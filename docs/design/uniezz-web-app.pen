@@ -1,5 +1,5 @@
 {
-  "version": "2.19",
+  "version": "2.20",
   "children": [
     {
       "type": "frame",
@@ -1940,7 +1940,7 @@
             "type": "image",
             "enabled": true,
             "url": "https://images.unsplash.com/photo-1527493324787-47372b893452?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODk0NTM5NTd8&ixlib=rb-4.1.0&q=80&w=1080",
-            "mode": "fill"
+            "mode": "cover"
           },
           "cornerRadius": "$r-md"
         },
@@ -7400,7 +7400,7 @@
                                 "type": "image",
                                 "enabled": true,
                                 "url": "https://images.unsplash.com/flagged/photo-1554391812-b02bb159a2bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODk0NTQzNTB8&ixlib=rb-4.1.0&q=80&w=1080",
-                                "mode": "fill"
+                                "mode": "cover"
                               },
                               "cornerRadius": 999
                             },
@@ -8666,7 +8666,7 @@
                                 "type": "image",
                                 "enabled": true,
                                 "url": "https://images.unsplash.com/photo-1723720474126-8704a01f6089?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODk0NTQzODN8&ixlib=rb-4.1.0&q=80&w=1080",
-                                "mode": "fill"
+                                "mode": "cover"
                               },
                               "cornerRadius": "$r-md"
                             },
@@ -8706,7 +8706,7 @@
                                 "type": "image",
                                 "enabled": true,
                                 "url": "https://images.unsplash.com/photo-1548453282-29d422a7025a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODk0NTQzODR8&ixlib=rb-4.1.0&q=80&w=1080",
-                                "mode": "fill"
+                                "mode": "cover"
                               },
                               "cornerRadius": "$r-md"
                             },
@@ -8746,7 +8746,7 @@
                                 "type": "image",
                                 "enabled": true,
                                 "url": "https://images.unsplash.com/photo-1785059934614-0d2d6bb5168b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODk0NTQzODR8&ixlib=rb-4.1.0&q=80&w=1080",
-                                "mode": "fill"
+                                "mode": "cover"
                               },
                               "cornerRadius": "$r-md"
                             },
@@ -8786,7 +8786,7 @@
                                 "type": "image",
                                 "enabled": true,
                                 "url": "https://images.unsplash.com/photo-1537043218005-98885a42594b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODk0NTQzODV8&ixlib=rb-4.1.0&q=80&w=1080",
-                                "mode": "fill"
+                                "mode": "cover"
                               },
                               "cornerRadius": "$r-md"
                             },
@@ -11366,6 +11366,7 @@
               "type": "frame",
               "id": "jJIoA",
               "name": "Center",
+              "rotation": -0.010037527563992244,
               "width": "fill_container",
               "height": "fill_container",
               "justifyContent": "center",
@@ -12330,7 +12331,7 @@
                             "type": "image",
                             "enabled": true,
                             "url": "https://images.unsplash.com/photo-1577614739132-81b2b774038c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODk0NTI5Mzl8&ixlib=rb-4.1.0&q=80&w=1080",
-                            "mode": "fill"
+                            "mode": "cover"
                           }
                         },
                         "Bzgk1": {
@@ -17644,7 +17645,7 @@
                                     "type": "image",
                                     "enabled": true,
                                     "url": "https://images.unsplash.com/photo-1552558636-f6a8f071c2b3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODk0NTMxMjB8&ixlib=rb-4.1.0&q=80&w=1080",
-                                    "mode": "fill"
+                                    "mode": "cover"
                                   },
                                   "cornerRadius": [
                                     14,
@@ -18215,7 +18216,7 @@
                                 "type": "image",
                                 "enabled": true,
                                 "url": "https://images.unsplash.com/photo-1711763560415-17e4d2341f78?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODk0NTMxODh8&ixlib=rb-4.1.0&q=80&w=1080",
-                                "mode": "fill"
+                                "mode": "cover"
                               },
                               "layout": "none",
                               "children": [
@@ -21293,7 +21294,7 @@
                             "type": "image",
                             "enabled": true,
                             "url": "https://images.unsplash.com/photo-1527493324787-47372b893452?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODk0NTM5NTd8&ixlib=rb-4.1.0&q=80&w=1080",
-                            "mode": "fill"
+                            "mode": "cover"
                           }
                         },
                         {
@@ -23677,7 +23678,7 @@
                     "type": "image",
                     "enabled": true,
                     "url": "https://images.unsplash.com/photo-1552558636-f6a8f071c2b3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODk0NTMxMjB8&ixlib=rb-4.1.0&q=80&w=1080",
-                    "mode": "fill"
+                    "mode": "cover"
                   }
                 }
               }
@@ -24900,7 +24901,7 @@
                   "type": "image",
                   "enabled": true,
                   "url": "https://images.unsplash.com/photo-1711763560415-17e4d2341f78?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODk0NTMxODh8&ixlib=rb-4.1.0&q=80&w=1080",
-                  "mode": "fill"
+                  "mode": "cover"
                 },
                 {
                   "type": "gradient",
@@ -29202,7 +29203,7 @@
         "type": "image",
         "enabled": true,
         "url": "https://images.unsplash.com/photo-1527493324787-47372b893452?w=800&q=80",
-        "mode": "fill"
+        "mode": "cover"
       },
       "cornerRadius": "$r-md"
     },
