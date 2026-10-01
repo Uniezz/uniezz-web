@@ -7,3 +7,4 @@ export * from './UIImage';
 export * from './UIInput';
 export * from './UISlider';
 export * from './UIText';
+export * from './UIRow/UIRow';
