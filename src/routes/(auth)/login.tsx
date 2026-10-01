@@ -1,18 +1,14 @@
-import { UIText } from '@/ui/components';
+import { UIRow, UIText } from '@/ui/components';
 import { createFileRoute } from '@tanstack/react-router';
 import { GraduationCapIcon, Lock } from 'lucide-react';
 import { DynamicIcon, IconName } from 'lucide-react/dynamic';
+import { useState } from 'react';
 
 export const Route = createFileRoute('/(auth)/login')({
   component: LoginPage,
 });
 type ContentItem = {
   icon: IconName;
-  topText: string;
-  bottomText: string;
-};
-type UnifersitiesItem = {
-  iconText: string;
   topText: string;
   bottomText: string;
 };
@@ -36,7 +32,7 @@ const CONTENT_ITEMS: ContentItem[] = [
   },
 ];
 
-const UNIVERSITIES: UnifersitiesItem[] = [
+const UNIVERSITIES = [
   {
     iconText: 'UM',
     topText: 'UMCS',
@@ -65,6 +61,8 @@ const UNIVERSITIES: UnifersitiesItem[] = [
 ];
 
 function LoginPage() {
+  const [selectedUniversity, setSelectedUniversity] = useState<number>();
+
   return (
     <main className="page">
       <div className="flex h-full w-full">
@@ -129,24 +127,22 @@ function LoginPage() {
               <UIText color={'gray'} weight={'bold'} size={'xs'}>
                 YOUR UNIVERSITY
               </UIText>
-              <div>
-                {UNIVERSITIES.map((item) => {
+
+              <div className="flex flex-col gap-2.5">
+                {UNIVERSITIES.map(({ iconText, topText, bottomText }, index) => {
+                  const isItemSelected: boolean = index === selectedUniversity;
+                  const handleClick = () => {
+                    setSelectedUniversity(index);
+                  };
                   return (
-                    <div className="flex flex-row gap-3.5" key={item.iconText}>
-                      <div className="items-start justify-center self-center rounded-xl bg-blue p-3">
-                        <UIText weight={'bold'} color={'white'}>
-                          {item.iconText}
-                        </UIText>
-                      </div>
-                      <div className="flex flex-col">
-                        <UIText weight={'semibold'} color={'primary'}>
-                          {item.topText}
-                        </UIText>
-                        <UIText color={'gray'} size={'sm'}>
-                          {item.bottomText}
-                        </UIText>
-                      </div>
-                    </div>
+                    <UIRow
+                      key={iconText}
+                      onClick={handleClick}
+                      selected={isItemSelected}
+                      iconText={iconText}
+                      topText={topText}
+                      bottomText={bottomText}
+                    />
                   );
                 })}
               </div>
