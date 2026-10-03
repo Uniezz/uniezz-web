@@ -8,6 +8,7 @@ export const buttonStyles = cva(
         sm: 'px-3.5 py-1.75',
         md: 'px-4.5 py-2.5',
         lg: 'px-6 py-3.25',
+        pill: 'rounded-full px-1.5 py-0.75',
       },
       bg: {
         primary:
@@ -18,6 +19,8 @@ export const buttonStyles = cva(
           'border border-white-primary bg-white-primary enabled:hover:border-accent-soft enabled:hover:bg-accent-soft',
         danger:
           'border border-danger bg-danger enabled:hover:border-danger-hover enabled:hover:bg-danger-hover',
+        gradient:
+          'border-blue-light bg-blue-light bg-[linear-gradient(0deg,#FFFFFF00_0%,#FFFFFF33_100%)] enabled:hover:border-blue enabled:hover:bg-blue',
       },
     },
     defaultVariants: {
@@ -30,4 +33,5 @@ export const buttonStyles = cva(
 export const iconColorClass = {
   white: 'text-white-primary',
   primary: 'text-primary',
+  gray: 'text-gray',
 } as const;
