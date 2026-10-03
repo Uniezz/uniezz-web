@@ -1,6 +1,6 @@
-import { UIRow, UIText } from '@/ui/components';
+import { UIButton, UIRow, UIText } from '@/ui/components';
 import { createFileRoute } from '@tanstack/react-router';
-import { GraduationCapIcon, Lock } from 'lucide-react';
+import { BadgeCheck, ChevronDown, Globe, GraduationCapIcon, Lock, ShieldCheck } from 'lucide-react';
 import { DynamicIcon, IconName } from 'lucide-react/dynamic';
 import { useState } from 'react';
 
@@ -61,7 +61,7 @@ const UNIVERSITIES = [
 ];
 
 function LoginPage() {
-  const [selectedUniversity, setSelectedUniversity] = useState<number>();
+  const [selectedUniversity, setSelectedUniversity] = useState<number>(0);
 
   return (
     <main className="page">
@@ -113,8 +113,16 @@ function LoginPage() {
             </UIText>
           </div>
         </div>
-        <div className="flex h-full w-3/5 items-center justify-center bg-ice">
-          <div className="flex flex-col gap-6 rounded-2xl bg-white-primary px-9 py-8.5">
+        <div className="flex h-full w-3/5 flex-col items-center justify-around bg-ice">
+          <div className="flex w-3/5 justify-end">
+            <UIButton leftIconColor="gray" leftIcon={Globe} bg={'secondary'} size={'pill'}>
+              <UIText weight={'semibold'} size={'sm'}>
+                EN
+              </UIText>
+              <ChevronDown className="text-gray" size={14} />
+            </UIButton>
+          </div>
+          <div className="flex w-3/5 flex-col gap-6 rounded-2xl bg-white-primary px-9 py-8.5">
             <div className="flex flex-col gap-2">
               <UIText size={'xxl'} weight={'bold'}>
                 Sign in to Uniezz
@@ -123,12 +131,12 @@ function LoginPage() {
                 Choose your university — you'll finish signing in on its own login page.
               </UIText>
             </div>
-            <div>
+            <div className="flex flex-col gap-2.5">
               <UIText color={'gray'} weight={'bold'} size={'xs'}>
                 YOUR UNIVERSITY
               </UIText>
 
-              <div className="flex flex-col gap-2.5">
+              <div className="flex flex-col gap-1.5">
                 {UNIVERSITIES.map(({ iconText, topText, bottomText }, index) => {
                   const isItemSelected: boolean = index === selectedUniversity;
                   const handleClick = () => {
@@ -147,7 +155,22 @@ function LoginPage() {
                 })}
               </div>
             </div>
+            <UIButton className="w-full" bg="gradient" leftIcon={ShieldCheck}>
+              <UIText weight={'semibold'} color={'white'}>
+                Continue with {UNIVERSITIES.at(selectedUniversity)?.topText}
+              </UIText>
+            </UIButton>
+            <div className="flex flex-row items-start gap-2.5 rounded-xl bg-ice px-4 py-3">
+              <BadgeCheck className="text-blue" size={22} />
+              <UIText size={'sm'} color={'secondary'} className="max-w-110 min-w-0">
+                Only active students of the five Lublin universities can create an account. Staff
+                and alumni accounts are rejected.
+              </UIText>
+            </div>
           </div>
+          <UIText size={'sm'} color={'secondary'}>
+            By continuing you agree to the Terms of Use and Privacy Policy · GDPR
+          </UIText>
         </div>
       </div>
     </main>
