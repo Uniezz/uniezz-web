@@ -36,6 +36,12 @@
   --color-ice: #e7f0ff;
   --color-blue-soft: #e7ecfb;
 
+  /* On navy */
+  --color-navy-raised: #101e4d;
+  --color-navy-text: #b9c2e8;
+  --color-navy-muted: #7e8bc4;
+  --color-navy-caption: #5e6b9e;
+
   /* Status */
   --color-success: #12875c;
   --color-success-soft: #dff3e9;
