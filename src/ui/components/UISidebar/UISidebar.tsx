@@ -13,6 +13,7 @@ import { cn } from '../../cn';
 import { UINavItem } from '../UINavItem';
 import {
   sidebarCaptionStyles,
+  sidebarGroupStyles,
   sidebarHeaderStyles,
   sidebarMarkStyles,
   sidebarStyles,
@@ -72,13 +73,13 @@ export const UISidebar = ({
       </div>
 
       <nav aria-label="Main navigation" className="flex flex-col">
-        <div className="flex flex-col gap-0.5">
+        <div className={sidebarGroupStyles({ collapsed })}>
           {MAIN_NAV.map((item) => (
             <UINavItem key={item.to} {...item} count={counts?.[item.to]} collapsed={collapsed} />
           ))}
         </div>
 
-        <div className="flex flex-col gap-0.5 pt-2.5 pb-1">
+        <div className={cn(sidebarGroupStyles({ collapsed }), 'pt-2.5 pb-1')}>
           {collapsed ? (
             <div className="mx-2 my-1.5 h-px bg-blue-light" />
           ) : (

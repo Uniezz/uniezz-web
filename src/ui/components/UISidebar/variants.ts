@@ -1,7 +1,7 @@
 import { cva } from 'class-variance-authority';
 
 export const sidebarStyles = cva(
-  'flex shrink-0 flex-col overflow-hidden bg-dark-blue bg-[radial-gradient(ellipse_170%_65%_at_8%_5%,color-mix(in_srgb,var(--color-blue-light)_40%,transparent)_0%,transparent_100%),radial-gradient(ellipse_150%_55%_at_90%_96%,color-mix(in_srgb,var(--color-accent)_24%,transparent)_0%,transparent_100%)] py-5 transition-[width] duration-200 ease-out motion-reduce:transition-none',
+  'flex shrink-0 flex-col overflow-hidden bg-dark-blue bg-[radial-gradient(ellipse_170%_65%_at_8%_5%,color-mix(in_srgb,var(--color-blue-light)_40%,transparent)_0%,transparent_100%),radial-gradient(ellipse_150%_55%_at_90%_96%,color-mix(in_srgb,var(--color-accent)_24%,transparent)_0%,transparent_100%)] py-5 transition-[width,padding] duration-200 ease-out motion-reduce:transition-none',
   {
     variants: {
       collapsed: {
@@ -18,7 +18,7 @@ export const sidebarStyles = cva(
 export const sidebarHeaderStyles = cva('flex pt-1.5 pb-5.5', {
   variants: {
     collapsed: {
-      true: 'flex-col items-center gap-2',
+      true: 'w-12 flex-col items-center gap-2',
       false: 'items-center gap-2.5 px-1',
     },
   },
@@ -46,15 +46,27 @@ export const sidebarToggleStyles = cva(
   },
 );
 
+export const sidebarGroupStyles = cva('flex flex-col gap-0.5', {
+  variants: {
+    collapsed: {
+      true: 'w-12',
+      false: '',
+    },
+  },
+  defaultVariants: {
+    collapsed: false,
+  },
+});
+
 export const sidebarCaptionStyles = cva(
   'text-caption font-bold tracking-[0.8px] text-navy-caption',
 );
 
-export const sidebarUserStyles = cva('mt-auto flex items-center rounded-xl bg-navy-raised p-2.5', {
+export const sidebarUserStyles = cva('mt-auto flex items-center rounded-xl bg-navy-raised', {
   variants: {
     collapsed: {
-      true: 'justify-center',
-      false: 'gap-2.5',
+      true: 'w-12 justify-center p-1.75',
+      false: 'gap-2.5 p-2.5',
     },
   },
   defaultVariants: {
