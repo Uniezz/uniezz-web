@@ -1,14 +1,19 @@
 import { cva } from 'class-variance-authority';
 
-export const navItemStyles = cva('flex w-full items-center gap-3 rounded-lg px-3 py-2.5', {
+export const navItemStyles = cva('flex w-full items-center rounded-lg py-2.5', {
   variants: {
     active: {
       true: 'bg-blue-light',
       false: 'hover:bg-blue',
     },
+    collapsed: {
+      true: 'justify-center px-0',
+      false: 'gap-3 px-3',
+    },
   },
   defaultVariants: {
     active: false,
+    collapsed: false,
   },
 });
 
