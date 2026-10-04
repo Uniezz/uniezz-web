@@ -5,5 +5,7 @@ export * from './UICard';
 export * from './UICheckbox';
 export * from './UIImage';
 export * from './UIInput';
+export * from './UINavItem';
+export * from './UISidebar';
 export * from './UISlider';
 export * from './UIText';
