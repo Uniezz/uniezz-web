@@ -14,7 +14,9 @@ import { Route as AppRouteImport } from './../routes/_app'
 import { Route as authLoginRouteImport } from './../routes/(auth)/login'
 import { Route as AppChatRouteImport } from './../routes/_app/chat'
 import { Route as AppConnectionsRouteImport } from './../routes/_app/connections'
+import { Route as AppExamsRouteImport } from './../routes/_app/exams'
 import { Route as AppFeedRouteImport } from './../routes/_app/feed'
+import { Route as AppGuideRouteImport } from './../routes/_app/guide'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -40,9 +42,19 @@ const AppConnectionsRoute = AppConnectionsRouteImport.update({
   path: '/connections',
   getParentRoute: () => AppRoute,
 } as any)
+const AppExamsRoute = AppExamsRouteImport.update({
+  id: '/exams',
+  path: '/exams',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppFeedRoute = AppFeedRouteImport.update({
   id: '/feed',
   path: '/feed',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppGuideRoute = AppGuideRouteImport.update({
+  id: '/guide',
+  path: '/guide',
   getParentRoute: () => AppRoute,
 } as any)
 
@@ -51,14 +63,18 @@ export interface FileRoutesByFullPath {
   '/login': typeof authLoginRoute
   '/chat': typeof AppChatRoute
   '/connections': typeof AppConnectionsRoute
+  '/exams': typeof AppExamsRoute
   '/feed': typeof AppFeedRoute
+  '/guide': typeof AppGuideRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof authLoginRoute
   '/chat': typeof AppChatRoute
   '/connections': typeof AppConnectionsRoute
+  '/exams': typeof AppExamsRoute
   '/feed': typeof AppFeedRoute
+  '/guide': typeof AppGuideRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -67,13 +83,16 @@ export interface FileRoutesById {
   '/(auth)/login': typeof authLoginRoute
   '/_app/chat': typeof AppChatRoute
   '/_app/connections': typeof AppConnectionsRoute
+  '/_app/exams': typeof AppExamsRoute
   '/_app/feed': typeof AppFeedRoute
+  '/_app/guide': typeof AppGuideRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/chat' | '/connections' | '/feed'
+  fullPaths:
+    '/' | '/login' | '/chat' | '/connections' | '/exams' | '/feed' | '/guide'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/chat' | '/connections' | '/feed'
+  to: '/' | '/login' | '/chat' | '/connections' | '/exams' | '/feed' | '/guide'
   id:
     | '__root__'
     | '/'
@@ -81,7 +100,9 @@ export interface FileRouteTypes {
     | '/(auth)/login'
     | '/_app/chat'
     | '/_app/connections'
+    | '/_app/exams'
     | '/_app/feed'
+    | '/_app/guide'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -127,11 +148,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppConnectionsRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/exams': {
+      id: '/_app/exams'
+      path: '/exams'
+      fullPath: '/exams'
+      preLoaderRoute: typeof AppExamsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/feed': {
       id: '/_app/feed'
       path: '/feed'
       fullPath: '/feed'
       preLoaderRoute: typeof AppFeedRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/guide': {
+      id: '/_app/guide'
+      path: '/guide'
+      fullPath: '/guide'
+      preLoaderRoute: typeof AppGuideRouteImport
       parentRoute: typeof AppRoute
     }
   }
@@ -140,13 +175,17 @@ declare module '@tanstack/react-router' {
 interface AppRouteChildren {
   AppChatRoute: typeof AppChatRoute
   AppConnectionsRoute: typeof AppConnectionsRoute
+  AppExamsRoute: typeof AppExamsRoute
   AppFeedRoute: typeof AppFeedRoute
+  AppGuideRoute: typeof AppGuideRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppChatRoute: AppChatRoute,
   AppConnectionsRoute: AppConnectionsRoute,
+  AppExamsRoute: AppExamsRoute,
   AppFeedRoute: AppFeedRoute,
+  AppGuideRoute: AppGuideRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
