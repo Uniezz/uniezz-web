@@ -8,7 +8,7 @@ import {
   Settings,
   Sparkles,
 } from 'lucide-react';
-import { type ComponentProps } from 'react';
+import { type ComponentProps, memo } from 'react';
 import { cn } from '../../cn';
 import { UINavItem } from '../UINavItem';
 import {
@@ -40,7 +40,7 @@ type UISidebarProps = ComponentProps<'aside'> & {
   onSettingsClick?: () => void;
 };
 
-export const UISidebar = ({
+const UISidebarBase = ({
   user,
   counts,
   collapsed,
@@ -118,3 +118,5 @@ export const UISidebar = ({
     </aside>
   );
 };
+
+export const UISidebar = memo(UISidebarBase);
