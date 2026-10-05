@@ -1,6 +1,6 @@
 import { UISidebar } from '@/ui/components';
 import { Outlet, createFileRoute } from '@tanstack/react-router';
-import { useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 export const Route = createFileRoute('/_app')({
   component: AppLayout,
@@ -19,8 +19,10 @@ function AppLayout() {
     () => localStorage.getItem(SIDEBAR_STORAGE_KEY) === 'true',
   );
 
-  useEffect(() => {
-    localStorage.setItem(SIDEBAR_STORAGE_KEY, String(collapsed));
+  const toggleCollapsed = useCallback(() => {
+    const next = !collapsed;
+    setCollapsed(next);
+    localStorage.setItem(SIDEBAR_STORAGE_KEY, String(next));
   }, [collapsed]);
 
   return (
@@ -29,7 +31,7 @@ function AppLayout() {
         className="sticky top-0 h-svh"
         user={CURRENT_USER}
         collapsed={collapsed}
-        onCollapsedToggle={() => setCollapsed((value) => !value)}
+        onCollapsedToggle={toggleCollapsed}
       />
       <main className="min-w-0 flex-1">
         <Outlet />
