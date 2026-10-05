@@ -10,7 +10,7 @@ import {
   UIText,
 } from '@/ui/components';
 import { createFileRoute } from '@tanstack/react-router';
-import { Coffee, Info, Map, PaperBag } from 'lucide-react';
+import { Coffee, Info, LayoutDashboard, Map, PaperBag } from 'lucide-react';
 import { useState } from 'react';
 
 export const Route = createFileRoute('/')({
@@ -28,6 +28,9 @@ function HomePage() {
       <UIText>A platform for students of Lublin universities.</UIText>
       <UIButton leftIconColor="primary" leftIcon={Map} navigateTo="/login">
         Sign in
+      </UIButton>
+      <UIButton leftIcon={LayoutDashboard} navigateTo="/feed">
+        Open app
       </UIButton>
       <UIText size={'xxl'} color={'secondary'}>
         Hello
