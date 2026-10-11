@@ -1,5 +1,5 @@
 {
-  "version": "2.20",
+  "version": "2.21",
   "children": [
     {
       "type": "frame",
@@ -23281,37 +23281,6 @@
                   "fontSize": 15
                 }
               }
-            },
-            {
-              "type": "frame",
-              "id": "KaINZ",
-              "name": "Alt",
-              "width": "fill_container",
-              "gap": 6,
-              "justifyContent": "center",
-              "alignItems": "center",
-              "children": [
-                {
-                  "type": "icon",
-                  "id": "KkLuy",
-                  "name": "Icon",
-                  "width": 15,
-                  "height": 15,
-                  "icon": "mail",
-                  "library": "lucide",
-                  "fill": "$brand"
-                },
-                {
-                  "type": "text",
-                  "id": "P7mGe5",
-                  "name": "Label",
-                  "fill": "$brand",
-                  "content": "Use my university email instead",
-                  "fontFamily": "$font-body",
-                  "fontSize": 13.5,
-                  "fontWeight": "600"
-                }
-              ]
             },
             {
               "type": "frame",

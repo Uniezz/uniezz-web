@@ -12,6 +12,8 @@ import { Route as rootRouteImport } from './../routes/__root'
 import { Route as IndexRouteImport } from './../routes/index'
 import { Route as AppRouteImport } from './../routes/_app'
 import { Route as authLoginRouteImport } from './../routes/(auth)/login'
+import { Route as authOtpRouteImport } from './../routes/(auth)/otp'
+import { Route as authUsosRouteImport } from './../routes/(auth)/usos'
 import { Route as AppChatRouteImport } from './../routes/_app/chat'
 import { Route as AppConnectionsRouteImport } from './../routes/_app/connections'
 import { Route as AppExamsRouteImport } from './../routes/_app/exams'
@@ -30,6 +32,16 @@ const AppRoute = AppRouteImport.update({
 const authLoginRoute = authLoginRouteImport.update({
   id: '/(auth)/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const authOtpRoute = authOtpRouteImport.update({
+  id: '/(auth)/otp',
+  path: '/otp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const authUsosRoute = authUsosRouteImport.update({
+  id: '/(auth)/usos',
+  path: '/usos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppChatRoute = AppChatRouteImport.update({
@@ -61,6 +73,8 @@ const AppGuideRoute = AppGuideRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof authLoginRoute
+  '/otp': typeof authOtpRoute
+  '/usos': typeof authUsosRoute
   '/chat': typeof AppChatRoute
   '/connections': typeof AppConnectionsRoute
   '/exams': typeof AppExamsRoute
@@ -70,6 +84,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof authLoginRoute
+  '/otp': typeof authOtpRoute
+  '/usos': typeof authUsosRoute
   '/chat': typeof AppChatRoute
   '/connections': typeof AppConnectionsRoute
   '/exams': typeof AppExamsRoute
@@ -81,6 +97,8 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
   '/(auth)/login': typeof authLoginRoute
+  '/(auth)/otp': typeof authOtpRoute
+  '/(auth)/usos': typeof authUsosRoute
   '/_app/chat': typeof AppChatRoute
   '/_app/connections': typeof AppConnectionsRoute
   '/_app/exams': typeof AppExamsRoute
@@ -90,14 +108,33 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/login' | '/chat' | '/connections' | '/exams' | '/feed' | '/guide'
+    | '/'
+    | '/login'
+    | '/otp'
+    | '/usos'
+    | '/chat'
+    | '/connections'
+    | '/exams'
+    | '/feed'
+    | '/guide'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/chat' | '/connections' | '/exams' | '/feed' | '/guide'
+  to:
+    | '/'
+    | '/login'
+    | '/otp'
+    | '/usos'
+    | '/chat'
+    | '/connections'
+    | '/exams'
+    | '/feed'
+    | '/guide'
   id:
     | '__root__'
     | '/'
     | '/_app'
     | '/(auth)/login'
+    | '/(auth)/otp'
+    | '/(auth)/usos'
     | '/_app/chat'
     | '/_app/connections'
     | '/_app/exams'
@@ -109,6 +146,8 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
   authLoginRoute: typeof authLoginRoute
+  authOtpRoute: typeof authOtpRoute
+  authUsosRoute: typeof authUsosRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -132,6 +171,20 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof authLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(auth)/otp': {
+      id: '/(auth)/otp'
+      path: '/otp'
+      fullPath: '/otp'
+      preLoaderRoute: typeof authOtpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(auth)/usos': {
+      id: '/(auth)/usos'
+      path: '/usos'
+      fullPath: '/usos'
+      preLoaderRoute: typeof authUsosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_app/chat': {
@@ -194,6 +247,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
   authLoginRoute: authLoginRoute,
+  authOtpRoute: authOtpRoute,
+  authUsosRoute: authUsosRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
