@@ -24,4 +24,6 @@ App runs at http://localhost:7711. Development uses the staging API by default.
 
 The API origins are set in `.env.development` and `.env.production`. Copy `.env.example` when creating a local override. Schema commands fetch from the selected remote API; the checked-in `api/openapi.yaml` is not a code generation source.
 
+USOS returns to `/auth/done`. The backend's `APP_WEB_URL` must be the web app's origin (for local development, `http://localhost:7711`), and its CORS origins must include that origin. The staging backend currently defaults to `http://localhost:3000` if `APP_WEB_URL` is unset.
+
 See [Coding Style Guide](docs/csg.md) for project conventions.

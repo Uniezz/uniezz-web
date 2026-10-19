@@ -22,6 +22,7 @@ import { Route as AppExamsRouteImport } from './../routes/_app/exams'
 import { Route as AppFeedRouteImport } from './../routes/_app/feed'
 import { Route as AppGuideRouteImport } from './../routes/_app/guide'
 import { Route as AuthCallbackRouteImport } from './../routes/auth/callback'
+import { Route as AuthDoneRouteImport } from './../routes/auth/done'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -86,6 +87,11 @@ const AuthCallbackRoute = AuthCallbackRouteImport.update({
   path: '/auth/callback',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthDoneRoute = AuthDoneRouteImport.update({
+  id: '/auth/done',
+  path: '/auth/done',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -99,6 +105,7 @@ export interface FileRoutesByFullPath {
   '/feed': typeof AppFeedRoute
   '/guide': typeof AppGuideRoute
   '/auth/callback': typeof AuthCallbackRoute
+  '/auth/done': typeof AuthDoneRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -112,6 +119,7 @@ export interface FileRoutesByTo {
   '/feed': typeof AppFeedRoute
   '/guide': typeof AppGuideRoute
   '/auth/callback': typeof AuthCallbackRoute
+  '/auth/done': typeof AuthDoneRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -128,6 +136,7 @@ export interface FileRoutesById {
   '/_app/feed': typeof AppFeedRoute
   '/_app/guide': typeof AppGuideRoute
   '/auth/callback': typeof AuthCallbackRoute
+  '/auth/done': typeof AuthDoneRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -143,6 +152,7 @@ export interface FileRouteTypes {
     | '/feed'
     | '/guide'
     | '/auth/callback'
+    | '/auth/done'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -156,6 +166,7 @@ export interface FileRouteTypes {
     | '/feed'
     | '/guide'
     | '/auth/callback'
+    | '/auth/done'
   id:
     | '__root__'
     | '/'
@@ -171,6 +182,7 @@ export interface FileRouteTypes {
     | '/_app/feed'
     | '/_app/guide'
     | '/auth/callback'
+    | '/auth/done'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -178,6 +190,7 @@ export interface RootRouteChildren {
   authRouteRoute: typeof authRouteRouteWithChildren
   AppRoute: typeof AppRouteWithChildren
   AuthCallbackRoute: typeof AuthCallbackRoute
+  AuthDoneRoute: typeof AuthDoneRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -273,6 +286,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthCallbackRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth/done': {
+      id: '/auth/done'
+      path: '/auth/done'
+      fullPath: '/auth/done'
+      preLoaderRoute: typeof AuthDoneRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -317,6 +337,7 @@ const rootRouteChildren: RootRouteChildren = {
   authRouteRoute: authRouteRouteWithChildren,
   AppRoute: AppRouteWithChildren,
   AuthCallbackRoute: AuthCallbackRoute,
+  AuthDoneRoute: AuthDoneRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

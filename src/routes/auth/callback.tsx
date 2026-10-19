@@ -1,11 +1,23 @@
-import { AuthLayout } from '@/components';
-import { FinishPage } from '../(auth)/finish';
+import { finishLogin } from '@/api/finishLogin';
+import { AuthLayout, FinishLoginPage } from '@/components';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/auth/callback')({
-  component: () => (
+  preload: false,
+  loader: ({ location }) => finishLogin(location.searchStr),
+  component: CallbackPage,
+  pendingComponent: () => (
     <AuthLayout>
-      <FinishPage />
+      <FinishLoginPage />
     </AuthLayout>
   ),
 });
+
+function CallbackPage() {
+  const { error } = Route.useLoaderData();
+  return (
+    <AuthLayout>
+      <FinishLoginPage error={error} />
+    </AuthLayout>
+  );
+}
