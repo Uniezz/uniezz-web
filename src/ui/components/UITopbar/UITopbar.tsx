@@ -1,6 +1,8 @@
-import { Bell, ChevronDown, Globe, Search } from 'lucide-react';
+import { Bell, ChevronDown, Globe, type LucideIcon, Search } from 'lucide-react';
 import { type ComponentProps } from 'react';
 import { cn } from '../../cn';
+import { UIButton } from '../UIButton';
+import { UIText } from '../UIText';
 import {
   topbarControlStyles,
   topbarSearchStyles,
@@ -12,9 +14,10 @@ import {
 type UITopbarProps = ComponentProps<'header'> & {
   title: string;
   subtitle?: string;
+  action?: { label: string; icon: LucideIcon; onClick?: () => void };
 };
 
-export const UITopbar = ({ title, subtitle, className, ...props }: UITopbarProps) => {
+export const UITopbar = ({ title, subtitle, action, className, ...props }: UITopbarProps) => {
   return (
     <header className={cn(topbarStyles(), className)} {...props}>
       <div className="flex min-w-0 flex-col gap-px">
@@ -58,6 +61,19 @@ export const UITopbar = ({ title, subtitle, className, ...props }: UITopbarProps
           className="absolute top-2.25 right-2 size-2 rounded-full border-[1.5px] border-white-primary bg-danger"
         />
       </button>
+
+      {action ? (
+        <UIButton
+          bg="gradient"
+          leftIcon={action.icon}
+          onClick={action.onClick}
+          className="shrink-0 px-5 py-2.75 shadow-[0_4px_12px_#2D419559]"
+        >
+          <UIText size="regular" weight="semibold" color="white">
+            {action.label}
+          </UIText>
+        </UIButton>
+      ) : null}
     </header>
   );
 };

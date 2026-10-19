@@ -1,5 +1,6 @@
 import { UISidebar, UITopbar } from '@/ui/components';
 import { Outlet, createFileRoute } from '@tanstack/react-router';
+import { Plus } from 'lucide-react';
 import { useCallback, useState } from 'react';
 
 export const Route = createFileRoute('/_app')({
@@ -34,7 +35,11 @@ function AppLayout() {
         onCollapsedToggle={toggleCollapsed}
       />
       <main className="min-w-0 flex-1">
-        <UITopbar title="Feed" subtitle="What's happening across Lublin" />
+        <UITopbar
+          title="Feed"
+          subtitle="What's happening across Lublin"
+          action={{ label: 'Create post', icon: Plus }}
+        />
         <Outlet />
       </main>
     </div>
