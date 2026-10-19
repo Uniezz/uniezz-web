@@ -13,22 +13,22 @@ const items = [
   {
     iconText: 'KUL',
     topText: 'KUL',
-    bottomText: 'Microsoft',
+    bottomText: 'Email code',
   },
   {
     iconText: 'PL',
     topText: 'Politechnika Lubelska',
-    bottomText: 'Microsoft',
+    bottomText: 'Email code',
   },
   {
     iconText: 'UP',
     topText: 'Uniwersytet Przyrodniczy',
-    bottomText: 'Microsoft',
+    bottomText: 'Email code',
   },
   {
     iconText: 'WS',
     topText: 'WSEI',
-    bottomText: 'Microsoft',
+    bottomText: 'Email code',
   },
 ];
 
@@ -42,15 +42,13 @@ function LoginPage() {
   const selectedItem = items[selected]!;
 
   const handleContinue = () => {
-    void navigate({
-      to: selectedItem.bottomText === 'Microsoft' ? '/otp' : '/usos',
-    });
+    void navigate({ to: selectedItem.bottomText === 'Email code' ? '/otp' : '/usos' });
   };
 
   return (
     <AuthPage
       topText="Sign in to Uniezz"
-      bottomText="Choose your university — you'll finish signing in on its own login page."
+      bottomText="Choose your university to sign in with USOS or a university email code."
     >
       <div className="flex flex-col gap-2.5">
         <UIText color="gray" weight="bold" size="xs">

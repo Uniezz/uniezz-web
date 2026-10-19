@@ -37,7 +37,7 @@ function UsosPage() {
         className="w-full"
         bg="gradient"
         leftIcon={ShieldCheck}
-        onClick={startUniversityLogin}
+        onClick={() => startUniversityLogin()}
       >
         <UIText weight="semibold" color="white">
           Open USOS login

@@ -13,6 +13,7 @@ function OtpPage() {
     email,
     onEmailChange,
     emailError,
+    availabilityError,
     emailPlaceholder,
     code,
     onCodeChange,
@@ -53,6 +54,11 @@ function OtpPage() {
       }
     >
       <form className="flex flex-col gap-6" onSubmit={onButtonPress}>
+        {availabilityError ? (
+          <p role="alert" className="text-red-600 text-sm">
+            {availabilityError}
+          </p>
+        ) : null}
         {isEmailStep ? (
           <UIInput
             type="email"

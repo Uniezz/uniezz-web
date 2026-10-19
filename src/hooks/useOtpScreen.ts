@@ -27,6 +27,7 @@ export const useOtpScreen = () => {
   const isEmailStep = step === 'email';
 
   const [resendSeconds, setResendSeconds] = useState(0);
+  const [availabilityError, setAvailabilityError] = useState<string | null>(null);
 
   useEffect(() => {
     if (isEmailStep) {
@@ -54,9 +55,9 @@ export const useOtpScreen = () => {
 
   const onButtonPress = handleSubmit((data) => {
     if (data.step === 'email') {
-      setValue('step', 'code');
-      setValue('code', '');
-      setResendSeconds(OTP_RESEND_SECONDS);
+      setAvailabilityError(
+        'Email sign-in is not available yet. Please use UMCS USOS if you have a UMCS account.',
+      );
       return;
     }
 
@@ -95,6 +96,7 @@ export const useOtpScreen = () => {
     email,
     onEmailChange,
     emailError: errors.email?.message,
+    availabilityError,
     emailPlaceholder: 'you@university.edu',
     code,
     onCodeChange,
