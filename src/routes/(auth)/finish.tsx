@@ -9,7 +9,7 @@ export const Route = createFileRoute('/(auth)/finish')({
   pendingComponent: FinishLoginPage,
 });
 
-export function FinishPage() {
+function FinishPage() {
   const { error } = Route.useLoaderData();
   return <FinishLoginPage error={error} />;
 }
