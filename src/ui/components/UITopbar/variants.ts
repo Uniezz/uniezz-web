@@ -13,3 +13,15 @@ export const topbarSubtitleStyles = cva('text-[12px] font-normal text-muted');
 export const topbarSearchStyles = cva(
   'flex w-100 items-center gap-2.25 rounded-lg border border-white-tertiary bg-white-secondary px-3 py-2.25 focus-within:border-blue-light',
 );
+
+export const topbarControlStyles = cva(
+  'flex items-center rounded-lg border border-white-tertiary bg-white-primary outline-none hover:bg-white-secondary focus-visible:ring-2 focus-visible:ring-blue-light',
+  {
+    variants: {
+      kind: {
+        chip: 'gap-1.5 px-2.5 py-2',
+        icon: 'relative size-9.5 justify-center',
+      },
+    },
+  },
+);
