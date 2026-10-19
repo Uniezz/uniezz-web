@@ -1,4 +1,4 @@
-import { UISidebar } from '@/ui/components';
+import { UISidebar, UITopbar } from '@/ui/components';
 import { Outlet, createFileRoute } from '@tanstack/react-router';
 import { useCallback, useState } from 'react';
 
@@ -34,6 +34,7 @@ function AppLayout() {
         onCollapsedToggle={toggleCollapsed}
       />
       <main className="min-w-0 flex-1">
+        <UITopbar title="Feed" subtitle="What's happening across Lublin" />
         <Outlet />
       </main>
     </div>
