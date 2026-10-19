@@ -1,5 +1,6 @@
-import { UIText } from '@/ui/components';
+import { UITopbar } from '@/ui/components';
 import { createFileRoute } from '@tanstack/react-router';
+import { Plus } from 'lucide-react';
 
 export const Route = createFileRoute('/_app/chat')({
   component: ChatPage,
@@ -7,10 +8,13 @@ export const Route = createFileRoute('/_app/chat')({
 
 function ChatPage() {
   return (
-    <div className="p-8">
-      <UIText as="h1" size="xxl" weight="bold">
-        Chat
-      </UIText>
-    </div>
+    <>
+      <UITopbar
+        title="Chat"
+        subtitle="Direct messages and group chats"
+        action={{ label: 'New group', icon: Plus }}
+      />
+      <div className="p-8" />
+    </>
   );
 }

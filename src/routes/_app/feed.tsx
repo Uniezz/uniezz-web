@@ -1,5 +1,6 @@
-import { UIText } from '@/ui/components';
+import { UITopbar } from '@/ui/components';
 import { createFileRoute } from '@tanstack/react-router';
+import { Plus } from 'lucide-react';
 
 export const Route = createFileRoute('/_app/feed')({
   component: FeedPage,
@@ -7,10 +8,13 @@ export const Route = createFileRoute('/_app/feed')({
 
 function FeedPage() {
   return (
-    <div className="p-8">
-      <UIText as="h1" size="xxl" weight="bold">
-        Feed
-      </UIText>
-    </div>
+    <>
+      <UITopbar
+        title="Feed"
+        subtitle="What's happening across Lublin"
+        action={{ label: 'Create post', icon: Plus }}
+      />
+      <div className="p-8" />
+    </>
   );
 }
