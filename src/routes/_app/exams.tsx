@@ -1,5 +1,6 @@
-import { UIText } from '@/ui/components';
+import { UITopbar } from '@/ui/components';
 import { createFileRoute } from '@tanstack/react-router';
+import { Paperclip } from 'lucide-react';
 
 export const Route = createFileRoute('/_app/exams')({
   component: ExamsPage,
@@ -7,10 +8,13 @@ export const Route = createFileRoute('/_app/exams')({
 
 function ExamsPage() {
   return (
-    <div className="p-8">
-      <UIText as="h1" size="xxl" weight="bold">
-        Exams &amp; Courses
-      </UIText>
-    </div>
+    <>
+      <UITopbar
+        title="Exams & Courses"
+        subtitle="Past papers, course reviews and professor ratings"
+        action={{ label: 'Upload material', icon: Paperclip }}
+      />
+      <div className="p-8" />
+    </>
   );
 }

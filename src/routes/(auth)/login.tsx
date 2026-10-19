@@ -81,6 +81,14 @@ function LoginPage() {
           alumni accounts are rejected.
         </UIText>
       </div>
+      {/* TODO(temp): skip login button  */}
+      {import.meta.env.DEV ? (
+        <UIButton className="w-full" bg="secondary" navigateTo="/feed">
+          <UIText weight="semibold" color="secondary">
+            Skip login (dev) → Feed
+          </UIText>
+        </UIButton>
+      ) : null}
     </AuthPage>
   );
 }

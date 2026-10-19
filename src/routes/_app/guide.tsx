@@ -1,5 +1,6 @@
-import { UIText } from '@/ui/components';
+import { UITopbar } from '@/ui/components';
 import { createFileRoute } from '@tanstack/react-router';
+import { MapPin } from 'lucide-react';
 
 export const Route = createFileRoute('/_app/guide')({
   component: GuidePage,
@@ -7,10 +8,13 @@ export const Route = createFileRoute('/_app/guide')({
 
 function GuidePage() {
   return (
-    <div className="p-8">
-      <UIText as="h1" size="xxl" weight="bold">
-        Student Guide
-      </UIText>
-    </div>
+    <>
+      <UITopbar
+        title="Student Guide"
+        subtitle="Everything you need to live in Lublin"
+        action={{ label: 'Suggest a place', icon: MapPin }}
+      />
+      <div className="p-8" />
+    </>
   );
 }
