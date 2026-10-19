@@ -71,7 +71,7 @@ export const useOtpScreen = () => {
       return;
     }
 
-    void navigate({ to: '/login' });
+    navigate({ to: '/login' });
   };
 
   const onResendPress = () => {

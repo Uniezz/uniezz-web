@@ -1,5 +1,6 @@
 import { AuthPage } from '@/components';
 import { UIButton, UIRow, UIText } from '@/ui/components';
+import { startUniversityLogin } from '@/utils';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { BadgeCheck, ShieldCheck } from 'lucide-react';
 import { useState } from 'react';
@@ -9,26 +10,31 @@ const items = [
     iconText: 'UM',
     topText: 'UMCS',
     bottomText: 'USOS',
+    provider: 'usos',
   },
   {
     iconText: 'KUL',
     topText: 'KUL',
     bottomText: 'Email code',
+    provider: 'otp',
   },
   {
     iconText: 'PL',
     topText: 'Politechnika Lubelska',
     bottomText: 'Email code',
+    provider: 'otp',
   },
   {
     iconText: 'UP',
     topText: 'Uniwersytet Przyrodniczy',
     bottomText: 'Email code',
+    provider: 'otp',
   },
   {
     iconText: 'WS',
     topText: 'WSEI',
     bottomText: 'Email code',
+    provider: 'otp',
   },
 ];
 
@@ -42,7 +48,12 @@ function LoginPage() {
   const selectedItem = items[selected]!;
 
   const handleContinue = () => {
-    void navigate({ to: selectedItem.bottomText === 'Email code' ? '/otp' : '/usos' });
+    if (selectedItem.provider === 'usos') {
+      startUniversityLogin();
+      return;
+    }
+
+    navigate({ to: '/otp' });
   };
 
   return (

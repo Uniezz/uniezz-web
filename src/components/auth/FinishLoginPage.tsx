@@ -15,7 +15,7 @@ export function FinishLoginPage({ error }: FinishLoginPageProps) {
       bottomText={error || 'Please wait while we finish your USOS sign-in.'}
     >
       {error ? (
-        <UIButton onClick={() => void navigate({ to: '/login' })}>
+        <UIButton onClick={() => navigate({ to: '/login' })}>
           <UIText>Back to universities</UIText>
         </UIButton>
       ) : null}

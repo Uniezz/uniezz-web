@@ -15,7 +15,6 @@ import { Route as AppRouteImport } from './../routes/_app'
 import { Route as authFinishRouteImport } from './../routes/(auth)/finish'
 import { Route as authLoginRouteImport } from './../routes/(auth)/login'
 import { Route as authOtpRouteImport } from './../routes/(auth)/otp'
-import { Route as authUsosRouteImport } from './../routes/(auth)/usos'
 import { Route as AppChatRouteImport } from './../routes/_app/chat'
 import { Route as AppConnectionsRouteImport } from './../routes/_app/connections'
 import { Route as AppExamsRouteImport } from './../routes/_app/exams'
@@ -50,11 +49,6 @@ const authLoginRoute = authLoginRouteImport.update({
 const authOtpRoute = authOtpRouteImport.update({
   id: '/otp',
   path: '/otp',
-  getParentRoute: () => authRouteRoute,
-} as any)
-const authUsosRoute = authUsosRouteImport.update({
-  id: '/usos',
-  path: '/usos',
   getParentRoute: () => authRouteRoute,
 } as any)
 const AppChatRoute = AppChatRouteImport.update({
@@ -98,7 +92,6 @@ export interface FileRoutesByFullPath {
   '/finish': typeof authFinishRoute
   '/login': typeof authLoginRoute
   '/otp': typeof authOtpRoute
-  '/usos': typeof authUsosRoute
   '/chat': typeof AppChatRoute
   '/connections': typeof AppConnectionsRoute
   '/exams': typeof AppExamsRoute
@@ -112,7 +105,6 @@ export interface FileRoutesByTo {
   '/finish': typeof authFinishRoute
   '/login': typeof authLoginRoute
   '/otp': typeof authOtpRoute
-  '/usos': typeof authUsosRoute
   '/chat': typeof AppChatRoute
   '/connections': typeof AppConnectionsRoute
   '/exams': typeof AppExamsRoute
@@ -129,7 +121,6 @@ export interface FileRoutesById {
   '/(auth)/finish': typeof authFinishRoute
   '/(auth)/login': typeof authLoginRoute
   '/(auth)/otp': typeof authOtpRoute
-  '/(auth)/usos': typeof authUsosRoute
   '/_app/chat': typeof AppChatRoute
   '/_app/connections': typeof AppConnectionsRoute
   '/_app/exams': typeof AppExamsRoute
@@ -145,7 +136,6 @@ export interface FileRouteTypes {
     | '/finish'
     | '/login'
     | '/otp'
-    | '/usos'
     | '/chat'
     | '/connections'
     | '/exams'
@@ -159,7 +149,6 @@ export interface FileRouteTypes {
     | '/finish'
     | '/login'
     | '/otp'
-    | '/usos'
     | '/chat'
     | '/connections'
     | '/exams'
@@ -175,7 +164,6 @@ export interface FileRouteTypes {
     | '/(auth)/finish'
     | '/(auth)/login'
     | '/(auth)/otp'
-    | '/(auth)/usos'
     | '/_app/chat'
     | '/_app/connections'
     | '/_app/exams'
@@ -237,13 +225,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authOtpRouteImport
       parentRoute: typeof authRouteRoute
     }
-    '/(auth)/usos': {
-      id: '/(auth)/usos'
-      path: '/usos'
-      fullPath: '/usos'
-      preLoaderRoute: typeof authUsosRouteImport
-      parentRoute: typeof authRouteRoute
-    }
     '/_app/chat': {
       id: '/_app/chat'
       path: '/chat'
@@ -300,14 +281,12 @@ interface authRouteRouteChildren {
   authFinishRoute: typeof authFinishRoute
   authLoginRoute: typeof authLoginRoute
   authOtpRoute: typeof authOtpRoute
-  authUsosRoute: typeof authUsosRoute
 }
 
 const authRouteRouteChildren: authRouteRouteChildren = {
   authFinishRoute: authFinishRoute,
   authLoginRoute: authLoginRoute,
   authOtpRoute: authOtpRoute,
-  authUsosRoute: authUsosRoute,
 }
 
 const authRouteRouteWithChildren = authRouteRoute._addFileChildren(
