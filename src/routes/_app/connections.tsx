@@ -1,5 +1,6 @@
-import { UIText } from '@/ui/components';
+import { UITopbar } from '@/ui/components';
 import { createFileRoute } from '@tanstack/react-router';
+import { Pencil } from 'lucide-react';
 
 export const Route = createFileRoute('/_app/connections')({
   component: ConnectionsPage,
@@ -7,10 +8,13 @@ export const Route = createFileRoute('/_app/connections')({
 
 function ConnectionsPage() {
   return (
-    <div className="p-8">
-      <UIText as="h1" size="xxl" weight="bold">
-        Connections
-      </UIText>
-    </div>
+    <>
+      <UITopbar
+        title="Connections"
+        subtitle="Meet students across all five universities"
+        action={{ label: 'Edit preferences', icon: Pencil }}
+      />
+      <div className="p-8" />
+    </>
   );
 }
