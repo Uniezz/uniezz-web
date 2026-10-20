@@ -9,6 +9,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { type ComponentProps, memo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { cn } from '../../cn';
 import { UINavItem } from '../UINavItem';
 import {
@@ -22,14 +23,14 @@ import {
 } from './variants';
 
 const MAIN_NAV = [
-  { to: '/feed', label: 'Feed', leftIcon: Newspaper },
-  { to: '/chat', label: 'Chat', leftIcon: MessageSquare },
-  { to: '/connections', label: 'Connections', leftIcon: Sparkles },
+  { to: '/feed', labelKey: 'feed.title', leftIcon: Newspaper },
+  { to: '/chat', labelKey: 'chat.title', leftIcon: MessageSquare },
+  { to: '/connections', labelKey: 'connections.title', leftIcon: Sparkles },
 ] as const;
 
 const ACADEMICS_NAV = [
-  { to: '/exams', label: 'Exams & Courses', leftIcon: LibraryBig },
-  { to: '/guide', label: 'Student Guide', leftIcon: MapPin },
+  { to: '/exams', labelKey: 'exams.title', leftIcon: LibraryBig },
+  { to: '/guide', labelKey: 'guide.title', leftIcon: MapPin },
 ] as const;
 
 type UISidebarProps = ComponentProps<'aside'> & {
@@ -49,6 +50,7 @@ const UISidebarBase = ({
   className,
   ...props
 }: UISidebarProps) => {
+  const { t } = useTranslation();
   const toggleLabel = collapsed ? 'Expand sidebar' : 'Collapse sidebar';
 
   return (
@@ -74,8 +76,14 @@ const UISidebarBase = ({
 
       <nav aria-label="Main navigation" className="flex flex-col">
         <div className={sidebarGroupStyles({ collapsed })}>
-          {MAIN_NAV.map((item) => (
-            <UINavItem key={item.to} {...item} count={counts?.[item.to]} collapsed={collapsed} />
+          {MAIN_NAV.map(({ labelKey, ...item }) => (
+            <UINavItem
+              key={item.to}
+              {...item}
+              label={t(labelKey)}
+              count={counts?.[item.to]}
+              collapsed={collapsed}
+            />
           ))}
         </div>
 
@@ -85,8 +93,14 @@ const UISidebarBase = ({
           ) : (
             <span className={sidebarCaptionStyles()}>ACADEMICS</span>
           )}
-          {ACADEMICS_NAV.map((item) => (
-            <UINavItem key={item.to} {...item} count={counts?.[item.to]} collapsed={collapsed} />
+          {ACADEMICS_NAV.map(({ labelKey, ...item }) => (
+            <UINavItem
+              key={item.to}
+              {...item}
+              label={t(labelKey)}
+              count={counts?.[item.to]}
+              collapsed={collapsed}
+            />
           ))}
         </div>
       </nav>
