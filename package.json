@@ -10,7 +10,12 @@
     "typecheck": "tsr generate && tsc --noEmit",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "clean": "rm -rf dist *.tsbuildinfo"
+    "clean": "rm -rf dist *.tsbuildinfo",
+    "format:check": "prettier --check .",
+    "i18n:sync": "i18next-cli extract && i18next-cli types",
+    "i18n:check": "i18next-cli lint && i18next-cli status && i18next-cli types --ci",
+    "check": "bun run format:check && bun run lint && bun run typecheck && bun run i18n:check",
+    "prepare": "husky"
   },
   "dependencies": {
     "@fontsource/plus-jakarta-sans": "^5.3.0",
@@ -42,10 +47,22 @@
     "eslint": "^10.9.0",
     "eslint-plugin-react-hooks": "^7.1.1",
     "globals": "^17.11.0",
+    "husky": "^9.1.7",
+    "i18next-cli": "^1.78.0",
+    "lint-staged": "^17.6.0",
     "prettier": "^3.9.8",
     "prettier-plugin-tailwindcss": "^0.8.1",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.67.0",
     "vite": "^8.3.0"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,css,md}": [
+      "prettier --write"
+    ]
   }
 }

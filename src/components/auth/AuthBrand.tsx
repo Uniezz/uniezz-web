@@ -7,13 +7,14 @@ import {
   Users,
   type LucideIcon,
 } from 'lucide-react';
+import type { ParseKeys } from 'i18next';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 type ContentItem = {
   icon: LucideIcon;
-  topText: string;
-  bottomText: string;
+  topText: ParseKeys;
+  bottomText: ParseKeys;
 };
 
 const CONTENT_ITEMS: ContentItem[] = [
