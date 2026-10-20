@@ -4,6 +4,8 @@ import { RouterProvider, createRouter } from '@tanstack/react-router';
 
 import { routeTree } from './config/router';
 
+import './i18n';
+
 const router = createRouter({ routeTree });
 
 declare module '@tanstack/react-router' {
