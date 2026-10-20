@@ -1,0 +1,66 @@
+{
+  "auth": {
+    "backToUniversities": "",
+    "brand": {
+      "communityText": "",
+      "communityTitle": "",
+      "description": "",
+      "examsText": "",
+      "examsTitle": "",
+      "headline": "",
+      "privacy": "",
+      "verifiedText": "",
+      "verifiedTitle": ""
+    },
+    "login": {
+      "continueWith": "",
+      "notice": "",
+      "subtitle": "",
+      "title": "",
+      "yourUniversity": ""
+    },
+    "otp": {
+      "codeLabel": "",
+      "codesPerHour": "",
+      "codeSubtitle": "",
+      "codeTitle": "",
+      "didntGetIt": "",
+      "emailLabel": "",
+      "emailPlaceholder": "",
+      "emailSubtitle": "",
+      "emailTitle": "",
+      "notice": "",
+      "resend": "",
+      "resendIn": "",
+      "send": "",
+      "verify": ""
+    },
+    "terms": "",
+    "usos": {
+      "notice": "",
+      "open": "",
+      "subtitle": "",
+      "title": ""
+    }
+  },
+  "chat": {
+    "subtitle": "",
+    "title": ""
+  },
+  "connections": {
+    "subtitle": "",
+    "title": ""
+  },
+  "exams": {
+    "subtitle": "",
+    "title": ""
+  },
+  "feed": {
+    "subtitle": "",
+    "title": ""
+  },
+  "guide": {
+    "subtitle": "",
+    "title": ""
+  }
+}
