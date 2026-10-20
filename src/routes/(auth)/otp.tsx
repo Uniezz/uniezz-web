@@ -3,12 +3,14 @@ import { useOtpScreen } from '@/hooks';
 import { UIButton, UIInput, UIText } from '@/ui/components';
 import { createFileRoute } from '@tanstack/react-router';
 import { ArrowLeft, AtSign, Check, Mail, Send, TriangleAlert } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/(auth)/otp')({
   component: OtpPage,
 });
 
 function OtpPage() {
+  const { t } = useTranslation();
   const {
     email,
     onEmailChange,
@@ -40,7 +42,7 @@ function OtpPage() {
         <button type="button" onClick={onBackPress} className="flex items-center gap-2 self-start">
           <ArrowLeft size={16} className="text-secondary" />
           <UIText weight="semibold" color="secondary">
-            Back to universities
+            {t('auth.backToUniversities')}
           </UIText>
         </button>
       }
@@ -59,7 +61,7 @@ function OtpPage() {
             autoComplete="email"
             autoFocus
             iconLeft={AtSign}
-            label="Email"
+            label={t('auth.otp.emailLabel')}
             placeholder={emailPlaceholder}
             text={email}
             onTextChange={onEmailChange}
@@ -75,7 +77,7 @@ function OtpPage() {
             />
             <div className="flex items-center gap-2">
               <UIText size="sm" color="gray">
-                Didn&apos;t get it?
+                {t('auth.otp.didntGetIt')}
               </UIText>
               <button type="button" onClick={onResendPress} disabled={!canResend}>
                 <UIText size="sm" color={canResend ? 'primary' : 'gray'} weight="semibold">
@@ -83,7 +85,7 @@ function OtpPage() {
                 </UIText>
               </button>
               <UIText size="sm" color="gray" className="ml-auto">
-                3 codes per hour
+                {t('auth.otp.codesPerHour')}
               </UIText>
             </div>
           </div>
@@ -103,8 +105,7 @@ function OtpPage() {
           <div className="flex flex-row items-start gap-2.5 rounded-xl bg-ice px-4 py-3">
             <TriangleAlert className="text-blue" size={22} />
             <UIText size="sm" color="secondary" className="min-w-0">
-              Email sign-in confirms your university domain only. Faculty and year of study stay
-              self-declared until your account is linked to USOS or your university directory.
+              {t('auth.otp.notice')}
             </UIText>
           </div>
         )}

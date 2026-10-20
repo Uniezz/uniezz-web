@@ -1,6 +1,7 @@
 import { UIText } from '@/ui/components';
 import { cn } from '@/ui/cn';
 import { useId } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type OtpCodeFieldProps = {
   value: string;
@@ -10,6 +11,7 @@ type OtpCodeFieldProps = {
 };
 
 export const OtpCodeField = ({ value, onChange, cellCount, errorText }: OtpCodeFieldProps) => {
+  const { t } = useTranslation();
   const inputId = useId();
   const errorId = `${inputId}-error`;
   const digits = value.split('');
@@ -44,7 +46,7 @@ export const OtpCodeField = ({ value, onChange, cellCount, errorText }: OtpCodeF
           inputMode="numeric"
           autoComplete="one-time-code"
           autoFocus
-          aria-label="6-digit verification code"
+          aria-label={t('auth.otp.codeLabel')}
           aria-invalid={Boolean(errorText) || undefined}
           aria-describedby={errorText ? errorId : undefined}
         />

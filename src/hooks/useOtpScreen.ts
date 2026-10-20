@@ -4,8 +4,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 export const useOtpScreen = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const form = useForm<OtpSchema>({
     resolver: zodResolver(otpSchema),
@@ -82,20 +84,22 @@ export const useOtpScreen = () => {
     setResendSeconds(OTP_RESEND_SECONDS);
   };
 
-  const topText = isEmailStep ? 'Provide your university email' : 'Check your university inbox';
+  const topText = isEmailStep ? t('auth.otp.emailTitle') : t('auth.otp.codeTitle');
   const bottomText = isEmailStep
-    ? 'We’ll send a six-digit code to this inbox. Use the address your university issued.'
-    : `We sent a six-digit code to ${email}. It expires in 10 minutes.`;
-  const buttonText = isEmailStep ? 'Send code' : 'Verify and continue';
+    ? t('auth.otp.emailSubtitle')
+    : t('auth.otp.codeSubtitle', { email });
+  const buttonText = isEmailStep ? t('auth.otp.send') : t('auth.otp.verify');
   const isButtonDisabled = !isEmailStep && code.length !== CELL_COUNT;
   const resendLabel =
-    resendSeconds > 0 ? `Resend in 0:${String(resendSeconds).padStart(2, '0')}` : 'Resend code';
+    resendSeconds > 0
+      ? t('auth.otp.resendIn', { time: `0:${String(resendSeconds).padStart(2, '0')}` })
+      : t('auth.otp.resend');
 
   return {
     email,
     onEmailChange,
     emailError: errors.email?.message,
-    emailPlaceholder: 'you@university.edu',
+    emailPlaceholder: t('auth.otp.emailPlaceholder'),
     code,
     onCodeChange,
     codeError: errors.code?.message,

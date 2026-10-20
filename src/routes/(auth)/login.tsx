@@ -3,6 +3,7 @@ import { UIButton, UIRow, UIText } from '@/ui/components';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { BadgeCheck, ShieldCheck } from 'lucide-react';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const items = [
   {
@@ -37,6 +38,7 @@ export const Route = createFileRoute('/(auth)/login')({
 });
 
 function LoginPage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [selected, setSelected] = useState(0);
   const selectedItem = items[selected]!;
@@ -48,13 +50,10 @@ function LoginPage() {
   };
 
   return (
-    <AuthPage
-      topText="Sign in to Uniezz"
-      bottomText="Choose your university — you'll finish signing in on its own login page."
-    >
+    <AuthPage topText={t('auth.login.title')} bottomText={t('auth.login.subtitle')}>
       <div className="flex flex-col gap-2.5">
         <UIText color="gray" weight="bold" size="xs">
-          YOUR UNIVERSITY
+          {t('auth.login.yourUniversity')}
         </UIText>
         <div className="flex flex-col gap-1.5">
           {items.map((item, index) => (
@@ -71,14 +70,13 @@ function LoginPage() {
       </div>
       <UIButton className="w-full" bg="gradient" leftIcon={ShieldCheck} onClick={handleContinue}>
         <UIText weight="semibold" color="white">
-          Continue with {selectedItem.bottomText}
+          {t('auth.login.continueWith', { provider: selectedItem.bottomText })}
         </UIText>
       </UIButton>
       <div className="flex flex-row items-start gap-2.5 rounded-xl bg-ice px-4 py-3">
         <BadgeCheck className="text-blue" size={22} />
         <UIText size="sm" color="secondary" className="max-w-110 min-w-0">
-          Only active students of the five Lublin universities can create an account. Staff and
-          alumni accounts are rejected.
+          {t('auth.login.notice')}
         </UIText>
       </div>
       {/* TODO(temp): skip login button  */}

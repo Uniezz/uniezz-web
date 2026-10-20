@@ -1,6 +1,7 @@
 import { UIButton, UIText } from '@/ui/components';
 import { ChevronDown, Globe } from 'lucide-react';
 import { type ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AuthBrand } from './AuthBrand';
 
 type AuthLayoutProps = {
@@ -8,6 +9,8 @@ type AuthLayoutProps = {
 };
 
 export const AuthLayout = ({ children }: AuthLayoutProps) => {
+  const { t } = useTranslation();
+
   return (
     <main className="page">
       <div className="flex h-full w-full">
@@ -25,7 +28,7 @@ export const AuthLayout = ({ children }: AuthLayoutProps) => {
             {children}
           </div>
           <UIText size="sm" color="secondary">
-            By continuing you agree to the Terms of Use and Privacy Policy · GDPR
+            {t('auth.terms')}
           </UIText>
         </div>
       </div>

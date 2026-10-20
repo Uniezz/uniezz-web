@@ -3,18 +3,20 @@ import { startUniversityLogin } from '@/utils';
 import { UIButton, UIText } from '@/ui/components';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { ArrowLeft, BadgeCheck, ShieldCheck } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/(auth)/usos')({
   component: UsosPage,
 });
 
 function UsosPage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   return (
     <AuthPage
-      topText="Continue with UMCS"
-      bottomText="You'll finish signing in on UMCS's own USOS page. Uniezz never sees your password."
+      topText={t('auth.usos.title')}
+      bottomText={t('auth.usos.subtitle')}
       beforeTitle={
         <button
           type="button"
@@ -23,7 +25,7 @@ function UsosPage() {
         >
           <ArrowLeft size={16} className="text-secondary" />
           <UIText weight="semibold" color="secondary">
-            Back to universities
+            {t('auth.backToUniversities')}
           </UIText>
         </button>
       }
@@ -40,13 +42,13 @@ function UsosPage() {
         onClick={startUniversityLogin}
       >
         <UIText weight="semibold" color="white">
-          Open USOS login
+          {t('auth.usos.open')}
         </UIText>
       </UIButton>
       <div className="flex flex-row items-start gap-2.5 rounded-xl bg-ice px-4 py-3">
         <BadgeCheck className="text-blue" size={22} />
         <UIText size="sm" color="secondary" className="min-w-0">
-          UMCS students sign in on USOS. We only receive the identity USOS sends back.
+          {t('auth.usos.notice')}
         </UIText>
       </div>
     </AuthPage>

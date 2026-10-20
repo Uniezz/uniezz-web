@@ -8,6 +8,7 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import { memo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type ContentItem = {
   icon: LucideIcon;
@@ -18,22 +19,24 @@ type ContentItem = {
 const CONTENT_ITEMS: ContentItem[] = [
   {
     icon: ShieldCheck,
-    topText: 'Verified students only',
-    bottomText: 'Every account is checked against the university directory before it goes live.',
+    topText: 'auth.brand.verifiedTitle',
+    bottomText: 'auth.brand.verifiedText',
   },
   {
     icon: Users,
-    topText: 'Feed, chat and connections',
-    bottomText: 'Meet people across UMCS, KUL, Politechnika, Przyrodniczy and WSEI.',
+    topText: 'auth.brand.communityTitle',
+    bottomText: 'auth.brand.communityText',
   },
   {
     icon: LibraryBig,
-    topText: 'Exams and course reviews',
-    bottomText: 'A shared archive of past papers, syllabi and honest professor ratings.',
+    topText: 'auth.brand.examsTitle',
+    bottomText: 'auth.brand.examsText',
   },
 ];
 
 export const AuthBrand = memo(function AuthBrand() {
+  const { t } = useTranslation();
+
   return (
     <div className="flex w-2/5 flex-col justify-between bg-mesh px-14 py-13">
       <div className="flex items-center justify-start gap-3">
@@ -47,11 +50,10 @@ export const AuthBrand = memo(function AuthBrand() {
       <div className="flex flex-col gap-10">
         <div className="flex flex-col gap-4.5">
           <UIText size="extra" weight="bold" color="white">
-            One platform for every student in Lublin.
+            {t('auth.brand.headline')}
           </UIText>
           <UIText color="gray" weight="semibold">
-            Five universities, one account. Sign in with the credentials you already use — your
-            password stays on your university&apos;s own page.
+            {t('auth.brand.description')}
           </UIText>
         </div>
         <div className="flex flex-col items-start justify-center gap-5">
@@ -64,10 +66,10 @@ export const AuthBrand = memo(function AuthBrand() {
                 </div>
                 <div className="flex flex-col">
                   <UIText weight="semibold" color="white">
-                    {item.topText}
+                    {t(item.topText)}
                   </UIText>
                   <UIText color="gray" size="sm">
-                    {item.bottomText}
+                    {t(item.bottomText)}
                   </UIText>
                 </div>
               </div>
@@ -78,7 +80,7 @@ export const AuthBrand = memo(function AuthBrand() {
       <div className="flex flex-row items-center gap-2.5 rounded-xl border border-blue bg-[#FFFFFF0D] px-4 py-3.5">
         <Lock className="text-gray" size={16} />
         <UIText size="sm" color="gray">
-          Uniezz never sees or stores your university password.
+          {t('auth.brand.privacy')}
         </UIText>
       </div>
     </div>
