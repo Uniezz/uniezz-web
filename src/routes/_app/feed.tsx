@@ -14,7 +14,7 @@ function FeedPage() {
       <UITopbar
         title={t('feed.title')}
         subtitle={t('feed.subtitle')}
-        action={{ label: 'Create post', icon: Plus }}
+        action={{ label: t('feed.action'), icon: Plus }}
       />
       <div className="p-8" />
     </>

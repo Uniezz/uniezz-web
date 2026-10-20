@@ -14,6 +14,11 @@ export default interface Resources {
         "verifiedText": "Every account is checked against the university directory before it goes live.",
         "verifiedTitle": "Verified students only"
       },
+      "errors": {
+        "codeInvalid": "Enter the 6-digit code we sent you.",
+        "emailInvalid": "Please, provide correct email address",
+        "emailRequired": "Enter your university email address."
+      },
       "login": {
         "continueWith": "Continue with {{provider}}",
         "notice": "Only active students of the five Lublin universities can create an account. Staff and alumni accounts are rejected.",
@@ -46,24 +51,46 @@ export default interface Resources {
       }
     },
     "chat": {
+      "action": "New group",
       "subtitle": "Direct messages and group chats",
       "title": "Chat"
     },
+    "common": {
+      "appName": "Uniezz"
+    },
     "connections": {
+      "action": "Edit preferences",
       "subtitle": "Meet students across all five universities",
       "title": "Connections"
     },
     "exams": {
+      "action": "Upload material",
       "subtitle": "Past papers, course reviews and professor ratings",
       "title": "Exams & Courses"
     },
     "feed": {
+      "action": "Create post",
       "subtitle": "What's happening across Lublin",
       "title": "Feed"
     },
     "guide": {
+      "action": "Suggest a place",
       "subtitle": "Everything you need to live in Lublin",
       "title": "Student Guide"
+    },
+    "sidebar": {
+      "academics": "ACADEMICS",
+      "collapse": "Collapse sidebar",
+      "expand": "Expand sidebar",
+      "mainNavigation": "Main navigation",
+      "settings": "Settings"
+    },
+    "topbar": {
+      "changeLanguage": "Change language",
+      "languageCode": "EN",
+      "notifications": "Notifications",
+      "search": "Search",
+      "searchPlaceholder": "Search posts, people, courses…"
     }
   }
 }

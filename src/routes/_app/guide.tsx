@@ -14,7 +14,7 @@ function GuidePage() {
       <UITopbar
         title={t('guide.title')}
         subtitle={t('guide.subtitle')}
-        action={{ label: 'Suggest a place', icon: MapPin }}
+        action={{ label: t('guide.action'), icon: MapPin }}
       />
       <div className="p-8" />
     </>

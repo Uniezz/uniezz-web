@@ -14,7 +14,7 @@ function ExamsPage() {
       <UITopbar
         title={t('exams.title')}
         subtitle={t('exams.subtitle')}
-        action={{ label: 'Upload material', icon: Paperclip }}
+        action={{ label: t('exams.action'), icon: Paperclip }}
       />
       <div className="p-8" />
     </>

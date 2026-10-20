@@ -1,5 +1,6 @@
 import { Bell, ChevronDown, Globe, type LucideIcon, Search } from 'lucide-react';
 import { type ComponentProps } from 'react';
+import { useTranslation } from 'react-i18next';
 import { cn } from '../../cn';
 import { UIButton } from '../UIButton';
 import { UIText } from '../UIText';
@@ -18,6 +19,8 @@ type UITopbarProps = ComponentProps<'header'> & {
 };
 
 export const UITopbar = ({ title, subtitle, action, className, ...props }: UITopbarProps) => {
+  const { t } = useTranslation();
+
   return (
     <header className={cn(topbarStyles(), className)} {...props}>
       <div className="flex min-w-0 flex-col gap-px">
@@ -30,8 +33,8 @@ export const UITopbar = ({ title, subtitle, action, className, ...props }: UITop
         <Search className="shrink-0 text-muted" size={16} />
         <input
           type="text"
-          aria-label="Search"
-          placeholder="Search posts, people, courses…"
+          aria-label={t('topbar.search')}
+          placeholder={t('topbar.searchPlaceholder')}
           className="min-w-0 flex-1 bg-transparent text-sm text-primary outline-none placeholder:text-muted"
         />
       </label>
@@ -41,18 +44,18 @@ export const UITopbar = ({ title, subtitle, action, className, ...props }: UITop
       {/* TODO: language menu when i18n will be ready */}
       <button
         type="button"
-        aria-label="Change language"
+        aria-label={t('topbar.changeLanguage')}
         className={topbarControlStyles({ kind: 'chip' })}
       >
         <Globe className="text-secondary" size={16} />
-        <span className="text-sm font-bold text-primary">EN</span>
+        <span className="text-sm font-bold text-primary">{t('topbar.languageCode')}</span>
         <ChevronDown className="text-muted" size={14} />
       </button>
 
       {/* TODO: notifications */}
       <button
         type="button"
-        aria-label="Notifications"
+        aria-label={t('topbar.notifications')}
         className={topbarControlStyles({ kind: 'icon' })}
       >
         <Bell className="text-secondary" size={17} />

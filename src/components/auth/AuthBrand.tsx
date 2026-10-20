@@ -45,7 +45,7 @@ export const AuthBrand = memo(function AuthBrand() {
           <GraduationCapIcon size={22} className="text-white-primary" />
         </div>
         <UIText color="white" size="xl" weight="bold">
-          Uniezz
+          {t('common.appName')}
         </UIText>
       </div>
       <div className="flex flex-col gap-10">

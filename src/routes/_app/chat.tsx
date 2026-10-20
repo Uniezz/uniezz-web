@@ -14,7 +14,7 @@ function ChatPage() {
       <UITopbar
         title={t('chat.title')}
         subtitle={t('chat.subtitle')}
-        action={{ label: 'New group', icon: Plus }}
+        action={{ label: t('chat.action'), icon: Plus }}
       />
       <div className="p-8" />
     </>

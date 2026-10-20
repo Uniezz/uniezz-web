@@ -51,7 +51,7 @@ const UISidebarBase = ({
   ...props
 }: UISidebarProps) => {
   const { t } = useTranslation();
-  const toggleLabel = collapsed ? 'Expand sidebar' : 'Collapse sidebar';
+  const toggleLabel = collapsed ? t('sidebar.expand') : t('sidebar.collapse');
 
   return (
     <aside className={cn(sidebarStyles({ collapsed }), className)} {...props}>
@@ -60,7 +60,9 @@ const UISidebarBase = ({
           <GraduationCap className="text-ice" size={19} />
         </div>
         {collapsed ? null : (
-          <span className="text-[21px] font-bold tracking-[-0.3px] text-ice">Uniezz</span>
+          <span className="text-[21px] font-bold tracking-[-0.3px] text-ice">
+            {t('common.appName')}
+          </span>
         )}
         <button
           type="button"
@@ -74,7 +76,7 @@ const UISidebarBase = ({
         </button>
       </div>
 
-      <nav aria-label="Main navigation" className="flex flex-col">
+      <nav aria-label={t('sidebar.mainNavigation')} className="flex flex-col">
         <div className={sidebarGroupStyles({ collapsed })}>
           {MAIN_NAV.map(({ labelKey, ...item }) => (
             <UINavItem
@@ -91,7 +93,7 @@ const UISidebarBase = ({
           {collapsed ? (
             <div className="mx-2 my-1.5 h-px bg-blue-light" />
           ) : (
-            <span className={sidebarCaptionStyles()}>ACADEMICS</span>
+            <span className={sidebarCaptionStyles()}>{t('sidebar.academics')}</span>
           )}
           {ACADEMICS_NAV.map(({ labelKey, ...item }) => (
             <UINavItem
@@ -120,7 +122,7 @@ const UISidebarBase = ({
             </div>
             <button
               type="button"
-              aria-label="Settings"
+              aria-label={t('sidebar.settings')}
               onClick={onSettingsClick}
               className="shrink-0 rounded-md text-navy-muted outline-none hover:text-ice focus-visible:ring-2 focus-visible:ring-ice"
             >

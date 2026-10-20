@@ -19,7 +19,7 @@ export const AuthLayout = ({ children }: AuthLayoutProps) => {
           <div className="flex w-full max-w-120 justify-end">
             <UIButton leftIconColor="gray" leftIcon={Globe} bg="secondary" size="pill">
               <UIText weight="semibold" size="sm">
-                EN
+                {t('topbar.languageCode')}
               </UIText>
               <ChevronDown className="text-gray" size={14} />
             </UIButton>

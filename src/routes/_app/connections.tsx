@@ -14,7 +14,7 @@ function ConnectionsPage() {
       <UITopbar
         title={t('connections.title')}
         subtitle={t('connections.subtitle')}
-        action={{ label: 'Edit preferences', icon: Pencil }}
+        action={{ label: t('connections.action'), icon: Pencil }}
       />
       <div className="p-8" />
     </>

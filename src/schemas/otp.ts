@@ -1,7 +1,8 @@
+import i18n from 'i18next';
 import * as z from 'zod';
 
 const emailError = (iss: { input: unknown }) =>
-  !iss.input ? 'Enter your university email address.' : 'Please, provide correct email address';
+  !iss.input ? i18n.t('auth.errors.emailRequired') : i18n.t('auth.errors.emailInvalid');
 
 export const emailOtpSchema = z.object({
   step: z.literal('email'),
@@ -13,7 +14,7 @@ export const codeOtpSchema = z.object({
   step: z.literal('code'),
   email: z.email({ error: emailError }),
   code: z.string().regex(/^\d{6}$/, {
-    error: 'Enter the 6-digit code we sent you.',
+    error: i18n.t('auth.errors.codeInvalid'),
   }),
 });
 
