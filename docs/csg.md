@@ -1,17 +1,18 @@
 # Coding Style Guide
+
 This document outlines coding practices, patterns, and conventions for React Native applications with TypeScript. It serves as a reference for maintaining consistency and quality across mobile development projects.
 
 ## Table of Contents
 
- 1. [Project Structure](#project-structure)
- 2. [TypeScript Patterns](#typescript-patterns)
- 3. [React Component Patterns](#react-component-patterns)
- 4. [Custom Hooks Patterns](#custom-hooks-patterns)
- 5. [API Layer Patterns](#api-layer-patterns)
- 6. [State Management](#state-management)
- 7. [Styling Patterns](#styling-patterns)
- 8. [Error Handling](#error-handling)
- 9. [Performance Considerations](#performance-considerations)
+1.  [Project Structure](#project-structure)
+2.  [TypeScript Patterns](#typescript-patterns)
+3.  [React Component Patterns](#react-component-patterns)
+4.  [Custom Hooks Patterns](#custom-hooks-patterns)
+5.  [API Layer Patterns](#api-layer-patterns)
+6.  [State Management](#state-management)
+7.  [Styling Patterns](#styling-patterns)
+8.  [Error Handling](#error-handling)
+9.  [Performance Considerations](#performance-considerations)
 10. [Code Organization](#code-organization)
 
 ## Project Structure
@@ -36,11 +37,11 @@ src/
 
 ### File Naming Conventions
 
-* **Components**: PascalCase (e.g., `UIButton.tsx`, `UserProfile.tsx`)
-* **Hooks**: camelCase starting with `use` (e.g., `useAuth.tsx`, `useData.ts`)
-* **Utilities**: camelCase (e.g., `validations.ts`, `formatters.ts`)
-* **Types**: camelCase (e.g., `database.types.ts`)
-* **Constants**: camelCase (e.g., `config.ts`)
+- **Components**: PascalCase (e.g., `UIButton.tsx`, `UserProfile.tsx`)
+- **Hooks**: camelCase starting with `use` (e.g., `useAuth.tsx`, `useData.ts`)
+- **Utilities**: camelCase (e.g., `validations.ts`, `formatters.ts`)
+- **Types**: camelCase (e.g., `database.types.ts`)
+- **Constants**: camelCase (e.g., `config.ts`)
 
 ## TypeScript Patterns
 
@@ -57,14 +58,14 @@ export type CreateItemData = {
   externalLink?: string;
   tags: string[];
   imageUris: string[];
-  visibility: "public" | "private";
+  visibility: 'public' | 'private';
 };
 
 export const createItem = async (
   userId: string,
   data: CreateItemData,
   tagIds: string[],
-  tags: Omit<DatabaseTable<"tags">, "created_at">[],
+  tags: Omit<DatabaseTable<'tags'>, 'created_at'>[],
 ): Promise<string> => {
   // Implementation
 };
@@ -80,11 +81,11 @@ export type UpdateItemData = {
   categoryId: string;
   externalLink?: string;
   tags: string[];
-  visibility: "public" | "private";
+  visibility: 'public' | 'private';
 };
 
 // ✅ Good: Using Omit for excluding properties
-tags: Omit < DatabaseTable<"tags">, "created_at" > [];
+tags: (Omit < DatabaseTable<'tags'>, 'created_at' > []);
 ```
 
 ### Type Guards and Validation
@@ -93,8 +94,7 @@ Implement type guards for runtime type checking:
 
 ```typescript
 // ✅ Good: Type guard function
-const UUID_REGEX =
-  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 export const isValidUUID = (uuid: string): boolean => {
   return UUID_REGEX.test(uuid);
@@ -187,8 +187,7 @@ export function UIText({
   isLoading = false,
   skeletonWidth,
   ...props
-}: { isLoading?: boolean; skeletonWidth?: number } & TextProps &
-  UnistylesVariants<typeof styles>) {
+}: { isLoading?: boolean; skeletonWidth?: number } & TextProps & UnistylesVariants<typeof styles>) {
   // Implementation
 }
 ```
@@ -202,11 +201,11 @@ Custom hooks should follow consistent naming and structure patterns:
 ```typescript
 // ✅ Good: Hook with clear purpose and error handling
 export function useSignUp() {
-  const { t } = useTranslation("app", { keyPrefix: "auth" });
+  const { t } = useTranslation('app', { keyPrefix: 'auth' });
   const { setUsername } = useInitialUsernamePersist();
 
   return useMutation({
-    mutationKey: ["signUp"],
+    mutationKey: ['signUp'],
     mutationFn: async ({
       username,
       ...params
@@ -216,13 +215,10 @@ export function useSignUp() {
     },
     onSuccess: () => {
       Toast.show({
-        text1: t(
-          "signUpSuccess",
-          "Sign up successful, please check your email for verification",
-        ),
-        type: "success",
+        text1: t('signUpSuccess', 'Sign up successful, please check your email for verification'),
+        type: 'success',
       });
-      router.navigate("/signIn");
+      router.navigate('/signIn');
     },
   });
 }
@@ -236,10 +232,10 @@ Use consistent patterns for data fetching hooks:
 // ✅ Good: Consistent query hook pattern
 export const useItemById = (itemId: string | undefined) => {
   return useQuery({
-    queryKey: ["items", itemId],
+    queryKey: ['items', itemId],
     queryFn: () => {
       if (!itemId) {
-        throw new Error("Item ID is required");
+        throw new Error('Item ID is required');
       }
       return getItemById(itemId);
     },
@@ -255,34 +251,34 @@ Follow consistent patterns for mutation hooks with proper error handling:
 ```typescript
 // ✅ Good: Mutation hook with comprehensive error handling
 export const useDeleteItem = ({ onSuccess }: { onSuccess?: VoidFunction }) => {
-  const { t } = useTranslation("app", { keyPrefix: "components" });
+  const { t } = useTranslation('app', { keyPrefix: 'components' });
   const queryClient = useQueryClient();
   const { session } = useSession();
 
   return useMutation({
-    mutationKey: ["deleteItem", session?.user.id],
+    mutationKey: ['deleteItem', session?.user.id],
     mutationFn: async (itemId: string) => {
       if (!session?.user.id) {
-        throw new Error("User ID is required");
+        throw new Error('User ID is required');
       }
       return await cleanupItem(itemId, session.user.id);
     },
     onSuccess: (_, itemId) => {
       // Cache invalidation
-      queryClient.removeQueries({ queryKey: ["items", itemId] });
-      queryClient.invalidateQueries({ queryKey: ["items"] });
+      queryClient.removeQueries({ queryKey: ['items', itemId] });
+      queryClient.invalidateQueries({ queryKey: ['items'] });
 
       Toast.show({
-        text1: t("itemDeleted", "Item deleted successfully!"),
-        type: "success",
+        text1: t('itemDeleted', 'Item deleted successfully!'),
+        type: 'success',
       });
       onSuccess?.();
     },
     onError: (error) => {
       Toast.show({
-        text1: t("error", "Error"),
-        text2: error.message || t("deleteFailed", "Failed to delete item"),
-        type: "error",
+        text1: t('error', 'Error'),
+        text2: error.message || t('deleteFailed', 'Failed to delete item'),
+        type: 'error',
       });
     },
   });
@@ -298,10 +294,7 @@ API query functions should be pure and focused on data fetching:
 ```typescript
 // ✅ Good: Pure query function with proper error handling
 export const getItemById = async (itemId: string) =>
-  executeQuery(
-    async () =>
-      await supabase.from("items").select("*").eq("id", itemId).single(),
-  );
+  executeQuery(async () => await supabase.from('items').select('*').eq('id', itemId).single());
 ```
 
 ### Transaction Handling
@@ -318,34 +311,30 @@ export const assignItemToCategory = async (
 ) => {
   // Get current state
   const { data: currentEntry, error: fetchError } = await supabase
-    .from("item_categories")
-    .select("id, position")
-    .eq("item_id", itemId)
-    .eq("category_id", currentCategoryId)
+    .from('item_categories')
+    .select('id, position')
+    .eq('item_id', itemId)
+    .eq('category_id', currentCategoryId)
     .single();
 
   if (fetchError) {
-    throw new Error(
-      `Failed to find current category assignment: ${fetchError.message}`,
-    );
+    throw new Error(`Failed to find current category assignment: ${fetchError.message}`);
   }
 
   // Perform operations with rollback capability
   const { error: deleteError } = await supabase
-    .from("item_categories")
+    .from('item_categories')
     .delete()
-    .eq("item_id", itemId)
-    .eq("category_id", currentCategoryId);
+    .eq('item_id', itemId)
+    .eq('category_id', currentCategoryId);
 
   if (deleteError) {
-    throw new Error(
-      `Failed to remove from current category: ${deleteError.message}`,
-    );
+    throw new Error(`Failed to remove from current category: ${deleteError.message}`);
   }
 
   // Insert with rollback
   const { data: newEntry, error: insertError } = await supabase
-    .from("item_categories")
+    .from('item_categories')
     .insert({
       item_id: itemId,
       category_id: newCategoryId,
@@ -357,7 +346,7 @@ export const assignItemToCategory = async (
 
   if (insertError) {
     // Rollback: restore the original entry
-    await supabase.from("item_categories").insert({
+    await supabase.from('item_categories').insert({
       item_id: itemId,
       category_id: currentCategoryId,
       position: currentEntry.position,
@@ -386,7 +375,7 @@ export const executeQuery = async <T>(
     }
     return data;
   } catch (error) {
-    console.error("Query execution failed:", error);
+    console.error('Query execution failed:', error);
     throw error;
   }
 };
@@ -434,16 +423,16 @@ Configure React Query with proper persistence and network handling:
 
 ```typescript
 // ✅ Good: Query client with persistence and network awareness
-const storage = new MMKV({ id: "queries" });
+const storage = new MMKV({ id: 'queries' });
 
-function createMMKVPersister(key = "REACT_QUERY_CACHE"): Persister {
+function createMMKVPersister(key = 'REACT_QUERY_CACHE'): Persister {
   return {
     persistClient: async (client) => {
       try {
         const data = JSON.stringify(client);
         storage.set(key, data);
       } catch (err) {
-        console.error("Failed to persist client:", err);
+        console.error('Failed to persist client:', err);
       }
     },
     restoreClient: async () => {
@@ -451,7 +440,7 @@ function createMMKVPersister(key = "REACT_QUERY_CACHE"): Persister {
         const cacheString = storage.getString(key);
         return cacheString ? JSON.parse(cacheString) : undefined;
       } catch (err) {
-        console.error("Failed to restore client:", err);
+        console.error('Failed to restore client:', err);
         return undefined;
       }
     },
@@ -459,7 +448,7 @@ function createMMKVPersister(key = "REACT_QUERY_CACHE"): Persister {
       try {
         storage.delete(key);
       } catch (err) {
-        console.error("Failed to remove client:", err);
+        console.error('Failed to remove client:', err);
       }
     },
   };
@@ -482,8 +471,8 @@ Use a centralized theme system with consistent scaling:
 // ✅ Good: Theme-based styling with variants
 const styles = StyleSheet.create((theme) => ({
   button: (disabled: boolean = false) => ({
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: theme.ms(8),
     opacity: disabled ? 0.5 : 1,
     variants: {
@@ -532,15 +521,14 @@ Use theme-based scaling for responsive design:
 // ✅ Good: Responsive scaling utilities
 export const lightTheme = {
   colors: {
-    black: "#000000",
-    white: "#F8FAF7",
-    error: "#FF3F6C",
-    primary: "#907AFE",
+    black: '#000000',
+    white: '#F8FAF7',
+    error: '#FF3F6C',
+    primary: '#907AFE',
     // ... more colors
   },
-  isIOS: Platform.OS === "ios",
-  safeBottomInset: (inset: number) =>
-    Platform.OS === "ios" ? inset : inset + vs(16),
+  isIOS: Platform.OS === 'ios',
+  safeBottomInset: (inset: number) => (Platform.OS === 'ios' ? inset : inset + vs(16)),
   getHexColorWithOpacity,
   s,
   ms,
@@ -592,10 +580,10 @@ Implement consistent error handling across the application:
 ```typescript
 // ✅ Good: Consistent error handling in mutations
 export const useGoogleAuth = () => {
-  const { t } = useTranslation("app", { keyPrefix: "auth" });
+  const { t } = useTranslation('app', { keyPrefix: 'auth' });
 
   return useMutation({
-    mutationKey: ["googleSignIn"],
+    mutationKey: ['googleSignIn'],
     mutationFn: async () => {
       try {
         await GoogleSignin.hasPlayServices();
@@ -603,37 +591,34 @@ export const useGoogleAuth = () => {
 
         if (userInfo.data?.idToken) {
           const data = await signInWithProvider({
-            provider: "google",
+            provider: 'google',
             token: userInfo.data.idToken,
           });
           return data;
         } else {
           Toast.show({
-            type: "warning",
-            text1: t("signInCancelled", "Sign in cancelled"),
+            type: 'warning',
+            text1: t('signInCancelled', 'Sign in cancelled'),
           });
         }
       } catch (error) {
-        const code = get(error, "code");
+        const code = get(error, 'code');
         if (code) {
           switch (code) {
             case statusCodes.SIGN_IN_CANCELLED:
               Toast.show({
-                type: "warning",
-                text1: t("signInCancelled", "Sign in cancelled"),
+                type: 'warning',
+                text1: t('signInCancelled', 'Sign in cancelled'),
               });
               break;
             case statusCodes.IN_PROGRESS:
               Toast.show({
-                type: "warning",
-                text1: t(
-                  "signInAlreadyInProgress",
-                  "Sign in already in progress",
-                ),
+                type: 'warning',
+                text1: t('signInAlreadyInProgress', 'Sign in already in progress'),
               });
               break;
             case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
-              throw new Error("Play services not available or outdated");
+              throw new Error('Play services not available or outdated');
             default:
               throw error;
           }
@@ -656,20 +641,20 @@ export const usernameSchema = z
   .string()
   .min(3, {
     message: i18next.t(
-      "app:validation.usernameMinLength",
-      "Username must be at least 3 characters",
+      'app:validation.usernameMinLength',
+      'Username must be at least 3 characters',
     ),
   })
   .max(32, {
     message: i18next.t(
-      "app:validation.usernameMaxLength",
-      "Username must be at most 32 characters",
+      'app:validation.usernameMaxLength',
+      'Username must be at most 32 characters',
     ),
   })
   .regex(/^[a-zA-Z0-9 _]+$/, {
     message: i18next.t(
-      "app:validation.usernameFormat",
-      "Username can only contain letters, numbers, spaces, underscores, and underscores",
+      'app:validation.usernameFormat',
+      'Username can only contain letters, numbers, spaces, underscores, and underscores',
     ),
   })
   .transform(normalizeUsername);
@@ -734,15 +719,15 @@ export const useUserSavedItemsPreview = (userId?: string) => {
   const userIdToUse = userId || session?.user.id;
 
   return useQuery({
-    queryKey: ["items", "saved", userIdToUse],
+    queryKey: ['items', 'saved', userIdToUse],
     queryFn: async () => {
       if (!userIdToUse) {
-        throw new Error("User ID is required");
+        throw new Error('User ID is required');
       }
       return await getUserSavedItemsPreview(userIdToUse);
     },
     enabled: !!userIdToUse,
-    staleTime: dayjs.duration(5, "minutes").asMilliseconds(),
+    staleTime: dayjs.duration(5, 'minutes').asMilliseconds(),
   });
 };
 ```
@@ -756,14 +741,14 @@ Organize imports consistently:
 ```typescript
 // ✅ Good: Organized imports
 // 1. External libraries
-import { useCallback, useMemo, useState } from "react";
-import { View, ViewStyle } from "react-native";
-import { StyleSheet, UnistylesVariants } from "react-native-unistyles";
+import { useCallback, useMemo, useState } from 'react';
+import { View, ViewStyle } from 'react-native';
+import { StyleSheet, UnistylesVariants } from 'react-native-unistyles';
 
 // 2. Internal utilities and components
-import { UILoader } from "./UILoader";
-import { UIPressable } from "./UIPressable";
-import { UIText } from "./UIText";
+import { UILoader } from './UILoader';
+import { UIPressable } from './UIPressable';
+import { UIText } from './UIText';
 ```
 
 ### Function Organization
@@ -824,17 +809,16 @@ Maintain consistent file structure within components:
 
 ## Best Practices Summary
 
- 1. **Type Safety**: Always use TypeScript with explicit types
- 2. **Error Handling**: Implement consistent error handling patterns
- 3. **Performance**: Use memoization and optimization techniques appropriately
- 4. **Consistency**: Follow established patterns throughout the codebase
- 5. **Maintainability**: Write clear, self-documenting code
- 6. **Testing**: Structure code to be easily testable
- 7. **Accessibility**: Consider accessibility in component design
- 8. **Internationalization**: Use i18n for all user-facing text
- 9. **Performance**: Optimize for mobile performance
+1.  **Type Safety**: Always use TypeScript with explicit types
+2.  **Error Handling**: Implement consistent error handling patterns
+3.  **Performance**: Use memoization and optimization techniques appropriately
+4.  **Consistency**: Follow established patterns throughout the codebase
+5.  **Maintainability**: Write clear, self-documenting code
+6.  **Testing**: Structure code to be easily testable
+7.  **Accessibility**: Consider accessibility in component design
+8.  **Internationalization**: Use i18n for all user-facing text
+9.  **Performance**: Optimize for mobile performance
 10. **Code Organization**: Maintain clear separation of concerns
-
 
 ## React 19.2 Patterns
 
@@ -844,8 +828,8 @@ These patterns target **React 19.2** and are scaffolded by `create-madis-app` un
 
 Enable the React Compiler for every app (Expo: `experiments.reactCompiler: true` in `app.json`). It auto-memoizes components and hook results, so:
 
-* **Don't** reach for `useMemo` / `useCallback` / `React.memo` by default — let the compiler handle memoization. Add them back only when profiling proves a need.
-* **Do** keep following the Rules of Hooks and keep render functions pure — the compiler relies on them.
+- **Don't** reach for `useMemo` / `useCallback` / `React.memo` by default — let the compiler handle memoization. Add them back only when profiling proves a need.
+- **Do** keep following the Rules of Hooks and keep render functions pure — the compiler relies on them.
 
 ### Screen-level loading & error: `<Suspense>` + Error Boundary
 
@@ -874,9 +858,9 @@ export default withSuspense(ProfileScreen, { onReset: resetUserResource });
 
 **Rule of thumb:**
 
-* Use `withSuspense` at the **screen/route level** — its fallbacks (`UILoadingScreen` / `UIErrorScreen`) take over the entire screen.
-* Small **widgets** that shouldn't blank out the whole screen should manage their **own inline** loading/error UI instead of suspending up to the screen boundary.
-* This replaces the old per-screen ladder:
+- Use `withSuspense` at the **screen/route level** — its fallbacks (`UILoadingScreen` / `UIErrorScreen`) take over the entire screen.
+- Small **widgets** that shouldn't blank out the whole screen should manage their **own inline** loading/error UI instead of suspending up to the screen boundary.
+- This replaces the old per-screen ladder:
 
 ```typescript
 // ❌ Avoid: imperative loading/error branches in every data screen
@@ -937,12 +921,12 @@ export function NameForm() {
 // ✅ Good: only roomId re-subscribes; the handler still sees the latest `muted`
 function useRoom(roomId: string, muted: boolean) {
   const onConnected = useEffectEvent(() => {
-    showToast(muted ? "connected (muted)" : "connected");
+    showToast(muted ? 'connected (muted)' : 'connected');
   });
 
   useEffect(() => {
     const connection = connect(roomId);
-    connection.on("connected", () => onConnected());
+    connection.on('connected', () => onConnected());
     return () => connection.disconnect();
   }, [roomId]); // `muted` is intentionally NOT a dependency
 }

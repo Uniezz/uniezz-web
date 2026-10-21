@@ -1,4 +1,3 @@
-import { useNavigate } from '@tanstack/react-router';
 import { UIButton, UIText } from '@/ui/components';
 import { AuthPage } from './AuthPage';
 
@@ -7,15 +6,13 @@ type FinishLoginPageProps = {
 };
 
 export function FinishLoginPage({ error }: FinishLoginPageProps) {
-  const navigate = useNavigate();
-
   return (
     <AuthPage
       topText={error ? 'Sign-in failed' : 'Finishing sign-in'}
       bottomText={error || 'Please wait while we finish your USOS sign-in.'}
     >
       {error ? (
-        <UIButton onClick={() => navigate({ to: '/login' })}>
+        <UIButton navigateTo="/login">
           <UIText>Back to universities</UIText>
         </UIButton>
       ) : null}

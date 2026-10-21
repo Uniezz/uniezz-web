@@ -8,20 +8,20 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './../routes/__root'
-import { Route as IndexRouteImport } from './../routes/index'
-import { Route as authRouteRouteImport } from './../routes/(auth)/route'
-import { Route as AppRouteImport } from './../routes/_app'
-import { Route as authFinishRouteImport } from './../routes/(auth)/finish'
-import { Route as authLoginRouteImport } from './../routes/(auth)/login'
-import { Route as authOtpRouteImport } from './../routes/(auth)/otp'
-import { Route as AppChatRouteImport } from './../routes/_app/chat'
-import { Route as AppConnectionsRouteImport } from './../routes/_app/connections'
-import { Route as AppExamsRouteImport } from './../routes/_app/exams'
-import { Route as AppFeedRouteImport } from './../routes/_app/feed'
-import { Route as AppGuideRouteImport } from './../routes/_app/guide'
-import { Route as AuthCallbackRouteImport } from './../routes/auth/callback'
-import { Route as AuthDoneRouteImport } from './../routes/auth/done'
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as authRouteRouteImport } from './routes/(auth)/route'
+import { Route as AppRouteImport } from './routes/_app'
+import { Route as authFinishRouteImport } from './routes/(auth)/finish'
+import { Route as authLoginRouteImport } from './routes/(auth)/login'
+import { Route as authOtpRouteImport } from './routes/(auth)/otp'
+import { Route as AppChatRouteImport } from './routes/_app/chat'
+import { Route as AppConnectionsRouteImport } from './routes/_app/connections'
+import { Route as AppExamsRouteImport } from './routes/_app/exams'
+import { Route as AppFeedRouteImport } from './routes/_app/feed'
+import { Route as AppGuideRouteImport } from './routes/_app/guide'
+import { Route as AuthCallbackRouteImport } from './routes/auth/callback'
+import { Route as AuthDoneRouteImport } from './routes/auth/done'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
