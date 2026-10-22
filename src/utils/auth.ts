@@ -3,7 +3,7 @@ import { env } from '@/schemas/env';
 
 type UsosQuery = NonNullable<paths['/auth/usos/start']['get']['parameters']['query']>;
 
-export function startUniversityLogin(university: UsosQuery['university'] = 'umcs') {
+export function startUniversityLogin(university: UsosQuery['university']) {
   const url = new URL('/auth/usos/start', env.VITE_API_URL);
   url.searchParams.set('university', university);
   url.searchParams.set('platform', 'web');

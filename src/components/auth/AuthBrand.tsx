@@ -50,7 +50,7 @@ export const AuthBrand = memo(function AuthBrand() {
             One platform for every student in Lublin.
           </UIText>
           <UIText color="gray" weight="semibold">
-            Five universities, one account. Sign in with the credentials you already use — your
+            Lublin universities, one account. Sign in with the credentials you already use — your
             password stays on your university&apos;s own page.
           </UIText>
         </div>

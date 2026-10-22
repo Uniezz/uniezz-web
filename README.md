@@ -24,6 +24,6 @@ App runs at http://localhost:7711. Development uses the staging API by default.
 
 Set the API origins in ignored `.env.staging.local` and `.env.production.local` files, following `.env.example`. Vite selects them through the staging and production modes. Schema commands fetch from the selected remote API.
 
-USOS returns to `/auth/done`. The backend's `APP_WEB_URL` must be the web app's origin (for local development, `http://localhost:7711`), and its CORS origins must include that origin. The staging backend currently defaults to `http://localhost:3000` if `APP_WEB_URL` is unset.
+Local development sends API requests through Vite's `/api` proxy, so the staging API does not need a CORS entry for `localhost`. USOS returns to `/auth/done`; the backend's `APP_WEB_URL` must be the web app's origin (for local development, `http://localhost:7711`). The staging backend currently defaults to `http://localhost:3000` if `APP_WEB_URL` is unset. Deployed web origins still need backend CORS access.
 
 See [Coding Style Guide](docs/csg.md) for project conventions.

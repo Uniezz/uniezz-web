@@ -3,7 +3,9 @@ import createQueryClient from 'openapi-react-query';
 import type { paths } from '@/@types/schema';
 import { env } from '@/schemas/env';
 
-export const api = createClient<paths>({ baseUrl: env.VITE_API_URL });
+export const api = createClient<paths>({
+  baseUrl: import.meta.env.DEV ? '/api' : env.VITE_API_URL,
+});
 
 api.use({
   onRequest({ request, schemaPath }) {
