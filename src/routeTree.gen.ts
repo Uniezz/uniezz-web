@@ -8,18 +8,20 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './../routes/__root'
-import { Route as IndexRouteImport } from './../routes/index'
-import { Route as authRouteRouteImport } from './../routes/(auth)/route'
-import { Route as AppRouteImport } from './../routes/_app'
-import { Route as authLoginRouteImport } from './../routes/(auth)/login'
-import { Route as authOtpRouteImport } from './../routes/(auth)/otp'
-import { Route as authUsosRouteImport } from './../routes/(auth)/usos'
-import { Route as AppChatRouteImport } from './../routes/_app/chat'
-import { Route as AppConnectionsRouteImport } from './../routes/_app/connections'
-import { Route as AppExamsRouteImport } from './../routes/_app/exams'
-import { Route as AppFeedRouteImport } from './../routes/_app/feed'
-import { Route as AppGuideRouteImport } from './../routes/_app/guide'
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as authRouteRouteImport } from './routes/(auth)/route'
+import { Route as AppRouteImport } from './routes/_app'
+import { Route as authFinishRouteImport } from './routes/(auth)/finish'
+import { Route as authLoginRouteImport } from './routes/(auth)/login'
+import { Route as authOtpRouteImport } from './routes/(auth)/otp'
+import { Route as AppChatRouteImport } from './routes/_app/chat'
+import { Route as AppConnectionsRouteImport } from './routes/_app/connections'
+import { Route as AppExamsRouteImport } from './routes/_app/exams'
+import { Route as AppFeedRouteImport } from './routes/_app/feed'
+import { Route as AppGuideRouteImport } from './routes/_app/guide'
+import { Route as AuthCallbackRouteImport } from './routes/auth/callback'
+import { Route as AuthDoneRouteImport } from './routes/auth/done'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,6 +36,11 @@ const AppRoute = AppRouteImport.update({
   id: '/_app',
   getParentRoute: () => rootRouteImport,
 } as any)
+const authFinishRoute = authFinishRouteImport.update({
+  id: '/finish',
+  path: '/finish',
+  getParentRoute: () => authRouteRoute,
+} as any)
 const authLoginRoute = authLoginRouteImport.update({
   id: '/login',
   path: '/login',
@@ -42,11 +49,6 @@ const authLoginRoute = authLoginRouteImport.update({
 const authOtpRoute = authOtpRouteImport.update({
   id: '/otp',
   path: '/otp',
-  getParentRoute: () => authRouteRoute,
-} as any)
-const authUsosRoute = authUsosRouteImport.update({
-  id: '/usos',
-  path: '/usos',
   getParentRoute: () => authRouteRoute,
 } as any)
 const AppChatRoute = AppChatRouteImport.update({
@@ -74,85 +76,109 @@ const AppGuideRoute = AppGuideRouteImport.update({
   path: '/guide',
   getParentRoute: () => AppRoute,
 } as any)
+const AuthCallbackRoute = AuthCallbackRouteImport.update({
+  id: '/auth/callback',
+  path: '/auth/callback',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthDoneRoute = AuthDoneRouteImport.update({
+  id: '/auth/done',
+  path: '/auth/done',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/finish': typeof authFinishRoute
   '/login': typeof authLoginRoute
   '/otp': typeof authOtpRoute
-  '/usos': typeof authUsosRoute
   '/chat': typeof AppChatRoute
   '/connections': typeof AppConnectionsRoute
   '/exams': typeof AppExamsRoute
   '/feed': typeof AppFeedRoute
   '/guide': typeof AppGuideRoute
+  '/auth/callback': typeof AuthCallbackRoute
+  '/auth/done': typeof AuthDoneRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/finish': typeof authFinishRoute
   '/login': typeof authLoginRoute
   '/otp': typeof authOtpRoute
-  '/usos': typeof authUsosRoute
   '/chat': typeof AppChatRoute
   '/connections': typeof AppConnectionsRoute
   '/exams': typeof AppExamsRoute
   '/feed': typeof AppFeedRoute
   '/guide': typeof AppGuideRoute
+  '/auth/callback': typeof AuthCallbackRoute
+  '/auth/done': typeof AuthDoneRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/(auth)': typeof authRouteRouteWithChildren
   '/_app': typeof AppRouteWithChildren
+  '/(auth)/finish': typeof authFinishRoute
   '/(auth)/login': typeof authLoginRoute
   '/(auth)/otp': typeof authOtpRoute
-  '/(auth)/usos': typeof authUsosRoute
   '/_app/chat': typeof AppChatRoute
   '/_app/connections': typeof AppConnectionsRoute
   '/_app/exams': typeof AppExamsRoute
   '/_app/feed': typeof AppFeedRoute
   '/_app/guide': typeof AppGuideRoute
+  '/auth/callback': typeof AuthCallbackRoute
+  '/auth/done': typeof AuthDoneRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/finish'
     | '/login'
     | '/otp'
-    | '/usos'
     | '/chat'
     | '/connections'
     | '/exams'
     | '/feed'
     | '/guide'
+    | '/auth/callback'
+    | '/auth/done'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/finish'
     | '/login'
     | '/otp'
-    | '/usos'
     | '/chat'
     | '/connections'
     | '/exams'
     | '/feed'
     | '/guide'
+    | '/auth/callback'
+    | '/auth/done'
   id:
     | '__root__'
     | '/'
     | '/(auth)'
     | '/_app'
+    | '/(auth)/finish'
     | '/(auth)/login'
     | '/(auth)/otp'
-    | '/(auth)/usos'
     | '/_app/chat'
     | '/_app/connections'
     | '/_app/exams'
     | '/_app/feed'
     | '/_app/guide'
+    | '/auth/callback'
+    | '/auth/done'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   authRouteRoute: typeof authRouteRouteWithChildren
   AppRoute: typeof AppRouteWithChildren
+  AuthCallbackRoute: typeof AuthCallbackRoute
+  AuthDoneRoute: typeof AuthDoneRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -178,6 +204,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/(auth)/finish': {
+      id: '/(auth)/finish'
+      path: '/finish'
+      fullPath: '/finish'
+      preLoaderRoute: typeof authFinishRouteImport
+      parentRoute: typeof authRouteRoute
+    }
     '/(auth)/login': {
       id: '/(auth)/login'
       path: '/login'
@@ -190,13 +223,6 @@ declare module '@tanstack/react-router' {
       path: '/otp'
       fullPath: '/otp'
       preLoaderRoute: typeof authOtpRouteImport
-      parentRoute: typeof authRouteRoute
-    }
-    '/(auth)/usos': {
-      id: '/(auth)/usos'
-      path: '/usos'
-      fullPath: '/usos'
-      preLoaderRoute: typeof authUsosRouteImport
       parentRoute: typeof authRouteRoute
     }
     '/_app/chat': {
@@ -234,19 +260,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppGuideRouteImport
       parentRoute: typeof AppRoute
     }
+    '/auth/callback': {
+      id: '/auth/callback'
+      path: '/auth/callback'
+      fullPath: '/auth/callback'
+      preLoaderRoute: typeof AuthCallbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/done': {
+      id: '/auth/done'
+      path: '/auth/done'
+      fullPath: '/auth/done'
+      preLoaderRoute: typeof AuthDoneRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 interface authRouteRouteChildren {
+  authFinishRoute: typeof authFinishRoute
   authLoginRoute: typeof authLoginRoute
   authOtpRoute: typeof authOtpRoute
-  authUsosRoute: typeof authUsosRoute
 }
 
 const authRouteRouteChildren: authRouteRouteChildren = {
+  authFinishRoute: authFinishRoute,
   authLoginRoute: authLoginRoute,
   authOtpRoute: authOtpRoute,
-  authUsosRoute: authUsosRoute,
 }
 
 const authRouteRouteWithChildren = authRouteRoute._addFileChildren(
@@ -275,6 +315,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   authRouteRoute: authRouteRouteWithChildren,
   AppRoute: AppRouteWithChildren,
+  AuthCallbackRoute: AuthCallbackRoute,
+  AuthDoneRoute: AuthDoneRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

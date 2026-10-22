@@ -13,6 +13,7 @@ function OtpPage() {
     email,
     onEmailChange,
     emailError,
+    availabilityError,
     emailPlaceholder,
     code,
     onCodeChange,
@@ -26,8 +27,6 @@ function OtpPage() {
     buttonText,
     isEmailStep,
     isButtonDisabled,
-    resendLabel,
-    canResend,
   } = useOtpScreen();
 
   const ButtonIcon = isEmailStep ? Send : Check;
@@ -53,6 +52,11 @@ function OtpPage() {
       }
     >
       <form className="flex flex-col gap-6" onSubmit={onButtonPress}>
+        {availabilityError ? (
+          <p role="alert" className="text-red-600 text-sm">
+            {availabilityError}
+          </p>
+        ) : null}
         {isEmailStep ? (
           <UIInput
             type="email"
@@ -77,9 +81,9 @@ function OtpPage() {
               <UIText size="sm" color="gray">
                 Didn&apos;t get it?
               </UIText>
-              <button type="button" onClick={onResendPress} disabled={!canResend}>
-                <UIText size="sm" color={canResend ? 'primary' : 'gray'} weight="semibold">
-                  {resendLabel}
+              <button type="button" onClick={onResendPress}>
+                <UIText size="sm" color="primary" weight="semibold">
+                  Resend code
                 </UIText>
               </button>
               <UIText size="sm" color="gray" className="ml-auto">

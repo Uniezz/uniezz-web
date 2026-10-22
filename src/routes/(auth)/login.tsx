@@ -1,5 +1,6 @@
 import { AuthPage } from '@/components';
 import { UIButton, UIRow, UIText } from '@/ui/components';
+import { startUniversityLogin } from '@/utils';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { BadgeCheck, ShieldCheck } from 'lucide-react';
 import { useState } from 'react';
@@ -9,26 +10,31 @@ const items = [
     iconText: 'UM',
     topText: 'UMCS',
     bottomText: 'USOS',
+    provider: 'usos',
   },
   {
     iconText: 'KUL',
     topText: 'KUL',
-    bottomText: 'Microsoft',
+    bottomText: 'Email code',
+    provider: 'otp',
   },
   {
     iconText: 'PL',
     topText: 'Politechnika Lubelska',
-    bottomText: 'Microsoft',
+    bottomText: 'Email code',
+    provider: 'otp',
   },
   {
     iconText: 'UP',
     topText: 'Uniwersytet Przyrodniczy',
-    bottomText: 'Microsoft',
+    bottomText: 'Email code',
+    provider: 'otp',
   },
   {
     iconText: 'WS',
     topText: 'WSEI',
-    bottomText: 'Microsoft',
+    bottomText: 'Email code',
+    provider: 'otp',
   },
 ];
 
@@ -42,15 +48,18 @@ function LoginPage() {
   const selectedItem = items[selected]!;
 
   const handleContinue = () => {
-    void navigate({
-      to: selectedItem.bottomText === 'Microsoft' ? '/otp' : '/usos',
-    });
+    if (selectedItem.provider === 'usos') {
+      startUniversityLogin();
+      return;
+    }
+
+    navigate({ to: '/otp' });
   };
 
   return (
     <AuthPage
       topText="Sign in to Uniezz"
-      bottomText="Choose your university — you'll finish signing in on its own login page."
+      bottomText="Choose your university to sign in with USOS or a university email code."
     >
       <div className="flex flex-col gap-2.5">
         <UIText color="gray" weight="bold" size="xs">
