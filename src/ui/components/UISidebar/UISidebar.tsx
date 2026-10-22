@@ -1,37 +1,20 @@
-import {
-  GraduationCap,
-  LibraryBig,
-  MapPin,
-  MessageSquare,
-  Newspaper,
-  PanelLeft,
-  Settings,
-  Sparkles,
-} from 'lucide-react';
+import { GraduationCap, PanelLeft, Settings } from 'lucide-react';
 import { type ComponentProps, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { cn } from '../../cn';
+import { UIButton } from '../UIButton';
 import { UINavItem } from '../UINavItem';
 import {
   sidebarCaptionStyles,
   sidebarGroupStyles,
   sidebarHeaderStyles,
   sidebarMarkStyles,
+  sidebarSettingsStyles,
   sidebarStyles,
   sidebarToggleStyles,
   sidebarUserStyles,
 } from './variants';
-
-const MAIN_NAV = [
-  { to: '/feed', labelKey: 'feed.title', leftIcon: Newspaper },
-  { to: '/chat', labelKey: 'chat.title', leftIcon: MessageSquare },
-  { to: '/connections', labelKey: 'connections.title', leftIcon: Sparkles },
-] as const;
-
-const ACADEMICS_NAV = [
-  { to: '/exams', labelKey: 'exams.title', leftIcon: LibraryBig },
-  { to: '/guide', labelKey: 'guide.title', leftIcon: MapPin },
-] as const;
+import { NAV_GROUPS } from '@/utils';
 
 type UISidebarProps = ComponentProps<'aside'> & {
   user: { initials: string; name: string; meta: string };
@@ -64,8 +47,9 @@ const UISidebarBase = ({
             {t('common.appName')}
           </span>
         )}
-        <button
-          type="button"
+        <UIButton
+          size="icon"
+          bg="transparent"
           aria-label={toggleLabel}
           aria-expanded={!collapsed}
           title={toggleLabel}
@@ -73,38 +57,32 @@ const UISidebarBase = ({
           className={sidebarToggleStyles({ collapsed })}
         >
           <PanelLeft size={18} />
-        </button>
+        </UIButton>
       </div>
 
       <nav aria-label={t('sidebar.mainNavigation')} className="flex flex-col">
-        <div className={sidebarGroupStyles({ collapsed })}>
-          {MAIN_NAV.map(({ labelKey, ...item }) => (
-            <UINavItem
-              key={item.to}
-              {...item}
-              label={t(labelKey)}
-              count={counts?.[item.to]}
-              collapsed={collapsed}
-            />
-          ))}
-        </div>
-
-        <div className={cn(sidebarGroupStyles({ collapsed }), 'pt-2.5 pb-1')}>
-          {collapsed ? (
-            <div className="mx-2 my-1.5 h-px bg-blue-light" />
-          ) : (
-            <span className={sidebarCaptionStyles()}>{t('sidebar.academics')}</span>
-          )}
-          {ACADEMICS_NAV.map(({ labelKey, ...item }) => (
-            <UINavItem
-              key={item.to}
-              {...item}
-              label={t(labelKey)}
-              count={counts?.[item.to]}
-              collapsed={collapsed}
-            />
-          ))}
-        </div>
+        {NAV_GROUPS.map(({ titleKey, items }) => (
+          <div
+            key={titleKey ?? 'main'}
+            className={sidebarGroupStyles({ collapsed, section: Boolean(titleKey) })}
+          >
+            {titleKey &&
+              (collapsed ? (
+                <div className="mx-2 my-1.5 h-px bg-blue-light" />
+              ) : (
+                <span className={sidebarCaptionStyles()}>{t(titleKey)}</span>
+              ))}
+            {items.map(({ labelKey, ...item }) => (
+              <UINavItem
+                key={item.to}
+                {...item}
+                label={t(labelKey)}
+                count={counts?.[item.to]}
+                collapsed={collapsed}
+              />
+            ))}
+          </div>
+        ))}
       </nav>
 
       <div className={sidebarUserStyles({ collapsed })}>
@@ -120,14 +98,15 @@ const UISidebarBase = ({
               <span className="truncate text-sm font-bold text-ice">{user.name}</span>
               <span className="truncate text-caption font-normal text-navy-muted">{user.meta}</span>
             </div>
-            <button
-              type="button"
+            <UIButton
+              size="icon"
+              bg="transparent"
               aria-label={t('sidebar.settings')}
               onClick={onSettingsClick}
-              className="shrink-0 rounded-md text-navy-muted outline-none hover:text-ice focus-visible:ring-2 focus-visible:ring-ice"
+              className={sidebarSettingsStyles()}
             >
               <Settings size={17} />
-            </button>
+            </UIButton>
           </>
         )}
       </div>

@@ -46,10 +46,18 @@ export const sidebarToggleStyles = cva(
   },
 );
 
+export const sidebarSettingsStyles = cva(
+  'shrink-0 rounded-md text-navy-muted outline-none hover:text-ice focus-visible:ring-2 focus-visible:ring-ice',
+);
+
 export const sidebarGroupStyles = cva('flex flex-col gap-0.5', {
   variants: {
     collapsed: {
       true: 'w-10.5',
+      false: '',
+    },
+    section: {
+      true: 'pt-2.5 pb-1',
       false: '',
     },
   },
