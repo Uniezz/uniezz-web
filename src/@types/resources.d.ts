@@ -6,7 +6,7 @@ export default interface Resources {
       "brand": {
         "communityText": "Meet people across UMCS, KUL, Politechnika, Przyrodniczy and WSEI.",
         "communityTitle": "Feed, chat and connections",
-        "description": "Five universities, one account. Sign in with the credentials you already use — your password stays on your university's own page.",
+        "description": "Lublin universities, one account. Sign in with the credentials you already use — your password stays on your university's own page.",
         "examsText": "A shared archive of past papers, syllabi and honest professor ratings.",
         "examsTitle": "Exams and course reviews",
         "headline": "One platform for every student in Lublin.",

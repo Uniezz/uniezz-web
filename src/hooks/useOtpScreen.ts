@@ -1,10 +1,12 @@
 import { otpDefaultValues, otpSchema, type OtpSchema } from '@/schemas';
-import { CELL_COUNT, OTP_RESEND_SECONDS } from '@/utils';
+import { CELL_COUNT } from '@/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from '@tanstack/react-router';
-import { useEffect, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+
+const OTP_UNAVAILABLE_MESSAGE =
+  'Email sign-in is not available yet. Please use UMCS USOS if you have a UMCS account.';
 
 export const useOtpScreen = () => {
   const { t } = useTranslation();
@@ -20,6 +22,8 @@ export const useOtpScreen = () => {
     control,
     handleSubmit,
     setValue,
+    setError,
+    clearErrors,
     formState: { errors, isSubmitted },
   } = form;
 
@@ -28,21 +32,8 @@ export const useOtpScreen = () => {
   const code = useWatch({ control, name: 'code' });
   const isEmailStep = step === 'email';
 
-  const [resendSeconds, setResendSeconds] = useState(0);
-
-  useEffect(() => {
-    if (isEmailStep) {
-      return;
-    }
-
-    const intervalId = window.setInterval(() => {
-      setResendSeconds((current) => (current <= 1 ? 0 : current - 1));
-    }, 1000);
-
-    return () => window.clearInterval(intervalId);
-  }, [isEmailStep, email]);
-
   const onEmailChange = (value: string) => {
+    clearErrors('root');
     setValue('email', value, {
       shouldValidate: isSubmitted && isEmailStep,
     });
@@ -56,9 +47,7 @@ export const useOtpScreen = () => {
 
   const onButtonPress = handleSubmit((data) => {
     if (data.step === 'email') {
-      setValue('step', 'code');
-      setValue('code', '');
-      setResendSeconds(OTP_RESEND_SECONDS);
+      setError('root', { type: 'unavailable', message: OTP_UNAVAILABLE_MESSAGE });
       return;
     }
 
@@ -67,21 +56,17 @@ export const useOtpScreen = () => {
 
   const onBackPress = () => {
     if (!isEmailStep) {
+      clearErrors('root');
       setValue('step', 'email');
       setValue('code', '');
       return;
     }
 
-    void navigate({ to: '/login' });
+    navigate({ to: '/login' });
   };
 
   const onResendPress = () => {
-    if (resendSeconds > 0) {
-      return;
-    }
-
-    // TODO: POST /auth/start
-    setResendSeconds(OTP_RESEND_SECONDS);
+    setError('root', { type: 'unavailable', message: OTP_UNAVAILABLE_MESSAGE });
   };
 
   const topText = isEmailStep ? t('auth.otp.emailTitle') : t('auth.otp.codeTitle');
@@ -90,16 +75,13 @@ export const useOtpScreen = () => {
     : t('auth.otp.codeSubtitle', { email });
   const buttonText = isEmailStep ? t('auth.otp.send') : t('auth.otp.verify');
   const isButtonDisabled = !isEmailStep && code.length !== CELL_COUNT;
-  const resendLabel =
-    resendSeconds > 0
-      ? t('auth.otp.resendIn', { time: `0:${String(resendSeconds).padStart(2, '0')}` })
-      : t('auth.otp.resend');
 
   return {
     email,
     onEmailChange,
     emailError: errors.email?.message,
     emailPlaceholder: t('auth.otp.emailPlaceholder'),
+    availabilityError: errors.root?.message,
     code,
     onCodeChange,
     codeError: errors.code?.message,
@@ -112,8 +94,5 @@ export const useOtpScreen = () => {
     buttonText,
     isEmailStep,
     isButtonDisabled,
-    resendSeconds,
-    resendLabel,
-    canResend: resendSeconds === 0,
   };
 };
