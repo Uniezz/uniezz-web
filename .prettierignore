@@ -1,4 +1,5 @@
 dist
 node_modules
 *.tsbuildinfo
+src/@types
 src/routeTree.gen.ts

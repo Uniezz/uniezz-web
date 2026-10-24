@@ -1,6 +1,7 @@
 import { UIButton, UIText } from '@/ui/components';
 import { ChevronDown, Globe } from 'lucide-react';
 import { type ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AuthBrand } from './AuthBrand';
 
 type AuthLayoutProps = {
@@ -9,6 +10,8 @@ type AuthLayoutProps = {
 };
 
 export const AuthLayout = ({ children, compact = false }: AuthLayoutProps) => {
+  const { t } = useTranslation();
+
   return (
     <main className="page">
       <div className="flex h-full w-full">
@@ -26,7 +29,7 @@ export const AuthLayout = ({ children, compact = false }: AuthLayoutProps) => {
             ) : null}
             <UIButton leftIconColor="gray" leftIcon={Globe} bg="secondary" size="pill">
               <UIText weight="semibold" size="sm">
-                EN
+                {t('topbar.languageCode')}
               </UIText>
               <ChevronDown className="text-gray" size={14} />
             </UIButton>
@@ -37,7 +40,7 @@ export const AuthLayout = ({ children, compact = false }: AuthLayoutProps) => {
             {children}
           </div>
           <UIText size="sm" color="secondary" className="mb-auto">
-            By continuing you agree to the Terms of Use and Privacy Policy · GDPR
+            {t('auth.terms')}
           </UIText>
         </div>
       </div>

@@ -1,15 +1,19 @@
-import { Bell, ChevronDown, Globe, type LucideIcon, Search } from 'lucide-react';
-import { type ComponentProps } from 'react';
+import { Bell, Check, ChevronDown, Globe, type LucideIcon, Search } from 'lucide-react';
+import { type ComponentProps, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { cn } from '../../cn';
 import { UIButton } from '../UIButton';
 import { UIText } from '../UIText';
 import {
+  languageMenuStyles,
+  languageOptionStyles,
   topbarControlStyles,
   topbarSearchStyles,
   topbarStyles,
   topbarSubtitleStyles,
   topbarTitleStyles,
 } from './variants';
+import { LNG_OPTIONS } from '@/utils';
 
 type UITopbarProps = ComponentProps<'header'> & {
   title: string;
@@ -18,6 +22,16 @@ type UITopbarProps = ComponentProps<'header'> & {
 };
 
 export const UITopbar = ({ title, subtitle, action, className, ...props }: UITopbarProps) => {
+  const { t, i18n } = useTranslation();
+  const [isLngOpen, setIsLngOpen] = useState(false);
+
+  const toggleLngMenu = () => setIsLngOpen((prev) => !prev);
+
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+    setIsLngOpen(false);
+  };
+
   return (
     <header className={cn(topbarStyles(), className)} {...props}>
       <div className="flex min-w-0 flex-col gap-px">
@@ -30,29 +44,37 @@ export const UITopbar = ({ title, subtitle, action, className, ...props }: UITop
         <Search className="shrink-0 text-muted" size={16} />
         <input
           type="text"
-          aria-label="Search"
-          placeholder="Search posts, people, courses…"
+          aria-label={t('topbar.search')}
+          placeholder={t('topbar.searchPlaceholder')}
           className="min-w-0 flex-1 bg-transparent text-sm text-primary outline-none placeholder:text-muted"
         />
       </label>
 
       <div className="flex-1" />
 
-      {/* TODO: language menu when i18n will be ready */}
-      <button
-        type="button"
-        aria-label="Change language"
-        className={topbarControlStyles({ kind: 'chip' })}
-      >
-        <Globe className="text-secondary" size={16} />
-        <span className="text-sm font-bold text-primary">EN</span>
-        <ChevronDown className="text-muted" size={14} />
-      </button>
+      <div className="relative">
+        <UIButton
+          bg="secondary"
+          aria-label={t('topbar.changeLanguage')}
+          aria-expanded={isLngOpen}
+          className={topbarControlStyles({ kind: 'chip' })}
+          onClick={toggleLngMenu}
+        >
+          <Globe className="text-secondary" size={16} />
+          <span className="text-sm font-bold text-primary">{t('topbar.languageCode')}</span>
+          <ChevronDown className="text-muted" size={14} />
+        </UIButton>
+
+        {isLngOpen ? (
+          <LanguageMenu value={i18n.resolvedLanguage ?? i18n.language} onSelect={changeLanguage} />
+        ) : null}
+      </div>
 
       {/* TODO: notifications */}
-      <button
-        type="button"
-        aria-label="Notifications"
+      <UIButton
+        size="icon"
+        bg="secondary"
+        aria-label={t('topbar.notifications')}
         className={topbarControlStyles({ kind: 'icon' })}
       >
         <Bell className="text-secondary" size={17} />
@@ -60,7 +82,7 @@ export const UITopbar = ({ title, subtitle, action, className, ...props }: UITop
           aria-hidden
           className="absolute top-2.25 right-2 size-2 rounded-full border-[1.5px] border-white-primary bg-danger"
         />
-      </button>
+      </UIButton>
 
       {action ? (
         <UIButton
@@ -77,3 +99,32 @@ export const UITopbar = ({ title, subtitle, action, className, ...props }: UITop
     </header>
   );
 };
+
+type LanguageMenuProps = {
+  value: string;
+  onSelect: (lng: string) => void;
+};
+
+const LanguageMenu = ({ value, onSelect }: LanguageMenuProps) => (
+  <div className={languageMenuStyles()}>
+    {LNG_OPTIONS.map((lng) => {
+      const isActive = lng.value === value;
+
+      return (
+        <UIButton
+          key={lng.value}
+          size="md"
+          bg="transparent"
+          value={lng.value}
+          aria-current={isActive}
+          className={languageOptionStyles({ active: isActive })}
+          onClick={() => onSelect(lng.value)}
+        >
+          <lng.Icon className="h-4 w-6 shrink-0 rounded-xs" />
+          <span className="flex-1 text-left">{lng.label}</span>
+          {isActive ? <Check className="text-blue-light" size={16} /> : null}
+        </UIButton>
+      );
+    })}
+  </div>
+);

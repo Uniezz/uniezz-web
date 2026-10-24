@@ -5,12 +5,14 @@ import { startUniversityLogin } from '@/utils';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { BadgeCheck, ShieldCheck } from 'lucide-react';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/(auth)/login')({
   component: LoginPage,
 });
 
 function LoginPage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [selectedId, setSelectedId] = useState<string>();
   const { data, isPending, isError, refetch } = useUniversities();
@@ -29,13 +31,10 @@ function LoginPage() {
   };
 
   return (
-    <AuthPage
-      topText="Sign in to Uniezz"
-      bottomText="Choose your university to sign in with USOS or a university email code."
-    >
+    <AuthPage topText={t('auth.login.title')} bottomText={t('auth.login.subtitle')}>
       <div className="flex flex-col gap-2.5">
         <UIText color="gray" weight="bold" size="xs">
-          YOUR UNIVERSITY
+          {t('auth.login.yourUniversity')}
         </UIText>
         {isPending ? (
           <UIText color="gray">Loading universities...</UIText>
@@ -70,15 +69,19 @@ function LoginPage() {
       >
         <UIText weight="semibold" color="white">
           {selectedUniversity
-            ? `Continue with ${selectedUniversity.authMethod === 'OTP' ? 'Email code' : selectedUniversity.authMethod}`
+            ? t('auth.login.continueWith', {
+                provider:
+                  selectedUniversity.authMethod === 'OTP'
+                    ? 'Email code'
+                    : selectedUniversity.authMethod,
+              })
             : 'Continue'}
         </UIText>
       </UIButton>
       <div className="flex flex-row items-start gap-2.5 rounded-xl bg-ice px-3 py-2">
         <BadgeCheck className="text-blue" size={22} />
         <UIText size="sm" color="secondary" className="max-w-110 min-w-0">
-          Only active students of supported Lublin universities can create an account. Staff and
-          alumni accounts are rejected.
+          {t('auth.login.notice')}
         </UIText>
       </div>
     </AuthPage>
