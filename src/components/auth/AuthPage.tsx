@@ -1,8 +1,10 @@
-import { UIButton, UIText } from '@/ui/components';
+import { UIButton, UIMenu, UIText } from '@/ui/components';
 import { ChevronDown, Globe } from 'lucide-react';
-import { type ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AuthBrand } from './AuthBrand';
+import i18n from 'i18next';
+import { LNG_OPTIONS } from '@/utils';
 
 type AuthLayoutProps = {
   children: ReactNode;
@@ -11,6 +13,14 @@ type AuthLayoutProps = {
 
 export const AuthLayout = ({ children, compact = false }: AuthLayoutProps) => {
   const { t } = useTranslation();
+  const [isLngOpen, setIsLngOpen] = useState(false);
+
+  const toggleLngMenu = () => setIsLngOpen((prev) => !prev);
+
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+    setIsLngOpen(false);
+  };
 
   return (
     <main className="page">
@@ -27,12 +37,27 @@ export const AuthLayout = ({ children, compact = false }: AuthLayoutProps) => {
                 </UIText>
               </UIButton>
             ) : null}
-            <UIButton leftIconColor="gray" leftIcon={Globe} bg="secondary" size="pill">
-              <UIText weight="semibold" size="sm">
-                {t('topbar.languageCode')}
-              </UIText>
-              <ChevronDown className="text-gray" size={14} />
-            </UIButton>
+            <div className="relative">
+              <UIButton
+                leftIconColor="gray"
+                leftIcon={Globe}
+                bg="secondary"
+                size="pill"
+                onClick={toggleLngMenu}
+              >
+                <UIText weight="semibold" size="sm">
+                  {t('topbar.languageCode')}
+                </UIText>
+                <ChevronDown className="text-gray" size={14} />
+              </UIButton>
+              {isLngOpen ? (
+                <UIMenu
+                  options={LNG_OPTIONS}
+                  value={i18n.resolvedLanguage ?? i18n.language}
+                  onSelect={changeLanguage}
+                />
+              ) : null}
+            </div>
           </div>
           <div
             className={`flex w-full max-w-120 flex-col rounded-2xl bg-white-primary ${compact ? 'gap-3 px-6 py-4' : 'gap-6 px-9 py-8.5'}`}

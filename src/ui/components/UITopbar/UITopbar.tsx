@@ -1,12 +1,10 @@
-import { Bell, Check, ChevronDown, Globe, type LucideIcon, Search } from 'lucide-react';
+import { Bell, ChevronDown, Globe, type LucideIcon, Search } from 'lucide-react';
 import { type ComponentProps, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { cn } from '../../cn';
 import { UIButton } from '../UIButton';
 import { UIText } from '../UIText';
 import {
-  languageMenuStyles,
-  languageOptionStyles,
   topbarControlStyles,
   topbarSearchStyles,
   topbarStyles,
@@ -14,6 +12,7 @@ import {
   topbarTitleStyles,
 } from './variants';
 import { LNG_OPTIONS } from '@/utils';
+import { UIMenu } from '../UIMenu';
 
 type UITopbarProps = ComponentProps<'header'> & {
   title: string;
@@ -66,7 +65,11 @@ export const UITopbar = ({ title, subtitle, action, className, ...props }: UITop
         </UIButton>
 
         {isLngOpen ? (
-          <LanguageMenu value={i18n.resolvedLanguage ?? i18n.language} onSelect={changeLanguage} />
+          <UIMenu
+            options={LNG_OPTIONS}
+            value={i18n.resolvedLanguage ?? i18n.language}
+            onSelect={changeLanguage}
+          />
         ) : null}
       </div>
 
@@ -99,32 +102,3 @@ export const UITopbar = ({ title, subtitle, action, className, ...props }: UITop
     </header>
   );
 };
-
-type LanguageMenuProps = {
-  value: string;
-  onSelect: (lng: string) => void;
-};
-
-const LanguageMenu = ({ value, onSelect }: LanguageMenuProps) => (
-  <div className={languageMenuStyles()}>
-    {LNG_OPTIONS.map((lng) => {
-      const isActive = lng.value === value;
-
-      return (
-        <UIButton
-          key={lng.value}
-          size="md"
-          bg="transparent"
-          value={lng.value}
-          aria-current={isActive}
-          className={languageOptionStyles({ active: isActive })}
-          onClick={() => onSelect(lng.value)}
-        >
-          <lng.Icon className="h-4 w-6 shrink-0 rounded-xs" />
-          <span className="flex-1 text-left">{lng.label}</span>
-          {isActive ? <Check className="text-blue-light" size={16} /> : null}
-        </UIButton>
-      );
-    })}
-  </div>
-);

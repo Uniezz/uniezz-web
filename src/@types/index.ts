@@ -1,2 +1,2 @@
 export * from './navigation';
-export * from './language';
+export * from './option';
