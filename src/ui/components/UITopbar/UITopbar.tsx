@@ -1,5 +1,5 @@
 import { Bell, ChevronDown, Globe, type LucideIcon, Search } from 'lucide-react';
-import { type ComponentProps, useState } from 'react';
+import { type ComponentProps } from 'react';
 import { useTranslation } from 'react-i18next';
 import { cn } from '../../cn';
 import { UIButton } from '../UIButton';
@@ -13,6 +13,7 @@ import {
 } from './variants';
 import { LNG_OPTIONS } from '@/utils';
 import { UIMenu } from '../UIMenu';
+import { useDropdown } from '@/hooks/useDropdown';
 
 type UITopbarProps = ComponentProps<'header'> & {
   title: string;
@@ -22,13 +23,10 @@ type UITopbarProps = ComponentProps<'header'> & {
 
 export const UITopbar = ({ title, subtitle, action, className, ...props }: UITopbarProps) => {
   const { t, i18n } = useTranslation();
-  const [isLngOpen, setIsLngOpen] = useState(false);
-
-  const toggleLngMenu = () => setIsLngOpen((prev) => !prev);
+  const { ref: lngMenuRef, isOpen: isLngOpen, toggle: toggleLngMenu } = useDropdown();
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
-    setIsLngOpen(false);
   };
 
   return (
@@ -51,7 +49,7 @@ export const UITopbar = ({ title, subtitle, action, className, ...props }: UITop
 
       <div className="flex-1" />
 
-      <div className="relative">
+      <div className="relative" ref={lngMenuRef}>
         <UIButton
           bg="secondary"
           aria-label={t('topbar.changeLanguage')}

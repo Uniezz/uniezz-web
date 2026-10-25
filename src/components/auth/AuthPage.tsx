@@ -1,10 +1,11 @@
 import { UIButton, UIMenu, UIText } from '@/ui/components';
 import { ChevronDown, Globe } from 'lucide-react';
-import { useState, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AuthBrand } from './AuthBrand';
 import i18n from 'i18next';
 import { LNG_OPTIONS } from '@/utils';
+import { useDropdown } from '@/hooks/useDropdown';
 
 type AuthLayoutProps = {
   children: ReactNode;
@@ -13,13 +14,10 @@ type AuthLayoutProps = {
 
 export const AuthLayout = ({ children, compact = false }: AuthLayoutProps) => {
   const { t } = useTranslation();
-  const [isLngOpen, setIsLngOpen] = useState(false);
-
-  const toggleLngMenu = () => setIsLngOpen((prev) => !prev);
+  const { ref: lngMenuRef, isOpen: isLngOpen, toggle: toggleLngMenu } = useDropdown();
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
-    setIsLngOpen(false);
   };
 
   return (
@@ -37,7 +35,7 @@ export const AuthLayout = ({ children, compact = false }: AuthLayoutProps) => {
                 </UIText>
               </UIButton>
             ) : null}
-            <div className="relative">
+            <div className="relative" ref={lngMenuRef}>
               <UIButton
                 leftIconColor="gray"
                 leftIcon={Globe}
