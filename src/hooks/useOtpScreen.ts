@@ -3,11 +3,13 @@ import { CELL_COUNT } from '@/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from '@tanstack/react-router';
 import { useForm, useWatch } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 const OTP_UNAVAILABLE_MESSAGE =
   'Email sign-in is not available yet. Please use UMCS USOS if you have a UMCS account.';
 
 export const useOtpScreen = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const form = useForm<OtpSchema>({
     resolver: zodResolver(otpSchema),
@@ -67,19 +69,19 @@ export const useOtpScreen = () => {
     setError('root', { type: 'unavailable', message: OTP_UNAVAILABLE_MESSAGE });
   };
 
-  const topText = isEmailStep ? 'Provide your university email' : 'Check your university inbox';
+  const topText = isEmailStep ? t('auth.otp.emailTitle') : t('auth.otp.codeTitle');
   const bottomText = isEmailStep
-    ? 'We’ll send a six-digit code to this inbox. Use the address your university issued.'
-    : `We sent a six-digit code to ${email}. It expires in 10 minutes.`;
-  const buttonText = isEmailStep ? 'Send code' : 'Verify and continue';
+    ? t('auth.otp.emailSubtitle')
+    : t('auth.otp.codeSubtitle', { email });
+  const buttonText = isEmailStep ? t('auth.otp.send') : t('auth.otp.verify');
   const isButtonDisabled = !isEmailStep && code.length !== CELL_COUNT;
 
   return {
     email,
     onEmailChange,
     emailError: errors.email?.message,
+    emailPlaceholder: t('auth.otp.emailPlaceholder'),
     availabilityError: errors.root?.message,
-    emailPlaceholder: 'you@university.edu',
     code,
     onCodeChange,
     codeError: errors.code?.message,

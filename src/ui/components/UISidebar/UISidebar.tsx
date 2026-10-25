@@ -1,36 +1,20 @@
-import {
-  GraduationCap,
-  LibraryBig,
-  MapPin,
-  MessageSquare,
-  Newspaper,
-  PanelLeft,
-  Settings,
-  Sparkles,
-} from 'lucide-react';
+import { GraduationCap, PanelLeft, Settings } from 'lucide-react';
 import { type ComponentProps, memo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { cn } from '../../cn';
+import { UIButton } from '../UIButton';
 import { UINavItem } from '../UINavItem';
 import {
   sidebarCaptionStyles,
   sidebarGroupStyles,
   sidebarHeaderStyles,
   sidebarMarkStyles,
+  sidebarSettingsStyles,
   sidebarStyles,
   sidebarToggleStyles,
   sidebarUserStyles,
 } from './variants';
-
-const MAIN_NAV = [
-  { to: '/feed', label: 'Feed', leftIcon: Newspaper },
-  { to: '/chat', label: 'Chat', leftIcon: MessageSquare },
-  { to: '/connections', label: 'Connections', leftIcon: Sparkles },
-] as const;
-
-const ACADEMICS_NAV = [
-  { to: '/exams', label: 'Exams & Courses', leftIcon: LibraryBig },
-  { to: '/guide', label: 'Student Guide', leftIcon: MapPin },
-] as const;
+import { NAV_GROUPS } from '@/utils';
 
 type UISidebarProps = ComponentProps<'aside'> & {
   user: { initials: string; name: string; meta: string };
@@ -49,7 +33,8 @@ const UISidebarBase = ({
   className,
   ...props
 }: UISidebarProps) => {
-  const toggleLabel = collapsed ? 'Expand sidebar' : 'Collapse sidebar';
+  const { t } = useTranslation();
+  const toggleLabel = collapsed ? t('sidebar.expand') : t('sidebar.collapse');
 
   return (
     <aside className={cn(sidebarStyles({ collapsed }), className)} {...props}>
@@ -58,10 +43,13 @@ const UISidebarBase = ({
           <GraduationCap className="text-ice" size={19} />
         </div>
         {collapsed ? null : (
-          <span className="text-[21px] font-bold tracking-[-0.3px] text-ice">Uniezz</span>
+          <span className="text-[21px] font-bold tracking-[-0.3px] text-ice">
+            {t('common.appName')}
+          </span>
         )}
-        <button
-          type="button"
+        <UIButton
+          size="icon"
+          bg="transparent"
           aria-label={toggleLabel}
           aria-expanded={!collapsed}
           title={toggleLabel}
@@ -69,26 +57,32 @@ const UISidebarBase = ({
           className={sidebarToggleStyles({ collapsed })}
         >
           <PanelLeft size={18} />
-        </button>
+        </UIButton>
       </div>
 
-      <nav aria-label="Main navigation" className="flex flex-col">
-        <div className={sidebarGroupStyles({ collapsed })}>
-          {MAIN_NAV.map((item) => (
-            <UINavItem key={item.to} {...item} count={counts?.[item.to]} collapsed={collapsed} />
-          ))}
-        </div>
-
-        <div className={cn(sidebarGroupStyles({ collapsed }), 'pt-2.5 pb-1')}>
-          {collapsed ? (
-            <div className="mx-2 my-1.5 h-px bg-blue-light" />
-          ) : (
-            <span className={sidebarCaptionStyles()}>ACADEMICS</span>
-          )}
-          {ACADEMICS_NAV.map((item) => (
-            <UINavItem key={item.to} {...item} count={counts?.[item.to]} collapsed={collapsed} />
-          ))}
-        </div>
+      <nav aria-label={t('sidebar.mainNavigation')} className="flex flex-col">
+        {NAV_GROUPS.map(({ titleKey, items }) => (
+          <div
+            key={titleKey ?? 'main'}
+            className={sidebarGroupStyles({ collapsed, section: Boolean(titleKey) })}
+          >
+            {titleKey &&
+              (collapsed ? (
+                <div className="mx-2 my-1.5 h-px bg-blue-light" />
+              ) : (
+                <span className={sidebarCaptionStyles()}>{t(titleKey)}</span>
+              ))}
+            {items.map(({ labelKey, ...item }) => (
+              <UINavItem
+                key={item.to}
+                {...item}
+                label={t(labelKey)}
+                count={counts?.[item.to]}
+                collapsed={collapsed}
+              />
+            ))}
+          </div>
+        ))}
       </nav>
 
       <div className={sidebarUserStyles({ collapsed })}>
@@ -104,14 +98,15 @@ const UISidebarBase = ({
               <span className="truncate text-sm font-bold text-ice">{user.name}</span>
               <span className="truncate text-caption font-normal text-navy-muted">{user.meta}</span>
             </div>
-            <button
-              type="button"
-              aria-label="Settings"
+            <UIButton
+              size="icon"
+              bg="transparent"
+              aria-label={t('sidebar.settings')}
               onClick={onSettingsClick}
-              className="shrink-0 rounded-md text-navy-muted outline-none hover:text-ice focus-visible:ring-2 focus-visible:ring-ice"
+              className={sidebarSettingsStyles()}
             >
               <Settings size={17} />
-            </button>
+            </UIButton>
           </>
         )}
       </div>

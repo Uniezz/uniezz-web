@@ -15,12 +15,12 @@ export const topbarSearchStyles = cva(
 );
 
 export const topbarControlStyles = cva(
-  'flex items-center rounded-lg border border-white-tertiary bg-white-primary outline-none hover:bg-white-secondary focus-visible:ring-2 focus-visible:ring-blue-light',
+  'outline-none focus-visible:ring-2 focus-visible:ring-blue-light',
   {
     variants: {
       kind: {
         chip: 'gap-1.5 px-2.5 py-2',
-        icon: 'relative size-9.5 justify-center',
+        icon: 'relative size-9.5',
       },
     },
   },

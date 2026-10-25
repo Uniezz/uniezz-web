@@ -6,6 +6,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import './schemas/env';
 import { routeTree } from './routeTree.gen';
 
+import './i18n';
+
 const router = createRouter({ routeTree });
 const queryClient = new QueryClient();
 
