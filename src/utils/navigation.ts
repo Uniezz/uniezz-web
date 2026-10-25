@@ -1,5 +1,5 @@
 import { LibraryBig, MapPin, MessageSquare, Newspaper, Sparkles } from 'lucide-react';
-import { type NavGroup, type NavItem } from '@/types';
+import { type NavGroup, type NavItem } from '@/@types';
 
 const MAIN_NAV: NavItem[] = [
   { to: '/feed', labelKey: 'feed.title', leftIcon: Newspaper },
