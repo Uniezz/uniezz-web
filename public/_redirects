@@ -1,1 +1,3 @@
+# shortcut: API target is hardcoded (Netlify _redirects has no env vars), switch to api.uniezz.pl once prod backend is deployed
+/api/* https://api.stg.uniezz.pl/:splat 200
 /* /index.html 200

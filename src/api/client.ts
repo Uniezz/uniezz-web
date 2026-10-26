@@ -1,10 +1,10 @@
 import createClient from 'openapi-fetch';
 import createQueryClient from 'openapi-react-query';
 import type { paths } from '@/@types/schema';
-import { env } from '@/schemas/env';
 
 export const api = createClient<paths>({
-  baseUrl: import.meta.env.DEV ? '/api' : env.VITE_API_URL,
+  // Same-origin in dev (Vite proxy) and prod (Netlify proxy in public/_redirects), so no CORS needed.
+  baseUrl: '/api',
 });
 
 api.use({
