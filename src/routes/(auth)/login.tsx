@@ -3,7 +3,7 @@ import { useUniversities } from '@/hooks';
 import { UIButton, UIRow, UIText } from '@/ui/components';
 import { startUniversityLogin } from '@/utils';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { BadgeCheck, ShieldCheck } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -32,10 +32,7 @@ function LoginPage() {
 
   return (
     <AuthPage topText={t('auth.login.title')} bottomText={t('auth.login.subtitle')}>
-      <div className="flex flex-col gap-2.5">
-        <UIText color="gray" weight="bold" size="xs">
-          {t('auth.login.yourUniversity')}
-        </UIText>
+      <div className="flex flex-col gap-1 rounded-2xl border border-white/10 bg-white/5 p-1.5">
         {isPending ? (
           <UIText color="gray">Loading universities...</UIText>
         ) : isError ? (
@@ -63,11 +60,11 @@ function LoginPage() {
       <UIButton
         className="w-full"
         bg="gradient"
-        leftIcon={ShieldCheck}
+        leftIcon={ArrowRight}
         onClick={handleContinue}
         disabled={!selectedUniversity || isError}
       >
-        <UIText weight="semibold" color="white">
+        <UIText weight="semibold" className="text-ink">
           {selectedUniversity
             ? t('auth.login.continueWith', {
                 provider:
@@ -78,12 +75,6 @@ function LoginPage() {
             : 'Continue'}
         </UIText>
       </UIButton>
-      <div className="flex flex-row items-start gap-2.5 rounded-xl bg-ice px-3 py-2">
-        <BadgeCheck className="text-blue" size={22} />
-        <UIText size="sm" color="secondary" className="max-w-110 min-w-0">
-          {t('auth.login.notice')}
-        </UIText>
-      </div>
     </AuthPage>
   );
 }

@@ -47,7 +47,7 @@ export const UIInput = ({
         <input
           {...props}
           id={inputId}
-          className="min-w-0 flex-1 outline-none"
+          className="min-w-0 flex-1 bg-transparent text-white outline-none placeholder:text-muted"
           type={type}
           value={text}
           onChange={(e) => onTextChange?.(e.target.value)}

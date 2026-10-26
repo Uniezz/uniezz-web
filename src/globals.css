@@ -1,16 +1,15 @@
 @import 'tailwindcss';
-@import '@fontsource/plus-jakarta-sans/400.css';
-@import '@fontsource/plus-jakarta-sans/600.css';
-@import '@fontsource/plus-jakarta-sans/700.css';
-@import '@fontsource/plus-jakarta-sans/800.css';
+@import '@fontsource-variable/geist/wght.css';
 
 @theme {
   --color-*: initial;
   --color-transparent: transparent;
   --color-current: currentColor;
   --color-inherit: inherit;
+  --color-white: #ffffff;
+  --color-black: #000000;
 
-  --font-sans: 'Plus Jakarta Sans', sans-serif;
+  --font-sans: 'Geist Variable', sans-serif;
 
   --text-caption: 11px;
   --text-sm: 13px;
@@ -22,49 +21,52 @@
   --text-xxl: 32px;
 
   /* Text */
-  --color-primary: #0b1633;
-  --color-secondary: #59648a;
-  --color-muted: #8e99b8;
+  --color-primary: #ffffff;
+  --color-secondary: #ffffff99;
+  --color-muted: #ffffff66;
   --color-white-primary: #ffffff;
-  --color-white-secondary: #f4f7fd;
-  --color-white-tertiary: #e1e8f7;
+  --color-white-secondary: #ffffff99;
+  --color-white-tertiary: #ffffff1a;
+  --color-ink: #0c0d14;
+  --color-surface: #161822;
+  --color-surface-glass: #16182299;
   /* Blues */
-  --color-dark-blue: #05102e;
-  --color-blue: #16296b;
-  --color-blue-light: #2d4195;
-  --color-periwinkle: #6d76b5;
-  --color-ice: #e7f0ff;
-  --color-blue-soft: #e7ecfb;
+  --color-dark-blue: #0c0d14;
+  --color-blue: #5b7cff;
+  --color-blue-light: #5b7cff;
+  --color-periwinkle: #a9baff;
+  --color-ice: #161822;
+  --color-blue-soft: #5b7cff33;
 
   /* On navy */
-  --color-navy-raised: #101e4d;
-  --color-navy-text: #b9c2e8;
-  --color-navy-muted: #7e8bc4;
-  --color-navy-caption: #5e6b9e;
+  --color-navy-raised: #16182299;
+  --color-navy-text: #ffffffcc;
+  --color-navy-muted: #ffffff99;
+  --color-navy-caption: #ffffff66;
 
   /* Status */
-  --color-success: #12875c;
-  --color-success-soft: #dff3e9;
-  --color-warning: #b5760a;
-  --color-warning-soft: #fbefd9;
-  --color-danger: #c6374d;
-  --color-danger-hover: #a62b3f;
-  --color-danger-soft: #fae6ea;
+  --color-success: #3dd68c;
+  --color-success-soft: #3dd68c26;
+  --color-warning: #ffc24d;
+  --color-warning-soft: #ffc24d26;
+  --color-danger: #e5484d;
+  --color-danger-hover: #c8373c;
+  --color-danger-soft: #e5484d26;
 
   /* Accent */
-  --color-accent: #6d5bf5;
-  --color-accent-hover: #5b49e0;
-  --color-accent-soft: #ece9fe;
+  --color-accent: #5b7cff;
+  --color-accent-hover: #a9baff;
+  --color-accent-soft: #5b7cff33;
 
   /* Additional */
-  --color-ember: #f0703a;
-  --color-ember-soft: #ffede3;
-  --color-teal: #12a594;
-  --color-teal-soft: #ddf4f0;
+  --color-ember: #ffc24d;
+  --color-ember-soft: #ffc24d26;
+  --color-teal: #3dd68c;
+  --color-teal-soft: #3dd68c26;
 
   /* Surfaces */
-  --color-surface-tint: #fafbff;
-  --color-gray: #8894c2;
+  --color-surface-tint: #ffffff0d;
+  --color-gray: #ffffff99;
 }
 
 :root {
@@ -89,11 +91,51 @@ main {
 
 body {
   min-height: 100svh;
+  background: var(--color-ink);
+  color: var(--color-primary);
+  font-family: var(--font-sans);
 }
 
 @utility bg-mesh {
-  background-color: #05102e;
-  background-image: radial-gradient(ellipse 80% 65% at 10% 8%, #2d419577 0%, #2d419500 100%);
+  background-color: #0c0d14;
+  background-image:
+    linear-gradient(90deg, #0c0d14b3, #0c0d1466), url('../docs/design/generated-1.png');
   background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background-size: cover;
+}
+
+@utility bg-app {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-color: #0c0d14;
+
+  &::before,
+  &::after {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    content: '';
+  }
+
+  &::before {
+    z-index: -2;
+    inset: -80px;
+    background: url('./assets/app-background.jpg') center / cover no-repeat;
+    filter: blur(70px);
+  }
+
+  &::after {
+    z-index: -1;
+    background:
+      radial-gradient(ellipse 65% 70% at 90% 5%, #5b7cff66, transparent),
+      radial-gradient(ellipse 60% 55% at 25% 100%, #8b5cf633, transparent),
+      linear-gradient(#0c0d14e5, #0c0d14e5);
+  }
+}
+
+@utility glass {
+  background: var(--color-surface-glass);
+  border: 1px solid var(--color-white-tertiary);
+  backdrop-filter: blur(48px);
 }

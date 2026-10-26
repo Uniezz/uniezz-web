@@ -1,4 +1,4 @@
-import { GraduationCap, PanelLeft, Settings } from 'lucide-react';
+import { Settings } from 'lucide-react';
 import { type ComponentProps, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { cn } from '../../cn';
@@ -11,7 +11,6 @@ import {
   sidebarMarkStyles,
   sidebarSettingsStyles,
   sidebarStyles,
-  sidebarToggleStyles,
   sidebarUserStyles,
 } from './variants';
 import { NAV_GROUPS } from '@/utils';
@@ -38,15 +37,7 @@ const UISidebarBase = ({
 
   return (
     <aside className={cn(sidebarStyles({ collapsed }), className)} {...props}>
-      <div className={sidebarHeaderStyles({ collapsed })}>
-        <div className={sidebarMarkStyles()}>
-          <GraduationCap className="text-ice" size={19} />
-        </div>
-        {collapsed ? null : (
-          <span className="text-[21px] font-bold tracking-[-0.3px] text-ice">
-            {t('common.appName')}
-          </span>
-        )}
+      <div className={sidebarHeaderStyles()}>
         <UIButton
           size="icon"
           bg="transparent"
@@ -54,9 +45,9 @@ const UISidebarBase = ({
           aria-expanded={!collapsed}
           title={toggleLabel}
           onClick={onCollapsedToggle}
-          className={sidebarToggleStyles({ collapsed })}
+          className={sidebarMarkStyles()}
         >
-          <PanelLeft size={18} />
+          <img src="/favicon.png" alt="" className="size-full object-cover" />
         </UIButton>
       </div>
 
@@ -68,7 +59,7 @@ const UISidebarBase = ({
           >
             {titleKey &&
               (collapsed ? (
-                <div className="mx-2 my-1.5 h-px bg-blue-light" />
+                <div className="mx-2 my-1.5 h-px bg-white/10" />
               ) : (
                 <span className={sidebarCaptionStyles()}>{t(titleKey)}</span>
               ))}
@@ -88,15 +79,15 @@ const UISidebarBase = ({
       <div className={sidebarUserStyles({ collapsed })}>
         <div
           title={collapsed ? user.name : undefined}
-          className="flex size-8.5 shrink-0 items-center justify-center rounded-full bg-blue"
+          className="flex size-8.5 shrink-0 items-center justify-center rounded-full bg-blue/50"
         >
-          <span className="text-sm font-bold text-ice">{user.initials}</span>
+          <span className="text-sm font-bold text-white">{user.initials}</span>
         </div>
         {collapsed ? null : (
           <>
             <div className="flex min-w-0 flex-1 flex-col gap-px">
-              <span className="truncate text-sm font-bold text-ice">{user.name}</span>
-              <span className="truncate text-caption font-normal text-navy-muted">{user.meta}</span>
+              <span className="truncate text-sm font-semibold text-white">{user.name}</span>
+              <span className="truncate text-caption font-normal text-secondary">{user.meta}</span>
             </div>
             <UIButton
               size="icon"

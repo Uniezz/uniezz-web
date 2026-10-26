@@ -1,12 +1,12 @@
 import { cva } from 'class-variance-authority';
 
 export const sidebarStyles = cva(
-  'flex shrink-0 flex-col overflow-hidden bg-dark-blue bg-[radial-gradient(ellipse_170%_65%_at_8%_5%,color-mix(in_srgb,var(--color-blue-light)_40%,transparent)_0%,transparent_100%),radial-gradient(ellipse_150%_55%_at_90%_96%,color-mix(in_srgb,var(--color-accent)_24%,transparent)_0%,transparent_100%)] px-4 py-5 transition-[width] duration-200 ease-out motion-reduce:transition-none',
+  'flex shrink-0 flex-col overflow-hidden border-r border-white/10 bg-white/5 px-3 py-5 backdrop-blur-[40px] transition-[width] duration-200 ease-out motion-reduce:transition-none',
   {
     variants: {
       collapsed: {
-        true: 'w-18.5',
-        false: 'w-66',
+        true: 'w-17',
+        false: 'w-58',
       },
     },
     defaultVariants: {
@@ -15,45 +15,18 @@ export const sidebarStyles = cva(
   },
 );
 
-export const sidebarHeaderStyles = cva('flex pt-1.5 pb-5.5', {
-  variants: {
-    collapsed: {
-      true: 'w-10.5 flex-col items-center gap-2',
-      false: 'items-center gap-2.5 px-1',
-    },
-  },
-  defaultVariants: {
-    collapsed: false,
-  },
-});
+export const sidebarHeaderStyles = cva('flex items-center pt-1 pb-7');
 
-export const sidebarMarkStyles = cva(
-  'flex size-8.5 shrink-0 items-center justify-center rounded-[10px] bg-[linear-gradient(135deg,var(--color-blue-light)_0%,var(--color-blue)_100%)]',
-);
-
-export const sidebarToggleStyles = cva(
-  'flex size-8.5 shrink-0 items-center justify-center rounded-lg text-navy-muted outline-none hover:bg-blue hover:text-ice focus-visible:ring-2 focus-visible:ring-ice',
-  {
-    variants: {
-      collapsed: {
-        true: '',
-        false: 'ml-auto',
-      },
-    },
-    defaultVariants: {
-      collapsed: false,
-    },
-  },
-);
+export const sidebarMarkStyles = cva('size-10 shrink-0 overflow-hidden rounded-lg p-0');
 
 export const sidebarSettingsStyles = cva(
-  'shrink-0 rounded-md text-navy-muted outline-none hover:text-ice focus-visible:ring-2 focus-visible:ring-ice',
+  'shrink-0 rounded-md text-secondary outline-none hover:text-white focus-visible:ring-2 focus-visible:ring-blue',
 );
 
 export const sidebarGroupStyles = cva('flex flex-col gap-0.5', {
   variants: {
     collapsed: {
-      true: 'w-10.5',
+      true: 'w-10',
       false: '',
     },
     section: {
@@ -66,18 +39,19 @@ export const sidebarGroupStyles = cva('flex flex-col gap-0.5', {
   },
 });
 
-export const sidebarCaptionStyles = cva(
-  'text-caption font-bold tracking-[0.8px] text-navy-caption',
-);
+export const sidebarCaptionStyles = cva('text-caption font-semibold tracking-[0.8px] text-muted');
 
-export const sidebarUserStyles = cva('mt-auto flex items-center rounded-xl bg-navy-raised', {
-  variants: {
-    collapsed: {
-      true: 'w-10.5 justify-center p-1',
-      false: 'gap-2.5 p-2.5',
+export const sidebarUserStyles = cva(
+  'mt-auto flex items-center rounded-xl border border-white/10 bg-white/5',
+  {
+    variants: {
+      collapsed: {
+        true: 'w-10 justify-center p-1',
+        false: 'gap-2.5 p-2',
+      },
+    },
+    defaultVariants: {
+      collapsed: false,
     },
   },
-  defaultVariants: {
-    collapsed: false,
-  },
-});
+);

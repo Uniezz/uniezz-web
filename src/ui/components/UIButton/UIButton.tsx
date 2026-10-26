@@ -19,7 +19,7 @@ export const UIButton = ({
   size,
   bg,
   leftIcon: LeftIcon,
-  leftIconColor = 'white',
+  leftIconColor = bg === 'primary' || bg === 'gradient' || !bg ? 'primary' : 'white',
   className,
   type = 'button',
   disabled,

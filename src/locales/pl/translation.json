@@ -4,10 +4,10 @@
     "brand": {
       "communityText": "Poznawaj ludzi z UMCS, KUL, Politechniki, Przyrodniczego i WSEI.",
       "communityTitle": "Aktualności, czat i znajomości",
-      "description": "Uczelnie z Lublina, jedno konto. Zaloguj się danymi, których już używasz — hasło zostaje na stronie Twojej uczelni.",
+      "description": "Aktualności, czat, dawne egzaminy i studenci UMCS, KUL, Politechniki, Przyrodniczego oraz WSEI. Zaloguj się kontem otrzymanym od swojej uczelni.",
       "examsText": "Wspólne archiwum dawnych egzaminów, sylabusów i szczerych ocen wykładowców.",
       "examsTitle": "Egzaminy i opinie o kursach",
-      "headline": "Jedna platforma dla każdego studenta w Lublinie.",
+      "headline": "Wszyscy studenci Lublina w jednym miejscu.",
       "privacy": "Uniezz nigdy nie widzi ani nie przechowuje Twojego hasła uczelnianego.",
       "verifiedText": "Każde konto jest sprawdzane w katalogu uczelni, zanim zostanie aktywowane.",
       "verifiedTitle": "Tylko zweryfikowani studenci"
@@ -20,8 +20,8 @@
     "login": {
       "continueWith": "Kontynuuj z {{provider}}",
       "notice": "Konto mogą założyć tylko aktywni studenci pięciu lubelskich uczelni. Konta pracowników i absolwentów są odrzucane.",
-      "subtitle": "Wybierz swoją uczelnię — logowanie dokończysz na jej stronie logowania.",
-      "title": "Zaloguj się do Uniezz",
+      "subtitle": "Wybierz uczelnię i zaloguj się przez USOS lub kod wysłany na uczelniany e-mail.",
+      "title": "Zaloguj się",
       "yourUniversity": "TWOJA UCZELNIA"
     },
     "otp": {

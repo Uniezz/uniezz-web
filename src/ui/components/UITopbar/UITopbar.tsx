@@ -32,8 +32,8 @@ export const UITopbar = ({ title, subtitle, action, className, ...props }: UITop
   return (
     <header className={cn(topbarStyles(), className)} {...props}>
       <div className="flex min-w-0 flex-col gap-px">
-        <h1 className={topbarTitleStyles()}>{title}</h1>
         {subtitle ? <p className={topbarSubtitleStyles()}>{subtitle}</p> : null}
+        <h1 className={topbarTitleStyles()}>{title}</h1>
       </div>
 
       {/* TODO: connect to search API */}
@@ -43,7 +43,7 @@ export const UITopbar = ({ title, subtitle, action, className, ...props }: UITop
           type="text"
           aria-label={t('topbar.search')}
           placeholder={t('topbar.searchPlaceholder')}
-          className="min-w-0 flex-1 bg-transparent text-sm text-primary outline-none placeholder:text-muted"
+          className="min-w-0 flex-1 bg-transparent text-sm text-white outline-none placeholder:text-muted"
         />
       </label>
 
@@ -58,7 +58,7 @@ export const UITopbar = ({ title, subtitle, action, className, ...props }: UITop
           onClick={toggleLngMenu}
         >
           <Globe className="text-secondary" size={16} />
-          <span className="text-sm font-bold text-primary">{t('topbar.languageCode')}</span>
+          <span className="text-sm font-semibold text-white">{t('topbar.languageCode')}</span>
           <ChevronDown className="text-muted" size={14} />
         </UIButton>
 
@@ -90,9 +90,9 @@ export const UITopbar = ({ title, subtitle, action, className, ...props }: UITop
           bg="gradient"
           leftIcon={action.icon}
           onClick={action.onClick}
-          className="shrink-0 px-5 py-2.75 shadow-[0_4px_12px_#2D419559]"
+          className="shrink-0"
         >
-          <UIText size="regular" weight="semibold" color="white">
+          <UIText size="regular" weight="semibold" className="text-ink">
             {action.label}
           </UIText>
         </UIButton>

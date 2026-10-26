@@ -1,21 +1,19 @@
 import { cva } from 'class-variance-authority';
 
-export const topbarStyles = cva(
-  'flex h-17 items-center gap-5 border-b border-white-tertiary bg-white-primary px-7',
-);
+export const topbarStyles = cva('flex min-h-23 items-center gap-5 bg-transparent px-7 py-5');
 
 export const topbarTitleStyles = cva(
-  'text-[19px] leading-tight font-extrabold tracking-[-0.2px] text-primary',
+  'text-[26px] leading-tight font-semibold tracking-[-0.6px] text-white',
 );
 
-export const topbarSubtitleStyles = cva('text-[12px] font-normal text-muted');
+export const topbarSubtitleStyles = cva('text-[12px] font-medium text-secondary');
 
 export const topbarSearchStyles = cva(
-  'flex w-100 items-center gap-2.25 rounded-lg border border-white-tertiary bg-white-secondary px-3 py-2.25 focus-within:border-blue-light',
+  'flex w-72 items-center gap-2.25 rounded-full border border-white/10 bg-white/5 px-4 py-2.5 focus-within:border-blue focus-within:ring-2 focus-within:ring-blue/30 max-lg:hidden',
 );
 
 export const topbarControlStyles = cva(
-  'outline-none focus-visible:ring-2 focus-visible:ring-blue-light',
+  'outline-none focus-visible:ring-2 focus-visible:ring-blue',
   {
     variants: {
       kind: {

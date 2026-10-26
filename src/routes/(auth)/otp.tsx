@@ -2,7 +2,7 @@ import { AuthPage, OtpCodeField } from '@/components';
 import { useOtpScreen } from '@/hooks';
 import { UIButton, UIInput, UIText } from '@/ui/components';
 import { createFileRoute, redirect } from '@tanstack/react-router';
-import { ArrowLeft, AtSign, Check, Mail, Send, TriangleAlert } from 'lucide-react';
+import { ArrowLeft, AtSign, Check, LockKeyhole, Mail, Send } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/(auth)/otp')({
@@ -45,17 +45,21 @@ function OtpPage() {
       topText={topText}
       bottomText={bottomText}
       beforeTitle={
-        <button type="button" onClick={onBackPress} className="flex items-center gap-2 self-start">
-          <ArrowLeft size={16} className="text-secondary" />
-          <UIText weight="semibold" color="secondary">
+        <button
+          type="button"
+          onClick={onBackPress}
+          className="flex items-center gap-2 self-start rounded text-secondary outline-none hover:text-white focus-visible:ring-2 focus-visible:ring-blue"
+        >
+          <ArrowLeft size={16} />
+          <UIText weight="semibold" size="sm">
             {isEmailStep ? t('auth.backToUniversities') : t('auth.otp.changeEmail')}
           </UIText>
         </button>
       }
       headingIcon={
         isEmailStep ? undefined : (
-          <div className="mb-1 flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-soft">
-            <Mail size={20} className="text-blue-light" />
+          <div className="mb-1 flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10">
+            <Mail size={20} className="text-white" />
           </div>
         )
       }
@@ -81,12 +85,17 @@ function OtpPage() {
               cellCount={cellCount}
               errorText={codeError}
             />
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <UIText size="sm" color="gray">
                 {t('auth.otp.didntGetIt')}
               </UIText>
-              <button type="button" onClick={onResendPress} disabled={isPending}>
-                <UIText size="sm" color="primary" weight="semibold">
+              <button
+                type="button"
+                onClick={onResendPress}
+                disabled={isPending}
+                className="rounded text-periwinkle outline-none hover:text-white focus-visible:ring-2 focus-visible:ring-blue disabled:opacity-40"
+              >
+                <UIText size="sm" weight="semibold">
                   {t('auth.otp.resend')}
                 </UIText>
               </button>
@@ -103,14 +112,14 @@ function OtpPage() {
           type="submit"
           disabled={isButtonDisabled}
         >
-          <UIText weight="semibold" color="white">
+          <UIText weight="semibold" className="text-ink">
             {buttonText}
           </UIText>
         </UIButton>
         {isEmailStep ? null : (
-          <div className="flex flex-row items-start gap-2.5 rounded-xl bg-ice px-4 py-3">
-            <TriangleAlert className="text-blue" size={22} />
-            <UIText size="sm" color="secondary" className="min-w-0">
+          <div className="flex flex-row items-start gap-2.5 rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+            <LockKeyhole className="shrink-0 text-secondary" size={18} />
+            <UIText size="sm" color="secondary" className="min-w-0 text-xs leading-5">
               {t('auth.otp.notice')}
             </UIText>
           </div>

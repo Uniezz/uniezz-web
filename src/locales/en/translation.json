@@ -4,10 +4,10 @@
     "brand": {
       "communityText": "Meet people across UMCS, KUL, Politechnika, Przyrodniczy and WSEI.",
       "communityTitle": "Feed, chat and connections",
-      "description": "Lublin universities, one account. Sign in with the credentials you already use — your password stays on your university's own page.",
+      "description": "Feed, chat, past papers and people from UMCS, KUL, Politechnika, Przyrodniczy and WSEI. Sign in with the account your university already gave you.",
       "examsText": "A shared archive of past papers, syllabi and honest professor ratings.",
       "examsTitle": "Exams and course reviews",
-      "headline": "One platform for every student in Lublin.",
+      "headline": "Every student in Lublin, one place.",
       "privacy": "Uniezz never sees or stores your university password.",
       "verifiedText": "Every account is checked against the university directory before it goes live.",
       "verifiedTitle": "Verified students only"
@@ -20,8 +20,8 @@
     "login": {
       "continueWith": "Continue with {{provider}}",
       "notice": "Only active students of the five Lublin universities can create an account. Staff and alumni accounts are rejected.",
-      "subtitle": "Choose your university — you'll finish signing in on its own login page.",
-      "title": "Sign in to Uniezz",
+      "subtitle": "Choose your university to sign in with USOS or a university email code.",
+      "title": "Sign in",
       "yourUniversity": "YOUR UNIVERSITY"
     },
     "otp": {

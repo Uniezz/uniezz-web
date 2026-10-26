@@ -13,7 +13,7 @@ export function FinishLoginPage({ error }: FinishLoginPageProps) {
     >
       {error ? (
         <UIButton navigateTo="/login">
-          <UIText>Back to universities</UIText>
+          <UIText className="text-ink">Back to universities</UIText>
         </UIButton>
       ) : null}
     </AuthPage>
