@@ -26,7 +26,7 @@ function AppLayout() {
   }, [collapsed]);
 
   return (
-    <BrandBackground className="flex min-h-svh">
+    <BrandBackground variant="app" className="flex min-h-svh">
       <UISidebar
         className="sticky top-0 h-svh"
         user={CURRENT_USER}
