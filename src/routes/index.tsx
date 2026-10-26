@@ -65,7 +65,7 @@ function LandingPage() {
 
   return (
     <MotionConfig reducedMotion="user">
-      <div className="min-h-svh overflow-x-clip bg-[#0c0d14] text-white">
+      <div className="min-h-svh overflow-x-clip bg-[#0c0d14] text-white select-none">
         <div
           aria-hidden
           className="pointer-events-none fixed inset-0 z-60 bg-grain opacity-[0.06] mix-blend-overlay"
