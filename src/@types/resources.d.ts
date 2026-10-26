@@ -79,6 +79,76 @@ export default interface Resources {
       "subtitle": "Everything you need to live in Lublin",
       "title": "Student Guide"
     },
+    "landing": {
+      "community": {
+        "description": "Different courses. Different campuses.\nMore people you haven't met yet.",
+        "peopleBody": "Find someone for the coffee, the concert, or the walk home after a long day.",
+        "peopleLabel": "01 / YOUR PEOPLE",
+        "peopleTitle": "Start with a hello.",
+        "plansLabel": "02 / YOUR NEXT PLAN",
+        "plansTitle": "From ‘we should’\nto ‘see you there’.",
+        "quote": "‘Anyone up for coffee?’\nis a pretty good start.",
+        "quoteLabel": "NO BIG INTRODUCTION REQUIRED.",
+        "quoteSignoff": "YOUR FIRST MESSAGE, SORTED.",
+        "serif": "there's someone for it.",
+        "title": "Whatever your thing,"
+      },
+      "findPeople": "Find my people",
+      "footer": {
+        "city": "LUBLIN, POLAND",
+        "copyright": "© 2026 Uniezz. See you around.",
+        "privacy": "Privacy",
+        "statement": "Student life,\nopened up.",
+        "terms": "Terms"
+      },
+      "help": {
+        "borrowBody": "Find past papers and ask what an exam is really like. A student who's been there is a good place to start.",
+        "borrowTitle": "Borrow a little hindsight.",
+        "cityBody": "Study spots, everyday essentials and advice from the people who know student life in Lublin.",
+        "cityTitle": "Get to know your city.",
+        "description": "Someone's taken that exam. Found that café.\nAsked that question. Start with them.",
+        "eyebrow": "A LITTLE COLLECTIVE KNOW-HOW",
+        "shareBody": "Your notes might be exactly what someone needs. Share what helped you get through the semester.",
+        "shareTitle": "Pass it on.",
+        "title": "You don't have\nto figure it all\nout alone."
+      },
+      "hero": {
+        "account": "Your university account is your way in.",
+        "caption": "SOMEWHERE BETWEEN\nCLASS & YOUR NEXT PLAN.",
+        "description": "Meet students across Lublin. Find your next plan, swap a little knowledge, and make this city yours.",
+        "eyebrow": "LUBLIN, MEET YOUR PEOPLE.",
+        "scroll": "THERE'S MORE TO UNI ↓",
+        "serif": "between lectures.",
+        "title": "Life happens"
+      },
+      "invitation": {
+        "description": "Your people are here. Come say hello.",
+        "label": "THE CITY'S BETTER WITH YOU IN IT.",
+        "passAction": "Sign in to Uniezz",
+        "passBody": "A place for you in Lublin's student community.",
+        "passLabel": "STUDENT PASS",
+        "passNote": "USOS or university email. No new password.",
+        "passTitle": "You're invited.",
+        "serif": "at home.",
+        "title": "Make yourself"
+      },
+      "navCommunity": "Your community",
+      "navJoin": "How to join",
+      "navLife": "The Uniezz life",
+      "navigation": "Page sections",
+      "signIn": "Sign in",
+      "steps": {
+        "connectBody": "A shared course. A plan. A simple hello.",
+        "connectTitle": "Find your first connection",
+        "label": "GETTING IN IS SIMPLE",
+        "title": "A university account. A fresh start.",
+        "universityBody": "Your campus is the starting point.",
+        "universityTitle": "Choose your university",
+        "verifyBody": "Use USOS or a university email code.",
+        "verifyTitle": "Verify you're a student"
+      },
+      "universitiesLabel": "FIVE UNIVERSITIES.\nONE COMMUNITY."
+    },
     "sidebar": {
       "academics": "ACADEMICS",
       "collapse": "Collapse sidebar",

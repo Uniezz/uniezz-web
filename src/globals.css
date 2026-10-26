@@ -1,5 +1,7 @@
 @import 'tailwindcss';
 @import '@fontsource-variable/geist/wght.css';
+@import '@fontsource-variable/noto-serif-display/wdth.css';
+@import '@fontsource-variable/noto-serif-display/wdth-italic.css';
 
 @theme {
   --color-*: initial;
@@ -10,6 +12,16 @@
   --color-black: #000000;
 
   --font-sans: 'Geist Variable', sans-serif;
+  /* Condensed to match the design's Instrument Serif, which has no Cyrillic. */
+  --font-editorial: 'Noto Serif Display Variable', Georgia, serif;
+  --font-editorial--font-variation-settings: 'wdth' 62.5;
+
+  --animate-marquee: marquee 40s linear infinite;
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
 
   --text-caption: 11px;
   --text-sm: 13px;
@@ -98,8 +110,7 @@ body {
 
 @utility bg-mesh {
   background-color: #0c0d14;
-  background-image:
-    linear-gradient(90deg, #0c0d14b3, #0c0d1466), url('../docs/design/generated-1.png');
+  background-image: linear-gradient(90deg, #0c0d14b3, #0c0d1466), url('/auth-background.png');
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -121,7 +132,7 @@ body {
   &::before {
     z-index: -2;
     inset: -80px;
-    background: url('./assets/app-background.jpg') center / cover no-repeat;
+    background: url('/app-background.jpg') center / cover no-repeat;
     filter: blur(70px);
   }
 

@@ -77,6 +77,76 @@
     "subtitle": "Wszystko, czego potrzebujesz, żeby żyć w Lublinie",
     "title": "Przewodnik studenta"
   },
+  "landing": {
+    "navigation": "Sekcje strony",
+    "navLife": "Życie z Uniezz",
+    "navCommunity": "Twoja społeczność",
+    "navJoin": "Jak dołączyć",
+    "signIn": "Zaloguj się",
+    "findPeople": "Poznaj swoich ludzi",
+    "universitiesLabel": "PIĘĆ UCZELNI.\nJEDNA SPOŁECZNOŚĆ.",
+    "hero": {
+      "eyebrow": "LUBLIN, POZNAJ SWOICH LUDZI.",
+      "title": "Życie dzieje się",
+      "serif": "między zajęciami.",
+      "description": "Poznawaj studentów z całego Lublina. Znajdź kolejne plany, wymieniaj się wiedzą i poczuj się tu jak u siebie.",
+      "account": "Wystarczy konto Twojej uczelni.",
+      "scroll": "TO DOPIERO POCZĄTEK ↓",
+      "caption": "GDZIEŚ MIĘDZY\nZAJĘCIAMI A NOWYMI PLANAMI."
+    },
+    "community": {
+      "title": "Cokolwiek lubisz,",
+      "serif": "znajdziesz tu swoich ludzi.",
+      "description": "Różne kierunki. Różne kampusy.\nWięcej osób, których jeszcze nie znasz.",
+      "peopleLabel": "01 / TWOI LUDZIE",
+      "peopleTitle": "Zacznij od cześć.",
+      "peopleBody": "Znajdź kogoś na kawę, koncert albo wspólny powrót po długim dniu.",
+      "plansLabel": "02 / TWÓJ KOLEJNY PLAN",
+      "plansTitle": "Od „musimy się spotkać”\ndo „widzimy się tam”.",
+      "quoteLabel": "NIE POTRZEBA WIELKIEGO WSTĘPU.",
+      "quote": "„Ktoś chętny na kawę?”\nto świetny początek.",
+      "quoteSignoff": "PIERWSZA WIADOMOŚĆ GOTOWA."
+    },
+    "help": {
+      "eyebrow": "WIEDZA, KTÓRĄ DZIELIMY SIĘ RAZEM",
+      "title": "Nie musisz\nwszystkiego\nrozgryzać samodzielnie.",
+      "description": "Ktoś już zdawał ten egzamin. Znalazł tę kawiarnię.\nZadał to pytanie. Zacznij od nich.",
+      "borrowTitle": "Skorzystaj z doświadczeń innych.",
+      "borrowBody": "Znajdź arkusze z poprzednich lat i zapytaj, jak naprawdę wygląda egzamin. Ktoś już przez to przeszedł.",
+      "shareTitle": "Podaj dalej.",
+      "shareBody": "Twoje notatki mogą być dokładnie tym, czego ktoś potrzebuje. Podziel się tym, co pomogło Ci w semestrze.",
+      "cityTitle": "Poznaj swoje miasto.",
+      "cityBody": "Miejsca do nauki, codzienne sprawy i rady od osób, które znają studencki Lublin."
+    },
+    "steps": {
+      "title": "Konto uczelni. Nowy początek.",
+      "label": "DOŁĄCZENIE JEST PROSTE",
+      "universityTitle": "Wybierz swoją uczelnię",
+      "universityBody": "Zacznij od swojego kampusu.",
+      "verifyTitle": "Potwierdź, że studiujesz",
+      "verifyBody": "Użyj USOS lub kodu wysłanego na uczelniany e-mail.",
+      "connectTitle": "Nawiąż pierwszą znajomość",
+      "connectBody": "Wspólny kurs. Plan. Proste cześć."
+    },
+    "invitation": {
+      "label": "MIASTO JEST LEPSZE, GDY JESTEŚ W NIM TY.",
+      "title": "Poczuj się",
+      "serif": "jak u siebie.",
+      "description": "Twoi ludzie są tutaj. Przywitaj się.",
+      "passLabel": "KARTA STUDENTA",
+      "passTitle": "Zapraszamy.",
+      "passBody": "Miejsce dla Ciebie w lubelskiej społeczności studenckiej.",
+      "passAction": "Zaloguj się do Uniezz",
+      "passNote": "USOS lub uczelniany e-mail. Bez nowego hasła."
+    },
+    "footer": {
+      "city": "LUBLIN, POLSKA",
+      "statement": "Życie studenckie,\nna nowo.",
+      "copyright": "© 2026 Uniezz. Do zobaczenia.",
+      "privacy": "Prywatność",
+      "terms": "Regulamin"
+    }
+  },
   "sidebar": {
     "academics": "NAUKA",
     "collapse": "Zwiń panel boczny",
