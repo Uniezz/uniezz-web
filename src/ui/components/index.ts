@@ -1,3 +1,4 @@
+export * from './BrandBackground';
 export * from './UIAvatar';
 export * from './UIBadge';
 export * from './UIButton';

@@ -25,7 +25,7 @@ export const UIMenu = ({ options, value, onSelect }: UIMenuProps) => (
         >
           <option.Icon className="h-4 w-6 shrink-0 rounded-xs" />
           <span className="flex-1 text-left">{option.label}</span>
-          {isActive ? <Check className="text-blue-light" size={16} /> : null}
+          {isActive ? <Check className="text-periwinkle" size={16} /> : null}
         </UIButton>
       );
     })}

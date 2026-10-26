@@ -1,4 +1,4 @@
-import { UISidebar } from '@/ui/components';
+import { BrandBackground, UISidebar } from '@/ui/components';
 import { Outlet, createFileRoute } from '@tanstack/react-router';
 import { useCallback, useState } from 'react';
 
@@ -26,7 +26,7 @@ function AppLayout() {
   }, [collapsed]);
 
   return (
-    <div className="flex min-h-svh bg-white-secondary">
+    <BrandBackground variant="app" className="flex min-h-svh">
       <UISidebar
         className="sticky top-0 h-svh"
         user={CURRENT_USER}
@@ -36,6 +36,6 @@ function AppLayout() {
       <main className="min-w-0 flex-1">
         <Outlet />
       </main>
-    </div>
+    </BrandBackground>
   );
 }

@@ -22,7 +22,7 @@ export const textStyles = cva('', {
       secondary: 'text-secondary',
       white: 'text-white-primary',
       error: 'text-danger',
-      gray: 'text-gray',
+      gray: 'text-muted',
     },
   },
   defaultVariants: {

@@ -29,9 +29,9 @@ export const OtpCodeField = ({ value, onChange, cellCount, errorText }: OtpCodeF
             <div
               key={index}
               className={cn(
-                'flex h-15.5 flex-1 items-center justify-center rounded-xl border text-2xl font-bold',
-                isFocused ? 'border-blue-light' : 'border-gray',
-                isEntered ? 'bg-transparent text-primary' : 'bg-blue-soft text-primary',
+                'flex h-14 min-w-0 flex-1 items-center justify-center rounded-xl border bg-white/5 text-xl font-semibold text-white',
+                isFocused ? 'border-white/60' : 'border-white/10',
+                isEntered ? 'bg-white/10' : '',
               )}
             >
               {digit}

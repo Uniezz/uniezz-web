@@ -5,13 +5,13 @@ export const badgeStyles = cva(
   {
     variants: {
       type: {
-        warning: 'border-warning-soft bg-warning-soft',
-        info: 'border-blue-soft bg-blue-soft',
-        success: 'border-success-soft bg-success-soft',
-        danger: 'border-danger-soft bg-danger-soft',
-        counter: 'border-blue-light bg-blue-light',
+        warning: 'border-warning/20 bg-warning/15',
+        info: 'border-blue/20 bg-blue/15',
+        success: 'border-success/20 bg-success/15',
+        danger: 'border-danger/20 bg-danger/15',
+        counter: 'border-blue bg-blue',
         counterNegative: 'border-danger bg-danger',
-        note: 'border-white-tertiary bg-ice',
+        note: 'border-white/10 bg-white/5',
       },
     },
     defaultVariants: {
@@ -25,11 +25,11 @@ export const badgeTextStyles = cva('text-sm font-semibold', {
     color: {
       success: 'text-success',
       warning: 'text-warning',
-      info: 'text-blue',
+      info: 'text-periwinkle',
       danger: 'text-danger',
       counter: 'text-white-primary',
       counterNegative: 'text-white-primary',
-      note: 'text-secondary',
+      note: 'text-white/70',
     },
   },
   defaultVariants: {

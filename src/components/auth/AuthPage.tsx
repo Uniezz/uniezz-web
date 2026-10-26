@@ -1,72 +1,58 @@
-import { UIButton, UIMenu, UIText } from '@/ui/components';
+import { useDropdown } from '@/hooks/useDropdown';
+import { BrandBackground, UIButton, UIMenu, UIText } from '@/ui/components';
+import { LNG_OPTIONS } from '@/utils';
 import { ChevronDown, Globe } from 'lucide-react';
 import { type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AuthBrand } from './AuthBrand';
-import i18n from 'i18next';
-import { LNG_OPTIONS } from '@/utils';
-import { useDropdown } from '@/hooks/useDropdown';
 
 type AuthLayoutProps = {
   children: ReactNode;
-  compact?: boolean;
 };
 
-export const AuthLayout = ({ children, compact = false }: AuthLayoutProps) => {
-  const { t } = useTranslation();
+export const AuthLayout = ({ children }: AuthLayoutProps) => {
+  const { t, i18n } = useTranslation();
   const { ref: lngMenuRef, isOpen: isLngOpen, toggle: toggleLngMenu } = useDropdown();
 
-  const changeLanguage = (lng: string) => {
-    i18n.changeLanguage(lng);
-  };
-
   return (
-    <main className="page">
-      <div className="flex h-full w-full">
-        <AuthBrand />
-        <div
-          className={`flex h-full w-3/5 flex-col items-center justify-start overflow-y-auto bg-ice ${compact ? 'gap-2 py-2' : 'gap-3 py-4'}`}
-        >
-          <div className="mt-auto flex w-full max-w-120 items-center justify-end gap-2">
-            {compact && import.meta.env.DEV ? (
-              <UIButton bg="secondary" size="pill" navigateTo="/feed">
-                <UIText size="sm" color="secondary">
-                  Skip login (dev) → Feed
-                </UIText>
-              </UIButton>
-            ) : null}
-            <div className="relative" ref={lngMenuRef}>
+    <main className="min-h-svh">
+      <BrandBackground className="relative min-h-svh overflow-hidden px-6 py-8 sm:px-12 lg:px-16">
+        <div className="pointer-events-none absolute inset-0 bg-ink/25" />
+        <div className="relative mx-auto flex min-h-[calc(100svh-64px)] max-w-360 flex-col gap-12 lg:flex-row lg:items-center lg:gap-16">
+          <AuthBrand />
+          <div className="flex w-full flex-col items-center justify-center pb-8 lg:w-120 lg:shrink-0 lg:pb-0">
+            <div className="absolute top-0 right-0 z-10" ref={lngMenuRef}>
               <UIButton
-                leftIconColor="gray"
+                leftIconColor="white"
                 leftIcon={Globe}
                 bg="secondary"
                 size="pill"
                 onClick={toggleLngMenu}
+                aria-label={t('topbar.changeLanguage')}
+                aria-expanded={isLngOpen}
               >
-                <UIText weight="semibold" size="sm">
-                  {t('topbar.languageCode')}
-                </UIText>
-                <ChevronDown className="text-gray" size={14} />
+                {t('topbar.languageCode')}
+                <ChevronDown size={14} />
               </UIButton>
               {isLngOpen ? (
                 <UIMenu
                   options={LNG_OPTIONS}
                   value={i18n.resolvedLanguage ?? i18n.language}
-                  onSelect={changeLanguage}
+                  onSelect={(language) => void i18n.changeLanguage(language)}
                 />
               ) : null}
             </div>
+            {import.meta.env.DEV ? (
+              <UIButton bg="secondary" size="pill" navigateTo="/feed" className="mb-3 self-end">
+                Skip login (dev) → Feed
+              </UIButton>
+            ) : null}
+            <div className="w-full rounded-[32px] border border-white/10 bg-ink/90 p-6 shadow-2xl backdrop-blur-3xl sm:p-8">
+              {children}
+            </div>
           </div>
-          <div
-            className={`flex w-full max-w-120 flex-col rounded-2xl bg-white-primary ${compact ? 'gap-3 px-6 py-4' : 'gap-6 px-9 py-8.5'}`}
-          >
-            {children}
-          </div>
-          <UIText size="sm" color="secondary" className="mb-auto">
-            {t('auth.terms')}
-          </UIText>
         </div>
-      </div>
+      </BrandBackground>
     </main>
   );
 };
@@ -85,20 +71,18 @@ export const AuthPage = ({
   bottomText,
   beforeTitle,
   headingIcon,
-}: AuthPageProps) => {
-  return (
-    <>
-      {beforeTitle}
-      <div className="flex flex-col items-start gap-2">
-        {headingIcon}
-        <UIText size="xxl" weight="bold">
-          {topText}
-        </UIText>
-        <UIText size="regular" color="gray">
-          {bottomText}
-        </UIText>
-      </div>
-      {children}
-    </>
-  );
-};
+}: AuthPageProps) => (
+  <div className="flex flex-col gap-6">
+    {beforeTitle}
+    <div className="flex flex-col items-start gap-2">
+      {headingIcon}
+      <UIText as="h2" size="xl" weight="semibold">
+        {topText}
+      </UIText>
+      <UIText size="sm" color="secondary" className="leading-5">
+        {bottomText}
+      </UIText>
+    </div>
+    {children}
+  </div>
+);

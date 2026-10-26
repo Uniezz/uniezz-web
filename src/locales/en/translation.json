@@ -1,0 +1,165 @@
+{
+  "auth": {
+    "backToUniversities": "Back to universities",
+    "brand": {
+      "communityText": "Meet people across UMCS, KUL, Politechnika, Przyrodniczy and WSEI.",
+      "communityTitle": "Feed, chat and connections",
+      "description": "Feed, chat, past papers and people from UMCS, KUL, Politechnika, Przyrodniczy and WSEI. Sign in with the account your university already gave you.",
+      "examsText": "A shared archive of past papers, syllabi and honest professor ratings.",
+      "examsTitle": "Exams and course reviews",
+      "headline": "Every student in Lublin, one place.",
+      "privacy": "Uniezz never sees or stores your university password.",
+      "verifiedText": "Every account is checked against the university directory before it goes live.",
+      "verifiedTitle": "Verified students only"
+    },
+    "errors": {
+      "codeInvalid": "Enter the 6-digit code we sent you.",
+      "emailInvalid": "Please, provide correct email address",
+      "emailRequired": "Enter your university email address."
+    },
+    "login": {
+      "continueWith": "Continue with {{provider}}",
+      "notice": "Only active students of the five Lublin universities can create an account. Staff and alumni accounts are rejected.",
+      "subtitle": "Choose your university to sign in with USOS or a university email code.",
+      "title": "Sign in",
+      "yourUniversity": "YOUR UNIVERSITY"
+    },
+    "otp": {
+      "changeEmail": "Change email",
+      "codeLabel": "6-digit verification code",
+      "codeSubtitle": "We sent a six-digit code to {{email}}. It expires in 10 minutes.",
+      "codeTitle": "Check your university inbox",
+      "codesPerHour": "3 codes per hour",
+      "didntGetIt": "Didn't get it?",
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@university.edu",
+      "emailSubtitle": "We'll send a six-digit code to this inbox. Use the address your university issued.",
+      "emailTitle": "Provide your university email",
+      "notice": "Email sign-in confirms your university domain only. Faculty and year of study stay self-declared until your account is linked to USOS or your university directory.",
+      "resend": "Resend code",
+      "resendIn": "Resend in {{time}}",
+      "send": "Send code",
+      "verify": "Verify and continue"
+    },
+    "terms": "By continuing you agree to the Terms of Use and Privacy Policy · GDPR",
+    "usos": {
+      "notice": "UMCS students sign in on USOS. We only receive the identity USOS sends back.",
+      "open": "Open USOS login",
+      "subtitle": "You'll finish signing in on UMCS's own USOS page. Uniezz never sees your password.",
+      "title": "Continue with UMCS"
+    }
+  },
+  "chat": {
+    "action": "New group",
+    "subtitle": "Direct messages and group chats",
+    "title": "Chat"
+  },
+  "common": {
+    "appName": "Uniezz"
+  },
+  "connections": {
+    "action": "Edit preferences",
+    "subtitle": "Meet students across all five universities",
+    "title": "Connections"
+  },
+  "exams": {
+    "action": "Upload material",
+    "subtitle": "Past papers, course reviews and professor ratings",
+    "title": "Exams & Courses"
+  },
+  "feed": {
+    "action": "Create post",
+    "subtitle": "What's happening across Lublin",
+    "title": "Feed"
+  },
+  "guide": {
+    "action": "Suggest a place",
+    "subtitle": "Everything you need to live in Lublin",
+    "title": "Student Guide"
+  },
+  "landing": {
+    "navigation": "Page sections",
+    "navLife": "The Uniezz life",
+    "navCommunity": "Your community",
+    "navJoin": "How to join",
+    "signIn": "Sign in",
+    "findPeople": "Find my people",
+    "universitiesLabel": "FIVE UNIVERSITIES.\nONE COMMUNITY.",
+    "hero": {
+      "eyebrow": "LUBLIN, MEET YOUR PEOPLE.",
+      "title": "Life happens",
+      "serif": "between lectures.",
+      "description": "Meet students across Lublin. Find your next plan, swap a little knowledge, and make this city yours.",
+      "account": "Your university account is your way in.",
+      "scroll": "THERE'S MORE TO UNI ↓",
+      "caption": "SOMEWHERE BETWEEN\nCLASS & YOUR NEXT PLAN."
+    },
+    "community": {
+      "title": "Whatever your thing,",
+      "serif": "there's someone for it.",
+      "description": "Different courses. Different campuses.\nMore people you haven't met yet.",
+      "peopleLabel": "01 / YOUR PEOPLE",
+      "peopleTitle": "Start with a hello.",
+      "peopleBody": "Find someone for the coffee, the concert, or the walk home after a long day.",
+      "plansLabel": "02 / YOUR NEXT PLAN",
+      "plansTitle": "From ‘we should’\nto ‘see you there’.",
+      "quoteLabel": "NO BIG INTRODUCTION REQUIRED.",
+      "quote": "‘Anyone up for coffee?’\nis a pretty good start.",
+      "quoteSignoff": "YOUR FIRST MESSAGE, SORTED."
+    },
+    "help": {
+      "eyebrow": "A LITTLE COLLECTIVE KNOW-HOW",
+      "title": "You don't have\nto figure it all\nout alone.",
+      "description": "Someone's taken that exam. Found that café.\nAsked that question. Start with them.",
+      "borrowTitle": "Borrow a little hindsight.",
+      "borrowBody": "Find past papers and ask what an exam is really like. A student who's been there is a good place to start.",
+      "shareTitle": "Pass it on.",
+      "shareBody": "Your notes might be exactly what someone needs. Share what helped you get through the semester.",
+      "cityTitle": "Get to know your city.",
+      "cityBody": "Study spots, everyday essentials and advice from the people who know student life in Lublin."
+    },
+    "steps": {
+      "title": "A university account. A fresh start.",
+      "label": "GETTING IN IS SIMPLE",
+      "universityTitle": "Choose your university",
+      "universityBody": "Your campus is the starting point.",
+      "verifyTitle": "Verify you're a student",
+      "verifyBody": "Use USOS or a university email code.",
+      "connectTitle": "Find your first connection",
+      "connectBody": "A shared course. A plan. A simple hello."
+    },
+    "invitation": {
+      "label": "THE CITY'S BETTER WITH YOU IN IT.",
+      "title": "Make yourself",
+      "serif": "at home.",
+      "description": "Your people are here. Come say hello.",
+      "passLabel": "STUDENT PASS",
+      "passTitle": "You're invited.",
+      "passBody": "A place for you in Lublin's student community.",
+      "passAction": "Sign in to Uniezz",
+      "passNote": "USOS or university email. No new password."
+    },
+    "footer": {
+      "city": "LUBLIN, POLAND",
+      "statement": "Student life,\nopened up.",
+      "copyright": "© 2026 Uniezz. See you around.",
+      "privacy": "Privacy",
+      "terms": "Terms"
+    },
+    "appsSoon": "Coming soon"
+  },
+  "sidebar": {
+    "academics": "ACADEMICS",
+    "collapse": "Collapse sidebar",
+    "expand": "Expand sidebar",
+    "mainNavigation": "Main navigation",
+    "settings": "Settings"
+  },
+  "topbar": {
+    "changeLanguage": "Change language",
+    "languageCode": "EN",
+    "notifications": "Notifications",
+    "search": "Search",
+    "searchPlaceholder": "Search posts, people, courses…"
+  }
+}

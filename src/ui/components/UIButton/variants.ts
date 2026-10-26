@@ -1,28 +1,23 @@
 import { cva } from 'class-variance-authority';
 
 export const buttonStyles = cva(
-  'inline-flex items-center justify-center gap-2 rounded-lg disabled:cursor-not-allowed disabled:opacity-60 aria-disabled:cursor-not-allowed aria-disabled:opacity-60',
+  'inline-flex items-center justify-center gap-2 rounded-full border font-semibold transition-colors outline-none focus-visible:ring-2 focus-visible:ring-blue focus-visible:ring-offset-2 focus-visible:ring-offset-ink disabled:cursor-not-allowed disabled:opacity-40 aria-disabled:cursor-not-allowed aria-disabled:opacity-40',
   {
     variants: {
       size: {
-        sm: 'px-3.5 py-1.75',
-        md: 'px-4.5 py-2.5',
-        lg: 'px-6 py-3.25',
-        pill: 'rounded-full px-1.5 py-0.75',
-        icon: 'p-1',
+        sm: 'min-h-8 px-3.5 py-1.5 text-sm',
+        md: 'min-h-10 px-5 py-2 text-sm',
+        lg: 'min-h-12 px-6 py-3 text-base',
+        pill: 'min-h-8 px-3 py-1 text-xs',
+        icon: 'size-9 p-2',
       },
       bg: {
-        primary:
-          'border border-blue-light bg-blue-light enabled:hover:border-blue enabled:hover:bg-blue',
-        secondary:
-          'border border-white-tertiary bg-white-primary enabled:hover:border-white-tertiary enabled:hover:bg-white-secondary',
-        ghost:
-          'border border-white-primary bg-white-primary enabled:hover:border-accent-soft enabled:hover:bg-accent-soft',
-        danger:
-          'border border-danger bg-danger enabled:hover:border-danger-hover enabled:hover:bg-danger-hover',
-        transparent: 'border border-transparent bg-transparent',
-        gradient:
-          'border-blue-light bg-blue-light bg-[linear-gradient(0deg,#FFFFFF00_0%,#FFFFFF33_100%)] enabled:hover:border-blue enabled:hover:bg-blue',
+        primary: 'border-white bg-white text-ink enabled:hover:bg-white/85',
+        secondary: 'border-white/10 bg-white/10 text-white enabled:hover:bg-white/20',
+        ghost: 'border-white/10 bg-transparent text-white enabled:hover:bg-white/10',
+        danger: 'border-danger bg-danger text-white enabled:hover:bg-danger-hover',
+        transparent: 'border-transparent bg-transparent text-white enabled:hover:bg-white/10',
+        gradient: 'border-white bg-white text-ink enabled:hover:bg-white/85',
       },
     },
     defaultVariants: {
@@ -34,6 +29,6 @@ export const buttonStyles = cva(
 
 export const iconColorClass = {
   white: 'text-white-primary',
-  primary: 'text-primary',
-  gray: 'text-gray',
+  primary: 'text-ink',
+  gray: 'text-secondary',
 } as const;

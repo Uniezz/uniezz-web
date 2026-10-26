@@ -30,7 +30,7 @@ export const UINavItem = ({
       to={to}
       title={collapsed ? label : undefined}
       aria-label={collapsed ? label : undefined}
-      className="block rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-ice"
+      className="block rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-blue"
     >
       {({ isActive }) => (
         <div className={cn(navItemStyles({ active: isActive, collapsed }), className)}>

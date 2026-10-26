@@ -4,6 +4,8 @@ Source of truth: **`uniezz-web-app.pen`** (pen.dev). Everything below is exporte
 
 ## Screens
 
+Landing page: [Desktop](exports/landing/00-landing-web.png) · [Mobile web](exports/landing/00-landing-mobile.png) · [Hero](exports/landing/00-landing-hero.png). The `00 · Landing` frames pair the v2 dark visual system with Instrument Serif editorial accents, cinematic student photography, a warm paper section for shared knowledge, and a cobalt student invitation. Primary actions lead into university sign-in. The campaign student photographs are AI-generated concept imagery; these are design layouts, not a wired website. Responsive and proposed motion behavior are recorded in the frames' context.
+
 | #   | Web (1440×1024)                                                            | iOS (393×852)                                        |
 | --- | -------------------------------------------------------------------------- | ---------------------------------------------------- |
 | 01  | [Sign In · UMCS / USOS](exports/web/01-sign-in.png)                        | [Sign In](exports/ios/01-sign-in.png)                |

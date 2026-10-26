@@ -1,25 +1,28 @@
 import { cva } from 'class-variance-authority';
 
-export const avatarStyles = cva('flex items-center justify-center overflow-hidden rounded-full', {
-  variants: {
-    size: {
-      sm: 'h-7 w-7',
-      md: 'h-9 w-9',
-      regular: 'h-11 w-11',
-      lg: 'h-14 w-14',
+export const avatarStyles = cva(
+  'flex items-center justify-center overflow-hidden rounded-full border border-white/10',
+  {
+    variants: {
+      size: {
+        sm: 'h-7 w-7',
+        md: 'h-9 w-9',
+        regular: 'h-11 w-11',
+        lg: 'h-14 w-14',
+      },
+      withImage: {
+        false: 'bg-blue/25',
+        true: '',
+      },
     },
-    withImage: {
-      false: 'bg-blue',
-      true: '',
+    defaultVariants: {
+      size: 'regular',
+      withImage: false,
     },
   },
-  defaultVariants: {
-    size: 'regular',
-    withImage: false,
-  },
-});
+);
 
-export const avatarTextStyles = cva('font-bold text-ice', {
+export const avatarTextStyles = cva('font-semibold text-white', {
   variants: {
     size: {
       sm: 'text-caption',

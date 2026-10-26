@@ -1,0 +1,165 @@
+{
+  "auth": {
+    "backToUniversities": "Wróć do uczelni",
+    "brand": {
+      "communityText": "Poznawaj ludzi z UMCS, KUL, Politechniki, Przyrodniczego i WSEI.",
+      "communityTitle": "Aktualności, czat i znajomości",
+      "description": "Aktualności, czat, dawne egzaminy i studenci UMCS, KUL, Politechniki, Przyrodniczego oraz WSEI. Zaloguj się kontem otrzymanym od swojej uczelni.",
+      "examsText": "Wspólne archiwum dawnych egzaminów, sylabusów i szczerych ocen wykładowców.",
+      "examsTitle": "Egzaminy i opinie o kursach",
+      "headline": "Wszyscy studenci Lublina w jednym miejscu.",
+      "privacy": "Uniezz nigdy nie widzi ani nie przechowuje Twojego hasła uczelnianego.",
+      "verifiedText": "Każde konto jest sprawdzane w katalogu uczelni, zanim zostanie aktywowane.",
+      "verifiedTitle": "Tylko zweryfikowani studenci"
+    },
+    "errors": {
+      "codeInvalid": "Wpisz 6-cyfrowy kod, który Ci wysłaliśmy.",
+      "emailInvalid": "Podaj poprawny adres e-mail",
+      "emailRequired": "Wpisz swój uczelniany adres e-mail."
+    },
+    "login": {
+      "continueWith": "Kontynuuj z {{provider}}",
+      "notice": "Konto mogą założyć tylko aktywni studenci pięciu lubelskich uczelni. Konta pracowników i absolwentów są odrzucane.",
+      "subtitle": "Wybierz uczelnię i zaloguj się przez USOS lub kod wysłany na uczelniany e-mail.",
+      "title": "Zaloguj się",
+      "yourUniversity": "TWOJA UCZELNIA"
+    },
+    "otp": {
+      "changeEmail": "Zmień e-mail",
+      "codeLabel": "6-cyfrowy kod weryfikacyjny",
+      "codeSubtitle": "Wysłaliśmy sześciocyfrowy kod na adres {{email}}. Wygasa za 10 minut.",
+      "codeTitle": "Sprawdź skrzynkę uczelnianą",
+      "codesPerHour": "3 kody na godzinę",
+      "didntGetIt": "Nie dotarł?",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "ty@uczelnia.edu",
+      "emailSubtitle": "Wyślemy sześciocyfrowy kod na ten adres. Użyj adresu nadanego przez uczelnię.",
+      "emailTitle": "Podaj uczelniany e-mail",
+      "notice": "Logowanie e-mailem potwierdza tylko domenę uczelni. Wydział i rok studiów są deklarowane przez Ciebie, dopóki konto nie zostanie połączone z USOS lub katalogiem uczelni.",
+      "resend": "Wyślij kod ponownie",
+      "resendIn": "Wyślij ponownie za {{time}}",
+      "send": "Wyślij kod",
+      "verify": "Zweryfikuj i kontynuuj"
+    },
+    "terms": "Kontynuując, akceptujesz Regulamin i Politykę prywatności · RODO",
+    "usos": {
+      "notice": "Studenci UMCS logują się przez USOS. Otrzymujemy tylko tożsamość, którą przesyła USOS.",
+      "open": "Otwórz logowanie USOS",
+      "subtitle": "Logowanie dokończysz na stronie USOS UMCS. Uniezz nigdy nie widzi Twojego hasła.",
+      "title": "Kontynuuj z UMCS"
+    }
+  },
+  "chat": {
+    "action": "Nowa grupa",
+    "subtitle": "Wiadomości prywatne i czaty grupowe",
+    "title": "Czat"
+  },
+  "common": {
+    "appName": "Uniezz"
+  },
+  "connections": {
+    "action": "Edytuj preferencje",
+    "subtitle": "Poznawaj studentów ze wszystkich pięciu uczelni",
+    "title": "Znajomości"
+  },
+  "exams": {
+    "action": "Dodaj materiał",
+    "subtitle": "Dawne egzaminy, opinie o kursach i oceny wykładowców",
+    "title": "Egzaminy i kursy"
+  },
+  "feed": {
+    "action": "Dodaj post",
+    "subtitle": "Co się dzieje w Lublinie",
+    "title": "Aktualności"
+  },
+  "guide": {
+    "action": "Zaproponuj miejsce",
+    "subtitle": "Wszystko, czego potrzebujesz, żeby żyć w Lublinie",
+    "title": "Przewodnik studenta"
+  },
+  "landing": {
+    "navigation": "Sekcje strony",
+    "navLife": "Życie z Uniezz",
+    "navCommunity": "Twoja społeczność",
+    "navJoin": "Jak dołączyć",
+    "signIn": "Zaloguj się",
+    "findPeople": "Poznaj swoich ludzi",
+    "universitiesLabel": "PIĘĆ UCZELNI.\nJEDNA SPOŁECZNOŚĆ.",
+    "hero": {
+      "eyebrow": "LUBLIN, POZNAJ SWOICH LUDZI.",
+      "title": "Życie dzieje się",
+      "serif": "między zajęciami.",
+      "description": "Poznawaj studentów z całego Lublina. Znajdź kolejne plany, wymieniaj się wiedzą i poczuj się tu jak u siebie.",
+      "account": "Wystarczy konto Twojej uczelni.",
+      "scroll": "TO DOPIERO POCZĄTEK ↓",
+      "caption": "GDZIEŚ MIĘDZY\nZAJĘCIAMI A NOWYMI PLANAMI."
+    },
+    "community": {
+      "title": "Cokolwiek lubisz,",
+      "serif": "znajdziesz tu swoich ludzi.",
+      "description": "Różne kierunki. Różne kampusy.\nWięcej osób, których jeszcze nie znasz.",
+      "peopleLabel": "01 / TWOI LUDZIE",
+      "peopleTitle": "Zacznij od cześć.",
+      "peopleBody": "Znajdź kogoś na kawę, koncert albo wspólny powrót po długim dniu.",
+      "plansLabel": "02 / TWÓJ KOLEJNY PLAN",
+      "plansTitle": "Od „musimy się spotkać”\ndo „widzimy się tam”.",
+      "quoteLabel": "NIE POTRZEBA WIELKIEGO WSTĘPU.",
+      "quote": "„Ktoś chętny na kawę?”\nto świetny początek.",
+      "quoteSignoff": "PIERWSZA WIADOMOŚĆ GOTOWA."
+    },
+    "help": {
+      "eyebrow": "WIEDZA, KTÓRĄ DZIELIMY SIĘ RAZEM",
+      "title": "Nie musisz\nwszystkiego\nrozgryzać samodzielnie.",
+      "description": "Ktoś już zdawał ten egzamin. Znalazł tę kawiarnię.\nZadał to pytanie. Zacznij od nich.",
+      "borrowTitle": "Skorzystaj z doświadczeń innych.",
+      "borrowBody": "Znajdź arkusze z poprzednich lat i zapytaj, jak naprawdę wygląda egzamin. Ktoś już przez to przeszedł.",
+      "shareTitle": "Podaj dalej.",
+      "shareBody": "Twoje notatki mogą być dokładnie tym, czego ktoś potrzebuje. Podziel się tym, co pomogło Ci w semestrze.",
+      "cityTitle": "Poznaj swoje miasto.",
+      "cityBody": "Miejsca do nauki, codzienne sprawy i rady od osób, które znają studencki Lublin."
+    },
+    "steps": {
+      "title": "Konto uczelni. Nowy początek.",
+      "label": "DOŁĄCZENIE JEST PROSTE",
+      "universityTitle": "Wybierz swoją uczelnię",
+      "universityBody": "Zacznij od swojego kampusu.",
+      "verifyTitle": "Potwierdź, że studiujesz",
+      "verifyBody": "Użyj USOS lub kodu wysłanego na uczelniany e-mail.",
+      "connectTitle": "Nawiąż pierwszą znajomość",
+      "connectBody": "Wspólny kurs. Plan. Proste cześć."
+    },
+    "invitation": {
+      "label": "MIASTO JEST LEPSZE, GDY JESTEŚ W NIM TY.",
+      "title": "Poczuj się",
+      "serif": "jak u siebie.",
+      "description": "Twoi ludzie są tutaj. Przywitaj się.",
+      "passLabel": "KARTA STUDENTA",
+      "passTitle": "Zapraszamy.",
+      "passBody": "Miejsce dla Ciebie w lubelskiej społeczności studenckiej.",
+      "passAction": "Zaloguj się do Uniezz",
+      "passNote": "USOS lub uczelniany e-mail. Bez nowego hasła."
+    },
+    "footer": {
+      "city": "LUBLIN, POLSKA",
+      "statement": "Życie studenckie,\nna nowo.",
+      "copyright": "© 2026 Uniezz. Do zobaczenia.",
+      "privacy": "Prywatność",
+      "terms": "Regulamin"
+    },
+    "appsSoon": "Wkrótce"
+  },
+  "sidebar": {
+    "academics": "NAUKA",
+    "collapse": "Zwiń panel boczny",
+    "expand": "Rozwiń panel boczny",
+    "mainNavigation": "Nawigacja główna",
+    "settings": "Ustawienia"
+  },
+  "topbar": {
+    "changeLanguage": "Zmień język",
+    "languageCode": "PL",
+    "notifications": "Powiadomienia",
+    "search": "Szukaj",
+    "searchPlaceholder": "Szukaj postów, osób, kursów…"
+  }
+}

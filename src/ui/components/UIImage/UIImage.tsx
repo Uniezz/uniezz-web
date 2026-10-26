@@ -23,7 +23,7 @@ export const UIImage = ({
     <div
       className={cn(
         imageStyles({ aspect }),
-        'flex items-center justify-center border border-white-tertiary bg-ice',
+        'flex items-center justify-center border border-white/10 bg-surface',
         className,
       )}
     >
