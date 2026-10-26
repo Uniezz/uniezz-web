@@ -3,6 +3,6 @@ export default {
   extract: {
     primaryLanguage: 'en',
     input: 'src/**/*.{js,jsx,ts,tsx}',
-    output: 'public/locales/{{language}}/{{namespace}}.json',
+    output: 'src/locales/{{language}}/{{namespace}}.json',
   },
 };
