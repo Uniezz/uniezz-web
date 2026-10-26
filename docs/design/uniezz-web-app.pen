@@ -43168,29 +43168,6 @@
               "alignItems": "center",
               "children": [
                 {
-                  "type": "frame",
-                  "id": "yJXWB",
-                  "name": "Mark",
-                  "width": 33,
-                  "height": 33,
-                  "fill": "$blue",
-                  "cornerRadius": 9,
-                  "justifyContent": "center",
-                  "alignItems": "center",
-                  "children": [
-                    {
-                      "type": "text",
-                      "id": "foeQH",
-                      "name": "Letter",
-                      "fill": "$white",
-                      "content": "u",
-                      "fontFamily": "$font",
-                      "fontSize": 17,
-                      "fontWeight": "700"
-                    }
-                  ]
-                },
-                {
                   "type": "text",
                   "id": "AgbMz",
                   "name": "Wordmark",
@@ -45037,9 +45014,9 @@
                     {
                       "type": "text",
                       "id": "FJ27f",
-                      "name": "EN / PL",
+                      "name": "EN / PL / UK / RU",
                       "fill": "$white60",
-                      "content": "EN / PL",
+                      "content": "EN / PL / UK / RU",
                       "fontFamily": "$font",
                       "fontSize": 12,
                       "fontWeight": "normal"
@@ -45088,29 +45065,6 @@
               "gap": 10,
               "alignItems": "center",
               "children": [
-                {
-                  "type": "frame",
-                  "id": "mGUX3",
-                  "name": "Mark",
-                  "width": 33,
-                  "height": 33,
-                  "fill": "$blue",
-                  "cornerRadius": 9,
-                  "justifyContent": "center",
-                  "alignItems": "center",
-                  "children": [
-                    {
-                      "type": "text",
-                      "id": "n2Rga",
-                      "name": "Letter",
-                      "fill": "$white",
-                      "content": "u",
-                      "fontFamily": "$font",
-                      "fontSize": 17,
-                      "fontWeight": "700"
-                    }
-                  ]
-                },
                 {
                   "type": "text",
                   "id": "qScKQ",
@@ -47019,9 +46973,9 @@
                     {
                       "type": "text",
                       "id": "gXuJ0",
-                      "name": "EN / PL",
+                      "name": "EN / PL / UK / RU",
                       "fill": "$white60",
-                      "content": "EN / PL",
+                      "content": "EN / PL / UK / RU",
                       "fontFamily": "$font",
                       "fontSize": 12,
                       "fontWeight": "normal"
