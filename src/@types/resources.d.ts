@@ -80,6 +80,7 @@ export default interface Resources {
       "title": "Student Guide"
     },
     "landing": {
+      "appsSoon": "Coming soon",
       "community": {
         "description": "Different courses. Different campuses.\nMore people you haven't met yet.",
         "peopleBody": "Find someone for the coffee, the concert, or the walk home after a long day.",
