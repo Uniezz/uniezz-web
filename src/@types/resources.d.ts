@@ -27,6 +27,7 @@ export default interface Resources {
         "yourUniversity": "YOUR UNIVERSITY"
       },
       "otp": {
+        "changeEmail": "Change email",
         "codeLabel": "6-digit verification code",
         "codeSubtitle": "We sent a six-digit code to {{email}}. It expires in 10 minutes.",
         "codeTitle": "Check your university inbox",

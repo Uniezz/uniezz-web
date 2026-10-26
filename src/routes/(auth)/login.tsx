@@ -27,7 +27,7 @@ function LoginPage() {
       return;
     }
 
-    navigate({ to: '/otp' });
+    navigate({ to: '/otp', search: { university: selectedUniversity.id } });
   };
 
   return (

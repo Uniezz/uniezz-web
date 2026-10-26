@@ -1,21 +1,27 @@
 import { AuthPage, OtpCodeField } from '@/components';
 import { useOtpScreen } from '@/hooks';
 import { UIButton, UIInput, UIText } from '@/ui/components';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, redirect } from '@tanstack/react-router';
 import { ArrowLeft, AtSign, Check, Mail, Send, TriangleAlert } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/(auth)/otp')({
+  validateSearch: (search) => ({
+    university: typeof search.university === 'string' ? search.university : '',
+  }),
+  beforeLoad: ({ search }) => {
+    if (!search.university) throw redirect({ to: '/login' });
+  },
   component: OtpPage,
 });
 
 function OtpPage() {
   const { t } = useTranslation();
+  const { university } = Route.useSearch();
   const {
     email,
     onEmailChange,
     emailError,
-    availabilityError,
     emailPlaceholder,
     code,
     onCodeChange,
@@ -29,7 +35,8 @@ function OtpPage() {
     buttonText,
     isEmailStep,
     isButtonDisabled,
-  } = useOtpScreen();
+    isPending,
+  } = useOtpScreen(university);
 
   const ButtonIcon = isEmailStep ? Send : Check;
 
@@ -41,7 +48,7 @@ function OtpPage() {
         <button type="button" onClick={onBackPress} className="flex items-center gap-2 self-start">
           <ArrowLeft size={16} className="text-secondary" />
           <UIText weight="semibold" color="secondary">
-            {t('auth.backToUniversities')}
+            {isEmailStep ? t('auth.backToUniversities') : t('auth.otp.changeEmail')}
           </UIText>
         </button>
       }
@@ -54,11 +61,6 @@ function OtpPage() {
       }
     >
       <form className="flex flex-col gap-6" onSubmit={onButtonPress}>
-        {availabilityError ? (
-          <p role="alert" className="text-red-600 text-sm">
-            {availabilityError}
-          </p>
-        ) : null}
         {isEmailStep ? (
           <UIInput
             type="email"
@@ -83,7 +85,7 @@ function OtpPage() {
               <UIText size="sm" color="gray">
                 {t('auth.otp.didntGetIt')}
               </UIText>
-              <button type="button" onClick={onResendPress}>
+              <button type="button" onClick={onResendPress} disabled={isPending}>
                 <UIText size="sm" color="primary" weight="semibold">
                   {t('auth.otp.resend')}
                 </UIText>
