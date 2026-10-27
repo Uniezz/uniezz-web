@@ -43,15 +43,15 @@ function LoginPage() {
           <UIText color="gray">No universities available.</UIText>
         ) : (
           <div className="flex flex-col gap-1">
-            {universities.map(({ id, name, authMethod }) => (
+            {universities.map(({ id, name }) => (
               <UIRow
                 key={id}
                 onClick={() => setSelectedId(id)}
                 selected={id === selectedUniversity?.id}
                 iconText={id.toUpperCase().slice(0, 3)}
+                iconSrc={`/universities/${id}.png`}
                 topText={id.toUpperCase()}
                 fullName={name}
-                bottomText={authMethod === 'OTP' ? 'Email code' : authMethod}
               />
             ))}
           </div>
