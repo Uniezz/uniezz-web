@@ -136,6 +136,34 @@ export interface components {
             /** @description One-time login code from the auth redirect */
             code: string;
         };
+        FacultyDTO: {
+            /**
+             * @description Street address of the faculty building
+             * @example pl. Marii Curie-Skłodowskiej 2
+             */
+            address: string;
+            /** @description Geographic location of the faculty building */
+            location: components["schemas"]["GeoPointDTO"];
+            /**
+             * @description Display name of the faculty
+             * @example Wydział Chemii
+             */
+            name: string;
+        };
+        GeoPointDTO: {
+            /**
+             * Format: double
+             * @description Latitude in decimal degrees (WGS 84)
+             * @example 51.24513
+             */
+            latitude: number;
+            /**
+             * Format: double
+             * @description Longitude in decimal degrees (WGS 84)
+             * @example 22.54247
+             */
+            longitude: number;
+        };
         IssuedSession: {
             /**
              * Format: date-time
@@ -187,6 +215,8 @@ export interface components {
              *     ]
              */
             domains?: string[] | null;
+            /** @description Faculties of the university with their locations */
+            faculties: components["schemas"]["FacultyDTO"][] | null;
             /**
              * @description Unique identifier of the university
              * @example umcs
