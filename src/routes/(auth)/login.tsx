@@ -1,9 +1,10 @@
 import { AuthPage } from '@/components';
 import { useUniversities } from '@/hooks';
+import { cn } from '@/ui/cn';
 import { UIButton, UIRow, UIText } from '@/ui/components';
 import { startUniversityLogin } from '@/utils';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -43,17 +44,35 @@ function LoginPage() {
           <UIText color="gray">No universities available.</UIText>
         ) : (
           <div className="flex flex-col gap-1">
-            {universities.map(({ id, name }) => (
-              <UIRow
-                key={id}
-                onClick={() => setSelectedId(id)}
-                selected={id === selectedUniversity?.id}
-                iconText={id.toUpperCase().slice(0, 3)}
-                iconSrc={`/universities/${id}.png`}
-                topText={id.toUpperCase()}
-                fullName={name}
-              />
-            ))}
+            <div
+              className={cn(
+                'flex flex-col gap-1',
+                universities.length > 4 &&
+                  'h-[15.75rem] overflow-y-auto overscroll-contain pr-1 [&>button]:h-[3.75rem] [&>button]:shrink-0',
+              )}
+            >
+              {universities.map(({ id, name }) => (
+                <UIRow
+                  key={id}
+                  onClick={() => setSelectedId(id)}
+                  selected={id === selectedUniversity?.id}
+                  iconText={id.toUpperCase().slice(0, 3)}
+                  iconSrc={`/universities/${id}.png`}
+                  topText={id.toUpperCase()}
+                  fullName={name}
+                />
+              ))}
+            </div>
+            {universities.length > 4 ? (
+              <UIText
+                size="sm"
+                color="gray"
+                className="flex items-center justify-center gap-1 pt-1"
+              >
+                {t('auth.login.scrollUniversities')}
+                <ChevronDown size={14} aria-hidden="true" />
+              </UIText>
+            ) : null}
           </div>
         )}
       </div>

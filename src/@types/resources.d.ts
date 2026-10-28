@@ -22,6 +22,7 @@ export default interface Resources {
       "login": {
         "continueWith": "Continue with {{provider}}",
         "notice": "Only active students of the five Lublin universities can create an account. Staff and alumni accounts are rejected.",
+        "scrollUniversities": "Scroll to see all universities",
         "subtitle": "Choose your university to sign in with USOS or a university email code.",
         "title": "Sign in",
         "yourUniversity": "YOUR UNIVERSITY"
