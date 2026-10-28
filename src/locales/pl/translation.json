@@ -20,7 +20,6 @@
     "login": {
       "continueWith": "Kontynuuj z {{provider}}",
       "notice": "Konto mogą założyć tylko aktywni studenci pięciu lubelskich uczelni. Konta pracowników i absolwentów są odrzucane.",
-      "scrollUniversities": "Przewiń, aby zobaczyć wszystkie uczelnie",
       "subtitle": "Wybierz uczelnię i zaloguj się przez USOS lub kod wysłany na uczelniany e-mail.",
       "title": "Zaloguj się",
       "yourUniversity": "TWOJA UCZELNIA"
