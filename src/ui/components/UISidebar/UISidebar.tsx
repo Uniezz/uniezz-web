@@ -61,7 +61,9 @@ const UISidebarBase = ({
               (collapsed ? (
                 <div className="mx-2 my-1.5 h-px bg-white/10" />
               ) : (
-                <span className={sidebarCaptionStyles()}>{t(titleKey)}</span>
+                <span className={sidebarCaptionStyles()}>
+                  {t(titleKey === 'sidebar.academics' ? 'sidebar.academics' : titleKey)}
+                </span>
               ))}
             {items.map(({ labelKey, ...item }) => (
               <UINavItem

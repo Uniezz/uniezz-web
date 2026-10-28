@@ -3,7 +3,7 @@ import { ArrowUpRight, BookOpen, MapPin, NotebookPen } from 'lucide-react';
 import { motion, MotionConfig } from 'motion/react';
 import { type MouseEvent, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Glow, ParallaxImage, RiseLine } from '@/components';
+import { Glow, ParallaxImage, RiseLine, UniversityMap } from '@/components';
 import { useUniversities } from '@/hooks';
 import { UIButton } from '@/ui/components';
 import {
@@ -27,7 +27,11 @@ const navLink =
 function LandingPage() {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
-  const { data: universities = [] } = useUniversities();
+  const {
+    data: universities = [],
+    isPending: universitiesLoading,
+    isError: universitiesError,
+  } = useUniversities();
   const stubRef = useRef<HTMLDivElement>(null);
   const help = [
     { title: t('landing.help.borrowTitle'), body: t('landing.help.borrowBody'), Icon: BookOpen },
@@ -173,29 +177,11 @@ function LandingPage() {
             </motion.div>
           </section>
 
-          <section
-            aria-label={t('landing.universitiesLabel')}
-            className="border-y border-white/10 px-6 py-7 md:flex md:items-center md:gap-12 md:px-14 md:py-8"
-          >
-            <p className="font-mono text-[10px] leading-4 tracking-widest whitespace-pre-line text-white/60">
-              {t('landing.universitiesLabel')}
-            </p>
-            <div className="mt-5 overflow-hidden mask-x-from-90% md:mt-0 md:flex-1">
-              <div className="flex w-max animate-marquee hover:[animation-play-state:paused] motion-reduce:animate-none">
-                {[0, 1].map((copy) => (
-                  <ul
-                    key={copy}
-                    aria-hidden={copy === 1 || undefined}
-                    className="flex min-w-[100vw] shrink-0 justify-around gap-14 pr-14 text-sm font-medium whitespace-nowrap text-white/80 md:min-w-[calc(100vw-260px)]"
-                  >
-                    {universities.map(({ id, name }) => (
-                      <li key={id}>{name}</li>
-                    ))}
-                  </ul>
-                ))}
-              </div>
-            </div>
-          </section>
+          <UniversityMap
+            universities={universities}
+            isLoading={universitiesLoading}
+            isError={universitiesError}
+          />
 
           <section
             id="community"

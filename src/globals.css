@@ -16,13 +16,6 @@
   --font-editorial: 'Noto Serif Display Variable', Georgia, serif;
   --font-editorial--font-variation-settings: 'wdth' 62.5;
 
-  --animate-marquee: marquee 40s linear infinite;
-  @keyframes marquee {
-    to {
-      transform: translateX(-50%);
-    }
-  }
-
   --text-caption: 11px;
   --text-sm: 13px;
   --text-regular: 14px;
@@ -161,4 +154,32 @@ input:-webkit-autofill:focus {
 
 @utility bg-grain {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.university-map-popup .maplibregl-popup-content {
+  border: 1px solid #ffffff26;
+  border-radius: 2px;
+  padding: 14px 16px;
+  background: #11131b;
+  color: #f2eee6;
+  box-shadow: 0 12px 32px #00000066;
+}
+
+.university-map-popup .maplibregl-popup-tip {
+  border-top-color: #11131b;
+  border-bottom-color: #11131b;
+}
+
+.university-map-popup .maplibregl-popup-close-button {
+  color: #ffffff99;
+  font-size: 18px;
+}
+
+.maplibregl-ctrl-attrib {
+  background: #0c0d14cc !important;
+  color: #ffffff99 !important;
+}
+
+.maplibregl-ctrl-attrib a {
+  color: #a9baff !important;
 }

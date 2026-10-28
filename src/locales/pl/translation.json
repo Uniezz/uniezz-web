@@ -85,7 +85,6 @@
     "navJoin": "Jak dołączyć",
     "signIn": "Zaloguj się",
     "findPeople": "Poznaj swoich ludzi",
-    "universitiesLabel": "PIĘĆ UCZELNI.\nJEDNA SPOŁECZNOŚĆ.",
     "hero": {
       "eyebrow": "LUBLIN, POZNAJ SWOICH LUDZI.",
       "title": "Życie dzieje się",
@@ -147,7 +146,21 @@
       "privacy": "Prywatność",
       "terms": "Regulamin"
     },
-    "appsSoon": "Wkrótce"
+    "appsSoon": "Wkrótce",
+    "map": {
+      "description": "Odkryj wydziały i miejsca, które tworzą studencki Lublin.",
+      "empty": "Brak dostępnych lokalizacji wydziałów.",
+      "eyebrow": "UCZELNIE LUBLINA. JEDNA MAPA.",
+      "loading": "Wczytywanie lokalizacji wydziałów…",
+      "mapUnavailable": "Mapa jest tymczasowo niedostępna.",
+      "noResults": "Nie znaleziono pasującej uczelni.",
+      "searchLabel": "Szukaj uczelni i wydziałów",
+      "searchPlaceholder": "Szukaj uczelni lub adresu",
+      "title": "Twoja uczelnia na mapie.",
+      "unavailable": "Lokalizacje wydziałów są tymczasowo niedostępne.",
+      "zoomIn": "Przybliż mapę",
+      "zoomOut": "Oddal mapę"
+    }
   },
   "sidebar": {
     "academics": "NAUKA",
