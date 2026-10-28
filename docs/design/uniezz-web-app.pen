@@ -43639,6 +43639,354 @@
         },
         {
           "type": "frame",
+          "id": "EmtuR",
+          "name": "Poland university map",
+          "width": "fill_container",
+          "fill": "$ink",
+          "layout": "vertical",
+          "gap": 28,
+          "padding": [
+            76,
+            56,
+            84,
+            56
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "p8yWVB",
+              "name": "Map section introduction",
+              "width": "fill_container",
+              "gap": 64,
+              "justifyContent": "space_between",
+              "alignItems": "end",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "M12hq",
+                  "name": "Map title group",
+                  "width": 620,
+                  "layout": "vertical",
+                  "gap": 10,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "ViF8j",
+                      "name": "Map eyebrow",
+                      "fill": "$white60",
+                      "content": "UNIVERSITIES ACROSS POLAND",
+                      "fontFamily": "Geist Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal",
+                      "letterSpacing": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "PWCkP",
+                      "name": "Map title",
+                      "fill": "#F2EEE6",
+                      "content": "Your campus, on the map.",
+                      "fontFamily": "Instrument Serif",
+                      "fontSize": 54,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "UPNn9",
+                  "name": "Map section description",
+                  "fill": "$white60",
+                  "textGrowth": "fixed-width",
+                  "width": 390,
+                  "content": "Find a university and the people who make its city feel like yours.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font",
+                  "fontSize": 15,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "s5XXl",
+              "name": "Poland map · OpenFreeMap dark",
+              "clip": true,
+              "width": "fill_container",
+              "height": 560,
+              "fill": "#0C0D14",
+              "cornerRadius": 4,
+              "layout": "none",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 4,
+                  "id": "E7JNyI",
+                  "x": 0,
+                  "y": 0,
+                  "name": "OpenFreeMap dark · Lublin",
+                  "fill": [
+                    "#ffffff",
+                    {
+                      "type": "image",
+                      "enabled": true,
+                      "url": "screenshot-openfreemap.org-8.png",
+                      "mode": "cover"
+                    }
+                  ],
+                  "width": 1328,
+                  "height": 560
+                },
+                {
+                  "type": "frame",
+                  "id": "eiM2G",
+                  "x": 24,
+                  "y": 24,
+                  "name": "Map search control",
+                  "width": 360,
+                  "height": 54,
+                  "fill": "#171922E8",
+                  "cornerRadius": 4,
+                  "stroke": "#FFFFFF26",
+                  "strokeWidth": 1,
+                  "gap": 12,
+                  "padding": [
+                    0,
+                    16
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "path",
+                      "id": "C1fZtC",
+                      "name": "Search icon",
+                      "geometry": "M11 3a8 8 0 1 0 0 16 8 8 0 0 0 0-16z m10 18l-4.35-4.35",
+                      "viewBox": [
+                        0,
+                        0,
+                        24,
+                        24
+                      ],
+                      "fill": "#00000000",
+                      "width": 18,
+                      "height": 18,
+                      "stroke": "#AAB0BF",
+                      "strokeWidth": 2,
+                      "strokeLinejoin": "round",
+                      "strokeLinecap": "round"
+                    },
+                    {
+                      "type": "text",
+                      "id": "C1MlDJ",
+                      "name": "Search placeholder",
+                      "fill": "#AAB0BF",
+                      "content": "Search a university or city",
+                      "fontFamily": "$font",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "ZBvYY",
+                  "x": 24,
+                  "y": 90,
+                  "name": "University count filter",
+                  "width": 166,
+                  "height": 36,
+                  "fill": "#171922E8",
+                  "cornerRadius": 4,
+                  "stroke": "#FFFFFF26",
+                  "strokeWidth": 1,
+                  "padding": [
+                    0,
+                    12
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "dagSi",
+                      "name": "University count label",
+                      "fill": "$white80",
+                      "content": "5 universities",
+                      "fontFamily": "Geist Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal",
+                      "letterSpacing": 0.3
+                    }
+                  ]
+                },
+                {
+                  "type": "ellipse",
+                  "id": "yq4mF",
+                  "x": 514,
+                  "y": 204,
+                  "name": "Lublin cluster halo",
+                  "fill": "#5B7CFF33",
+                  "width": 68,
+                  "height": 68
+                },
+                {
+                  "type": "frame",
+                  "id": "WP1dD",
+                  "x": 527,
+                  "y": 217,
+                  "name": "Lublin university cluster · 5",
+                  "width": 42,
+                  "height": 42,
+                  "fill": "#5B7CFF",
+                  "cornerRadius": 21,
+                  "stroke": "#DCE6FF",
+                  "strokeWidth": 2,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "h8XH4A",
+                      "name": "Cluster count",
+                      "fill": "#FFFFFF",
+                      "content": "5",
+                      "fontFamily": "$font",
+                      "fontSize": 16,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "D37V3",
+                  "x": 588,
+                  "y": 184,
+                  "name": "Lublin university cluster details",
+                  "width": 310,
+                  "height": 132,
+                  "fill": "#11131BEF",
+                  "cornerRadius": 4,
+                  "stroke": "#FFFFFF26",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "gap": 8,
+                  "padding": 14,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "y8oiPA",
+                      "name": "Cluster heading",
+                      "fill": "#F2EEE6",
+                      "content": "Lublin · 5 universities",
+                      "fontFamily": "$font",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "text",
+                      "id": "O7fhM",
+                      "name": "Cluster universities",
+                      "fill": "$white80",
+                      "textGrowth": "fixed-width",
+                      "width": 282,
+                      "content": "UMCS · KUL · Politechnika Lubelska\nUniwersytet Przyrodniczy · WSEI",
+                      "lineHeight": 1.45,
+                      "fontFamily": "$font",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "W1ybm",
+                      "name": "Cluster action",
+                      "fill": "#A9BAFF",
+                      "content": "View universities  →",
+                      "fontFamily": "Geist Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "PackY",
+                  "x": 1260,
+                  "y": 424,
+                  "name": "Map zoom controls",
+                  "width": 44,
+                  "height": 88,
+                  "fill": "#171922E8",
+                  "cornerRadius": 4,
+                  "stroke": "#FFFFFF26",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "hntWh",
+                      "name": "Zoom in button",
+                      "width": 44,
+                      "height": 44,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "path",
+                          "id": "lJuAS",
+                          "name": "Zoom in icon",
+                          "geometry": "M12 5v14m-7-7h14",
+                          "viewBox": [
+                            0,
+                            0,
+                            24,
+                            24
+                          ],
+                          "fill": "#00000000",
+                          "width": 16,
+                          "height": 16,
+                          "stroke": "#F2EEE6",
+                          "strokeWidth": 2,
+                          "strokeLinecap": "round"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "amAFs",
+                      "name": "Zoom out button",
+                      "width": 44,
+                      "height": 44,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "path",
+                          "id": "eNonQ",
+                          "name": "Zoom out icon",
+                          "geometry": "M5 12h14",
+                          "viewBox": [
+                            0,
+                            0,
+                            24,
+                            24
+                          ],
+                          "fill": "#00000000",
+                          "width": 16,
+                          "height": 16,
+                          "stroke": "#F2EEE6",
+                          "strokeWidth": 2,
+                          "strokeLinecap": "round"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
           "id": "S2zDK",
           "name": "Community · Whatever your thing",
           "width": "fill_container",

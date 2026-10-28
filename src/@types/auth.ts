@@ -1,4 +1,4 @@
-import type { paths } from './schema';
+import type { components, paths } from './schema';
 
 export type OtpRequestInputBody = NonNullable<
   paths['/auth/otp/request']['post']['requestBody']['content']['application/json']
@@ -7,3 +7,5 @@ export type OtpRequestInputBody = NonNullable<
 export type OtpVerifyInputBody = NonNullable<
   paths['/auth/otp/verify']['post']['requestBody']['content']['application/json']
 >;
+
+export type University = components['schemas']['UniversityDTO'];

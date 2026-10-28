@@ -22,7 +22,6 @@ export default interface Resources {
       "login": {
         "continueWith": "Continue with {{provider}}",
         "notice": "Only active students of the five Lublin universities can create an account. Staff and alumni accounts are rejected.",
-        "scrollUniversities": "Scroll to see all universities",
         "subtitle": "Choose your university to sign in with USOS or a university email code.",
         "title": "Sign in",
         "yourUniversity": "YOUR UNIVERSITY"
@@ -134,6 +133,20 @@ export default interface Resources {
         "serif": "at home.",
         "title": "Make yourself"
       },
+      "map": {
+        "description": "Explore faculties and find the places that make student life in Lublin yours.",
+        "empty": "No campus locations are available yet.",
+        "eyebrow": "LUBLIN'S UNIVERSITIES. ONE MAP.",
+        "loading": "Loading campus locations…",
+        "mapUnavailable": "Map tiles are temporarily unavailable.",
+        "noResults": "No matching university found.",
+        "searchLabel": "Search universities and faculties",
+        "searchPlaceholder": "Search a university or address",
+        "title": "Your campus, on the map.",
+        "unavailable": "Campus locations are temporarily unavailable.",
+        "zoomIn": "Zoom in",
+        "zoomOut": "Zoom out"
+      },
       "navCommunity": "Your community",
       "navJoin": "How to join",
       "navLife": "The Uniezz life",
@@ -148,8 +161,7 @@ export default interface Resources {
         "universityTitle": "Choose your university",
         "verifyBody": "Use USOS or a university email code.",
         "verifyTitle": "Verify you're a student"
-      },
-      "universitiesLabel": "FIVE UNIVERSITIES.\nONE COMMUNITY."
+      }
     },
     "sidebar": {
       "academics": "ACADEMICS",
