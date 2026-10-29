@@ -37402,16 +37402,6 @@
                   "name": "Header spacer",
                   "width": "fill_container",
                   "height": 1
-                },
-                {
-                  "type": "text",
-                  "id": "xmE3Y",
-                  "name": "Edit profile",
-                  "fill": "$blue",
-                  "content": "Edit",
-                  "fontFamily": "$font",
-                  "fontSize": 15,
-                  "fontWeight": "600"
                 }
               ]
             },
