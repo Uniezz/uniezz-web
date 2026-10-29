@@ -33,3 +33,4 @@ dist-ssr
 .zed
 .gstack/
 .tanstack/
+.wrangler

@@ -4,7 +4,7 @@ import type { paths } from '@/@types/schema';
 
 export const api = createClient<paths>({
   // Same-origin in dev (Vite proxy) and prod (Netlify proxy in public/_redirects), so no CORS needed.
-  // TODO: restore `import.meta.env.DEV ? '/api' : env.VITE_API_URL` and drop the /api line in public/_redirects once the backend sends CORS headers.
+  // TODO: restore `import.meta.env.DEV ? '/api' : env.VITE_API_URL` and delete functions/api once the backend sends CORS headers.
   baseUrl: '/api',
 });
 
