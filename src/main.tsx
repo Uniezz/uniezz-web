@@ -1,6 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { RouterProvider, createRouter } from '@tanstack/react-router';
+import { RouterProvider, createRouteMask, createRouter } from '@tanstack/react-router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import './schemas/env';
@@ -8,7 +8,19 @@ import { routeTree } from './routeTree.gen';
 
 import './i18n';
 
-const router = createRouter({ routeTree });
+const newGroupRouteMask = createRouteMask({
+  routeTree,
+  from: '/chat/new-group',
+  to: '/chat/new-group',
+  search: () => ({}),
+});
+const connectionsRouteMask = createRouteMask({
+  routeTree,
+  from: '/connections',
+  to: '/connections',
+  search: () => ({}),
+});
+const router = createRouter({ routeTree, routeMasks: [newGroupRouteMask, connectionsRouteMask] });
 const queryClient = new QueryClient();
 
 declare module '@tanstack/react-router' {

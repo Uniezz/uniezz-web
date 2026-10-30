@@ -11,17 +11,26 @@ export const Route = createFileRoute('/_app')({
   ): {
     conversationId?: string;
     chatType?: 'groups' | 'connections' | undefined;
+    chatRoute?: 'new-group' | undefined;
   } => {
     const conversationId = optionalSearchString(search.conversationId);
     const chatType =
       search.chatType === 'groups' || search.chatType === 'connections'
         ? search.chatType
         : undefined;
-    return { ...(chatType ? { chatType } : {}), ...(conversationId ? { conversationId } : {}) };
+    const chatRoute = search.chatRoute === 'new-group' ? search.chatRoute : undefined;
+    return {
+      ...(chatType ? { chatType } : {}),
+      ...(conversationId ? { conversationId } : {}),
+      ...(chatRoute ? { chatRoute } : {}),
+    };
   },
-  search: { middlewares: [retainSearchParams(['chatType', 'conversationId'])] },
+  search: {
+    middlewares: [retainSearchParams(['chatType', 'conversationId', 'chatRoute'])],
+  },
   component: AppLayout,
 });
+
 function AppLayout() {
   const { t } = useTranslation();
   const narrow = useNarrowViewport();
