@@ -6,12 +6,12 @@ export const badgeStyles = cva(
     variants: {
       type: {
         warning: 'border-warning/20 bg-warning/15',
-        info: 'border-blue/20 bg-blue/15',
+        info: 'border-blue-20 bg-blue/15',
         success: 'border-success/20 bg-success/15',
         danger: 'border-danger/20 bg-danger/15',
         counter: 'border-blue bg-blue',
         counterNegative: 'border-danger bg-danger',
-        note: 'border-white/10 bg-white/5',
+        note: 'border-white-10 bg-white-5',
       },
     },
     defaultVariants: {
@@ -25,7 +25,7 @@ export const badgeTextStyles = cva('text-sm font-semibold', {
     color: {
       success: 'text-success',
       warning: 'text-warning',
-      info: 'text-periwinkle',
+      info: 'text-sky',
       danger: 'text-danger',
       counter: 'text-white-primary',
       counterNegative: 'text-white-primary',

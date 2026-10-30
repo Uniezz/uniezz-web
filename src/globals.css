@@ -25,6 +25,57 @@
   --text-xl: 24px;
   --text-xxl: 32px;
 
+  /* v2 canvas tokens; legacy aliases below remain for landing and auth. */
+  --color-black-50: #0000007f;
+  --color-white-0: #ffffff00;
+  --color-white-5: #ffffff0d;
+  --color-white-10: #ffffff1a;
+  --color-white-20: #ffffff33;
+  --color-white-40: #ffffff66;
+  --color-white-60: #ffffff99;
+  --color-white-80: #ffffffcc;
+  --color-ink-0: #0c0d1400;
+  --color-ink-40: #0c0d1466;
+  --color-ink-70: #0c0d14b3;
+  --color-ink-90: #0c0d14e5;
+  --color-surface-60: #16182299;
+  --color-blue-0: #5b7cff00;
+  --color-blue-20: #5b7cff33;
+  --color-blue-40: #5b7cff66;
+  --color-sky: #a9baff;
+  --color-violet-0: #8b5cf600;
+  --color-violet-20: #8b5cf633;
+  --color-amber: #ffc24d;
+  --color-amber-10: #ffc24d1a;
+  --color-amber-30: #ffc24d4d;
+  --color-green: #3dd68c;
+  --color-green-15: #3dd68c26;
+  --color-red: #e5484d;
+
+  --text-page-title: 40px;
+  --text-page-title--line-height: 1;
+  --text-panel-title: 28px;
+  --text-card-title: 24px;
+  --text-card-title--line-height: 1.2;
+  --text-section: 17px;
+  --text-section--line-height: 1.32;
+  --text-body: 15px;
+  --text-body--line-height: 1.5;
+  --text-label: 14px;
+  --text-label--line-height: 1.2;
+  --text-detail: 13px;
+  --text-detail--line-height: 1.2;
+  --text-micro: 12px;
+  --text-micro--line-height: 1.2;
+  --text-profile-name: 36px;
+  --text-countdown: 56px;
+  --text-countdown--line-height: 1;
+  --radius-card: 24px;
+  --radius-story: 20px;
+  --radius-feature: 28px;
+  --radius-profile: 22px;
+  --radius-programme: 18px;
+
   /* Text */
   --color-primary: #ffffff;
   --color-secondary: #ffffff99;
@@ -101,12 +152,49 @@ body {
   font-family: var(--font-sans);
 }
 
+* {
+  scrollbar-color: var(--color-white-40) transparent;
+  scrollbar-width: thin;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background: var(--color-white-40);
+  background-clip: content-box;
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus {
   -webkit-text-fill-color: var(--color-primary);
   -webkit-box-shadow: 0 0 0 1000px var(--color-surface) inset;
   caret-color: var(--color-primary);
+}
+
+input[type='search']::-webkit-search-cancel-button {
+  display: none;
+}
+
+.scrollbar-gray {
+  scrollbar-color: var(--color-white-40) transparent;
+  scrollbar-width: thin;
+}
+
+.scrollbar-gray::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar-gray::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background: var(--color-white-40);
+  background-clip: content-box;
 }
 
 @utility bg-mesh {
@@ -140,15 +228,15 @@ input:-webkit-autofill:focus {
   &::after {
     z-index: -1;
     background:
-      radial-gradient(ellipse 65% 70% at 90% 5%, #5b7cff66, transparent),
-      radial-gradient(ellipse 60% 55% at 25% 100%, #8b5cf633, transparent),
-      linear-gradient(#0c0d14e5, #0c0d14e5);
+      radial-gradient(ellipse 65% 65% at 90% 5%, var(--color-blue-40), var(--color-blue-0)),
+      radial-gradient(ellipse 60% 50% at 25% 100%, var(--color-violet-20), var(--color-violet-0)),
+      linear-gradient(var(--color-ink-90), var(--color-ink-90));
   }
 }
 
 @utility glass {
-  background: var(--color-surface-glass);
-  border: 1px solid var(--color-white-tertiary);
+  background: var(--color-surface-60);
+  border: 1px solid var(--color-white-10);
   backdrop-filter: blur(48px);
 }
 
@@ -182,4 +270,49 @@ input:-webkit-autofill:focus {
 
 .maplibregl-ctrl-attrib a {
   color: #a9baff !important;
+}
+
+@layer components {
+  .nav-item-active {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background-color: #232a5c60;
+  }
+  .nav-item-active::before {
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    pointer-events: none;
+    content: '';
+    background-image:
+      radial-gradient(circle at 16% 25%, #dce3ff99 1px, transparent 1.5px),
+      radial-gradient(circle at 42% 78%, #dce3ff99 1px, transparent 1.5px),
+      radial-gradient(circle at 77% 22%, #dce3ff99 1px, transparent 1.5px),
+      radial-gradient(circle at 91% 72%, #dce3ff99 1px, transparent 1.5px),
+      radial-gradient(circle at 31% 48%, #dce3ff99 1px, transparent 1.5px),
+      radial-gradient(circle at 63% 48%, #dce3ff99 1px, transparent 1.5px),
+      radial-gradient(circle at 53% 14%, #dce3ff99 1px, transparent 1.5px),
+      radial-gradient(circle at 9% 83%, #dce3ff99 1px, transparent 1.5px);
+  }
+  .nav-item-active::after {
+    position: absolute;
+    z-index: 0;
+    bottom: 0;
+    right: 4px;
+    width: 24px;
+    height: 24px;
+    pointer-events: none;
+    content: '';
+    background: url('/app/sidebar-cat.png') center / contain no-repeat;
+  }
+  .app-control {
+    @apply min-h-11 w-full min-w-0 rounded-xl border border-white-10 bg-white-5 px-3 py-2.5 text-label font-medium text-white outline-none focus:border-white-60;
+  }
+  .app-control option {
+    @apply bg-surface text-white;
+  }
+  .app-tag {
+    @apply inline-block rounded-full border border-white-10 bg-white-10 px-3 py-1.5 text-detail font-semibold text-white;
+  }
 }

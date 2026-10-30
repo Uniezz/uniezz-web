@@ -20,6 +20,7 @@ import { Route as AppConnectionsRouteImport } from './routes/_app/connections'
 import { Route as AppExamsRouteImport } from './routes/_app/exams'
 import { Route as AppFeedRouteImport } from './routes/_app/feed'
 import { Route as AppGuideRouteImport } from './routes/_app/guide'
+import { Route as AppProfileRouteImport } from './routes/_app/profile'
 import { Route as AuthCallbackRouteImport } from './routes/auth/callback'
 import { Route as AuthDoneRouteImport } from './routes/auth/done'
 
@@ -76,6 +77,11 @@ const AppGuideRoute = AppGuideRouteImport.update({
   path: '/guide',
   getParentRoute: () => AppRoute,
 } as any)
+const AppProfileRoute = AppProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AppRoute,
+} as any)
 const AuthCallbackRoute = AuthCallbackRouteImport.update({
   id: '/auth/callback',
   path: '/auth/callback',
@@ -97,6 +103,7 @@ export interface FileRoutesByFullPath {
   '/exams': typeof AppExamsRoute
   '/feed': typeof AppFeedRoute
   '/guide': typeof AppGuideRoute
+  '/profile': typeof AppProfileRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/auth/done': typeof AuthDoneRoute
 }
@@ -110,6 +117,7 @@ export interface FileRoutesByTo {
   '/exams': typeof AppExamsRoute
   '/feed': typeof AppFeedRoute
   '/guide': typeof AppGuideRoute
+  '/profile': typeof AppProfileRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/auth/done': typeof AuthDoneRoute
 }
@@ -126,6 +134,7 @@ export interface FileRoutesById {
   '/_app/exams': typeof AppExamsRoute
   '/_app/feed': typeof AppFeedRoute
   '/_app/guide': typeof AppGuideRoute
+  '/_app/profile': typeof AppProfileRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/auth/done': typeof AuthDoneRoute
 }
@@ -141,6 +150,7 @@ export interface FileRouteTypes {
     | '/exams'
     | '/feed'
     | '/guide'
+    | '/profile'
     | '/auth/callback'
     | '/auth/done'
   fileRoutesByTo: FileRoutesByTo
@@ -154,6 +164,7 @@ export interface FileRouteTypes {
     | '/exams'
     | '/feed'
     | '/guide'
+    | '/profile'
     | '/auth/callback'
     | '/auth/done'
   id:
@@ -169,6 +180,7 @@ export interface FileRouteTypes {
     | '/_app/exams'
     | '/_app/feed'
     | '/_app/guide'
+    | '/_app/profile'
     | '/auth/callback'
     | '/auth/done'
   fileRoutesById: FileRoutesById
@@ -260,6 +272,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppGuideRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/profile': {
+      id: '/_app/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AppProfileRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/auth/callback': {
       id: '/auth/callback'
       path: '/auth/callback'
@@ -299,6 +318,7 @@ interface AppRouteChildren {
   AppExamsRoute: typeof AppExamsRoute
   AppFeedRoute: typeof AppFeedRoute
   AppGuideRoute: typeof AppGuideRoute
+  AppProfileRoute: typeof AppProfileRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
@@ -307,6 +327,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppExamsRoute: AppExamsRoute,
   AppFeedRoute: AppFeedRoute,
   AppGuideRoute: AppGuideRoute,
+  AppProfileRoute: AppProfileRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)

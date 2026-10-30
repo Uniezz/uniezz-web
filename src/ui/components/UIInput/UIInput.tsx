@@ -1,4 +1,4 @@
-import { type LucideIcon } from 'lucide-react';
+import { type LucideIcon, X } from 'lucide-react';
 import { type ComponentProps, useId } from 'react';
 import { cn } from '../../cn';
 import { UIText } from '../UIText';
@@ -11,6 +11,7 @@ type UIInputProps = Omit<ComponentProps<'input'>, 'value' | 'onChange'> & {
   label?: string;
   iconLeft?: LucideIcon;
   iconRight?: LucideIcon;
+  clearButton?: { label: string; onClear: VoidFunction };
   isDisabled?: boolean;
 };
 
@@ -20,6 +21,7 @@ export const UIInput = ({
   onTextChange,
   iconLeft: IconLeft,
   iconRight: IconRight,
+  clearButton,
   isDisabled,
   placeholder,
   label,
@@ -57,7 +59,18 @@ export const UIInput = ({
           aria-describedby={isErrorPresent ? errorId : undefined}
         />
 
-        {IconRight ? <IconRight className="text-muted" size={18} /> : null}
+        {clearButton && text ? (
+          <button
+            type="button"
+            aria-label={clearButton.label}
+            onClick={clearButton.onClear}
+            className="flex size-6 shrink-0 items-center justify-center text-danger"
+          >
+            <X size={14} />
+          </button>
+        ) : IconRight ? (
+          <IconRight className="text-muted" size={18} />
+        ) : null}
       </div>
 
       {isErrorPresent ? (
