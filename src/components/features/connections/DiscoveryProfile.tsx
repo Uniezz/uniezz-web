@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
+// TODO(api): Replace the mock discovery profile with API-backed profile data.
 import { CONNECTIONSMOCKS } from '@/utils';
 import { UIButton, UIEmpty, UIPanel } from '@/ui/components';
 

@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
+// TODO(api): Load these connection rows from the connections API.
 import { CONNECTIONSMOCKS } from '@/utils';
 import { UIAvatar } from '@/ui/components';
 

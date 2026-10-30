@@ -24,6 +24,7 @@ function FeedPage() {
   };
   const { t } = useTranslation();
   const [search, setSearch] = useState('');
+  // TODO(api): Replace local post storage and submission with the feed API.
   const [posts, setPosts] = useState<string[]>([]);
   return (
     <>

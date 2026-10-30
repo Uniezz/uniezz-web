@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import type { Message, Conversation } from '@/@types';
 import { UIAvatar, UIButton, UIEmpty, UIPanel } from '@/ui/components';
 import { textFormSchema, type TextFormSchema } from '@/schemas';
+// TODO(api): Replace mock chat status and context content with API-backed conversation data.
 import { CHATMOCKS } from '@/utils';
 
 export function ChatThread({

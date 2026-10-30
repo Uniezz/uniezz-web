@@ -9,6 +9,7 @@ export * from './search';
 export * from './device';
 export * from './routeSearch';
 export * from './chat';
+// TODO(api): Remove these mock exports when their consumers are API-backed.
 export * from './CHATMOCKS';
 export * from './FEEDMOCKS';
 export * from './EXAMSMOCKS';

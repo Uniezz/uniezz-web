@@ -15,6 +15,7 @@ const initialProgrammes: Programme[] = [
   },
 ];
 
+// TODO(api): Remove this fixture module when profile consumers use the API.
 export const PROFILEMOCKS = {
   initialProgrammes,
   university: 'Maria Curie-Skłodowska University',

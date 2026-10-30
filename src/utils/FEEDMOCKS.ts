@@ -13,6 +13,7 @@ const question = 'Statistics with dr hab. Nowak: is the final written or oral?';
 
 const housing = 'Two rooms on Radziszewskiego';
 
+// TODO(api): Remove this fixture module when feed consumers use the API.
 export const FEEDMOCKS = {
   stories,
   eventTitle,

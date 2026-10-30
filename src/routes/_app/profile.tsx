@@ -5,6 +5,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import toast from 'react-hot-toast';
 
+// TODO(api): Replace mock profile defaults and local form submission with API-backed profile data and mutations.
 import { PROFILEMOCKS } from '@/utils';
 import { UIButton, UITopbar } from '@/ui/components';
 import { profileFormSchema, type ProfileFormSchema } from '@/schemas';

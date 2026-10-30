@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useWatch, type UseFormReturn } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
+// TODO(api): Replace mock filter labels/defaults and local filter actions with API-backed options and filtering.
 import { CONNECTIONSMOCKS } from '@/utils';
 import type { ConnectionFilters } from '@/@types';
 import { UIButton, UIChip, UIDialog, UIPanel } from '@/ui/components';

@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { useWatch, type UseFormReturn } from 'react-hook-form';
 import { ChevronDown } from 'lucide-react';
 
+// TODO(api): Replace mock university and semester filter values with API-backed values.
 import { EXAMSMOCKS } from '@/utils';
 import type { ExamsFilters } from '@/@types';
 import { UISearch, UISegmented } from '@/ui/components';

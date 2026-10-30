@@ -3,6 +3,7 @@ import { Heart, MessageCircle, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { UIButton, UIPanel } from '@/ui/components';
 
+// TODO(api): Replace local pass/connect toggles with discovery API mutations.
 export function DiscoveryActions({
   showProfile,
   connected,

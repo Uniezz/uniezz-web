@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Star } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
+// TODO(api): Replace the mock guide data with API-backed places.
 import { GUIDEMOCKS } from '@/utils';
 import { UIEmpty, UIPanel, UISegmented, UITopbar } from '@/ui/components';
 import { GuideMap } from '@/components/features/guide';

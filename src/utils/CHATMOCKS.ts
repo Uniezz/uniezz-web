@@ -1,5 +1,6 @@
 import type { Message, Conversation } from '@/@types';
 
+// TODO(api): Remove this fixture module when chat consumers use the API.
 const thread: Message[] = [
   {
     text: 'Hi! I saw your post about the flat on Radziszewskiego. Is one of the rooms still free?',

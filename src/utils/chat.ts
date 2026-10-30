@@ -1,5 +1,6 @@
 import type { Conversation } from '@/@types';
 
+// TODO(api): Replace this local mock group factory with the create-group API mutation.
 export function createGroupConversation(
   conversations: Conversation[],
   name: string,

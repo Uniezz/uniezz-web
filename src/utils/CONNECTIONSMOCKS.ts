@@ -1,3 +1,4 @@
+// TODO(api): Remove this fixture module when connections consumers use the API.
 import type { ConnectionFilters } from '@/@types';
 
 const connections = [

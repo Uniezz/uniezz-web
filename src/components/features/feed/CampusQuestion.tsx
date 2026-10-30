@@ -1,6 +1,7 @@
 import { MessageCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
+// TODO(api): Replace the mock question/answer and local reply state with API-backed feed data and mutations.
 import { FEEDMOCKS } from '@/utils';
 import { UIButton, UIPanel } from '@/ui/components';
 

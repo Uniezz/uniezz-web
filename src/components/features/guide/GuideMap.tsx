@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { MapPin, Minus, Navigation, Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
+// TODO(api): Replace mock map places with API-backed guide data.
 import { GUIDEMOCKS } from '@/utils';
 import { UIButton, UIPanel } from '@/ui/components';
 

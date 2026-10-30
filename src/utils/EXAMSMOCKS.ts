@@ -68,6 +68,7 @@ const materials: Material[] = [
 
 const universities = [...new Set(materials.map((material) => material.university))];
 
+// TODO(api): Remove this fixture module when exams consumers use the API.
 export const EXAMSMOCKS = {
   materials,
   universities,

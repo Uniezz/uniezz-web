@@ -3,6 +3,7 @@ import { Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useForm, useWatch } from 'react-hook-form';
 
+// TODO(api): Replace mock programme options/lookup and local form addition with API-backed programmes and mutations.
 import { PROFILEMOCKS } from '@/utils';
 import type { Programme } from '@/@types';
 import { UIButton, UIDialog, UIField } from '@/ui/components';

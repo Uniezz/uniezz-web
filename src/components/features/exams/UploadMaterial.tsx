@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
+// TODO(api): Replace mock options and local metadata-only submission with API-backed upload data and mutations.
 import { EXAMSMOCKS } from '@/utils';
 import { UIButton, UIDialog, UIField } from '@/ui/components';
 import { uploadSchema, type UploadSchema } from '@/schemas';

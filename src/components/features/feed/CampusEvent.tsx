@@ -1,6 +1,7 @@
 import { Check, Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
+// TODO(api): Replace mock event details and local attendance toggle with API-backed feed data and mutations.
 import { FEEDMOCKS } from '@/utils';
 import { UIButton, UIPanel } from '@/ui/components';
 

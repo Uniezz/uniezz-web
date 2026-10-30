@@ -5,6 +5,7 @@ import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { UIButton, UIAvatar, UIField, UISearch } from '@/ui/components';
+// TODO(api): Load group members and image choices from API-backed data.
 import { CHATMOCKS, matchesSearch } from '@/utils';
 import { groupSchema, type GroupSchema } from '@/schemas';
 

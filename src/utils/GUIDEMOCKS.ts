@@ -46,6 +46,7 @@ const places = [
   },
 ];
 
+// TODO(api): Remove this fixture module when guide consumers use the API.
 export const GUIDEMOCKS = {
   places,
   placeCount: '18 places',

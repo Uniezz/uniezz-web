@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+// TODO(api): Replace mock stories with API-backed feed data.
 import { FEEDMOCKS, matchesSearch } from '@/utils';
 import { UIDialog } from '@/ui/components';
 

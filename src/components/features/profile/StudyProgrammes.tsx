@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { Trash2 } from 'lucide-react';
 
+// TODO(api): Replace the mock faculty option with profile/catalog API data.
 import { PROFILEMOCKS } from '@/utils';
 import { UIButton, UIField, UIPanel } from '@/ui/components';
 import { type ProfileFormSchema } from '@/schemas';

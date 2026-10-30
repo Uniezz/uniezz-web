@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useForm, useWatch } from 'react-hook-form';
 
+// TODO(api): Replace mock discovery defaults and local actions with API data and mutations.
 import { CONNECTIONSMOCKS } from '@/utils';
 import type { ConnectionFilters } from '@/@types';
 import { UISegmented, UITopbar } from '@/ui/components';

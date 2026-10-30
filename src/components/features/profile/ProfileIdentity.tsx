@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useController, useFormContext, useWatch } from 'react-hook-form';
 
+// TODO(api): Replace mock identity details with API-backed profile data.
 import { PROFILEMOCKS } from '@/utils';
 import { UILanguageSwitcher, UIPanel, UISwitch } from '@/ui/components';
 import { type ProfileFormSchema } from '@/schemas';
