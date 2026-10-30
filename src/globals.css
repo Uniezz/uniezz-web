@@ -3,6 +3,63 @@
 @import '@fontsource-variable/noto-serif-display/wdth.css';
 @import '@fontsource-variable/noto-serif-display/wdth-italic.css';
 
+@keyframes landing-glow-drift {
+  0%,
+  100% {
+    transform: translate(-8%, 0);
+  }
+  50% {
+    transform: translate(10%, 12%);
+  }
+}
+
+@keyframes landing-scroll-bob {
+  50% {
+    transform: translateY(5px);
+  }
+}
+
+@keyframes landing-parallax-drift {
+  from {
+    transform: translateY(-7%) scale(1.16);
+  }
+  to {
+    transform: translateY(7%) scale(1.16);
+  }
+}
+
+.landing-glow {
+  animation: landing-glow-drift 18s ease-in-out infinite;
+}
+
+.landing-scroll-bob {
+  animation: landing-scroll-bob 2s ease-in-out infinite;
+}
+
+.landing-parallax-image {
+  transform: scale(1.16);
+}
+
+@supports (animation-timeline: view()) {
+  .landing-parallax-image {
+    animation: landing-parallax-drift linear both;
+    animation-timeline: view();
+    animation-range: entry 0% exit 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-glow,
+  .landing-parallax-image,
+  .landing-scroll-bob {
+    animation: none;
+  }
+
+  .landing-parallax-image {
+    transform: none;
+  }
+}
+
 @theme {
   --color-*: initial;
   --color-transparent: transparent;

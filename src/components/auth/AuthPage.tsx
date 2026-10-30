@@ -1,6 +1,6 @@
 import { Warp } from '@paper-design/shaders-react';
 import { BrandBackground, UIButton, UILanguageSwitcher, UIText } from '@/ui/components';
-import { useReducedMotion } from 'motion/react';
+import { useReducedMotion } from '@react-spring/web';
 import { type ReactNode } from 'react';
 import { AuthBrand } from './AuthBrand';
 
