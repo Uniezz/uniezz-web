@@ -1,5 +1,6 @@
 export type Message = { text: string; outgoing: boolean; time: string };
 export type Conversation = {
+  id: string;
   name: string;
   preview: string;
   time: string;
@@ -10,4 +11,3 @@ export type Conversation = {
   messages: Message[];
 };
 
-export type ChatView = { selected: string; panel: 'list' | 'thread' | 'group' };

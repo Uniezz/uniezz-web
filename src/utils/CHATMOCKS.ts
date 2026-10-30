@@ -26,6 +26,7 @@ const thread: Message[] = [
 
 const initialConversations: Conversation[] = [
   {
+    id: 'kateryna-melnyk',
     name: 'Kateryna Melnyk',
     preview: 'Sure, I can show you the flat on Thursday',
     time: '2m',
@@ -35,6 +36,7 @@ const initialConversations: Conversation[] = [
     messages: thread,
   },
   {
+    id: 'mechatronika-sem-5',
     name: 'Mechatronika, sem 5',
     preview: 'Taras: past papers are in the archive',
     time: '18m',
@@ -44,6 +46,7 @@ const initialConversations: Conversation[] = [
     messages: [],
   },
   {
+    id: 'taras-hnatiuk',
     name: 'Taras Hnatiuk',
     preview: 'Are you coming to the party on Friday?',
     time: '1h',
@@ -53,6 +56,7 @@ const initialConversations: Conversation[] = [
     messages: [],
   },
   {
+    id: 'erasmus-lublin',
     name: 'Erasmus Lublin',
     preview: 'Anna: welcome to everyone who just joined',
     time: '3h',
@@ -62,6 +66,7 @@ const initialConversations: Conversation[] = [
     messages: [],
   },
   {
+    id: 'anna-nowak',
     name: 'Anna Nowak',
     preview: 'Thanks for the statistics notes!',
     time: 'Yesterday',
@@ -71,6 +76,7 @@ const initialConversations: Conversation[] = [
     messages: [],
   },
   {
+    id: 'dormitory-helios',
     name: 'Dormitory Helios',
     preview: 'Julia: laundry room is fixed',
     time: 'Yesterday',
@@ -80,12 +86,43 @@ const initialConversations: Conversation[] = [
     messages: [],
   },
   {
+    id: 'julia-wojcik',
     name: 'Julia Wójcik',
     preview: 'See you at the job fair',
     time: 'Mon',
     group: false,
     unread: 0,
     image: 7,
+    messages: [],
+  },
+  {
+    id: 'julia-wojcik-1',
+    name: 'Julia Wójcik1',
+    preview: 'See you at the job fair1',
+    time: 'Mon',
+    group: false,
+    unread: 0,
+    image: 7,
+    messages: [],
+  },
+  {
+    id: 'dormitory-helios-1',
+    name: 'Dormitory Helios1',
+    preview: 'Julia: laundry room is fixed1',
+    time: 'Yesterday',
+    group: true,
+    unread: 0,
+    image: 6,
+    messages: [],
+  },
+  {
+    id: 'dormitory-helios-2',
+    name: 'Dormitory Helios2',
+    preview: 'Julia: laundry room is fixed1',
+    time: 'Yesterday',
+    group: true,
+    unread: 0,
+    image: 6,
     messages: [],
   },
 ];
@@ -100,7 +137,11 @@ const students = [
   { name: 'Kateryna Melnyk2', meta: 'UMCS · Law · 4nd year' },
 ];
 
-const extraConversations: Conversation[] = ['Zofia', 'Piotr Lewandowski'].map((name) => ({
+const extraConversations: Conversation[] = [
+  { id: 'zofia', name: 'Zofia' },
+  { id: 'piotr-lewandowski', name: 'Piotr Lewandowski' },
+].map(({ id, name }) => ({
+  id,
   name,
   preview: '',
   time: '',

@@ -43,7 +43,7 @@ export function DiscoveryActions({
       <div className="text-center">
         <Link
           to="/chat"
-          search={{ recipient: 'Zofia' }}
+          search={{ conversationId: 'zofia' }}
           aria-label={t('app.message')}
           className="mb-2 inline-flex size-16 items-center justify-center rounded-full border border-white-10 bg-white-5"
         >

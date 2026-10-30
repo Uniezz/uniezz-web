@@ -1,49 +1,93 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Activity, useState } from 'react';
 
-import type { ChatView, Message } from '@/@types';
+import type { Message } from '@/@types';
 import { UIPanel } from '@/ui/components';
-import { CHATMOCKS, createGroupConversation, optionalSearchString } from '@/utils';
+import { CHATMOCKS, CONNECTIONSMOCKS, createGroupConversation } from '@/utils';
 import { CreateGroup, ConversationList, ChatThread } from '@/components/features/chat';
 
 export const Route = createFileRoute('/_app/chat')({
-  validateSearch: (search: Record<string, unknown>): { recipient?: string } => ({
-    recipient: optionalSearchString(search.recipient),
-  }),
   component: ChatPage,
-  remountDeps: ({ search }) => search.recipient,
 });
 
 function ChatPage() {
-  const { recipient } = Route.useSearch();
-  const [conversations, setConversations] = useState(() => [
-    ...CHATMOCKS.initialConversations,
-    ...CHATMOCKS.extraConversations.filter((conversation) => conversation.name === recipient),
-  ]);
-  const [{ selected, panel }, setView] = useState<ChatView>(() => ({
-    selected:
-      conversations.find((conversation) => conversation.name === recipient)?.name ??
-      CHATMOCKS.initialConversations[0].name,
-    panel: recipient ? 'thread' : 'list',
-  }));
-
-  function openConversation(name: string): void {
-    setConversations((conversations) =>
-      conversations.map((conversation) =>
-        conversation.name === name ? { ...conversation, unread: 0 } : conversation,
-      ),
+  const { conversationId, chatType = 'all' } = Route.useSearch();
+  const navigate = Route.useNavigate();
+  const [conversations, setConversations] = useState(() => {
+    const conversations = [...CHATMOCKS.initialConversations];
+    if (
+      !conversationId ||
+      conversations.some((conversation) => conversation.id === conversationId)
+    ) {
+      return conversations;
+    }
+    const extra = CHATMOCKS.extraConversations.find(
+      (conversation) => conversation.id === conversationId,
     );
-    setView({ selected: name, panel: 'thread' });
+    const connection = CONNECTIONSMOCKS.connections.find((person) => person.id === conversationId);
+    if (extra) {
+      conversations.push(
+        connection ? { ...extra, imageUrl: `/app/kuQtw-${connection.image}.jpg` } : extra,
+      );
+    } else if (connection) {
+      conversations.push({
+        id: connection.id,
+        name: connection.name,
+        preview: '',
+        time: '',
+        group: false,
+        unread: 0,
+        image: 0,
+        imageUrl: `/app/kuQtw-${connection.image}.jpg`,
+        messages: [],
+      });
+    }
+    return conversations;
+  });
+  const selected =
+    conversations.find((conversation) => conversation.id === conversationId)?.id ??
+    CHATMOCKS.initialConversations[0].id;
+  const [panel, setPanel] = useState<'list' | 'thread' | 'group'>(() =>
+    conversations.some((conversation) => conversation.id === conversationId) ? 'thread' : 'list',
+  );
+  function openConversation(id: string): void {
+    const person = CONNECTIONSMOCKS.connections.find((connection) => connection.id === id);
+    setConversations((conversations) => {
+      if (conversations.some((conversation) => conversation.id === id)) {
+        return conversations.map((conversation) =>
+          conversation.id === id ? { ...conversation, unread: 0 } : conversation,
+        );
+      }
+      return person
+        ? [
+            ...conversations,
+            {
+              id: person.id,
+              name: person.name,
+              preview: '',
+              time: '',
+              group: false,
+              unread: 0,
+              image: 0,
+              imageUrl: `/app/kuQtw-${person.image}.jpg`,
+              messages: [],
+            },
+          ]
+        : conversations;
+    });
+    setPanel('thread');
+    void navigate({ search: (previous) => ({ ...previous, conversationId: id }) });
   }
   function createGroup(name: string, members: string[], imageUrl?: string): void {
     const group = createGroupConversation(conversations, name, members, imageUrl);
     setConversations((conversations) => [...conversations, group]);
-    setView({ selected: group.name, panel: 'thread' });
+    setPanel('thread');
+    void navigate({ search: (previous) => ({ ...previous, conversationId: group.id }) });
   }
-  function sendMessage(name: string, message: Message): void {
+  function sendMessage(id: string, message: Message): void {
     setConversations((conversations) =>
       conversations.map((conversation) =>
-        conversation.name === name
+        conversation.id === id
           ? {
               ...conversation,
               preview: message.text,
@@ -58,17 +102,23 @@ function ChatPage() {
       <ConversationList
         conversations={conversations}
         selected={selected}
+        filter={chatType}
         hidden={panel !== 'list'}
-        onNewGroup={() => setView((view) => ({ ...view, panel: 'group' }))}
+        onFilterChange={(chatType) =>
+          void navigate({
+            search: (previous) => ({
+              chatType: chatType === 'all' ? undefined : chatType,
+              ...(previous.conversationId ? { conversationId: previous.conversationId } : {}),
+            }),
+          })
+        }
+        onNewGroup={() => setPanel('group')}
         onOpen={openConversation}
       />
       <div className={`${panel === 'group' ? 'block' : 'hidden'} min-h-0`}>
         {panel === 'group' && (
           <UIPanel className="flex h-full min-h-0 flex-col overflow-hidden p-5 sm:p-8">
-            <CreateGroup
-              onBack={() => setView((view) => ({ ...view, panel: 'list' }))}
-              onCreate={createGroup}
-            />
+            <CreateGroup onBack={() => setPanel('list')} onCreate={createGroup} />
           </UIPanel>
         )}
       </div>
@@ -77,13 +127,13 @@ function ChatPage() {
       >
         {conversations.map((conversation) => (
           <Activity
-            key={conversation.name}
-            mode={conversation.name === selected ? 'visible' : 'hidden'}
+            key={conversation.id}
+            mode={conversation.id === selected ? 'visible' : 'hidden'}
           >
             <ChatThread
               current={conversation}
-              onBack={() => setView((view) => ({ ...view, panel: 'list' }))}
-              onSend={(message) => sendMessage(conversation.name, message)}
+              onBack={() => setPanel('list')}
+              onSend={(message) => sendMessage(conversation.id, message)}
             />
           </Activity>
         ))}

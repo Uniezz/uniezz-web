@@ -7,6 +7,7 @@ export function createGroupConversation(
   imageUrl?: string,
 ): Conversation {
   return {
+    id: `group-${conversations.length + 1}`,
     name: conversations.some((conversation) => conversation.name === name)
       ? `${name} (${conversations.length + 1})`
       : name,

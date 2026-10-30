@@ -71,7 +71,5 @@ const universities = [...new Set(materials.map((material) => material.university
 export const EXAMSMOCKS = {
   materials,
   universities,
-  examTitle: 'Thermodynamics, written',
-  examDescription: '7 October, 9:00, room E-201. 4 past papers and 23 reviews from your course.',
   semester: 'Winter 2025/26',
 };

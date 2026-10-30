@@ -3,7 +3,16 @@ import { createGroupConversation } from '../../src/utils/chat';
 import type { Conversation } from '../../src/@types/chat';
 
 const existing: Conversation[] = [
-  { name: 'Maths', preview: '', time: '', group: true, unread: 0, image: 0, messages: [] },
+  {
+    id: 'maths',
+    name: 'Maths',
+    preview: '',
+    time: '',
+    group: true,
+    unread: 0,
+    image: 0,
+    messages: [],
+  },
 ];
 
 test('a new group uses its name and member preview without changing existing conversations', () => {

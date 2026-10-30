@@ -5,7 +5,7 @@ import { useForm, useWatch } from 'react-hook-form';
 
 import { EXAMSMOCKS, matchesSearch, optionalSearchString } from '@/utils';
 import type { ExamsFilters } from '@/@types';
-import { UIButton, UIPanel, UITopbar } from '@/ui/components';
+import { UITopbar } from '@/ui/components';
 import { MaterialFilters, MaterialTable, UploadMaterialButton } from '@/components/features/exams';
 
 export const Route = createFileRoute('/_app/exams')({
@@ -59,28 +59,6 @@ function ExamsPage() {
           />
         </UITopbar>
       </div>
-      <UIPanel className="mb-5.5 flex shrink-0 flex-wrap items-center gap-6 bg-[linear-gradient(90deg,var(--color-blue-40),var(--color-blue-0)_60%)] p-5.5">
-        <div className="w-24 border-r border-white-10 pr-6 text-center">
-          <strong className="text-countdown tracking-[-2.5px]">12</strong>
-          <p className="text-detail text-secondary">{t('app.daysLeft')}</p>
-        </div>
-        <div className="min-w-0 flex-1">
-          <p className="mb-1.5 text-detail font-semibold text-sky">{t('app.nextExam')}</p>
-          <h2 className="text-card-title font-semibold tracking-[-0.6px]">
-            {EXAMSMOCKS.examTitle}
-          </h2>
-          <p className="mt-1.5 text-body text-white-80">{EXAMSMOCKS.examDescription}</p>
-        </div>
-        <UIButton
-          bg="secondary"
-          size="sm"
-          onClick={() => {
-            filters.reset({ search: 'Thermodynamics', tab: 'papers', university: '' });
-          }}
-        >
-          {t('app.studyPapers')}
-        </UIButton>
-      </UIPanel>
       <div className="shrink-0">
         <MaterialFilters form={filters} />
       </div>

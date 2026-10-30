@@ -75,7 +75,7 @@
   "guide": {
     "action": "Zaproponuj miejsce",
     "subtitle": "Wszystko, czego potrzebujesz, żeby żyć w Lublinie",
-    "title": "Przewodnik studenta"
+    "title": "Przewodnik"
   },
   "landing": {
     "navigation": "Sekcje strony",
@@ -200,7 +200,6 @@
     "searchConversations": "Szukaj rozmów",
     "all": "Wszystkie",
     "groups": "Grupy",
-    "requests": "Prośby 2",
     "back": "Wstecz",
     "messages": "Wiadomości",
     "todayLabel": "Dzisiaj",
@@ -221,9 +220,6 @@
     "courseReviews": "Opinie o kursach",
     "professorRatings": "Oceny wykładowców",
     "myUploads": "Moje materiały",
-    "daysLeft": "dni do egzaminu",
-    "nextExam": "Twój następny egzamin",
-    "studyPapers": "Przeglądaj arkusze",
     "university": "Uczelnia",
     "allUniversities": "Wszystkie uczelnie",
     "semester": "Semestr",
@@ -243,8 +239,6 @@
     "pass": "Pomiń",
     "connected": "Połączono",
     "connect": "Połącz",
-    "newConnections": "Nowe znajomości",
-    "twoNew": "2 nowe",
     "sayHi": "Przywitaj się",
     "showing": "Wyświetlane",
     "edit": "Edytuj",

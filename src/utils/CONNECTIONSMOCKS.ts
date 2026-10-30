@@ -1,9 +1,15 @@
 import type { ConnectionFilters } from '@/@types';
 
 const connections = [
-  { name: 'Anna Nowak', meta: 'KUL, connected 2h ago', image: 2 },
-  { name: 'Piotr Lewandowski', meta: 'Przyrodniczy, yesterday', image: 3 },
-  { name: 'Julia Wójcik', meta: 'WSEI, Monday', image: 4 },
+  { id: 'anna-nowak', name: 'Anna Nowak', meta: 'KUL, connected 2h ago', image: 2 },
+  { id: 'piotr-lewandowski', name: 'Piotr Lewandowski', meta: 'Przyrodniczy, yesterday', image: 3 },
+  { id: 'julia-wojcik', name: 'Julia Wójcik', meta: 'WSEI, Monday', image: 4 },
+  { id: 'julia-wojcik-1', name: 'Julia Wójcik1', meta: 'WSEI, Monday', image: 4 },
+  { id: 'julia-wojcik-2', name: 'Julia Wójcik2', meta: 'WSEI, Monday', image: 4 },
+  { id: 'julia-wojcik-3', name: 'Julia Wójcik3', meta: 'WSEI, Monday', image: 4 },
+  { id: 'julia-wojcik-5', name: 'Julia Wójcik5', meta: 'WSEI, Monday', image: 4 },
+  { id: 'julia-wojcik-6', name: 'Julia Wójcik6', meta: 'WSEI, Monday', image: 4 },
+  { id: 'julia-wojcik-7', name: 'Julia Wójcik7', meta: 'WSEI, Monday', image: 4 },
 ];
 
 const defaultFilters: ConnectionFilters = {

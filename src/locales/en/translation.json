@@ -75,7 +75,7 @@
   "guide": {
     "action": "Suggest a place",
     "subtitle": "Everything you need to live in Lublin",
-    "title": "Student Guide"
+    "title": "Guide"
   },
   "landing": {
     "navigation": "Page sections",
@@ -200,7 +200,6 @@
     "searchConversations": "Search conversations",
     "all": "All",
     "groups": "Groups",
-    "requests": "Requests 2",
     "back": "Back",
     "messages": "Messages",
     "todayLabel": "Today",
@@ -221,9 +220,6 @@
     "courseReviews": "Course reviews",
     "professorRatings": "Professor ratings",
     "myUploads": "My uploads",
-    "daysLeft": "days left",
-    "nextExam": "Your next exam",
-    "studyPapers": "Study papers",
     "university": "University",
     "allUniversities": "All universities",
     "semester": "Semester",
@@ -243,8 +239,6 @@
     "pass": "Pass",
     "connected": "Connected",
     "connect": "Connect",
-    "newConnections": "New connections",
-    "twoNew": "2 new",
     "sayHi": "Say hi",
     "showing": "Showing",
     "edit": "Edit",

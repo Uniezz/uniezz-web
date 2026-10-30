@@ -9,7 +9,6 @@ import { UISegmented, UITopbar } from '@/ui/components';
 import {
   DiscoveryProfile,
   DiscoveryActions,
-  NewConnections,
   ConnectionFilterPanel,
 } from '@/components/features/connections';
 
@@ -54,7 +53,6 @@ function ConnectionsPage() {
             onPass={() => setPassed(true)}
             onConnect={() => setConnected((value) => !value)}
           />
-          <NewConnections connected={connected} />
           <ConnectionFilterPanel form={filters} />
         </aside>
       </div>

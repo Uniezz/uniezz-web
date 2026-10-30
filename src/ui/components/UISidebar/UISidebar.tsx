@@ -40,12 +40,22 @@ export function UISidebar({ user, counts, className, ...props }: UISidebarProps)
       <Link
         to="/profile"
         aria-label={t('app.profile')}
-        className={cn(sidebarUserStyles(), 'focus-visible:outline-2 focus-visible:outline-blue')}
+        className={cn(
+          sidebarUserStyles(),
+          'border border-transparent focus-visible:outline-2 focus-visible:outline-blue',
+        )}
+        activeProps={{ className: 'nav-item-active border border-white-10' }}
       >
-        <img src="/app/avatar.png" alt="" className="size-8.5 shrink-0 rounded-full object-cover" />
-        <span className="flex min-w-0 flex-col gap-1">
-          <strong className="truncate text-label">{user.name}</strong>
-          <span className="truncate text-detail text-secondary">{user.meta}</span>
+        <span className="relative z-10 flex min-w-0 items-center gap-2.5">
+          <img
+            src="/app/avatar.png"
+            alt=""
+            className="size-8.5 shrink-0 rounded-full object-cover"
+          />
+          <span className="flex min-w-0 flex-col gap-1">
+            <strong className="truncate text-label">{user.name}</strong>
+            <span className="truncate text-detail text-secondary">{user.meta}</span>
+          </span>
         </span>
       </Link>
     </aside>

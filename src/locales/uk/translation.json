@@ -75,7 +75,7 @@
   "guide": {
     "action": "Запропонувати місце",
     "subtitle": "Усе, що потрібно, щоб жити в Любліні",
-    "title": "Гід студента"
+    "title": "Гід"
   },
   "landing": {
     "navigation": "Розділи сторінки",
@@ -200,7 +200,6 @@
     "searchConversations": "Пошук розмов",
     "all": "Усі",
     "groups": "Групи",
-    "requests": "Запити 2",
     "back": "Назад",
     "messages": "Повідомлення",
     "todayLabel": "Сьогодні",
@@ -221,9 +220,6 @@
     "courseReviews": "Відгуки про курси",
     "professorRatings": "Оцінки викладачів",
     "myUploads": "Мої матеріали",
-    "daysLeft": "днів до іспиту",
-    "nextExam": "Ваш наступний іспит",
-    "studyPapers": "Переглянути завдання",
     "university": "Університет",
     "allUniversities": "Усі університети",
     "semester": "Семестр",
@@ -243,8 +239,6 @@
     "pass": "Пропустити",
     "connected": "Додано",
     "connect": "Додати",
-    "newConnections": "Нові знайомства",
-    "twoNew": "2 нові",
     "sayHi": "Привітатися",
     "showing": "Показано",
     "edit": "Редагувати",

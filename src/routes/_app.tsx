@@ -1,10 +1,27 @@
 import { BrandBackground, UIBottomTabs, UIDialog, UISidebar } from '@/ui/components';
-import { Outlet, createFileRoute, Link } from '@tanstack/react-router';
+import { Outlet, createFileRoute, Link, retainSearchParams } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
+import { Toaster } from 'react-hot-toast';
 import { useNarrowViewport } from '@/hooks/useNarrowViewport';
-import { isMobileDevice, shouldBlockMobile } from '@/utils';
+import { isMobileDevice, optionalSearchString, shouldBlockMobile } from '@/utils';
 import { APP_STORES } from '@/utils/stores';
-export const Route = createFileRoute('/_app')({ component: AppLayout });
+export const Route = createFileRoute('/_app')({
+  validateSearch: (
+    search: Record<string, unknown>,
+  ): {
+    conversationId?: string;
+    chatType?: 'groups' | 'connections' | undefined;
+  } => {
+    const conversationId = optionalSearchString(search.conversationId);
+    const chatType =
+      search.chatType === 'groups' || search.chatType === 'connections'
+        ? search.chatType
+        : undefined;
+    return { ...(chatType ? { chatType } : {}), ...(conversationId ? { conversationId } : {}) };
+  },
+  search: { middlewares: [retainSearchParams(['chatType', 'conversationId'])] },
+  component: AppLayout,
+});
 function AppLayout() {
   const { t } = useTranslation();
   const narrow = useNarrowViewport();
@@ -53,6 +70,27 @@ function AppLayout() {
           {t('app.home')}
         </Link>
       </UIDialog>
+      <Toaster
+        position="top-right"
+        gutter={10}
+        containerStyle={{ top: 24, right: 24 }}
+        toastOptions={{
+          duration: 3500,
+          style: {
+            maxWidth: 'calc(100vw - 32px)',
+            border: '1px solid rgba(255, 255, 255, 0.12)',
+            borderRadius: 16,
+            background: 'rgba(22, 24, 34, 0.96)',
+            padding: '12px 16px',
+            color: '#fff',
+            fontFamily: 'Geist Variable, sans-serif',
+            fontSize: 14,
+            boxShadow: '0 12px 32px rgba(0, 0, 0, 0.28)',
+          },
+          success: { duration: 3000, iconTheme: { primary: '#3dd68c', secondary: '#161822' } },
+          error: { iconTheme: { primary: '#e5484d', secondary: '#fff' } },
+        }}
+      />
     </BrandBackground>
   );
 }

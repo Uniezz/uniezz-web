@@ -3,6 +3,7 @@ import { Check } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import toast from 'react-hot-toast';
 
 import { PROFILEMOCKS } from '@/utils';
 import { UIButton, UITopbar } from '@/ui/components';
@@ -30,7 +31,12 @@ function ProfilePage() {
   const saved = isSubmitSuccessful && !isDirty;
   return (
     <FormProvider {...form}>
-      <form onSubmit={handleSubmit((data) => reset(data))}>
+      <form
+        onSubmit={handleSubmit((data) => {
+          reset(data);
+          toast.success(t('app.savedLocally'));
+        })}
+      >
         <UITopbar title={t('app.yourProfile')}>
           <UIButton
             type="submit"
@@ -46,11 +52,6 @@ function ProfilePage() {
           <div className="space-y-4.5">
             <PersonalDetails />
             <StudyProgrammes />
-            {saved && (
-              <p role="status" className="text-label text-success">
-                {t('app.savedLocally')}
-              </p>
-            )}
           </div>
         </div>
       </form>

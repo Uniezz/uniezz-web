@@ -63,7 +63,7 @@ export function FeedPosts({ posts, search }: FeedPostsProps) {
             <p className="mt-2.5 text-body text-white-80">{FEEDMOCKS.housingDescription}</p>
             <Link
               to="/chat"
-              search={{ recipient: 'Kateryna Melnyk' }}
+              search={{ conversationId: 'kateryna-melnyk' }}
               className="mt-4 inline-block text-label text-sky"
             >
               {t('app.message')} →

@@ -44,17 +44,9 @@ export const navItemLabelStyles = cva('truncate text-body leading-[1.2]', {
   },
 });
 
-export const navItemBadgeStyles = cva(
-  'ml-auto shrink-0 rounded-full px-1.75 py-0.25 text-micro font-bold text-white',
-  {
-    variants: {
-      active: {
-        true: 'bg-blue',
-        false: 'bg-blue',
-      },
-    },
-    defaultVariants: {
-      active: false,
-    },
+export const navItemBadgeStyles = cva('absolute -top-0 right-0 z-10 size-1.5 rounded-full', {
+  variants: {
+    active: { true: 'bg-red', false: 'bg-red' },
   },
-);
+  defaultVariants: { active: false },
+});

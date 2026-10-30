@@ -20,7 +20,6 @@ export default interface Resources {
       "courseReviews": "Course reviews",
       "createGroup": "Create group",
       "dating": "Dating",
-      "daysLeft": "days left",
       "directions": "Directions",
       "done": "Done",
       "dorms": "Dorms",
@@ -54,9 +53,7 @@ export default interface Resources {
       "mobileTitle": "Uniezz is coming to mobile",
       "myUploads": "My uploads",
       "nearby": "Nearby",
-      "newConnections": "New connections",
       "newPost": "New post",
-      "nextExam": "Your next exam",
       "noDocument": "No downloadable document was supplied with this design.",
       "pass": "Pass",
       "pastPapers": "Past papers",
@@ -70,7 +67,6 @@ export default interface Resources {
       "question": "Question",
       "rating": "Rating",
       "remove": "Remove",
-      "requests": "Requests 2",
       "required": "Enter a valid value.",
       "reset": "Reset filters and profiles",
       "saveChanges": "Save changes",
@@ -85,7 +81,6 @@ export default interface Resources {
       "send": "Send",
       "showing": "Showing",
       "studyBuddy": "Study buddy",
-      "studyPapers": "Study papers",
       "studyProgrammes": "Study programmes",
       "studyYear": "Year {{year}}",
       "subject": "Subject",
@@ -94,7 +89,6 @@ export default interface Resources {
       "today": "Top posts",
       "todayLabel": "Today",
       "trending": "Trending",
-      "twoNew": "2 new",
       "type": "Type",
       "typing": "Kateryna is typing",
       "university": "University",
@@ -181,7 +175,7 @@ export default interface Resources {
     "guide": {
       "action": "Suggest a place",
       "subtitle": "Everything you need to live in Lublin",
-      "title": "Student Guide"
+      "title": "Guide"
     },
     "landing": {
       "appsSoon": "Coming soon",
