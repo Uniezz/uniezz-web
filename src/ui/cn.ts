@@ -4,7 +4,21 @@ import { extendTailwindMerge } from 'tailwind-merge';
 const twMerge = extendTailwindMerge({
   extend: {
     theme: {
-      text: ['caption', 'regular', 'xxl'],
+      text: [
+        'caption',
+        'regular',
+        'xxl',
+        'page-title',
+        'panel-title',
+        'card-title',
+        'section',
+        'body',
+        'label',
+        'detail',
+        'micro',
+        'profile-name',
+        'countdown',
+      ],
     },
   },
 });

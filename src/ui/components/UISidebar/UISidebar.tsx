@@ -1,110 +1,54 @@
-import { Settings } from 'lucide-react';
-import { type ComponentProps, memo } from 'react';
+import { Link } from '@tanstack/react-router';
+import { type ComponentProps } from 'react';
 import { useTranslation } from 'react-i18next';
 import { cn } from '../../cn';
-import { UIButton } from '../UIButton';
 import { UINavItem } from '../UINavItem';
-import {
-  sidebarCaptionStyles,
-  sidebarGroupStyles,
-  sidebarHeaderStyles,
-  sidebarMarkStyles,
-  sidebarSettingsStyles,
-  sidebarStyles,
-  sidebarUserStyles,
-} from './variants';
-import { NAV_GROUPS } from '@/utils';
-
-type UISidebarProps = ComponentProps<'aside'> & {
+import { NAV_GROUPS } from '@/utils/navigation';
+import { sidebarStyles, sidebarGroupStyles, sidebarUserStyles } from './variants';
+export type UISidebarProps = ComponentProps<'aside'> & {
   user: { initials: string; name: string; meta: string };
   counts?: Record<string, number>;
-  collapsed?: boolean;
-  onCollapsedToggle?: () => void;
-  onSettingsClick?: () => void;
 };
-
-const UISidebarBase = ({
-  user,
-  counts,
-  collapsed,
-  onCollapsedToggle,
-  onSettingsClick,
-  className,
-  ...props
-}: UISidebarProps) => {
+export function UISidebar({ user, counts, className, ...props }: UISidebarProps) {
   const { t } = useTranslation();
-  const toggleLabel = collapsed ? t('sidebar.expand') : t('sidebar.collapse');
-
   return (
-    <aside className={cn(sidebarStyles({ collapsed }), className)} {...props}>
-      <div className={sidebarHeaderStyles()}>
-        <UIButton
-          size="icon"
-          bg="transparent"
-          aria-label={toggleLabel}
-          aria-expanded={!collapsed}
-          title={toggleLabel}
-          onClick={onCollapsedToggle}
-          className={sidebarMarkStyles()}
-        >
-          <img src="/favicon.png" alt="" className="size-full object-cover" />
-        </UIButton>
-      </div>
-
+    <aside className={cn(sidebarStyles(), className)} {...props}>
+      <Link to="/feed" className="mb-5.5 px-2.5 text-lg font-semibold tracking-[-0.6px]">
+        {t('common.appName')}
+      </Link>
       <nav aria-label={t('sidebar.mainNavigation')} className="flex flex-col">
         {NAV_GROUPS.map(({ titleKey, items }) => (
           <div
             key={titleKey ?? 'main'}
-            className={sidebarGroupStyles({ collapsed, section: Boolean(titleKey) })}
+            className={sidebarGroupStyles({ section: Boolean(titleKey) })}
           >
-            {titleKey &&
-              (collapsed ? (
-                <div className="mx-2 my-1.5 h-px bg-white/10" />
-              ) : (
-                <span className={sidebarCaptionStyles()}>
-                  {t(titleKey === 'sidebar.academics' ? 'sidebar.academics' : titleKey)}
-                </span>
-              ))}
             {items.map(({ labelKey, ...item }) => (
-              <UINavItem
-                key={item.to}
-                {...item}
-                label={t(labelKey)}
-                count={counts?.[item.to]}
-                collapsed={collapsed}
-              />
+              <UINavItem key={item.to} {...item} label={t(labelKey)} count={counts?.[item.to]} />
             ))}
           </div>
         ))}
       </nav>
-
-      <div className={sidebarUserStyles({ collapsed })}>
-        <div
-          title={collapsed ? user.name : undefined}
-          className="flex size-8.5 shrink-0 items-center justify-center rounded-full bg-blue/50"
-        >
-          <span className="text-sm font-bold text-white">{user.initials}</span>
-        </div>
-        {collapsed ? null : (
-          <>
-            <div className="flex min-w-0 flex-1 flex-col gap-px">
-              <span className="truncate text-sm font-semibold text-white">{user.name}</span>
-              <span className="truncate text-caption font-normal text-secondary">{user.meta}</span>
-            </div>
-            <UIButton
-              size="icon"
-              bg="transparent"
-              aria-label={t('sidebar.settings')}
-              onClick={onSettingsClick}
-              className={sidebarSettingsStyles()}
-            >
-              <Settings size={17} />
-            </UIButton>
-          </>
+      <Link
+        to="/profile"
+        aria-label={t('app.profile')}
+        className={cn(
+          sidebarUserStyles(),
+          'border border-transparent focus-visible:outline-2 focus-visible:outline-blue',
         )}
-      </div>
+        activeProps={{ className: 'nav-item-active border border-white-10' }}
+      >
+        <span className="relative z-10 flex min-w-0 items-center gap-2.5">
+          <img
+            src="/app/avatar.png"
+            alt=""
+            className="size-8.5 shrink-0 rounded-full object-cover"
+          />
+          <span className="flex min-w-0 flex-col gap-1">
+            <strong className="truncate text-label">{user.name}</strong>
+            <span className="truncate text-detail text-secondary">{user.meta}</span>
+          </span>
+        </span>
+      </Link>
     </aside>
   );
-};
-
-export const UISidebar = memo(UISidebarBase);
+}

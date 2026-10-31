@@ -1,27 +1,30 @@
 import { cva } from 'class-variance-authority';
 
-export const navItemStyles = cva('flex w-full items-center rounded-xl py-2.5 transition-colors', {
-  variants: {
-    active: {
-      true: 'bg-white/15',
-      false: 'hover:bg-white/10',
+export const navItemStyles = cva(
+  'flex w-full items-center rounded-xl border py-2.5 transition-colors',
+  {
+    variants: {
+      active: {
+        true: 'nav-item-active border-white-10',
+        false: 'border-transparent hover:bg-white-5',
+      },
+      collapsed: {
+        true: 'justify-center px-0',
+        false: 'gap-3 px-3',
+      },
     },
-    collapsed: {
-      true: 'justify-center px-0',
-      false: 'gap-3 px-3',
+    defaultVariants: {
+      active: false,
+      collapsed: false,
     },
   },
-  defaultVariants: {
-    active: false,
-    collapsed: false,
-  },
-});
+);
 
 export const navItemIconStyles = cva('shrink-0', {
   variants: {
     active: {
       true: 'text-white',
-      false: 'text-white/60',
+      false: 'text-white-60',
     },
   },
   defaultVariants: {
@@ -29,11 +32,11 @@ export const navItemIconStyles = cva('shrink-0', {
   },
 });
 
-export const navItemLabelStyles = cva('truncate text-regular', {
+export const navItemLabelStyles = cva('truncate text-body leading-[1.2]', {
   variants: {
     active: {
       true: 'font-semibold text-white',
-      false: 'font-medium text-white/70',
+      false: 'font-medium text-white-60',
     },
   },
   defaultVariants: {
@@ -41,17 +44,9 @@ export const navItemLabelStyles = cva('truncate text-regular', {
   },
 });
 
-export const navItemBadgeStyles = cva(
-  'ml-auto shrink-0 rounded-full px-1.75 py-0.5 text-caption font-bold text-white',
-  {
-    variants: {
-      active: {
-        true: 'bg-blue',
-        false: 'bg-blue/70',
-      },
-    },
-    defaultVariants: {
-      active: false,
-    },
+export const navItemBadgeStyles = cva('absolute -top-0 right-0 z-10 size-1.5 rounded-full', {
+  variants: {
+    active: { true: 'bg-red', false: 'bg-red' },
   },
-);
+  defaultVariants: { active: false },
+});

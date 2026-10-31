@@ -1,7 +1,7 @@
 import { cva } from 'class-variance-authority';
 
 export const menuStyles = cva(
-  'absolute top-full right-0 z-10 mt-2 flex w-56 flex-col gap-0.5 rounded-2xl border border-white/10 bg-surface p-1.5 shadow-2xl',
+  'absolute top-full right-0 z-10 mt-2 flex w-56 flex-col gap-0.5 rounded-2xl border border-white-10 bg-surface p-1.5 shadow-2xl',
 );
 
 export const menuOptionStyles = cva(
@@ -9,8 +9,8 @@ export const menuOptionStyles = cva(
   {
     variants: {
       active: {
-        true: 'bg-blue/20',
-        false: 'bg-transparent enabled:hover:bg-white/10',
+        true: 'bg-blue-20',
+        false: 'bg-transparent enabled:hover:bg-white-10',
       },
     },
   },

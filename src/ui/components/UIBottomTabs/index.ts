@@ -1,0 +1,1 @@
+export { UIBottomTabs } from './UIBottomTabs';
