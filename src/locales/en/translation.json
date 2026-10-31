@@ -311,6 +311,25 @@
     "preview": "Preview in Feed",
     "published": "Post published"
   },
+  "report": {
+    "post": "Report post",
+    "comment": "Report comment",
+    "user": "Report user",
+    "description": "Choose a reason and add any details that may help.",
+    "reason": "Reason",
+    "selectReason": "Select a reason",
+    "spam": "Spam",
+    "harassment": "Harassment",
+    "inappropriate": "Inappropriate content",
+    "hateSpeech": "Hate speech",
+    "other": "Other",
+    "details": "Details (optional)",
+    "detailsError": "Use at most 1000 characters.",
+    "submit": "Send report",
+    "sent": "Report sent.",
+    "duplicate": "You have already reported this item.",
+    "rateLimit": "You have reached the reporting limit. Try again later."
+  },
   "apiState": {
     "editComment": "Edit comment",
     "editPost": "Edit post",

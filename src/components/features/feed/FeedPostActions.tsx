@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 import type { FeedPost } from '@/@types';
 import { useDeleteFeedPost, useMyProfile } from '@/hooks';
 import { UIButton, UIDialog } from '@/ui/components';
+import { ReportButton } from '@/components/features/reports/ReportButton';
 
 export function FeedPostActions({ post }: { post: FeedPost }) {
   const { t } = useTranslation();
@@ -14,7 +15,15 @@ export function FeedPostActions({ post }: { post: FeedPost }) {
   const { mutateAsync: deletePost, isPending: isDeleting } = useDeleteFeedPost();
   const [confirmDelete, setConfirmDelete] = useState(false);
 
-  if (profile?.id !== post.author.id) return null;
+  if (!profile) return null;
+  if (profile.id !== post.author.id) {
+    return (
+      <div className="flex flex-wrap gap-4">
+        <ReportButton targetType="post" targetId={post.id} />
+        <ReportButton targetType="user" targetId={post.author.id} />
+      </div>
+    );
+  }
 
   return (
     <>

@@ -327,6 +327,25 @@ export default interface Resources {
       "titlePlaceholder": "Give your post a title",
       "type": "Post type"
     },
+    "report": {
+      "comment": "Report comment",
+      "description": "Choose a reason and add any details that may help.",
+      "details": "Details (optional)",
+      "detailsError": "Use at most 1000 characters.",
+      "duplicate": "You have already reported this item.",
+      "harassment": "Harassment",
+      "hateSpeech": "Hate speech",
+      "inappropriate": "Inappropriate content",
+      "other": "Other",
+      "post": "Report post",
+      "rateLimit": "You have reached the reporting limit. Try again later.",
+      "reason": "Reason",
+      "selectReason": "Select a reason",
+      "sent": "Report sent.",
+      "spam": "Spam",
+      "submit": "Send report",
+      "user": "Report user"
+    },
     "sidebar": {
       "academics": "ACADEMICS",
       "collapse": "Collapse sidebar",

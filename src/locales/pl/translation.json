@@ -311,6 +311,25 @@
     "preview": "Podgląd w aktualnościach",
     "published": "Post opublikowany"
   },
+  "report": {
+    "post": "Zgłoś post",
+    "comment": "Zgłoś komentarz",
+    "user": "Zgłoś użytkownika",
+    "description": "Wybierz powód i opcjonalnie podaj szczegóły.",
+    "reason": "Powód",
+    "selectReason": "Wybierz powód",
+    "spam": "Spam",
+    "harassment": "Nękanie",
+    "inappropriate": "Nieodpowiednia treść",
+    "hateSpeech": "Mowa nienawiści",
+    "other": "Inny",
+    "details": "Szczegóły (opcjonalnie)",
+    "detailsError": "Maksymalnie 1000 znaków.",
+    "submit": "Wyślij zgłoszenie",
+    "sent": "Zgłoszenie wysłane.",
+    "duplicate": "Ten element został już zgłoszony.",
+    "rateLimit": "Osiągnięto limit zgłoszeń. Spróbuj ponownie później."
+  },
   "apiState": {
     "editComment": "Edytuj komentarz",
     "editPost": "Edytuj post",

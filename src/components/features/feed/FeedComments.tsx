@@ -8,6 +8,7 @@ import { authorName } from '@/utils/feed';
 import { FeedCommentsSkeleton } from './FeedCommentsSkeleton';
 import { FeedLikeButton } from './FeedLikeButton';
 import { FeedCommentEditor } from './FeedCommentEditor';
+import { ReportButton } from '@/components/features/reports/ReportButton';
 
 export function FeedCommentItem({
   comment,
@@ -84,6 +85,12 @@ export function FeedCommentItem({
                   >
                     {t('app.remove')}
                   </UIButton>
+                </>
+              )}
+              {profile?.id && comment.author && profile.id !== comment.author.id && (
+                <>
+                  <ReportButton targetType="comment" targetId={comment.id} />
+                  <ReportButton targetType="user" targetId={comment.author.id} />
                 </>
               )}
             </>

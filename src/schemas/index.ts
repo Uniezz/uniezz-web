@@ -4,3 +4,4 @@ export * from './exams';
 export * from './feed';
 export * from './message';
 export * from './profile';
+export * from './report';
