@@ -280,5 +280,33 @@
     "savedLocally": "Zmiany zapisano lokalnie do opuszczenia ekranu.",
     "programmeExists": "Ten kierunek jest już na Twoim profilu.",
     "clearSearch": "Wyczyść wyszukiwanie"
+  },
+  "postComposer": {
+    "justNow": "Przed chwilą",
+    "questionPlaceholder": "O co chcesz zapytać?",
+    "eventPlaceholder": "Podaj nazwę wydarzenia",
+    "titlePlaceholder": "Dodaj tytuł posta",
+    "post": "Post",
+    "subtitle": "Podziel się czymś ze swoją społecznością studencką.",
+    "type": "Rodzaj posta",
+    "questionTitle": "Twoje pytanie",
+    "title": "Tytuł",
+    "details": "Szczegóły (opcjonalnie)",
+    "detailsPlaceholder": "Dodaj informacje, które powinni znać inni studenci…",
+    "eventDetails": "Szczegóły wydarzenia",
+    "date": "Data",
+    "time": "Godzina",
+    "location": "Miejsce",
+    "locationPlaceholder": "Nazwa miejsca, adres lub link do spotkania online",
+    "photo": "Zdjęcie (opcjonalnie)",
+    "photoPreview": "Wybrane zdjęcie do posta",
+    "removePhoto": "Usuń zdjęcie",
+    "readingPhoto": "Wczytywanie zdjęcia…",
+    "addPhoto": "Dodaj zdjęcie",
+    "photoHint": "JPG, PNG lub WebP · do 5 MB",
+    "cancel": "Anuluj",
+    "publish": "Opublikuj",
+    "preview": "Podgląd w aktualnościach",
+    "published": "Post opublikowany"
   }
 }

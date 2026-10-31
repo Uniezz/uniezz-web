@@ -280,5 +280,33 @@
     "savedLocally": "Changes saved locally until you leave this screen.",
     "programmeExists": "This programme is already on your profile.",
     "clearSearch": "Clear search"
+  },
+  "postComposer": {
+    "justNow": "Just now",
+    "questionPlaceholder": "What would you like to ask?",
+    "eventPlaceholder": "Give your event a name",
+    "titlePlaceholder": "Give your post a title",
+    "post": "Post",
+    "subtitle": "Share something with your campus.",
+    "type": "Post type",
+    "questionTitle": "Your question",
+    "title": "Title",
+    "details": "Details (optional)",
+    "detailsPlaceholder": "Add the details other students should know…",
+    "eventDetails": "Event details",
+    "date": "Date",
+    "time": "Time",
+    "location": "Location",
+    "locationPlaceholder": "Venue, address, or online meeting link",
+    "photo": "Photo (optional)",
+    "photoPreview": "Selected post photo",
+    "removePhoto": "Remove photo",
+    "readingPhoto": "Loading photo…",
+    "addPhoto": "Add a photo",
+    "photoHint": "JPG, PNG or WebP · up to 5 MB",
+    "cancel": "Cancel",
+    "publish": "Publish",
+    "preview": "Preview in Feed",
+    "published": "Post published"
   }
 }

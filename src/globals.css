@@ -264,7 +264,7 @@ input[type='search']::-webkit-search-cancel-button {
 @utility bg-app {
   position: relative;
   isolation: isolate;
-  overflow: hidden;
+  overflow: clip;
   background-color: #0c0d14;
 
   &::before,

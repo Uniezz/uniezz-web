@@ -1,25 +1,16 @@
 import { createFileRoute, Link, redirect } from '@tanstack/react-router';
-import { ChevronLeft, ChevronRight, Send } from 'lucide-react';
-import { type FormEvent, useState } from 'react';
+import { ChevronLeft, ChevronRight, Send, CalendarDays, MapPin } from 'lucide-react';
+import { type FormEvent, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { cn } from '@/ui/cn';
 import { inputStyles } from '@/ui/components/UIInput/variants';
 import { UIAvatar, UIButton, UIEmpty, UIPanel } from '@/ui/components';
 import { FEEDMOCKS } from '@/utils';
+import { FeedContext } from './route';
 
 // TODO(api): Replace mock post details, comments, ordering, and local comment submission with API-backed feed data.
-const feedPosts = [
-  ...FEEDMOCKS.feed.topPosts.map((post) => ({
-    ...post,
-    author: post.university,
-    body: 'body' in post ? post.body : `${post.summary} · ${post.university}`,
-  })),
-  ...FEEDMOCKS.feed.posts.map((post) => ({
-    ...post,
-    image: 'image' in post ? post.image : undefined,
-  })),
-];
+const mockPosts = [...FEEDMOCKS.feed.topPosts, ...FEEDMOCKS.feed.posts];
 
 export const Route = createFileRoute('/_app/feed/$postId')({
   beforeLoad: ({ params, search }) => {
@@ -38,6 +29,9 @@ export const Route = createFileRoute('/_app/feed/$postId')({
 function FeedPostPage() {
   const { postId } = Route.useParams();
   const { t } = useTranslation();
+  // TODO(api): Resolve created posts through the post query instead of local feed context.
+  const context = useContext(FeedContext);
+  const feedPosts = [...(context?.posts ?? []), ...mockPosts];
   const [commentDraft, setCommentDraft] = useState('');
   const [isCommentMultiline, setIsCommentMultiline] = useState(false);
   const [localComments, setLocalComments] = useState<
@@ -76,7 +70,7 @@ function FeedPostPage() {
         ...(current[post.id] ?? []),
         {
           id: `${post.id}-${Date.now()}`,
-          author: FEEDMOCKS.currentAuthor.split(' · ')[0],
+          author: FEEDMOCKS.currentUser.name,
           text,
         },
       ],
@@ -102,7 +96,9 @@ function FeedPostPage() {
                 <img src={post.image} alt="" className="absolute inset-0 size-full object-cover" />
               ) : (
                 <div className="p-8 text-center">
-                  <h1 className="text-body font-semibold tracking-[-0.2px]">{post.title}</h1>
+                  <h1 className="text-body font-semibold tracking-[-0.2px] wrap-anywhere">
+                    {post.title}
+                  </h1>
                 </div>
               )}
             </div>
@@ -117,7 +113,23 @@ function FeedPostPage() {
                 />
                 <p className="text-label font-medium text-white">{post.author}</p>
               </div>
-              <h1 className="text-body font-semibold tracking-[-0.2px]">{post.title}</h1>
+              <h1 className="text-body font-semibold tracking-[-0.2px] wrap-anywhere">
+                {post.title}
+              </h1>
+              {post.type === 'event' && (
+                <div className="space-y-2 text-detail text-secondary">
+                  <p className="flex items-center gap-2">
+                    <CalendarDays className="size-4 shrink-0" aria-hidden="true" />
+                    {post.summary}
+                  </p>
+                  {post.location && (
+                    <p className="flex items-center gap-2">
+                      <MapPin className="size-4 shrink-0" aria-hidden="true" />
+                      {post.location}
+                    </p>
+                  )}
+                </div>
+              )}
               {post.body && (
                 <p className="text-body wrap-anywhere whitespace-pre-wrap text-white-80">
                   {post.body}

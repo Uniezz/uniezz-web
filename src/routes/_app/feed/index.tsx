@@ -6,7 +6,7 @@ import { FeedContext } from './route';
 
 export const Route = createFileRoute('/_app/feed/')({
   beforeLoad: ({ search }) => {
-    if (search.postId && !search.compose) {
+    if (search.postId) {
       throw redirect({ to: '/feed/$postId', params: { postId: search.postId }, search });
     }
   },

@@ -1,3 +1,5 @@
+import type { FeedPost } from '@/@types';
+
 const eventTitle = 'Autumn Welcome Party';
 const question = 'Statistics with dr hab. Nowak: is the final written or oral?';
 const housing = 'Two rooms on Radziszewskiego';
@@ -98,9 +100,10 @@ const comments = [
   },
 ];
 
-const topPosts = [
+const topPosts: FeedPost[] = [
   {
     id: 'coffee-code-meetup',
+    author: 'Politechnika',
     type: 'event',
     title: 'Coffee & code meetup',
     university: 'Politechnika',
@@ -110,6 +113,7 @@ const topPosts = [
   },
   {
     id: 'rowing-club-open-day',
+    author: 'UMCS',
     type: 'event',
     title: 'Rowing club open day',
     university: 'UMCS',
@@ -119,6 +123,7 @@ const topPosts = [
   },
   {
     id: 'bread-baking-workshop',
+    author: 'Przyrodniczy',
     type: 'event',
     title: 'Bread baking workshop',
     university: 'Przyrodniczy',
@@ -128,6 +133,7 @@ const topPosts = [
   },
   {
     id: 'erasmus-language-cafe',
+    author: 'WSEI',
     type: 'event',
     title: 'Erasmus language café',
     university: 'WSEI',
@@ -137,6 +143,7 @@ const topPosts = [
   },
   {
     id: 'autumn-welcome-party',
+    author: 'Politechnika',
     type: 'event',
     title: eventTitle,
     university: 'Politechnika',
@@ -147,7 +154,7 @@ const topPosts = [
   },
 ];
 
-const posts = [
+const posts: FeedPost[] = [
   {
     id: 'open-mic-night',
     type: 'event',
@@ -187,5 +194,5 @@ const posts = [
 // TODO(api): Replace this fixture module when feed consumers use the API.
 export const FEEDMOCKS = {
   feed: { topPosts, posts },
-  currentAuthor: 'Jan Kowalski · UMCS',
+  currentUser: { name: 'Jan Kowalski', university: 'UMCS', avatar: '/app/avatar.png' },
 };
