@@ -49,6 +49,7 @@ export const UIInput = ({
         <input
           {...props}
           id={inputId}
+          autoComplete={props.autoComplete ?? 'off'}
           className="min-w-0 flex-1 bg-transparent text-white outline-none placeholder:text-muted"
           type={type}
           value={text}

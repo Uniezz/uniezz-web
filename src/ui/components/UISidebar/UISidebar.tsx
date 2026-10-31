@@ -31,7 +31,7 @@ export function UISidebar({ user, counts, className, ...props }: UISidebarProps)
       </nav>
       <Link
         to="/feed"
-        search={{ compose: true }}
+        search={{ compose: true, postId: undefined }}
         className="mt-5 flex items-center justify-center gap-2 rounded-full bg-white px-4 py-2.75 text-label font-semibold text-ink"
       >
         <Plus size={16} />

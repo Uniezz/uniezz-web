@@ -1,9 +1,11 @@
-import { ArrowLeft, ArrowUp } from 'lucide-react';
+import { ArrowLeft, Send } from 'lucide-react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import type { Message, Conversation } from '@/@types';
+import { cn } from '@/ui/cn';
 import { UIAvatar, UIButton, UIEmpty, UIPanel } from '@/ui/components';
 import { textFormSchema, type TextFormSchema } from '@/schemas';
 // TODO(api): Replace mock chat status and context content with API-backed conversation data.
@@ -19,16 +21,13 @@ export function ChatThread({
   onSend: (message: Message) => void;
 }) {
   const { t } = useTranslation();
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { isValid },
-  } = useForm<TextFormSchema>({
+  const { register, control, handleSubmit, reset } = useForm<TextFormSchema>({
     resolver: zodResolver(textFormSchema),
     defaultValues: { text: '' },
     mode: 'onChange',
   });
+  const [isMultiline, setIsMultiline] = useState(false);
+  const messageDraft = useWatch({ control, name: 'text' });
   const submit = handleSubmit(({ text }) => {
     onSend({
       text,
@@ -38,6 +37,7 @@ export function ChatThread({
       ),
     });
     reset({ text: '' });
+    setIsMultiline(false);
   });
   return (
     <UIPanel className="flex h-full min-h-0 flex-col p-0">
@@ -95,12 +95,16 @@ export function ChatThread({
         </div>
       </div>
       <form
-        className="mx-5 mb-5 flex items-end gap-3 rounded-feature border border-white-10 bg-white-5 p-2 pl-4"
+        className={cn(
+          'relative mx-5 mb-5 flex items-end border border-white-10 bg-white-5 p-2 pr-12 pl-4',
+          isMultiline ? 'rounded-2xl' : 'rounded-full',
+        )}
         onSubmit={submit}
       >
         <textarea
           aria-label={t('app.message')}
           {...register('text')}
+          onInput={(event) => setIsMultiline(event.currentTarget.scrollHeight > 48)}
           onKeyDown={(e) => {
             if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) {
               e.preventDefault();
@@ -110,11 +114,23 @@ export function ChatThread({
           rows={1}
           maxLength={4000}
           placeholder={t('app.writeMessage')}
-          className="field-sizing-content max-h-32 min-h-9.5 min-w-0 flex-1 resize-none bg-transparent p-2 text-body leading-[1.4] outline-none"
+          className="field-sizing-content max-h-32 min-h-9.5 min-w-0 flex-1 resize-none bg-transparent p-2 text-body leading-[1.4] outline-none placeholder:text-secondary"
         />
-        <UIButton type="submit" size="icon" aria-label={t('app.send')} disabled={!isValid}>
-          <ArrowUp size={18} />
-        </UIButton>
+        {messageDraft?.trim() && (
+          <UIButton
+            type="submit"
+            size="icon"
+            bg="secondary"
+            leftIcon={Send}
+            aria-label={t('app.send')}
+            className={cn(
+              'absolute right-1.5 border-transparent',
+              isMultiline ? 'bottom-1.5' : 'top-1/2 -translate-y-1/2',
+            )}
+          >
+            {''}
+          </UIButton>
+        )}
       </form>
     </UIPanel>
   );

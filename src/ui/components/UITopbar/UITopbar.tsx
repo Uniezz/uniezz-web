@@ -32,7 +32,7 @@ export function UITopbar({ title, subtitle, action, search, children }: UITopbar
         <div className="w-full sm:w-75">
           <UISearch
             {...search}
-            className="gap-2.5 px-4 py-2.75 text-body backdrop-blur-[40px] [&_svg]:size-4.25"
+            className="gap-2.5 px-4 text-body backdrop-blur-[40px] [&_svg]:size-4.25"
           />
         </div>
       )}

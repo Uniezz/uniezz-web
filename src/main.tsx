@@ -20,7 +20,17 @@ const connectionsRouteMask = createRouteMask({
   to: '/connections',
   search: () => ({}),
 });
-const router = createRouter({ routeTree, routeMasks: [newGroupRouteMask, connectionsRouteMask] });
+const postRouteMask = createRouteMask({
+  routeTree,
+  from: '/feed/$postId',
+  to: '/feed/$postId',
+  params: true,
+  search: (search) => ({ ...search, postId: undefined }),
+});
+const router = createRouter({
+  routeTree,
+  routeMasks: [newGroupRouteMask, connectionsRouteMask, postRouteMask],
+});
 const queryClient = new QueryClient();
 
 declare module '@tanstack/react-router' {

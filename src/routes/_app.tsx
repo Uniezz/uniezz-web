@@ -12,8 +12,10 @@ export const Route = createFileRoute('/_app')({
     conversationId?: string;
     chatType?: 'groups' | 'connections' | undefined;
     chatRoute?: 'new-group' | undefined;
+    postId?: string;
   } => {
     const conversationId = optionalSearchString(search.conversationId);
+    const postId = optionalSearchString(search.postId);
     const chatType =
       search.chatType === 'groups' || search.chatType === 'connections'
         ? search.chatType
@@ -23,10 +25,11 @@ export const Route = createFileRoute('/_app')({
       ...(chatType ? { chatType } : {}),
       ...(conversationId ? { conversationId } : {}),
       ...(chatRoute ? { chatRoute } : {}),
+      ...(postId ? { postId } : {}),
     };
   },
   search: {
-    middlewares: [retainSearchParams(['chatType', 'conversationId', 'chatRoute'])],
+    middlewares: [retainSearchParams(['chatType', 'conversationId', 'chatRoute', 'postId'])],
   },
   component: AppLayout,
 });

@@ -1,5 +1,5 @@
 import { cva } from 'class-variance-authority';
 
 export const searchStyles = cva(
-  'min-h-11 rounded-full py-2 [&_input]:placeholder:text-secondary [&_svg]:size-4 [&_svg]:text-secondary',
+  'h-12 min-h-12 rounded-full py-0 [&_input]:placeholder:text-secondary [&_svg]:size-4 [&_svg]:text-secondary',
 );

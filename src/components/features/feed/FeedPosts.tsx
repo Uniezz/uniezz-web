@@ -1,14 +1,11 @@
 import { Link } from '@tanstack/react-router';
 import { Masonry, type RenderComponentProps } from 'masonic';
-import { useState, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { UIPanel, UIEmpty } from '@/ui/components';
-// TODO(api): Replace mock post/story content, local filtering, and interactions with API-backed feed data and mutations.
+// TODO(api): Replace mock featured/plain posts, hardcoded IDs/order, local filtering, and interactions with API-backed feed data and mutations.
 import { FEEDMOCKS, matchesSearch } from '@/utils';
-import { CampusEvent } from './CampusEvent';
-import { CampusQuestion } from './CampusQuestion';
-import { TextFormDialog } from './TextFormDialog';
 
 type FeedPostsProps = {
   posts: string[];
@@ -27,9 +24,6 @@ function FeedCard({ data }: RenderComponentProps<FeedItem>): ReactNode {
 
 export function FeedPosts({ posts, search }: FeedPostsProps) {
   const { t } = useTranslation();
-  const [going, setGoing] = useState(true);
-  const [answers, setAnswers] = useState<string[]>([]);
-  const [answerOpen, setAnswerOpen] = useState(false);
 
   const items: FeedItem[] = [
     ...posts.map((post, index) => ({
@@ -42,37 +36,65 @@ export function FeedPosts({ posts, search }: FeedPostsProps) {
         </UIPanel>
       ),
     })),
-    {
-      id: 'event',
-      searchText: `${FEEDMOCKS.eventTitle} Politechnika`,
-      content: <CampusEvent going={going} onGoingChange={setGoing} />,
-    },
-    {
-      id: 'question',
-      searchText: `${FEEDMOCKS.question} Olena Kovalenko`,
-      content: <CampusQuestion answers={answers} onAnswer={() => setAnswerOpen(true)} />,
-    },
-    {
-      id: 'housing',
-      searchText: `${FEEDMOCKS.housing} Kateryna`,
-      content: (
-        <UIPanel className="overflow-hidden p-0">
-          <img src="/app/b4YP8L-14.jpg" alt="" className="h-50 w-full object-cover" />
-          <div className="min-w-0 p-5.5">
-            <p className="mb-2.5 text-label font-medium text-white-80">{FEEDMOCKS.housingAuthor}</p>
-            <h2 className="text-card-title font-semibold tracking-[-0.6px]">{FEEDMOCKS.housing}</h2>
-            <p className="mt-2.5 text-body text-white-80">{FEEDMOCKS.housingDescription}</p>
+    ...FEEDMOCKS.feed.posts.map((post) => ({
+      id: post.id,
+      searchText: `${post.title} ${post.author} ${post.university} ${post.summary}`,
+      content:
+        post.type === 'question' ? (
+          <div className="relative">
+            <UIPanel className="p-5.5">
+              <p className="text-label font-medium text-white-80">{post.author}</p>
+              <p className="mt-1 mb-3 text-detail text-secondary">
+                {post.university} · {post.time}
+              </p>
+              <h2 className="text-card-title font-semibold tracking-[-0.6px]">{post.title}</h2>
+            </UIPanel>
+            <span className="app-tag pointer-events-none absolute top-3 right-5.5 z-20 border-[#626470] bg-[#3d3f4a] px-2 py-1">
+              {t('app.question')}
+            </span>
             <Link
-              to="/chat"
-              search={{ conversationId: 'kateryna-melnyk' }}
-              className="mt-4 inline-block text-label text-sky"
-            >
-              {t('app.message')} →
-            </Link>
+              to="/feed/$postId"
+              params={{ postId: post.id }}
+              search={{ postId: post.id }}
+              aria-label={`${t('app.viewPost')}: ${post.title}`}
+              className="absolute inset-0 z-10 rounded-3xl"
+            />
           </div>
-        </UIPanel>
-      ),
-    },
+        ) : (
+          <div className="group relative">
+            <UIPanel className="overflow-hidden p-0">
+              {'image' in post && (
+                <div className="h-50 overflow-hidden">
+                  <img
+                    src={post.image}
+                    alt=""
+                    className="size-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  />
+                </div>
+              )}
+              <div className="min-w-0 p-5.5">
+                <p className="text-label font-medium text-white-80">{post.author}</p>
+                <p className="mt-1 mb-3 text-detail text-secondary">
+                  {post.university} · {post.summary}
+                </p>
+                <h2 className="text-card-title font-semibold tracking-[-0.6px]">{post.title}</h2>
+              </div>
+            </UIPanel>
+            {post.type === 'event' && (
+              <span className="app-tag pointer-events-none absolute top-3 left-3 z-20 border-[#626470] bg-[#3d3f4a] px-2 py-1">
+                {t('app.event')}
+              </span>
+            )}
+            <Link
+              to="/feed/$postId"
+              params={{ postId: post.id }}
+              search={{ postId: post.id }}
+              aria-label={`${t('app.viewPost')}: ${post.title}`}
+              className="absolute inset-0 z-10 rounded-3xl"
+            />
+          </div>
+        ),
+    })),
   ].filter((item) => matchesSearch(search, item.searchText));
 
   return (
@@ -90,16 +112,9 @@ export function FeedPosts({ posts, search }: FeedPostsProps) {
         />
       ) : (
         search &&
-        !FEEDMOCKS.stories.some((story) =>
-          matchesSearch(search, story.title, story.university),
+        ![...FEEDMOCKS.feed.topPosts, ...FEEDMOCKS.feed.posts].some((post) =>
+          matchesSearch(search, post.title, post.university, post.summary),
         ) && <UIEmpty />
-      )}
-      {answerOpen && (
-        <TextFormDialog
-          title={t('app.answer')}
-          onClose={() => setAnswerOpen(false)}
-          onSubmit={(text) => setAnswers((answers) => [...answers, text])}
-        />
       )}
     </>
   );
