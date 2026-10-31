@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 
 // TODO(api): Replace mock profile defaults and local form submission with API-backed profile data and mutations.
 import { PROFILEMOCKS } from '@/utils';
-import { UIButton, UITopbar } from '@/ui/components';
+import { UIButton, UITopbar, UIUnsavedChanges } from '@/ui/components';
 import { profileFormSchema, type ProfileFormSchema } from '@/schemas';
 import { ProfileIdentity, PersonalDetails, StudyProgrammes } from '@/components/features/profile';
 
@@ -32,6 +32,7 @@ function ProfilePage() {
   const saved = isSubmitSuccessful && !isDirty;
   return (
     <FormProvider {...form}>
+      <UIUnsavedChanges dirty={isDirty} />
       <form
         onSubmit={handleSubmit((data) => {
           reset(data);

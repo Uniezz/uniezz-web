@@ -279,7 +279,9 @@
     "studyYear": "Рік {{year}}",
     "savedLocally": "Зміни збережено локально до виходу з екрана.",
     "programmeExists": "Ця програма вже є у вашому профілі.",
-    "clearSearch": "Очистити пошук"
+    "clearSearch": "Очистити пошук",
+    "unsavedChangesTitle": "Відхилити зміни?",
+    "discardChangesDescription": "Якщо ви зараз підете, незбережені зміни буде втрачено."
   },
   "postComposer": {
     "justNow": "Щойно",

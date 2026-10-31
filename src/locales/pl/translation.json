@@ -279,7 +279,9 @@
     "studyYear": "Rok {{year}}",
     "savedLocally": "Zmiany zapisano lokalnie do opuszczenia ekranu.",
     "programmeExists": "Ten kierunek jest już na Twoim profilu.",
-    "clearSearch": "Wyczyść wyszukiwanie"
+    "clearSearch": "Wyczyść wyszukiwanie",
+    "unsavedChangesTitle": "Odrzucić zmiany?",
+    "discardChangesDescription": "Jeśli teraz wyjdziesz, niezapisane zmiany zostaną utracone."
   },
   "postComposer": {
     "justNow": "Przed chwilą",

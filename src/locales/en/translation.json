@@ -279,7 +279,9 @@
     "studyYear": "Year {{year}}",
     "savedLocally": "Changes saved locally until you leave this screen.",
     "programmeExists": "This programme is already on your profile.",
-    "clearSearch": "Clear search"
+    "clearSearch": "Clear search",
+    "unsavedChangesTitle": "Discard changes?",
+    "discardChangesDescription": "Your unsaved changes will be lost if you leave now."
   },
   "postComposer": {
     "justNow": "Just now",

@@ -1,4 +1,3 @@
-import { Plus } from 'lucide-react';
 import { Link } from '@tanstack/react-router';
 import { type ComponentProps } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -29,14 +28,6 @@ export function UISidebar({ user, counts, className, ...props }: UISidebarProps)
           </div>
         ))}
       </nav>
-      <Link
-        to="/feed/new-post"
-        search={{ postId: undefined }}
-        className="mt-5 flex items-center justify-center gap-2 rounded-full bg-white px-4 py-2.75 text-label font-semibold text-ink"
-      >
-        <Plus size={16} />
-        {t('app.newPost')}
-      </Link>
       <Link
         to="/profile"
         aria-label={t('app.profile')}

@@ -17,7 +17,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import type { FeedPost } from '@/@types';
 import { postSchema, type PostSchema } from '@/schemas';
-import { UIButton, UIField, UIMenu, UIPanel, UITopbar } from '@/ui/components';
+import { UIButton, UIField, UIMenu, UIPanel, UITopbar, UIUnsavedChanges } from '@/ui/components';
 import { useDropdown } from '@/hooks/useDropdown';
 // TODO(api): Use the authenticated profile and upload media through the post API.
 import { FEEDMOCKS } from '@/utils';
@@ -47,7 +47,7 @@ export function CreatePost({
     setError,
     trigger,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<PostSchema>({
     resolver: zodResolver(postSchema),
     defaultValues: { type: 'post', title: '', body: '', date: '', time: '', location: '' },
@@ -131,10 +131,11 @@ export function CreatePost({
 
   return (
     <div className="mx-auto flex h-[calc(100svh-136px)] min-h-0 max-w-5xl flex-col overflow-hidden lg:h-[calc(100svh-56px)]">
+      <UIUnsavedChanges dirty={isDirty} />
       <div className="shrink-0">
         <Link
           to="/feed"
-          search={{ postId: undefined }}
+          search={{ postId: undefined, feedRoute: undefined }}
           className="mb-4 inline-flex min-h-11 items-center gap-2 text-label text-secondary hover:text-white"
         >
           <ChevronLeft className="size-5" aria-hidden="true" /> {t('feed.title')}

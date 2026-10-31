@@ -13,9 +13,11 @@ export const Route = createFileRoute('/_app')({
     chatType?: 'groups' | 'connections' | undefined;
     chatRoute?: 'new-group' | undefined;
     postId?: string;
+    feedRoute?: 'new-post';
   } => {
     const conversationId = optionalSearchString(search.conversationId);
     const postId = optionalSearchString(search.postId);
+    const feedRoute = search.feedRoute === 'new-post' ? search.feedRoute : undefined;
     const chatType =
       search.chatType === 'groups' || search.chatType === 'connections'
         ? search.chatType
@@ -26,10 +28,13 @@ export const Route = createFileRoute('/_app')({
       ...(conversationId ? { conversationId } : {}),
       ...(chatRoute ? { chatRoute } : {}),
       ...(postId ? { postId } : {}),
+      ...(feedRoute ? { feedRoute } : {}),
     };
   },
   search: {
-    middlewares: [retainSearchParams(['chatType', 'conversationId', 'chatRoute', 'postId'])],
+    middlewares: [
+      retainSearchParams(['chatType', 'conversationId', 'chatRoute', 'postId', 'feedRoute']),
+    ],
   },
   component: AppLayout,
 });

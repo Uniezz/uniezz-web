@@ -23,3 +23,4 @@ export * from './UIDialog';
 export * from './UIEmpty';
 export * from './UIBottomTabs';
 export * from './UILanguageSwitcher';
+export * from './UIUnsavedChanges';

@@ -3,7 +3,7 @@ import { createFileRoute, Outlet, useLocation } from '@tanstack/react-router';
 import { Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { UIButton, UITopbar } from '@/ui/components';
+import { UIButton, UISearch, UITopbar } from '@/ui/components';
 import type { FeedPost } from '@/@types';
 
 type FeedContextValue = {
@@ -31,19 +31,32 @@ function FeedPage() {
   return (
     <FeedContext.Provider value={{ posts, setPosts, search, setSearch }}>
       {isFeedIndex && (
-        <UITopbar
-          title={t('app.today')}
-          subtitle={t('app.feedSubtitle')}
-          search={{ value: search, onChange: setSearch, label: t('app.searchUniezz') }}
-        >
-          <UIButton
-            className="mb-4 lg:hidden"
-            size="sm"
-            leftIcon={Plus}
-            onClick={() => navigate({ to: '/feed/new-post', search: { postId: undefined } })}
-          >
-            {t('app.newPost')}
-          </UIButton>
+        <UITopbar title={t('app.today')} subtitle={t('app.feedSubtitle')}>
+          <div className="flex w-full items-center gap-3 sm:w-auto">
+            <div className="min-w-0 flex-1 sm:w-75">
+              <UISearch
+                value={search}
+                onChange={setSearch}
+                label={t('app.searchUniezz')}
+                className="gap-2.5 px-4 text-body backdrop-blur-[40px] [&_svg]:size-4.25"
+              />
+            </div>
+            <UIButton
+              className="size-10 shrink-0 backdrop-blur-[40px]"
+              size="icon"
+              bg="secondary"
+              aria-label={t('app.newPost')}
+              title={t('app.newPost')}
+              onClick={() =>
+                navigate({
+                  to: '/feed/new-post',
+                  search: { postId: undefined, feedRoute: 'new-post' },
+                })
+              }
+            >
+              <Plus size={18} aria-hidden="true" />
+            </UIButton>
+          </div>
         </UITopbar>
       )}
       <Outlet />

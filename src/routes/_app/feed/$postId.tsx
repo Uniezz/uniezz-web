@@ -14,11 +14,11 @@ const mockPosts = [...FEEDMOCKS.feed.topPosts, ...FEEDMOCKS.feed.posts];
 
 export const Route = createFileRoute('/_app/feed/$postId')({
   beforeLoad: ({ params, search }) => {
-    if (search.postId !== params.postId) {
+    if (search.postId !== params.postId || search.feedRoute) {
       throw redirect({
         to: '/feed/$postId',
         params,
-        search: { ...search, postId: params.postId },
+        search: { ...search, postId: params.postId, feedRoute: undefined },
         replace: true,
       });
     }

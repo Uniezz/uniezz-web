@@ -27,9 +27,15 @@ const postRouteMask = createRouteMask({
   params: true,
   search: (search) => ({ ...search, postId: undefined }),
 });
+const newPostRouteMask = createRouteMask({
+  routeTree,
+  from: '/feed/new-post',
+  to: '/feed/new-post',
+  search: (search) => ({ ...search, feedRoute: undefined, postId: undefined }),
+});
 const router = createRouter({
   routeTree,
-  routeMasks: [newGroupRouteMask, connectionsRouteMask, postRouteMask],
+  routeMasks: [newGroupRouteMask, connectionsRouteMask, postRouteMask, newPostRouteMask],
 });
 const queryClient = new QueryClient();
 
