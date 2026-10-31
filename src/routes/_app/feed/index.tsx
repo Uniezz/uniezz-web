@@ -9,10 +9,10 @@ import { UIButton, UISearch, UITopbar } from '@/ui/components';
 export const Route = createFileRoute('/_app/feed/')({
   beforeLoad: ({ search }) => {
     if (search.feedRoute === 'new-post') {
-      throw redirect({ to: '/feed/new-post', search });
+      throw redirect({ to: '/feed/post/new-post', search });
     }
     if (search.postId) {
-      throw redirect({ to: '/feed/$postId', params: { postId: search.postId }, search });
+      throw redirect({ to: '/feed/post/$postId', params: { postId: search.postId }, search });
     }
   },
   component: FeedIndexPage,
@@ -43,7 +43,7 @@ function FeedIndexPage() {
             title={t('app.newPost')}
             onClick={() =>
               navigate({
-                to: '/feed/new-post',
+                to: '/feed/post/new-post',
                 search: { postId: undefined, feedRoute: 'new-post' },
               })
             }

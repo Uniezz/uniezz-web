@@ -45,7 +45,7 @@ export function FeedPostCard({ post }: { post: FeedPost }) {
         </span>
       )}
       <Link
-        to="/feed/$postId"
+        to="/feed/post/$postId"
         params={{ postId: post.id }}
         search={{ postId: post.id }}
         aria-label={`${t('app.viewPost')}: ${post.title}`}

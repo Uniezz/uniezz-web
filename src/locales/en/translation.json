@@ -312,6 +312,10 @@
     "published": "Post published"
   },
   "apiState": {
+    "editComment": "Edit comment",
+    "editPost": "Edit post",
+    "deletePostTitle": "Delete post?",
+    "deletePostDescription": "The post and its comments will be deleted.",
     "deleteCommentTitle": "Delete comment?",
     "deleteCommentDescription": "This comment will be deleted.",
     "reply": "Reply",

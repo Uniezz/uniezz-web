@@ -312,6 +312,10 @@
     "published": "Допис опубліковано"
   },
   "apiState": {
+    "editComment": "Редагувати коментар",
+    "editPost": "Редагувати допис",
+    "deletePostTitle": "Видалити допис?",
+    "deletePostDescription": "Допис і його коментарі буде видалено.",
     "deleteCommentTitle": "Видалити коментар?",
     "deleteCommentDescription": "Коментар буде видалено.",
     "reply": "Відповісти",

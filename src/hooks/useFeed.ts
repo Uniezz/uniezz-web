@@ -2,13 +2,46 @@ import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tansta
 import {
   createFeedComment,
   deleteFeedComment,
+  deleteFeedPost,
   getCommentReplies,
   getFeedComments,
   getFeedPost,
   getFeedPosts,
   setFeedLike,
+  updateFeedComment,
+  updateFeedPost,
 } from '@/api';
 import type { FeedFilters } from '@/@types';
+
+export function useUpdateFeedComment() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: updateFeedComment,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['feed'] }),
+  });
+}
+
+export function useUpdateFeedPost() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: updateFeedPost,
+    onSuccess: (post) => {
+      queryClient.setQueryData(['feed', 'post', post.id], post);
+      return queryClient.invalidateQueries({ queryKey: ['feed'] });
+    },
+  });
+}
+
+export function useDeleteFeedPost() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deleteFeedPost,
+    onSuccess: (_, id) => {
+      queryClient.removeQueries({ queryKey: ['feed', 'post', id], exact: true });
+      void queryClient.invalidateQueries({ queryKey: ['feed', 'posts'] });
+    },
+  });
+}
 
 export function useDeleteFeedComment() {
   const queryClient = useQueryClient();

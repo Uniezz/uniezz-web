@@ -1,14 +1,12 @@
 import { useState } from 'react';
-import { createFileRoute, Link, redirect } from '@tanstack/react-router';
 import { ChevronLeft, Send } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import toast from 'react-hot-toast';
-
-import { useCreatePost } from '@/hooks/useCreatePost';
+import type { FeedPost } from '@/@types';
 import { useMyProfile } from '@/hooks';
-import { postSchema } from '@/schemas';
+import { postSchema, type PostSchema } from '@/schemas';
+import { postFormDefaults } from '@/utils/feed';
 import {
   UIButton,
   UIField,
@@ -17,28 +15,25 @@ import {
   UITopbar,
   UIUnsavedChanges,
 } from '@/ui/components';
-import { PostEventDetails } from '@/components/features/feed/PostEventDetails';
-import { PostPhotoField } from '@/components/features/feed/PostPhotoField';
-import { PostTypeSelector } from '@/components/features/feed/PostTypeSelector';
-import { PostAudienceSelector } from '@/components/features/feed/PostAudienceSelector';
+import { PostEventDetails } from './PostEventDetails';
+import { PostPhotoField } from './PostPhotoField';
+import { PostTypeSelector } from './PostTypeSelector';
+import { PostAudienceSelector } from './PostAudienceSelector';
 
-export const Route = createFileRoute('/_app/feed/new-post')({
-  beforeLoad: ({ search }) => {
-    if (search.feedRoute !== 'new-post' || search.postId) {
-      throw redirect({
-        to: '/feed/new-post',
-        search: { ...search, feedRoute: 'new-post', postId: undefined },
-        replace: true,
-      });
-    }
-  },
-  component: NewPostPage,
-});
-
-function NewPostPage() {
-  const { mutateAsync: createPost, isPending, isError } = useCreatePost();
+export function PostComposer({
+  post,
+  isPending,
+  isError,
+  onSubmit,
+  onCancel,
+}: {
+  post?: FeedPost;
+  isPending: boolean;
+  isError: boolean;
+  onSubmit: (values: PostSchema) => Promise<void>;
+  onCancel: () => void;
+}) {
   const { data: author, isError: profileError, refetch: refetchProfile } = useMyProfile();
-  const navigate = Route.useNavigate();
   const { t } = useTranslation();
   const [image, setImage] = useState('');
   const [readingImage, setReadingImage] = useState(false);
@@ -53,14 +48,16 @@ function NewPostPage() {
     formState: { errors, isDirty },
   } = useForm({
     resolver: zodResolver(postSchema),
-    defaultValues: {
-      type: 'announcement',
-      audience: 'university',
-      title: '',
-      body: '',
-      date: '',
-      time: '',
-    },
+    defaultValues: post
+      ? postFormDefaults(post)
+      : {
+          type: 'announcement',
+          audience: 'university',
+          title: '',
+          body: '',
+          date: '',
+          time: '',
+        },
     mode: 'onBlur',
   });
   const { type = 'announcement', audience = 'university', body = '' } = useWatch({ control });
@@ -75,14 +72,19 @@ function NewPostPage() {
     <div className="mx-auto flex h-[calc(100svh-136px)] min-h-0 max-w-5xl flex-col overflow-hidden lg:h-[calc(100svh-56px)]">
       <UIUnsavedChanges dirty={isDirty} />
       <div className="shrink-0">
-        <Link
-          to="/feed"
-          search={{ postId: undefined, feedRoute: undefined }}
-          className="mb-4 inline-flex min-h-11 items-center gap-2 text-label text-secondary hover:text-white"
+        <UIButton
+          bg="transparent"
+          size="pill"
+          onClick={onCancel}
+          className="mb-4 min-h-11 gap-2 border-0 px-0 text-label text-secondary enabled:hover:bg-transparent enabled:hover:text-white"
         >
-          <ChevronLeft className="size-5" aria-hidden="true" /> {t('feed.title')}
-        </Link>
-        <UITopbar title={t('app.newPost')} subtitle={t('postComposer.subtitle')} />
+          <ChevronLeft className="size-5" aria-hidden="true" />{' '}
+          {post ? t('app.back') : t('feed.title')}
+        </UIButton>
+        <UITopbar
+          title={post ? t('apiState.editPost') : t('app.newPost')}
+          subtitle={post ? undefined : t('postComposer.subtitle')}
+        />
       </div>
       <div className="min-h-0 flex-1">
         <UIPanel className="h-full min-h-0 overflow-hidden p-0">
@@ -91,13 +93,7 @@ function NewPostPage() {
             className="flex h-full min-h-0 flex-col"
             onSubmit={handleSubmit(async (values) => {
               try {
-                await createPost(values);
-                toast.success(t('postComposer.published'));
-                void navigate({
-                  to: '/feed',
-                  search: { postId: undefined, feedRoute: undefined },
-                  ignoreBlocker: true,
-                });
+                await onSubmit(values);
               } catch {
                 // Keep the draft available when publishing fails.
               }
@@ -107,6 +103,7 @@ function NewPostPage() {
               <fieldset disabled={isPending} className="space-y-5 p-5 sm:p-6">
                 <PostTypeSelector
                   type={type}
+                  disabled={Boolean(post)}
                   onSelect={(value) => {
                     setValue('type', value, { shouldDirty: true });
                     clearErrors(['date', 'time']);
@@ -119,6 +116,7 @@ function NewPostPage() {
                 />
                 <PostAudienceSelector
                   audience={audience}
+                  disabled={Boolean(post)}
                   university={author?.universityId.toUpperCase() ?? t('app.university')}
                   onSelect={(value) => setValue('audience', value, { shouldDirty: true })}
                 />
@@ -165,7 +163,19 @@ function NewPostPage() {
                   </span>
                 </UIField>
                 {type === 'event' && <PostEventDetails register={register} errors={errors} />}
-                {type !== 'question' && (
+                {post && post.mediaUrls?.[0] && (
+                  <div className="space-y-3">
+                    <p className="text-detail font-semibold text-secondary">
+                      {t('postComposer.photo')}
+                    </p>
+                    <img
+                      src={post.mediaUrls[0]}
+                      alt={t('postComposer.photoPreview')}
+                      className="h-36 w-full rounded-feature object-cover"
+                    />
+                  </div>
+                )}
+                {!post && type !== 'question' && (
                   <PostPhotoField
                     image={image}
                     setImage={setImage}
@@ -181,16 +191,7 @@ function NewPostPage() {
               </fieldset>
             </div>
             <div className="flex shrink-0 flex-wrap items-center justify-end gap-3 border-t border-white-10 p-5 sm:p-6">
-              <UIButton
-                bg="secondary"
-                onClick={() =>
-                  void navigate({
-                    to: '/feed',
-                    search: { postId: undefined, feedRoute: undefined },
-                  })
-                }
-                disabled={isPending}
-              >
+              <UIButton bg="secondary" onClick={onCancel} disabled={isPending}>
                 {t('postComposer.cancel')}
               </UIButton>
               <UIButton
@@ -198,7 +199,7 @@ function NewPostPage() {
                 leftIcon={Send}
                 disabled={readingImage || isPending || !author}
               >
-                {t('postComposer.publish')}
+                {post ? t('app.saveChanges') : t('postComposer.publish')}
               </UIButton>
             </div>
           </form>

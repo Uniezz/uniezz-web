@@ -16,9 +16,11 @@ const postTypeOptions = [
 export function PostTypeSelector({
   type,
   onSelect,
+  disabled = false,
 }: {
   type: PostType;
   onSelect: (type: PostType) => void;
+  disabled?: boolean;
 }) {
   const { t } = useTranslation();
   const { ref, isOpen, toggle, close } = useDropdown();
@@ -44,6 +46,7 @@ export function PostTypeSelector({
           leftIcon={Icon}
           leftIconColor="gray"
           onClick={toggle}
+          disabled={disabled}
           aria-label={t('postComposer.type')}
           aria-expanded={isOpen}
           className="min-h-7 gap-1.5 px-2.5 py-1 text-detail font-medium text-secondary"

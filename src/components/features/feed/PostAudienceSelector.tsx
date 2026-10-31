@@ -11,10 +11,12 @@ export function PostAudienceSelector({
   audience,
   university,
   onSelect,
+  disabled = false,
 }: {
   audience: Audience;
   university: string;
   onSelect: (audience: Audience) => void;
+  disabled?: boolean;
 }) {
   const { t } = useTranslation();
   const { ref, isOpen, toggle, close } = useDropdown();
@@ -43,6 +45,7 @@ export function PostAudienceSelector({
           leftIcon={selected.Icon}
           leftIconColor="gray"
           onClick={toggle}
+          disabled={disabled}
           aria-label={t('app.university')}
           aria-expanded={isOpen}
           className="min-h-7 gap-1.5 px-2.5 py-1 text-detail font-medium text-secondary"

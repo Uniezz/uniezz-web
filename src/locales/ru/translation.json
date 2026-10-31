@@ -312,6 +312,10 @@
     "published": "Публикация опубликована"
   },
   "apiState": {
+    "editComment": "Редактировать комментарий",
+    "editPost": "Редактировать пост",
+    "deletePostTitle": "Удалить пост?",
+    "deletePostDescription": "Пост и его комментарии будут удалены.",
     "deleteCommentTitle": "Удалить комментарий?",
     "deleteCommentDescription": "Комментарий будет удалён.",
     "reply": "Ответить",

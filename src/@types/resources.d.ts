@@ -4,8 +4,12 @@ export default interface Resources {
     "apiState": {
       "deleteCommentDescription": "This comment will be deleted.",
       "deleteCommentTitle": "Delete comment?",
+      "deletePostDescription": "The post and its comments will be deleted.",
+      "deletePostTitle": "Delete post?",
       "deletedComment": "Deleted comment",
       "detailsError": "Use 10–5000 characters.",
+      "editComment": "Edit comment",
+      "editPost": "Edit post",
       "error": "Could not load or save your changes. Please try again.",
       "hideReplies": "Hide replies",
       "imageError": "Choose a valid JPG, PNG or WebP image under 10 MB.",

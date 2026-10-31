@@ -7,6 +7,7 @@ import { UIAvatar, UIButton, UIDialog, UIQueryError } from '@/ui/components';
 import { authorName } from '@/utils/feed';
 import { FeedCommentsSkeleton } from './FeedCommentsSkeleton';
 import { FeedLikeButton } from './FeedLikeButton';
+import { FeedCommentEditor } from './FeedCommentEditor';
 
 export function FeedCommentItem({
   comment,
@@ -18,6 +19,7 @@ export function FeedCommentItem({
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [editing, setEditing] = useState(false);
   const { data: profile } = useMyProfile();
   const { mutateAsync: deleteComment, isPending: isDeleting } = useDeleteFeedComment();
   const { data, isPending, isError, refetch, hasNextPage, isFetchingNextPage, fetchNextPage } =
@@ -31,10 +33,14 @@ export function FeedCommentItem({
             ? t('apiState.deletedComment')
             : authorName(comment.author) || t('apiState.student')}
         </strong>
-        {!comment.deleted && (
-          <p className="mt-1 text-label leading-relaxed wrap-anywhere whitespace-pre-wrap text-white-80">
-            {comment.content}
-          </p>
+        {editing ? (
+          <FeedCommentEditor comment={comment} onClose={() => setEditing(false)} />
+        ) : (
+          !comment.deleted && (
+            <p className="mt-1 text-label leading-relaxed wrap-anywhere whitespace-pre-wrap text-white-80">
+              {comment.content}
+            </p>
+          )
         )}
         <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2">
           {!comment.deleted && (
@@ -59,14 +65,26 @@ export function FeedCommentItem({
                 </UIButton>
               )}
               {profile?.id && profile.id === comment.author?.id && (
-                <UIButton
-                  bg="transparent"
-                  size="pill"
-                  className="min-h-0 border-0 p-0 text-danger enabled:hover:bg-transparent"
-                  onClick={() => setConfirmDelete(true)}
-                >
-                  {t('app.remove')}
-                </UIButton>
+                <>
+                  {!editing && (
+                    <UIButton
+                      bg="transparent"
+                      size="pill"
+                      className="min-h-0 border-0 p-0 enabled:hover:bg-transparent"
+                      onClick={() => setEditing(true)}
+                    >
+                      {t('app.edit')}
+                    </UIButton>
+                  )}
+                  <UIButton
+                    bg="transparent"
+                    size="pill"
+                    className="min-h-0 border-0 p-0 text-danger enabled:hover:bg-transparent"
+                    onClick={() => setConfirmDelete(true)}
+                  >
+                    {t('app.remove')}
+                  </UIButton>
+                </>
               )}
             </>
           )}

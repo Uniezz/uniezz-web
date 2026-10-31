@@ -22,15 +22,15 @@ const connectionsRouteMask = createRouteMask({
 });
 const postRouteMask = createRouteMask({
   routeTree,
-  from: '/feed/$postId',
-  to: '/feed/$postId',
+  from: '/feed/post/$postId',
+  to: '/feed/post/$postId',
   params: true,
   search: (search) => ({ ...search, postId: undefined }),
 });
 const newPostRouteMask = createRouteMask({
   routeTree,
-  from: '/feed/new-post',
-  to: '/feed/new-post',
+  from: '/feed/post/new-post',
+  to: '/feed/post/new-post',
   search: (search) => ({ ...search, feedRoute: undefined, postId: undefined }),
 });
 const queryClient = new QueryClient();

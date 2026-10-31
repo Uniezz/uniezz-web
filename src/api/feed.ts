@@ -2,6 +2,34 @@ import type { components } from '@/@types/schema';
 import type { FeedFilters } from '@/@types';
 import { api } from './client';
 
+export async function updateFeedComment({ id, content }: { id: string; content: string }) {
+  const { data, error } = await api.PATCH('/feed/comments/{id}', {
+    params: { path: { id } },
+    body: { content },
+  });
+  if (error) throw new Error(error.error);
+  if (!data) throw new Error('Missing comment response');
+  return data;
+}
+
+export async function updateFeedPost({
+  id,
+  body,
+}: {
+  id: string;
+  body: components['schemas']['UpdatePostInputBody'];
+}) {
+  const { data, error } = await api.PATCH('/feed/posts/{id}', { params: { path: { id } }, body });
+  if (error) throw new Error(error.error);
+  if (!data) throw new Error('Missing post response');
+  return data;
+}
+
+export async function deleteFeedPost(id: string) {
+  const { error } = await api.DELETE('/feed/posts/{id}', { params: { path: { id } } });
+  if (error) throw new Error(error.error);
+}
+
 export async function deleteFeedComment(id: string) {
   const { error } = await api.DELETE('/feed/comments/{id}', { params: { path: { id } } });
   if (error) throw new Error(error.error);

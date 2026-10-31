@@ -26,8 +26,9 @@ import { Route as AuthDoneRouteImport } from './routes/auth/done'
 import { Route as AppChatIndexRouteImport } from './routes/_app/chat/index'
 import { Route as AppChatNewGroupRouteImport } from './routes/_app/chat/new-group'
 import { Route as AppFeedIndexRouteImport } from './routes/_app/feed/index'
-import { Route as AppFeedPostIdRouteImport } from './routes/_app/feed/$postId'
-import { Route as AppFeedNewPostRouteImport } from './routes/_app/feed/new-post'
+import { Route as AppFeedPostPostIdRouteImport } from './routes/_app/feed/post/$postId'
+import { Route as AppFeedPostNewPostRouteImport } from './routes/_app/feed/post/new-post'
+import { Route as AppFeedPostEditPostPostIdRouteImport } from './routes/_app/feed/post/edit-post/$postId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -112,16 +113,22 @@ const AppFeedIndexRoute = AppFeedIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppFeedRouteRoute,
 } as any)
-const AppFeedPostIdRoute = AppFeedPostIdRouteImport.update({
-  id: '/$postId',
-  path: '/$postId',
+const AppFeedPostPostIdRoute = AppFeedPostPostIdRouteImport.update({
+  id: '/post/$postId',
+  path: '/post/$postId',
   getParentRoute: () => AppFeedRouteRoute,
 } as any)
-const AppFeedNewPostRoute = AppFeedNewPostRouteImport.update({
-  id: '/new-post',
-  path: '/new-post',
+const AppFeedPostNewPostRoute = AppFeedPostNewPostRouteImport.update({
+  id: '/post/new-post',
+  path: '/post/new-post',
   getParentRoute: () => AppFeedRouteRoute,
 } as any)
+const AppFeedPostEditPostPostIdRoute =
+  AppFeedPostEditPostPostIdRouteImport.update({
+    id: '/post/edit-post/$postId',
+    path: '/post/edit-post/$postId',
+    getParentRoute: () => AppFeedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -137,10 +144,11 @@ export interface FileRoutesByFullPath {
   '/auth/callback': typeof AuthCallbackRoute
   '/auth/done': typeof AuthDoneRoute
   '/chat/new-group': typeof AppChatNewGroupRoute
-  '/feed/$postId': typeof AppFeedPostIdRoute
-  '/feed/new-post': typeof AppFeedNewPostRoute
   '/chat/': typeof AppChatIndexRoute
   '/feed/': typeof AppFeedIndexRoute
+  '/feed/post/$postId': typeof AppFeedPostPostIdRoute
+  '/feed/post/new-post': typeof AppFeedPostNewPostRoute
+  '/feed/post/edit-post/$postId': typeof AppFeedPostEditPostPostIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -154,10 +162,11 @@ export interface FileRoutesByTo {
   '/auth/callback': typeof AuthCallbackRoute
   '/auth/done': typeof AuthDoneRoute
   '/chat/new-group': typeof AppChatNewGroupRoute
-  '/feed/$postId': typeof AppFeedPostIdRoute
-  '/feed/new-post': typeof AppFeedNewPostRoute
   '/chat': typeof AppChatIndexRoute
   '/feed': typeof AppFeedIndexRoute
+  '/feed/post/$postId': typeof AppFeedPostPostIdRoute
+  '/feed/post/new-post': typeof AppFeedPostNewPostRoute
+  '/feed/post/edit-post/$postId': typeof AppFeedPostEditPostPostIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -176,10 +185,11 @@ export interface FileRoutesById {
   '/auth/callback': typeof AuthCallbackRoute
   '/auth/done': typeof AuthDoneRoute
   '/_app/chat/new-group': typeof AppChatNewGroupRoute
-  '/_app/feed/$postId': typeof AppFeedPostIdRoute
-  '/_app/feed/new-post': typeof AppFeedNewPostRoute
   '/_app/chat/': typeof AppChatIndexRoute
   '/_app/feed/': typeof AppFeedIndexRoute
+  '/_app/feed/post/$postId': typeof AppFeedPostPostIdRoute
+  '/_app/feed/post/new-post': typeof AppFeedPostNewPostRoute
+  '/_app/feed/post/edit-post/$postId': typeof AppFeedPostEditPostPostIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -197,10 +207,11 @@ export interface FileRouteTypes {
     | '/auth/callback'
     | '/auth/done'
     | '/chat/new-group'
-    | '/feed/$postId'
-    | '/feed/new-post'
     | '/chat/'
     | '/feed/'
+    | '/feed/post/$postId'
+    | '/feed/post/new-post'
+    | '/feed/post/edit-post/$postId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -214,10 +225,11 @@ export interface FileRouteTypes {
     | '/auth/callback'
     | '/auth/done'
     | '/chat/new-group'
-    | '/feed/$postId'
-    | '/feed/new-post'
     | '/chat'
     | '/feed'
+    | '/feed/post/$postId'
+    | '/feed/post/new-post'
+    | '/feed/post/edit-post/$postId'
   id:
     | '__root__'
     | '/'
@@ -235,10 +247,11 @@ export interface FileRouteTypes {
     | '/auth/callback'
     | '/auth/done'
     | '/_app/chat/new-group'
-    | '/_app/feed/$postId'
-    | '/_app/feed/new-post'
     | '/_app/chat/'
     | '/_app/feed/'
+    | '/_app/feed/post/$postId'
+    | '/_app/feed/post/new-post'
+    | '/_app/feed/post/edit-post/$postId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -370,18 +383,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppFeedIndexRouteImport
       parentRoute: typeof AppFeedRouteRoute
     }
-    '/_app/feed/$postId': {
-      id: '/_app/feed/$postId'
-      path: '/$postId'
-      fullPath: '/feed/$postId'
-      preLoaderRoute: typeof AppFeedPostIdRouteImport
+    '/_app/feed/post/$postId': {
+      id: '/_app/feed/post/$postId'
+      path: '/post/$postId'
+      fullPath: '/feed/post/$postId'
+      preLoaderRoute: typeof AppFeedPostPostIdRouteImport
       parentRoute: typeof AppFeedRouteRoute
     }
-    '/_app/feed/new-post': {
-      id: '/_app/feed/new-post'
-      path: '/new-post'
-      fullPath: '/feed/new-post'
-      preLoaderRoute: typeof AppFeedNewPostRouteImport
+    '/_app/feed/post/new-post': {
+      id: '/_app/feed/post/new-post'
+      path: '/post/new-post'
+      fullPath: '/feed/post/new-post'
+      preLoaderRoute: typeof AppFeedPostNewPostRouteImport
+      parentRoute: typeof AppFeedRouteRoute
+    }
+    '/_app/feed/post/edit-post/$postId': {
+      id: '/_app/feed/post/edit-post/$postId'
+      path: '/post/edit-post/$postId'
+      fullPath: '/feed/post/edit-post/$postId'
+      preLoaderRoute: typeof AppFeedPostEditPostPostIdRouteImport
       parentRoute: typeof AppFeedRouteRoute
     }
   }
@@ -418,15 +438,17 @@ const AppChatRouteRouteWithChildren = AppChatRouteRoute._addFileChildren(
 )
 
 interface AppFeedRouteRouteChildren {
-  AppFeedPostIdRoute: typeof AppFeedPostIdRoute
-  AppFeedNewPostRoute: typeof AppFeedNewPostRoute
   AppFeedIndexRoute: typeof AppFeedIndexRoute
+  AppFeedPostPostIdRoute: typeof AppFeedPostPostIdRoute
+  AppFeedPostNewPostRoute: typeof AppFeedPostNewPostRoute
+  AppFeedPostEditPostPostIdRoute: typeof AppFeedPostEditPostPostIdRoute
 }
 
 const AppFeedRouteRouteChildren: AppFeedRouteRouteChildren = {
-  AppFeedPostIdRoute: AppFeedPostIdRoute,
-  AppFeedNewPostRoute: AppFeedNewPostRoute,
   AppFeedIndexRoute: AppFeedIndexRoute,
+  AppFeedPostPostIdRoute: AppFeedPostPostIdRoute,
+  AppFeedPostNewPostRoute: AppFeedPostNewPostRoute,
+  AppFeedPostEditPostPostIdRoute: AppFeedPostEditPostPostIdRoute,
 }
 
 const AppFeedRouteRouteWithChildren = AppFeedRouteRoute._addFileChildren(

@@ -312,6 +312,10 @@
     "published": "Post opublikowany"
   },
   "apiState": {
+    "editComment": "Edytuj komentarz",
+    "editPost": "Edytuj post",
+    "deletePostTitle": "Usunąć post?",
+    "deletePostDescription": "Post i jego komentarze zostaną usunięte.",
     "deleteCommentTitle": "Usunąć komentarz?",
     "deleteCommentDescription": "Komentarz zostanie usunięty.",
     "reply": "Odpowiedz",

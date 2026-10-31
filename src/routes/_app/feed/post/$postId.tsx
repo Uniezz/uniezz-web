@@ -13,12 +13,13 @@ import { FeedCommentItem } from '@/components/features/feed/FeedComments';
 import { FeedCommentsSkeleton } from '@/components/features/feed/FeedCommentsSkeleton';
 import { FeedLikeButton } from '@/components/features/feed/FeedLikeButton';
 import { FeedPostSkeleton } from '@/components/features/feed/FeedPostSkeleton';
+import { FeedPostActions } from '@/components/features/feed/FeedPostActions';
 
-export const Route = createFileRoute('/_app/feed/$postId')({
+export const Route = createFileRoute('/_app/feed/post/$postId')({
   beforeLoad: ({ params, search }) => {
     if (search.postId !== params.postId || search.feedRoute) {
       throw redirect({
-        to: '/feed/$postId',
+        to: '/feed/post/$postId',
         params,
         search: { ...search, postId: params.postId, feedRoute: undefined },
         replace: true,
@@ -162,6 +163,7 @@ function FeedPostPage() {
                 liked={post.likedByMe}
                 count={post.likesCount}
               />
+              <FeedPostActions post={post} />
             </div>
             <section aria-label={t('app.comments')} className="flex min-h-0 flex-1 flex-col">
               <div className="min-h-0 flex-1 space-y-5 overflow-y-auto p-5.5 sm:p-6">
@@ -258,7 +260,7 @@ function FeedPostPage() {
             </>
           ) : previous ? (
             <Link
-              to="/feed/$postId"
+              to="/feed/post/$postId"
               params={{ postId: previous.id }}
               search={{ postId: previous.id }}
               aria-label={t('app.previousPost')}
@@ -271,7 +273,7 @@ function FeedPostPage() {
           )}
           {next && (
             <Link
-              to="/feed/$postId"
+              to="/feed/post/$postId"
               params={{ postId: next.id }}
               search={{ postId: next.id }}
               aria-label={t('app.nextPost')}
