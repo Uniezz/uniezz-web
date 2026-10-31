@@ -3,6 +3,7 @@ import { postSchema } from '../../src/schemas';
 
 const post = {
   type: 'announcement',
+  audience: 'university',
   title: 'A valid title',
   body: 'A valid description.',
   date: '',
@@ -12,6 +13,8 @@ const post = {
 test('post validation matches API text and image limits', () => {
   expect(postSchema.safeParse(post).success).toBe(true);
   expect(postSchema.safeParse({ ...post, type: 'post' }).success).toBe(false);
+  expect(postSchema.safeParse({ ...post, audience: 'all' }).success).toBe(true);
+  expect(postSchema.safeParse({ ...post, audience: 'other' }).success).toBe(false);
   expect(postSchema.safeParse({ ...post, title: 'ab' }).success).toBe(false);
   expect(postSchema.safeParse({ ...post, title: 'a'.repeat(151) }).success).toBe(false);
   expect(postSchema.safeParse({ ...post, body: '123456789' }).success).toBe(false);

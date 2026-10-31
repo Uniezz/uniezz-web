@@ -20,6 +20,7 @@ import {
 import { PostEventDetails } from '@/components/features/feed/PostEventDetails';
 import { PostPhotoField } from '@/components/features/feed/PostPhotoField';
 import { PostTypeSelector } from '@/components/features/feed/PostTypeSelector';
+import { PostAudienceSelector } from '@/components/features/feed/PostAudienceSelector';
 
 export const Route = createFileRoute('/_app/feed/new-post')({
   beforeLoad: ({ search }) => {
@@ -52,10 +53,17 @@ function NewPostPage() {
     formState: { errors, isDirty },
   } = useForm({
     resolver: zodResolver(postSchema),
-    defaultValues: { type: 'announcement', title: '', body: '', date: '', time: '' },
+    defaultValues: {
+      type: 'announcement',
+      audience: 'university',
+      title: '',
+      body: '',
+      date: '',
+      time: '',
+    },
     mode: 'onBlur',
   });
-  const { type = 'announcement', body = '' } = useWatch({ control });
+  const { type = 'announcement', audience = 'university', body = '' } = useWatch({ control });
   const titlePlaceholder =
     type === 'question'
       ? t('postComposer.questionPlaceholder')
@@ -108,6 +116,11 @@ function NewPostPage() {
                       setImage('');
                     }
                   }}
+                />
+                <PostAudienceSelector
+                  audience={audience}
+                  university={author?.universityId.toUpperCase() ?? t('app.university')}
+                  onSelect={(value) => setValue('audience', value, { shouldDirty: true })}
                 />
                 <div className="space-y-1.5">
                   <label htmlFor="post-title" className="text-micro font-semibold text-secondary">

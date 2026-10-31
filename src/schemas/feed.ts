@@ -8,6 +8,7 @@ export type TextFormSchema = z.infer<typeof textFormSchema>;
 export const postSchema = z
   .object({
     type: z.enum(['announcement', 'question', 'event']),
+    audience: z.enum(['university', 'all']),
     title: z.string().trim().min(3).max(150),
     body: z.string().trim().min(10).max(5000),
     date: z.string(),

@@ -24,7 +24,7 @@ export function useCreatePost() {
         type: values.type,
         title: values.title,
         content: values.body,
-        university: profile.universityId,
+        university: values.audience === 'all' ? 'all' : profile.universityId,
         eventDate:
           values.type === 'event'
             ? new Date(`${values.date}T${values.time}`).toISOString()
