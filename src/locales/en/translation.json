@@ -312,6 +312,12 @@
     "published": "Post published"
   },
   "apiState": {
+    "deleteCommentTitle": "Delete comment?",
+    "deleteCommentDescription": "This comment will be deleted.",
+    "reply": "Reply",
+    "replyingTo": "Replying to {{name}}",
+    "like": "Like",
+    "unlike": "Unlike",
     "loading": "Loading…",
     "error": "Could not load or save your changes. Please try again.",
     "retry": "Try again",

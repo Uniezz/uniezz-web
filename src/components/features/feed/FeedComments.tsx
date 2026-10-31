@@ -1,14 +1,25 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import toast from 'react-hot-toast';
 import type { FeedComment } from '@/@types';
-import { useCommentReplies } from '@/hooks';
-import { UIAvatar, UIButton, UIQueryError } from '@/ui/components';
+import { useCommentReplies, useDeleteFeedComment, useMyProfile } from '@/hooks';
+import { UIAvatar, UIButton, UIDialog, UIQueryError } from '@/ui/components';
 import { authorName } from '@/utils/feed';
 import { FeedCommentsSkeleton } from './FeedCommentsSkeleton';
+import { FeedLikeButton } from './FeedLikeButton';
 
-export function FeedCommentItem({ comment }: { comment: FeedComment }) {
+export function FeedCommentItem({
+  comment,
+  onReply,
+}: {
+  comment: FeedComment;
+  onReply: (comment: FeedComment) => void;
+}) {
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const { data: profile } = useMyProfile();
+  const { mutateAsync: deleteComment, isPending: isDeleting } = useDeleteFeedComment();
   const { data, isPending, isError, refetch, hasNextPage, isFetchingNextPage, fetchNextPage } =
     useCommentReplies(comment.id, expanded && comment.parentId === null);
   return (
@@ -25,26 +36,102 @@ export function FeedCommentItem({ comment }: { comment: FeedComment }) {
             {comment.content}
           </p>
         )}
-        {comment.parentId === null && comment.repliesCount > 0 && (
-          <UIButton
-            bg="transparent"
-            size="pill"
-            className="mt-2 px-0 text-detail"
-            aria-expanded={expanded}
-            onClick={() => setExpanded(!expanded)}
-          >
-            {t(expanded ? 'apiState.hideReplies' : 'apiState.showReplies', {
-              total: comment.repliesCount,
-            })}
-          </UIButton>
-        )}
+        <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2">
+          {!comment.deleted && (
+            <>
+              <FeedLikeButton
+                id={comment.id}
+                kind="comment"
+                liked={comment.likedByMe}
+                count={comment.likesCount}
+              />
+              {comment.parentId === null && (
+                <UIButton
+                  bg="transparent"
+                  size="pill"
+                  className="min-h-0 border-0 p-0 enabled:hover:bg-transparent"
+                  onClick={() => {
+                    setExpanded(true);
+                    onReply(comment);
+                  }}
+                >
+                  {t('apiState.reply')}
+                </UIButton>
+              )}
+              {profile?.id && profile.id === comment.author?.id && (
+                <UIButton
+                  bg="transparent"
+                  size="pill"
+                  className="min-h-0 border-0 p-0 text-danger enabled:hover:bg-transparent"
+                  onClick={() => setConfirmDelete(true)}
+                >
+                  {t('app.remove')}
+                </UIButton>
+              )}
+            </>
+          )}
+          {comment.parentId === null && comment.repliesCount > 0 && (
+            <UIButton
+              bg="transparent"
+              size="pill"
+              className="min-h-0 border-0 p-0 text-detail enabled:hover:bg-transparent"
+              aria-expanded={expanded}
+              onClick={() => setExpanded(!expanded)}
+            >
+              <span className="grid">
+                <span
+                  className={
+                    expanded ? 'invisible col-start-1 row-start-1' : 'col-start-1 row-start-1'
+                  }
+                  aria-hidden={expanded}
+                >
+                  {t('apiState.showReplies', { total: comment.repliesCount })}
+                </span>
+                <span
+                  className={
+                    expanded ? 'col-start-1 row-start-1' : 'invisible col-start-1 row-start-1'
+                  }
+                  aria-hidden={!expanded}
+                >
+                  {t('apiState.hideReplies')}
+                </span>
+              </span>
+            </UIButton>
+          )}
+        </div>
+        <UIDialog
+          open={confirmDelete}
+          onOpenChange={setConfirmDelete}
+          title={t('apiState.deleteCommentTitle')}
+          description={t('apiState.deleteCommentDescription')}
+        >
+          <div className="flex justify-end gap-3">
+            <UIButton bg="secondary" disabled={isDeleting} onClick={() => setConfirmDelete(false)}>
+              {t('postComposer.cancel')}
+            </UIButton>
+            <UIButton
+              bg="danger"
+              disabled={isDeleting}
+              onClick={async () => {
+                try {
+                  await deleteComment(comment.id);
+                  setConfirmDelete(false);
+                } catch {
+                  toast.error(t('apiState.error'));
+                }
+              }}
+            >
+              {t('app.remove')}
+            </UIButton>
+          </div>
+        </UIDialog>
         {expanded && (
           <div className="mt-3 space-y-5">
             {isPending && <FeedCommentsSkeleton />}
             {data?.pages
               .flatMap((page) => page.items ?? [])
               .map((reply) => (
-                <FeedCommentItem key={reply.id} comment={reply} />
+                <FeedCommentItem key={reply.id} comment={reply} onReply={onReply} />
               ))}
             {isError && <UIQueryError retry={() => void refetch()} />}
             {hasNextPage && (

@@ -1,7 +1,8 @@
 import { createFileRoute, Link, redirect } from '@tanstack/react-router';
 import { ChevronLeft, ChevronRight, Send, CalendarDays } from 'lucide-react';
-import { type FormEvent, useRef, useState } from 'react';
+import { type FormEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import type { FeedComment } from '@/@types';
 
 import { cn } from '@/ui/cn';
 import { inputStyles } from '@/ui/components/UIInput/variants';
@@ -10,6 +11,7 @@ import { useFeedPosts, useFeedPost, useFeedComments, useCreateComment } from '@/
 import { authorName, postDate } from '@/utils/feed';
 import { FeedCommentItem } from '@/components/features/feed/FeedComments';
 import { FeedCommentsSkeleton } from '@/components/features/feed/FeedCommentsSkeleton';
+import { FeedLikeButton } from '@/components/features/feed/FeedLikeButton';
 import { FeedPostSkeleton } from '@/components/features/feed/FeedPostSkeleton';
 
 export const Route = createFileRoute('/_app/feed/$postId')({
@@ -53,13 +55,13 @@ function FeedPostPage() {
     fetchNextPage: fetchMoreComments,
   } = useFeedComments(postId);
   const {
-    mutateAsync: createComment,
+    createComment,
     isPending: isCreatingComment,
     isError: createCommentError,
   } = useCreateComment();
-  const attempt = useRef({ content: '', key: '' });
   const feedPosts = feedData?.pages.flatMap((page) => page.items ?? []) ?? [];
   const [commentDraft, setCommentDraft] = useState('');
+  const [replyTo, setReplyTo] = useState<FeedComment | null>(null);
   const [isCommentMultiline, setIsCommentMultiline] = useState(false);
   const index = feedPosts.findIndex((post) => post.id === postId);
   if (isPostPending) return <FeedPostSkeleton />;
@@ -87,13 +89,16 @@ function FeedPostPage() {
     event.preventDefault();
     const content = commentDraft.trim();
     if (!content || content.length > 1000 || isCreatingComment) return;
-    if (attempt.current.content !== content)
-      attempt.current = { content, key: crypto.randomUUID() };
+    const replyToCommentId = replyTo?.id;
     try {
-      await createComment({ id: postId, content, key: attempt.current.key });
+      await createComment({
+        id: postId,
+        content,
+        replyToCommentId,
+      });
       setCommentDraft('');
+      setReplyTo(null);
       setIsCommentMultiline(false);
-      attempt.current = { content: '', key: '' };
     } catch {
       /* Keep the comment draft on failure. */
     }
@@ -151,12 +156,18 @@ function FeedPostPage() {
                   {post.content}
                 </p>
               )}
+              <FeedLikeButton
+                id={post.id}
+                kind="post"
+                liked={post.likedByMe}
+                count={post.likesCount}
+              />
             </div>
             <section aria-label={t('app.comments')} className="flex min-h-0 flex-1 flex-col">
               <div className="min-h-0 flex-1 space-y-5 overflow-y-auto p-5.5 sm:p-6">
                 {areCommentsPending && <FeedCommentsSkeleton />}
                 {comments.map((comment) => (
-                  <FeedCommentItem key={comment.id} comment={comment} />
+                  <FeedCommentItem key={comment.id} comment={comment} onReply={setReplyTo} />
                 ))}
                 {areCommentsError && <UIQueryError retry={() => void refetchComments()} />}
                 {hasMoreComments && (
@@ -172,6 +183,18 @@ function FeedPostPage() {
               </div>
             </section>
             <form onSubmit={sendComment} className="shrink-0 border-t border-white-10 p-4 sm:p-5">
+              {replyTo && (
+                <div className="mb-2 flex items-center justify-between text-detail text-secondary">
+                  <span>
+                    {t('apiState.replyingTo', {
+                      name: authorName(replyTo.author) || t('apiState.student'),
+                    })}
+                  </span>
+                  <UIButton bg="transparent" size="pill" onClick={() => setReplyTo(null)}>
+                    {t('postComposer.cancel')}
+                  </UIButton>
+                </div>
+              )}
               <div
                 className={cn(
                   inputStyles(),

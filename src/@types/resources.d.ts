@@ -2,22 +2,28 @@
 export default interface Resources {
   "translation": {
     "apiState": {
+      "deleteCommentDescription": "This comment will be deleted.",
+      "deleteCommentTitle": "Delete comment?",
       "deletedComment": "Deleted comment",
       "detailsError": "Use 10–5000 characters.",
       "error": "Could not load or save your changes. Please try again.",
       "hideReplies": "Hide replies",
       "imageError": "Choose a valid JPG, PNG or WebP image under 10 MB.",
+      "like": "Like",
       "loadMore": "Load more",
       "loadedSearch": "Search covers loaded posts. Load more to search older posts.",
       "loading": "Loading…",
       "profileSaveError": "Some changes couldn’t be saved. Please try again.",
+      "reply": "Reply",
+      "replyingTo": "Replying to {{name}}",
       "retry": "Try again",
       "showEmail": "Show email",
       "showFaculty": "Show faculty",
       "showReplies": "Show replies ({{total}})",
       "showYear": "Show year of study",
       "student": "Student",
-      "titleError": "Use 3–150 characters."
+      "titleError": "Use 3–150 characters.",
+      "unlike": "Unlike"
     },
     "app": {
       "add": "Add",

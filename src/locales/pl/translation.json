@@ -312,6 +312,12 @@
     "published": "Post opublikowany"
   },
   "apiState": {
+    "deleteCommentTitle": "Usunąć komentarz?",
+    "deleteCommentDescription": "Komentarz zostanie usunięty.",
+    "reply": "Odpowiedz",
+    "replyingTo": "Odpowiedź dla {{name}}",
+    "like": "Polub",
+    "unlike": "Usuń polubienie",
     "loading": "Ładowanie…",
     "error": "Nie udało się wczytać lub zapisać zmian. Spróbuj ponownie.",
     "retry": "Spróbuj ponownie",

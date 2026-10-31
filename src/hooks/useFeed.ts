@@ -1,12 +1,30 @@
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   createFeedComment,
+  deleteFeedComment,
   getCommentReplies,
   getFeedComments,
   getFeedPost,
   getFeedPosts,
+  setFeedLike,
 } from '@/api';
 import type { FeedFilters } from '@/@types';
+
+export function useDeleteFeedComment() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deleteFeedComment,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['feed'] }),
+  });
+}
+
+export function useFeedLike() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: setFeedLike,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['feed'] }),
+  });
+}
 
 export function useFeedPosts(filters: FeedFilters = {}) {
   return useInfiniteQuery({
@@ -42,9 +60,22 @@ export function useCommentReplies(id: string, enabled: boolean) {
 
 export function useCreateComment() {
   const queryClient = useQueryClient();
-  return useMutation({
+  const { mutateAsync, variables, isError, isPending } = useMutation({
     mutationKey: ['feed', 'create-comment'],
     mutationFn: createFeedComment,
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['feed'] }),
   });
+
+  function createComment(input: Omit<Parameters<typeof createFeedComment>[0], 'key'>) {
+    const key =
+      isError &&
+      variables?.id === input.id &&
+      variables.content === input.content &&
+      variables.replyToCommentId === input.replyToCommentId
+        ? variables.key
+        : crypto.randomUUID();
+    return mutateAsync({ ...input, key });
+  }
+
+  return { createComment, isError, isPending };
 }
