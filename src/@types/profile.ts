@@ -1,1 +1,2 @@
-export type Programme = { name: string; faculty: string; year: string; primary: boolean };
+import type { components } from './schema';
+export type Programme = components['schemas']['Programme'];

@@ -9,18 +9,22 @@ test('profile names must be nonempty and are normalized', () => {
   expect(profileSchema.safeParse({ first: '', last: 'Kowalski' }).success).toBe(false);
 });
 
-test('the profile form validates all editable fields without dropping programme or visibility values', () => {
+test('the profile form validates all editable fields without dropping programme or privacy values', () => {
   const profile = {
     first: ' Jan ',
     last: ' Kowalski ',
-    visible: false,
+    privacy: { showEmail: false, showFaculty: true, showYear: false },
     photo: '/app/avatar.png',
     programmes: [
       {
-        name: 'Informatyka',
+        id: 'programme-id',
+        programme: 'Informatyka',
         faculty: 'Mathematics, Physics and Computer Science',
-        year: '3',
-        primary: true,
+        yearOfStudy: 3,
+        isPrimary: true,
+        status: 'active',
+        level: 'first_cycle',
+        modeOfStudies: 'full_time',
       },
     ],
   };

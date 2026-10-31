@@ -2,6 +2,8 @@ import { BrandBackground, UIBottomTabs, UIDialog, UISidebar } from '@/ui/compone
 import { Outlet, createFileRoute, Link, retainSearchParams } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { Toaster } from 'react-hot-toast';
+import { useMyProfile } from '@/hooks';
+import { authorName } from '@/utils/feed';
 import { useNarrowViewport } from '@/hooks/useNarrowViewport';
 import { isMobileDevice, optionalSearchString, shouldBlockMobile } from '@/utils';
 import { APP_STORES } from '@/utils/stores';
@@ -42,6 +44,7 @@ export const Route = createFileRoute('/_app')({
 function AppLayout() {
   const { t } = useTranslation();
   const narrow = useNarrowViewport();
+  const { data: profile } = useMyProfile();
   const blocked = shouldBlockMobile(
     isMobileDevice(navigator.userAgent, navigator.platform, navigator.maxTouchPoints),
     narrow,
@@ -50,7 +53,12 @@ function AppLayout() {
     <BrandBackground variant="app" className="flex min-h-svh">
       <UISidebar
         className="sticky top-0 hidden h-svh lg:flex"
-        user={{ initials: 'JK', name: 'Jan Kowalski', meta: 'UMCS · 3rd year' }}
+        user={{
+          initials: '',
+          name: authorName(profile) || t('app.profile'),
+          meta: profile?.universityId.toUpperCase() ?? '',
+          avatar: profile?.avatarUrl ?? '/app/avatar.png',
+        }}
         counts={{ '/chat': 2, '/connections': 2 }}
       />
       <main className="min-w-0 flex-1 px-4 py-6 pb-28 sm:px-7 lg:px-10 lg:py-7 lg:pb-7">

@@ -1,47 +1,50 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { Check } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { FormProvider, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { FormProvider } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
-// TODO(api): Replace mock profile defaults and local form submission with API-backed profile data and mutations.
-import { PROFILEMOCKS } from '@/utils';
-import { UIButton, UITopbar, UIUnsavedChanges } from '@/ui/components';
-import { profileFormSchema, type ProfileFormSchema } from '@/schemas';
+import { myProfileQueryOptions } from '@/hooks/useMyProfile';
+import { useProfileForm } from '@/hooks/useProfileForm';
+import type { components } from '@/@types/schema';
+import { UIButton, UIQueryError, UITopbar, UIUnsavedChanges } from '@/ui/components';
 import { ProfileIdentity, PersonalDetails, StudyProgrammes } from '@/components/features/profile';
+import { ProfileSkeleton } from '@/components/features/profile/ProfileSkeleton';
 
-export const Route = createFileRoute('/_app/profile')({ component: ProfilePage });
+export const Route = createFileRoute('/_app/profile')({
+  loader: ({ context }) => context.queryClient.ensureQueryData(myProfileQueryOptions()),
+  pendingComponent: ProfileSkeleton,
+  errorComponent: ProfileError,
+  component: ProfilePage,
+});
+
+function ProfileError() {
+  const router = useRouter();
+  return <UIQueryError retry={() => void router.invalidate()} />;
+}
+
 function ProfilePage() {
+  const profile = Route.useLoaderData();
+  return <ProfileEditor key={profile.id} profile={profile} />;
+}
+
+function ProfileEditor({ profile }: { profile: components['schemas']['Profile'] }) {
   const { t } = useTranslation();
-  const form = useForm<ProfileFormSchema>({
-    resolver: zodResolver(profileFormSchema),
-    defaultValues: {
-      first: 'Jan',
-      last: 'Kowalski',
-      visible: true,
-      photo: '/app/avatar.png',
-      programmes: PROFILEMOCKS.initialProgrammes,
-    },
-  });
+  const { form, saveProfile, isSuccess, isPending } = useProfileForm(profile);
   const {
     handleSubmit,
-    reset,
-    formState: { isSubmitSuccessful, isDirty },
+    formState: { isDirty },
   } = form;
-  const saved = isSubmitSuccessful && !isDirty;
+  const saved = isSuccess && !isDirty;
   return (
     <FormProvider {...form}>
       <UIUnsavedChanges dirty={isDirty} />
-      <form
-        onSubmit={handleSubmit((data) => {
-          reset(data);
-          toast.success(t('app.savedLocally'));
-        })}
-      >
+      <>
         <UITopbar title={t('app.yourProfile')}>
           <UIButton
             type="submit"
+            form="profile-form"
+            disabled={isPending}
             size="sm"
             leftIcon={Check}
             className="h-9 min-h-9 shrink-0 px-3 py-0 text-detail whitespace-nowrap"
@@ -49,14 +52,30 @@ function ProfilePage() {
             {saved ? t('app.saved') : t('app.saveChanges')}
           </UIButton>
         </UITopbar>
-        <div className="grid items-start gap-5 xl:grid-cols-[310px_minmax(0,1fr)]">
-          <ProfileIdentity />
+        <div className="grid min-w-0 items-start gap-5 xl:grid-cols-[310px_minmax(0,1fr)]">
+          <fieldset disabled={isPending}>
+            <ProfileIdentity universityId={profile.universityId} />
+          </fieldset>
           <div className="space-y-4.5">
-            <PersonalDetails />
-            <StudyProgrammes />
+            <form
+              id="profile-form"
+              onSubmit={handleSubmit(async (data) => {
+                try {
+                  await saveProfile(data);
+                  toast.success(t('app.saved'));
+                } catch {
+                  toast.error(t('apiState.profileSaveError'));
+                }
+              })}
+            >
+              <fieldset disabled={isPending}>
+                <PersonalDetails />
+              </fieldset>
+            </form>
+            <StudyProgrammes universityId={profile.universityId} />
           </div>
         </div>
-      </form>
+      </>
     </FormProvider>
   );
 }

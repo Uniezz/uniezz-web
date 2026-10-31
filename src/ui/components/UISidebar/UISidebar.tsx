@@ -6,7 +6,7 @@ import { UINavItem } from '../UINavItem';
 import { NAV_GROUPS } from '@/utils/navigation';
 import { sidebarStyles, sidebarGroupStyles, sidebarUserStyles } from './variants';
 export type UISidebarProps = ComponentProps<'aside'> & {
-  user: { initials: string; name: string; meta: string };
+  user: { initials: string; name: string; meta: string; avatar?: string };
   counts?: Record<string, number>;
 };
 export function UISidebar({ user, counts, className, ...props }: UISidebarProps) {
@@ -39,7 +39,7 @@ export function UISidebar({ user, counts, className, ...props }: UISidebarProps)
       >
         <span className="relative z-10 flex min-w-0 items-center gap-2.5">
           <img
-            src="/app/avatar.png"
+            src={user.avatar ?? '/app/avatar.png'}
             alt=""
             className="size-8.5 shrink-0 rounded-full object-cover"
           />

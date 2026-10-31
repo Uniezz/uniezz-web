@@ -8,6 +8,7 @@ import { useBlocker } from '@tanstack/react-router';
 import { UIButton, UIAvatar, UIField, UIDialog, UISearch } from '@/ui/components';
 // TODO(api): Load group members and image choices from API-backed data.
 import { CHATMOCKS, matchesSearch } from '@/utils';
+import { readImageFile } from '@/utils/image';
 import { groupSchema, type GroupSchema } from '@/schemas';
 
 const avatarForMember = (name: string): string => {
@@ -54,6 +55,24 @@ export function CreateGroup({
     enableBeforeUnload: () => hasUnsavedChanges,
     withResolver: true,
   });
+
+  async function changeImage(file?: File) {
+    if (!file) return;
+    if (
+      !['image/jpeg', 'image/png', 'image/webp'].includes(file.type) ||
+      file.size > 5 * 1024 * 1024
+    ) {
+      setImageError(t('app.photoError'));
+      return;
+    }
+    try {
+      setImageUrl(await readImageFile(file));
+      setImageError('');
+    } catch {
+      setImageError(t('app.photoError'));
+    }
+  }
+
   return (
     <>
       {blocker.status === 'blocked' && (
@@ -96,27 +115,7 @@ export function CreateGroup({
               onChange={(event) => {
                 const file = event.target.files?.[0];
                 event.target.value = '';
-                if (!file) return;
-                if (
-                  !['image/jpeg', 'image/png', 'image/webp'].includes(file.type) ||
-                  file.size > 5 * 1024 * 1024
-                ) {
-                  setImageError(t('app.photoError'));
-                  return;
-                }
-                const reader = new FileReader();
-                reader.onerror = () => setImageError(t('app.photoError'));
-                reader.onload = () => {
-                  if (typeof reader.result !== 'string') return;
-                  const preview = new Image();
-                  preview.onerror = () => setImageError(t('app.photoError'));
-                  preview.onload = () => {
-                    setImageUrl(reader.result as string);
-                    setImageError('');
-                  };
-                  preview.src = reader.result;
-                };
-                reader.readAsDataURL(file);
+                void changeImage(file);
               }}
             />
           </label>
@@ -133,6 +132,7 @@ export function CreateGroup({
           className="gap-2 [&>span]:text-base [&>span]:font-semibold [&>span]:text-white"
         >
           <input
+            autoComplete="off"
             className="app-control"
             {...register('name')}
             maxLength={80}

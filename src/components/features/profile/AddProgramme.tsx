@@ -2,28 +2,43 @@ import { useState } from 'react';
 import { Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useForm, useWatch } from 'react-hook-form';
-
-// TODO(api): Replace mock programme options/lookup and local form addition with API-backed programmes and mutations.
-import { PROFILEMOCKS } from '@/utils';
-import type { Programme } from '@/@types';
+import toast from 'react-hot-toast';
+import { useProfileProgrammes } from '@/hooks';
+import type { components } from '@/@types/schema';
 import { UIButton, UIDialog, UIField } from '@/ui/components';
 
-export function AddProgramme({
-  programmes,
-  onAdd,
-}: {
-  programmes: Programme[];
-  onAdd: (programme: Programme) => void;
-}) {
+export function AddProgramme({ programmes }: { programmes: components['schemas']['Programme'][] }) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
-  const { register, control, handleSubmit, reset } = useForm<{
-    name: string;
-  }>({
-    defaultValues: { name: 'Informatyka' },
+  const { saveProgramme, isSaving: isPending } = useProfileProgrammes();
+  const { register, control, handleSubmit, reset } = useForm<{ name: string; faculty: string }>({
+    defaultValues: { name: '', faculty: '' },
   });
   const name = useWatch({ control, name: 'name' });
-  const exists = programmes.some((p) => p.name === name);
+  const exists = programmes.some(
+    (p) => p.programme.toLocaleLowerCase() === name.trim().toLocaleLowerCase(),
+  );
+
+  async function addProgramme({ name, faculty }: { name: string; faculty: string }) {
+    try {
+      await saveProgramme({
+        programme: {
+          programme: name.trim(),
+          faculty: faculty.trim(),
+          yearOfStudy: null,
+          isPrimary: programmes.length === 0,
+          status: 'active',
+          level: null,
+          modeOfStudies: null,
+        },
+      });
+      toast.success(t('app.saved'));
+      setOpen(false);
+    } catch {
+      toast.error(t('apiState.profileSaveError'));
+    }
+  }
+
   return (
     <>
       <UIButton
@@ -42,27 +57,28 @@ export function AddProgramme({
         open={open}
         onOpenChange={setOpen}
         title={t('app.addProgramme')}
-        description={t('app.localOnly')}
+        description={t('app.studyProgrammes')}
       >
         <div className="space-y-4">
           <UIField label={t('app.studyProgrammes')}>
-            <select className="app-control" {...register('name', { required: true })}>
-              {PROFILEMOCKS.initialProgrammes.map((p) => (
-                <option key={p.name}>{p.name}</option>
-              ))}
-            </select>
+            <input
+              autoComplete="off"
+              className="app-control"
+              {...register('name', { required: true, validate: (value) => Boolean(value.trim()) })}
+            />
+          </UIField>
+          <UIField label={t('app.faculty')}>
+            <input
+              autoComplete="off"
+              className="app-control"
+              {...register('faculty', {
+                required: true,
+                validate: (value) => Boolean(value.trim()),
+              })}
+            />
           </UIField>
           {exists && <p className="text-label text-secondary">{t('app.programmeExists')}</p>}
-          <UIButton
-            disabled={exists}
-            onClick={handleSubmit(({ name }) => {
-              const programme = PROFILEMOCKS.initialProgrammes.find((p) => p.name === name);
-              if (programme && !programmes.some((p) => p.name === name)) {
-                onAdd(programme);
-                setOpen(false);
-              }
-            })}
-          >
+          <UIButton disabled={exists || isPending} onClick={handleSubmit(addProgramme)}>
             {t('app.addProgramme')}
           </UIButton>
         </div>

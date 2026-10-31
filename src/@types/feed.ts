@@ -1,25 +1,6 @@
-export type FeedPostType = 'post' | 'question' | 'event';
+import type { components, operations } from './schema';
 
-export type FeedComment = {
-  id: string;
-  author: string;
-  text: string;
-  avatar?: string;
-};
-
-export type FeedPost = {
-  id: string;
-  type: FeedPostType;
-  title: string;
-  author: string;
-  university: string;
-  summary: string;
-  body?: string;
-  image?: string;
-  avatar?: string;
-  time?: string;
-  category?: string;
-  location?: string;
-  eventDate?: string;
-  comments: FeedComment[];
-};
+export type FeedPost = components['schemas']['Post'];
+export type FeedPostType = FeedPost['type'];
+export type FeedComment = components['schemas']['Comment'];
+export type FeedFilters = Omit<NonNullable<operations['listFeedPosts']['parameters']['query']>, 'cursor'>;

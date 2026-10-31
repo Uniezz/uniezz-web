@@ -1,16 +1,16 @@
 import { createFileRoute, Link, redirect } from '@tanstack/react-router';
-import { ChevronLeft, ChevronRight, Send, CalendarDays, MapPin } from 'lucide-react';
-import { type FormEvent, useContext, useState } from 'react';
+import { ChevronLeft, ChevronRight, Send, CalendarDays } from 'lucide-react';
+import { type FormEvent, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { cn } from '@/ui/cn';
 import { inputStyles } from '@/ui/components/UIInput/variants';
-import { UIAvatar, UIButton, UIEmpty, UIPanel } from '@/ui/components';
-import { FEEDMOCKS } from '@/utils';
-import { FeedContext } from './route';
-
-// TODO(api): Replace mock post details, comments, ordering, and local comment submission with API-backed feed data.
-const mockPosts = [...FEEDMOCKS.feed.topPosts, ...FEEDMOCKS.feed.posts];
+import { UIAvatar, UIButton, UIEmpty, UIPanel, UIQueryError, UISkeleton } from '@/ui/components';
+import { useFeedPosts, useFeedPost, useFeedComments, useCreateComment } from '@/hooks';
+import { authorName, postDate } from '@/utils/feed';
+import { FeedCommentItem } from '@/components/features/feed/FeedComments';
+import { FeedCommentsSkeleton } from '@/components/features/feed/FeedCommentsSkeleton';
+import { FeedPostSkeleton } from '@/components/features/feed/FeedPostSkeleton';
 
 export const Route = createFileRoute('/_app/feed/$postId')({
   beforeLoad: ({ params, search }) => {
@@ -23,23 +23,46 @@ export const Route = createFileRoute('/_app/feed/$postId')({
       });
     }
   },
+  remountDeps: ({ params }) => params.postId,
   component: FeedPostPage,
 });
 
 function FeedPostPage() {
   const { postId } = Route.useParams();
-  const { t } = useTranslation();
-  // TODO(api): Resolve created posts through the post query instead of local feed context.
-  const context = useContext(FeedContext);
-  const feedPosts = [...(context?.posts ?? []), ...mockPosts];
+  const { t, i18n } = useTranslation();
+  const {
+    data: post,
+    isPending: isPostPending,
+    isError: isPostError,
+    refetch: refetchPost,
+  } = useFeedPost(postId);
+  const {
+    data: feedData,
+    isPending: isFeedPending,
+    hasNextPage: hasMorePosts,
+    isFetchingNextPage: isFetchingMorePosts,
+    fetchNextPage: fetchMorePosts,
+  } = useFeedPosts();
+  const {
+    data: commentData,
+    isPending: areCommentsPending,
+    isError: areCommentsError,
+    refetch: refetchComments,
+    hasNextPage: hasMoreComments,
+    isFetchingNextPage: isFetchingMoreComments,
+    fetchNextPage: fetchMoreComments,
+  } = useFeedComments(postId);
+  const {
+    mutateAsync: createComment,
+    isPending: isCreatingComment,
+    isError: createCommentError,
+  } = useCreateComment();
+  const attempt = useRef({ content: '', key: '' });
+  const feedPosts = feedData?.pages.flatMap((page) => page.items ?? []) ?? [];
   const [commentDraft, setCommentDraft] = useState('');
   const [isCommentMultiline, setIsCommentMultiline] = useState(false);
-  const [localComments, setLocalComments] = useState<
-    Record<string, { id: string; author: string; text: string; avatar?: string }[]>
-  >({});
   const index = feedPosts.findIndex((post) => post.id === postId);
-  const post = feedPosts[index];
-
+  if (isPostPending) return <FeedPostSkeleton />;
   if (!post) {
     return (
       <div className="space-y-4">
@@ -50,33 +73,30 @@ function FeedPostPage() {
         >
           <ChevronLeft className="size-4" /> {t('app.back')}
         </Link>
-        <UIEmpty />
+        {isPostError ? <UIQueryError retry={() => void refetchPost()} /> : <UIEmpty />}
       </div>
     );
   }
 
-  const previous = feedPosts[index - 1];
-  const next = feedPosts[index + 1];
-  const comments = [...post.comments, ...(localComments[post.id] ?? [])];
+  // shortcut: Adjacent navigation covers loaded feed pages until the API provides neighbours.
+  const previous = index > 0 ? feedPosts[index - 1] : undefined;
+  const next = index >= 0 ? feedPosts[index + 1] : undefined;
+  const comments = commentData?.pages.flatMap((page) => page.items ?? []) ?? [];
 
-  const sendComment = (event: FormEvent<HTMLFormElement>) => {
+  const sendComment = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const text = commentDraft.trim();
-    if (!text) return;
-
-    setLocalComments((current) => ({
-      ...current,
-      [post.id]: [
-        ...(current[post.id] ?? []),
-        {
-          id: `${post.id}-${Date.now()}`,
-          author: FEEDMOCKS.currentUser.name,
-          text,
-        },
-      ],
-    }));
-    setCommentDraft('');
-    setIsCommentMultiline(false);
+    const content = commentDraft.trim();
+    if (!content || content.length > 1000 || isCreatingComment) return;
+    if (attempt.current.content !== content)
+      attempt.current = { content, key: crypto.randomUUID() };
+    try {
+      await createComment({ id: postId, content, key: attempt.current.key });
+      setCommentDraft('');
+      setIsCommentMultiline(false);
+      attempt.current = { content: '', key: '' };
+    } catch {
+      /* Keep the comment draft on failure. */
+    }
   };
 
   return (
@@ -92,8 +112,12 @@ function FeedPostPage() {
         <div className="grid min-w-0 items-stretch gap-5 md:h-[calc(100svh-9rem)] md:min-h-0 md:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.75fr)] xl:h-[calc(100svh-56px)]">
           <UIPanel className="overflow-hidden p-0">
             <div className="bg-ink-20 relative flex aspect-[4/3] items-center justify-center md:aspect-auto md:h-full">
-              {'image' in post && post.image ? (
-                <img src={post.image} alt="" className="absolute inset-0 size-full object-cover" />
+              {post.mediaUrls?.[0] ? (
+                <img
+                  src={post.mediaUrls?.[0]}
+                  alt=""
+                  className="absolute inset-0 size-full object-cover"
+                />
               ) : (
                 <div className="p-8 text-center">
                   <h1 className="text-body font-semibold tracking-[-0.2px] wrap-anywhere">
@@ -104,14 +128,12 @@ function FeedPostPage() {
             </div>
           </UIPanel>
           <UIPanel className="flex min-h-0 min-w-0 flex-col p-0">
-            <div className="space-y-3 border-b border-white-10 p-5.5 sm:p-6">
+            <div className="max-h-[45%] shrink-0 space-y-3 overflow-y-auto border-b border-white-10 p-5.5 sm:p-6">
               <div className="flex items-center gap-3">
-                <UIAvatar
-                  size="md"
-                  imgSrc={'avatar' in post && post.avatar ? post.avatar : '/app/avatar.png'}
-                  alt=""
-                />
-                <p className="text-label font-medium text-white">{post.author}</p>
+                <UIAvatar size="md" imgSrc={post.author.avatarUrl ?? '/app/avatar.png'} alt="" />
+                <p className="text-label font-medium text-white">
+                  {authorName(post.author) || t('apiState.student')}
+                </p>
               </div>
               <h1 className="text-body font-semibold tracking-[-0.2px] wrap-anywhere">
                 {post.title}
@@ -120,38 +142,36 @@ function FeedPostPage() {
                 <div className="space-y-2 text-detail text-secondary">
                   <p className="flex items-center gap-2">
                     <CalendarDays className="size-4 shrink-0" aria-hidden="true" />
-                    {post.summary}
+                    {postDate(post, i18n.resolvedLanguage ?? 'en')}
                   </p>
-                  {post.location && (
-                    <p className="flex items-center gap-2">
-                      <MapPin className="size-4 shrink-0" aria-hidden="true" />
-                      {post.location}
-                    </p>
-                  )}
                 </div>
               )}
-              {post.body && (
+              {post.content && (
                 <p className="text-body wrap-anywhere whitespace-pre-wrap text-white-80">
-                  {post.body}
+                  {post.content}
                 </p>
               )}
             </div>
             <section aria-label={t('app.comments')} className="flex min-h-0 flex-1 flex-col">
               <div className="min-h-0 flex-1 space-y-5 overflow-y-auto p-5.5 sm:p-6">
+                {areCommentsPending && <FeedCommentsSkeleton />}
                 {comments.map((comment) => (
-                  <article key={comment.id} className="flex items-start gap-3">
-                    <UIAvatar size="md" imgSrc={comment.avatar ?? '/app/avatar.png'} alt="" />
-                    <div className="min-w-0">
-                      <strong className="block text-label font-semibold">{comment.author}</strong>
-                      <p className="mt-1 text-label leading-relaxed wrap-anywhere whitespace-pre-wrap text-white-80">
-                        {comment.text}
-                      </p>
-                    </div>
-                  </article>
+                  <FeedCommentItem key={comment.id} comment={comment} />
                 ))}
+                {areCommentsError && <UIQueryError retry={() => void refetchComments()} />}
+                {hasMoreComments && (
+                  <UIButton
+                    bg="secondary"
+                    size="pill"
+                    disabled={isFetchingMoreComments}
+                    onClick={() => void fetchMoreComments()}
+                  >
+                    {t('apiState.loadMore')}
+                  </UIButton>
+                )}
               </div>
             </section>
-            <form onSubmit={sendComment} className="border-t border-white-10 p-4 sm:p-5">
+            <form onSubmit={sendComment} className="shrink-0 border-t border-white-10 p-4 sm:p-5">
               <div
                 className={cn(
                   inputStyles(),
@@ -160,6 +180,7 @@ function FeedPostPage() {
                 )}
               >
                 <textarea
+                  autoComplete="off"
                   value={commentDraft}
                   onChange={(event) => {
                     setCommentDraft(event.target.value);
@@ -176,7 +197,8 @@ function FeedPostPage() {
                     }
                   }}
                   rows={1}
-                  maxLength={4000}
+                  maxLength={1000}
+                  disabled={isCreatingComment}
                   aria-label={t('app.addComment')}
                   placeholder={t('app.addComment')}
                   className="field-sizing-content max-h-28 min-h-6 min-w-0 flex-1 resize-none bg-transparent p-0 text-label leading-6 text-white outline-none placeholder:text-secondary"
@@ -184,6 +206,7 @@ function FeedPostPage() {
                 {commentDraft.trim() && (
                   <UIButton
                     type="submit"
+                    disabled={isCreatingComment}
                     size="icon"
                     bg="secondary"
                     leftIcon={Send}
@@ -197,14 +220,20 @@ function FeedPostPage() {
                   </UIButton>
                 )}
               </div>
+              {createCommentError && <UIQueryError />}
             </form>
           </UIPanel>
         </div>
         <nav
           aria-label={t('app.postNavigation')}
-          className="pointer-events-none absolute inset-y-0 -right-32 -left-32 grid grid-cols-[8rem_minmax(0,1fr)_8rem] items-center max-xl:static max-xl:mt-5 max-xl:flex max-xl:justify-between"
+          className="pointer-events-none absolute inset-y-0 -right-32 -left-32 grid min-h-11 grid-cols-[8rem_minmax(0,1fr)_8rem] items-center max-xl:static max-xl:mt-5 max-xl:flex max-xl:justify-between"
         >
-          {previous ? (
+          {isFeedPending ? (
+            <>
+              <UISkeleton className="pointer-events-auto col-start-1 row-start-1 size-11 justify-self-center rounded-full" />
+              <UISkeleton className="pointer-events-auto col-start-3 row-start-1 size-11 justify-self-center rounded-full" />
+            </>
+          ) : previous ? (
             <Link
               to="/feed/$postId"
               params={{ postId: previous.id }}
@@ -228,7 +257,19 @@ function FeedPostPage() {
               <ChevronRight className="size-5" />
             </Link>
           )}
-          {!next && <span className="col-start-3 row-start-1" />}
+          {!next && hasMorePosts && index >= 0 ? (
+            <UIButton
+              bg="secondary"
+              size="pill"
+              className="pointer-events-auto col-start-3 row-start-1 justify-self-center"
+              disabled={isFetchingMorePosts}
+              onClick={() => void fetchMorePosts()}
+            >
+              {t('apiState.loadMore')}
+            </UIButton>
+          ) : (
+            !next && <span className="col-start-3 row-start-1" />
+          )}
         </nav>
       </div>
     </div>

@@ -33,11 +33,12 @@ const newPostRouteMask = createRouteMask({
   to: '/feed/new-post',
   search: (search) => ({ ...search, feedRoute: undefined, postId: undefined }),
 });
+const queryClient = new QueryClient();
 const router = createRouter({
   routeTree,
   routeMasks: [newGroupRouteMask, connectionsRouteMask, postRouteMask, newPostRouteMask],
+  context: { queryClient },
 });
-const queryClient = new QueryClient();
 
 declare module '@tanstack/react-router' {
   interface Register {

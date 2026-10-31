@@ -1,58 +1,53 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useController, useFormContext, useWatch } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 
-// TODO(api): Replace mock identity details with API-backed profile data.
-import { PROFILEMOCKS } from '@/utils';
+import { useUniversities } from '@/hooks';
 import { UILanguageSwitcher, UIPanel, UISwitch } from '@/ui/components';
 import { type ProfileFormSchema } from '@/schemas';
+import { readImageFile } from '@/utils/image';
 
-export function ProfileIdentity() {
+export function ProfileIdentity({ universityId }: { universityId: string }) {
+  const { data: universities } = useUniversities();
   const { t } = useTranslation();
   const {
     control,
     setValue,
-    formState: { defaultValues },
+    trigger,
+    setError,
+    clearErrors,
+    formState: { defaultValues, errors },
   } = useFormContext<ProfileFormSchema>();
   const photo = useWatch({ control, name: 'photo' });
-  const { field: visibility } = useController({ control, name: 'visible' });
-  const [photoError, setPhotoError] = useState('');
-  function changePhoto(file?: File): void {
+  const privacy = useWatch({ control, name: 'privacy' });
+  const [preview, setPreview] = useState('');
+  async function changePhoto(file?: File): Promise<void> {
     if (!file) return;
-    if (
-      !['image/jpeg', 'image/png', 'image/webp'].includes(file.type) ||
-      file.size > 5 * 1024 * 1024
-    ) {
-      setPhotoError(t('app.photoError'));
-      return;
+    setValue('avatarFile', file, { shouldDirty: true });
+    if (!(await trigger('avatarFile'))) return;
+    try {
+      setPreview(await readImageFile(file));
+      clearErrors('avatarFile');
+    } catch {
+      setValue('avatarFile', undefined, { shouldDirty: true });
+      setError('avatarFile', { type: 'validate', message: t('app.photoError') });
     }
-    const reader = new FileReader();
-    reader.onerror = () => setPhotoError(t('app.photoError'));
-    reader.onload = () => {
-      if (typeof reader.result !== 'string') return;
-      const data = reader.result;
-      const image = new Image();
-      image.onerror = () => setPhotoError(t('app.photoError'));
-      image.onload = () => {
-        setValue('photo', data, { shouldDirty: true, shouldValidate: true });
-        setPhotoError('');
-      };
-      image.src = data;
-    };
-    reader.readAsDataURL(file);
   }
   return (
     <div className="space-y-4">
       <UIPanel surface="tint" className="rounded-profile text-center">
         <img
-          src={photo}
+          src={preview || photo}
           alt={`${defaultValues?.first} ${defaultValues?.last}`}
           className="mx-auto mb-4.5 size-22 rounded-full object-cover"
         />
         <h2 className="text-[21px] leading-[1.2] font-bold">
           {defaultValues?.first} {defaultValues?.last}
         </h2>
-        <p className="mt-1.25 text-detail font-medium text-secondary">{PROFILEMOCKS.university}</p>
+        <p className="mt-1.25 text-detail font-medium text-secondary">
+          {universities?.find((item) => item.id === universityId)?.name ??
+            universityId.toUpperCase()}
+        </p>
         <label className="mt-4.5 inline-flex h-10 w-full cursor-pointer items-center justify-center rounded-xl border border-white-10 bg-white-5 px-5 text-detail font-semibold focus-within:outline-2 focus-within:outline-blue">
           {t('app.changePhoto')}
           <input
@@ -60,27 +55,36 @@ export function ProfileIdentity() {
             className="sr-only"
             accept="image/png,image/jpeg,image/webp"
             onChange={(e) => {
-              changePhoto(e.target.files?.[0]);
+              void changePhoto(e.target.files?.[0]);
               e.target.value = '';
             }}
           />
         </label>
-        {photoError && (
+        {errors.avatarFile && (
           <p role="alert" className="mt-3 text-detail text-danger">
-            {photoError}
+            {t('app.photoError')}
           </p>
         )}
       </UIPanel>
       <UIPanel surface="tint" className="rounded-profile p-4.5">
         <h2 className="mb-3.5 text-base font-bold">{t('app.profileVisibility')}</h2>
-        <p className="mb-3.5 text-detail leading-[1.35] text-secondary">
-          {t('app.visibilityDescription')}
-        </p>
-        <UISwitch
-          label={t('app.visibleToStudents')}
-          checked={visibility.value}
-          onChange={visibility.onChange}
-        />
+        <div className="space-y-3">
+          <UISwitch
+            label={t('apiState.showEmail')}
+            checked={privacy.showEmail}
+            onChange={(value) => setValue('privacy.showEmail', value, { shouldDirty: true })}
+          />
+          <UISwitch
+            label={t('apiState.showFaculty')}
+            checked={privacy.showFaculty}
+            onChange={(value) => setValue('privacy.showFaculty', value, { shouldDirty: true })}
+          />
+          <UISwitch
+            label={t('apiState.showYear')}
+            checked={privacy.showYear}
+            onChange={(value) => setValue('privacy.showYear', value, { shouldDirty: true })}
+          />
+        </div>
         <div className="mt-4 flex items-center justify-between gap-3 border-t border-white-10 pt-4">
           <span className="text-detail font-semibold">{t('topbar.changeLanguage')}</span>
           <UILanguageSwitcher />

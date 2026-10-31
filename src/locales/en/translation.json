@@ -293,7 +293,7 @@
     "type": "Post type",
     "questionTitle": "Your question",
     "title": "Title",
-    "details": "Details (optional)",
+    "details": "Details",
     "detailsPlaceholder": "Add the details other students should know…",
     "eventDetails": "Event details",
     "date": "Date",
@@ -305,10 +305,28 @@
     "removePhoto": "Remove photo",
     "readingPhoto": "Loading photo…",
     "addPhoto": "Add a photo",
-    "photoHint": "JPG, PNG or WebP · up to 5 MB",
+    "photoHint": "JPG, PNG or WebP · up to 10 MB",
     "cancel": "Cancel",
     "publish": "Publish",
     "preview": "Preview in Feed",
     "published": "Post published"
+  },
+  "apiState": {
+    "loading": "Loading…",
+    "error": "Could not load or save your changes. Please try again.",
+    "retry": "Try again",
+    "loadMore": "Load more",
+    "student": "Student",
+    "deletedComment": "Deleted comment",
+    "showReplies": "Show replies ({{total}})",
+    "hideReplies": "Hide replies",
+    "loadedSearch": "Search covers loaded posts. Load more to search older posts.",
+    "profileSaveError": "Some changes couldn’t be saved. Please try again.",
+    "showEmail": "Show email",
+    "showFaculty": "Show faculty",
+    "showYear": "Show year of study",
+    "titleError": "Use 3–150 characters.",
+    "detailsError": "Use 10–5000 characters.",
+    "imageError": "Choose a valid JPG, PNG or WebP image under 10 MB."
   }
 }

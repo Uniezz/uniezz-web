@@ -102,6 +102,7 @@ export function ChatThread({
         onSubmit={submit}
       >
         <textarea
+          autoComplete="off"
           aria-label={t('app.message')}
           {...register('text')}
           onInput={(event) => setIsMultiline(event.currentTarget.scrollHeight > 48)}

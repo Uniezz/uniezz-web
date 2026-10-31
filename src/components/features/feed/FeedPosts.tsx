@@ -1,33 +1,49 @@
 import { Masonry, type RenderComponentProps } from 'masonic';
+import { useTranslation } from 'react-i18next';
 import type { FeedPost } from '@/@types';
-import { UIEmpty } from '@/ui/components';
-// TODO(api): Replace mock feed data and local filtering with API-backed feed queries.
-import { FEEDMOCKS, matchesSearch } from '@/utils';
+import { UIButton, UIEmpty, UIQueryError } from '@/ui/components';
+import { useFeedPosts } from '@/hooks';
+import { matchesSearch } from '@/utils';
+import { authorName } from '@/utils/feed';
 import { FeedPostCard } from './FeedPostCard';
+import { FeedPostsSkeleton } from './FeedPostsSkeleton';
 
 function FeedCard({ data }: RenderComponentProps<FeedPost>) {
   return <FeedPostCard post={data} />;
 }
 
-export function FeedPosts({ posts, search }: { posts: FeedPost[]; search: string }) {
-  const items = [...posts, ...FEEDMOCKS.feed.posts].filter((post) =>
-    matchesSearch(search, post.title, post.author, post.university, post.summary),
+export function FeedPosts({ search }: { search: string }) {
+  const { t } = useTranslation();
+  const { data, isPending, isError, refetch, hasNextPage, isFetchingNextPage, fetchNextPage } =
+    useFeedPosts();
+  // shortcut: Search filters loaded pages until the feed API accepts search; then pass it to the API.
+  const items = (data?.pages.flatMap((page) => page.items ?? []) ?? []).filter((post) =>
+    matchesSearch(search, post.title, authorName(post.author), post.university, post.content),
   );
-  return items.length > 0 ? (
-    <Masonry
-      key={items.map((post) => post.id).join(',')}
-      items={items}
-      itemKey={(post) => post.id}
-      columnWidth={352}
-      columnGutter={24}
-      maxColumnCount={3}
-      render={FeedCard}
-      role="list"
-    />
-  ) : search &&
-    !FEEDMOCKS.feed.topPosts.some((post) =>
-      matchesSearch(search, post.title, post.university, post.summary),
-    ) ? (
-    <UIEmpty />
-  ) : null;
+  if (isPending) return <FeedPostsSkeleton />;
+  return (
+    <div className="space-y-6">
+      {items.length > 0 ? (
+        <Masonry
+          key={items.map((post) => post.id).join(',')}
+          items={items}
+          itemKey={(post) => post.id}
+          columnWidth={352}
+          columnGutter={24}
+          maxColumnCount={3}
+          render={FeedCard}
+          role="list"
+        />
+      ) : (
+        !isError && <UIEmpty />
+      )}
+      {isError && <UIQueryError retry={() => void refetch()} />}
+      {hasNextPage && (
+        <UIButton bg="secondary" disabled={isFetchingNextPage} onClick={() => void fetchNextPage()}>
+          {t('apiState.loadMore')}
+        </UIButton>
+      )}
+      {search && <p className="text-detail text-secondary">{t('apiState.loadedSearch')}</p>}
+    </div>
+  );
 }

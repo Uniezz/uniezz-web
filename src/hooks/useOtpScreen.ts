@@ -1,20 +1,22 @@
-import { requestOtpCode, verifyOtpCode } from '@/api';
-import { otpDefaultValues, otpSchema, type OtpSchema } from '@/schemas';
-import { CELL_COUNT } from '@/utils';
-import { saveSession } from '@/utils/session';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
 import { useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { requestOtpCode, verifyOtpCode } from '@/api';
+import { otpDefaultValues, otpSchema, type OtpSchema } from '@/schemas';
+import { CELL_COUNT } from '@/utils';
+import { saveSession } from '@/utils/session';
 
 export const useOtpScreen = (university: string) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { mutateAsync: requestCode, isPending: isRequesting } = useMutation({
+    mutationKey: ['auth', 'request-otp'],
     mutationFn: requestOtpCode,
   });
   const { mutateAsync: verifyCode, isPending: isVerifying } = useMutation({
+    mutationKey: ['auth', 'verify-otp'],
     mutationFn: verifyOtpCode,
   });
   const isPending = isRequesting || isVerifying;

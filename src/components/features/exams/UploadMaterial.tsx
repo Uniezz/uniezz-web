@@ -34,7 +34,12 @@ export function UploadMaterial({
     >
       <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
         <UIField label={t('app.subject')} error={errors.subject ? t('app.required') : undefined}>
-          <input className="app-control" {...register('subject')} maxLength={120} />
+          <input
+            autoComplete="off"
+            className="app-control"
+            {...register('subject')}
+            maxLength={120}
+          />
         </UIField>
         <UIField label={t('app.university')}>
           <select className="app-control" {...register('university')}>

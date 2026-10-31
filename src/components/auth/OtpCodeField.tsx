@@ -44,7 +44,7 @@ export const OtpCodeField = ({ value, onChange, cellCount, errorText }: OtpCodeF
           value={value}
           onChange={(event) => onChange(event.target.value)}
           inputMode="numeric"
-          autoComplete="one-time-code"
+          autoComplete="off"
           autoFocus
           aria-label={t('auth.otp.codeLabel')}
           aria-invalid={Boolean(errorText) || undefined}

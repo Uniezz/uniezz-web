@@ -293,7 +293,7 @@
     "type": "Rodzaj posta",
     "questionTitle": "Twoje pytanie",
     "title": "Tytuł",
-    "details": "Szczegóły (opcjonalnie)",
+    "details": "Szczegóły",
     "detailsPlaceholder": "Dodaj informacje, które powinni znać inni studenci…",
     "eventDetails": "Szczegóły wydarzenia",
     "date": "Data",
@@ -305,10 +305,28 @@
     "removePhoto": "Usuń zdjęcie",
     "readingPhoto": "Wczytywanie zdjęcia…",
     "addPhoto": "Dodaj zdjęcie",
-    "photoHint": "JPG, PNG lub WebP · do 5 MB",
+    "photoHint": "JPG, PNG lub WebP · do 10 MB",
     "cancel": "Anuluj",
     "publish": "Opublikuj",
     "preview": "Podgląd w aktualnościach",
     "published": "Post opublikowany"
+  },
+  "apiState": {
+    "loading": "Ładowanie…",
+    "error": "Nie udało się wczytać lub zapisać zmian. Spróbuj ponownie.",
+    "retry": "Spróbuj ponownie",
+    "loadMore": "Wczytaj więcej",
+    "student": "Student",
+    "deletedComment": "Usunięty komentarz",
+    "showReplies": "Pokaż odpowiedzi ({{total}})",
+    "hideReplies": "Ukryj odpowiedzi",
+    "loadedSearch": "Wyszukiwanie obejmuje wczytane posty. Wczytaj więcej, aby przeszukać starsze.",
+    "profileSaveError": "Nie udało się zapisać części zmian. Spróbuj ponownie.",
+    "showEmail": "Pokaż e-mail",
+    "showFaculty": "Pokaż wydział",
+    "showYear": "Pokaż rok studiów",
+    "titleError": "Użyj 3–150 znaków.",
+    "detailsError": "Użyj 10–5000 znaków.",
+    "imageError": "Wybierz poprawny obraz JPG, PNG lub WebP o rozmiarze poniżej 10 MB."
   }
 }
