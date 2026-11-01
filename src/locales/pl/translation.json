@@ -65,7 +65,12 @@
     "anyFaculty": "Dowolny wydział",
     "lookingFor": "Szukam",
     "emptyTitle": "Na razie nikogo",
-    "emptyDescription": "Widzisz już wszystkich pasujących. Poszerz filtry lub zajrzyj później."
+    "emptyDescription": "Widzisz już wszystkich pasujących. Poszerz filtry lub zajrzyj później.",
+    "matchInterests": "Wspólne zainteresowania",
+    "showMe": "Pokaż mi",
+    "everyone": "Wszystkich",
+    "women": "Kobiety",
+    "men": "Mężczyzn"
   },
   "exams": {
     "action": "Dodaj materiał",

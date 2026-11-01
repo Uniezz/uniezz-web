@@ -8,6 +8,7 @@ import { useForm, useWatch } from 'react-hook-form';
 import { CONNECTIONSMOCKS, matchesConnectionFilters } from '@/utils';
 import type { ConnectionFilters } from '@/@types';
 import { UITopbar } from '@/ui/components';
+import { useMyProfile } from '@/hooks';
 import {
   DiscoveryProfile,
   DiscoveryActions,
@@ -25,11 +26,17 @@ function ConnectionsPage() {
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) setPassed(true);
     else setLeaving(direction);
   };
+  const { data: me } = useMyProfile();
   const filters = useForm<ConnectionFilters>({ defaultValues: CONNECTIONSMOCKS.defaultFilters });
   const values = { ...CONNECTIONSMOCKS.defaultFilters, ...useWatch({ control: filters.control }) };
   const { mode } = values;
   const showProfile =
-    !passed && matchesConnectionFilters(values as ConnectionFilters, CONNECTIONSMOCKS.candidate);
+    !passed &&
+    matchesConnectionFilters(
+      values as ConnectionFilters,
+      CONNECTIONSMOCKS.candidate,
+      me?.interests ?? [],
+    );
   return (
     <>
       <UITopbar title={t('connections.title')} subtitle={t('connections.subtitle')}>
@@ -42,7 +49,7 @@ function ConnectionsPage() {
           <ArrowUpRight className="size-4" aria-hidden="true" />
         </Link>
       </UITopbar>
-      <div className="grid items-start gap-6 xl:grid-cols-[620px_minmax(0,1fr)]">
+      <div className="grid items-start gap-6 xl:grid-cols-[620px_minmax(0,1fr)] xl:items-stretch">
         <div className="min-w-0 space-y-4">
           <DiscoveryProfile
             showProfile={showProfile}
@@ -67,7 +74,7 @@ function ConnectionsPage() {
             />
           </DiscoveryProfile>
         </div>
-        <aside className="space-y-5">
+        <aside className="relative">
           <ConnectionFilterPanel form={filters} />
         </aside>
       </div>

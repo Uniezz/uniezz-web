@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { cn } from '../../cn';
-import { emptyStyles } from './variants';
+import { emptySkyStyles, emptyStyles } from './variants';
 
 export type UIEmptyProps = {
   /** Replaces the default message */
@@ -12,6 +12,7 @@ export const UIEmpty = ({ children }: UIEmptyProps) => {
   const { t } = useTranslation();
   return (
     <div role="status" className={emptyStyles()}>
+      <span aria-hidden="true" className={emptySkyStyles()} />
       <CatScene className="h-36" />
       <div className="relative z-10 px-6 pb-6">{children ?? <p>{t('app.empty')}</p>}</div>
     </div>
@@ -23,7 +24,7 @@ export const UIEmptyCat = ({ className }: { className?: string }) => (
   <div
     aria-hidden="true"
     className={cn(
-      'nav-item-active relative overflow-hidden rounded-2xl border border-white-10 after:hidden',
+      'nav-item-active relative overflow-hidden rounded-none border-0 after:hidden',
       className,
     )}
   >

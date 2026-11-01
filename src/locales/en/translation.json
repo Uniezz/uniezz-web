@@ -65,7 +65,12 @@
     "anyFaculty": "Any faculty",
     "lookingFor": "Looking for",
     "emptyTitle": "No one here yet",
-    "emptyDescription": "You have seen everyone who matches. Widen your filters or check back later."
+    "emptyDescription": "You have seen everyone who matches. Widen your filters or check back later.",
+    "matchInterests": "Match interests",
+    "showMe": "Show me",
+    "everyone": "Everyone",
+    "women": "Women",
+    "men": "Men"
   },
   "exams": {
     "action": "Upload material",

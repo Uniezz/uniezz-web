@@ -8,4 +8,9 @@ export type ConnectionFilters = {
   universities: string[];
   faculty: string | null;
   levels: StudyLevel[];
+  /** Only students who share at least one of my interests. */
+  matchInterests: boolean;
+  gender: Gender | null;
 };
+
+export type Gender = 'male' | 'female';

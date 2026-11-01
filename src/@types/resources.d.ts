@@ -215,11 +215,16 @@ export default interface Resources {
       "anyFaculty": "Any faculty",
       "emptyDescription": "You have seen everyone who matches. Widen your filters or check back later.",
       "emptyTitle": "No one here yet",
+      "everyone": "Everyone",
       "filters": "Filters",
       "lookingFor": "Looking for",
+      "matchInterests": "Match interests",
+      "men": "Men",
       "resetFilters": "Reset",
+      "showMe": "Show me",
       "subtitle": "Meet students across all five universities",
-      "title": "Connections"
+      "title": "Connections",
+      "women": "Women"
     },
     "exams": {
       "action": "Upload material",

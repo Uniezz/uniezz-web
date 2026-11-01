@@ -1,6 +1,7 @@
 import { Link } from '@tanstack/react-router';
 import { Heart, MessageCircle, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { cn } from '@/ui/cn';
 import { UIButton } from '@/ui/components';
 
 // TODO(api): Replace local pass/connect toggles with discovery API mutations.
@@ -30,7 +31,7 @@ export function DiscoveryActions({
         <div key={label} className="text-center">
           <UIButton
             size="icon"
-            className="mb-2 size-16"
+            className={cn('mb-2 size-16', !primary && 'text-danger')}
             bg={primary ? 'primary' : 'secondary'}
             aria-label={label}
             disabled={!showProfile}

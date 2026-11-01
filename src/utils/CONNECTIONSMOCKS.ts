@@ -18,12 +18,16 @@ const defaultFilters: ConnectionFilters = {
   universities: [],
   faculty: null,
   levels: [],
+  matchInterests: false,
+  gender: null,
 };
 
 const candidate = {
   universityId: 'umcs',
   faculty: 'Wydział Politologii i Dziennikarstwa',
   level: 'first_cycle',
+  gender: 'female',
+  interests: ['Coffee', 'Film', 'Travel', 'Books', 'Radio'],
 } as const;
 
 export const CONNECTIONSMOCKS = {
@@ -37,5 +41,4 @@ export const CONNECTIONSMOCKS = {
   meta: 'UMCS, Journalism, 3rd year',
   prompt: 'This semester I want to',
   bio: 'find people to explore Lublin with: coffee, concerts, weekend trips. I also run the student radio podcast.',
-  mutual: '3 mutual',
 };
