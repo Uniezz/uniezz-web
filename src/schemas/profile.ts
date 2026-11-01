@@ -18,23 +18,32 @@ export const programmeSchema = z.object({
     .nullable(),
   modeOfStudies: z.enum(['full_time', 'part_time']).nullable(),
 });
+export const addProgrammeSchema = programmeSchema.pick({ programme: true, faculty: true });
+
+export const avatarImageSchema = z
+  .file()
+  .min(1)
+  .max(5 * 1024 * 1024)
+  .mime(['image/jpeg', 'image/png', 'image/webp']);
+
 export const profileFormSchema = profileSchema.extend({
   privacy: z.object({ showEmail: z.boolean(), showFaculty: z.boolean(), showYear: z.boolean() }),
   photo: z.string(),
-  bio: z.string().max(500),
-  interests: z.string().refine((value) => {
-    const items = value
-      .split(',')
-      .map((item) => item.trim())
-      .filter(Boolean);
-    return items.length <= 10 && items.every((item) => item.length <= 30);
-  }),
-  avatarFile: z
-    .file()
-    .min(1)
-    .max(5 * 1024 * 1024)
-    .mime(['image/jpeg', 'image/png', 'image/webp'])
-    .optional(),
+  bio: z
+    .string()
+    .max(500)
+    .transform((value) => value.trim()),
+  interests: z
+    .string()
+    .transform((value) =>
+      value
+        .split(',')
+        .map((item) => item.trim())
+        .filter(Boolean),
+    )
+    .pipe(z.array(z.string().max(30)).max(10)),
+  avatarFile: avatarImageSchema.optional(),
 });
-export type ProfileFormSchema = z.infer<typeof profileFormSchema>;
+export type ProfileFormSchema = z.input<typeof profileFormSchema>;
+export type ProfileSubmission = z.output<typeof profileFormSchema>;
 export type ProgrammeFormSchema = z.infer<typeof programmeSchema>;

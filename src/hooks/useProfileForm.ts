@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import type { components } from '@/@types/schema';
 import { updateMyProfile } from '@/api';
-import { profileFormSchema, type ProfileFormSchema } from '@/schemas';
+import { profileFormSchema, type ProfileFormSchema, type ProfileSubmission } from '@/schemas';
 import { useUploadImage } from './useUploadImage';
 
 function defaults(profile: components['schemas']['Profile']): ProfileFormSchema {
@@ -19,7 +19,7 @@ function defaults(profile: components['schemas']['Profile']): ProfileFormSchema 
 
 export function useProfileForm(profile: components['schemas']['Profile']) {
   const queryClient = useQueryClient();
-  const form = useForm<ProfileFormSchema>({
+  const form = useForm<ProfileFormSchema, unknown, ProfileSubmission>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: defaults(profile),
   });
@@ -36,7 +36,7 @@ export function useProfileForm(profile: components['schemas']['Profile']) {
     isPending: isSaving,
   } = useMutation({
     mutationKey: ['profile', 'update'],
-    mutationFn: async (values: ProfileFormSchema) => {
+    mutationFn: async (values: ProfileSubmission) => {
       const uploaded = values.avatarFile
         ? uploadedImage?.file === values.avatarFile
           ? uploadedImage
@@ -45,11 +45,8 @@ export function useProfileForm(profile: components['schemas']['Profile']) {
       return updateMyProfile({
         firstName: values.first,
         lastName: values.last,
-        bio: values.bio.trim(),
-        interests: values.interests
-          .split(',')
-          .map((item) => item.trim())
-          .filter(Boolean),
+        bio: values.bio,
+        interests: values.interests,
         privacy: values.privacy,
         avatarMediaId: uploaded?.mediaId,
       });

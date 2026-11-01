@@ -4,7 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { useForm, useWatch } from 'react-hook-form';
 
 // TODO(api): Replace the mock materials and local row updates with API data and mutations.
-import { EXAMSMOCKS, matchesSearch, optionalSearchString } from '@/utils';
+import { EXAMSMOCKS, matchesSearch } from '@/utils';
+import { optionalSearchStringSchema } from '@/schemas';
 import type { ExamsFilters } from '@/@types';
 import { UITopbar } from '@/ui/components';
 import { MaterialFilters, MaterialTable, UploadMaterialButton } from '@/components/features/exams';
@@ -15,7 +16,7 @@ export const Route = createFileRoute('/_app/exams')({
   ): {
     material?: string;
   } => ({
-    material: optionalSearchString(search.material),
+    material: optionalSearchStringSchema.parse(search.material),
   }),
   component: ExamsPage,
   remountDeps: ({ search }) => search.material,

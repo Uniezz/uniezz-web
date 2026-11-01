@@ -6,11 +6,11 @@ import { usePublicProfile } from '@/hooks';
 import { UIQueryError } from '@/ui/components';
 import { PublicProfile } from '@/components/features/profile/PublicProfile';
 import { samplePublicProfile } from '@/utils/profileSkeletonData';
-import { optionalSearchString } from '@/utils';
+import { optionalSearchStringSchema } from '@/schemas';
 
 export const Route = createFileRoute('/_app/profiles/$profileId')({
   validateSearch: (search: Record<string, unknown>) => ({
-    studentSearch: optionalSearchString(search.studentSearch),
+    studentSearch: optionalSearchStringSchema.parse(search.studentSearch),
   }),
   component: StudentProfilePage,
 });

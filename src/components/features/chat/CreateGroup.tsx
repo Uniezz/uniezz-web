@@ -9,7 +9,7 @@ import { UIButton, UIAvatar, UIField, UIDialog, UISearch } from '@/ui/components
 // TODO(api): Load group members and image choices from API-backed data.
 import { CHATMOCKS, matchesSearch } from '@/utils';
 import { readImageFile } from '@/utils/image';
-import { groupSchema, type GroupSchema } from '@/schemas';
+import { avatarImageSchema, groupSchema, type GroupSchema } from '@/schemas';
 
 const avatarForMember = (name: string): string => {
   const image = CHATMOCKS.initialConversations.find(
@@ -58,10 +58,7 @@ export function CreateGroup({
 
   async function changeImage(file?: File) {
     if (!file) return;
-    if (
-      !['image/jpeg', 'image/png', 'image/webp'].includes(file.type) ||
-      file.size > 5 * 1024 * 1024
-    ) {
+    if (!avatarImageSchema.safeParse(file).success) {
       setImageError(t('app.photoError'));
       return;
     }

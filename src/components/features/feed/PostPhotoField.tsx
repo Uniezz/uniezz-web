@@ -1,102 +1,130 @@
+import { useState } from 'react';
+import { useController, type Control } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import type { FieldError, UseFormReturn } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { ImagePlus, Trash2 } from 'lucide-react';
-
-import type { PostSchema } from '@/schemas';
+import { postImagesSchema, type PostSchema } from '@/schemas';
 import { UIButton } from '@/ui/components';
-import { readImageFile } from '@/utils/image';
+import { hasDuplicateImages, readImageFile } from '@/utils/image';
 
 export function PostPhotoField({
-  image,
-  setImage,
+  control,
   readingImage,
   setReadingImage,
-  imageError,
-  form,
   disabled,
 }: {
-  image: string;
-  setImage: (image: string) => void;
+  control: Control<PostSchema>;
   readingImage: boolean;
   setReadingImage: (reading: boolean) => void;
-  imageError?: FieldError;
-  form: Pick<UseFormReturn<PostSchema>, 'setValue' | 'clearErrors' | 'setError' | 'trigger'>;
   disabled: boolean;
 }) {
   const { t } = useTranslation();
+  const {
+    field: { value: images, onChange },
+  } = useController({ control, name: 'images' });
+  const [previews, setPreviews] = useState<{ id: string; src: string }[]>([]);
 
-  async function changePhoto(file?: File) {
-    if (!file) return;
-    setImage('');
+  async function addPhotos(files: File[]) {
+    if (!files.length) return;
+    const next = [...images, ...files];
+    if (!postImagesSchema.safeParse(next).success) {
+      toast.error(t('postComposer.photosError'));
+      return;
+    }
     setReadingImage(true);
-    form.setValue('image', file, { shouldDirty: true });
     try {
-      if (!(await form.trigger('image'))) return;
-      setImage(await readImageFile(file));
+      const added = await Promise.all(files.map(readImageFile));
+      if (
+        hasDuplicateImages(
+          previews.map((preview) => preview.src),
+          added,
+        )
+      ) {
+        toast.error(t('postComposer.duplicatePhoto'));
+        return;
+      }
+      const newPreviews = added.map((src) => ({ id: crypto.randomUUID(), src }));
+      setPreviews((previous) => [...previous, ...newPreviews]);
+      onChange(next);
     } catch {
-      form.setValue('image', undefined, { shouldDirty: true });
-      form.setError('image', { type: 'validate', message: t('app.photoError') });
+      toast.error(t('postComposer.photosError'));
     } finally {
       setReadingImage(false);
     }
   }
 
-  function removePhoto() {
-    setImage('');
-    form.setValue('image', undefined, { shouldDirty: true });
-    form.clearErrors('image');
+  function removePhoto(index: number) {
+    onChange(images.filter((_, item) => item !== index));
+    setPreviews((previous) => previous.filter((_, item) => item !== index));
   }
 
   return (
-    <div className="space-y-3">
-      <p className="text-detail font-semibold text-secondary">{t('postComposer.photo')}</p>
-      <div className="relative h-36 overflow-hidden rounded-feature focus-within:outline-2 focus-within:outline-blue">
-        <input
-          id="post-photo"
-          type="file"
-          accept="image/jpeg,image/png,image/webp"
-          aria-label={t('postComposer.addPhoto')}
-          className="sr-only"
-          disabled={readingImage || disabled}
-          onChange={(event) => {
-            void changePhoto(event.target.files?.[0]);
-            event.target.value = '';
-          }}
-        />
-        {image ? (
-          <>
-            <img
-              src={image}
-              alt={t('postComposer.photoPreview')}
-              className="size-full object-cover"
-            />
-            <UIButton
-              size="icon"
-              bg="secondary"
-              aria-label={t('postComposer.removePhoto')}
-              className="absolute top-3 right-3 bg-surface"
-              onClick={removePhoto}
-            >
-              <Trash2 size={18} className="text-danger" />
-            </UIButton>
-          </>
-        ) : (
-          <label
-            htmlFor="post-photo"
-            className="flex h-full cursor-pointer flex-col items-center justify-center gap-2 rounded-feature border border-dashed border-white-20 bg-white-5 p-5 text-center transition-colors hover:bg-white-10"
-          >
-            <ImagePlus className="mb-1 size-6 text-secondary" aria-hidden="true" />
-            <span className="text-label font-semibold">
-              {readingImage ? t('postComposer.readingPhoto') : t('postComposer.addPhoto')}
-            </span>
-            <span className="text-detail text-secondary">{t('postComposer.photoHint')}</span>
-          </label>
-        )}
+    <div className="min-w-0 space-y-3">
+      <p className="text-detail font-semibold text-secondary">{t('postComposer.photos')}</p>
+      <div className="flex flex-wrap items-center gap-3">
+        <label
+          htmlFor="post-photo"
+          className="inline-flex min-h-10 cursor-pointer items-center justify-center gap-2 rounded-full border border-white-10 bg-white-5 px-4 text-label font-semibold transition-colors hover:bg-white-10 has-disabled:cursor-not-allowed has-disabled:opacity-50 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-blue"
+        >
+          <input
+            id="post-photo"
+            type="file"
+            multiple
+            accept="image/jpeg,image/png,image/webp"
+            className="sr-only"
+            disabled={disabled || images.length >= 10}
+            aria-disabled={readingImage || disabled || images.length >= 10}
+            onClick={(event) => {
+              if (readingImage) event.preventDefault();
+            }}
+            onChange={(event) => {
+              void addPhotos(Array.from(event.target.files ?? []));
+              event.target.value = '';
+            }}
+          />
+          <ImagePlus className="size-4" aria-hidden="true" />
+          <span>{t('postComposer.addPhoto')}</span>
+        </label>
+        <span className="text-detail text-secondary">{t('postComposer.photosHint')}</span>
       </div>
-      {imageError && (
-        <p role="alert" className="text-detail text-danger">
-          {t('apiState.imageError')}
-        </p>
+      {readingImage && (
+        <span role="status" className="sr-only">
+          {t('postComposer.readingPhoto')}
+        </span>
+      )}
+      {previews.length > 0 && (
+        <div
+          role="region"
+          aria-label={t('postComposer.photos')}
+          tabIndex={0}
+          className="flex h-38 max-w-full min-w-0 items-start gap-3 overflow-x-auto overflow-y-hidden rounded-feature [overflow-anchor:none] focus-visible:outline-2 focus-visible:outline-blue"
+        >
+          {previews.map((image, index) => (
+            <div
+              key={image.id}
+              className="relative size-36 shrink-0 overflow-hidden rounded-feature"
+            >
+              <img
+                src={image.src}
+                alt={`${t('postComposer.photoPreview')} ${index + 1}`}
+                className="size-full object-cover"
+              />
+              <UIButton
+                size="icon"
+                bg="secondary"
+                aria-label={`${t('postComposer.removePhoto')} ${index + 1}`}
+                className="absolute top-2 right-2 bg-surface aria-disabled:opacity-100"
+                disabled={disabled}
+                aria-disabled={readingImage || undefined}
+                onClick={() => {
+                  if (!readingImage) removePhoto(index);
+                }}
+              >
+                <Trash2 size={18} className="text-danger" />
+              </UIButton>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );

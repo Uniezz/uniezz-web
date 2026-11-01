@@ -16,3 +16,13 @@ export function readImageFile(file: File): Promise<string> {
     reader.readAsDataURL(file);
   });
 }
+
+export function hasDuplicateImages(existing: string[], added: string[]): boolean {
+  const images = new Set(existing.map((image) => image.slice(image.indexOf(',') + 1)));
+  for (const image of added) {
+    const data = image.slice(image.indexOf(',') + 1);
+    if (images.has(data)) return true;
+    images.add(data);
+  }
+  return false;
+}

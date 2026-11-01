@@ -65,6 +65,7 @@ function EditPostPage() {
           body: {
             title: values.title,
             content: values.body,
+            tags: values.tags,
             ...(post.type === 'event' &&
             (values.date !== original.date || values.time !== original.time)
               ? { eventDate: new Date(`${values.date}T${values.time}`).toISOString() }

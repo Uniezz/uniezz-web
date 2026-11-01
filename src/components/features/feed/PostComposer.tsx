@@ -3,9 +3,10 @@ import { ChevronLeft, Send } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import toast from 'react-hot-toast';
 import type { FeedPost } from '@/@types';
 import { useMyProfile } from '@/hooks';
-import { postSchema, type PostSchema } from '@/schemas';
+import { postSchema, postTagAdditionSchema, type PostSchema } from '@/schemas';
 import { postFormDefaults } from '@/utils/feed';
 import {
   UIButton,
@@ -17,6 +18,7 @@ import {
 } from '@/ui/components';
 import { PostEventDetails } from './PostEventDetails';
 import { PostPhotoField } from './PostPhotoField';
+import { PostTagsField } from './PostTagsField';
 import { PostTypeSelector } from './PostTypeSelector';
 import { PostAudienceSelector } from './PostAudienceSelector';
 
@@ -35,15 +37,12 @@ export function PostComposer({
 }) {
   const { data: author, isError: profileError, refetch: refetchProfile } = useMyProfile();
   const { t } = useTranslation();
-  const [image, setImage] = useState('');
   const [readingImage, setReadingImage] = useState(false);
   const {
     register,
     control,
     setValue,
     clearErrors,
-    setError,
-    trigger,
     handleSubmit,
     formState: { errors, isDirty },
   } = useForm({
@@ -57,10 +56,16 @@ export function PostComposer({
           body: '',
           date: '',
           time: '',
+          images: [],
+          tags: [],
+          tagDraft: '',
         },
     mode: 'onBlur',
   });
-  const { type = 'announcement', audience = 'university', body = '' } = useWatch({ control });
+  const [type = 'announcement', audience = 'university', body = ''] = useWatch({
+    control,
+    name: ['type', 'audience', 'body'],
+  });
   const titlePlaceholder =
     type === 'question'
       ? t('postComposer.questionPlaceholder')
@@ -87,30 +92,36 @@ export function PostComposer({
         />
       </div>
       <div className="min-h-0 flex-1">
-        <UIPanel className="h-full min-h-0 overflow-hidden p-0">
+        <UIPanel className="flex h-full min-h-0 flex-col overflow-hidden p-0">
           <form
             autoComplete="off"
-            className="flex h-full min-h-0 flex-col"
-            onSubmit={handleSubmit(async (values) => {
-              try {
-                await onSubmit(values);
-              } catch {
-                // Keep the draft available when publishing fails.
-              }
-            })}
+            className="flex min-h-0 flex-1 flex-col"
+            onSubmit={handleSubmit(
+              async (values) => {
+                try {
+                  const tags = postTagAdditionSchema.safeParse([...values.tags, values.tagDraft]);
+                  await onSubmit({ ...values, tags: tags.success ? tags.data : values.tags });
+                } catch {
+                  // Keep the draft available when publishing fails.
+                }
+              },
+              (errors) => {
+                if (errors.images) toast.error(t('postComposer.photosError'));
+              },
+            )}
           >
-            <div className="min-h-0 flex-1 overflow-y-auto">
-              <fieldset disabled={isPending} className="space-y-5 p-5 sm:p-6">
+            <div className="min-h-0 flex-1 [scrollbar-gutter:stable] overflow-y-auto [overflow-anchor:none]">
+              <fieldset disabled={isPending} className="min-w-0 space-y-5 p-5 sm:p-6">
                 <PostTypeSelector
                   type={type}
                   disabled={Boolean(post)}
+                  readingImage={readingImage}
                   onSelect={(value) => {
                     setValue('type', value, { shouldDirty: true });
                     clearErrors(['date', 'time']);
                     if (value === 'question') {
-                      setValue('image', undefined, { shouldDirty: true });
-                      clearErrors('image');
-                      setImage('');
+                      setValue('images', [], { shouldDirty: true });
+                      clearErrors('images');
                     }
                   }}
                 />
@@ -163,26 +174,29 @@ export function PostComposer({
                   </span>
                 </UIField>
                 {type === 'event' && <PostEventDetails register={register} errors={errors} />}
-                {post && post.mediaUrls?.[0] && (
+                <PostTagsField control={control} />
+                {post && post.mediaUrls && post.mediaUrls.length > 0 && (
                   <div className="space-y-3">
                     <p className="text-detail font-semibold text-secondary">
-                      {t('postComposer.photo')}
+                      {t('postComposer.photos')}
                     </p>
-                    <img
-                      src={post.mediaUrls[0]}
-                      alt={t('postComposer.photoPreview')}
-                      className="h-36 w-full rounded-feature object-cover"
-                    />
+                    <div className="flex h-36 gap-3 overflow-x-auto rounded-feature">
+                      {post.mediaUrls.map((url, index) => (
+                        <img
+                          key={url}
+                          src={url}
+                          alt={`${t('postComposer.photoPreview')} ${index + 1}`}
+                          className="h-full w-36 shrink-0 rounded-feature object-cover"
+                        />
+                      ))}
+                    </div>
                   </div>
                 )}
                 {!post && type !== 'question' && (
                   <PostPhotoField
-                    image={image}
-                    setImage={setImage}
+                    control={control}
                     readingImage={readingImage}
                     setReadingImage={setReadingImage}
-                    imageError={errors.image}
-                    form={{ setValue, clearErrors, setError, trigger }}
                     disabled={isPending}
                   />
                 )}
@@ -198,6 +212,9 @@ export function PostComposer({
                 type="submit"
                 leftIcon={Send}
                 disabled={readingImage || isPending || !author}
+                className={
+                  readingImage && !isPending && author ? 'disabled:opacity-100' : undefined
+                }
               >
                 {post ? t('app.saveChanges') : t('postComposer.publish')}
               </UIButton>

@@ -2,8 +2,32 @@ import type { FeedPost } from '@/@types';
 import type { components } from '@/@types/schema';
 import type { PostSchema } from '@/schemas';
 
+export type UploadedPostImage = { file: File; mediaId: string };
+
+export async function uploadPostImages(
+  files: File[],
+  previous: UploadedPostImage[],
+  upload: (file: File) => Promise<UploadedPostImage>,
+) {
+  const uploaded = previous.filter((item) => files.includes(item.file));
+  const mediaIds: string[] = [];
+  try {
+    for (const file of files) {
+      let image = uploaded.find((item) => item.file === file);
+      if (!image) {
+        image = await upload(file);
+        uploaded.push(image);
+      }
+      mediaIds.push(image.mediaId);
+    }
+    return { uploaded, mediaIds, failed: false as const };
+  } catch (error) {
+    return { uploaded, failed: true as const, error };
+  }
+}
+
 export function postFormDefaults(
-  post: Pick<FeedPost, 'eventDate' | 'type' | 'university' | 'title' | 'content'>,
+  post: Pick<FeedPost, 'eventDate' | 'type' | 'university' | 'title' | 'content' | 'tags'>,
 ): PostSchema {
   const date = post.eventDate ? new Date(post.eventDate) : null;
   const local =
@@ -16,6 +40,9 @@ export function postFormDefaults(
     audience: post.university === 'all' ? 'all' : 'university',
     title: post.title,
     body: post.content,
+    tags: post.tags ?? [],
+    tagDraft: '',
+    images: [],
     date: day,
     time,
   };

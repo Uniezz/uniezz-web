@@ -5,11 +5,11 @@ import debounce from 'lodash/debounce';
 import { useTranslation } from 'react-i18next';
 import { StudentSearchResults } from '@/components/features/connections/StudentSearchResults';
 import { UITopbar } from '@/ui/components';
-import { optionalSearchString } from '@/utils';
+import { optionalSearchStringSchema } from '@/schemas';
 
 export const Route = createFileRoute('/_app/students')({
   validateSearch: (search: Record<string, unknown>) => ({
-    studentSearch: optionalSearchString(search.studentSearch),
+    studentSearch: optionalSearchStringSchema.parse(search.studentSearch),
   }),
   component: StudentsPage,
 });

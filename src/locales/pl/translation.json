@@ -284,6 +284,16 @@
     "discardChangesDescription": "Jeśli teraz wyjdziesz, niezapisane zmiany zostaną utracone."
   },
   "postComposer": {
+    "duplicatePhoto": "To zdjęcie zostało już dodane.",
+    "photos": "Zdjęcia (opcjonalnie)",
+    "photosHint": "Do 10 zdjęć · JPG, PNG lub WebP · do 10 MB każde",
+    "photosError": "Wybierz do 10 prawidłowych zdjęć JPG, PNG lub WebP, do 10 MB każde.",
+    "tags": "Tagi (opcjonalnie)",
+    "tagsPlaceholder": "Dodaj tag",
+    "addTag": "Dodaj tag",
+    "tagsHint": "{{used}}/10 tagów · do 30 znaków każdy",
+    "previousPhoto": "Poprzednie zdjęcie",
+    "nextPhoto": "Następne zdjęcie",
     "justNow": "Przed chwilą",
     "questionPlaceholder": "O co chcesz zapytać?",
     "eventPlaceholder": "Podaj nazwę wydarzenia",

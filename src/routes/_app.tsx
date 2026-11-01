@@ -5,7 +5,8 @@ import { Toaster } from 'react-hot-toast';
 import { useMyProfile } from '@/hooks';
 import { authorName } from '@/utils/feed';
 import { useNarrowViewport } from '@/hooks/useNarrowViewport';
-import { isMobileDevice, optionalSearchString, shouldBlockMobile } from '@/utils';
+import { isMobileDevice, shouldBlockMobile } from '@/utils';
+import { optionalSearchStringSchema } from '@/schemas';
 import { APP_STORES } from '@/utils/stores';
 export const Route = createFileRoute('/_app')({
   validateSearch: (
@@ -17,8 +18,8 @@ export const Route = createFileRoute('/_app')({
     postId?: string;
     feedRoute?: 'new-post';
   } => {
-    const conversationId = optionalSearchString(search.conversationId);
-    const postId = optionalSearchString(search.postId);
+    const conversationId = optionalSearchStringSchema.parse(search.conversationId);
+    const postId = optionalSearchStringSchema.parse(search.postId);
     const feedRoute = search.feedRoute === 'new-post' ? search.feedRoute : undefined;
     const chatType =
       search.chatType === 'groups' || search.chatType === 'connections'

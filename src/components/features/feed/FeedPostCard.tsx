@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router';
+import { Images } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { FeedPost } from '@/@types';
 import { UIPanel } from '@/ui/components';
@@ -13,12 +14,18 @@ export function FeedPostCard({ post }: { post: FeedPost }) {
     <div className="group relative">
       <UIPanel className="overflow-hidden p-0">
         {image && !isQuestion && (
-          <div className="h-50 overflow-hidden">
+          <div className="relative h-50 overflow-hidden">
             <img
               src={image}
               alt=""
               className="size-full object-cover transition-transform duration-300 ease-out motion-safe:group-hover:scale-105"
             />
+            {(post.mediaUrls?.length ?? 0) > 1 && (
+              <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-ink-70 px-2.5 py-1 text-detail font-semibold text-white">
+                <Images className="size-4" aria-hidden="true" />
+                {post.mediaUrls?.length}
+              </span>
+            )}
           </div>
         )}
         <div className="min-w-0 p-5.5">
@@ -44,6 +51,16 @@ export function FeedPostCard({ post }: { post: FeedPost }) {
           <h2 className="text-card-title font-semibold tracking-[-0.6px] wrap-anywhere">
             {post.title}
           </h2>
+          {post.tags && post.tags.length > 0 && (
+            <div className="mt-3 flex flex-wrap gap-2">
+              {post.tags.slice(0, 3).map((tag) => (
+                <span key={tag} className="app-tag wrap-anywhere">
+                  {tag}
+                </span>
+              ))}
+              {post.tags.length > 3 && <span className="app-tag">+{post.tags.length - 3}</span>}
+            </div>
+          )}
         </div>
       </UIPanel>
       {post.type !== 'announcement' && (

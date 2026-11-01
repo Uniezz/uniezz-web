@@ -284,6 +284,16 @@
     "discardChangesDescription": "Если вы сейчас уйдёте, несохранённые изменения будут потеряны."
   },
   "postComposer": {
+    "duplicatePhoto": "Эта фотография уже добавлена.",
+    "photos": "Фотографии (необязательно)",
+    "photosHint": "До 10 фото · JPG, PNG или WebP · до 10 МБ каждое",
+    "photosError": "Выберите до 10 корректных изображений JPG, PNG или WebP размером до 10 МБ каждое.",
+    "tags": "Теги (необязательно)",
+    "tagsPlaceholder": "Добавить тег",
+    "addTag": "Добавить тег",
+    "tagsHint": "{{used}}/10 тегов · до 30 символов каждый",
+    "previousPhoto": "Предыдущее фото",
+    "nextPhoto": "Следующее фото",
     "justNow": "Только что",
     "questionPlaceholder": "О чём хотите спросить?",
     "eventPlaceholder": "Дайте название событию",

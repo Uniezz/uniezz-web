@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import type { FeedComment } from '@/@types';
 import { useUpdateFeedComment } from '@/hooks';
 import { UIButton } from '@/ui/components';
+import { commentSchema } from '@/schemas';
 
 export function FeedCommentEditor({
   comment,
@@ -21,10 +22,10 @@ export function FeedCommentEditor({
       className="mt-2 space-y-2"
       onSubmit={async (event) => {
         event.preventDefault();
-        const value = content.trim();
-        if (!value || value.length > 1000) return;
+        const result = commentSchema.safeParse(content);
+        if (!result.success) return;
         try {
-          await updateComment({ id: comment.id, content: value });
+          await updateComment({ id: comment.id, content: result.data });
           onClose();
         } catch {
           toast.error(t('apiState.error'));

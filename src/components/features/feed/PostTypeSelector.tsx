@@ -17,10 +17,12 @@ export function PostTypeSelector({
   type,
   onSelect,
   disabled = false,
+  readingImage = false,
 }: {
   type: PostType;
   onSelect: (type: PostType) => void;
   disabled?: boolean;
+  readingImage?: boolean;
 }) {
   const { t } = useTranslation();
   const { ref, isOpen, toggle, close } = useDropdown();
@@ -46,10 +48,10 @@ export function PostTypeSelector({
           leftIcon={Icon}
           leftIconColor="gray"
           onClick={toggle}
-          disabled={disabled}
+          disabled={disabled || readingImage}
           aria-label={t('postComposer.type')}
           aria-expanded={isOpen}
-          className="min-h-7 gap-1.5 px-2.5 py-1 text-detail font-medium text-secondary"
+          className={`min-h-7 gap-1.5 px-2.5 py-1 text-detail font-medium text-secondary ${readingImage && !disabled ? 'disabled:opacity-100' : ''}`}
         >
           {t(selected.labelKey)}
           <ChevronDown size={14} aria-hidden="true" />

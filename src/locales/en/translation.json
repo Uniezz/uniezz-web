@@ -284,6 +284,16 @@
     "discardChangesDescription": "Your unsaved changes will be lost if you leave now."
   },
   "postComposer": {
+    "duplicatePhoto": "This photo has already been added.",
+    "photos": "Photos (optional)",
+    "photosHint": "Up to 10 photos · JPG, PNG or WebP · 10 MB each",
+    "photosError": "Choose up to 10 valid JPG, PNG or WebP images, up to 10 MB each.",
+    "tags": "Tags (optional)",
+    "tagsPlaceholder": "Add a tag",
+    "addTag": "Add tag",
+    "tagsHint": "{{used}}/10 tags · 30 characters each",
+    "previousPhoto": "Previous photo",
+    "nextPhoto": "Next photo",
     "justNow": "Just now",
     "questionPlaceholder": "What would you like to ask?",
     "eventPlaceholder": "Give your event a name",

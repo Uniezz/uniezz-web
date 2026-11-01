@@ -14,6 +14,8 @@ import { FeedCommentItem, FeedCommentsSkeleton } from '@/components/features/fee
 import { FeedLikeButton } from '@/components/features/feed/FeedLikeButton';
 import { sampleComment, samplePost } from '@/utils/feedSkeletonData';
 import { FeedPostActions } from '@/components/features/feed/FeedPostActions';
+import { PostMedia } from '@/components/features/feed/PostMedia';
+import { commentSchema } from '@/schemas';
 
 export const Route = createFileRoute('/_app/feed/post/$postId')({
   beforeLoad: ({ params, search }) => {
@@ -90,13 +92,13 @@ function FeedPostPage() {
 
   const sendComment = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const content = commentDraft.trim();
-    if (!content || content.length > 1000 || isCreatingComment) return;
+    const result = commentSchema.safeParse(commentDraft);
+    if (!result.success || isCreatingComment) return;
     const replyToCommentId = replyTo?.id;
     try {
       await createComment({
         id: postId,
-        content,
+        content: result.data,
         replyToCommentId,
       });
       setCommentDraft('');
@@ -120,21 +122,7 @@ function FeedPostPage() {
         <div className="relative">
           <div className="grid min-w-0 items-stretch gap-5 md:h-[calc(100svh-9rem)] md:min-h-0 md:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.75fr)] xl:h-[calc(100svh-56px)]">
             <UIPanel className="overflow-hidden p-0">
-              <div className="bg-ink-20 relative flex aspect-[4/3] items-center justify-center md:aspect-auto md:h-full">
-                {post.mediaUrls?.[0] ? (
-                  <img
-                    src={post.mediaUrls?.[0]}
-                    alt=""
-                    className="absolute inset-0 size-full object-cover"
-                  />
-                ) : (
-                  <div className="p-8 text-center">
-                    <h1 className="text-body font-semibold tracking-[-0.2px] wrap-anywhere">
-                      {post.title}
-                    </h1>
-                  </div>
-                )}
-              </div>
+              <PostMedia images={post.mediaUrls ?? []} title={post.title} />
             </UIPanel>
             <UIPanel className="flex min-h-0 min-w-0 flex-col p-0">
               <div className="max-h-[45%] shrink-0 space-y-3 overflow-y-auto border-b border-white-10 p-5.5 sm:p-6">
@@ -164,6 +152,15 @@ function FeedPostPage() {
                   <p className="text-body wrap-anywhere whitespace-pre-wrap text-white-80">
                     {post.content}
                   </p>
+                )}
+                {post.tags && post.tags.length > 0 && (
+                  <div className="flex flex-wrap gap-2">
+                    {post.tags.map((tag) => (
+                      <span key={tag} className="app-tag wrap-anywhere">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 )}
                 <FeedLikeButton
                   id={post.id}

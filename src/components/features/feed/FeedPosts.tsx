@@ -29,7 +29,14 @@ export function FeedPosts({ search }: { search: string }) {
     useFeedPosts();
   // shortcut: Search filters loaded pages until the feed API accepts search; then pass it to the API.
   const items = (data?.pages.flatMap((page) => page.items ?? []) ?? []).filter((post) =>
-    matchesSearch(search, post.title, authorName(post.author), post.university, post.content),
+    matchesSearch(
+      search,
+      post.title,
+      authorName(post.author),
+      post.university,
+      post.content,
+      ...(post.tags ?? []),
+    ),
   );
   return (
     <Skeleton loading={isPending} label={t('apiState.loading')}>

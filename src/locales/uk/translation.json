@@ -284,6 +284,16 @@
     "discardChangesDescription": "Якщо ви зараз підете, незбережені зміни буде втрачено."
   },
   "postComposer": {
+    "duplicatePhoto": "Цю фотографію вже додано.",
+    "photos": "Фотографії (необов’язково)",
+    "photosHint": "До 10 фото · JPG, PNG або WebP · до 10 МБ кожне",
+    "photosError": "Виберіть до 10 коректних зображень JPG, PNG або WebP розміром до 10 МБ кожне.",
+    "tags": "Теги (необов’язково)",
+    "tagsPlaceholder": "Додати тег",
+    "addTag": "Додати тег",
+    "tagsHint": "{{used}}/10 тегів · до 30 символів кожен",
+    "previousPhoto": "Попереднє фото",
+    "nextPhoto": "Наступне фото",
     "justNow": "Щойно",
     "questionPlaceholder": "Про що хочете запитати?",
     "eventPlaceholder": "Дайте назву події",
