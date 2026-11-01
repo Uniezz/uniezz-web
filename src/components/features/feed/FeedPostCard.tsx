@@ -28,7 +28,14 @@ export function FeedPostCard({ post }: { post: FeedPost }) {
               post.type !== 'announcement' && (!image || isQuestion) && 'pr-24',
             )}
           >
-            {authorName(post.author) || t('apiState.student')}
+            <Link
+              to="/profiles/$profileId"
+              params={{ profileId: post.author.id }}
+              search={{ studentSearch: undefined }}
+              className="relative z-20 rounded-sm hover:underline focus-visible:outline-2 focus-visible:outline-blue"
+            >
+              {authorName(post.author) || t('apiState.student')}
+            </Link>
           </p>
           <p className="mt-1 mb-3 text-detail text-secondary">
             {post.author.universityId.toUpperCase()} ·{' '}

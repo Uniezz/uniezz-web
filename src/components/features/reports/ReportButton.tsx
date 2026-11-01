@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Flag } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 import type { components } from '@/@types/schema';
@@ -21,9 +21,11 @@ const reasons = [
 export function ReportButton({
   targetType,
   targetId,
+  compact = false,
 }: {
   targetType: components['schemas']['CreateReportInputBody']['targetType'];
   targetId: string;
+  compact?: boolean;
 }) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
@@ -57,11 +59,17 @@ export function ReportButton({
     <>
       <UIButton
         bg="transparent"
-        size="pill"
-        className="min-h-0 border-0 p-0 text-secondary enabled:hover:bg-transparent enabled:hover:text-white"
+        size={compact ? 'icon' : 'pill'}
+        aria-label={compact ? label : undefined}
+        title={compact ? label : undefined}
+        className={
+          compact
+            ? 'size-10 border-white-10 bg-white-5 text-secondary enabled:hover:bg-white-10 enabled:hover:text-white'
+            : 'min-h-0 border-0 p-0 text-secondary enabled:hover:bg-transparent enabled:hover:text-white'
+        }
         onClick={() => changeOpen(true)}
       >
-        {label}
+        {compact ? <Flag className="size-4" aria-hidden="true" /> : label}
       </UIButton>
       <UIDialog
         open={open}

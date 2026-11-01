@@ -3,3 +3,4 @@ export * from './useUniversities';
 export * from './useFeed';
 export * from './useMyProfile';
 export * from './useProfileProgrammes';
+export * from './useProfiles';

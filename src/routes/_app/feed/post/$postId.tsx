@@ -138,12 +138,17 @@ function FeedPostPage() {
             </UIPanel>
             <UIPanel className="flex min-h-0 min-w-0 flex-col p-0">
               <div className="max-h-[45%] shrink-0 space-y-3 overflow-y-auto border-b border-white-10 p-5.5 sm:p-6">
-                <div className="flex items-center gap-3">
+                <Link
+                  to="/profiles/$profileId"
+                  params={{ profileId: post.author.id }}
+                  search={{ studentSearch: undefined }}
+                  className="inline-flex items-center gap-3 rounded-sm hover:underline focus-visible:outline-2 focus-visible:outline-blue"
+                >
                   <UIAvatar size="md" imgSrc={post.author.avatarUrl ?? '/app/avatar.png'} alt="" />
                   <p className="text-label font-medium text-white">
                     {authorName(post.author) || t('apiState.student')}
                   </p>
-                </div>
+                </Link>
                 <h1 className="text-body font-semibold tracking-[-0.2px] wrap-anywhere">
                   {post.title}
                 </h1>

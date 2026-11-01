@@ -24,3 +24,9 @@ export const sampleProfile: components['schemas']['Profile'] = {
     },
   ],
 };
+
+export const samplePublicProfile: components['schemas']['PublicProfile'] = {
+  ...sampleProfile,
+  bio: 'A short introduction from this student.',
+  interests: ['Music', 'Books', 'Travel'],
+};

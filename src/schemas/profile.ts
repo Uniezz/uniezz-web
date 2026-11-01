@@ -21,6 +21,14 @@ export const programmeSchema = z.object({
 export const profileFormSchema = profileSchema.extend({
   privacy: z.object({ showEmail: z.boolean(), showFaculty: z.boolean(), showYear: z.boolean() }),
   photo: z.string(),
+  bio: z.string().max(500),
+  interests: z.string().refine((value) => {
+    const items = value
+      .split(',')
+      .map((item) => item.trim())
+      .filter(Boolean);
+    return items.length <= 10 && items.every((item) => item.length <= 30);
+  }),
   avatarFile: z
     .file()
     .min(1)

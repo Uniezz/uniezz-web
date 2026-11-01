@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 import { Skeleton } from 'skullet/react';
@@ -31,9 +32,20 @@ export function FeedCommentItem({
       <UIAvatar size="md" imgSrc={comment.author?.avatarUrl ?? '/app/avatar.png'} alt="" />
       <div className="min-w-0 flex-1">
         <strong className="block text-label font-semibold">
-          {comment.deleted
-            ? t('apiState.deletedComment')
-            : authorName(comment.author) || t('apiState.student')}
+          {!comment.deleted && comment.author ? (
+            <Link
+              to="/profiles/$profileId"
+              params={{ profileId: comment.author.id }}
+              search={{ studentSearch: undefined }}
+              className="rounded-sm hover:underline focus-visible:outline-2 focus-visible:outline-blue"
+            >
+              {authorName(comment.author) || t('apiState.student')}
+            </Link>
+          ) : comment.deleted ? (
+            t('apiState.deletedComment')
+          ) : (
+            t('apiState.student')
+          )}
         </strong>
         {editing ? (
           <FeedCommentEditor comment={comment} onClose={() => setEditing(false)} />

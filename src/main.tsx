@@ -28,6 +28,12 @@ const connectionsRouteMask = createRouteMask({
   to: '/connections',
   search: () => ({}),
 });
+const studentsRouteMask = createRouteMask({
+  routeTree,
+  from: '/students',
+  to: '/students',
+  search: ({ studentSearch }) => ({ studentSearch }),
+});
 const postRouteMask = createRouteMask({
   routeTree,
   from: '/feed/post/$postId',
@@ -41,10 +47,24 @@ const newPostRouteMask = createRouteMask({
   to: '/feed/post/new-post',
   search: (search) => ({ ...search, feedRoute: undefined, postId: undefined }),
 });
+const profileRouteMask = createRouteMask({
+  routeTree,
+  from: '/profiles/$profileId',
+  to: '/profiles/$profileId',
+  params: true,
+  search: ({ studentSearch }) => ({ studentSearch }),
+});
 const queryClient = new QueryClient();
 const router = createRouter({
   routeTree,
-  routeMasks: [newGroupRouteMask, connectionsRouteMask, postRouteMask, newPostRouteMask],
+  routeMasks: [
+    newGroupRouteMask,
+    connectionsRouteMask,
+    studentsRouteMask,
+    postRouteMask,
+    newPostRouteMask,
+    profileRouteMask,
+  ],
   context: { queryClient },
 });
 

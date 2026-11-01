@@ -2,6 +2,7 @@ import { Check } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { FormProvider } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { useDeleteAvatar } from '@/hooks/useProfiles';
 import { useProfileForm } from '@/hooks/useProfileForm';
 import type { components } from '@/@types/schema';
 import { UIButton, UITopbar, UIUnsavedChanges } from '@/ui/components';
@@ -11,7 +12,9 @@ import { StudyProgrammes } from './StudyProgrammes';
 
 export function ProfileEditor({ profile }: { profile: components['schemas']['Profile'] }) {
   const { t } = useTranslation();
-  const { form, saveProfile, isSuccess, isPending } = useProfileForm(profile);
+  const { form, saveProfile, isSuccess, isPending: isSaving } = useProfileForm(profile);
+  const { mutateAsync: deleteAvatar, isPending: isDeleting } = useDeleteAvatar();
+  const isPending = isSaving || isDeleting;
   const {
     handleSubmit,
     formState: { isDirty },
@@ -35,7 +38,14 @@ export function ProfileEditor({ profile }: { profile: components['schemas']['Pro
         </UITopbar>
         <div className="grid min-w-0 items-start gap-5 xl:grid-cols-[310px_minmax(0,1fr)]">
           <fieldset disabled={isPending}>
-            <ProfileIdentity universityId={profile.universityId} />
+            <ProfileIdentity
+              universityId={profile.universityId}
+              onRemoveAvatar={async () => {
+                if (form.getValues('photo') !== '/app/avatar.png') await deleteAvatar();
+                form.resetField('photo', { defaultValue: '/app/avatar.png' });
+                form.resetField('avatarFile');
+              }}
+            />
           </fieldset>
           <div className="space-y-4.5">
             <form

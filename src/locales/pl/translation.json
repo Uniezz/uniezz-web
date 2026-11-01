@@ -357,5 +357,18 @@
     "titleError": "Użyj 3–150 znaków.",
     "detailsError": "Użyj 10–5000 znaków.",
     "imageError": "Wybierz poprawny obraz JPG, PNG lub WebP o rozmiarze poniżej 10 MB."
+  },
+  "students": {
+    "allStudents": "Wszyscy studenci",
+    "noResults": "Nie znaleziono studentów",
+    "tryAnotherName": "Spróbuj wpisać inne imię lub nazwisko.",
+    "results": "Wyniki wyszukiwania",
+    "search": "Szukaj studentów po imieniu i nazwisku",
+    "bio": "O mnie",
+    "bioError": "Opis może mieć maksymalnie 500 znaków.",
+    "interests": "Zainteresowania",
+    "interestsHint": "Oddziel zainteresowania przecinkami",
+    "interestsError": "Dodaj do 10 zainteresowań, każde do 30 znaków.",
+    "removePhoto": "Usuń zdjęcie"
   }
 }

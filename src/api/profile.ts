@@ -30,3 +30,24 @@ export async function deleteProgramme(id: string) {
   });
   if (error && response.status !== 404) throw new Error(error.error);
 }
+
+export async function deleteMyAvatar() {
+  const { error } = await api.DELETE('/profile/avatar');
+  if (error) throw new Error(error.error);
+}
+
+export async function getProfiles(name: string, cursor?: string) {
+  const { data, error } = await api.GET('/profiles', {
+    params: { query: { name: name || undefined, cursor } },
+  });
+  if (error) throw new Error(error.error);
+  if (!data) throw new Error('Missing profiles response');
+  return data;
+}
+
+export async function getPublicProfile(id: string) {
+  const { data, error } = await api.GET('/profiles/{id}', { params: { path: { id } } });
+  if (error) throw new Error(error.error);
+  if (!data) throw new Error('Missing profile response');
+  return data;
+}

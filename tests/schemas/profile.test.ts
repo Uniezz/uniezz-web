@@ -9,32 +9,21 @@ test('profile names must be nonempty and are normalized', () => {
   expect(profileSchema.safeParse({ first: '', last: 'Kowalski' }).success).toBe(false);
 });
 
-test('the profile form validates all editable fields without dropping programme or privacy values', () => {
+test('the profile form validates bio, interests and privacy', () => {
   const profile = {
     first: ' Jan ',
     last: ' Kowalski ',
+    bio: 'Hello',
+    interests: 'music, sport',
     privacy: { showEmail: false, showFaculty: true, showYear: false },
     photo: '/app/avatar.png',
-    programmes: [
-      {
-        id: 'programme-id',
-        programme: 'Informatyka',
-        faculty: 'Mathematics, Physics and Computer Science',
-        yearOfStudy: 3,
-        isPrimary: true,
-        status: 'active',
-        level: 'first_cycle',
-        modeOfStudies: 'full_time',
-      },
-    ],
   };
-  const saved = profileFormSchema.parse(profile);
-  expect(saved).toEqual({ ...profile, first: 'Jan', last: 'Kowalski' });
-  expect(profileFormSchema.safeParse({ ...profile, first: ' ' }).success).toBe(false);
+  expect(profileFormSchema.parse(profile)).toEqual({ ...profile, first: 'Jan', last: 'Kowalski' });
+  expect(profileFormSchema.safeParse({ ...profile, bio: 'x'.repeat(501) }).success).toBe(false);
+  expect(profileFormSchema.safeParse({ ...profile, interests: 'x'.repeat(31) }).success).toBe(
+    false,
+  );
   expect(
-    profileFormSchema.safeParse({
-      ...profile,
-      programmes: [{ ...profile.programmes[0], faculty: '' }],
-    }).success,
+    profileFormSchema.safeParse({ ...profile, interests: Array(11).fill('x').join(',') }).success,
   ).toBe(false);
 });

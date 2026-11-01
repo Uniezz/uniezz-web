@@ -1,13 +1,20 @@
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
-import { useFormContext, useWatch } from 'react-hook-form';
+import { useController, useFormContext, useWatch } from 'react-hook-form';
 
 import { useUniversities } from '@/hooks';
-import { UILanguageSwitcher, UIPanel, UISwitch } from '@/ui/components';
+import { UIButton, UILanguageSwitcher, UIPanel, UISwitch } from '@/ui/components';
 import { type ProfileFormSchema } from '@/schemas';
 import { readImageFile } from '@/utils/image';
 
-export function ProfileIdentity({ universityId }: { universityId: string }) {
+export function ProfileIdentity({
+  universityId,
+  onRemoveAvatar,
+}: {
+  universityId: string;
+  onRemoveAvatar: () => Promise<void>;
+}) {
   const { data: universities } = useUniversities();
   const { t } = useTranslation();
   const {
@@ -18,19 +25,28 @@ export function ProfileIdentity({ universityId }: { universityId: string }) {
     clearErrors,
     formState: { defaultValues, errors },
   } = useFormContext<ProfileFormSchema>();
-  const photo = useWatch({ control, name: 'photo' });
+  const {
+    field: { value: photo },
+  } = useController({ control, name: 'photo' });
+  const {
+    field: { onChange: setAvatarFile },
+  } = useController({ control, name: 'avatarFile' });
   const privacy = useWatch({ control, name: 'privacy' });
   const [preview, setPreview] = useState('');
+  const [readingImage, setReadingImage] = useState(false);
   async function changePhoto(file?: File): Promise<void> {
     if (!file) return;
-    setValue('avatarFile', file, { shouldDirty: true });
+    setAvatarFile(file);
     if (!(await trigger('avatarFile'))) return;
+    setReadingImage(true);
     try {
       setPreview(await readImageFile(file));
       clearErrors('avatarFile');
     } catch {
-      setValue('avatarFile', undefined, { shouldDirty: true });
+      setAvatarFile(undefined);
       setError('avatarFile', { type: 'validate', message: t('app.photoError') });
+    } finally {
+      setReadingImage(false);
     }
   }
   return (
@@ -52,6 +68,7 @@ export function ProfileIdentity({ universityId }: { universityId: string }) {
           {t('app.changePhoto')}
           <input
             type="file"
+            disabled={readingImage}
             className="sr-only"
             accept="image/png,image/jpeg,image/webp"
             onChange={(e) => {
@@ -60,6 +77,25 @@ export function ProfileIdentity({ universityId }: { universityId: string }) {
             }}
           />
         </label>
+        {(preview || photo !== '/app/avatar.png') && (
+          <UIButton
+            bg="transparent"
+            size="pill"
+            className="mt-2 text-danger"
+            disabled={readingImage}
+            onClick={async () => {
+              try {
+                await onRemoveAvatar();
+                setPreview('');
+                clearErrors('avatarFile');
+              } catch {
+                toast.error(t('apiState.error'));
+              }
+            }}
+          >
+            {t('students.removePhoto')}
+          </UIButton>
+        )}
         {errors.avatarFile && (
           <p role="alert" className="mt-3 text-detail text-danger">
             {t('app.photoError')}

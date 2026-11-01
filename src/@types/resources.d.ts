@@ -353,6 +353,19 @@ export default interface Resources {
       "mainNavigation": "Main navigation",
       "settings": "Settings"
     },
+    "students": {
+      "allStudents": "All students",
+      "bio": "Bio",
+      "bioError": "Bio must be 500 characters or fewer.",
+      "interests": "Interests",
+      "interestsError": "Use up to 10 interests, each up to 30 characters.",
+      "interestsHint": "Separate interests with commas",
+      "noResults": "No students found",
+      "removePhoto": "Remove photo",
+      "results": "Search results",
+      "search": "Search students by name",
+      "tryAnotherName": "Try a different name."
+    },
     "topbar": {
       "changeLanguage": "Change language",
       "languageCode": "EN",

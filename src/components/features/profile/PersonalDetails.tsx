@@ -20,6 +20,22 @@ export function PersonalDetails() {
           <input className="app-control" {...register('last')} autoComplete="off" maxLength={80} />
         </UIField>
       </div>
+      <div className="mt-4 space-y-4">
+        <UIField label={t('students.bio')} error={errors.bio ? t('students.bioError') : undefined}>
+          <textarea className="app-control h-28 resize-none" {...register('bio')} maxLength={500} />
+        </UIField>
+        <UIField
+          label={t('students.interests')}
+          error={errors.interests ? t('students.interestsError') : undefined}
+        >
+          <input
+            className="app-control"
+            {...register('interests')}
+            placeholder={t('students.interestsHint')}
+            autoComplete="off"
+          />
+        </UIField>
+      </div>
     </UIPanel>
   );
 }

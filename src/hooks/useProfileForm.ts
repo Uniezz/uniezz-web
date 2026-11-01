@@ -10,6 +10,8 @@ function defaults(profile: components['schemas']['Profile']): ProfileFormSchema 
   return {
     first: profile.firstName ?? '',
     last: profile.lastName ?? '',
+    bio: profile.bio ?? '',
+    interests: profile.interests?.join(', ') ?? '',
     privacy: profile.privacy,
     photo: profile.avatarUrl ?? '/app/avatar.png',
   };
@@ -43,6 +45,11 @@ export function useProfileForm(profile: components['schemas']['Profile']) {
       return updateMyProfile({
         firstName: values.first,
         lastName: values.last,
+        bio: values.bio.trim(),
+        interests: values.interests
+          .split(',')
+          .map((item) => item.trim())
+          .filter(Boolean),
         privacy: values.privacy,
         avatarMediaId: uploaded?.mediaId,
       });
@@ -54,6 +61,7 @@ export function useProfileForm(profile: components['schemas']['Profile']) {
     },
     onSettled: () => {
       void queryClient.invalidateQueries({ queryKey: ['profile'] });
+      void queryClient.invalidateQueries({ queryKey: ['profiles'] });
     },
   });
   return { form, saveProfile, isSuccess, isPending: isSaving || isUploading };
