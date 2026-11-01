@@ -154,6 +154,7 @@ export function FeedCommentItem({
                 try {
                   await deleteComment(comment.id);
                   setConfirmDelete(false);
+                  toast.success(t('apiState.commentDeleted'));
                 } catch {
                   toast.error(t('apiState.error'));
                 }

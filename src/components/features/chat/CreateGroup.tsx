@@ -119,7 +119,7 @@ export function CreateGroup({
         </div>
         <p className="text-label text-secondary">{t('app.groupDescription')}</p>
         {imageError && (
-          <p role="alert" className="text-detail text-danger">
+          <p role="alert" className="text-detail text-warning">
             {imageError}
           </p>
         )}
@@ -204,7 +204,7 @@ export function CreateGroup({
         </div>
         <div className="flex items-center justify-start gap-3">
           {errors.members && (
-            <p className="text-detail text-danger" role="alert">
+            <p className="text-detail text-warning" role="alert">
               {t('app.minimumMembers')}
             </p>
           )}

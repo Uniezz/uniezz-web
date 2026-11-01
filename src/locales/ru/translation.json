@@ -393,7 +393,9 @@
     "showYear": "Показывать курс",
     "titleError": "Введите 3–150 символов.",
     "detailsError": "Введите 10–5000 символов.",
-    "imageError": "Выберите корректное изображение JPG, PNG или WebP до 10 МБ."
+    "imageError": "Выберите корректное изображение JPG, PNG или WebP до 10 МБ.",
+    "postDeleted": "Пост удалён",
+    "commentDeleted": "Комментарий удалён"
   },
   "students": {
     "allStudents": "Все студенты",

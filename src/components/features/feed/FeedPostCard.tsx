@@ -58,13 +58,17 @@ export function FeedPostCard({ post }: { post: FeedPost }) {
             {post.title}
           </h2>
           {post.tags && post.tags.length > 0 && (
-            <div className="mt-3 flex flex-wrap gap-2">
+            <div className="mt-3 flex flex-wrap gap-1.5">
               {post.tags.slice(0, 3).map((tag) => (
-                <span key={tag} className="app-tag wrap-anywhere">
+                <span key={tag} className="app-hashtag wrap-anywhere">
                   {tag}
                 </span>
               ))}
-              {post.tags.length > 3 && <span className="app-tag">+{post.tags.length - 3}</span>}
+              {post.tags.length > 3 && (
+                <span className="app-hashtag text-secondary before:content-none">
+                  +{post.tags.length - 3}
+                </span>
+              )}
             </div>
           )}
         </div>

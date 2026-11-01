@@ -61,6 +61,7 @@ export function FeedPostActions({ post }: { post: FeedPost }) {
             onClick={async () => {
               try {
                 await deletePost(post.id);
+                toast.success(t('apiState.postDeleted'));
                 void navigate({ to: '/feed', search: { postId: undefined, feedRoute: undefined } });
               } catch {
                 toast.error(t('apiState.error'));

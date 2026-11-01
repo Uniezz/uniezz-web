@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ChevronDown, Flag } from 'lucide-react';
 import toast from 'react-hot-toast';
@@ -29,17 +29,19 @@ export function ReportButton({
 }) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
-  const { mutateAsync: createReport, isPending, error, reset: resetMutation } = useCreateReport();
+  const { mutateAsync: createReport, isPending, reset: resetMutation } = useCreateReport();
   const {
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors },
   } = useForm<ReportSchema>({
     resolver: zodResolver(reportSchema),
     defaultValues: { details: '' },
     mode: 'onBlur',
   });
+  const details = useWatch({ control, name: 'details' }) ?? '';
   const label =
     targetType === 'post'
       ? t('report.post')
@@ -85,8 +87,17 @@ export function ReportButton({
               await createReport({ targetType, targetId, reason, details: details || undefined });
               changeOpen(false);
               toast.success(t('report.sent'));
-            } catch {
-              // The mutation error is shown below the form.
+            } catch (error) {
+              const status = error instanceof Error ? error.cause : undefined;
+              toast.error(
+                t(
+                  status === 409
+                    ? 'report.duplicate'
+                    : status === 429
+                      ? 'report.rateLimit'
+                      : 'apiState.error',
+                ),
+              );
             }
           })}
         >
@@ -119,26 +130,18 @@ export function ReportButton({
             </UIField>
             <UIField
               label={t('report.details')}
-              error={errors.details ? t('report.detailsError') : undefined}
+              error={errors.details && t('report.detailsError')}
+              maxLength={1000}
+              count={details.length}
             >
               <textarea
                 className="app-control h-28 resize-none"
                 {...register('details')}
                 maxLength={1000}
+                aria-invalid={Boolean(errors.details)}
               />
             </UIField>
           </fieldset>
-          {error && (
-            <p role="alert" className="text-detail text-danger">
-              {t(
-                error.cause === 409
-                  ? 'report.duplicate'
-                  : error.cause === 429
-                    ? 'report.rateLimit'
-                    : 'apiState.error',
-              )}
-            </p>
-          )}
           <div className="flex justify-end gap-3">
             <UIButton bg="secondary" disabled={isPending} onClick={() => changeOpen(false)}>
               {t('postComposer.cancel')}

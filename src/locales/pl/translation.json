@@ -393,7 +393,9 @@
     "showYear": "Pokaż rok studiów",
     "titleError": "Użyj 3–150 znaków.",
     "detailsError": "Użyj 10–5000 znaków.",
-    "imageError": "Wybierz poprawny obraz JPG, PNG lub WebP o rozmiarze poniżej 10 MB."
+    "imageError": "Wybierz poprawny obraz JPG, PNG lub WebP o rozmiarze poniżej 10 MB.",
+    "postDeleted": "Post usunięty",
+    "commentDeleted": "Komentarz usunięty"
   },
   "students": {
     "allStudents": "Wszyscy studenci",

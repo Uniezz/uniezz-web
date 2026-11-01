@@ -60,9 +60,9 @@ export function PostComposer({
         },
     mode: 'onBlur',
   });
-  const [type = 'announcement', audience = 'university', body = ''] = useWatch({
+  const [type = 'announcement', audience = 'university', title = '', body = ''] = useWatch({
     control,
-    name: ['type', 'audience', 'body'],
+    name: ['type', 'audience', 'title', 'body'],
   });
   const titlePlaceholder =
     type === 'question'
@@ -130,35 +130,28 @@ export function PostComposer({
                   universityId={author?.universityId}
                   onSelect={(value) => setValue('audience', value, { shouldDirty: true })}
                 />
-                <div className="space-y-1.5">
-                  <label htmlFor="post-title" className="text-micro font-semibold text-secondary">
-                    {type === 'question'
-                      ? t('postComposer.questionTitle')
-                      : t('postComposer.title')}
-                  </label>
+                <UIField
+                  label={
+                    type === 'question' ? t('postComposer.questionTitle') : t('postComposer.title')
+                  }
+                  error={errors.title && t('apiState.titleError')}
+                  maxLength={150}
+                  count={title.length}
+                >
                   <input
                     autoComplete="off"
                     {...register('title')}
-                    id="post-title"
                     className="app-control"
                     placeholder={titlePlaceholder}
                     maxLength={150}
                     aria-invalid={Boolean(errors.title)}
-                    aria-describedby={errors.title ? 'post-title-error' : undefined}
                   />
-                  {errors.title && (
-                    <p
-                      id="post-title-error"
-                      role="alert"
-                      className="text-micro font-semibold text-danger"
-                    >
-                      {t('apiState.titleError')}
-                    </p>
-                  )}
-                </div>
+                </UIField>
                 <UIField
                   label={t('postComposer.details')}
-                  error={errors.body ? t('apiState.detailsError') : undefined}
+                  error={errors.body && t('apiState.detailsError')}
+                  maxLength={5000}
+                  count={body.length}
                 >
                   <textarea
                     autoComplete="off"
@@ -168,9 +161,6 @@ export function PostComposer({
                     maxLength={5000}
                     aria-invalid={Boolean(errors.body)}
                   />
-                  <span className="text-right text-micro font-normal text-secondary">
-                    {body.length}/5000
-                  </span>
                 </UIField>
                 {type === 'event' && <PostEventDetails register={register} errors={errors} />}
                 <PostTagsField control={control} />

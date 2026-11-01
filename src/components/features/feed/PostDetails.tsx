@@ -35,7 +35,7 @@ export function PostDetails({ post, large = false }: { post: FeedPost; large?: b
       {post.tags && post.tags.length > 0 && (
         <div className="flex flex-wrap gap-2">
           {post.tags.map((tag) => (
-            <span key={tag} className="app-tag wrap-anywhere">
+            <span key={tag} className="app-hashtag wrap-anywhere">
               {tag}
             </span>
           ))}

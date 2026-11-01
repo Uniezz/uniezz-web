@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
 export const profileSchema = z.object({
-  first: z.string().trim().min(1).max(80),
-  last: z.string().trim().min(1).max(80),
+  first: z.string().trim().min(1).max(100),
+  last: z.string().trim().min(1).max(100),
 });
 export type ProfileSchema = z.infer<typeof profileSchema>;
 

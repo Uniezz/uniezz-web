@@ -393,7 +393,9 @@
     "showYear": "Show year of study",
     "titleError": "Use 3–150 characters.",
     "detailsError": "Use 10–5000 characters.",
-    "imageError": "Choose a valid JPG, PNG or WebP image under 10 MB."
+    "imageError": "Choose a valid JPG, PNG or WebP image under 10 MB.",
+    "postDeleted": "Post deleted",
+    "commentDeleted": "Comment deleted"
   },
   "students": {
     "allStudents": "All students",

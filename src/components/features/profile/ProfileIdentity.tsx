@@ -98,7 +98,7 @@ export function ProfileIdentity({
           </UIButton>
         )}
         {errors.avatarFile && (
-          <p role="alert" className="mt-3 text-detail text-danger">
+          <p role="alert" className="mt-3 text-detail text-warning">
             {t('app.photoError')}
           </p>
         )}

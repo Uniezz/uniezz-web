@@ -2,6 +2,7 @@
 export default interface Resources {
   "translation": {
     "apiState": {
+      "commentDeleted": "Comment deleted",
       "deleteCommentDescription": "This comment will be deleted.",
       "deleteCommentTitle": "Delete comment?",
       "deletePostDescription": "The post and its comments will be deleted.",
@@ -17,6 +18,7 @@ export default interface Resources {
       "loadMore": "Load more",
       "loadedSearch": "Search covers loaded posts. Load more to search older posts.",
       "loading": "Loading…",
+      "postDeleted": "Post deleted",
       "profileSaveError": "Some changes couldn’t be saved. Please try again.",
       "reply": "Reply",
       "replyingTo": "Replying to {{name}}",

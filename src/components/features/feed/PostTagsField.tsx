@@ -59,7 +59,7 @@ export function PostTagsField({ control }: { control: Control<PostSchema> }) {
       {tags.length > 0 && (
         <div className="flex flex-wrap gap-2">
           {tags.map((tag) => (
-            <span key={tag} className="app-tag inline-flex items-center gap-2">
+            <span key={tag} className="app-hashtag gap-1.5 pr-1.5">
               {tag}
               <button
                 type="button"
