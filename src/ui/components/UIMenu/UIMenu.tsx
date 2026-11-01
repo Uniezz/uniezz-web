@@ -1,5 +1,6 @@
 import { Check } from 'lucide-react';
 import { type Option } from '@/@types';
+import { cn } from '@/ui/cn';
 import { UIButton } from '../UIButton';
 import { menuOptionStyles, menuStyles } from './variants';
 
@@ -7,10 +8,11 @@ type UIMenuProps = {
   options: Option[];
   value: string;
   onSelect: (value: string) => void;
+  className?: string;
 };
 
-export const UIMenu = ({ options, value, onSelect }: UIMenuProps) => (
-  <div className={menuStyles()}>
+export const UIMenu = ({ options, value, onSelect, className }: UIMenuProps) => (
+  <div className={cn(menuStyles(), className)}>
     {options.map((option) => {
       const isActive = option.value === value;
 
