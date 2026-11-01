@@ -10,14 +10,20 @@ import { programmeSchema, type ProgrammeFormSchema } from '@/schemas';
 import { UIButton, UIField, UIPanel, UIUnsavedChanges } from '@/ui/components';
 import { AddProgramme } from './AddProgramme';
 
-export function StudyProgrammes({ universityId }: { universityId: string }) {
+export function StudyProgrammes({
+  universityId,
+  initialProgrammes,
+}: {
+  universityId: string;
+  initialProgrammes: components['schemas']['Programme'][];
+}) {
   const { t } = useTranslation();
   const { data: universities } = useUniversities();
   const faculties =
     universities?.find((university) => university.id === universityId)?.faculties ?? [];
   const { data: profile } = useMyProfile();
   const { saveProgramme, isSaving, removeProgramme, isRemoving } = useProfileProgrammes();
-  const programmes = profile?.programmes ?? [];
+  const programmes = profile?.programmes ?? initialProgrammes;
 
   return (
     <div className="space-y-4">

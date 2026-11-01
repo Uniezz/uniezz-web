@@ -1,10 +1,12 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
+import { Skeleton } from 'skullet/react';
 import toast from 'react-hot-toast';
 
 import { PostComposer } from '@/components/features/feed/PostComposer';
 import { useFeedPost, useMyProfile, useUpdateFeedPost } from '@/hooks';
-import { UIEmpty, UIPanel, UIQueryError, UISkeleton } from '@/ui/components';
+import { UIEmpty, UIQueryError } from '@/ui/components';
+import { samplePost } from '@/utils/feedSkeletonData';
 import { postFormDefaults } from '@/utils/feed';
 
 export const Route = createFileRoute('/_app/feed/post/edit-post/$postId')({
@@ -27,14 +29,15 @@ function EditPostPage() {
 
   if (isLoadingPost || isLoadingProfile) {
     return (
-      <div className="mx-auto max-w-5xl space-y-6">
-        <UISkeleton className="h-12 w-48" />
-        <UIPanel className="space-y-6">
-          <UISkeleton className="h-12 w-full" />
-          <UISkeleton className="h-36 w-full" />
-          <UISkeleton className="h-36 w-full" />
-        </UIPanel>
-      </div>
+      <Skeleton loading label={t('apiState.loading')}>
+        <PostComposer
+          post={samplePost}
+          isPending={false}
+          isError={false}
+          onCancel={() => {}}
+          onSubmit={async () => {}}
+        />
+      </Skeleton>
     );
   }
   if (!post || !profile)

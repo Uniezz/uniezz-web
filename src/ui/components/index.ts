@@ -21,7 +21,6 @@ export * from './UIField';
 export * from './UISwitch';
 export * from './UIDialog';
 export * from './UIEmpty';
-export * from './UISkeleton';
 export * from './UIQueryError';
 export * from './UIBottomTabs';
 export * from './UILanguageSwitcher';

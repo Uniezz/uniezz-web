@@ -2,6 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { RouterProvider, createRouteMask, createRouter } from '@tanstack/react-router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { SkulletProvider } from 'skullet/react';
 
 import './schemas/env';
 import { routeTree } from './routeTree.gen';
@@ -54,7 +55,16 @@ if (!rootElement) {
 createRoot(rootElement).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
+      <SkulletProvider
+        mode="dark"
+        theme={{
+          dark: { base: 'rgb(255 255 255 / 0.2)', highlight: 'rgb(255 255 255 / 0.3)' },
+          animation: 'pulse',
+          radius: '0.375rem',
+        }}
+      >
+        <RouterProvider router={router} />
+      </SkulletProvider>
     </QueryClientProvider>
   </StrictMode>,
 );

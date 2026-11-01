@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
+import { Skeleton } from 'skullet/react';
 import type { FeedComment } from '@/@types';
 import { useCommentReplies, useDeleteFeedComment, useMyProfile } from '@/hooks';
 import { UIAvatar, UIButton, UIDialog, UIQueryError } from '@/ui/components';
 import { authorName } from '@/utils/feed';
-import { FeedCommentsSkeleton } from './FeedCommentsSkeleton';
+import { sampleComment } from '@/utils/feedSkeletonData';
 import { FeedLikeButton } from './FeedLikeButton';
 import { FeedCommentEditor } from './FeedCommentEditor';
 import { ReportButton } from '@/components/features/reports/ReportButton';
@@ -152,7 +153,7 @@ export function FeedCommentItem({
         </UIDialog>
         {expanded && (
           <div className="mt-3 space-y-5">
-            {isPending && <FeedCommentsSkeleton />}
+            {isPending && <FeedCommentsSkeleton reply />}
             {data?.pages
               .flatMap((page) => page.items ?? [])
               .map((reply) => (
@@ -173,5 +174,26 @@ export function FeedCommentItem({
         )}
       </div>
     </article>
+  );
+}
+
+export function FeedCommentsSkeleton({ reply = false }: { reply?: boolean }) {
+  const { t } = useTranslation();
+  return (
+    <Skeleton loading label={t('apiState.loading')}>
+      <div className="space-y-5">
+        {[0, 1].map((index) => (
+          <FeedCommentItem
+            key={index}
+            comment={{
+              ...sampleComment,
+              id: `skeleton-${index}`,
+              parentId: reply ? 'skeleton' : null,
+            }}
+            onReply={() => {}}
+          />
+        ))}
+      </div>
+    </Skeleton>
   );
 }
