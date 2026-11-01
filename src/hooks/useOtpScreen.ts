@@ -1,16 +1,16 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
 import { useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { requestOtpCode, verifyOtpCode } from '@/api';
 import { otpDefaultValues, otpSchema, type OtpSchema } from '@/schemas';
 import { CELL_COUNT } from '@/utils';
-import { saveSession } from '@/utils/session';
 
 export const useOtpScreen = (university: string) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { mutateAsync: requestCode, isPending: isRequesting } = useMutation({
     mutationKey: ['auth', 'request-otp'],
     mutationFn: requestOtpCode,
@@ -62,12 +62,8 @@ export const useOtpScreen = (university: string) => {
         setValue('step', 'code');
         setValue('code', '');
       } else {
-        const session = await verifyCode({ code: data.code, email: data.email, university });
-        try {
-          saveSession(session);
-        } catch {
-          throw new Error('Couldn’t save your session. Please sign in again.');
-        }
+        await verifyCode({ code: data.code, email: data.email, university });
+        queryClient.clear();
         navigate({ to: '/feed', replace: true });
       }
     } catch (error) {

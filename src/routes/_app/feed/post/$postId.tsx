@@ -261,18 +261,28 @@ function FeedPostPage() {
                 <Skeleton
                   loading
                   label={t('apiState.loading')}
-                  className="col-start-1 row-start-1 justify-self-center"
+                  className="col-start-1 row-start-1 size-11 justify-self-center"
                 >
-                  <UIButton size="icon" bg="secondary" aria-label={t('app.previousPost')}>
+                  <UIButton
+                    size="icon"
+                    bg="secondary"
+                    className="size-11"
+                    aria-label={t('app.previousPost')}
+                  >
                     <ChevronLeft className="size-5" />
                   </UIButton>
                 </Skeleton>
                 <Skeleton
                   loading
                   label={t('apiState.loading')}
-                  className="col-start-3 row-start-1 justify-self-center"
+                  className="col-start-3 row-start-1 size-11 justify-self-center"
                 >
-                  <UIButton size="icon" bg="secondary" aria-label={t('app.nextPost')}>
+                  <UIButton
+                    size="icon"
+                    bg="secondary"
+                    className="size-11"
+                    aria-label={t('app.nextPost')}
+                  >
                     <ChevronRight className="size-5" />
                   </UIButton>
                 </Skeleton>
@@ -288,7 +298,7 @@ function FeedPostPage() {
                 <ChevronLeft className="size-5" />
               </Link>
             ) : (
-              <span className="col-start-1 row-start-1" />
+              <span skullet-ignore="" className="col-start-1 row-start-1" />
             )}
             {next && (
               <Link
@@ -312,7 +322,7 @@ function FeedPostPage() {
                 {t('apiState.loadMore')}
               </UIButton>
             ) : (
-              !next && <span className="col-start-3 row-start-1" />
+              !next && <span skullet-ignore="" className="col-start-3 row-start-1" />
             )}
           </nav>
         </div>

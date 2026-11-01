@@ -4,7 +4,7 @@ import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/(auth)/finish')({
   preload: false,
-  loader: ({ location }) => finishLogin(location.searchStr),
+  loader: ({ location, context }) => finishLogin(location.searchStr, context.queryClient),
   component: FinishPage,
   pendingComponent: FinishLoginPage,
 });

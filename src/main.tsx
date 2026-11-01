@@ -9,6 +9,13 @@ import { routeTree } from './routeTree.gen';
 
 import './i18n';
 
+try {
+  sessionStorage.removeItem('uniezz:access-token');
+  sessionStorage.removeItem('uniezz:session-expires-at');
+} catch {
+  // Storage can be unavailable in private browsing.
+}
+
 const newGroupRouteMask = createRouteMask({
   routeTree,
   from: '/chat/new-group',
