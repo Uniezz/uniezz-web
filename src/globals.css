@@ -427,6 +427,6 @@ input[type='search']::-webkit-search-cancel-button {
   }
   /* Post tags read as hashtags: quiet chip, muted # so the word carries the weight. */
   .app-hashtag {
-    @apply inline-flex items-center rounded-lg border border-white-10 bg-white-5 px-2 py-1 text-detail font-medium text-white/85 before:mr-1 before:font-semibold before:text-muted before:content-['#'];
+    @apply inline-flex items-center rounded-lg border border-white-10 bg-white-5 px-2 py-1 text-detail font-medium text-white/85 before:mr-0.5 before:translate-y-px before:text-[0.9em] before:font-semibold before:text-muted before:content-['#'];
   }
 }

@@ -59,12 +59,12 @@ export function PostTagsField({ control }: { control: Control<PostSchema> }) {
       {tags.length > 0 && (
         <div className="flex flex-wrap gap-2">
           {tags.map((tag) => (
-            <span key={tag} className="app-hashtag gap-1.5 pr-1.5">
+            <span key={tag} className="app-hashtag pr-1.5">
               {tag}
               <button
                 type="button"
                 aria-label={`${t('app.remove')} ${tag}`}
-                className="rounded-sm text-secondary hover:text-white focus-visible:outline-2 focus-visible:outline-blue"
+                className="ml-1.5 rounded-sm text-secondary transition-colors hover:text-danger focus-visible:outline-2 focus-visible:outline-blue"
                 onPointerDown={(event) => event.preventDefault()}
                 onClick={() => onChange(tags.filter((item) => item !== tag))}
               >
