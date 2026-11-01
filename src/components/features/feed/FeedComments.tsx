@@ -28,13 +28,13 @@ export function FeedCommentItem({
   const { data, isPending, isError, refetch, hasNextPage, isFetchingNextPage, fetchNextPage } =
     useCommentReplies(comment.id, expanded && comment.parentId === null);
   return (
-    <article className="flex items-start gap-3">
+    <article className="flex items-start gap-3 motion-safe:animate-rise-in">
       <UIAvatar size="md" imgSrc={comment.author?.avatarUrl ?? '/app/avatar.png'} alt="" />
       <div className="min-w-0 flex-1">
         <strong className="block text-label font-semibold">
           {!comment.deleted && comment.author ? (
             <Link
-              to="/profiles/$profileId"
+              to="/connections/students/$profileId"
               params={{ profileId: comment.author.id }}
               search={{ studentSearch: undefined }}
               className="rounded-sm hover:underline focus-visible:outline-2 focus-visible:outline-blue"
@@ -193,7 +193,7 @@ export function FeedCommentsSkeleton({ reply = false }: { reply?: boolean }) {
   const { t } = useTranslation();
   return (
     <Skeleton loading label={t('apiState.loading')}>
-      <div className="space-y-5">
+      <div inert className="space-y-5">
         {[0, 1].map((index) => (
           <FeedCommentItem
             key={index}

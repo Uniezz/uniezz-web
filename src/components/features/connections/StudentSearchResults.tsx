@@ -45,7 +45,10 @@ export function StudentSearchResults({ search, name }: { search: string; name: s
             className="min-h-0 overflow-y-auto overscroll-y-none focus-visible:outline-2 focus-visible:outline-blue"
           >
             <Skeleton loading={loading} label={t('apiState.loading')}>
-              <div className="-mb-px grid md:grid-cols-2 [&>*]:border-b [&>*]:border-white-10 md:[&>*:nth-child(odd)]:border-r">
+              <div
+                inert={loading}
+                className="-mb-px grid md:grid-cols-2 [&>*]:border-b [&>*]:border-white-10 md:[&>*:nth-child(odd)]:border-r"
+              >
                 {displayed.map((student) => (
                   <StudentCard
                     key={student.id}

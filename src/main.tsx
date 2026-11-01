@@ -24,14 +24,14 @@ const newGroupRouteMask = createRouteMask({
 });
 const connectionsRouteMask = createRouteMask({
   routeTree,
-  from: '/connections',
+  from: '/connections/',
   to: '/connections',
   search: () => ({}),
 });
 const studentsRouteMask = createRouteMask({
   routeTree,
-  from: '/students',
-  to: '/students',
+  from: '/connections/students/',
+  to: '/connections/students',
   search: ({ studentSearch }) => ({ studentSearch }),
 });
 const postRouteMask = createRouteMask({
@@ -49,8 +49,8 @@ const newPostRouteMask = createRouteMask({
 });
 const profileRouteMask = createRouteMask({
   routeTree,
-  from: '/profiles/$profileId',
-  to: '/profiles/$profileId',
+  from: '/connections/students/$profileId',
+  to: '/connections/students/$profileId',
   params: true,
   search: ({ studentSearch }) => ({ studentSearch }),
 });

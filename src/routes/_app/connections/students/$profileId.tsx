@@ -8,7 +8,7 @@ import { PublicProfile } from '@/components/features/profile/PublicProfile';
 import { samplePublicProfile } from '@/utils/profileSkeletonData';
 import { optionalSearchStringSchema } from '@/schemas';
 
-export const Route = createFileRoute('/_app/profiles/$profileId')({
+export const Route = createFileRoute('/_app/connections/students/$profileId')({
   validateSearch: (search: Record<string, unknown>) => ({
     studentSearch: optionalSearchStringSchema.parse(search.studentSearch),
   }),
@@ -31,7 +31,9 @@ function StudentProfilePage() {
     <Skeleton loading={isPending} label={t('apiState.loading')}>
       <div className="relative mx-auto max-w-5xl space-y-5">
         <ProfileBack />
-        <PublicProfile profile={profile ?? samplePublicProfile} />
+        <div inert={isPending}>
+          <PublicProfile profile={profile ?? samplePublicProfile} />
+        </div>
       </div>
     </Skeleton>
   );
@@ -56,7 +58,7 @@ function ProfileBack() {
       {content}
     </button>
   ) : (
-    <Link to="/students" search={{ studentSearch }} className={className}>
+    <Link to="/connections/students" search={{ studentSearch }} className={className}>
       {content}
     </Link>
   );

@@ -16,18 +16,18 @@ import { Route as authFinishRouteImport } from './routes/(auth)/finish'
 import { Route as authLoginRouteImport } from './routes/(auth)/login'
 import { Route as authOtpRouteImport } from './routes/(auth)/otp'
 import { Route as AppChatRouteRouteImport } from './routes/_app/chat/route'
-import { Route as AppConnectionsRouteImport } from './routes/_app/connections'
 import { Route as AppExamsRouteImport } from './routes/_app/exams'
 import { Route as AppFeedRouteRouteImport } from './routes/_app/feed/route'
 import { Route as AppGuideRouteImport } from './routes/_app/guide'
 import { Route as AppProfileRouteImport } from './routes/_app/profile'
-import { Route as AppStudentsRouteImport } from './routes/_app/students'
 import { Route as AuthCallbackRouteImport } from './routes/auth/callback'
 import { Route as AuthDoneRouteImport } from './routes/auth/done'
 import { Route as AppChatIndexRouteImport } from './routes/_app/chat/index'
 import { Route as AppChatNewGroupRouteImport } from './routes/_app/chat/new-group'
+import { Route as AppConnectionsIndexRouteImport } from './routes/_app/connections/index'
 import { Route as AppFeedIndexRouteImport } from './routes/_app/feed/index'
-import { Route as AppProfilesProfileIdRouteImport } from './routes/_app/profiles/$profileId'
+import { Route as AppConnectionsStudentsIndexRouteImport } from './routes/_app/connections/students/index'
+import { Route as AppConnectionsStudentsProfileIdRouteImport } from './routes/_app/connections/students/$profileId'
 import { Route as AppFeedPostPostIdRouteImport } from './routes/_app/feed/post/$postId'
 import { Route as AppFeedPostNewPostRouteImport } from './routes/_app/feed/post/new-post'
 import { Route as AppFeedPostEditPostPostIdRouteImport } from './routes/_app/feed/post/edit-post/$postId'
@@ -65,11 +65,6 @@ const AppChatRouteRoute = AppChatRouteRouteImport.update({
   path: '/chat',
   getParentRoute: () => AppRoute,
 } as any)
-const AppConnectionsRoute = AppConnectionsRouteImport.update({
-  id: '/connections',
-  path: '/connections',
-  getParentRoute: () => AppRoute,
-} as any)
 const AppExamsRoute = AppExamsRouteImport.update({
   id: '/exams',
   path: '/exams',
@@ -88,11 +83,6 @@ const AppGuideRoute = AppGuideRouteImport.update({
 const AppProfileRoute = AppProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppStudentsRoute = AppStudentsRouteImport.update({
-  id: '/students',
-  path: '/students',
   getParentRoute: () => AppRoute,
 } as any)
 const AuthCallbackRoute = AuthCallbackRouteImport.update({
@@ -115,16 +105,28 @@ const AppChatNewGroupRoute = AppChatNewGroupRouteImport.update({
   path: '/new-group',
   getParentRoute: () => AppChatRouteRoute,
 } as any)
+const AppConnectionsIndexRoute = AppConnectionsIndexRouteImport.update({
+  id: '/connections/',
+  path: '/connections/',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppFeedIndexRoute = AppFeedIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AppFeedRouteRoute,
 } as any)
-const AppProfilesProfileIdRoute = AppProfilesProfileIdRouteImport.update({
-  id: '/profiles/$profileId',
-  path: '/profiles/$profileId',
-  getParentRoute: () => AppRoute,
-} as any)
+const AppConnectionsStudentsIndexRoute =
+  AppConnectionsStudentsIndexRouteImport.update({
+    id: '/connections/students/',
+    path: '/connections/students/',
+    getParentRoute: () => AppRoute,
+  } as any)
+const AppConnectionsStudentsProfileIdRoute =
+  AppConnectionsStudentsProfileIdRouteImport.update({
+    id: '/connections/students/$profileId',
+    path: '/connections/students/$profileId',
+    getParentRoute: () => AppRoute,
+  } as any)
 const AppFeedPostPostIdRoute = AppFeedPostPostIdRouteImport.update({
   id: '/post/$postId',
   path: '/post/$postId',
@@ -149,19 +151,19 @@ export interface FileRoutesByFullPath {
   '/finish': typeof authFinishRoute
   '/login': typeof authLoginRoute
   '/otp': typeof authOtpRoute
-  '/connections': typeof AppConnectionsRoute
   '/exams': typeof AppExamsRoute
   '/guide': typeof AppGuideRoute
   '/profile': typeof AppProfileRoute
-  '/students': typeof AppStudentsRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/auth/done': typeof AuthDoneRoute
   '/chat/new-group': typeof AppChatNewGroupRoute
-  '/profiles/$profileId': typeof AppProfilesProfileIdRoute
   '/chat/': typeof AppChatIndexRoute
+  '/connections/': typeof AppConnectionsIndexRoute
   '/feed/': typeof AppFeedIndexRoute
+  '/connections/students/$profileId': typeof AppConnectionsStudentsProfileIdRoute
   '/feed/post/$postId': typeof AppFeedPostPostIdRoute
   '/feed/post/new-post': typeof AppFeedPostNewPostRoute
+  '/connections/students/': typeof AppConnectionsStudentsIndexRoute
   '/feed/post/edit-post/$postId': typeof AppFeedPostEditPostPostIdRoute
 }
 export interface FileRoutesByTo {
@@ -169,19 +171,19 @@ export interface FileRoutesByTo {
   '/finish': typeof authFinishRoute
   '/login': typeof authLoginRoute
   '/otp': typeof authOtpRoute
-  '/connections': typeof AppConnectionsRoute
   '/exams': typeof AppExamsRoute
   '/guide': typeof AppGuideRoute
   '/profile': typeof AppProfileRoute
-  '/students': typeof AppStudentsRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/auth/done': typeof AuthDoneRoute
   '/chat/new-group': typeof AppChatNewGroupRoute
-  '/profiles/$profileId': typeof AppProfilesProfileIdRoute
   '/chat': typeof AppChatIndexRoute
+  '/connections': typeof AppConnectionsIndexRoute
   '/feed': typeof AppFeedIndexRoute
+  '/connections/students/$profileId': typeof AppConnectionsStudentsProfileIdRoute
   '/feed/post/$postId': typeof AppFeedPostPostIdRoute
   '/feed/post/new-post': typeof AppFeedPostNewPostRoute
+  '/connections/students': typeof AppConnectionsStudentsIndexRoute
   '/feed/post/edit-post/$postId': typeof AppFeedPostEditPostPostIdRoute
 }
 export interface FileRoutesById {
@@ -194,19 +196,19 @@ export interface FileRoutesById {
   '/(auth)/finish': typeof authFinishRoute
   '/(auth)/login': typeof authLoginRoute
   '/(auth)/otp': typeof authOtpRoute
-  '/_app/connections': typeof AppConnectionsRoute
   '/_app/exams': typeof AppExamsRoute
   '/_app/guide': typeof AppGuideRoute
   '/_app/profile': typeof AppProfileRoute
-  '/_app/students': typeof AppStudentsRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/auth/done': typeof AuthDoneRoute
   '/_app/chat/new-group': typeof AppChatNewGroupRoute
-  '/_app/profiles/$profileId': typeof AppProfilesProfileIdRoute
   '/_app/chat/': typeof AppChatIndexRoute
+  '/_app/connections/': typeof AppConnectionsIndexRoute
   '/_app/feed/': typeof AppFeedIndexRoute
+  '/_app/connections/students/$profileId': typeof AppConnectionsStudentsProfileIdRoute
   '/_app/feed/post/$postId': typeof AppFeedPostPostIdRoute
   '/_app/feed/post/new-post': typeof AppFeedPostNewPostRoute
+  '/_app/connections/students/': typeof AppConnectionsStudentsIndexRoute
   '/_app/feed/post/edit-post/$postId': typeof AppFeedPostEditPostPostIdRoute
 }
 export interface FileRouteTypes {
@@ -218,19 +220,19 @@ export interface FileRouteTypes {
     | '/finish'
     | '/login'
     | '/otp'
-    | '/connections'
     | '/exams'
     | '/guide'
     | '/profile'
-    | '/students'
     | '/auth/callback'
     | '/auth/done'
     | '/chat/new-group'
-    | '/profiles/$profileId'
     | '/chat/'
+    | '/connections/'
     | '/feed/'
+    | '/connections/students/$profileId'
     | '/feed/post/$postId'
     | '/feed/post/new-post'
+    | '/connections/students/'
     | '/feed/post/edit-post/$postId'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -238,19 +240,19 @@ export interface FileRouteTypes {
     | '/finish'
     | '/login'
     | '/otp'
-    | '/connections'
     | '/exams'
     | '/guide'
     | '/profile'
-    | '/students'
     | '/auth/callback'
     | '/auth/done'
     | '/chat/new-group'
-    | '/profiles/$profileId'
     | '/chat'
+    | '/connections'
     | '/feed'
+    | '/connections/students/$profileId'
     | '/feed/post/$postId'
     | '/feed/post/new-post'
+    | '/connections/students'
     | '/feed/post/edit-post/$postId'
   id:
     | '__root__'
@@ -262,19 +264,19 @@ export interface FileRouteTypes {
     | '/(auth)/finish'
     | '/(auth)/login'
     | '/(auth)/otp'
-    | '/_app/connections'
     | '/_app/exams'
     | '/_app/guide'
     | '/_app/profile'
-    | '/_app/students'
     | '/auth/callback'
     | '/auth/done'
     | '/_app/chat/new-group'
-    | '/_app/profiles/$profileId'
     | '/_app/chat/'
+    | '/_app/connections/'
     | '/_app/feed/'
+    | '/_app/connections/students/$profileId'
     | '/_app/feed/post/$postId'
     | '/_app/feed/post/new-post'
+    | '/_app/connections/students/'
     | '/_app/feed/post/edit-post/$postId'
   fileRoutesById: FileRoutesById
 }
@@ -337,13 +339,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppChatRouteRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/connections': {
-      id: '/_app/connections'
-      path: '/connections'
-      fullPath: '/connections'
-      preLoaderRoute: typeof AppConnectionsRouteImport
-      parentRoute: typeof AppRoute
-    }
     '/_app/exams': {
       id: '/_app/exams'
       path: '/exams'
@@ -370,13 +365,6 @@ declare module '@tanstack/react-router' {
       path: '/profile'
       fullPath: '/profile'
       preLoaderRoute: typeof AppProfileRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/students': {
-      id: '/_app/students'
-      path: '/students'
-      fullPath: '/students'
-      preLoaderRoute: typeof AppStudentsRouteImport
       parentRoute: typeof AppRoute
     }
     '/auth/callback': {
@@ -407,6 +395,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppChatNewGroupRouteImport
       parentRoute: typeof AppChatRouteRoute
     }
+    '/_app/connections/': {
+      id: '/_app/connections/'
+      path: '/connections'
+      fullPath: '/connections/'
+      preLoaderRoute: typeof AppConnectionsIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/feed/': {
       id: '/_app/feed/'
       path: '/'
@@ -414,11 +409,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppFeedIndexRouteImport
       parentRoute: typeof AppFeedRouteRoute
     }
-    '/_app/profiles/$profileId': {
-      id: '/_app/profiles/$profileId'
-      path: '/profiles/$profileId'
-      fullPath: '/profiles/$profileId'
-      preLoaderRoute: typeof AppProfilesProfileIdRouteImport
+    '/_app/connections/students/': {
+      id: '/_app/connections/students/'
+      path: '/connections/students'
+      fullPath: '/connections/students/'
+      preLoaderRoute: typeof AppConnectionsStudentsIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/connections/students/$profileId': {
+      id: '/_app/connections/students/$profileId'
+      path: '/connections/students/$profileId'
+      fullPath: '/connections/students/$profileId'
+      preLoaderRoute: typeof AppConnectionsStudentsProfileIdRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/feed/post/$postId': {
@@ -496,23 +498,23 @@ const AppFeedRouteRouteWithChildren = AppFeedRouteRoute._addFileChildren(
 interface AppRouteChildren {
   AppChatRouteRoute: typeof AppChatRouteRouteWithChildren
   AppFeedRouteRoute: typeof AppFeedRouteRouteWithChildren
-  AppConnectionsRoute: typeof AppConnectionsRoute
   AppExamsRoute: typeof AppExamsRoute
   AppGuideRoute: typeof AppGuideRoute
   AppProfileRoute: typeof AppProfileRoute
-  AppStudentsRoute: typeof AppStudentsRoute
-  AppProfilesProfileIdRoute: typeof AppProfilesProfileIdRoute
+  AppConnectionsIndexRoute: typeof AppConnectionsIndexRoute
+  AppConnectionsStudentsProfileIdRoute: typeof AppConnectionsStudentsProfileIdRoute
+  AppConnectionsStudentsIndexRoute: typeof AppConnectionsStudentsIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppChatRouteRoute: AppChatRouteRouteWithChildren,
   AppFeedRouteRoute: AppFeedRouteRouteWithChildren,
-  AppConnectionsRoute: AppConnectionsRoute,
   AppExamsRoute: AppExamsRoute,
   AppGuideRoute: AppGuideRoute,
   AppProfileRoute: AppProfileRoute,
-  AppStudentsRoute: AppStudentsRoute,
-  AppProfilesProfileIdRoute: AppProfilesProfileIdRoute,
+  AppConnectionsIndexRoute: AppConnectionsIndexRoute,
+  AppConnectionsStudentsProfileIdRoute: AppConnectionsStudentsProfileIdRoute,
+  AppConnectionsStudentsIndexRoute: AppConnectionsStudentsIndexRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)

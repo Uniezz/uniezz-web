@@ -1,3 +1,4 @@
+import { cn } from '@/ui/cn';
 import type { FeedFilters } from '@/@types';
 import { Masonry, type RenderComponentProps } from 'masonic';
 import { Skeleton } from 'skullet/react';
@@ -16,7 +17,7 @@ function FeedCard({ data }: RenderComponentProps<FeedPost>) {
 
 function FeedPostsSkeleton() {
   return (
-    <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+    <div inert className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
       {Array.from({ length: 6 }, (_, index) => (
         <FeedPostCard key={index} post={samplePost} />
       ))}
@@ -26,8 +27,16 @@ function FeedPostsSkeleton() {
 
 export function FeedPosts({ search, filters }: { search: string; filters?: FeedFilters }) {
   const { t } = useTranslation();
-  const { data, isPending, isError, refetch, hasNextPage, isFetchingNextPage, fetchNextPage } =
-    useFeedPosts(filters);
+  const {
+    data,
+    isPending,
+    isPlaceholderData,
+    isError,
+    refetch,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  } = useFeedPosts(filters);
   // shortcut: Search filters loaded pages until the feed API accepts search; then pass it to the API.
   const items = (data?.pages.flatMap((page) => page.items ?? []) ?? []).filter((post) =>
     matchesSearch(
@@ -44,7 +53,12 @@ export function FeedPosts({ search, filters }: { search: string; filters?: FeedF
       {isPending ? (
         <FeedPostsSkeleton />
       ) : (
-        <div className="space-y-6">
+        <div
+          className={cn(
+            'space-y-6 transition-opacity duration-200 motion-safe:animate-rise-in',
+            isPlaceholderData && 'pointer-events-none opacity-50',
+          )}
+        >
           {items.length > 0 ? (
             <Masonry
               key={items.map((post) => post.id).join(',')}

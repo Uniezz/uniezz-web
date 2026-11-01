@@ -1,4 +1,10 @@
-import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  keepPreviousData,
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import {
   createFeedComment,
   deleteFeedComment,
@@ -63,6 +69,8 @@ export function useFeedPosts(filters: FeedFilters = {}) {
   return useInfiniteQuery({
     queryKey: ['feed', 'posts', filters],
     queryFn: ({ pageParam }) => getFeedPosts(filters, pageParam),
+    // Keeps the current posts on screen while a filter change loads, instead of a skeleton flash.
+    placeholderData: keepPreviousData,
     initialPageParam: undefined as string | undefined,
     getNextPageParam: (page) => page.nextCursor ?? undefined,
   });

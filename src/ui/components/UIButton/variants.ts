@@ -1,7 +1,7 @@
 import { cva } from 'class-variance-authority';
 
 export const buttonStyles = cva(
-  'inline-flex items-center justify-center gap-2 rounded-full border font-semibold transition-colors outline-none focus-visible:ring-2 focus-visible:ring-blue focus-visible:ring-offset-2 focus-visible:ring-offset-ink disabled:cursor-not-allowed disabled:opacity-40 aria-disabled:cursor-not-allowed aria-disabled:opacity-40',
+  'inline-flex items-center justify-center gap-2 rounded-full border font-semibold transition-[color,background-color,border-color,scale] outline-none focus-visible:ring-2 focus-visible:ring-blue focus-visible:ring-offset-2 focus-visible:ring-offset-ink disabled:cursor-not-allowed disabled:opacity-40 aria-disabled:cursor-not-allowed aria-disabled:opacity-40 motion-safe:enabled:active:scale-[0.97]',
   {
     variants: {
       size: {

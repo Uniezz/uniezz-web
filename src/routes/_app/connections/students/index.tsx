@@ -7,7 +7,7 @@ import { StudentSearchResults } from '@/components/features/connections/StudentS
 import { UITopbar } from '@/ui/components';
 import { optionalSearchStringSchema } from '@/schemas';
 
-export const Route = createFileRoute('/_app/students')({
+export const Route = createFileRoute('/_app/connections/students/')({
   validateSearch: (search: Record<string, unknown>) => ({
     studentSearch: optionalSearchStringSchema.parse(search.studentSearch),
   }),

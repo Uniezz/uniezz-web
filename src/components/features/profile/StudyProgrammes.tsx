@@ -141,7 +141,7 @@ function ProgrammeCard({
                     type="submit"
                     size="pill"
                     bg="secondary"
-                    className="min-h-0 px-2 py-1 text-micro"
+                    className="min-h-0 px-2 py-1 text-micro motion-safe:animate-pop-in"
                     disabled={isPending}
                   >
                     <Save size={12} />

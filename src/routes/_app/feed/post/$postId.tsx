@@ -113,7 +113,7 @@ function FeedPostPage() {
     <>
       <div className="flex items-center justify-between gap-3">
         <Link
-          to="/profiles/$profileId"
+          to="/connections/students/$profileId"
           params={{ profileId: post.author.id }}
           search={{ studentSearch: undefined }}
           className="flex w-fit items-center gap-3 rounded-sm hover:underline focus-visible:outline-2 focus-visible:outline-blue"
@@ -149,7 +149,7 @@ function FeedPostPage() {
         >
           <ChevronLeft className="size-5" /> {t('feed.title')}
         </Link>
-        <div className="relative">
+        <div inert={isPostPending} className="relative">
           <div className="grid min-w-0 items-stretch gap-5 md:h-[calc(100svh-9rem)] md:min-h-0 md:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.75fr)] xl:h-[calc(100svh-56px)]">
             {hasMedia ? (
               <UIPanel className="overflow-hidden p-0">

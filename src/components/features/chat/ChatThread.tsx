@@ -73,7 +73,10 @@ export function ChatThread({
             </>
           )}
           {current.messages.map((m, i) => (
-            <div key={i} className={`flex ${m.outgoing ? 'justify-end' : 'justify-start'}`}>
+            <div
+              key={i}
+              className={`flex motion-safe:animate-rise-in ${m.outgoing ? 'justify-end' : 'justify-start'}`}
+            >
               <div
                 className={`max-w-[85%] rounded-story px-3.5 py-2.5 text-body leading-[1.4] md:max-w-[420px] ${m.outgoing ? 'rounded-br-[6px] bg-blue' : 'rounded-bl-[6px] border border-white-10 bg-white-10'}`}
               >

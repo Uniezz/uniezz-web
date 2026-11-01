@@ -1,4 +1,5 @@
 import { Heart } from 'lucide-react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 import { useFeedLike } from '@/hooks';
@@ -18,6 +19,7 @@ export function FeedLikeButton({
 }) {
   const { t } = useTranslation();
   const { mutateAsync, isPending } = useFeedLike();
+  const [popping, setPopping] = useState(false);
   return (
     <UIButton
       bg="transparent"
@@ -30,6 +32,8 @@ export function FeedLikeButton({
       aria-label={t(liked ? 'apiState.unlike' : 'apiState.like')}
       aria-pressed={liked}
       onClick={async () => {
+        // Without motion there's no animationend to clear the pop, so skip it.
+        if (!liked && !matchMedia('(prefers-reduced-motion: reduce)').matches) setPopping(true);
         try {
           await mutateAsync({ id, kind, liked: !liked });
         } catch {
@@ -37,7 +41,14 @@ export function FeedLikeButton({
         }
       }}
     >
-      <Heart size={16} fill={liked ? 'currentColor' : 'none'} aria-hidden="true" /> {count}
+      <Heart
+        size={16}
+        fill={liked || popping ? 'currentColor' : 'none'}
+        className={cn(popping && 'animate-like-pop text-danger')}
+        onAnimationEnd={() => setPopping(false)}
+        aria-hidden="true"
+      />{' '}
+      {count}
     </UIButton>
   );
 }

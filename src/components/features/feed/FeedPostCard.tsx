@@ -39,7 +39,7 @@ export function FeedPostCard({ post }: { post: FeedPost }) {
             <div className="min-w-0">
               <p className="text-label font-medium text-white-80">
                 <Link
-                  to="/profiles/$profileId"
+                  to="/connections/students/$profileId"
                   params={{ profileId: post.author.id }}
                   search={{ studentSearch: undefined }}
                   className="relative z-20 rounded-sm hover:underline focus-visible:outline-2 focus-visible:outline-blue"

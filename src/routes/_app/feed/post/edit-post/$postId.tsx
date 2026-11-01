@@ -30,12 +30,14 @@ function EditPostPage() {
   if (isLoadingPost || isLoadingProfile) {
     return (
       <Skeleton loading label={t('apiState.loading')}>
-        <PostComposer
-          post={samplePost}
-          isPending={false}
-          onCancel={() => {}}
-          onSubmit={async () => {}}
-        />
+        <div inert>
+          <PostComposer
+            post={samplePost}
+            isPending={false}
+            onCancel={() => {}}
+            onSubmit={async () => {}}
+          />
+        </div>
       </Skeleton>
     );
   }

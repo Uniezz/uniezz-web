@@ -4,19 +4,35 @@ import { useTranslation } from 'react-i18next';
 // TODO(api): Replace the mock discovery profile with API-backed profile data.
 import { CONNECTIONSMOCKS } from '@/utils';
 import { UIButton, UIPanel } from '@/ui/components';
+import { cn } from '@/ui/cn';
 
 export function DiscoveryProfile({
   showProfile,
+  leaving = null,
+  onLeft,
   onReset,
   children,
 }: {
   showProfile: boolean;
+  leaving?: 'left' | 'right' | null;
+  onLeft?: () => void;
   onReset: () => void;
   children?: ReactNode;
 }) {
   const { t } = useTranslation();
   return (
-    <UIPanel className="overflow-hidden rounded-feature p-0">
+    <UIPanel
+      key={showProfile ? 'profile' : 'empty'}
+      className={cn(
+        'overflow-hidden rounded-feature p-0',
+        leaving === 'left' && 'animate-swipe-left',
+        leaving === 'right' && 'animate-swipe-right',
+        !leaving && 'motion-safe:animate-rise-in',
+      )}
+      onAnimationEnd={(event) => {
+        if (leaving && event.target === event.currentTarget) onLeft?.();
+      }}
+    >
       {showProfile ? (
         <>
           <div className="relative h-110">

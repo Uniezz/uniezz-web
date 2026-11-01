@@ -14,11 +14,17 @@ import {
   ConnectionFilterPanel,
 } from '@/components/features/connections';
 
-export const Route = createFileRoute('/_app/connections')({ component: ConnectionsPage });
+export const Route = createFileRoute('/_app/connections/')({ component: ConnectionsPage });
 function ConnectionsPage() {
   const { t } = useTranslation();
   const [passed, setPassed] = useState(false);
   const [connected, setConnected] = useState(false);
+  const [leaving, setLeaving] = useState<'left' | 'right' | null>(null);
+  // Swipes the card away first; without motion there's no animationend, so move on at once.
+  const leave = (direction: 'left' | 'right') => {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) setPassed(true);
+    else setLeaving(direction);
+  };
   const filters = useForm<ConnectionFilters>({ defaultValues: CONNECTIONSMOCKS.defaultFilters });
   const values = { ...CONNECTIONSMOCKS.defaultFilters, ...useWatch({ control: filters.control }) };
   const { mode } = values;
@@ -28,7 +34,7 @@ function ConnectionsPage() {
     <>
       <UITopbar title={t('connections.title')} subtitle={t('connections.subtitle')}>
         <Link
-          to="/students"
+          to="/connections/students"
           search={{ studentSearch: undefined }}
           className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-white-10 bg-white-5 px-4 text-label font-semibold transition-colors hover:bg-white-10 focus-visible:outline-2 focus-visible:outline-blue"
         >
@@ -40,16 +46,24 @@ function ConnectionsPage() {
         <div className="min-w-0 space-y-4">
           <DiscoveryProfile
             showProfile={showProfile}
+            leaving={leaving}
+            onLeft={() => {
+              setPassed(true);
+              setLeaving(null);
+            }}
             onReset={() => {
               setPassed(false);
               filters.reset({ ...CONNECTIONSMOCKS.defaultFilters, mode });
             }}
           >
             <DiscoveryActions
-              showProfile={showProfile}
+              showProfile={showProfile && !leaving}
               connected={connected}
-              onPass={() => setPassed(true)}
-              onConnect={() => setConnected((value) => !value)}
+              onPass={() => leave('left')}
+              onConnect={() => {
+                setConnected(true);
+                leave('right');
+              }}
             />
           </DiscoveryProfile>
         </div>

@@ -5,7 +5,8 @@ export const navItemStyles = cva(
   {
     variants: {
       active: {
-        true: 'nav-item-active border-white-10',
+        // The sidebar draws one sliding highlight behind the active item.
+        true: 'border-transparent',
         false: 'border-transparent hover:bg-white-5',
       },
       collapsed: {

@@ -17,7 +17,7 @@ export function StudentCard({
   const { t } = useTranslation();
   return (
     <Link
-      to="/profiles/$profileId"
+      to="/connections/students/$profileId"
       params={{ profileId: student.id }}
       search={{ studentSearch: search }}
       className="group flex min-h-22 items-center gap-4 px-4 py-4 transition-colors hover:bg-white-5 focus-visible:relative focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-blue sm:px-6"

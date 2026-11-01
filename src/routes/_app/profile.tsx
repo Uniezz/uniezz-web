@@ -18,7 +18,9 @@ function ProfileSkeleton() {
   const { t } = useTranslation();
   return (
     <Skeleton loading label={t('apiState.loading')}>
-      <ProfileEditor profile={sampleProfile} />
+      <div inert>
+        <ProfileEditor profile={sampleProfile} />
+      </div>
     </Skeleton>
   );
 }
