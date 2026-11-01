@@ -20,7 +20,6 @@ export function FeedPostActions({ post }: { post: FeedPost }) {
     return (
       <div className="flex flex-wrap gap-4">
         <ReportButton targetType="post" targetId={post.id} />
-        <ReportButton targetType="user" targetId={post.author.id} />
       </div>
     );
   }

@@ -19,35 +19,32 @@ export function PublicProfile({ profile }: { profile: components['schemas']['Pub
 
   return (
     <div className="space-y-5">
-      <UIPanel className="overflow-hidden p-0">
+      <UIPanel className="relative overflow-hidden p-0">
+        {me && me.id !== profile.id && (
+          <div className="absolute top-2.5 right-2.5 z-10">
+            <ReportButton targetType="user" targetId={profile.id} compact />
+          </div>
+        )}
         <div
           aria-hidden="true"
-          className="nav-item-active h-20 after:right-5 after:size-14 sm:h-24 sm:after:right-8 sm:after:size-18"
+          className="nav-item-active h-20 rounded-t-card after:right-5 after:size-14 sm:h-24 sm:after:right-8 sm:after:size-18"
         />
         <div className="px-5 pb-6 sm:px-8 sm:pb-8">
-          <div className="relative flex items-start gap-4 sm:gap-5">
+          <div className="relative flex flex-col items-start gap-3 sm:gap-4">
             <img
               src={profile.avatarUrl ?? '/app/avatar.png'}
               alt=""
-              className="-mt-8 size-20 shrink-0 rounded-full border-4 border-surface bg-surface object-cover sm:-mt-10 sm:size-24"
+              className="relative z-10 -mt-8 size-20 shrink-0 rounded-full bg-surface object-cover shadow-[0_10px_30px_-10px_rgb(0_0_0/0.7)] ring-1 ring-white-10 sm:-mt-10 sm:size-24"
             />
-            <div className="min-w-0 flex-1 pt-4 sm:pt-5">
+            <div className="min-w-0">
               <h1 className="text-card-title font-bold tracking-[-0.6px] wrap-anywhere sm:text-xxl">
                 {authorName(profile) || t('apiState.student')}
               </h1>
-              <p className="mt-2 text-label leading-relaxed wrap-anywhere text-secondary">
-                <UIUniversityLogo
-                  universityId={profile.universityId}
-                  className="mr-2 align-middle"
-                />
-                {university}
+              <p className="mt-2 flex items-center gap-2 text-label leading-relaxed text-secondary">
+                <UIUniversityLogo universityId={profile.universityId} className="shrink-0" />
+                <span className="min-w-0 wrap-anywhere">{university}</span>
               </p>
             </div>
-            {me && me.id !== profile.id && (
-              <div className="shrink-0 pt-4 sm:pt-5">
-                <ReportButton targetType="user" targetId={profile.id} compact />
-              </div>
-            )}
           </div>
         </div>
       </UIPanel>

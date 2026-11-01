@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { ChevronDown, Flag } from 'lucide-react';
+import { ChevronDown, FlagTriangleRight } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 import type { components } from '@/@types/schema';
@@ -61,17 +61,16 @@ export function ReportButton({
     <>
       <UIButton
         bg="transparent"
-        size={compact ? 'icon' : 'pill'}
-        aria-label={compact ? label : undefined}
-        title={compact ? label : undefined}
+        size="pill"
         className={
           compact
-            ? 'size-10 border-white-10 bg-white-5 text-secondary enabled:hover:bg-white-10 enabled:hover:text-white'
-            : 'min-h-0 border-0 p-0 text-secondary enabled:hover:bg-transparent enabled:hover:text-white'
+            ? 'min-h-0 gap-1.5 rounded-full border border-danger/25 bg-danger-soft py-1 pr-2.5 pl-2 text-micro font-semibold text-danger backdrop-blur-md enabled:hover:border-danger/50 enabled:hover:bg-danger/25'
+            : 'min-h-0 gap-1 border-0 p-0 text-secondary enabled:hover:bg-transparent enabled:hover:text-white'
         }
         onClick={() => changeOpen(true)}
       >
-        {compact ? <Flag className="size-4" aria-hidden="true" /> : label}
+        <FlagTriangleRight className="size-3.5" aria-hidden="true" />
+        {label}
       </UIButton>
       <UIDialog
         open={open}

@@ -1,4 +1,4 @@
-import { Link, type LinkProps } from '@tanstack/react-router';
+import { Link, useMatchRoute, type LinkProps } from '@tanstack/react-router';
 import { type LucideIcon } from 'lucide-react';
 import { cn } from '../../cn';
 import {
@@ -7,6 +7,14 @@ import {
   navItemLabelStyles,
   navItemStyles,
 } from './variants';
+
+const RESET_TAB_SEARCH = {
+  postId: undefined,
+  feedRoute: undefined,
+  chatType: undefined,
+  conversationId: undefined,
+  chatRoute: undefined,
+};
 
 type UINavItemProps = {
   to: LinkProps['to'];
@@ -25,9 +33,14 @@ export const UINavItem = ({
   collapsed,
   className,
 }: UINavItemProps) => {
+  const isCurrentTab = Boolean(useMatchRoute()({ to, fuzzy: true }));
+
   return (
     <Link
       to={to}
+      // The app layout carries sub-route state (open post, chat) across links; pressing the
+      // current tab drops it so the tab opens at its root.
+      search={isCurrentTab ? ((() => RESET_TAB_SEARCH) as never) : undefined}
       title={collapsed ? label : undefined}
       aria-label={collapsed ? label : undefined}
       className="block rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-blue"

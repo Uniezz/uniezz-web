@@ -26,7 +26,9 @@ export function PostDetails({ post, large = false }: { post: FeedPost; large?: b
         <p
           className={cn(
             'text-body wrap-anywhere whitespace-pre-wrap text-white-80',
-            large && 'max-w-prose leading-relaxed',
+            // Only the body scrolls, so the title stays on top and the tags stay at the bottom.
+            large &&
+              'min-h-0 max-w-prose flex-1 [scrollbar-gutter:stable] overflow-y-auto leading-relaxed',
           )}
         >
           {post.content}

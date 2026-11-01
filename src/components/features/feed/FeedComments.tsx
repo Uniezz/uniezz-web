@@ -103,7 +103,6 @@ export function FeedCommentItem({
               {profile?.id && comment.author && profile.id !== comment.author.id && (
                 <>
                   <ReportButton targetType="comment" targetId={comment.id} />
-                  <ReportButton targetType="user" targetId={comment.author.id} />
                 </>
               )}
             </>
