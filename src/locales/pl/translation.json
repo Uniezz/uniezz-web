@@ -75,7 +75,15 @@
   "feed": {
     "action": "Dodaj post",
     "subtitle": "Co się dzieje w Lublinie",
-    "title": "Aktualności"
+    "title": "Aktualności",
+    "filters": "Filtry aktualności",
+    "type": "Typ posta",
+    "allTypes": "Wszystkie typy",
+    "date": "Data",
+    "anyTime": "Kiedykolwiek",
+    "today": "Dzisiaj",
+    "lastWeek": "Ostatnie 7 dni",
+    "lastMonth": "Ostatnie 30 dni"
   },
   "guide": {
     "action": "Zaproponuj miejsce",

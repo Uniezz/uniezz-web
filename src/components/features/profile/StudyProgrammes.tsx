@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ChevronDown, Save, Trash2 } from 'lucide-react';
 import toast from 'react-hot-toast';
@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 import type { components } from '@/@types/schema';
 import { useMyProfile, useProfileProgrammes, useUniversities } from '@/hooks';
 import { programmeSchema, type ProgrammeFormSchema } from '@/schemas';
-import { UIButton, UIField, UIPanel, UIUnsavedChanges } from '@/ui/components';
+import { UIButton, UIField, UIPanel, UISelect, UIUnsavedChanges } from '@/ui/components';
 import { AddProgramme } from './AddProgramme';
 
 export function StudyProgrammes({
@@ -61,7 +61,7 @@ function ProgrammeCard({
 }) {
   const { t } = useTranslation();
   const {
-    register,
+    control,
     handleSubmit,
     reset,
     getValues,
@@ -150,76 +150,120 @@ function ProgrammeCard({
                 )}
               </div>
             </summary>
-            <div className="grid gap-3 pt-3 [&_label>span]:text-[10px] [&_label>span]:font-bold [&_label>span]:tracking-[0.8px] [&_label>span]:text-muted [&_label>span]:uppercase [&_select]:min-h-0 [&_select]:rounded-none [&_select]:border-0 [&_select]:bg-transparent [&_select]:p-0 [&_select]:text-detail">
+            <div className="grid gap-3 pt-3 [&_label>span]:text-[10px] [&_label>span]:font-bold [&_label>span]:tracking-[0.8px] [&_label>span]:text-muted [&_label>span]:uppercase">
               <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_125px]">
                 <UIField
                   label={t('app.faculty')}
                   error={errors.faculty ? t('app.required') : undefined}
                   className="rounded-lg bg-white-5 px-2.5 py-2"
                 >
-                  <select className="app-control" {...register('faculty')} required>
-                    {[...new Set([programme.faculty, ...faculties])].map((faculty) => (
-                      <option key={faculty} value={faculty}>
-                        {faculty}
-                      </option>
-                    ))}
-                  </select>
+                  <Controller
+                    control={control}
+                    name="faculty"
+                    render={({ field }) => (
+                      <UISelect
+                        label={t('app.faculty')}
+                        value={field.value}
+                        onChange={field.onChange}
+                        className="text-detail"
+                        options={[...new Set([programme.faculty, ...faculties])].map((faculty) => ({
+                          value: faculty,
+                          label: faculty,
+                        }))}
+                      />
+                    )}
+                  />
                 </UIField>
                 <UIField
                   label={t('app.yearOfStudy')}
                   error={errors.yearOfStudy ? t('app.required') : undefined}
                   className="rounded-lg bg-white-5 px-2.5 py-2"
                 >
-                  <select
-                    className="app-control"
-                    {...register('yearOfStudy', {
-                      setValueAs: (value) =>
-                        value === '' || value === null ? null : Number(value),
-                    })}
-                  >
-                    <option value="">—</option>
-                    {['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'].map((year) => (
-                      <option key={year} value={year}>
-                        {t('app.studyYear', { year })}
-                      </option>
-                    ))}
-                  </select>
+                  <Controller
+                    control={control}
+                    name="yearOfStudy"
+                    render={({ field }) => (
+                      <UISelect
+                        label={t('app.yearOfStudy')}
+                        value={field.value === null ? '' : String(field.value)}
+                        onChange={(value) => field.onChange(value === '' ? null : Number(value))}
+                        className="text-detail"
+                        options={[
+                          { value: '', label: '—' },
+                          ...Array.from({ length: 10 }, (_, index) => ({
+                            value: String(index + 1),
+                            label: t('app.studyYear', { year: index + 1 }),
+                          })),
+                        ]}
+                      />
+                    )}
+                  />
                 </UIField>
               </div>
               <div className="grid gap-3 sm:grid-cols-3">
                 <UIField label={t('app.studyStatus')} className="rounded-lg bg-white-5 px-2.5 py-2">
-                  <select className="app-control" {...register('status')}>
-                    <option value="active">{t('app.studyStatusActive')}</option>
-                    <option value="graduated">{t('app.studyStatusGraduated')}</option>
-                    <option value="suspended">{t('app.studyStatusSuspended')}</option>
-                    <option value="cancelled">{t('app.studyStatusCancelled')}</option>
-                  </select>
+                  <Controller
+                    control={control}
+                    name="status"
+                    render={({ field }) => (
+                      <UISelect
+                        label={t('app.studyStatus')}
+                        value={field.value}
+                        onChange={field.onChange}
+                        className="text-detail"
+                        options={[
+                          { value: 'active', label: t('app.studyStatusActive') },
+                          { value: 'graduated', label: t('app.studyStatusGraduated') },
+                          { value: 'suspended', label: t('app.studyStatusSuspended') },
+                          { value: 'cancelled', label: t('app.studyStatusCancelled') },
+                        ]}
+                      />
+                    )}
+                  />
                 </UIField>
                 <UIField label={t('app.studyLevel')} className="rounded-lg bg-white-5 px-2.5 py-2">
-                  <select
-                    className="app-control"
-                    {...register('level', { setValueAs: (value) => value || null })}
-                  >
-                    <option value="">—</option>
-                    <option value="first_cycle">{t('app.studyLevelFirstCycle')}</option>
-                    <option value="second_cycle">{t('app.studyLevelSecondCycle')}</option>
-                    <option value="long_cycle">{t('app.studyLevelLongCycle')}</option>
-                    <option value="third_cycle">{t('app.studyLevelThirdCycle')}</option>
-                    <option value="phd_school">{t('app.studyLevelPhdSchool')}</option>
-                  </select>
+                  <Controller
+                    control={control}
+                    name="level"
+                    render={({ field }) => (
+                      <UISelect
+                        label={t('app.studyLevel')}
+                        value={field.value ?? ''}
+                        onChange={(value) => field.onChange(value || null)}
+                        className="text-detail"
+                        options={[
+                          { value: '', label: '—' },
+                          { value: 'first_cycle', label: t('app.studyLevelFirstCycle') },
+                          { value: 'second_cycle', label: t('app.studyLevelSecondCycle') },
+                          { value: 'long_cycle', label: t('app.studyLevelLongCycle') },
+                          { value: 'third_cycle', label: t('app.studyLevelThirdCycle') },
+                          { value: 'phd_school', label: t('app.studyLevelPhdSchool') },
+                        ]}
+                      />
+                    )}
+                  />
                 </UIField>
                 <UIField
                   label={t('app.modeOfStudies')}
                   className="rounded-lg bg-white-5 px-2.5 py-2"
                 >
-                  <select
-                    className="app-control"
-                    {...register('modeOfStudies', { setValueAs: (value) => value || null })}
-                  >
-                    <option value="">—</option>
-                    <option value="full_time">{t('app.modeOfStudiesFullTime')}</option>
-                    <option value="part_time">{t('app.modeOfStudiesPartTime')}</option>
-                  </select>
+                  <Controller
+                    control={control}
+                    name="modeOfStudies"
+                    render={({ field }) => (
+                      <UISelect
+                        label={t('app.modeOfStudies')}
+                        value={field.value ?? ''}
+                        onChange={(value) => field.onChange(value || null)}
+                        className="text-detail"
+                        options={[
+                          { value: '', label: '—' },
+                          { value: 'full_time', label: t('app.modeOfStudiesFullTime') },
+                          { value: 'part_time', label: t('app.modeOfStudiesPartTime') },
+                        ]}
+                      />
+                    )}
+                  />
                 </UIField>
               </div>
             </div>

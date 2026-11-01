@@ -1,19 +1,18 @@
 import { Check } from 'lucide-react';
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState, type ComponentProps } from 'react';
 import { type Option } from '@/@types';
 import { cn } from '@/ui/cn';
 import { UIButton } from '../UIButton';
 import { UIUniversityLogo } from '../UIUniversityLogo';
 import { menuIconStyles, menuOptionStyles, menuStyles } from './variants';
 
-type UIMenuProps = {
+type UIMenuProps = Omit<ComponentProps<'div'>, 'onSelect' | 'ref'> & {
   options: Option[];
   value: string;
   onSelect: (value: string) => void;
-  className?: string;
 };
 
-export const UIMenu = ({ options, value, onSelect, className }: UIMenuProps) => {
+export const UIMenu = ({ options, value, onSelect, className, ...props }: UIMenuProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const [opensUp, setOpensUp] = useState(false);
 
@@ -28,6 +27,7 @@ export const UIMenu = ({ options, value, onSelect, className }: UIMenuProps) => 
 
   return (
     <div
+      {...props}
       ref={ref}
       className={cn(menuStyles(), opensUp && 'top-auto bottom-full mt-0 mb-2', className)}
     >

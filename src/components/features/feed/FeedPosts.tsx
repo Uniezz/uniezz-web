@@ -1,3 +1,4 @@
+import type { FeedFilters } from '@/@types';
 import { Masonry, type RenderComponentProps } from 'masonic';
 import { Skeleton } from 'skullet/react';
 import { useTranslation } from 'react-i18next';
@@ -23,10 +24,10 @@ function FeedPostsSkeleton() {
   );
 }
 
-export function FeedPosts({ search }: { search: string }) {
+export function FeedPosts({ search, filters }: { search: string; filters?: FeedFilters }) {
   const { t } = useTranslation();
   const { data, isPending, isError, refetch, hasNextPage, isFetchingNextPage, fetchNextPage } =
-    useFeedPosts();
+    useFeedPosts(filters);
   // shortcut: Search filters loaded pages until the feed API accepts search; then pass it to the API.
   const items = (data?.pages.flatMap((page) => page.items ?? []) ?? []).filter((post) =>
     matchesSearch(

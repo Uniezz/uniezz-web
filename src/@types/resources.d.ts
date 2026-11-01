@@ -226,8 +226,16 @@ export default interface Resources {
     },
     "feed": {
       "action": "Create post",
+      "allTypes": "All types",
+      "anyTime": "Any time",
+      "date": "Date",
+      "filters": "Feed filters",
+      "lastMonth": "Last 30 days",
+      "lastWeek": "Last 7 days",
       "subtitle": "What's happening across Lublin",
-      "title": "Feed"
+      "title": "Feed",
+      "today": "Today",
+      "type": "Post type"
     },
     "guide": {
       "action": "Suggest a place",

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { FeedPosts, TopPosts } from '@/components/features/feed';
+import { FeedFilterBar, FeedPosts, TopPosts } from '@/components/features/feed';
 import { UIButton, UISearch, UITopbar } from '@/ui/components';
 
 export const Route = createFileRoute('/_app/feed/')({
@@ -22,12 +22,15 @@ function FeedIndexPage() {
   const navigate = Route.useNavigate();
   const { t } = useTranslation();
   const [search, setSearch] = useState('');
+  const [filters, setFilters] = useState<Parameters<typeof FeedFilterBar>[0]['filters']>({});
+  const { type, university, from } = filters;
 
   return (
     <>
       <UITopbar title={t('feed.title')} subtitle={t('app.feedSubtitle')}>
-        <div className="flex w-full items-center gap-3 sm:w-auto">
-          <div className="min-w-0 flex-1 sm:w-75">
+        <div className="flex w-full flex-wrap items-center gap-3 sm:w-auto">
+          <FeedFilterBar filters={filters} onChange={setFilters} />
+          <div className="min-w-0 flex-1 sm:w-75 sm:flex-none">
             <UISearch
               value={search}
               onChange={setSearch}
@@ -53,7 +56,7 @@ function FeedIndexPage() {
         </div>
       </UITopbar>
       <TopPosts search={search} />
-      <FeedPosts search={search} />
+      <FeedPosts search={search} filters={{ type, university, from }} />
     </>
   );
 }

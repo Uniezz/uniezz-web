@@ -75,7 +75,15 @@
   "feed": {
     "action": "Create post",
     "subtitle": "What's happening across Lublin",
-    "title": "Feed"
+    "title": "Feed",
+    "filters": "Feed filters",
+    "type": "Post type",
+    "allTypes": "All types",
+    "date": "Date",
+    "anyTime": "Any time",
+    "today": "Today",
+    "lastWeek": "Last 7 days",
+    "lastMonth": "Last 30 days"
   },
   "guide": {
     "action": "Suggest a place",
