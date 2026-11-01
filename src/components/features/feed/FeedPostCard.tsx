@@ -14,7 +14,7 @@ export function FeedPostCard({ post }: { post: FeedPost }) {
     <div className="group relative">
       <UIPanel className="overflow-hidden p-0">
         {image && !isQuestion && (
-          <div className="relative h-50 overflow-hidden">
+          <div className="relative h-50 overflow-hidden rounded-t-card">
             <img
               src={image}
               alt=""
@@ -78,6 +78,7 @@ export function FeedPostCard({ post }: { post: FeedPost }) {
         params={{ postId: post.id }}
         search={{ postId: post.id }}
         aria-label={`${t('app.viewPost')}: ${post.title}`}
+        skullet-ignore=""
         className="absolute inset-0 z-10 rounded-3xl focus-visible:outline-2 focus-visible:outline-blue"
       />
     </div>
