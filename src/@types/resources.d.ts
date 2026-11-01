@@ -37,6 +37,7 @@ export default interface Resources {
       "addProgrammeDescription": "Enter your programme and faculty.",
       "all": "All",
       "allUniversities": "All universities",
+      "allUniversitiesHint": "Visible to students of every university",
       "back": "Back",
       "changePhoto": "Change photo",
       "cheapGroceries": "Cheap groceries near campus",

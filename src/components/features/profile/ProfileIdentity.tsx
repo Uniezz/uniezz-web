@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useController, useFormContext, useWatch } from 'react-hook-form';
 
 import { useUniversities } from '@/hooks';
-import { UIButton, UILanguageSwitcher, UIPanel, UISwitch } from '@/ui/components';
+import { UIButton, UILanguageSwitcher, UIPanel, UISwitch, UIUniversityLogo } from '@/ui/components';
 import { type ProfileFormSchema } from '@/schemas';
 import { readImageFile } from '@/utils/image';
 
@@ -60,7 +60,8 @@ export function ProfileIdentity({
         <h2 className="text-[21px] leading-[1.2] font-bold">
           {defaultValues?.first} {defaultValues?.last}
         </h2>
-        <p className="mt-1.25 text-detail font-medium text-secondary">
+        <p className="mt-1.25 text-detail font-medium text-balance text-secondary">
+          <UIUniversityLogo universityId={universityId} size="xs" className="mr-1.5 align-middle" />
           {universities?.find((item) => item.id === universityId)?.name ??
             universityId.toUpperCase()}
         </p>

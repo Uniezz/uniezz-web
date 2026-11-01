@@ -33,7 +33,7 @@ export function PostTypeSelector({
     <div className="flex items-center justify-between gap-3">
       <span className="text-micro font-semibold text-secondary">{t('postComposer.type')}</span>
       <div
-        className="relative"
+        className="relative flex"
         ref={ref}
         onKeyDown={(event) => {
           if (event.key === 'Escape') {

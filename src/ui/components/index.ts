@@ -16,6 +16,7 @@ export * from './UIRow/UIRow';
 export * from './UIPanel';
 export * from './UISearch';
 export * from './UISegmented';
+export * from './UIUniversityLogo';
 export * from './UIChip';
 export * from './UIField';
 export * from './UISwitch';

@@ -127,6 +127,7 @@ export function PostComposer({
                   audience={audience}
                   disabled={Boolean(post)}
                   university={author?.universityId.toUpperCase() ?? t('app.university')}
+                  universityId={author?.universityId}
                   onSelect={(value) => setValue('audience', value, { shouldDirty: true })}
                 />
                 <div className="space-y-1.5">

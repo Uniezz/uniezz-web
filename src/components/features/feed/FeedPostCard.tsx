@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router';
 import { Images } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { FeedPost } from '@/@types';
-import { UIAvatar, UIPanel } from '@/ui/components';
+import { UIAvatar, UIPanel, UIUniversityLogo } from '@/ui/components';
 import { cn } from '@/ui/cn';
 import { authorName, postDate } from '@/utils/feed';
 
@@ -47,7 +47,8 @@ export function FeedPostCard({ post }: { post: FeedPost }) {
                   {authorName(post.author) || t('apiState.student')}
                 </Link>
               </p>
-              <p className="mt-1 text-detail text-secondary">
+              <p className="mt-1 flex items-center gap-1.5 text-detail text-secondary">
+                <UIUniversityLogo universityId={post.author.universityId} size="xs" />
                 {post.author.universityId.toUpperCase()} ·{' '}
                 {postDate(post, i18n.resolvedLanguage ?? 'en')}
               </p>

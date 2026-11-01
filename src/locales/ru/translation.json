@@ -297,7 +297,8 @@
     "modeOfStudiesFullTime": "Очная",
     "modeOfStudiesPartTime": "Заочная",
     "programme": "Направление",
-    "addProgrammeDescription": "Укажите направление и факультет."
+    "addProgrammeDescription": "Укажите направление и факультет.",
+    "allUniversitiesHint": "Видят студенты всех университетов"
   },
   "postComposer": {
     "duplicatePhoto": "Эта фотография уже добавлена.",

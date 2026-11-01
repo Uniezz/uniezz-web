@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router';
 import { ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { components } from '@/@types/schema';
-import { UIAvatar } from '@/ui/components';
+import { UIAvatar, UIUniversityLogo } from '@/ui/components';
 import { authorName } from '@/utils/feed';
 
 export function StudentCard({
@@ -37,8 +37,12 @@ export function StudentCard({
         </p>
       </div>
       {university && (
-        <span className="hidden shrink-0 rounded-full border border-white-10 bg-white-5 px-3 py-1 text-micro font-semibold tracking-wide text-secondary sm:block">
-          {student.universityId.toUpperCase()}
+        <span className="hidden shrink-0 items-center gap-1.5 rounded-full border border-white-10 bg-white-5 py-1 pr-2 pl-1 text-micro font-semibold tracking-wide text-secondary sm:flex">
+          <UIUniversityLogo universityId={student.universityId} />
+          {/* Trims the text box to the capitals, so they centre optically next to the logo. */}
+          <span className="[text-box:trim-both_cap_alphabetic]">
+            {student.universityId.toUpperCase()}
+          </span>
         </span>
       )}
       <ChevronRight

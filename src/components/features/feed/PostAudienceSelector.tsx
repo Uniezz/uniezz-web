@@ -1,28 +1,39 @@
-import { Building2, ChevronDown, Globe } from 'lucide-react';
+import { Building2, ChevronDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import { useDropdown } from '@/hooks/useDropdown';
 import type { PostSchema } from '@/schemas';
-import { UIButton, UIMenu } from '@/ui/components';
+import { UIButton, UIMenu, UIUniversityLogo } from '@/ui/components';
 
 type Audience = PostSchema['audience'];
 
 export function PostAudienceSelector({
   audience,
   university,
+  universityId,
   onSelect,
   disabled = false,
 }: {
   audience: Audience;
   university: string;
+  universityId?: string;
   onSelect: (audience: Audience) => void;
   disabled?: boolean;
 }) {
   const { t } = useTranslation();
   const { ref, isOpen, toggle, close } = useDropdown();
   const options = [
-    { value: 'university', label: university, Icon: Building2 },
-    { value: 'all', label: t('app.allUniversities'), Icon: Globe },
+    {
+      value: 'university',
+      label: university,
+      Icon: Building2,
+      universityId,
+    },
+    {
+      value: 'all',
+      label: t('app.allUniversities'),
+      description: t('app.allUniversitiesHint'),
+    },
   ];
   const selected = audience === 'all' ? options[1] : options[0];
 
@@ -30,7 +41,7 @@ export function PostAudienceSelector({
     <div className="flex items-center justify-between gap-3">
       <span className="text-micro font-semibold text-secondary">{t('app.university')}</span>
       <div
-        className="relative"
+        className="relative flex"
         ref={ref}
         onKeyDown={(event) => {
           if (event.key === 'Escape') {
@@ -42,14 +53,17 @@ export function PostAudienceSelector({
         <UIButton
           size="pill"
           bg="secondary"
-          leftIcon={selected.Icon}
+          leftIcon={selected.universityId ? undefined : selected.Icon}
           leftIconColor="gray"
           onClick={toggle}
           disabled={disabled}
           aria-label={t('app.university')}
           aria-expanded={isOpen}
-          className="min-h-7 gap-1.5 px-2.5 py-1 text-detail font-medium text-secondary"
+          className="h-7 min-h-7 gap-1.5 px-2.5 py-1 text-detail font-medium text-secondary"
         >
+          {selected.universityId && (
+            <UIUniversityLogo universityId={selected.universityId} size="xs" />
+          )}
           {selected.label}
           <ChevronDown size={14} aria-hidden="true" />
         </UIButton>

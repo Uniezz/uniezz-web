@@ -2,7 +2,7 @@ import { GraduationCap, Heart, Mail, UserRound } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { components } from '@/@types/schema';
 import { useMyProfile, useUniversities } from '@/hooks';
-import { UIPanel } from '@/ui/components';
+import { UIPanel, UIUniversityLogo } from '@/ui/components';
 import { ReportButton } from '@/components/features/reports/ReportButton';
 import { authorName } from '@/utils/feed';
 import { cn } from '@/ui/cn';
@@ -36,6 +36,10 @@ export function PublicProfile({ profile }: { profile: components['schemas']['Pub
                 {authorName(profile) || t('apiState.student')}
               </h1>
               <p className="mt-2 text-label leading-relaxed wrap-anywhere text-secondary">
+                <UIUniversityLogo
+                  universityId={profile.universityId}
+                  className="mr-2 align-middle"
+                />
                 {university}
               </p>
             </div>

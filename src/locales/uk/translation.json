@@ -297,7 +297,8 @@
     "modeOfStudiesFullTime": "Денна",
     "modeOfStudiesPartTime": "Заочна",
     "programme": "Напрям",
-    "addProgrammeDescription": "Вкажіть напрям і факультет."
+    "addProgrammeDescription": "Вкажіть напрям і факультет.",
+    "allUniversitiesHint": "Бачать студенти всіх університетів"
   },
   "postComposer": {
     "duplicatePhoto": "Цю фотографію вже додано.",
