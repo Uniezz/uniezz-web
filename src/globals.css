@@ -382,21 +382,6 @@ input[type='search']::-webkit-search-cancel-button {
   }
 }
 
-/* The sidebar cat hops each time the highlight moves: crouch, jump, squash on landing, sit. */
-@keyframes cat-hop {
-  15% {
-    scale: 1.1 0.9;
-  }
-  50% {
-    translate: 0 -16px;
-    scale: 0.95 1.05;
-  }
-  85% {
-    translate: 0 0;
-    scale: 1.15 0.85;
-  }
-}
-
 @layer components {
   .nav-item-active {
     position: relative;

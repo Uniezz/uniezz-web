@@ -1,3 +1,6 @@
 import { cva } from 'class-variance-authority';
 
-export const emptyStyles = cva('py-12 text-center text-body text-secondary');
+// One night-sky card: the cat on top, the message below it.
+export const emptyStyles = cva(
+  'nav-item-active mx-auto my-6 w-full max-w-sm overflow-hidden rounded-2xl border border-white-10 text-center text-body text-secondary after:hidden',
+);

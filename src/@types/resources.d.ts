@@ -57,7 +57,7 @@ export default interface Resources {
       "download": "Download",
       "downloads": "Downloads",
       "edit": "Edit",
-      "empty": "No matching records in this design.",
+      "empty": "Nothing here yet.",
       "event": "Event",
       "faculty": "Faculty",
       "feedSubtitle": "What’s happening in Lublin",

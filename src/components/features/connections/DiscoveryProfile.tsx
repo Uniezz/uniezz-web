@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 // TODO(api): Replace the mock discovery profile with API-backed profile data.
 import { CONNECTIONSMOCKS } from '@/utils';
-import { UIButton, UIPanel } from '@/ui/components';
+import { UIButton, UIEmptyCat, UIPanel } from '@/ui/components';
 import { cn } from '@/ui/cn';
 
 export function DiscoveryProfile({
@@ -71,7 +71,10 @@ export function DiscoveryProfile({
         </>
       ) : (
         // Same footprint and text position as a profile card, so the layout holds when the last profile is gone.
-        <div role="status" className="flex h-110 flex-col justify-end gap-4 p-6">
+        <div role="status" className="flex h-110 flex-col gap-4 p-6">
+          <div className="flex min-h-0 flex-1 items-center justify-center">
+            <UIEmptyCat className="aspect-[7/4] h-full max-h-56 max-w-full" />
+          </div>
           <div className="space-y-2">
             <h2 className="text-card-title font-bold tracking-[-0.6px]">
               {t('connections.emptyTitle')}

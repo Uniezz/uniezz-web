@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Search } from 'lucide-react';
 import { Skeleton } from 'skullet/react';
 import { useProfileSearch, useUniversities } from '@/hooks';
-import { UIButton, UIPanel, UIQueryError } from '@/ui/components';
+import { UIButton, UIEmpty, UIPanel, UIQueryError } from '@/ui/components';
 import { sampleProfile } from '@/utils/profileSkeletonData';
 import { StudentCard } from './StudentCard';
 
@@ -20,12 +20,12 @@ export function StudentSearchResults({ search, name }: { search: string; name: s
     <div className="flex h-full min-h-0 flex-col gap-5">
       {isError && !loading && <UIQueryError retry={() => void refetch()} />}
       {!loading && !isError && students.length === 0 && (
-        <UIPanel surface="tint" className="space-y-1 text-center" role="status">
-          <p className="text-label font-semibold">{t('students.noResults')}</p>
+        <UIEmpty>
+          <p className="font-semibold text-white">{t('students.noResults')}</p>
           {search.trim() && (
-            <p className="text-detail text-secondary">{t('students.tryAnotherName')}</p>
+            <p className="mt-1 text-detail text-secondary">{t('students.tryAnotherName')}</p>
           )}
-        </UIPanel>
+        </UIEmpty>
       )}
       {displayed.length > 0 && (
         <UIPanel surface="tint" className="flex min-h-0 flex-col overflow-hidden p-0">
