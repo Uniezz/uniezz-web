@@ -313,7 +313,8 @@
     "modeOfStudiesPartTime": "Niestacjonarne",
     "programme": "Kierunek",
     "addProgrammeDescription": "Podaj kierunek i wydział.",
-    "allUniversitiesHint": "Widoczne dla studentów wszystkich uczelni"
+    "allUniversitiesHint": "Widoczne dla studentów wszystkich uczelni",
+    "studyLevelDoctoral": "Doktoranckie"
   },
   "postComposer": {
     "duplicatePhoto": "To zdjęcie zostało już dodane.",

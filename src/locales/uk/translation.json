@@ -313,7 +313,8 @@
     "modeOfStudiesPartTime": "Заочна",
     "programme": "Напрям",
     "addProgrammeDescription": "Вкажіть напрям і факультет.",
-    "allUniversitiesHint": "Бачать студенти всіх університетів"
+    "allUniversitiesHint": "Бачать студенти всіх університетів",
+    "studyLevelDoctoral": "Докторантура"
   },
   "postComposer": {
     "duplicatePhoto": "Цю фотографію вже додано.",

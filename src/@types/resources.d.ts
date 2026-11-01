@@ -122,6 +122,7 @@ export default interface Resources {
       "send": "Send",
       "studyBuddy": "Study buddy",
       "studyLevel": "Level",
+      "studyLevelDoctoral": "Doctoral",
       "studyLevelFirstCycle": "Bachelor's / engineer",
       "studyLevelLongCycle": "Long-cycle master's",
       "studyLevelPhdSchool": "Doctoral school",

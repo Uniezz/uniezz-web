@@ -313,7 +313,8 @@
     "modeOfStudiesPartTime": "Part-time",
     "programme": "Programme",
     "addProgrammeDescription": "Enter your programme and faculty.",
-    "allUniversitiesHint": "Visible to students of every university"
+    "allUniversitiesHint": "Visible to students of every university",
+    "studyLevelDoctoral": "Doctoral"
   },
   "postComposer": {
     "duplicatePhoto": "This photo has already been added.",

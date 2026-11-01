@@ -57,11 +57,12 @@ export function ConnectionFilterPanel({ form }: { form: UseFormReturn<Connection
     { value: 'female', label: t('connections.women') },
     { value: 'male', label: t('connections.men') },
   ];
-  const levelOptions: { value: StudyLevel; label: string }[] = [
-    { value: 'first_cycle', label: t('app.studyLevelFirstCycle') },
-    { value: 'second_cycle', label: t('app.studyLevelSecondCycle') },
-    { value: 'long_cycle', label: t('app.studyLevelLongCycle') },
-    { value: 'phd_school', label: t('app.studyLevelPhdSchool') },
+  // One "Doctoral" chip covers both PhD tracks: old-style third-cycle studies and doctoral schools.
+  const levelOptions: { values: StudyLevel[]; label: string }[] = [
+    { values: ['first_cycle'], label: t('app.studyLevelFirstCycle') },
+    { values: ['second_cycle'], label: t('app.studyLevelSecondCycle') },
+    { values: ['long_cycle'], label: t('app.studyLevelLongCycle') },
+    { values: ['third_cycle', 'phd_school'], label: t('app.studyLevelDoctoral') },
   ];
 
   return (
@@ -134,17 +135,26 @@ export function ConnectionFilterPanel({ form }: { form: UseFormReturn<Connection
               />
             </div>
             <FilterSection label={t('app.studyLevel')}>
-              {levelOptions.map(({ value, label }) => (
-                <UIChip
-                  key={value}
-                  selected={levels.includes(value)}
-                  onClick={() =>
-                    form.setValue('levels', toggle(levels, value), { shouldDirty: true })
-                  }
-                >
-                  {label}
-                </UIChip>
-              ))}
+              {levelOptions.map(({ values, label }) => {
+                const selected = values.every((value) => levels.includes(value));
+                return (
+                  <UIChip
+                    key={label}
+                    selected={selected}
+                    onClick={() =>
+                      form.setValue(
+                        'levels',
+                        selected
+                          ? levels.filter((level) => !values.includes(level))
+                          : [...levels, ...values.filter((value) => !levels.includes(value))],
+                        { shouldDirty: true },
+                      )
+                    }
+                  >
+                    {label}
+                  </UIChip>
+                );
+              })}
             </FilterSection>
           </>
         )}

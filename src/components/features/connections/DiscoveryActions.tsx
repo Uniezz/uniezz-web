@@ -1,5 +1,4 @@
-import { Link } from '@tanstack/react-router';
-import { Heart, MessageCircle, X } from 'lucide-react';
+import { Heart, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { cn } from '@/ui/cn';
 import { UIButton } from '@/ui/components';
@@ -42,17 +41,6 @@ export function DiscoveryActions({
           <p className="text-detail text-secondary">{label}</p>
         </div>
       ))}
-      <div className="text-center">
-        <Link
-          to="/chat"
-          search={{ conversationId: 'zofia' }}
-          aria-label={t('app.message')}
-          className="mb-2 inline-flex size-16 items-center justify-center rounded-full border border-white-10 bg-white-5"
-        >
-          <MessageCircle size={24} />
-        </Link>
-        <p className="text-detail text-secondary">{t('app.message')}</p>
-      </div>
     </div>
   );
 }
