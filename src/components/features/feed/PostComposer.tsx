@@ -25,13 +25,11 @@ import { PostAudienceSelector } from './PostAudienceSelector';
 export function PostComposer({
   post,
   isPending,
-  isError,
   onSubmit,
   onCancel,
 }: {
   post?: FeedPost;
   isPending: boolean;
-  isError: boolean;
   onSubmit: (values: PostSchema) => Promise<void>;
   onCancel: () => void;
 }) {
@@ -102,7 +100,7 @@ export function PostComposer({
                   const tags = postTagAdditionSchema.safeParse([...values.tags, values.tagDraft]);
                   await onSubmit({ ...values, tags: tags.success ? tags.data : values.tags });
                 } catch {
-                  // Keep the draft available when publishing fails.
+                  toast.error(t('apiState.error'));
                 }
               },
               (errors) => {
@@ -200,7 +198,6 @@ export function PostComposer({
                     disabled={isPending}
                   />
                 )}
-                {isError && <UIQueryError />}
                 {profileError && <UIQueryError retry={() => void refetchProfile()} />}
               </fieldset>
             </div>

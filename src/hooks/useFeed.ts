@@ -110,5 +110,5 @@ export function useCreateComment() {
     return mutateAsync({ ...input, key });
   }
 
-  return { createComment, isError, isPending };
+  return { createComment, isPending };
 }

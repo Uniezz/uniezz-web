@@ -1,8 +1,9 @@
 import { createFileRoute, Link, redirect } from '@tanstack/react-router';
-import { ChevronLeft, ChevronRight, Send, CalendarDays } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Send, CalendarDays, CornerUpLeft, X } from 'lucide-react';
 import { type FormEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Skeleton } from 'skullet/react';
+import toast from 'react-hot-toast';
 import type { FeedComment } from '@/@types';
 
 import { cn } from '@/ui/cn';
@@ -57,11 +58,7 @@ function FeedPostPage() {
     isFetchingNextPage: isFetchingMoreComments,
     fetchNextPage: fetchMoreComments,
   } = useFeedComments(postId);
-  const {
-    createComment,
-    isPending: isCreatingComment,
-    isError: createCommentError,
-  } = useCreateComment();
+  const { createComment, isPending: isCreatingComment } = useCreateComment();
   const feedPosts = feedData?.pages.flatMap((page) => page.items ?? []) ?? [];
   const [commentDraft, setCommentDraft] = useState('');
   const [replyTo, setReplyTo] = useState<FeedComment | null>(null);
@@ -105,7 +102,7 @@ function FeedPostPage() {
       setReplyTo(null);
       setIsCommentMultiline(false);
     } catch {
-      /* Keep the comment draft on failure. */
+      toast.error(t('apiState.error'));
     }
   };
 
@@ -191,14 +188,29 @@ function FeedPostPage() {
               </section>
               <form onSubmit={sendComment} className="shrink-0 border-t border-white-10 p-4 sm:p-5">
                 {replyTo && (
-                  <div className="mb-2 flex items-center justify-between text-detail text-secondary">
-                    <span>
-                      {t('apiState.replyingTo', {
-                        name: authorName(replyTo.author) || t('apiState.student'),
-                      })}
-                    </span>
-                    <UIButton bg="transparent" size="pill" onClick={() => setReplyTo(null)}>
-                      {t('postComposer.cancel')}
+                  <div className="mb-3 flex min-w-0 items-start gap-2 px-1">
+                    <CornerUpLeft
+                      className="mt-1 size-4 shrink-0 text-secondary"
+                      aria-hidden="true"
+                    />
+                    <div className="min-w-0 flex-1 text-detail leading-relaxed">
+                      <p className="text-secondary">
+                        {t('apiState.replyingTo', {
+                          name: authorName(replyTo.author) || t('apiState.student'),
+                        })}
+                      </p>
+                      <p className="max-h-20 overflow-y-auto wrap-anywhere whitespace-pre-wrap text-white-80">
+                        {replyTo.content ?? t('apiState.deletedComment')}
+                      </p>
+                    </div>
+                    <UIButton
+                      bg="transparent"
+                      size="icon"
+                      className="-mt-1 shrink-0 border-0 text-secondary"
+                      aria-label={t('postComposer.cancel')}
+                      onClick={() => setReplyTo(null)}
+                    >
+                      <X size={18} aria-hidden="true" />
                     </UIButton>
                   </div>
                 )}
@@ -250,7 +262,6 @@ function FeedPostPage() {
                     </UIButton>
                   )}
                 </div>
-                {createCommentError && <UIQueryError />}
               </form>
             </UIPanel>
           </div>

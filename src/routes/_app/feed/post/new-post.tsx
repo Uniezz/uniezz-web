@@ -18,14 +18,13 @@ export const Route = createFileRoute('/_app/feed/post/new-post')({
 });
 
 function NewPostPage() {
-  const { mutateAsync: createPost, isPending, isError } = useCreatePost();
+  const { mutateAsync: createPost, isPending } = useCreatePost();
   const navigate = Route.useNavigate();
   const { t } = useTranslation();
 
   return (
     <PostComposer
       isPending={isPending}
-      isError={isError}
       onCancel={() =>
         void navigate({ to: '/feed', search: { postId: undefined, feedRoute: undefined } })
       }

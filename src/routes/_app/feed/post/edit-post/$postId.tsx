@@ -25,7 +25,7 @@ function EditPostPage() {
     refetch: refetchPost,
   } = useFeedPost(postId);
   const { data: profile, isPending: isLoadingProfile, refetch: refetchProfile } = useMyProfile();
-  const { mutateAsync: updatePost, isPending, isError } = useUpdateFeedPost();
+  const { mutateAsync: updatePost, isPending } = useUpdateFeedPost();
 
   if (isLoadingPost || isLoadingProfile) {
     return (
@@ -33,7 +33,6 @@ function EditPostPage() {
         <PostComposer
           post={samplePost}
           isPending={false}
-          isError={false}
           onCancel={() => {}}
           onSubmit={async () => {}}
         />
@@ -56,7 +55,6 @@ function EditPostPage() {
     <PostComposer
       post={post}
       isPending={isPending}
-      isError={isError}
       onCancel={backToPost}
       onSubmit={async (values) => {
         const original = postFormDefaults(post);
