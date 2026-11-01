@@ -21,15 +21,15 @@ function StudentProfilePage() {
   const { data: profile, isPending, isError, refetch } = usePublicProfile(profileId);
   if (isError) {
     return (
-      <div className="mx-auto max-w-5xl space-y-5">
+      <div className="relative mx-auto max-w-5xl space-y-5">
         <ProfileBack />
-        <UIQueryError retry={() => void refetch()} />
+        <UIQueryError retry={refetch} />
       </div>
     );
   }
   return (
     <Skeleton loading={isPending} label={t('apiState.loading')}>
-      <div className="mx-auto max-w-5xl space-y-5">
+      <div className="relative mx-auto max-w-5xl space-y-5">
         <ProfileBack />
         <PublicProfile profile={profile ?? samplePublicProfile} />
       </div>
@@ -43,7 +43,7 @@ function ProfileBack() {
   const canGoBack = useCanGoBack();
   const router = useRouter();
   const className =
-    'inline-flex min-h-11 cursor-pointer items-center gap-2 text-label text-secondary hover:text-white focus-visible:outline-2 focus-visible:outline-blue';
+    'inline-flex min-h-11 items-center gap-2 px-2 py-2 text-label text-secondary transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-blue xl:absolute xl:top-0 xl:-left-32';
   const content = (
     <>
       <ChevronLeft className="size-5" aria-hidden="true" />

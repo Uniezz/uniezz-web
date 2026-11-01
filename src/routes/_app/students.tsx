@@ -25,7 +25,7 @@ function StudentsPage() {
   const name = studentSearch === typedSearch ? debouncedName : studentSearch.trim();
 
   return (
-    <div className="mx-auto flex h-[calc(100svh-136px)] min-h-0 max-w-4xl flex-col overflow-hidden lg:h-[calc(100svh-56px)]">
+    <div className="flex h-[calc(100svh-136px)] min-h-0 flex-col overflow-hidden lg:h-[calc(100svh-56px)]">
       <div className="shrink-0">
         <Link
           to="/connections"
@@ -51,12 +51,7 @@ function StudentsPage() {
           }}
         />
       </div>
-      <div
-        role="region"
-        aria-label={t('students.results')}
-        tabIndex={0}
-        className="min-h-0 flex-1 overflow-y-auto overscroll-y-none rounded-card focus-visible:outline-2 focus-visible:outline-blue"
-      >
+      <div className="min-h-0 flex-1">
         <StudentSearchResults search={studentSearch} name={name} />
       </div>
     </div>
