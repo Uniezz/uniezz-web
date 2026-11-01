@@ -35,10 +35,9 @@ export const CONNECTIONSMOCKS = {
   defaultFilters,
   candidate,
   name: 'Zofia',
-  distance: '1.2 km away',
-  photos: '1 of 4',
+  photos: ['/app/kuQtw-1.jpg', '/app/kuQtw-2.jpg', '/app/kuQtw-4.jpg', '/app/kuQtw-5.jpg'],
   title: 'Zofia, 21',
   meta: 'UMCS, Journalism, 3rd year',
-  prompt: 'This semester I want to',
+  prompt: 'I want to…',
   bio: 'find people to explore Lublin with: coffee, concerts, weekend trips. I also run the student radio podcast.',
 };
