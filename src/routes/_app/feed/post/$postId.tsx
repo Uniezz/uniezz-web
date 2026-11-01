@@ -1,5 +1,5 @@
 import { createFileRoute, Link, redirect } from '@tanstack/react-router';
-import { ChevronLeft, ChevronRight, Send, CalendarDays, CornerUpLeft, X } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Send, CornerUpLeft, X } from 'lucide-react';
 import { type FormEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Skeleton } from 'skullet/react';
@@ -10,12 +10,13 @@ import { cn } from '@/ui/cn';
 import { inputStyles } from '@/ui/components/UIInput/variants';
 import { UIAvatar, UIButton, UIEmpty, UIPanel, UIQueryError } from '@/ui/components';
 import { useFeedPosts, useFeedPost, useFeedComments, useCreateComment } from '@/hooks';
-import { authorName, postDate } from '@/utils/feed';
+import { authorName } from '@/utils/feed';
 import { FeedCommentItem, FeedCommentsSkeleton } from '@/components/features/feed/FeedComments';
 import { FeedLikeButton } from '@/components/features/feed/FeedLikeButton';
 import { sampleComment, samplePost } from '@/utils/feedSkeletonData';
 import { FeedPostActions } from '@/components/features/feed/FeedPostActions';
 import { PostMedia } from '@/components/features/feed/PostMedia';
+import { PostDetails } from '@/components/features/feed/PostDetails';
 import { commentSchema } from '@/schemas';
 
 export const Route = createFileRoute('/_app/feed/post/$postId')({
@@ -35,7 +36,7 @@ export const Route = createFileRoute('/_app/feed/post/$postId')({
 
 function FeedPostPage() {
   const { postId } = Route.useParams();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const {
     data: loadedPost,
     isPending: isPostPending,
@@ -106,6 +107,38 @@ function FeedPostPage() {
     }
   };
 
+  const hasMedia = (post.mediaUrls?.length ?? 0) > 0;
+
+  const postHeader = (
+    <>
+      <div className="flex items-center justify-between gap-3">
+        <Link
+          to="/profiles/$profileId"
+          params={{ profileId: post.author.id }}
+          search={{ studentSearch: undefined }}
+          className="flex w-fit items-center gap-3 rounded-sm hover:underline focus-visible:outline-2 focus-visible:outline-blue"
+        >
+          <UIAvatar size="md" imgSrc={post.author.avatarUrl ?? '/app/avatar.png'} alt="" />
+          <p className="text-label font-medium text-white">
+            {authorName(post.author) || t('apiState.student')}
+          </p>
+        </Link>
+        {post.type !== 'announcement' && (
+          <span className="app-tag shrink-0 border-white-20 bg-surface px-2 py-1">
+            {post.type === 'question' ? t('app.question') : t('app.event')}
+          </span>
+        )}
+      </div>
+      <PostDetails post={post} large={!hasMedia} />
+    </>
+  );
+  const postActions = (
+    <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+      <FeedLikeButton id={post.id} kind="post" liked={post.likedByMe} count={post.likesCount} />
+      <FeedPostActions post={post} />
+    </div>
+  );
+
   return (
     <Skeleton loading={isPostPending} label={t('apiState.loading')}>
       <div className="relative mx-auto max-w-5xl">
@@ -118,54 +151,19 @@ function FeedPostPage() {
         </Link>
         <div className="relative">
           <div className="grid min-w-0 items-stretch gap-5 md:h-[calc(100svh-9rem)] md:min-h-0 md:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.75fr)] xl:h-[calc(100svh-56px)]">
-            <UIPanel className="overflow-hidden p-0">
-              <PostMedia images={post.mediaUrls ?? []} title={post.title} />
-            </UIPanel>
+            {hasMedia ? (
+              <UIPanel className="overflow-hidden p-0">
+                <PostMedia images={post.mediaUrls ?? []} />
+              </UIPanel>
+            ) : (
+              <UIPanel className="min-h-0 space-y-4 overflow-y-auto p-6 sm:p-8">
+                {postHeader}
+              </UIPanel>
+            )}
             <UIPanel className="flex min-h-0 min-w-0 flex-col p-0">
               <div className="max-h-[45%] shrink-0 space-y-3 overflow-y-auto border-b border-white-10 p-5.5 sm:p-6">
-                <Link
-                  to="/profiles/$profileId"
-                  params={{ profileId: post.author.id }}
-                  search={{ studentSearch: undefined }}
-                  className="inline-flex items-center gap-3 rounded-sm hover:underline focus-visible:outline-2 focus-visible:outline-blue"
-                >
-                  <UIAvatar size="md" imgSrc={post.author.avatarUrl ?? '/app/avatar.png'} alt="" />
-                  <p className="text-label font-medium text-white">
-                    {authorName(post.author) || t('apiState.student')}
-                  </p>
-                </Link>
-                <h1 className="text-body font-semibold tracking-[-0.2px] wrap-anywhere">
-                  {post.title}
-                </h1>
-                {post.type === 'event' && (
-                  <div className="space-y-2 text-detail text-secondary">
-                    <p className="flex items-center gap-2">
-                      <CalendarDays className="size-4 shrink-0" aria-hidden="true" />
-                      {postDate(post, i18n.resolvedLanguage ?? 'en')}
-                    </p>
-                  </div>
-                )}
-                {post.content && (
-                  <p className="text-body wrap-anywhere whitespace-pre-wrap text-white-80">
-                    {post.content}
-                  </p>
-                )}
-                {post.tags && post.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-2">
-                    {post.tags.map((tag) => (
-                      <span key={tag} className="app-tag wrap-anywhere">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                )}
-                <FeedLikeButton
-                  id={post.id}
-                  kind="post"
-                  liked={post.likedByMe}
-                  count={post.likesCount}
-                />
-                <FeedPostActions post={post} />
+                {hasMedia && postHeader}
+                {postActions}
               </div>
               <section aria-label={t('app.comments')} className="flex min-h-0 flex-1 flex-col">
                 <div className="min-h-0 flex-1 space-y-5 overflow-y-auto p-5.5 sm:p-6">

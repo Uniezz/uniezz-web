@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router';
 import { Images } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { FeedPost } from '@/@types';
-import { UIPanel } from '@/ui/components';
+import { UIAvatar, UIPanel } from '@/ui/components';
 import { cn } from '@/ui/cn';
 import { authorName, postDate } from '@/utils/feed';
 
@@ -29,25 +29,30 @@ export function FeedPostCard({ post }: { post: FeedPost }) {
           </div>
         )}
         <div className="min-w-0 p-5.5">
-          <p
+          <div
             className={cn(
-              'text-label font-medium text-white-80',
+              'mb-3 flex items-center gap-3',
               post.type !== 'announcement' && (!image || isQuestion) && 'pr-24',
             )}
           >
-            <Link
-              to="/profiles/$profileId"
-              params={{ profileId: post.author.id }}
-              search={{ studentSearch: undefined }}
-              className="relative z-20 rounded-sm hover:underline focus-visible:outline-2 focus-visible:outline-blue"
-            >
-              {authorName(post.author) || t('apiState.student')}
-            </Link>
-          </p>
-          <p className="mt-1 mb-3 text-detail text-secondary">
-            {post.author.universityId.toUpperCase()} ·{' '}
-            {postDate(post, i18n.resolvedLanguage ?? 'en')}
-          </p>
+            <UIAvatar size="regular" imgSrc={post.author.avatarUrl ?? '/app/avatar.png'} alt="" />
+            <div className="min-w-0">
+              <p className="text-label font-medium text-white-80">
+                <Link
+                  to="/profiles/$profileId"
+                  params={{ profileId: post.author.id }}
+                  search={{ studentSearch: undefined }}
+                  className="relative z-20 rounded-sm hover:underline focus-visible:outline-2 focus-visible:outline-blue"
+                >
+                  {authorName(post.author) || t('apiState.student')}
+                </Link>
+              </p>
+              <p className="mt-1 text-detail text-secondary">
+                {post.author.universityId.toUpperCase()} ·{' '}
+                {postDate(post, i18n.resolvedLanguage ?? 'en')}
+              </p>
+            </div>
+          </div>
           <h2 className="text-card-title font-semibold tracking-[-0.6px] wrap-anywhere">
             {post.title}
           </h2>

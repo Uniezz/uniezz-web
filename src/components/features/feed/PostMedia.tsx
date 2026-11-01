@@ -3,23 +3,17 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { UIButton } from '@/ui/components';
 
-export function PostMedia({ images, title }: { images: string[]; title: string }) {
+export function PostMedia({ images }: { images: string[] }) {
   const { t } = useTranslation();
   const [selected, setSelected] = useState(0);
   const index = Math.min(selected, Math.max(0, images.length - 1));
   return (
     <div className="bg-ink-20 relative flex aspect-[4/3] items-center justify-center md:aspect-auto md:h-full">
-      {images[index] ? (
-        <img
-          src={images[index]}
-          alt={`${t('postComposer.photoPreview')} ${index + 1}`}
-          className="absolute inset-0 size-full object-cover"
-        />
-      ) : (
-        <div className="p-8 text-center">
-          <h1 className="text-body font-semibold tracking-[-0.2px] wrap-anywhere">{title}</h1>
-        </div>
-      )}
+      <img
+        src={images[index]}
+        alt={`${t('postComposer.photoPreview')} ${index + 1}`}
+        className="absolute inset-0 size-full object-cover"
+      />
       {images.length > 1 && (
         <>
           <UIButton
