@@ -30,7 +30,7 @@ export function PostTypeSelector({
   const Icon = selected.Icon;
 
   return (
-    <div className="flex items-center justify-between gap-3">
+    <div className="flex items-center gap-2">
       <span className="text-micro font-semibold text-secondary">{t('postComposer.type')}</span>
       <div
         className="relative flex"
@@ -58,6 +58,7 @@ export function PostTypeSelector({
         </UIButton>
         {isOpen && (
           <UIMenu
+            className="right-auto left-0"
             options={postTypeOptions.map(({ value, labelKey, Icon: OptionIcon }) => ({
               value,
               label: t(labelKey),

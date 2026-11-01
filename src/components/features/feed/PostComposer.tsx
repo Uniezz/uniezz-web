@@ -110,26 +110,28 @@ export function PostComposer({
           >
             <div className="min-h-0 flex-1 [scrollbar-gutter:stable] overflow-y-auto [overflow-anchor:none]">
               <fieldset disabled={isPending} className="min-w-0 space-y-5 p-5 sm:p-6">
-                <PostTypeSelector
-                  type={type}
-                  disabled={Boolean(post)}
-                  readingImage={readingImage}
-                  onSelect={(value) => {
-                    setValue('type', value, { shouldDirty: true });
-                    clearErrors(['date', 'time']);
-                    if (value === 'question') {
-                      setValue('images', [], { shouldDirty: true });
-                      clearErrors('images');
-                    }
-                  }}
-                />
-                <PostAudienceSelector
-                  audience={audience}
-                  disabled={Boolean(post)}
-                  university={author?.universityId.toUpperCase() ?? t('app.university')}
-                  universityId={author?.universityId}
-                  onSelect={(value) => setValue('audience', value, { shouldDirty: true })}
-                />
+                <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+                  <PostTypeSelector
+                    type={type}
+                    disabled={Boolean(post)}
+                    readingImage={readingImage}
+                    onSelect={(value) => {
+                      setValue('type', value, { shouldDirty: true });
+                      clearErrors(['date', 'time']);
+                      if (value === 'question') {
+                        setValue('images', [], { shouldDirty: true });
+                        clearErrors('images');
+                      }
+                    }}
+                  />
+                  <PostAudienceSelector
+                    audience={audience}
+                    disabled={Boolean(post)}
+                    university={author?.universityId.toUpperCase() ?? t('app.university')}
+                    universityId={author?.universityId}
+                    onSelect={(value) => setValue('audience', value, { shouldDirty: true })}
+                  />
+                </div>
                 <UIField
                   label={
                     type === 'question' ? t('postComposer.questionTitle') : t('postComposer.title')

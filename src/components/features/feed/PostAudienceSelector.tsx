@@ -38,7 +38,7 @@ export function PostAudienceSelector({
   const selected = audience === 'all' ? options[1] : options[0];
 
   return (
-    <div className="flex items-center justify-between gap-3">
+    <div className="flex items-center gap-2">
       <span className="text-micro font-semibold text-secondary">{t('app.university')}</span>
       <div
         className="relative flex"
@@ -69,6 +69,7 @@ export function PostAudienceSelector({
         </UIButton>
         {isOpen && (
           <UIMenu
+            className="right-auto left-0"
             options={options}
             value={audience}
             onSelect={(value) => {
