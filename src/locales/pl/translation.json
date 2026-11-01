@@ -58,9 +58,14 @@
     "appName": "Uniezz"
   },
   "connections": {
-    "action": "Edytuj preferencje",
     "subtitle": "Poznawaj studentów ze wszystkich pięciu uczelni",
-    "title": "Znajomości"
+    "title": "Znajomości",
+    "filters": "Filtry",
+    "resetFilters": "Wyczyść",
+    "anyFaculty": "Dowolny wydział",
+    "lookingFor": "Szukam",
+    "emptyTitle": "Na razie nikogo",
+    "emptyDescription": "Widzisz już wszystkich pasujących. Poszerz filtry lub zajrzyj później."
   },
   "exams": {
     "action": "Dodaj materiał",
@@ -183,7 +188,6 @@
     "mobileDescription": "Nasze aplikacje mobilne pojawią się wkrótce. Na razie otwórz Uniezz na komputerze.",
     "home": "Wróć na stronę główną",
     "newPost": "Nowy post",
-    "localOnly": "Zmiany pozostają na tym ekranie i znikają po jego opuszczeniu lub odświeżeniu.",
     "message": "Wiadomość",
     "required": "Wprowadź poprawną wartość.",
     "submit": "Wyślij",
@@ -248,9 +252,7 @@
     "connected": "Połączono",
     "connect": "Połącz",
     "sayHi": "Przywitaj się",
-    "showing": "Wyświetlane",
     "edit": "Edytuj",
-    "done": "Gotowe",
     "reset": "Zresetuj filtry i profile",
     "groceries": "Sklepy",
     "hangouts": "Miejsca spotkań",

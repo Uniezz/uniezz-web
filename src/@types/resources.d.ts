@@ -53,7 +53,6 @@ export default interface Resources {
       "discardChanges": "Discard changes",
       "discardChangesDescription": "Your unsaved changes will be lost if you leave now.",
       "discardGroupDescription": "Your group details will be lost if you leave now.",
-      "done": "Done",
       "dorms": "Dorms",
       "download": "Download",
       "downloads": "Downloads",
@@ -76,7 +75,6 @@ export default interface Resources {
       "keepEditing": "Keep editing",
       "lastName": "Last name",
       "liveNow": "Live now",
-      "localOnly": "Changes are kept on this screen and reset when you leave or reload.",
       "makePrimary": "Make primary",
       "mapDescription": "Illustrated map of Lublin; locations are illustrative.",
       "message": "Message",
@@ -120,7 +118,6 @@ export default interface Resources {
       "searchUniezz": "Search Uniezz",
       "semester": "Semester",
       "send": "Send",
-      "showing": "Showing",
       "studyBuddy": "Study buddy",
       "studyLevel": "Level",
       "studyLevelFirstCycle": "Bachelor's / engineer",
@@ -213,7 +210,12 @@ export default interface Resources {
       "appName": "Uniezz"
     },
     "connections": {
-      "action": "Edit preferences",
+      "anyFaculty": "Any faculty",
+      "emptyDescription": "You have seen everyone who matches. Widen your filters or check back later.",
+      "emptyTitle": "No one here yet",
+      "filters": "Filters",
+      "lookingFor": "Looking for",
+      "resetFilters": "Reset",
       "subtitle": "Meet students across all five universities",
       "title": "Connections"
     },

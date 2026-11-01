@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router';
 import { Heart, MessageCircle, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { UIButton, UIPanel } from '@/ui/components';
+import { UIButton } from '@/ui/components';
 
 // TODO(api): Replace local pass/connect toggles with discovery API mutations.
 export function DiscoveryActions({
@@ -17,7 +17,7 @@ export function DiscoveryActions({
 }) {
   const { t } = useTranslation();
   return (
-    <UIPanel className="flex justify-center gap-3.5">
+    <div className="flex justify-center gap-3.5">
       {[
         { label: t('app.pass'), icon: X, action: onPass, primary: false },
         {
@@ -52,6 +52,6 @@ export function DiscoveryActions({
         </Link>
         <p className="text-detail text-secondary">{t('app.message')}</p>
       </div>
-    </UIPanel>
+    </div>
   );
 }

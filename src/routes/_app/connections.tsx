@@ -5,9 +5,9 @@ import { useTranslation } from 'react-i18next';
 import { useForm, useWatch } from 'react-hook-form';
 
 // TODO(api): Replace mock discovery defaults and local actions with API data and mutations.
-import { CONNECTIONSMOCKS } from '@/utils';
+import { CONNECTIONSMOCKS, matchesConnectionFilters } from '@/utils';
 import type { ConnectionFilters } from '@/@types';
-import { UISegmented, UITopbar } from '@/ui/components';
+import { UITopbar } from '@/ui/components';
 import {
   DiscoveryProfile,
   DiscoveryActions,
@@ -20,13 +20,10 @@ function ConnectionsPage() {
   const [passed, setPassed] = useState(false);
   const [connected, setConnected] = useState(false);
   const filters = useForm<ConnectionFilters>({ defaultValues: CONNECTIONSMOCKS.defaultFilters });
-  const { universities = [], years, mode = 'friends' } = useWatch({ control: filters.control });
-  const showProfile = !passed && universities.includes('UMCS') && years === true;
-  const modes = [
-    { value: 'friends', label: t('app.friends') },
-    { value: 'studyBuddy', label: t('app.studyBuddy') },
-    { value: 'dating', label: t('app.dating') },
-  ] as const;
+  const values = { ...CONNECTIONSMOCKS.defaultFilters, ...useWatch({ control: filters.control }) };
+  const { mode } = values;
+  const showProfile =
+    !passed && matchesConnectionFilters(values as ConnectionFilters, CONNECTIONSMOCKS.candidate);
   return (
     <>
       <UITopbar title={t('connections.title')} subtitle={t('connections.subtitle')}>
@@ -41,30 +38,22 @@ function ConnectionsPage() {
       </UITopbar>
       <div className="grid items-start gap-6 xl:grid-cols-[620px_minmax(0,1fr)]">
         <div className="min-w-0 space-y-4">
-          <UISegmented
-            options={modes.map((option) => option.label)}
-            value={modes.find((option) => option.value === mode)!.label}
-            onChange={(label) => {
-              const option = modes.find((option) => option.label === label);
-              if (option) filters.setValue('mode', option.value);
-            }}
-            label={t('connections.title')}
-          />
           <DiscoveryProfile
             showProfile={showProfile}
             onReset={() => {
               setPassed(false);
               filters.reset({ ...CONNECTIONSMOCKS.defaultFilters, mode });
             }}
-          />
+          >
+            <DiscoveryActions
+              showProfile={showProfile}
+              connected={connected}
+              onPass={() => setPassed(true)}
+              onConnect={() => setConnected((value) => !value)}
+            />
+          </DiscoveryProfile>
         </div>
         <aside className="space-y-5">
-          <DiscoveryActions
-            showProfile={showProfile}
-            connected={connected}
-            onPass={() => setPassed(true)}
-            onConnect={() => setConnected((value) => !value)}
-          />
           <ConnectionFilterPanel form={filters} />
         </aside>
       </div>

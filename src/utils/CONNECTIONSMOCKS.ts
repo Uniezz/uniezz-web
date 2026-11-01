@@ -15,13 +15,21 @@ const connections = [
 
 const defaultFilters: ConnectionFilters = {
   mode: 'friends',
-  universities: ['UMCS', 'KUL', 'Politechnika'],
-  years: true,
+  universities: [],
+  faculty: null,
+  levels: [],
 };
+
+const candidate = {
+  universityId: 'umcs',
+  faculty: 'Wydział Politologii i Dziennikarstwa',
+  level: 'first_cycle',
+} as const;
 
 export const CONNECTIONSMOCKS = {
   connections,
   defaultFilters,
+  candidate,
   name: 'Zofia',
   distance: '1.2 km away',
   photos: '1 of 4',
@@ -30,5 +38,4 @@ export const CONNECTIONSMOCKS = {
   prompt: 'This semester I want to',
   bio: 'find people to explore Lublin with: coffee, concerts, weekend trips. I also run the student radio podcast.',
   mutual: '3 mutual',
-  year: 'Year 1–4',
 };

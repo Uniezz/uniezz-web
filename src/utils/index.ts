@@ -7,6 +7,7 @@ export * from './map';
 export * from './search';
 export * from './device';
 export * from './chat';
+export * from './connections';
 // TODO(api): Remove these mock exports when their consumers are API-backed.
 export * from './CHATMOCKS';
 export * from './EXAMSMOCKS';

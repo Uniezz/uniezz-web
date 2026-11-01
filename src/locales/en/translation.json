@@ -58,9 +58,14 @@
     "appName": "Uniezz"
   },
   "connections": {
-    "action": "Edit preferences",
     "subtitle": "Meet students across all five universities",
-    "title": "Connections"
+    "title": "Connections",
+    "filters": "Filters",
+    "resetFilters": "Reset",
+    "anyFaculty": "Any faculty",
+    "lookingFor": "Looking for",
+    "emptyTitle": "No one here yet",
+    "emptyDescription": "You have seen everyone who matches. Widen your filters or check back later."
   },
   "exams": {
     "action": "Upload material",
@@ -183,7 +188,6 @@
     "mobileDescription": "Our mobile apps are coming soon. For now, open Uniezz on your computer.",
     "home": "Back to home",
     "newPost": "New post",
-    "localOnly": "Changes are kept on this screen and reset when you leave or reload.",
     "message": "Message",
     "required": "Enter a valid value.",
     "submit": "Submit",
@@ -248,9 +252,7 @@
     "connected": "Connected",
     "connect": "Connect",
     "sayHi": "Say hi",
-    "showing": "Showing",
     "edit": "Edit",
-    "done": "Done",
     "reset": "Reset filters and profiles",
     "groceries": "Groceries",
     "hangouts": "Hangouts",
