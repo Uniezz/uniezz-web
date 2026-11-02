@@ -5,8 +5,8 @@ export const rowstyles = cva(
   {
     variants: {
       selected: {
-        true: 'border-blue/40 bg-blue/20',
-        false: 'border-white/10 bg-white/5 hover:bg-white/10',
+        true: 'border-blue/40 bg-blue-20',
+        false: 'border-white-10 bg-white-5 hover:bg-white-10',
       },
     },
     defaultVariants: { selected: false },

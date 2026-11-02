@@ -13,10 +13,9 @@ export async function requestOtpCode(body: OtpRequestInputBody) {
 
 export async function verifyOtpCode(body: OtpVerifyInputBody) {
   const fallback = 'Couldn’t verify the code. Try again.';
-  const { data, response } = await api.POST('/auth/otp/verify', { body }).catch(() => {
+  const { response } = await api.POST('/auth/otp/verify', { body }).catch(() => {
     throw new Error(fallback);
   });
 
-  if (!response.ok || !data) throw new Error(OTP_VERIFY_ERRORS[response.status] ?? fallback);
-  return data;
+  if (!response.ok) throw new Error(OTP_VERIFY_ERRORS[response.status] ?? fallback);
 }

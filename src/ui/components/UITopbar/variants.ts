@@ -9,7 +9,7 @@ export const topbarTitleStyles = cva(
 export const topbarSubtitleStyles = cva('text-[12px] font-medium text-secondary');
 
 export const topbarSearchStyles = cva(
-  'flex w-72 items-center gap-2.25 rounded-full border border-white/10 bg-white/5 px-4 py-2.5 focus-within:border-blue focus-within:ring-2 focus-within:ring-blue/30 max-lg:hidden',
+  'flex w-72 items-center gap-2.25 rounded-full border border-white-10 bg-white-5 px-4 py-2.5 focus-within:border-white-60 max-lg:hidden',
 );
 
 export const topbarControlStyles = cva(

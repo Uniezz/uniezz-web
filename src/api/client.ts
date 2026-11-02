@@ -3,18 +3,15 @@ import createQueryClient from 'openapi-react-query';
 import type { paths } from '@/@types/schema';
 
 export const api = createClient<paths>({
-  // Same-origin in dev (Vite proxy) and prod (Netlify proxy in public/_redirects), so no CORS needed.
-  // TODO: restore `import.meta.env.DEV ? '/api' : env.VITE_API_URL` and delete functions/api once the backend sends CORS headers.
   baseUrl: '/api',
 });
 
 api.use({
-  onRequest({ request, schemaPath }) {
-    const token = sessionStorage.getItem('uniezz:access-token');
-    if (token && !schemaPath.startsWith('/auth/')) {
-      request.headers.set('Authorization', `Bearer ${token}`);
+  onResponse({ response, schemaPath }) {
+    if (response.status === 401 && !schemaPath.startsWith('/auth/')) {
+      window.location.assign('/login');
     }
-    return request;
+    return response;
   },
 });
 

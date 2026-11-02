@@ -1,11 +1,7 @@
 import { Warp } from '@paper-design/shaders-react';
-import { useDropdown } from '@/hooks/useDropdown';
-import { BrandBackground, UIButton, UIMenu, UIText } from '@/ui/components';
-import { LNG_OPTIONS } from '@/utils';
-import { ChevronDown, Globe } from 'lucide-react';
-import { useReducedMotion } from 'motion/react';
+import { BrandBackground, UIButton, UILanguageSwitcher, UIText } from '@/ui/components';
+import { useReducedMotion } from '@react-spring/web';
 import { type ReactNode } from 'react';
-import { useTranslation } from 'react-i18next';
 import { AuthBrand } from './AuthBrand';
 
 const INK_COLORS = ['#0c0d14', '#121633', '#1e2a78', '#3b3cff'];
@@ -15,8 +11,6 @@ type AuthLayoutProps = {
 };
 
 export const AuthLayout = ({ children }: AuthLayoutProps) => {
-  const { t, i18n } = useTranslation();
-  const { ref: lngMenuRef, isOpen: isLngOpen, toggle: toggleLngMenu } = useDropdown();
   const reduceMotion = useReducedMotion();
 
   return (
@@ -40,29 +34,8 @@ export const AuthLayout = ({ children }: AuthLayoutProps) => {
         <div className="relative flex flex-1 px-6 py-8 sm:px-12 lg:px-16">
           <AuthBrand />
         </div>
-        <div
-          className="absolute top-6 right-6 z-10 sm:right-12 md:top-8 md:right-8 lg:right-12"
-          ref={lngMenuRef}
-        >
-          <UIButton
-            leftIconColor="white"
-            leftIcon={Globe}
-            bg="secondary"
-            size="pill"
-            onClick={toggleLngMenu}
-            aria-label={t('topbar.changeLanguage')}
-            aria-expanded={isLngOpen}
-          >
-            {t('topbar.languageCode')}
-            <ChevronDown size={14} />
-          </UIButton>
-          {isLngOpen ? (
-            <UIMenu
-              options={LNG_OPTIONS}
-              value={i18n.resolvedLanguage ?? i18n.language}
-              onSelect={(language) => void i18n.changeLanguage(language)}
-            />
-          ) : null}
+        <div className="absolute top-6 right-6 z-10 sm:right-12 md:top-8 md:right-8 lg:right-12">
+          <UILanguageSwitcher />
         </div>
         {/* Phone: bottom sheet. Tablet and up: full-height side panel. */}
         <section className="relative flex flex-col border-t border-white/10 bg-ink/50 px-6 pt-8 pb-10 shadow-2xl backdrop-blur-xs sm:px-12 md:w-1/2 md:justify-center md:border-t-0 md:border-l md:px-8 md:py-12 lg:w-1/3 lg:min-w-110 lg:px-12">

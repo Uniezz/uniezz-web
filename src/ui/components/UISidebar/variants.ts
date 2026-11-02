@@ -1,7 +1,7 @@
 import { cva } from 'class-variance-authority';
 
 export const sidebarStyles = cva(
-  'flex shrink-0 flex-col overflow-hidden border-r border-white/10 bg-white/5 px-3 py-5 backdrop-blur-[40px] transition-[width] duration-200 ease-out motion-reduce:transition-none',
+  'flex shrink-0 flex-col gap-1 overflow-hidden border-r border-white-10 bg-white-5 px-3.5 py-6 transition-[width] duration-200 ease-out motion-reduce:transition-none',
   {
     variants: {
       collapsed: {
@@ -23,7 +23,7 @@ export const sidebarSettingsStyles = cva(
   'shrink-0 rounded-md text-secondary outline-none hover:text-white focus-visible:ring-2 focus-visible:ring-blue',
 );
 
-export const sidebarGroupStyles = cva('flex flex-col gap-0.5', {
+export const sidebarGroupStyles = cva('flex flex-col gap-1', {
   variants: {
     collapsed: {
       true: 'w-10',
@@ -41,17 +41,14 @@ export const sidebarGroupStyles = cva('flex flex-col gap-0.5', {
 
 export const sidebarCaptionStyles = cva('text-caption font-semibold tracking-[0.8px] text-muted');
 
-export const sidebarUserStyles = cva(
-  'mt-auto flex items-center rounded-xl border border-white/10 bg-white/5',
-  {
-    variants: {
-      collapsed: {
-        true: 'w-10 justify-center p-1',
-        false: 'gap-2.5 p-2',
-      },
-    },
-    defaultVariants: {
-      collapsed: false,
+export const sidebarUserStyles = cva('mt-auto flex items-center rounded-[14px]', {
+  variants: {
+    collapsed: {
+      true: 'w-10 justify-center p-1',
+      false: 'gap-2.5 p-2.5',
     },
   },
-);
+  defaultVariants: {
+    collapsed: false,
+  },
+});

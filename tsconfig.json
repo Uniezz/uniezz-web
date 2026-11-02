@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src", "functions", "vite.config.ts"],
+  "include": ["src", "functions", "server", "vite.config.ts"],
   "exclude": ["node_modules", "dist"]
 }

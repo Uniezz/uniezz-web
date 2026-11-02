@@ -1,7 +1,7 @@
 import { cva } from 'class-variance-authority';
 
 export const avatarStyles = cva(
-  'flex items-center justify-center overflow-hidden rounded-full border border-white/10',
+  'flex items-center justify-center overflow-hidden rounded-full border border-white-10',
   {
     variants: {
       size: {
@@ -11,7 +11,7 @@ export const avatarStyles = cva(
         lg: 'h-14 w-14',
       },
       withImage: {
-        false: 'bg-blue/25',
+        false: 'bg-blue-20',
         true: '',
       },
     },
