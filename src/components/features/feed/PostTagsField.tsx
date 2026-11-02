@@ -1,7 +1,7 @@
 import { useController, type Control } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Plus, X } from 'lucide-react';
-import { postTagAdditionSchema, type PostSchema } from '@/schemas';
+import { parsePostTagDraft, postTagAdditionSchema, type PostSchema } from '@/schemas';
 import { UIButton } from '@/ui/components';
 
 export function PostTagsField({ control }: { control: Control<PostSchema> }) {
@@ -12,7 +12,8 @@ export function PostTagsField({ control }: { control: Control<PostSchema> }) {
   const {
     field: { value: draft, onChange: setDraft, onBlur },
   } = useController({ control, name: 'tagDraft' });
-  const next = postTagAdditionSchema.safeParse([...tags, draft]);
+  const draftTags = parsePostTagDraft(draft);
+  const next = postTagAdditionSchema.safeParse([...tags, ...draftTags]);
 
   function addTag() {
     if (!next.success) return;
@@ -38,7 +39,7 @@ export function PostTagsField({ control }: { control: Control<PostSchema> }) {
             }
           }}
           className="app-control flex-1"
-          maxLength={30}
+          maxLength={319}
           disabled={tags.length >= 10}
           placeholder={t('postComposer.tagsPlaceholder')}
         />

@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import toast from 'react-hot-toast';
 import type { FeedPost } from '@/@types';
 import { useMyProfile } from '@/hooks';
-import { postSchema, postTagAdditionSchema, type PostSchema } from '@/schemas';
+import { parsePostTagDraft, postSchema, postTagAdditionSchema, type PostSchema } from '@/schemas';
 import { postFormDefaults } from '@/utils/feed';
 import {
   UIButton,
@@ -98,7 +98,10 @@ export function PostComposer({
             onSubmit={handleSubmit(
               async (values) => {
                 try {
-                  const tags = postTagAdditionSchema.safeParse([...values.tags, values.tagDraft]);
+                  const tags = postTagAdditionSchema.safeParse([
+                    ...values.tags,
+                    ...parsePostTagDraft(values.tagDraft),
+                  ]);
                   await onSubmit({ ...values, tags: tags.success ? tags.data : values.tags });
                 } catch {
                   toast.error(t('apiState.error'));

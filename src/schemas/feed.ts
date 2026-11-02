@@ -12,6 +12,13 @@ export const postTagAdditionSchema = postTagsSchema.refine((tags) => {
   const added = tags.at(-1)?.toLocaleLowerCase();
   return !tags.slice(0, -1).some((tag) => tag.toLocaleLowerCase() === added);
 });
+export const postTagDraftSchema = z.string().max(319);
+export const parsePostTagDraft = (draft: string) =>
+  draft
+    .trim()
+    .split(/\s+/)
+    .map((tag) => tag.replace(/^#+/, ''))
+    .filter(Boolean);
 
 export const postImagesSchema = z
   .array(
@@ -33,7 +40,7 @@ export const postSchema = z
     time: z.string(),
     images: postImagesSchema,
     tags: postTagsSchema,
-    tagDraft: z.string().max(30),
+    tagDraft: postTagDraftSchema,
   })
   .superRefine((post, context) => {
     if (post.type !== 'event') return;
