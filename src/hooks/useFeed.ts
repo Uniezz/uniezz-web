@@ -4,6 +4,7 @@ import {
   useMutation,
   useQuery,
   useQueryClient,
+  type QueryClient,
 } from '@tanstack/react-query';
 import {
   createFeedComment,
@@ -19,11 +20,32 @@ import {
 } from '@/api';
 import type { FeedFilters } from '@/@types';
 
+// Patches one post or comment in every cached feed query (single items and infinite pages), so a
+// like or edit doesn't refetch every loaded page.
+function patchFeedItem(queryClient: QueryClient, id: string, patch: Record<string, unknown>): void {
+  const update = (item: unknown) =>
+    item && typeof item === 'object' && 'id' in item && item.id === id
+      ? { ...item, ...patch }
+      : item;
+  queryClient.setQueriesData({ queryKey: ['feed'] }, (data: unknown) => {
+    if (!data || typeof data !== 'object' || !('pages' in data) || !Array.isArray(data.pages)) {
+      return update(data);
+    }
+    return {
+      ...data,
+      pages: data.pages.map((page: { items?: unknown[] | null }) => ({
+        ...page,
+        items: page.items?.map(update) ?? page.items,
+      })),
+    };
+  });
+}
+
 export function useUpdateFeedComment() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: updateFeedComment,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['feed'] }),
+    onSuccess: (comment) => patchFeedItem(queryClient, comment.id, comment),
   });
 }
 
@@ -53,7 +75,12 @@ export function useDeleteFeedComment() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: deleteFeedComment,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['feed'] }),
+    onSuccess: () =>
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['feed', 'comments'] }),
+        queryClient.invalidateQueries({ queryKey: ['feed', 'replies'] }),
+        queryClient.invalidateQueries({ queryKey: ['feed', 'post'] }),
+      ]),
   });
 }
 
@@ -61,7 +88,8 @@ export function useFeedLike() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: setFeedLike,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['feed'] }),
+    onSuccess: ({ liked, likesCount }, { id }) =>
+      patchFeedItem(queryClient, id, { likedByMe: liked, likesCount }),
   });
 }
 
@@ -104,7 +132,13 @@ export function useCreateComment() {
   const { mutateAsync, variables, isError, isPending } = useMutation({
     mutationKey: ['feed', 'create-comment'],
     mutationFn: createFeedComment,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['feed'] }),
+    onSuccess: (_, { id, replyToCommentId }) =>
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['feed', 'comments', id] }),
+        queryClient.invalidateQueries({ queryKey: ['feed', 'post', id] }),
+        replyToCommentId &&
+          queryClient.invalidateQueries({ queryKey: ['feed', 'replies', replyToCommentId] }),
+      ]),
   });
 
   function createComment(input: Omit<Parameters<typeof createFeedComment>[0], 'key'>) {

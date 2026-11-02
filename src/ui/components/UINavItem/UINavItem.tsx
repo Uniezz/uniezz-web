@@ -7,14 +7,7 @@ import {
   navItemLabelStyles,
   navItemStyles,
 } from './variants';
-
-const RESET_TAB_SEARCH = {
-  postId: undefined,
-  feedRoute: undefined,
-  chatType: undefined,
-  conversationId: undefined,
-  chatRoute: undefined,
-};
+import { RESET_TAB_SEARCH } from '@/utils/navigation';
 
 type UINavItemProps = {
   to: LinkProps['to'];
@@ -38,8 +31,6 @@ export const UINavItem = ({
   return (
     <Link
       to={to}
-      // The app layout carries sub-route state (open post, chat) across links; pressing the
-      // current tab drops it so the tab opens at its root.
       search={isCurrentTab ? ((() => RESET_TAB_SEARCH) as never) : undefined}
       title={collapsed ? label : undefined}
       aria-label={collapsed ? label : undefined}

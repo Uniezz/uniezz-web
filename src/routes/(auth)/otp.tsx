@@ -68,7 +68,7 @@ function OtpPage() {
         {isEmailStep ? (
           <UIInput
             type="email"
-            autoComplete="off"
+            autoComplete="email"
             autoFocus
             iconLeft={AtSign}
             label={t('auth.otp.emailLabel')}

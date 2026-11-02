@@ -120,6 +120,7 @@ export default interface Resources {
       "searchUniezz": "Search Uniezz",
       "semester": "Semester",
       "send": "Send",
+      "signOut": "Sign out",
       "studyBuddy": "Study buddy",
       "studyLevel": "Level",
       "studyLevelDoctoral": "Doctoral",

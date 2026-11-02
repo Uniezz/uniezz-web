@@ -28,6 +28,8 @@ export async function proxyApi(request: Request, backendUrl: string): Promise<Re
     return new Response('Forbidden', { status: 403, headers: { 'Cache-Control': 'no-store' } });
   }
 
+  // shortcut: logout only clears the cookie; the token stays valid until expiry. Forward it
+  // once the backend has a revoke endpoint.
   if (path === '/auth/logout' && request.method === 'POST') {
     return new Response(null, {
       status: 204,

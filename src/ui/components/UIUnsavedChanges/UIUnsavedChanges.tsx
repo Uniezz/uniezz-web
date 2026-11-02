@@ -1,9 +1,11 @@
 import { useBlocker } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-import { UIButton } from './UIButton';
-import { UIDialog } from './UIDialog';
+import { UIButton } from '../UIButton';
+import { UIDialog } from '../UIDialog';
 
-export function UIUnsavedChanges({ dirty }: { dirty: boolean }) {
+export type UIUnsavedChangesProps = { dirty: boolean };
+
+export function UIUnsavedChanges({ dirty }: UIUnsavedChangesProps) {
   const { t } = useTranslation();
   const blocker = useBlocker({
     shouldBlockFn: () => dirty,

@@ -41,6 +41,10 @@ export function ProfileEditor({ profile }: { profile: components['schemas']['Pro
             <ProfileIdentity
               universityId={profile.universityId}
               onRemoveAvatar={async () => {
+                if (form.getValues('avatarFile')) {
+                  form.resetField('avatarFile');
+                  return;
+                }
                 if (form.getValues('photo') !== '/app/avatar.png') await deleteAvatar();
                 form.resetField('photo', { defaultValue: '/app/avatar.png' });
                 form.resetField('avatarFile');

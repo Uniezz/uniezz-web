@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useController, useFormContext, useWatch } from 'react-hook-form';
 
-import { useUniversities } from '@/hooks';
+import { useSignOut, useUniversities } from '@/hooks';
 import { UIButton, UILanguageSwitcher, UIPanel, UISwitch, UIUniversityLogo } from '@/ui/components';
 import { type ProfileFormSchema } from '@/schemas';
 import { readImageFile } from '@/utils/image';
@@ -16,6 +16,7 @@ export function ProfileIdentity({
   onRemoveAvatar: () => Promise<void>;
 }) {
   const { data: universities } = useUniversities();
+  const { mutate: signOut, isPending: isSigningOut } = useSignOut();
   const { t } = useTranslation();
   const {
     control,
@@ -126,6 +127,15 @@ export function ProfileIdentity({
           <span className="text-detail font-semibold">{t('topbar.changeLanguage')}</span>
           <UILanguageSwitcher />
         </div>
+        <UIButton
+          bg="transparent"
+          size="pill"
+          className="mt-4 w-full text-danger"
+          disabled={isSigningOut}
+          onClick={() => signOut(undefined, { onError: () => toast.error(t('apiState.error')) })}
+        >
+          {t('app.signOut')}
+        </UIButton>
       </UIPanel>
     </div>
   );

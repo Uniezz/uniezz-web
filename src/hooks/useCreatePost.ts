@@ -8,7 +8,7 @@ import { useCreateFeedPost } from './useCreateFeedPost';
 export function useCreatePost() {
   const { data: profile } = useMyProfile();
   const { uploadImages } = useUploadPostImages();
-  const { variables: previousRequest, mutateAsync: createPost } = useCreateFeedPost();
+  const { variables, isError, mutateAsync: createPost } = useCreateFeedPost();
 
   return useMutation({
     mutationKey: ['feed', 'create'],
@@ -27,7 +27,8 @@ export function useCreatePost() {
         mediaIds: mediaIds.length ? mediaIds : undefined,
         tags: values.tags,
       };
-      return createPost(postSubmission(body, previousRequest));
+      // Reuse the idempotency key only to retry a failed request, never after a success.
+      return createPost(postSubmission(body, isError ? variables : undefined));
     },
   });
 }

@@ -1,5 +1,5 @@
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { deleteMyAvatar, getProfiles, getPublicProfile } from '@/api';
+import { deleteMyAvatar, getProfiles, getPublicProfile, signOut } from '@/api';
 import type { components } from '@/@types/schema';
 
 export function useProfileSearch(name: string) {
@@ -25,6 +25,17 @@ export function useDeleteAvatar() {
       );
       void queryClient.invalidateQueries({ queryKey: ['profiles'] });
       void queryClient.invalidateQueries({ queryKey: ['feed'] });
+    },
+  });
+}
+
+export function useSignOut() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: signOut,
+    onSuccess: () => {
+      queryClient.clear();
+      window.location.assign('/login');
     },
   });
 }

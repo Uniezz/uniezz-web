@@ -1,5 +1,6 @@
 import { cn } from '@/ui/cn';
 import type { FeedFilters } from '@/@types';
+import { useState } from 'react';
 import { Masonry, useInfiniteLoader, type RenderComponentProps } from 'masonic';
 import { Skeleton } from 'skullet/react';
 import { useTranslation } from 'react-i18next';
@@ -58,6 +59,12 @@ export function FeedPosts({ search, filters }: { search: string; filters?: FeedF
     },
     { threshold: 4 },
   );
+  // Masonic caches positions by index and throws when the list gets shorter (search, a deletion),
+  // so the grid remounts only then. Reordered items are re-measured by Masonic itself.
+  const [layout, setLayout] = useState({ count: items.length, key: 0 });
+  if (items.length !== layout.count) {
+    setLayout({ count: items.length, key: layout.key + Number(items.length < layout.count) });
+  }
   return (
     <Skeleton loading={isPending} label={t('apiState.loading')}>
       {isPending ? (
@@ -71,7 +78,7 @@ export function FeedPosts({ search, filters }: { search: string; filters?: FeedF
         >
           {items.length > 0 ? (
             <Masonry
-              key={items.map((post) => post.id).join(',')}
+              key={layout.key}
               items={items}
               itemKey={(post) => post.id}
               columnWidth={352}
