@@ -1,6 +1,6 @@
 import { cn } from '@/ui/cn';
 import type { FeedFilters } from '@/@types';
-import { Masonry, type RenderComponentProps } from 'masonic';
+import { Masonry, useInfiniteLoader, type RenderComponentProps } from 'masonic';
 import { Skeleton } from 'skullet/react';
 import { useTranslation } from 'react-i18next';
 import type { FeedPost } from '@/@types';
@@ -34,9 +34,11 @@ export function FeedPosts({ search, filters }: { search: string; filters?: FeedF
     isError,
     refetch,
     hasNextPage,
+    isFetching,
     isFetchingNextPage,
     fetchNextPage,
   } = useFeedPosts(filters);
+
   // shortcut: Search filters loaded pages until the feed API accepts search; then pass it to the API.
   const items = (data?.pages.flatMap((page) => page.items ?? []) ?? []).filter((post) =>
     matchesSearch(
@@ -47,6 +49,14 @@ export function FeedPosts({ search, filters }: { search: string; filters?: FeedF
       post.content,
       ...(post.tags ?? []),
     ),
+  );
+  const maybeLoadMore = useInfiniteLoader(
+    () => {
+      if (hasNextPage && !isFetching && !isError && !isPlaceholderData) {
+        void fetchNextPage({ cancelRefetch: false });
+      }
+    },
+    { threshold: 4 },
   );
   return (
     <Skeleton loading={isPending} label={t('apiState.loading')}>
@@ -68,6 +78,7 @@ export function FeedPosts({ search, filters }: { search: string; filters?: FeedF
               columnGutter={24}
               maxColumnCount={3}
               render={FeedCard}
+              onRender={maybeLoadMore}
               role="list"
             />
           ) : (
