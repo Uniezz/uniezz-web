@@ -5,10 +5,9 @@ import { useTranslation } from 'react-i18next';
 import { Skeleton } from 'skullet/react';
 import toast from 'react-hot-toast';
 import type { FeedComment } from '@/@types';
-
 import { cn } from '@/ui/cn';
 import { inputStyles } from '@/ui/components/UIInput/variants';
-import { UIAvatar, UIButton, UIEmpty, UIPanel, UIQueryError } from '@/ui/components';
+import { UIAvatar, UIButton, UIEmojiPicker, UIEmpty, UIPanel, UIQueryError } from '@/ui/components';
 import { useFeedPosts, useFeedPost, useFeedComments, useCreateComment } from '@/hooks';
 import { authorName } from '@/utils/feed';
 import { FeedCommentItem, FeedCommentsSkeleton } from '@/components/features/feed/FeedComments';
@@ -241,20 +240,22 @@ function FeedPostPage() {
                     placeholder={t('app.addComment')}
                     className="field-sizing-content max-h-28 min-h-6 min-w-0 flex-1 resize-none bg-transparent p-0 text-label leading-6 text-white outline-none placeholder:text-secondary"
                   />
+                  <UIEmojiPicker
+                    disabled={isCreatingComment}
+                    className={cn('-my-1 shrink-0', isCommentMultiline && 'self-end')}
+                  />
                   {commentDraft.trim() && (
                     <UIButton
                       type="submit"
                       disabled={isCreatingComment}
                       size="icon"
-                      bg="secondary"
-                      leftIcon={Send}
+                      bg="transparent"
                       aria-label={t('app.send')}
                       className={cn(
-                        'absolute right-1.5 border-transparent',
-                        isCommentMultiline ? 'bottom-1.5' : 'top-1/2 -translate-y-1/2',
+                        'absolute right-1.5 bottom-0 border-transparent enabled:hover:bg-transparent',
                       )}
                     >
-                      {''}
+                      <Send size={16} aria-hidden="true" />
                     </UIButton>
                   )}
                 </div>

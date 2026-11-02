@@ -10,6 +10,7 @@ import { postSchema, postTagAdditionSchema, type PostSchema } from '@/schemas';
 import { postFormDefaults } from '@/utils/feed';
 import {
   UIButton,
+  UIEmojiPicker,
   UIField,
   UIPanel,
   UIQueryError,
@@ -163,6 +164,7 @@ export function PostComposer({
                     maxLength={5000}
                     aria-invalid={Boolean(errors.body)}
                   />
+                  <UIEmojiPicker align="start" className="absolute bottom-0.5 left-1" />
                 </UIField>
                 {type === 'event' && <PostEventDetails register={register} errors={errors} />}
                 <PostTagsField control={control} />

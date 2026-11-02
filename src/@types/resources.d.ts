@@ -34,6 +34,7 @@ export default interface Resources {
     "app": {
       "add": "Add",
       "addComment": "Add a comment…",
+      "addEmoji": "Add emoji",
       "addPeople": "Add people",
       "addProgramme": "Add programme",
       "addProgrammeDescription": "Enter your programme and faculty.",
@@ -93,6 +94,7 @@ export default interface Resources {
       "newPost": "New post",
       "nextPost": "Next post",
       "noDocument": "No downloadable document was supplied with this design.",
+      "noEmoji": "No emoji found.",
       "pass": "Pass",
       "pastPapers": "Past papers",
       "personalDetails": "Personal details",
@@ -115,6 +117,7 @@ export default interface Resources {
       "savedLocally": "Changes saved locally until you leave this screen.",
       "sayHi": "Say hi",
       "searchConversations": "Search conversations",
+      "searchEmoji": "Search emoji",
       "searchMaterials": "Search materials",
       "searchStudents": "Search students by name",
       "searchUniezz": "Search Uniezz",

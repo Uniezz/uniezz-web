@@ -11,6 +11,7 @@
 
 ## Project conventions
 
+- Use conventional commit subjects with a lowercase type prefix, such as `feat:` or `fix:`.
 - Reuse existing UI components, hooks, API functions, schemas, and query patterns.
 - Keep API calls in `src/api`, query and mutation logic in `src/hooks`, route composition in `src/routes`, and feature UI in `src/components/features`.
 - Preserve existing behavior unless the request calls for changing it.

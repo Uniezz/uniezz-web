@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useFormContext, useWatch } from 'react-hook-form';
-import { UIField, UIPanel } from '@/ui/components';
+import { UIEmojiPicker, UIField, UIPanel } from '@/ui/components';
 import { type ProfileFormSchema } from '@/schemas';
 
 export function PersonalDetails() {
@@ -57,6 +57,7 @@ export function PersonalDetails() {
             maxLength={500}
             aria-invalid={Boolean(errors.bio)}
           />
+          <UIEmojiPicker align="start" className="absolute bottom-0.5 left-1" />
         </UIField>
         <UIField
           label={t('students.interests')}

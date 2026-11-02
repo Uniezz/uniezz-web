@@ -27,3 +27,4 @@ export * from './UIQueryError';
 export * from './UIBottomTabs';
 export * from './UILanguageSwitcher';
 export * from './UIUnsavedChanges';
+export * from './UIEmojiPicker';

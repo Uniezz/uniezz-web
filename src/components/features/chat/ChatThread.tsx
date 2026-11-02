@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import type { Message, Conversation } from '@/@types';
 import { cn } from '@/ui/cn';
-import { UIAvatar, UIButton, UIEmpty, UIPanel } from '@/ui/components';
+import { UIAvatar, UIButton, UIEmojiPicker, UIEmpty, UIPanel } from '@/ui/components';
 import { textFormSchema, type TextFormSchema } from '@/schemas';
 // TODO(api): Replace mock chat status and context content with API-backed conversation data.
 import { CHATMOCKS } from '@/utils';
@@ -99,7 +99,7 @@ export function ChatThread({
       </div>
       <form
         className={cn(
-          'relative mx-5 mb-5 flex items-end border border-white-10 bg-white-5 p-2 pr-12 pl-4',
+          'mx-5 mb-5 flex items-end gap-2 border border-white-10 bg-white-5 p-2 pl-4',
           isMultiline ? 'rounded-2xl' : 'rounded-full',
         )}
         onSubmit={submit}
@@ -120,17 +120,15 @@ export function ChatThread({
           placeholder={t('app.writeMessage')}
           className="field-sizing-content max-h-32 min-h-9.5 min-w-0 flex-1 resize-none bg-transparent p-2 text-body leading-[1.4] outline-none placeholder:text-secondary"
         />
+        <UIEmojiPicker className="shrink-0" />
         {messageDraft?.trim() && (
           <UIButton
             type="submit"
             size="icon"
-            bg="secondary"
+            bg="transparent"
             leftIcon={Send}
             aria-label={t('app.send')}
-            className={cn(
-              'absolute right-1.5 border-transparent',
-              isMultiline ? 'bottom-1.5' : 'top-1/2 -translate-y-1/2',
-            )}
+            className="shrink-0 border-transparent enabled:hover:bg-transparent"
           >
             {''}
           </UIButton>

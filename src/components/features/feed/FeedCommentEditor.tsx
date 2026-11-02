@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 import type { FeedComment } from '@/@types';
 import { useUpdateFeedComment } from '@/hooks';
-import { UIButton } from '@/ui/components';
+import { UIButton, UIEmojiPicker } from '@/ui/components';
 import { commentSchema } from '@/schemas';
 
 export function FeedCommentEditor({
@@ -42,6 +42,7 @@ export function FeedCommentEditor({
         disabled={isPending}
       />
       <div className="flex gap-3">
+        <UIEmojiPicker align="start" disabled={isPending} />
         <UIButton type="submit" size="sm" disabled={isPending || !content.trim()}>
           {t('app.saveChanges')}
         </UIButton>

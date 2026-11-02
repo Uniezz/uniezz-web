@@ -194,6 +194,9 @@
     "searchPlaceholder": "Search posts, people, courses…"
   },
   "app": {
+    "addEmoji": "Add emoji",
+    "noEmoji": "No emoji found.",
+    "searchEmoji": "Search emoji",
     "close": "Close",
     "empty": "Nothing here yet.",
     "profile": "Your profile",

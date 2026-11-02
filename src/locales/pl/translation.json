@@ -194,6 +194,9 @@
     "searchPlaceholder": "Szukaj postów, osób, kursów…"
   },
   "app": {
+    "addEmoji": "Dodaj emoji",
+    "noEmoji": "Nie znaleziono emoji.",
+    "searchEmoji": "Szukaj emoji",
     "close": "Zamknij",
     "empty": "Na razie nic tu nie ma.",
     "profile": "Twój profil",
