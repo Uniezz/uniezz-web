@@ -157,7 +157,11 @@ export function PostComposer({
                   label={t('postComposer.details')}
                   error={errors.body && t('apiState.detailsError')}
                   maxLength={5000}
-                  count={body.length}
+                  count={
+                    Array.from(
+                      new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(body),
+                    ).length
+                  }
                 >
                   <textarea
                     autoComplete="off"

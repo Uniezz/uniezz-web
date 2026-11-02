@@ -4,20 +4,18 @@ import { useTranslation } from 'react-i18next';
 
 // TODO(api): Replace the mock discovery profile with API-backed profile data.
 import { CONNECTIONSMOCKS } from '@/utils';
-import { UIButton, UIEmptyCat, UIPanel } from '@/ui/components';
+import { UIButton, UIEmpty, UIPanel } from '@/ui/components';
 import { cn } from '@/ui/cn';
 
 export function DiscoveryProfile({
   showProfile,
   leaving = null,
   onLeft,
-  onReset,
   children,
 }: {
   showProfile: boolean;
   leaving?: 'left' | 'right' | null;
   onLeft?: () => void;
-  onReset: () => void;
   children?: ReactNode;
 }) {
   const { t } = useTranslation();
@@ -109,9 +107,8 @@ export function DiscoveryProfile({
           <div aria-hidden="true" inert className="invisible">
             {profileCard}
           </div>
-          <div role="status" className="absolute inset-0 flex flex-col">
-            <UIEmptyCat className="min-h-0 flex-1" />
-            <div className="flex flex-col gap-4 p-6">
+          <div className="absolute inset-0 flex items-center justify-center">
+            <UIEmpty>
               <div className="space-y-2">
                 <h2 className="text-card-title font-bold tracking-[-0.6px]">
                   {t('connections.emptyTitle')}
@@ -120,10 +117,7 @@ export function DiscoveryProfile({
                   {t('connections.emptyDescription')}
                 </p>
               </div>
-              <UIButton bg="secondary" size="pill" className="self-start" onClick={onReset}>
-                {t('app.reset')}
-              </UIButton>
-            </div>
+            </UIEmpty>
           </div>
         </>
       )}

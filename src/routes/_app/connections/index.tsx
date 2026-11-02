@@ -29,7 +29,6 @@ function ConnectionsPage() {
   const { data: me } = useMyProfile();
   const filters = useForm<ConnectionFilters>({ defaultValues: CONNECTIONSMOCKS.defaultFilters });
   const values = { ...CONNECTIONSMOCKS.defaultFilters, ...useWatch({ control: filters.control }) };
-  const { mode } = values;
   const showProfile =
     !passed &&
     matchesConnectionFilters(
@@ -57,10 +56,6 @@ function ConnectionsPage() {
             onLeft={() => {
               setPassed(true);
               setLeaving(null);
-            }}
-            onReset={() => {
-              setPassed(false);
-              filters.reset({ ...CONNECTIONSMOCKS.defaultFilters, mode });
             }}
           >
             <DiscoveryActions
