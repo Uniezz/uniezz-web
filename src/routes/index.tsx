@@ -117,7 +117,7 @@ function LandingPage() {
             >
               {t('landing.hero.eyebrow')}
             </Reveal>
-            <h1 className="mt-7 max-w-255 text-[clamp(50px,8.75vw,126px)] leading-[0.95] font-medium tracking-[-0.075em] text-[#f4f2ec] md:mt-8">
+            <h1 className="mt-7 max-w-255 text-[clamp(50px,7vw,100px)] leading-[0.95] font-medium tracking-[-0.075em] text-[#f4f2ec] md:mt-8">
               <RiseLine delay={0.2}>{t('landing.hero.title')}</RiseLine>
               <RiseLine
                 delay={0.35}
