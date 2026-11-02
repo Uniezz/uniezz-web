@@ -155,9 +155,17 @@ function FeedPostPage() {
                 <PostMedia images={post.mediaUrls ?? []} />
               </UIPanel>
             ) : (
-              <UIPanel className="flex min-h-0 flex-col gap-4 p-6 sm:p-8">{postHeader}</UIPanel>
+              <UIPanel
+                surface="tint"
+                className="flex min-h-0 flex-col gap-4 bg-ink/20 p-6 backdrop-blur-[48px] sm:p-8"
+              >
+                {postHeader}
+              </UIPanel>
             )}
-            <UIPanel className="flex min-h-0 min-w-0 flex-col p-0">
+            <UIPanel
+              surface="tint"
+              className="flex min-h-0 min-w-0 flex-col bg-ink/20 p-0 backdrop-blur-[48px]"
+            >
               <div className="max-h-[45%] shrink-0 space-y-3 overflow-y-auto border-b border-white-10 p-5.5 sm:p-6">
                 {hasMedia && postHeader}
                 {postActions}
