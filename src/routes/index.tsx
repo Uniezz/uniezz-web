@@ -4,8 +4,8 @@ import { type MouseEvent, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Glow, ParallaxImage, Reveal, RiseLine, UniversityMap } from '@/components';
 import { useUniversities } from '@/hooks';
-import { UIButton } from '@/ui/components';
-import { APP_STORES, LNG_OPTIONS } from '@/utils';
+import { UIButton, UILanguageSwitcher } from '@/ui/components';
+import { APP_STORES } from '@/utils';
 
 export const Route = createFileRoute('/')({ component: LandingPage });
 
@@ -15,7 +15,7 @@ const navLink =
   'relative py-1 transition-colors after:absolute after:inset-x-0 after:bottom-0 after:h-px after:origin-left after:scale-x-0 after:bg-white after:transition-transform after:duration-300 hover:text-white hover:after:scale-x-100';
 
 function LandingPage() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const {
     data: universities = [],
@@ -89,9 +89,12 @@ function LandingPage() {
             {t('landing.navJoin')}
           </a>
         </nav>
-        <UIButton navigateTo="/login" size="sm" className="group gap-2">
-          {t('landing.signIn')} <ArrowUpRight size={15} className={arrowHover} aria-hidden />
-        </UIButton>
+        <div className="flex items-center gap-3">
+          <UILanguageSwitcher />
+          <UIButton navigateTo="/login" size="sm" className="group gap-2">
+            {t('landing.signIn')} <ArrowUpRight size={15} className={arrowHover} aria-hidden />
+          </UIButton>
+        </div>
       </Reveal>
 
       <main>
@@ -444,24 +447,6 @@ function LandingPage() {
           <div className="flex flex-wrap items-center gap-5 md:gap-6">
             <span>{t('landing.footer.privacy')}</span>
             <span>{t('landing.footer.terms')}</span>
-            <div className="flex items-center gap-1" aria-label={t('topbar.changeLanguage')}>
-              {LNG_OPTIONS.map(({ value: code, label }, index) => (
-                <span key={code} className="flex items-center gap-1">
-                  {index > 0 ? <span aria-hidden>/</span> : null}
-                  <button
-                    type="button"
-                    onClick={() => void i18n.changeLanguage(code)}
-                    aria-label={label}
-                    aria-current={
-                      (i18n.resolvedLanguage ?? i18n.language) === code ? 'true' : undefined
-                    }
-                    className="uppercase hover:text-white focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-[#a9baff] aria-current:text-white"
-                  >
-                    {code}
-                  </button>
-                </span>
-              ))}
-            </div>
           </div>
         </div>
       </footer>
