@@ -12,7 +12,7 @@ export function FeedPostCard({ post }: { post: FeedPost }) {
   const isQuestion = post.type === 'question';
   return (
     <div className="group relative">
-      <UIPanel className="overflow-hidden p-0">
+      <UIPanel surface="tint" className="overflow-hidden bg-ink/20 p-0 backdrop-blur-[48px]">
         {image && !isQuestion && (
           <div className="relative h-50 overflow-hidden rounded-t-card">
             <img
