@@ -48,9 +48,9 @@ export const useOtpScreen = (university: string) => {
   };
 
   const onCodeChange = (value: string) => {
-    setValue('code', value.replace(/\D/g, '').slice(0, CELL_COUNT), {
-      shouldValidate: isSubmitted && !isEmailStep,
-    });
+    // No format validation while typing: Verify stays disabled until all digits are in.
+    setValue('code', value.replace(/\D/g, '').slice(0, CELL_COUNT));
+    clearErrors('code');
   };
 
   const onButtonPress = handleSubmit(async (data) => {

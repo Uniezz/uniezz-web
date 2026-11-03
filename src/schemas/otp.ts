@@ -14,7 +14,7 @@ export const codeOtpSchema = z.object({
   step: z.literal('code'),
   email: z.email({ error: emailError }),
   code: z.string().regex(/^\d{6}$/, {
-    error: i18n.t('auth.errors.codeInvalid'),
+    error: () => i18n.t('auth.errors.codeInvalid'),
   }),
 });
 

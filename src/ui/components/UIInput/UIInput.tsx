@@ -13,6 +13,8 @@ type UIInputProps = Omit<ComponentProps<'input'>, 'value' | 'onChange'> & {
   iconRight?: LucideIcon;
   clearButton?: { label: string; onClear: VoidFunction };
   isDisabled?: boolean;
+  /** Keeps one line under the input so an error appearing doesn't shift the layout. */
+  reserveErrorSpace?: boolean;
 };
 
 export const UIInput = ({
@@ -23,6 +25,7 @@ export const UIInput = ({
   iconRight: IconRight,
   clearButton,
   isDisabled,
+  reserveErrorSpace,
   placeholder,
   label,
   id,
@@ -74,8 +77,8 @@ export const UIInput = ({
         ) : null}
       </div>
 
-      {isErrorPresent ? (
-        <UIText as="p" id={errorId} color="error" className="pl-2">
+      {isErrorPresent || reserveErrorSpace ? (
+        <UIText as="p" id={errorId} color="error" className="min-h-lh pl-2">
           {errorText}
         </UIText>
       ) : null}

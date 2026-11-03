@@ -76,6 +76,7 @@ function OtpPage() {
             text={email}
             onTextChange={onEmailChange}
             errorText={emailError}
+            reserveErrorSpace
           />
         ) : (
           <div className="flex flex-col gap-3">

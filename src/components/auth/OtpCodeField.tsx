@@ -51,11 +51,10 @@ export const OtpCodeField = ({ value, onChange, cellCount, errorText }: OtpCodeF
           aria-describedby={errorText ? errorId : undefined}
         />
       </div>
-      {errorText ? (
-        <UIText as="p" id={errorId} color="error" className="pl-2">
-          {errorText}
-        </UIText>
-      ) : null}
+      {/* Always rendered so an error appearing doesn't shift the layout. */}
+      <UIText as="p" id={errorId} color="error" className="min-h-lh pl-2">
+        {errorText}
+      </UIText>
     </div>
   );
 };
