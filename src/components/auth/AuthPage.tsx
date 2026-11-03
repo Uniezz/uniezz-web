@@ -5,7 +5,7 @@ import { type ReactNode } from 'react';
 import { AuthBrand } from './AuthBrand';
 
 // Feed palette (ink, blue, violet); screen-blended so the dark parts leave the feed background visible.
-const GLOW_COLORS = ['#0c0d14', '#0c0d14', '#0c0d14', '#5b7cff', '#8b5cf6'];
+const GLOW_COLORS = ['#0c0d14', '#0c0d14', '#0c0d14', '#5b7cff'];
 
 type AuthLayoutProps = {
   children: ReactNode;
@@ -21,7 +21,7 @@ export const AuthLayout = ({ children }: AuthLayoutProps) => {
         className="relative flex min-h-svh flex-col overflow-hidden md:flex-row"
       >
         <MeshGradient
-          className="pointer-events-none absolute inset-0 opacity-70 mix-blend-screen"
+          className="pointer-events-none absolute inset-0 opacity-45 mix-blend-screen"
           colors={GLOW_COLORS}
           distortion={0.8}
           swirl={0.6}
