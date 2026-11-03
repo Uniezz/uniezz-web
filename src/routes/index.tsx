@@ -21,11 +21,12 @@ function LandingPage() {
       <header className="landing-header">
         <a
           href="#life"
-          className="flex items-center gap-2 text-xl font-semibold tracking-tight"
+          className="flex items-center gap-0.5 text-xl font-semibold tracking-tight"
           aria-label={t('common.appName')}
         >
+          {/* The icon is the "u", so the wordmark reads as one word: [u]niezz. */}
           <img src="/favicon.png" alt="" className="size-9 rounded-lg" />
-          <span className="hidden sm:inline">{t('common.appName').toLowerCase()}</span>
+          <span className="hidden sm:inline">{t('common.appName').toLowerCase().slice(1)}</span>
         </a>
         <nav
           aria-label={t('landing.navigation')}
