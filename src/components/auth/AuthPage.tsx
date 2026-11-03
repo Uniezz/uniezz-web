@@ -1,10 +1,11 @@
-import { Warp } from '@paper-design/shaders-react';
+import { MeshGradient } from '@paper-design/shaders-react';
 import { BrandBackground, UIButton, UILanguageSwitcher, UIText } from '@/ui/components';
 import { useReducedMotion } from '@react-spring/web';
 import { type ReactNode } from 'react';
 import { AuthBrand } from './AuthBrand';
 
-const INK_COLORS = ['#0c0d14', '#121633', '#1e2a78', '#3b3cff'];
+// Feed palette (ink, blue, violet); screen-blended so the dark parts leave the feed background visible.
+const GLOW_COLORS = ['#0c0d14', '#0c0d14', '#0c0d14', '#5b7cff', '#8b5cf6'];
 
 type AuthLayoutProps = {
   children: ReactNode;
@@ -15,22 +16,21 @@ export const AuthLayout = ({ children }: AuthLayoutProps) => {
 
   return (
     <main className="min-h-svh">
-      <BrandBackground className="relative flex min-h-svh flex-col overflow-hidden md:flex-row">
-        <Warp
-          className="pointer-events-none absolute inset-0"
-          colors={INK_COLORS}
-          proportion={0.9}
-          softness={0.5}
-          distortion={0.2}
-          swirl={0.8}
-          swirlIterations={10}
-          shape="edge"
-          shapeScale={0.2}
-          scale={0.6}
-          rotation={4}
-          speed={reduceMotion ? 0 : 5}
+      <BrandBackground
+        variant="app"
+        className="relative flex min-h-svh flex-col overflow-hidden md:flex-row"
+      >
+        <MeshGradient
+          className="pointer-events-none absolute inset-0 opacity-70 mix-blend-screen"
+          colors={GLOW_COLORS}
+          distortion={0.8}
+          swirl={0.6}
+          grainMixer={0.35}
+          grainOverlay={0.15}
+          scale={0.7}
+          speed={reduceMotion ? 0 : 0.4}
         />
-        <div className="pointer-events-none absolute inset-0 bg-ink/25" />
+        <div className="pointer-events-none absolute inset-0 bg-ink/35" />
         <div className="relative flex flex-1 px-6 py-8 sm:px-12 lg:px-16">
           <AuthBrand />
         </div>
