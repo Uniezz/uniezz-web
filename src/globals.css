@@ -734,86 +734,40 @@
   }
 }
 
-.landing-signpost-art {
+.landing-faq-art {
   align-items: center;
-  gap: 18px;
-  padding-bottom: 65px;
+  padding: 24px;
 }
-.landing-signpost-pole {
-  position: absolute;
-  top: 15%;
-  bottom: 20px;
-  left: calc(50% - 5px);
-  z-index: -1;
-  width: 10px;
-  border-inline: 1px solid #78839940;
-  background: linear-gradient(90deg, #202636, #69758c 45%, #343d50 65%, #202636);
-}
-.landing-signpost-city {
-  padding: 6px 16px;
-  border: 1px solid #a9baff35;
-  border-radius: 3px;
-  background: #192131;
-  font-size: 13px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--color-sky);
-}
-.landing-street-sign {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 15px;
-  width: 78%;
-  min-height: 60px;
-  padding: 14px 24px;
-  border: 1px solid #a9baff50;
-  border-radius: 5px;
-  outline: 1px solid #a9baff18;
-  outline-offset: -5px;
-  background: linear-gradient(175deg, #26334c, #1a2539);
-  box-shadow:
-    0 5px 0 #101624,
-    0 14px 20px #00000030;
-  font-size: clamp(18px, 2.2vw, 28px);
-  line-height: 1.2;
+.landing-faq-sheet {
+  width: min(100%, 390px);
+  padding: 24px 28px 0;
+  border: 1px solid #a9baff30;
+  border-radius: 24px;
+  background: #161822cc;
+  box-shadow: 0 30px 80px #00000040;
   transform: rotate(-3deg);
 }
-.landing-street-sign::before,
-.landing-street-sign::after {
-  position: absolute;
-  left: calc(50% - 2px);
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: #98a5bd;
-  box-shadow: 0 1px 2px #000;
-  content: '';
+.landing-faq-sheet-title {
+  padding-bottom: 16px;
+  border-bottom: 1px solid #a9baff30;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  color: #f3f3f7;
 }
-.landing-street-sign::before {
-  top: 5px;
+.landing-faq-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding-block: 16px;
+  font-size: 16px;
+  color: #f3f3f7;
 }
-.landing-street-sign::after {
-  bottom: 5px;
+.landing-faq-list li + li {
+  border-top: 1px solid #a9baff30;
 }
-.landing-street-sign svg {
-  width: 26px;
-  height: 26px;
-  flex-shrink: 0;
-  stroke-width: 1.5;
-  color: var(--color-sky);
-}
-.landing-street-sign-left {
-  transform: rotate(2deg);
-  background: linear-gradient(175deg, #283040, #1c2534);
-}
-.landing-signpost-ground {
-  position: absolute;
-  bottom: 19px;
-  width: 65%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, #a9baff40, transparent);
+.landing-faq-list li span:last-child {
+  color: #a9baff;
 }
 .landing-progress {
   --yarn-size: 36px;
@@ -1086,29 +1040,6 @@
   .landing-notebook-graph {
     max-height: 85px;
     margin-top: 12px;
-  }
-  .landing-signpost-art {
-    gap: 12px;
-    padding-bottom: 25px;
-  }
-  .landing-signpost-city {
-    padding: 3px 10px;
-    font-size: 10px;
-  }
-  .landing-street-sign {
-    min-height: 40px;
-    padding: 9px 15px;
-    font-size: 18px;
-  }
-  .landing-street-sign svg {
-    width: 20px;
-    height: 20px;
-  }
-  .landing-signpost-pole {
-    bottom: 0;
-  }
-  .landing-signpost-ground {
-    bottom: 0;
   }
   .landing-map-heading {
     top: 24px;

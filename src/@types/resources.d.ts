@@ -236,6 +236,10 @@ export default interface Resources {
       "subtitle": "Past papers, course reviews and professor ratings",
       "title": "Exams & Courses"
     },
+    "faq": {
+      "empty": "No questions here yet.",
+      "title": "FAQ"
+    },
     "feed": {
       "action": "Create post",
       "allTypes": "All types",
@@ -289,6 +293,9 @@ export default interface Resources {
       "navigation": "Page sections",
       "preview": {
         "city": "Lublin",
+        "faqOne": "When does the semester start?",
+        "faqThree": "Where can I find my timetable?",
+        "faqTwo": "How do I get a student ID?",
         "greeting": "Hi!",
         "interestCoffee": "Coffee",
         "interestMusic": "Music",
@@ -315,13 +322,13 @@ export default interface Resources {
           "body": "We’re adding direct messages and group chats for classmates and friends.",
           "title": "Private and group chats."
         },
+        "faq": {
+          "body": "We’re making a space for the questions students ask most.",
+          "title": "Questions, all in one place."
+        },
         "feed": {
           "body": "Ask about an exam, post an event, or share news from your university. Replies stay under the post, so others can find the answer too.",
           "title": "Posts from students."
-        },
-        "guide": {
-          "body": "We’re putting together a guide to local shops, places to meet, and student dorms.",
-          "title": "Where to go in Lublin."
         },
         "navigation": "Explore app features",
         "people": {

@@ -1,4 +1,4 @@
-import { BookOpen, Map, MessageCircle, House, Users } from 'lucide-react';
+import { BookOpen, CircleHelp, MessageCircle, House, Users } from 'lucide-react';
 import { type NavGroup, type NavItem } from '@/@types';
 
 const MAIN_NAV: NavItem[] = [
@@ -9,7 +9,7 @@ const MAIN_NAV: NavItem[] = [
 
 const ACADEMICS_NAV: NavItem[] = [
   { to: '/exams', labelKey: 'exams.title', leftIcon: BookOpen },
-  { to: '/guide', labelKey: 'guide.title', leftIcon: Map },
+  { to: '/faq', labelKey: 'faq.title', leftIcon: CircleHelp },
 ];
 
 export const NAV_GROUPS: NavGroup[] = [

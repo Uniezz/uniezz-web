@@ -95,6 +95,10 @@
     "subtitle": "Everything you need to live in Lublin",
     "title": "Guide"
   },
+  "faq": {
+    "title": "FAQ",
+    "empty": "No questions here yet."
+  },
   "landing": {
     "navigation": "Page sections",
     "navCommunity": "Explore uniezz",
@@ -141,9 +145,9 @@
         "title": "Notes and past papers.",
         "body": "This section will hold study materials shared by students, along with course and teacher reviews."
       },
-      "guide": {
-        "title": "Where to go in Lublin.",
-        "body": "We’re putting together a guide to local shops, places to meet, and student dorms."
+      "faq": {
+        "title": "Questions, all in one place.",
+        "body": "We’re making a space for the questions students ask most."
       }
     },
     "preview": {
@@ -157,7 +161,10 @@
       "materialOne": "Calculus · practice questions",
       "city": "Lublin",
       "reply": "Library at 6?",
-      "greeting": "Hi!"
+      "greeting": "Hi!",
+      "faqOne": "When does the semester start?",
+      "faqThree": "Where can I find my timetable?",
+      "faqTwo": "How do I get a student ID?"
     },
     "steps": {
       "title": "Join uniezz.",

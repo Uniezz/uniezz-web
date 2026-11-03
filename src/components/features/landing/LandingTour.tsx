@@ -5,7 +5,7 @@ import { LandingPeoplePreview } from './LandingPeoplePreview';
 import { LandingProfilePreview } from './LandingProfilePreview';
 import { LandingChatPreview } from './LandingChatPreview';
 import { LandingStudyPreview } from './LandingStudyPreview';
-import { LandingGuidePreview } from './LandingGuidePreview';
+import { LandingFaqPreview } from './LandingFaqPreview';
 
 const chapters = [
   { id: 'feed', label: 'feed.title', Preview: LandingFeedPreview },
@@ -21,7 +21,7 @@ const chapters = [
   },
   { id: 'chat', label: 'chat.title', Preview: LandingChatPreview },
   { id: 'study', label: 'exams.title', Preview: LandingStudyPreview },
-  { id: 'guide', label: 'guide.title', Preview: LandingGuidePreview },
+  { id: 'faq', label: 'faq.title', Preview: LandingFaqPreview },
 ] as const;
 
 export function LandingTour() {

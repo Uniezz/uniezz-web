@@ -17,6 +17,7 @@ import { Route as authLoginRouteImport } from './routes/(auth)/login'
 import { Route as authOtpRouteImport } from './routes/(auth)/otp'
 import { Route as AppChatRouteRouteImport } from './routes/_app/chat/route'
 import { Route as AppExamsRouteImport } from './routes/_app/exams'
+import { Route as AppFaqRouteImport } from './routes/_app/faq'
 import { Route as AppFeedRouteRouteImport } from './routes/_app/feed/route'
 import { Route as AppGuideRouteImport } from './routes/_app/guide'
 import { Route as AppProfileRouteImport } from './routes/_app/profile'
@@ -68,6 +69,11 @@ const AppChatRouteRoute = AppChatRouteRouteImport.update({
 const AppExamsRoute = AppExamsRouteImport.update({
   id: '/exams',
   path: '/exams',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppFaqRoute = AppFaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
   getParentRoute: () => AppRoute,
 } as any)
 const AppFeedRouteRoute = AppFeedRouteRouteImport.update({
@@ -152,6 +158,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof authLoginRoute
   '/otp': typeof authOtpRoute
   '/exams': typeof AppExamsRoute
+  '/faq': typeof AppFaqRoute
   '/guide': typeof AppGuideRoute
   '/profile': typeof AppProfileRoute
   '/auth/callback': typeof AuthCallbackRoute
@@ -172,6 +179,7 @@ export interface FileRoutesByTo {
   '/login': typeof authLoginRoute
   '/otp': typeof authOtpRoute
   '/exams': typeof AppExamsRoute
+  '/faq': typeof AppFaqRoute
   '/guide': typeof AppGuideRoute
   '/profile': typeof AppProfileRoute
   '/auth/callback': typeof AuthCallbackRoute
@@ -197,6 +205,7 @@ export interface FileRoutesById {
   '/(auth)/login': typeof authLoginRoute
   '/(auth)/otp': typeof authOtpRoute
   '/_app/exams': typeof AppExamsRoute
+  '/_app/faq': typeof AppFaqRoute
   '/_app/guide': typeof AppGuideRoute
   '/_app/profile': typeof AppProfileRoute
   '/auth/callback': typeof AuthCallbackRoute
@@ -221,6 +230,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/otp'
     | '/exams'
+    | '/faq'
     | '/guide'
     | '/profile'
     | '/auth/callback'
@@ -241,6 +251,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/otp'
     | '/exams'
+    | '/faq'
     | '/guide'
     | '/profile'
     | '/auth/callback'
@@ -265,6 +276,7 @@ export interface FileRouteTypes {
     | '/(auth)/login'
     | '/(auth)/otp'
     | '/_app/exams'
+    | '/_app/faq'
     | '/_app/guide'
     | '/_app/profile'
     | '/auth/callback'
@@ -344,6 +356,13 @@ declare module '@tanstack/react-router' {
       path: '/exams'
       fullPath: '/exams'
       preLoaderRoute: typeof AppExamsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/faq': {
+      id: '/_app/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof AppFaqRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/feed': {
@@ -499,6 +518,7 @@ interface AppRouteChildren {
   AppChatRouteRoute: typeof AppChatRouteRouteWithChildren
   AppFeedRouteRoute: typeof AppFeedRouteRouteWithChildren
   AppExamsRoute: typeof AppExamsRoute
+  AppFaqRoute: typeof AppFaqRoute
   AppGuideRoute: typeof AppGuideRoute
   AppProfileRoute: typeof AppProfileRoute
   AppConnectionsIndexRoute: typeof AppConnectionsIndexRoute
@@ -510,6 +530,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppChatRouteRoute: AppChatRouteRouteWithChildren,
   AppFeedRouteRoute: AppFeedRouteRouteWithChildren,
   AppExamsRoute: AppExamsRoute,
+  AppFaqRoute: AppFaqRoute,
   AppGuideRoute: AppGuideRoute,
   AppProfileRoute: AppProfileRoute,
   AppConnectionsIndexRoute: AppConnectionsIndexRoute,

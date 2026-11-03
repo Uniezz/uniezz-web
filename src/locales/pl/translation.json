@@ -95,6 +95,10 @@
     "subtitle": "Wszystko, czego potrzebujesz, żeby żyć w Lublinie",
     "title": "Przewodnik"
   },
+  "faq": {
+    "title": "FAQ",
+    "empty": "Nie ma tu jeszcze pytań."
+  },
   "landing": {
     "navigation": "Sekcje strony",
     "navCommunity": "Poznaj uniezz",
@@ -141,9 +145,9 @@
         "title": "Notatki i zadania z egzaminów.",
         "body": "Tutaj pojawią się materiały udostępnione przez studentów oraz opinie o zajęciach i prowadzących."
       },
-      "guide": {
-        "title": "Gdzie pójść w Lublinie?",
-        "body": "Przygotowujemy przewodnik po sklepach, miejscach spotkań i akademikach w Lublinie."
+      "faq": {
+        "title": "Pytania w jednym miejscu.",
+        "body": "Tworzymy miejsce na pytania, które studenci zadają najczęściej."
       }
     },
     "preview": {
@@ -157,7 +161,10 @@
       "materialOne": "Analiza · zadania do ćwiczeń",
       "city": "Lublin",
       "reply": "Biblioteka o 18?",
-      "greeting": "Cześć!"
+      "greeting": "Cześć!",
+      "faqOne": "Kiedy zaczyna się semestr?",
+      "faqThree": "Gdzie znajdę plan zajęć?",
+      "faqTwo": "Jak zdobyć legitymację studencką?"
     },
     "steps": {
       "title": "Dołącz do uniezz.",

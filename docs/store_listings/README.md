@@ -20,7 +20,7 @@ Selected design: the cat-shaped **u**, ink `#0C0D14` on blue `#5B7CFF`. Editable
 | [android/ic_launcher_monochrome.png](android/ic_launcher_monochrome.png)                                 | 1024×1024 | Transparent white monogram for themed icon setup.                                              |
 | [web/favicon.png](web/favicon.png)                                                                       | 32×32     | Browser icon.                                                                                  |
 
-Names were checked against `uniezz-mobile/app.json`, the iOS AppIcon catalog, and Android launcher resources. These are documentation exports; the native app configuration and installed icons have not been changed. Android files here cover xxxhdpi only; regenerate the remaining densities when integrating them. Use blue `#5B7CFF` for the adaptive icon and splash background when integrating; the current native configuration still uses older background colors.
+Names were checked against `uniezz-mobile/app.json`, the iOS AppIcon catalog, and Android launcher resources. The mobile app uses the selected icon as its Expo source, and its local generated assets were refreshed. The mobile repo ignores `ios` and `android`, so a native rebuild regenerates those files from the committed source assets. The adaptive foreground source is `assets/images/adaptive-icon.png`, with blue `#5B7CFF` behind it.
 
 ## Regenerate
 
