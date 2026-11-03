@@ -84,8 +84,8 @@ export default interface Resources {
       "messages": "Messages",
       "metadataOnly": "Add material details locally. File uploading is unavailable in this mock.",
       "minimumMembers": "Select at least two people.",
-      "mobileDescription": "Our mobile apps are coming soon. For now, open Uniezz on your computer.",
-      "mobileTitle": "Uniezz is coming to mobile",
+      "mobileDescription": "Our mobile apps are coming soon. For now, open uniezz on your computer.",
+      "mobileTitle": "uniezz is coming to mobile",
       "modeOfStudies": "Mode",
       "modeOfStudiesFullTime": "Full-time",
       "modeOfStudiesPartTime": "Part-time",
@@ -120,7 +120,7 @@ export default interface Resources {
       "searchEmoji": "Search emoji",
       "searchMaterials": "Search materials",
       "searchStudents": "Search students by name",
-      "searchUniezz": "Search Uniezz",
+      "searchUniezz": "Search uniezz",
       "semester": "Semester",
       "send": "Send",
       "signOut": "Sign out",
@@ -167,7 +167,7 @@ export default interface Resources {
         "examsText": "A shared archive of past papers, syllabi and honest professor ratings.",
         "examsTitle": "Exams and course reviews",
         "headline": "Every student in Lublin, one place.",
-        "privacy": "Uniezz never sees or stores your university password.",
+        "privacy": "uniezz never sees or stores your university password.",
         "verifiedText": "Every account is checked against the university directory before it goes live.",
         "verifiedTitle": "Verified students only"
       },
@@ -204,7 +204,7 @@ export default interface Resources {
       "usos": {
         "notice": "UMCS students sign in on USOS. We only receive the identity USOS sends back.",
         "open": "Open USOS login",
-        "subtitle": "You'll finish signing in on UMCS's own USOS page. Uniezz never sees your password.",
+        "subtitle": "You'll finish signing in on UMCS's own USOS page. uniezz never sees your password.",
         "title": "Continue with UMCS"
       }
     },
@@ -214,7 +214,7 @@ export default interface Resources {
       "title": "Chat"
     },
     "common": {
-      "appName": "Uniezz"
+      "appName": "uniezz"
     },
     "connections": {
       "anyFaculty": "Any faculty",
@@ -256,60 +256,22 @@ export default interface Resources {
     },
     "landing": {
       "appsSoon": "Coming soon",
-      "community": {
-        "description": "Meet students from Lublin universities.\nChat, share ideas, and make plans.",
-        "peopleBody": "Find someone to get coffee, go to a concert, or walk around the city.",
-        "peopleLabel": "01 / MEET STUDENTS",
-        "peopleTitle": "Say hello.",
-        "plansLabel": "02 / MAKE A PLAN",
-        "plansTitle": "Talk about it.\nThen meet up.",
-        "quote": "Want to get coffee?\nThat is a good start.",
-        "quoteLabel": "START WITH A SIMPLE MESSAGE.",
-        "quoteSignoff": "SEND YOUR FIRST MESSAGE.",
-        "serif": "Make plans together.",
-        "title": "Meet students."
-      },
-      "findPeople": "Meet students",
+      "findPeople": "Find your people",
       "footer": {
-        "city": "LUBLIN, POLAND",
-        "copyright": "© 2026 Uniezz. See you around.",
-        "privacy": "Privacy",
-        "statement": "Student life,\nin Lublin.",
-        "terms": "Terms"
-      },
-      "help": {
-        "borrowBody": "Find shared past papers and ask other students what to expect.",
-        "borrowTitle": "Prepare for exams.",
-        "cityBody": "See places to study, shop, and spend time with friends.",
-        "cityTitle": "Find places in Lublin.",
-        "description": "Find study notes, ask about exams, and\ndiscover places in the city.",
-        "eyebrow": "STUDY HELP FROM STUDENTS",
-        "shareBody": "Share notes and tips that helped you. They may help another student too.",
-        "shareTitle": "Share what you know.",
-        "title": "Get help with\nstudy and life\nin Lublin."
+        "copyright": "© 2026 uniezz. See you around.",
+        "statement": "Built by students, for students."
       },
       "hero": {
-        "account": "Sign in with your university account.",
-        "caption": "MEET STUDENTS.\nSHARE IDEAS. FIND PLACES.",
-        "description": "Uniezz helps students in Lublin meet, share study tips, find events, and learn about the city.",
-        "eyebrow": "FOR STUDENTS IN LUBLIN",
-        "scroll": "SEE WHAT UNIEZZ CAN DO ↓",
-        "serif": "starts here.",
-        "title": "Student life"
-      },
-      "invitation": {
-        "description": "Meet students, share ideas, and find useful places in Lublin.",
-        "label": "FOR STUDENTS IN LUBLIN",
-        "passAction": "Sign in to Uniezz",
-        "passBody": "Meet students and explore student life in Lublin.",
-        "passLabel": "STUDENT PASS",
-        "passNote": "Sign in with USOS or your university email.",
-        "passTitle": "Join Uniezz.",
-        "serif": "in student life.",
-        "title": "Find your place"
+        "account": "Start with your university account.",
+        "caption": "See what students are talking about, or post something of your own.",
+        "description": "Meet students from Lublin universities. Ask questions, share events, and find people beyond your class.",
+        "eyebrow": "STUDENT LIFE IN LUBLIN",
+        "scroll": "SCROLL TO EXPLORE",
+        "serif": "In Lublin.",
+        "title": "Student life."
       },
       "map": {
-        "description": "Find universities and faculties in Lublin on the map.",
+        "description": "Find your university and its buildings on the map.",
         "empty": "No campus locations are available yet.",
         "eyebrow": "LUBLIN'S UNIVERSITIES. ONE MAP.",
         "loading": "Loading campus locations…",
@@ -317,25 +279,71 @@ export default interface Resources {
         "noResults": "No matching university found.",
         "searchLabel": "Search universities and faculties",
         "searchPlaceholder": "Search a university or address",
-        "title": "Your campus, on the map.",
+        "title": "Lublin.",
         "unavailable": "Campus locations are temporarily unavailable.",
         "zoomIn": "Zoom in",
         "zoomOut": "Zoom out"
       },
-      "navCommunity": "Meet students",
+      "navCommunity": "Explore uniezz",
       "navJoin": "How to join",
-      "navLife": "Student life",
       "navigation": "Page sections",
+      "preview": {
+        "city": "Lublin",
+        "greeting": "Hi!",
+        "interestCoffee": "Coffee",
+        "interestMusic": "Music",
+        "interestWalks": "Walks",
+        "materialOne": "Calculus · practice questions",
+        "messageOne": "Library after class?",
+        "messageThree": "Works for me.",
+        "messageTwo": "At 4? I’ve got the notes.",
+        "question": "Anyone studying tonight?",
+        "reply": "Library at 6?"
+      },
       "signIn": "Sign in",
       "steps": {
-        "connectBody": "Find people to chat with, study with, or meet.",
-        "connectTitle": "Meet other students",
-        "label": "HOW TO JOIN",
-        "title": "Join Uniezz in three steps.",
-        "universityBody": "Choose your university from the list.",
+        "connectBody": "Add your interests, explore student profiles, and share your first post.",
+        "connectTitle": "Make it yours",
+        "title": "Join uniezz.",
+        "universityBody": "Find your university on the sign-in page.",
         "universityTitle": "Choose your university",
-        "verifyBody": "Sign in with USOS or a code sent to your university email.",
-        "verifyTitle": "Show you are a student"
+        "verifyBody": "Use the sign-in method offered by your university: USOS or a code sent to your university email.",
+        "verifyTitle": "Sign in"
+      },
+      "tour": {
+        "chat": {
+          "body": "We’re adding direct messages and group chats for classmates and friends.",
+          "title": "Private and group chats."
+        },
+        "feed": {
+          "body": "Ask about an exam, post an event, or share news from your university. Replies stay under the post, so others can find the answer too.",
+          "title": "Posts from students."
+        },
+        "guide": {
+          "body": "We’re putting together a guide to local shops, places to meet, and student dorms.",
+          "title": "Where to go in Lublin."
+        },
+        "navigation": "Explore app features",
+        "people": {
+          "body": "Search for a student by name and open their profile. See what they study and what they’re interested in.",
+          "title": "Who else studies here?"
+        },
+        "profile": {
+          "body": "Write a few words about yourself and add your interests. You can choose whether to show your email, faculty, and year of study.",
+          "title": "Introduce yourself."
+        },
+        "study": {
+          "body": "This section will hold study materials shared by students, along with course and teacher reviews.",
+          "title": "Notes and past papers."
+        }
+      },
+      "unicat": {
+        "action": "Why uniezz?",
+        "alt": "cazy, the black cat from uniezz",
+        "name": "cazy",
+        "nav": "Meet cazy",
+        "note": "The uniezz team likes him. You will too :)",
+        "title": "Meet cazy."
       }
     },
     "postComposer": {

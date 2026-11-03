@@ -9,10 +9,11 @@ import Map, {
 import { type FeatureCollection, type Point } from 'geojson';
 import { Minus, Plus, Search } from 'lucide-react';
 import type { GeoJSONSource } from 'maplibre-gl';
-import { useMemo, useRef, useState } from 'react';
+import { useMemo, useState, type RefObject } from 'react';
 import { useTranslation } from 'react-i18next';
 import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
 import { type Campus, type CampusProperties } from '@/@types';
+import { landingMapCamera } from '@/utils/landingMap';
 import type { University } from '@/@types/auth';
 import {
   addUniversityLogo,
@@ -34,13 +35,18 @@ export function UniversityMapCanvas({
   universities,
   isLoading,
   isError,
+  mapRef,
+  onReady,
+  onClusterZoom,
 }: {
   universities: University[];
   isLoading: boolean;
   isError: boolean;
+  mapRef: RefObject<MapRef | null>;
+  onReady: () => void;
+  onClusterZoom: (zoom: number) => void;
 }) {
   const { t } = useTranslation();
-  const mapRef = useRef<MapRef>(null);
   const [mapFailed, setMapFailed] = useState(false);
   const [mapReady, setMapReady] = useState(false);
   const [search, setSearch] = useState('');
@@ -76,6 +82,7 @@ export function UniversityMapCanvas({
     map.setMissingStyleImageResolver((id) => addUniversityLogo(map, id));
     // The logo layer mounts after the resolver is set, so no logo request is missed.
     setMapReady(true);
+    onReady();
   };
 
   const onMapClick = (event: MapLayerMouseEvent) => {
@@ -86,7 +93,10 @@ export function UniversityMapCanvas({
       const source = mapRef.current?.getSource<GeoJSONSource>(SOURCE_ID);
       const center = (feature.geometry as Point).coordinates as [number, number];
       void source?.getClusterExpansionZoom(feature.properties.cluster_id).then(
-        (zoom) => mapRef.current?.easeTo({ center, zoom }),
+        (zoom) => {
+          onClusterZoom(zoom);
+          mapRef.current?.easeTo({ center, zoom });
+        },
         () => undefined,
       );
       return;
@@ -117,11 +127,17 @@ export function UniversityMapCanvas({
           : null;
 
   return (
-    <div className="relative mt-8 h-112 overflow-hidden rounded-sm bg-[#0c0d14] md:h-140">
+    <div className="landing-map-canvas relative overflow-hidden bg-ink">
       <Map
         ref={mapRef}
-        initialViewState={{ longitude: 22.565, latitude: 51.25, zoom: 12 }}
+        initialViewState={{
+          longitude: landingMapCamera(0).center[0],
+          latitude: landingMapCamera(0).center[1],
+          zoom: landingMapCamera(0).zoom,
+        }}
         mapStyle={MAP_STYLE}
+        scrollZoom={false}
+        cooperativeGestures
         // Below zoom 5 the tiles drop the country codes the Poland border filter needs.
         minZoom={5}
         maxZoom={15}
@@ -165,7 +181,7 @@ export function UniversityMapCanvas({
         ) : null}
       </Map>
 
-      <div className="absolute top-4 left-4 z-10 w-[min(360px,calc(100%-6rem))]">
+      <div className="absolute bottom-14 left-4 z-10 flex w-[min(360px,calc(100%-6rem))] flex-col-reverse">
         <label className="flex h-14 items-center gap-3 border border-white/15 bg-[#171922]/95 px-4 text-white/60 backdrop-blur-sm focus-within:border-[#a9baff]/70">
           <Search size={18} aria-hidden />
           <span className="sr-only">{t('landing.map.searchLabel')}</span>
@@ -182,7 +198,7 @@ export function UniversityMapCanvas({
           <div
             role="listbox"
             aria-label={t('landing.map.searchLabel')}
-            className="mt-2 max-h-56 overflow-auto border border-white/10 bg-[#171922]/95 py-1 shadow-xl backdrop-blur-sm"
+            className="mb-2 max-h-56 overflow-auto border border-white/10 bg-[#171922]/95 py-1 shadow-xl backdrop-blur-sm"
           >
             {searchResults.length ? (
               searchResults.map((university) => (

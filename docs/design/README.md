@@ -1,10 +1,22 @@
-# Uniezz — Design
+# uniezz design
 
-Source of truth: **`uniezz-web-app.pen`** (pen.dev). Everything below is exported from it — regenerate the exports rather than editing them by hand.
+Last edited: 2026-11-03.
 
-## Screens
+Editable source: [uniezz-web-app.pen](uniezz-web-app.pen), opened with pen.dev.
 
-Landing page: [Desktop](exports/landing/00-landing-web.png) · [Mobile web](exports/landing/00-landing-mobile.png) · [Hero](exports/landing/00-landing-hero.png). The `00 · Landing` frames pair the v2 dark visual system with Instrument Serif editorial accents, cinematic student photography, a warm paper section for shared knowledge, and a cobalt student invitation. Primary actions lead into university sign-in. The campaign student photographs are AI-generated concept imagery; these are design layouts, not a wired website. Responsive and proposed motion behavior are recorded in the frames' context.
+## App icon
+
+The selected icon is the ink cat-shaped **u** on blue `#5B7CFF` (node `ujpZi`). Board `L5jki` contains its export artwork. Previous logo explorations have been removed.
+
+[Store listing and native icon assets](../store_listings/README.md) contains the current exports, platform filenames, and regeneration instructions.
+
+## Landing
+
+[LANDING.md](LANDING.md) describes the implemented landing page. The `.pen` file also contains earlier concepts; those frames and their screenshots are design references, not a description of current app behavior.
+
+## Screen references
+
+These older screen exports are retained for design reference. Features and navigation may differ from the current app.
 
 | #   | Web (1440×1024)                                                            | iOS (393×852)                                        |
 | --- | -------------------------------------------------------------------------- | ---------------------------------------------------- |
@@ -19,132 +31,10 @@ Landing page: [Desktop](exports/landing/00-landing-web.png) · [Mobile web](expo
 | 07  | [Student Guide](exports/web/07-student-guide.png)                          | [Guide](exports/ios/06-guide.png)                    |
 | 08  | [Moderation Sign In](exports/web/08-moderation-sign-in.png)                | [Moderation](exports/ios/07-moderation.png)          |
 
-Also: [Web UI Kit](exports/kit/00-ui-kit.png) · [iOS UIKit](exports/kit/uikit.png) · [States & Variants](exports/kit/states-variants.png) · [all screens as one PDF](exports/all-screens.pdf)
+Also: [Web UI Kit](exports/kit/00-ui-kit.png) · [iOS UIKit](exports/kit/uikit.png) · [States & Variants](exports/kit/states-variants.png)
 
-### Student sign-in flow
+## Source images
 
-| Selection                        | Continue                                   | Next steps                               |
-| -------------------------------- | ------------------------------------------ | ---------------------------------------- |
-| **UMCS** (USOS)                  | Opens USOS auth in the browser immediately | User finishes on USOS → redirect to feed |
-| **Any other university** (Email) | Stays in Uniezz                            | Email input → 6-digit OTP → feed         |
+Images referenced by the active `.pen` file are retained beside it and in `images/landing-v2`. Unused avatar variants, map captures, logo explorations, and intermediate previews were removed.
 
-Same pattern as any OAuth provider (USOS today; Google-style IdP would also leave the app on Continue). Non-USOS universities use university-domain email + OTP — no password on Uniezz.
-
-The web app uses a left sidebar; mobile collapses it to five bottom tabs — **Feed · Chat · Meet · Study · Guide**. Tab bar is **iOS 26 liquid glass** (`UITabBar`). Status bar is native (not drawn). `My Profile` and `Saved` have no tab; profile sits behind the avatar in the app bar.
-
-## Platform conventions
-
-Brand typography (Plus Jakarta Sans / Inter) and all colour tokens are shared. Mobile chrome is iOS-native.
-
-|                | iOS                                  |
-| -------------- | ------------------------------------ |
-| Status bar     | Native (not in mock)                 |
-| Navigation     | iOS 26 floating liquid-glass tab bar |
-| Titles         | large titles (30pt)                  |
-| Search         | inset rounded rect                   |
-| Filters        | pill chips                           |
-| Sub-nav        | segmented control                    |
-| Primary action | inline in app bar                    |
-| Cards          | 1px border                           |
-| Sheets         | 22pt corners + grabber               |
-
-## Colour tokens
-
-Defined as variables in the `.pen` file. Display names below match the **UIKit · States & Variants** board; variable keys stay kebab-case for code.
-
-### Brand & accent
-
-| Name        | Token          | Hex       |
-| ----------- | -------------- | --------- |
-| Midnight    | `navy-900`     | `#05102E` |
-| Abyss       | `navy-800`     | `#0B1B45` |
-| Harbor      | `navy-700`     | `#16296B` |
-| Indigo      | `navy-600`     | `#243A8C` |
-| Brand       | `brand`        | `#2D4195` |
-| Brand Deep  | `brand-hover`  | `#233473` |
-| Periwinkle  | `periwinkle`   | `#6D76B5` |
-| Violet      | `accent`       | `#6D5BF5` |
-| Violet Deep | `accent-hover` | `#5B49E0` |
-
-### Semantic
-
-| Name    | Token     | Hex       | Soft token     | Soft hex  |
-| ------- | --------- | --------- | -------------- | --------- |
-| Ember   | `ember`   | `#F0703A` | `ember-soft`   | `#FFEDE3` |
-| Lagoon  | `teal`    | `#12A594` | `teal-soft`    | `#DDF4F0` |
-| Meadow  | `success` | `#12875C` | `success-soft` | `#DFF3EA` |
-| Amber   | `warning` | `#B5760A` | `warning-soft` | `#FBEFD9` |
-| Crimson | `danger`  | `#C6374D` | `danger-soft`  | `#FBE6EA` |
-
-Also: `brand-soft` `#E7ECFB`, `accent-soft` `#ECE9FE`.
-
-### Washes & surfaces
-
-| Name      | Token            | Hex       |
-| --------- | ---------------- | --------- |
-| Ice       | `ice-100`        | `#E7F0FF` |
-| Mist      | `ice-50`         | `#F2F7FF` |
-| Canvas    | `canvas`         | `#F4F7FD` |
-| Paper     | `surface`        | `#FFFFFF` |
-| Tint      | `surface-tint`   | `#FAFBFF` |
-| Raised    | `surface-raised` | `#FFFFFF` |
-| Hairline  | `border`         | `#E1E8F7` |
-| Rule      | `border-strong`  | `#C8D4EC` |
-| Navy Line | `navy-line`      | `#1D2C5E` |
-
-### Text on color
-
-| Name         | Token            | Hex       |
-| ------------ | ---------------- | --------- |
-| Ink          | `text-primary`   | `#0B1633` |
-| Slate        | `text-secondary` | `#59648A` |
-| Fog          | `text-muted`     | `#8E99B8` |
-| On Brand     | `on-brand`       | `#F2F7FF` |
-| On Navy      | `on-navy`        | `#EEF3FF` |
-| On Navy Soft | `on-navy-muted`  | `#9AA6D4` |
-
-### Glow · type · radius
-
-- **Glow** — `glow-brand` `#2D419559`, `glow-accent` `#6D5BF54D`
-- **Type** — `font-display` Plus Jakarta Sans, `font-body` Inter
-- **Radius** — `r-sm` 8 · `r-md` 12 · `r-lg` 16 · pill `999`
-
-## Components
-
-Reusable frames in the `.pen`, instanced across the screens.
-
-**Web** — Button / Primary, Button / Secondary, Button / Gradient, Field / Text, Badge / Status, Card / Stat, Tag / University, Avatar, Nav Item, Post Card, Sidebar, Topbar
-
-**iOS UIKit** — UIText / Title · Headline · Body · Caption · UIButton / Primary · Secondary · Gradient · Icon · Ghost · UICard · UICard / Post · UIImage · UIAvatar · UIBadge · UIBadge / Count · UIChip / On · Off · UITag · UIRow · UIRow / Select · UISearch · UIField · UISegmented · UITabBar
-
-### States · sizes · variants
-
-Documented on the **UIKit · States & Variants** board ([export](exports/kit/states-variants.png)):
-
-| Component             | Variants / sizes / states                                                                                              |
-| --------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| UIButton              | Primary · Secondary · Gradient · Icon · Ghost · SM / MD / LG · Default · Hover · Disabled · Danger · Icon 28 / 36 / 44 |
-| UIBadge / Count / Tag | Ember · Meadow · Amber · Crimson · Brand · Lagoon · Violet color pairs                                                 |
-| UIChip                | On · Off                                                                                                               |
-| UIAvatar              | 24 · 32 · 40 · 48 · 64 · fill colors                                                                                   |
-| UIField               | Default · Focus · Error · Disabled                                                                                     |
-| UISearch              | Default · Filled · Focus                                                                                               |
-| UISegmented / UIRow   | Selected · Idle                                                                                                        |
-
-## Notes on the moderation screens
-
-`08 · Moderation Sign In` and `iOS · 07 Moderation` use a **separate credential path** — email and password only. Moderators can be outside any university; they are appointed, not verified as students. No authenticator / TOTP step.
-
-This is a design proposal, not a decided flow. [`../auth/AUTHENTICATION.en.md`](../auth/AUTHENTICATION.en.md) covers student providers and says nothing about moderator authentication yet. The 30-minute idle timeout and the queue statistics on the panel are invented for the mock — settle them in the auth doc before building.
-
-## Regenerating the exports
-
-In pen.dev, with `uniezz-web-app.pen` open:
-
-```js
-Export([...screenIds], 'png', './exports/web', { scale: 2 });
-Export(['Esl4T', 'RvmN4'], 'png', './exports/kit', { scale: 2 });
-Export([...allScreenIds], 'pdf', './exports');
-```
-
-Files land as `<nodeId>.png` — rename `Esl4T.png` → `uikit.png`, `RvmN4.png` → `states-variants.png`, and screen ids to the slugs above.
+Regenerate screenshots from the relevant frame with pen.dev `Export`; do not edit exported artwork by hand.

@@ -8,7 +8,7 @@
       "examsText": "Wspólne archiwum dawnych egzaminów, sylabusów i szczerych ocen wykładowców.",
       "examsTitle": "Egzaminy i opinie o kursach",
       "headline": "Wszyscy studenci Lublina w jednym miejscu.",
-      "privacy": "Uniezz nigdy nie widzi ani nie przechowuje Twojego hasła uczelnianego.",
+      "privacy": "uniezz nigdy nie widzi ani nie przechowuje Twojego hasła uczelnianego.",
       "verifiedText": "Każde konto jest sprawdzane w katalogu uczelni, zanim zostanie aktywowane.",
       "verifiedTitle": "Tylko zweryfikowani studenci"
     },
@@ -45,7 +45,7 @@
     "usos": {
       "notice": "Studenci UMCS logują się przez USOS. Otrzymujemy tylko tożsamość, którą przesyła USOS.",
       "open": "Otwórz logowanie USOS",
-      "subtitle": "Logowanie dokończysz na stronie USOS UMCS. Uniezz nigdy nie widzi Twojego hasła.",
+      "subtitle": "Logowanie dokończysz na stronie USOS UMCS. uniezz nigdy nie widzi Twojego hasła.",
       "title": "Kontynuuj z UMCS"
     }
   },
@@ -55,7 +55,7 @@
     "title": "Czat"
   },
   "common": {
-    "appName": "Uniezz"
+    "appName": "uniezz"
   },
   "connections": {
     "subtitle": "Poznawaj studentów ze wszystkich pięciu uczelni",
@@ -97,75 +97,83 @@
   },
   "landing": {
     "navigation": "Sekcje strony",
-    "navLife": "Życie studenckie",
-    "navCommunity": "Poznaj studentów",
+    "navCommunity": "Poznaj uniezz",
     "navJoin": "Jak dołączyć",
     "signIn": "Zaloguj się",
-    "findPeople": "Poznaj studentów",
+    "findPeople": "Poznaj innych studentów",
+    "appsSoon": "Wkrótce",
     "hero": {
-      "eyebrow": "DLA STUDENTÓW W LUBLINIE",
-      "title": "Studenckie życie",
-      "serif": "zaczyna się tutaj.",
-      "description": "Uniezz pomaga studentom w Lublinie poznawać się, dzielić poradami o nauce, znajdować wydarzenia i poznawać miasto.",
-      "account": "Zaloguj się przez konto swojej uczelni.",
-      "scroll": "ZOBACZ, CO MOŻESZ ZROBIĆ W UNIEZZ ↓",
-      "caption": "POZNAWAJ STUDENTÓW. DZIEL SIĘ POMYSŁAMI. ODKRYWAJ MIASTO."
+      "eyebrow": "STUDENCKIE ŻYCIE W LUBLINIE",
+      "title": "Studenckie życie.",
+      "serif": "W Lublinie.",
+      "description": "Poznaj studentów lubelskich uczelni. Zadawaj pytania, dziel się wydarzeniami i poznawaj ludzi spoza swojej grupy.",
+      "account": "Zacznij od konta swojej uczelni.",
+      "caption": "Sprawdź, o czym rozmawiają studenci, lub dodaj własny post.",
+      "scroll": "PRZEWIŃ I ZOBACZ"
     },
-    "community": {
-      "title": "Poznaj studentów.",
-      "serif": "Planujcie razem.",
-      "description": "Poznaj studentów z lubelskich uczelni. Rozmawiajcie, dzielcie się pomysłami i planujcie spotkania.",
-      "peopleLabel": "01 / POZNAJ STUDENTÓW",
-      "peopleTitle": "Zacznij od cześć.",
-      "peopleBody": "Znajdź kogoś na kawę, koncert albo spacer po mieście.",
-      "plansLabel": "02 / ZAPLANUJ SPOTKANIE",
-      "plansTitle": "Porozmawiajcie. Potem się spotkajcie.",
-      "quoteLabel": "ZACZNIJ OD KRÓTKIEJ WIADOMOŚCI.",
-      "quote": "„Masz ochotę na kawę?” — to dobry początek.",
-      "quoteSignoff": "WYŚLIJ PIERWSZĄ WIADOMOŚĆ."
+    "unicat": {
+      "nav": "Poznaj cazya",
+      "title": "Poznaj cazya.",
+      "note": "Ekipa uniezz go lubi. Ty też go polubisz :)",
+      "action": "Dlaczego uniezz?",
+      "alt": "cazy, czarny kot z uniezz",
+      "name": "cazy"
     },
-    "help": {
-      "eyebrow": "POMOC W NAUCE OD STUDENTÓW",
-      "title": "Znajdź pomoc w nauce i życiu w Lublinie.",
-      "description": "Znajdź notatki, zapytaj o egzaminy i odkryj miejsca w mieście.",
-      "borrowTitle": "Przygotuj się do egzaminów.",
-      "borrowBody": "Znajdź arkusze z poprzednich lat i zapytaj innych studentów, czego się spodziewać.",
-      "shareTitle": "Podziel się tym, co wiesz.",
-      "shareBody": "Udostępnij notatki i porady, które Ci pomogły. Mogą pomóc też innym.",
-      "cityTitle": "Znajdź miejsca w Lublinie.",
-      "cityBody": "Zobacz miejsca do nauki, zakupów i spotkań ze znajomymi."
+    "tour": {
+      "navigation": "Poznaj funkcje aplikacji",
+      "feed": {
+        "title": "Posty studentów.",
+        "body": "Zapytaj o egzamin, dodaj wydarzenie lub wiadomość z uczelni. Odpowiedzi zostają pod postem, więc inni też mogą z nich skorzystać."
+      },
+      "people": {
+        "title": "Kto jeszcze tu studiuje?",
+        "body": "Wyszukaj studenta po imieniu lub nazwisku i otwórz jego profil. Sprawdź, co studiuje i czym się interesuje."
+      },
+      "profile": {
+        "title": "Przedstaw się.",
+        "body": "Napisz kilka słów o sobie i dodaj zainteresowania. Wybierz, czy chcesz pokazać swój e-mail, wydział i rok studiów."
+      },
+      "chat": {
+        "title": "Wiadomości i czaty grupowe.",
+        "body": "Dodajemy prywatne wiadomości i czaty grupowe dla znajomych oraz osób z zajęć."
+      },
+      "study": {
+        "title": "Notatki i zadania z egzaminów.",
+        "body": "Tutaj pojawią się materiały udostępnione przez studentów oraz opinie o zajęciach i prowadzących."
+      },
+      "guide": {
+        "title": "Gdzie pójść w Lublinie?",
+        "body": "Przygotowujemy przewodnik po sklepach, miejscach spotkań i akademikach w Lublinie."
+      }
+    },
+    "preview": {
+      "question": "Ktoś się dziś uczy?",
+      "interestMusic": "Muzyka",
+      "interestWalks": "Spacery",
+      "interestCoffee": "Kawa",
+      "messageOne": "Biblioteka po zajęciach?",
+      "messageTwo": "O 16? Mam notatki.",
+      "messageThree": "Pasuje mi.",
+      "materialOne": "Analiza · zadania do ćwiczeń",
+      "city": "Lublin",
+      "reply": "Biblioteka o 18?",
+      "greeting": "Cześć!"
     },
     "steps": {
-      "title": "Dołącz do Uniezz w trzech krokach.",
-      "label": "JAK DOŁĄCZYĆ",
-      "universityTitle": "Wybierz swoją uczelnię",
-      "universityBody": "Wybierz swoją uczelnię z listy.",
-      "verifyTitle": "Pokaż, że jesteś studentem",
-      "verifyBody": "Zaloguj się przez USOS lub kod z uczelnianego e-maila.",
-      "connectTitle": "Poznaj innych studentów",
-      "connectBody": "Znajdź osoby do rozmowy, wspólnej nauki lub spotkań."
-    },
-    "invitation": {
-      "label": "DLA STUDENTÓW W LUBLINIE",
-      "title": "Znajdź swoje miejsce",
-      "serif": "wśród studentów.",
-      "description": "Poznawaj studentów, dziel się pomysłami i odkrywaj miejsca w Lublinie.",
-      "passLabel": "KARTA STUDENTA",
-      "passTitle": "Dołącz do Uniezz.",
-      "passBody": "Poznawaj studentów i odkrywaj studenckie życie w Lublinie.",
-      "passAction": "Zaloguj się do Uniezz",
-      "passNote": "Zaloguj się przez USOS lub uczelniany e-mail."
+      "title": "Dołącz do uniezz.",
+      "universityTitle": "Wybierz uczelnię",
+      "universityBody": "Znajdź swoją uczelnię na stronie logowania.",
+      "verifyTitle": "Zaloguj się",
+      "verifyBody": "Użyj metody dostępnej dla twojej uczelni: USOS lub kodu wysłanego na uczelniany e-mail.",
+      "connectTitle": "Pokaż, co cię interesuje",
+      "connectBody": "Dodaj zainteresowania, poznaj profile studentów i opublikuj pierwszy post."
     },
     "footer": {
-      "city": "LUBLIN, POLSKA",
-      "statement": "Studenckie życie w Lublinie.",
-      "copyright": "© 2026 Uniezz. Do zobaczenia.",
-      "privacy": "Prywatność",
-      "terms": "Regulamin"
+      "statement": "Od studentów dla studentów.",
+      "copyright": "© 2026 uniezz. Do zobaczenia."
     },
-    "appsSoon": "Wkrótce",
     "map": {
-      "description": "Znajdź uczelnie i wydziały w Lublinie na mapie.",
+      "description": "Znajdź swoją uczelnię i jej budynki na mapie.",
       "empty": "Brak dostępnych lokalizacji wydziałów.",
       "eyebrow": "UCZELNIE LUBLINA. JEDNA MAPA.",
       "loading": "Wczytywanie lokalizacji wydziałów…",
@@ -173,7 +181,7 @@
       "noResults": "Nie znaleziono pasującej uczelni.",
       "searchLabel": "Szukaj uczelni i wydziałów",
       "searchPlaceholder": "Szukaj uczelni lub adresu",
-      "title": "Twoja uczelnia na mapie.",
+      "title": "Lublin.",
       "unavailable": "Lokalizacje wydziałów są tymczasowo niedostępne.",
       "zoomIn": "Przybliż mapę",
       "zoomOut": "Oddal mapę"
@@ -200,8 +208,8 @@
     "close": "Zamknij",
     "empty": "Na razie nic tu nie ma.",
     "profile": "Twój profil",
-    "mobileTitle": "Uniezz już wkrótce na telefonie",
-    "mobileDescription": "Nasze aplikacje mobilne pojawią się wkrótce. Na razie otwórz Uniezz na komputerze.",
+    "mobileTitle": "uniezz już wkrótce na telefonie",
+    "mobileDescription": "Nasze aplikacje mobilne pojawią się wkrótce. Na razie otwórz uniezz na komputerze.",
     "home": "Wróć na stronę główną",
     "newPost": "Nowy post",
     "message": "Wiadomość",
@@ -209,7 +217,7 @@
     "submit": "Wyślij",
     "today": "Top posty",
     "feedSubtitle": "Co słychać w Lublinie",
-    "searchUniezz": "Szukaj w Uniezz",
+    "searchUniezz": "Szukaj w uniezz",
     "liveNow": "Trwa teraz",
     "going": "Wezmę udział",
     "join": "Dołącz",
