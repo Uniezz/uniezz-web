@@ -8,6 +8,10 @@ import {
   type Texture,
 } from 'three';
 import { clone } from 'three/addons/utils/SkeletonUtils.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+
+export const landingCatLoader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
 
 export function prepareLandingCat(source: Group, atlas: Texture) {
   const scene = clone(source);

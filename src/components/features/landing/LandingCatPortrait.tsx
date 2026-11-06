@@ -9,13 +9,14 @@ const LandingCatCanvas = lazy(() =>
 export function LandingCatPortrait() {
   const [ref, inView] = useInView();
   const reducedMotion = useReducedMotion();
+  const fallback = <img src="/app/sidebar-cat.png" alt="" loading="lazy" />;
   return (
     <div ref={ref} className="landing-unicat-portrait" aria-hidden>
-      <img src="/app/sidebar-cat.png" alt="" loading="lazy" />
-      {inView && reducedMotion === false && (
-        <CatchBoundary getResetKey={() => 'landing-cat'} errorComponent={() => null}>
+      {reducedMotion && fallback}
+      {reducedMotion === false && (
+        <CatchBoundary getResetKey={() => 'landing-cat'} errorComponent={() => fallback}>
           <Suspense fallback={null}>
-            <LandingCatCanvas />
+            <LandingCatCanvas isVisible={inView} />
           </Suspense>
         </CatchBoundary>
       )}

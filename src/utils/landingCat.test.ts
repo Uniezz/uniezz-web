@@ -2,12 +2,12 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { readFileSync } from 'node:fs';
 import { AnimationMixer, Box3, Mesh, SRGBColorSpace, Texture, Vector3 } from 'three';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { prepareLandingCat } from './landingCat';
+import { landingCatLoader, prepareLandingCat } from './landingCat';
 
 test('prepares the supplied cat atlas, fits the model and preserves its rig', async () => {
   const bytes = readFileSync(new URL('../../public/landing/unicat/cat.glb', import.meta.url));
-  const gltf = await new GLTFLoader().parseAsync(
+  assert.ok(bytes.byteLength < 1_500_000);
+  const gltf = await landingCatLoader.parseAsync(
     bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength),
     '',
   );
@@ -21,7 +21,10 @@ test('prepares the supplied cat atlas, fits the model and preserves its rig', as
   assert.equal(texture.colorSpace, SRGBColorSpace);
   assert.equal(atlas.flipY, true);
   scene.traverse((object) => {
-    if (object instanceof Mesh) assert.equal(object.material, material);
+    if (object instanceof Mesh) {
+      assert.equal(object.material, material);
+      assert.ok(object.geometry.getAttribute('uv'));
+    }
   });
   const mixer = new AnimationMixer(scene);
   const action = mixer.clipAction(gltf.animations[0]).reset().play();
