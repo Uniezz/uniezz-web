@@ -1,9 +1,11 @@
 import {
+  AnimationMixer,
   Box3,
   Mesh,
   MeshStandardMaterial,
   SRGBColorSpace,
   Vector3,
+  type AnimationClip,
   type Group,
   type Texture,
 } from 'three';
@@ -13,7 +15,7 @@ import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 
 export const landingCatLoader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
 
-export function prepareLandingCat(source: Group, atlas: Texture) {
+export function prepareLandingCat(source: Group, atlas: Texture, clip: AnimationClip | undefined) {
   const scene = clone(source);
   const texture = atlas.clone();
   texture.flipY = false;
@@ -29,5 +31,12 @@ export function prepareLandingCat(source: Group, atlas: Texture) {
   const scale = 2.4 / Math.max(size.x, size.y, size.z);
   scene.scale.multiplyScalar(scale);
   scene.position.sub(center.multiplyScalar(scale));
-  return { scene, material, texture };
+  const mixer = new AnimationMixer(scene);
+  if (clip) {
+    mixer.clipAction(clip).play();
+    mixer.update(0);
+    scene.updateMatrixWorld(true);
+    scene.position.x -= new Box3().setFromObject(scene, true).getCenter(new Vector3()).x;
+  }
+  return { scene, material, texture, mixer };
 }

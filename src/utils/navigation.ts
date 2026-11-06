@@ -14,7 +14,7 @@ const ACADEMICS_NAV: NavItem[] = [
 
 export const NAV_GROUPS: NavGroup[] = [
   { items: MAIN_NAV },
-  { titleKey: 'sidebar.academics', items: ACADEMICS_NAV },
+  { section: 'academics', items: ACADEMICS_NAV },
 ];
 
 // The app layout carries sub-route state (open post, chat) across links; pressing the current

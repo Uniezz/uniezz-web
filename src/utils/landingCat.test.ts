@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { readFileSync } from 'node:fs';
-import { AnimationMixer, Box3, Mesh, SRGBColorSpace, Texture, Vector3 } from 'three';
+import { Box3, Mesh, SkinnedMesh, SRGBColorSpace, Texture, Vector3 } from 'three';
 import { landingCatLoader, prepareLandingCat } from './landingCat';
 
 test('prepares the supplied cat atlas, fits the model and preserves its rig', async () => {
@@ -12,11 +12,19 @@ test('prepares the supplied cat atlas, fits the model and preserves its rig', as
     '',
   );
   const atlas = new Texture();
-  const { scene, material, texture } = prepareLandingCat(gltf.scene, atlas);
-  const bounds = new Box3().setFromObject(scene);
-  const size = bounds.getSize(new Vector3());
-  assert.ok(Math.abs(Math.max(size.x, size.y, size.z) - 2.4) < 0.001);
-  assert.ok(bounds.getCenter(new Vector3()).length() < 0.001);
+  const sourceBounds = new Box3().setFromObject(gltf.scene);
+  const sourceSize = sourceBounds.getSize(new Vector3());
+  const expectedScale = 2.4 / Math.max(sourceSize.x, sourceSize.y, sourceSize.z);
+  const { scene, material, texture, mixer } = prepareLandingCat(
+    gltf.scene,
+    atlas,
+    gltf.animations[0],
+  );
+  assert.ok(Math.abs(scene.scale.x - expectedScale) < 0.001);
+  assert.ok(Math.abs(new Box3().setFromObject(scene, true).getCenter(new Vector3()).x) < 0.001);
+  assert.ok(
+    Math.abs(scene.position.y + sourceBounds.getCenter(new Vector3()).y * expectedScale) < 0.001,
+  );
   assert.equal(texture.flipY, false);
   assert.equal(texture.colorSpace, SRGBColorSpace);
   assert.equal(atlas.flipY, true);
@@ -26,8 +34,15 @@ test('prepares the supplied cat atlas, fits the model and preserves its rig', as
       assert.ok(object.geometry.getAttribute('uv'));
     }
   });
-  const mixer = new AnimationMixer(scene);
   const action = mixer.clipAction(gltf.animations[0]).reset().play();
+  mixer.update(0);
+  scene.updateMatrixWorld(true);
+  scene.traverse((object) => {
+    if (object instanceof SkinnedMesh) {
+      object.computeBoundingBox();
+    }
+  });
+  assert.ok(Math.abs(new Box3().setFromObject(scene).getCenter(new Vector3()).x) < 0.001);
   mixer.update(0.5);
   assert.equal(mixer.time, 0.5);
   mixer.update(gltf.animations[0].duration * 2);

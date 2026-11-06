@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router';
 import { LockKeyhole } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
@@ -6,7 +7,14 @@ export function AuthBrand() {
 
   return (
     <div className="flex flex-1 flex-col justify-between py-2 md:min-h-[calc(100svh-64px)]">
-      <span className="text-sm font-semibold text-white">{t('common.appName')}</span>
+      <Link
+        to="/"
+        aria-label={t('common.appName')}
+        className="flex min-h-11 w-fit items-center gap-0.5 rounded-lg text-xxl font-semibold tracking-tight text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue"
+      >
+        <img src="/favicon.png" alt="" className="size-11 rounded-lg" />
+        <span>{t('common.appName').slice(1)}</span>
+      </Link>
       <div className="max-w-130 py-8 sm:py-10 lg:py-16">
         <h1 className="max-w-115 text-4xl leading-[0.98] font-bold tracking-[-2px] text-white sm:text-5xl lg:text-[64px]">
           {t('auth.brand.headline')}

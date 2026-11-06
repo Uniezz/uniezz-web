@@ -119,10 +119,10 @@ export function UISidebar({ user, counts, className, ...props }: UISidebarProps)
         {t('common.appName')}
       </Link>
       <nav ref={navRef} aria-label={t('sidebar.mainNavigation')} className="relative flex flex-col">
-        {NAV_GROUPS.map(({ titleKey, items }) => (
+        {NAV_GROUPS.map(({ section, items }) => (
           <div
-            key={titleKey ?? 'main'}
-            className={sidebarGroupStyles({ section: Boolean(titleKey) })}
+            key={section ?? 'main'}
+            className={sidebarGroupStyles({ section: Boolean(section) })}
           >
             {items.map(({ labelKey, ...item }) => (
               <UINavItem key={item.to} {...item} label={t(labelKey)} count={counts?.[item.to]} />

@@ -1,6 +1,6 @@
 import { useFrame, useLoader } from '@react-three/fiber';
 import { useEffect, useMemo } from 'react';
-import { AnimationMixer, TextureLoader } from 'three';
+import { TextureLoader } from 'three';
 import { landingCatLoader, prepareLandingCat } from '@/utils/landingCat';
 
 useLoader.preload(landingCatLoader, '/landing/unicat/cat.glb');
@@ -9,11 +9,10 @@ useLoader.preload(TextureLoader, '/landing/unicat/IMG_1374.PNG');
 export function LandingCatModel() {
   const { scene: source, animations } = useLoader(landingCatLoader, '/landing/unicat/cat.glb');
   const atlas = useLoader(TextureLoader, '/landing/unicat/IMG_1374.PNG');
-  const { scene, material, texture } = useMemo(
-    () => prepareLandingCat(source, atlas),
-    [source, atlas],
+  const { scene, material, texture, mixer } = useMemo(
+    () => prepareLandingCat(source, atlas, animations[0]),
+    [source, atlas, animations],
   );
-  const mixer = useMemo(() => new AnimationMixer(scene), [scene]);
 
   useEffect(() => {
     const clip = animations[0];

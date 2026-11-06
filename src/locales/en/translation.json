@@ -2,15 +2,9 @@
   "auth": {
     "backToUniversities": "Back to universities",
     "brand": {
-      "communityText": "Meet people across UMCS, KUL, Politechnika, Przyrodniczy and WSEI.",
-      "communityTitle": "Feed, chat and connections",
       "description": "Feed, chat, past papers and people from UMCS, KUL, Politechnika, Przyrodniczy and WSEI. Sign in with the account your university already gave you.",
-      "examsText": "A shared archive of past papers, syllabi and honest professor ratings.",
-      "examsTitle": "Exams and course reviews",
       "headline": "Every student in Lublin, one place.",
-      "privacy": "uniezz never sees or stores your university password.",
-      "verifiedText": "Every account is checked against the university directory before it goes live.",
-      "verifiedTitle": "Verified students only"
+      "privacy": "uniezz never sees or stores your university password."
     },
     "errors": {
       "codeInvalid": "Enter the 6-digit code we sent you.",
@@ -19,10 +13,8 @@
     },
     "login": {
       "continueWith": "Continue with {{provider}}",
-      "notice": "Only active students of the five Lublin universities can create an account. Staff and alumni accounts are rejected.",
       "subtitle": "Choose your university to sign in with USOS or a university email code.",
-      "title": "Sign in",
-      "yourUniversity": "YOUR UNIVERSITY"
+      "title": "Sign in"
     },
     "otp": {
       "changeEmail": "Change email",
@@ -37,21 +29,12 @@
       "emailTitle": "Provide your university email",
       "notice": "Email sign-in confirms your university domain only. Faculty and year of study stay self-declared until your account is linked to USOS or your university directory.",
       "resend": "Resend code",
-      "resendIn": "Resend in {{time}}",
       "send": "Send code",
       "verify": "Verify and continue"
-    },
-    "terms": "By continuing you agree to the Terms of Use and Privacy Policy · GDPR",
-    "usos": {
-      "notice": "UMCS students sign in on USOS. We only receive the identity USOS sends back.",
-      "open": "Open USOS login",
-      "subtitle": "You'll finish signing in on UMCS's own USOS page. uniezz never sees your password.",
-      "title": "Continue with UMCS"
     }
   },
   "chat": {
     "action": "New group",
-    "subtitle": "Direct messages and group chats",
     "title": "Chat"
   },
   "common": {
@@ -78,8 +61,6 @@
     "title": "Exams & Courses"
   },
   "feed": {
-    "action": "Create post",
-    "subtitle": "What's happening across Lublin",
     "title": "Feed",
     "filters": "Feed filters",
     "type": "Post type",
@@ -89,11 +70,6 @@
     "today": "Today",
     "lastWeek": "Last 7 days",
     "lastMonth": "Last 30 days"
-  },
-  "guide": {
-    "action": "Suggest a place",
-    "subtitle": "Everything you need to live in Lublin",
-    "title": "Guide"
   },
   "faq": {
     "title": "FAQ",
@@ -107,11 +83,9 @@
     "findPeople": "Find your people",
     "appsSoon": "Coming soon",
     "hero": {
-      "eyebrow": "STUDENT LIFE IN LUBLIN",
       "title": "Student life.",
       "serif": "In Lublin.",
       "description": "Meet students from Lublin universities. Ask questions, share events, and find people beyond your class.",
-      "account": "Start with your university account.",
       "caption": "See what students are talking about, or post something of your own.",
       "scroll": "SCROLL TO EXPLORE"
     },
@@ -120,7 +94,6 @@
       "title": "Meet cazy.",
       "note": "The uniezz team likes him. You will too :)",
       "action": "Why uniezz?",
-      "alt": "cazy, the black cat from uniezz",
       "name": "cazy"
     },
     "tour": {
@@ -159,7 +132,6 @@
       "messageTwo": "At 4? I’ve got the notes.",
       "messageThree": "Works for me.",
       "materialOne": "Calculus · practice questions",
-      "city": "Lublin",
       "reply": "Library at 6?",
       "greeting": "Hi!",
       "faqOne": "When does the semester start?",
@@ -195,18 +167,11 @@
     }
   },
   "sidebar": {
-    "academics": "ACADEMICS",
-    "collapse": "Collapse sidebar",
-    "expand": "Expand sidebar",
-    "mainNavigation": "Main navigation",
-    "settings": "Settings"
+    "mainNavigation": "Main navigation"
   },
   "topbar": {
     "changeLanguage": "Change language",
-    "languageCode": "EN",
-    "notifications": "Notifications",
-    "search": "Search",
-    "searchPlaceholder": "Search posts, people, courses…"
+    "languageCode": "EN"
   },
   "app": {
     "addEmoji": "Add emoji",
@@ -226,8 +191,6 @@
     "feedSubtitle": "What’s happening in Lublin",
     "searchUniezz": "Search uniezz",
     "liveNow": "Live now",
-    "going": "Going",
-    "join": "Join",
     "question": "Question",
     "event": "Event",
     "searchConversations": "Search conversations",
@@ -284,12 +247,6 @@
     "connect": "Connect",
     "sayHi": "Say hi",
     "edit": "Edit",
-    "reset": "Reset filters and profiles",
-    "groceries": "Groceries",
-    "hangouts": "Hangouts",
-    "dorms": "Dorms",
-    "nearby": "Nearby",
-    "cheapGroceries": "Cheap groceries near campus",
     "mapDescription": "Illustrated map of Lublin; locations are illustrative.",
     "directions": "Directions",
     "yourProfile": "Your profile",
@@ -299,8 +256,6 @@
     "changePhoto": "Change photo",
     "photoError": "Choose a valid JPG, PNG or WebP image under 5 MB.",
     "profileVisibility": "Profile visibility",
-    "visibilityDescription": "Let other students find you by name and study programme.",
-    "visibleToStudents": "Visible to students",
     "personalDetails": "Personal details",
     "firstName": "First name",
     "lastName": "Last name",
@@ -311,7 +266,6 @@
     "faculty": "Faculty",
     "yearOfStudy": "Year of study",
     "studyYear": "Year {{year}}",
-    "savedLocally": "Changes saved locally until you leave this screen.",
     "programmeExists": "This programme is already on your profile.",
     "clearSearch": "Clear search",
     "unsavedChangesTitle": "Discard changes?",
@@ -346,7 +300,6 @@
     "tagsHint": "{{used}}/10 tags · 30 characters each",
     "previousPhoto": "Previous photo",
     "nextPhoto": "Next photo",
-    "justNow": "Just now",
     "questionPlaceholder": "What would you like to ask?",
     "eventPlaceholder": "Give your event a name",
     "titlePlaceholder": "Give your post a title",
@@ -360,17 +313,12 @@
     "eventDetails": "Event details",
     "date": "Date",
     "time": "Time",
-    "location": "Location",
-    "locationPlaceholder": "Venue, address, or online meeting link",
-    "photo": "Photo (optional)",
     "photoPreview": "Selected post photo",
     "removePhoto": "Remove photo",
     "readingPhoto": "Loading photo…",
     "addPhoto": "Add a photo",
-    "photoHint": "JPG, PNG or WebP · up to 10 MB",
     "cancel": "Cancel",
     "publish": "Publish",
-    "preview": "Preview in Feed",
     "published": "Post published"
   },
   "report": {
@@ -418,7 +366,6 @@
     "showYear": "Show year of study",
     "titleError": "Use 3–150 characters.",
     "detailsError": "Use 10–5000 characters.",
-    "imageError": "Choose a valid JPG, PNG or WebP image under 10 MB.",
     "postDeleted": "Post deleted",
     "commentDeleted": "Comment deleted"
   },

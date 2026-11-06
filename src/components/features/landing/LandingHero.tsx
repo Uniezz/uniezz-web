@@ -13,7 +13,6 @@ export function LandingHero() {
         <div aria-hidden className="landing-light-field" />
         <div aria-hidden className="landing-film-grain" />
         <div className="landing-opening-front" inert={isPinned && activeStep === 1}>
-          <p className="landing-eyebrow">{t('landing.hero.eyebrow')}</p>
           <h1 id="landing-title" className="landing-wordmark">
             {t('common.appName').toLowerCase()}
           </h1>

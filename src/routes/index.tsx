@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { Link, createFileRoute } from '@tanstack/react-router';
 import { ArrowUpRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { UniversityMap } from '@/components/landing';
@@ -19,15 +19,15 @@ function LandingPage() {
   return (
     <div className="landing-page min-h-svh overflow-x-clip bg-ink text-white">
       <header className="landing-header">
-        <a
-          href="#life"
+        <Link
+          to="/"
           className="flex items-center gap-0.5 text-xl font-semibold tracking-tight"
           aria-label={t('common.appName')}
         >
           {/* The icon is the "u", so the wordmark reads as one word: [u]niezz. */}
           <img src="/favicon.png" alt="" className="size-9 rounded-lg" />
           <span className="hidden sm:inline">{t('common.appName').toLowerCase().slice(1)}</span>
-        </a>
+        </Link>
         <nav
           aria-label={t('landing.navigation')}
           className="hidden items-center gap-7 text-body text-secondary lg:flex"

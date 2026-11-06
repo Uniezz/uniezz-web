@@ -9,6 +9,6 @@ export type NavItem = {
 };
 
 export type NavGroup = {
-  titleKey?: ParseKeys;
+  section?: string;
   items: NavItem[];
 };
