@@ -1,41 +1,41 @@
 {
   "auth": {
-    "backToUniversities": "Wróć do uczelni",
+    "backToUniversities": "Wróć do wyboru uczelni",
     "brand": {
-      "communityText": "Poznawaj ludzi z UMCS, KUL, Politechniki, Przyrodniczego i WSEI.",
+      "communityText": "Poznawaj studentów UMCS, KUL, Politechniki Lubelskiej, Uniwersytetu Przyrodniczego i WSEI.",
       "communityTitle": "Aktualności, czat i znajomości",
-      "description": "Aktualności, czat, dawne egzaminy i studenci UMCS, KUL, Politechniki, Przyrodniczego oraz WSEI. Zaloguj się kontem otrzymanym od swojej uczelni.",
-      "examsText": "Wspólne archiwum dawnych egzaminów, sylabusów i szczerych ocen wykładowców.",
-      "examsTitle": "Egzaminy i opinie o kursach",
+      "description": "Aktualności, czat, zadania z poprzednich egzaminów i studenci UMCS, KUL, Politechniki Lubelskiej, Uniwersytetu Przyrodniczego oraz WSEI. Zaloguj się swoim kontem uczelnianym.",
+      "examsText": "Wspólne archiwum zadań z poprzednich egzaminów, sylabusów i szczerych opinii o wykładowcach.",
+      "examsTitle": "Egzaminy i opinie o przedmiotach",
       "headline": "Wszyscy studenci Lublina w jednym miejscu.",
-      "privacy": "uniezz nigdy nie widzi ani nie przechowuje Twojego hasła uczelnianego.",
-      "verifiedText": "Każde konto jest sprawdzane w katalogu uczelni, zanim zostanie aktywowane.",
+      "privacy": "uniezz nie ma dostępu do twojego hasła uczelnianego i go nie przechowuje.",
+      "verifiedText": "Przed aktywacją każdego konta sprawdzamy je w rejestrze uczelni.",
       "verifiedTitle": "Tylko zweryfikowani studenci"
     },
     "errors": {
-      "codeInvalid": "Wpisz 6-cyfrowy kod, który Ci wysłaliśmy.",
+      "codeInvalid": "Wpisz 6-cyfrowy kod, który ci wysłaliśmy.",
       "emailInvalid": "Podaj poprawny adres e-mail",
       "emailRequired": "Wpisz swój uczelniany adres e-mail."
     },
     "login": {
-      "continueWith": "Kontynuuj z {{provider}}",
-      "notice": "Konto mogą założyć tylko aktywni studenci pięciu lubelskich uczelni. Konta pracowników i absolwentów są odrzucane.",
-      "subtitle": "Wybierz uczelnię i zaloguj się przez USOS lub kod wysłany na uczelniany e-mail.",
+      "continueWith": "Zaloguj się przez {{provider}}",
+      "notice": "Konto mogą założyć tylko osoby, które obecnie studiują na jednej z pięciu lubelskich uczelni. Konta pracowników i absolwentów nie są akceptowane.",
+      "subtitle": "Wybierz uczelnię i zaloguj się przez USOS lub za pomocą kodu wysłanego na uczelniany adres e-mail.",
       "title": "Zaloguj się",
-      "yourUniversity": "TWOJA UCZELNIA"
+      "yourUniversity": "Twoja uczelnia"
     },
     "otp": {
       "changeEmail": "Zmień e-mail",
       "codeLabel": "6-cyfrowy kod weryfikacyjny",
-      "codeSubtitle": "Wysłaliśmy sześciocyfrowy kod na adres {{email}}. Wygasa za 10 minut.",
+      "codeSubtitle": "Wysłaliśmy sześciocyfrowy kod na adres {{email}}. Kod jest ważny przez 10 minut.",
       "codeTitle": "Sprawdź skrzynkę uczelnianą",
       "codesPerHour": "3 kody na godzinę",
-      "didntGetIt": "Nie dotarł?",
+      "didntGetIt": "Kod nie dotarł?",
       "emailLabel": "E-mail",
       "emailPlaceholder": "ty@uczelnia.edu",
       "emailSubtitle": "Wyślemy sześciocyfrowy kod na ten adres. Użyj adresu nadanego przez uczelnię.",
       "emailTitle": "Podaj uczelniany e-mail",
-      "notice": "Logowanie e-mailem potwierdza tylko domenę uczelni. Wydział i rok studiów są deklarowane przez Ciebie, dopóki konto nie zostanie połączone z USOS lub katalogiem uczelni.",
+      "notice": "Logowanie e-mailem potwierdza tylko domenę uczelni. Wydział i rok studiów podajesz samodzielnie. Dane te pozostają niezweryfikowane do czasu połączenia konta z USOS lub rejestrem uczelni.",
       "resend": "Wyślij kod ponownie",
       "resendIn": "Wyślij ponownie za {{time}}",
       "send": "Wyślij kod",
@@ -43,10 +43,10 @@
     },
     "terms": "Kontynuując, akceptujesz Regulamin i Politykę prywatności · RODO",
     "usos": {
-      "notice": "Studenci UMCS logują się przez USOS. Otrzymujemy tylko tożsamość, którą przesyła USOS.",
-      "open": "Otwórz logowanie USOS",
-      "subtitle": "Logowanie dokończysz na stronie USOS UMCS. uniezz nigdy nie widzi Twojego hasła.",
-      "title": "Kontynuuj z UMCS"
+      "notice": "Studenci UMCS logują się przez USOS. Otrzymujemy wyłącznie dane identyfikacyjne przekazane przez USOS.",
+      "open": "Przejdź do logowania w USOS",
+      "subtitle": "Logowanie dokończysz na stronie USOS UMCS. uniezz nie ma dostępu do twojego hasła.",
+      "title": "Zaloguj się przez UMCS"
     }
   },
   "chat": {
@@ -65,7 +65,7 @@
     "anyFaculty": "Dowolny wydział",
     "lookingFor": "Szukam",
     "emptyTitle": "Na razie nikogo",
-    "emptyDescription": "Widzisz już wszystkich pasujących. Poszerz filtry lub zajrzyj później.",
+    "emptyDescription": "Nie ma już profili spełniających wybrane kryteria. Zmień filtry lub zajrzyj później.",
     "matchInterests": "Wspólne zainteresowania",
     "showMe": "Pokaż mi",
     "everyone": "Wszystkich",
@@ -74,8 +74,8 @@
   },
   "exams": {
     "action": "Dodaj materiał",
-    "subtitle": "Dawne egzaminy, opinie o kursach i oceny wykładowców",
-    "title": "Egzaminy i kursy"
+    "subtitle": "Zadania z poprzednich egzaminów, opinie o przedmiotach i oceny wykładowców",
+    "title": "Egzaminy i przedmioty"
   },
   "feed": {
     "action": "Dodaj post",
@@ -85,18 +85,18 @@
     "type": "Typ posta",
     "allTypes": "Wszystkie typy",
     "date": "Data",
-    "anyTime": "Kiedykolwiek",
+    "anyTime": "Cały okres",
     "today": "Dzisiaj",
     "lastWeek": "Ostatnie 7 dni",
     "lastMonth": "Ostatnie 30 dni"
   },
   "guide": {
     "action": "Zaproponuj miejsce",
-    "subtitle": "Wszystko, czego potrzebujesz, żeby żyć w Lublinie",
+    "subtitle": "Wszystko, co przyda ci się w Lublinie",
     "title": "Przewodnik"
   },
   "faq": {
-    "title": "FAQ",
+    "title": "Częste pytania",
     "empty": "Nie ma tu jeszcze pytań."
   },
   "landing": {
@@ -107,17 +107,17 @@
     "findPeople": "Poznaj innych studentów",
     "appsSoon": "Wkrótce",
     "hero": {
-      "eyebrow": "STUDENCKIE ŻYCIE W LUBLINIE",
+      "eyebrow": "Studenckie życie w Lublinie",
       "title": "Studenckie życie.",
       "serif": "W Lublinie.",
-      "description": "Poznaj studentów lubelskich uczelni. Zadawaj pytania, dziel się wydarzeniami i poznawaj ludzi spoza swojej grupy.",
-      "account": "Zacznij od konta swojej uczelni.",
+      "description": "Poznaj studentów lubelskich uczelni. Zadawaj pytania, udostępniaj wydarzenia i poznawaj ludzi spoza swojej grupy.",
+      "account": "Zaloguj się swoim kontem uczelnianym.",
       "caption": "Sprawdź, o czym rozmawiają studenci, lub dodaj własny post.",
-      "scroll": "PRZEWIŃ I ZOBACZ"
+      "scroll": "Przewiń dalej"
     },
     "unicat": {
-      "nav": "Poznaj cazya",
-      "title": "Poznaj cazya.",
+      "nav": "Poznaj kota cazy",
+      "title": "Poznaj kota cazy.",
       "note": "Ekipa uniezz go lubi. Ty też go polubisz :)",
       "action": "Dlaczego uniezz?",
       "alt": "cazy, czarny kot z uniezz",
@@ -127,7 +127,7 @@
       "navigation": "Poznaj funkcje aplikacji",
       "feed": {
         "title": "Posty studentów.",
-        "body": "Zapytaj o egzamin, dodaj wydarzenie lub wiadomość z uczelni. Odpowiedzi zostają pod postem, więc inni też mogą z nich skorzystać."
+        "body": "Zapytaj o egzamin, udostępnij wydarzenie lub napisz, co słychać na uczelni. Odpowiedzi zostają pod postem, więc inni też mogą z nich skorzystać."
       },
       "people": {
         "title": "Kto jeszcze tu studiuje?",
@@ -139,7 +139,7 @@
       },
       "chat": {
         "title": "Wiadomości i czaty grupowe.",
-        "body": "Dodajemy prywatne wiadomości i czaty grupowe dla znajomych oraz osób z zajęć."
+        "body": "Pracujemy nad prywatnymi wiadomościami i czatami grupowymi dla znajomych i osób z twojej grupy."
       },
       "study": {
         "title": "Notatki i zadania z egzaminów.",
@@ -147,18 +147,18 @@
       },
       "faq": {
         "title": "Pytania w jednym miejscu.",
-        "body": "Tworzymy miejsce na pytania, które studenci zadają najczęściej."
+        "body": "Przygotowujemy sekcję z najczęstszymi pytaniami studentów."
       }
     },
     "preview": {
-      "question": "Ktoś się dziś uczy?",
+      "question": "Ktoś się dziś wieczorem uczy?",
       "interestMusic": "Muzyka",
       "interestWalks": "Spacery",
       "interestCoffee": "Kawa",
       "messageOne": "Biblioteka po zajęciach?",
       "messageTwo": "O 16? Mam notatki.",
       "messageThree": "Pasuje mi.",
-      "materialOne": "Analiza · zadania do ćwiczeń",
+      "materialOne": "Analiza matematyczna · zadania",
       "city": "Lublin",
       "reply": "Biblioteka o 18?",
       "greeting": "Cześć!",
@@ -173,7 +173,7 @@
       "verifyTitle": "Zaloguj się",
       "verifyBody": "Użyj metody dostępnej dla twojej uczelni: USOS lub kodu wysłanego na uczelniany e-mail.",
       "connectTitle": "Pokaż, co cię interesuje",
-      "connectBody": "Dodaj zainteresowania, poznaj profile studentów i opublikuj pierwszy post."
+      "connectBody": "Dodaj zainteresowania, przejrzyj profile studentów i opublikuj pierwszy post."
     },
     "footer": {
       "statement": "Od studentów dla studentów.",
@@ -181,21 +181,21 @@
     },
     "map": {
       "description": "Znajdź swoją uczelnię i jej budynki na mapie.",
-      "empty": "Brak dostępnych lokalizacji wydziałów.",
-      "eyebrow": "UCZELNIE LUBLINA. JEDNA MAPA.",
-      "loading": "Wczytywanie lokalizacji wydziałów…",
+      "empty": "Nie dodano jeszcze lokalizacji budynków uczelni.",
+      "eyebrow": "Lubelskie uczelnie na jednej mapie",
+      "loading": "Wczytywanie lokalizacji budynków uczelni…",
       "mapUnavailable": "Mapa jest tymczasowo niedostępna.",
       "noResults": "Nie znaleziono pasującej uczelni.",
       "searchLabel": "Szukaj uczelni i wydziałów",
       "searchPlaceholder": "Szukaj uczelni lub adresu",
       "title": "Lublin.",
-      "unavailable": "Lokalizacje wydziałów są tymczasowo niedostępne.",
+      "unavailable": "Lokalizacje budynków uczelni są chwilowo niedostępne.",
       "zoomIn": "Przybliż mapę",
       "zoomOut": "Oddal mapę"
     }
   },
   "sidebar": {
-    "academics": "NAUKA",
+    "academics": "Nauka",
     "collapse": "Zwiń panel boczny",
     "expand": "Rozwiń panel boczny",
     "mainNavigation": "Nawigacja główna",
@@ -206,7 +206,7 @@
     "languageCode": "PL",
     "notifications": "Powiadomienia",
     "search": "Szukaj",
-    "searchPlaceholder": "Szukaj postów, osób, kursów…"
+    "searchPlaceholder": "Szukaj postów, osób, przedmiotów…"
   },
   "app": {
     "addEmoji": "Dodaj emoji",
@@ -222,7 +222,7 @@
     "message": "Wiadomość",
     "required": "Wprowadź poprawną wartość.",
     "submit": "Wyślij",
-    "today": "Top posty",
+    "today": "Popularne posty",
     "feedSubtitle": "Co słychać w Lublinie",
     "searchUniezz": "Szukaj w uniezz",
     "liveNow": "Trwa teraz",
@@ -245,22 +245,22 @@
     "typing": "Kateryna pisze",
     "writeMessage": "Napisz wiadomość",
     "send": "Wyślij",
-    "groupDescription": "Rozpocznij rozmowę z kilkorgiem studentów.",
+    "groupDescription": "Rozpocznij rozmowę z kilkoma studentami.",
     "groupName": "Nazwa grupy",
-    "groupPlaceholder": "np. Grupa do nauki matematyki dyskretnej",
+    "groupPlaceholder": "np. Nauka matematyki dyskretnej",
     "addPeople": "Dodaj osoby",
-    "searchStudents": "Szukaj studentów po imieniu",
+    "searchStudents": "Szukaj studentów po imieniu lub nazwisku",
     "remove": "Usuń",
     "suggested": "Proponowane",
     "add": "Dodaj",
     "minimumMembers": "Wybierz co najmniej dwie osoby.",
     "createGroup": "Utwórz grupę",
-    "unsavedGroupTitle": "Odrzucić tę grupę?",
-    "discardGroupDescription": "Jeśli teraz wyjdziesz, dane grupy zostaną utracone.",
+    "unsavedGroupTitle": "Anulować tworzenie grupy?",
+    "discardGroupDescription": "Jeśli teraz wyjdziesz, nazwa grupy i wybór uczestników nie zostaną zapisane.",
     "keepEditing": "Kontynuuj edycję",
     "discardChanges": "Odrzuć zmiany",
-    "pastPapers": "Arkusze egzaminacyjne",
-    "courseReviews": "Opinie o kursach",
+    "pastPapers": "Archiwum egzaminów",
+    "courseReviews": "Opinie o przedmiotach",
     "professorRatings": "Oceny wykładowców",
     "myUploads": "Moje materiały",
     "university": "Uczelnia",
@@ -269,19 +269,19 @@
     "searchMaterials": "Szukaj materiałów",
     "subject": "Przedmiot",
     "type": "Typ",
-    "uploadedBy": "Autor",
+    "uploadedBy": "Dodane przez",
     "rating": "Ocena",
     "downloads": "Pobrania",
     "download": "Pobierz",
     "trending": "Popularne",
-    "noDocument": "Projekt nie zawiera dokumentu do pobrania.",
-    "metadataOnly": "Dodaj lokalnie opis materiału. Przesyłanie plików nie jest dostępne w tej wersji demonstracyjnej.",
+    "noDocument": "Ten materiał nie zawiera pliku do pobrania.",
+    "metadataOnly": "Możesz dodać opis materiału. Zostanie zapisany tylko na tym urządzeniu. Przesyłanie plików jest niedostępne w wersji demonstracyjnej.",
     "friends": "Znajomi",
     "studyBuddy": "Wspólna nauka",
     "dating": "Randki",
     "pass": "Pomiń",
-    "connected": "Połączono",
-    "connect": "Połącz",
+    "connected": "Kontakt nawiązany",
+    "connect": "Nawiąż kontakt",
     "sayHi": "Przywitaj się",
     "edit": "Edytuj",
     "reset": "Zresetuj filtry i profile",
@@ -290,16 +290,16 @@
     "dorms": "Akademiki",
     "nearby": "W pobliżu",
     "cheapGroceries": "Tanie zakupy blisko kampusu",
-    "mapDescription": "Ilustracyjna mapa Lublina; lokalizacje są orientacyjne.",
+    "mapDescription": "Poglądowa mapa Lublina. Lokalizacje są orientacyjne.",
     "directions": "Trasa",
     "yourProfile": "Twój profil",
     "saveChanges": "Zapisz zmiany",
     "saved": "Zapisano",
     "signOut": "Wyloguj się",
     "changePhoto": "Zmień zdjęcie",
-    "photoError": "Wybierz poprawny obraz JPG, PNG lub WebP o rozmiarze poniżej 5 MB.",
+    "photoError": "Wybierz zdjęcie w formacie JPG, PNG lub WebP o rozmiarze mniejszym niż 5 MB.",
     "profileVisibility": "Widoczność profilu",
-    "visibilityDescription": "Pozwól innym studentom znaleźć Cię po imieniu i kierunku studiów.",
+    "visibilityDescription": "Pozwól innym studentom znaleźć cię po imieniu i kierunku studiów.",
     "visibleToStudents": "Widoczny dla studentów",
     "personalDetails": "Dane osobowe",
     "firstName": "Imię",
@@ -311,23 +311,23 @@
     "faculty": "Wydział",
     "yearOfStudy": "Rok studiów",
     "studyYear": "Rok {{year}}",
-    "savedLocally": "Zmiany zapisano lokalnie do opuszczenia ekranu.",
-    "programmeExists": "Ten kierunek jest już na Twoim profilu.",
+    "savedLocally": "Zmiany są zapisane tylko na tym urządzeniu i znikną po opuszczeniu tego ekranu.",
+    "programmeExists": "Ten kierunek jest już na twoim profilu.",
     "clearSearch": "Wyczyść wyszukiwanie",
     "unsavedChangesTitle": "Odrzucić zmiany?",
     "discardChangesDescription": "Jeśli teraz wyjdziesz, niezapisane zmiany zostaną utracone.",
-    "studyStatus": "Status",
+    "studyStatus": "Status studiów",
     "studyStatusActive": "Aktywny",
     "studyStatusGraduated": "Absolwent",
     "studyStatusSuspended": "Zawieszony",
     "studyStatusCancelled": "Skreślony",
-    "studyLevel": "Poziom",
+    "studyLevel": "Poziom studiów",
     "studyLevelFirstCycle": "Studia I stopnia",
     "studyLevelSecondCycle": "Studia II stopnia",
-    "studyLevelLongCycle": "Jednolite magisterskie",
+    "studyLevelLongCycle": "Jednolite studia magisterskie",
     "studyLevelThirdCycle": "Studia III stopnia",
     "studyLevelPhdSchool": "Szkoła doktorska",
-    "modeOfStudies": "Forma",
+    "modeOfStudies": "Forma studiów",
     "modeOfStudiesFullTime": "Stacjonarne",
     "modeOfStudiesPartTime": "Niestacjonarne",
     "programme": "Kierunek",
@@ -339,7 +339,7 @@
     "duplicatePhoto": "To zdjęcie zostało już dodane.",
     "photos": "Zdjęcia (opcjonalnie)",
     "photosHint": "Do 10 zdjęć · JPG, PNG lub WebP · do 10 MB każde",
-    "photosError": "Wybierz do 10 prawidłowych zdjęć JPG, PNG lub WebP, do 10 MB każde.",
+    "photosError": "Wybierz maksymalnie 10 zdjęć w formacie JPG, PNG lub WebP. Każde może mieć do 10 MB.",
     "tags": "Tagi (opcjonalnie)",
     "tagsPlaceholder": "Dodaj tag",
     "addTag": "Dodaj tag",
@@ -352,7 +352,7 @@
     "titlePlaceholder": "Dodaj tytuł posta",
     "post": "Post",
     "subtitle": "Podziel się czymś ze swoją społecznością studencką.",
-    "type": "Rodzaj posta",
+    "type": "Typ posta",
     "questionTitle": "Twoje pytanie",
     "title": "Tytuł",
     "details": "Szczegóły",
@@ -389,7 +389,7 @@
     "detailsError": "Maksymalnie 1000 znaków.",
     "submit": "Wyślij zgłoszenie",
     "sent": "Zgłoszenie wysłane.",
-    "duplicate": "Ten element został już zgłoszony.",
+    "duplicate": "Twoje zgłoszenie zostało już wysłane.",
     "rateLimit": "Osiągnięto limit zgłoszeń. Spróbuj ponownie później."
   },
   "apiState": {
@@ -416,9 +416,9 @@
     "showEmail": "Pokaż e-mail",
     "showFaculty": "Pokaż wydział",
     "showYear": "Pokaż rok studiów",
-    "titleError": "Użyj 3–150 znaków.",
-    "detailsError": "Użyj 10–5000 znaków.",
-    "imageError": "Wybierz poprawny obraz JPG, PNG lub WebP o rozmiarze poniżej 10 MB.",
+    "titleError": "Wpisz od 3 do 150 znaków.",
+    "detailsError": "Wpisz od 10 do 5000 znaków.",
+    "imageError": "Wybierz zdjęcie w formacie JPG, PNG lub WebP o rozmiarze mniejszym niż 10 MB.",
     "postDeleted": "Post usunięty",
     "commentDeleted": "Komentarz usunięty"
   },
