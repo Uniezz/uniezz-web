@@ -1,6 +1,7 @@
 import { ArrowDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useLandingScroll } from '@/hooks/useLandingScroll';
+import { LandingCatPortrait } from './LandingCatPortrait';
 
 export function LandingUnicat() {
   const { t } = useTranslation();
@@ -11,12 +12,7 @@ export function LandingUnicat() {
         <span aria-hidden className="landing-unicat-word">
           {t('landing.unicat.name')}
         </span>
-        <div className="landing-unicat-portrait">
-          <picture>
-            <source media="(prefers-reduced-motion: reduce)" srcSet="/app/sidebar-cat.png" />
-            <img src="/app/empty-cat.svg" alt={t('landing.unicat.alt')} loading="lazy" />
-          </picture>
-        </div>
+        <LandingCatPortrait />
         <div className="landing-unicat-copy landing-container">
           <div>
             <h2 id="unicat-title" className="landing-display">

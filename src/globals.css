@@ -348,6 +348,9 @@
   height: 100%;
   object-fit: contain;
 }
+.landing-unicat-portrait:has(canvas) img {
+  visibility: hidden;
+}
 .landing-unicat-copy {
   position: relative;
   display: grid;
