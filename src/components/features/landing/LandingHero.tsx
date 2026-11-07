@@ -10,8 +10,6 @@ export function LandingHero() {
   return (
     <section ref={ref} id="life" className="landing-opening" aria-labelledby="landing-title">
       <div className="landing-opening-stage">
-        <div aria-hidden className="landing-light-field" />
-        <div aria-hidden className="landing-film-grain" />
         <div className="landing-opening-front" inert={isPinned && activeStep === 1}>
           <h1 id="landing-title" className="landing-wordmark">
             {t('common.appName').toLowerCase()}

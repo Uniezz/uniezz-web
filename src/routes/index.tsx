@@ -17,7 +17,7 @@ function LandingPage() {
   const { data: universities = [], isPending, isError } = useUniversities();
 
   return (
-    <div className="landing-page min-h-svh overflow-x-clip bg-ink text-white">
+    <div className="landing-page bg-app min-h-svh overflow-x-clip text-white">
       <header className="landing-header">
         <Link
           to="/"

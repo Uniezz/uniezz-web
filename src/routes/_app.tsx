@@ -51,7 +51,7 @@ function AppLayout() {
     narrow,
   );
   return (
-    <BrandBackground variant="app" className="flex min-h-svh">
+    <BrandBackground variant="app" className="app-shell-background flex min-h-svh">
       <UISidebar
         className="sticky top-0 hidden h-svh lg:flex"
         user={{
