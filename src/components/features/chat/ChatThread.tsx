@@ -1,3 +1,4 @@
+import { captureAnalytics, trackLocalAction } from '@/utils/analytics';
 import { ArrowLeft, Send } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -28,17 +29,22 @@ export function ChatThread({
   });
   const [isMultiline, setIsMultiline] = useState(false);
   const messageDraft = useWatch({ control, name: 'text' });
-  const submit = handleSubmit(({ text }) => {
-    onSend({
-      text,
-      outgoing: true,
-      time: new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit' }).format(
-        new Date(),
-      ),
-    });
-    reset({ text: '' });
-    setIsMultiline(false);
-  });
+  const submit = handleSubmit(
+    ({ text }) => {
+      trackLocalAction('message_send', () =>
+        onSend({
+          text,
+          outgoing: true,
+          time: new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit' }).format(
+            new Date(),
+          ),
+        }),
+      );
+      reset({ text: '' });
+      setIsMultiline(false);
+    },
+    () => captureAnalytics('message_form_validation_failed'),
+  );
   return (
     <UIPanel className="flex h-full min-h-0 flex-col p-0">
       <div className="flex items-center gap-3 border-b border-white-5 px-5 py-4">

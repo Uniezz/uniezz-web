@@ -1,12 +1,14 @@
 import { Link } from '@tanstack/react-router';
 import { type VariantProps } from 'class-variance-authority';
 import { type LucideIcon } from 'lucide-react';
-import { type ComponentProps, type ReactNode } from 'react';
+import { type ComponentProps, type MouseEventHandler, type ReactNode } from 'react';
 import { cn } from '../../cn';
 import { buttonStyles, iconColorClass } from './variants';
 
 type UIButtonProps = VariantProps<typeof buttonStyles> &
-  ComponentProps<'button'> & {
+  Omit<ComponentProps<'button'>, 'onClick' | 'onAuxClick'> & {
+    onClick?: MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>;
+    onAuxClick?: MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>;
     children: ReactNode;
     navigateTo?: string;
     leftIcon?: LucideIcon;
@@ -15,6 +17,7 @@ type UIButtonProps = VariantProps<typeof buttonStyles> &
 
 export const UIButton = ({
   children,
+  id,
   navigateTo,
   size,
   bg,
@@ -23,6 +26,8 @@ export const UIButton = ({
   className,
   type = 'button',
   disabled,
+  onClick,
+  onAuxClick,
   ...props
 }: UIButtonProps) => {
   const classes = cn(buttonStyles({ size, bg }), className);
@@ -30,7 +35,14 @@ export const UIButton = ({
 
   if (navigateTo) {
     return (
-      <Link disabled={disabled} className={classes} to={navigateTo}>
+      <Link
+        onClick={onClick}
+        onAuxClick={onAuxClick}
+        id={id}
+        disabled={disabled}
+        className={classes}
+        to={navigateTo}
+      >
         {icon}
         {children}
       </Link>
@@ -38,7 +50,15 @@ export const UIButton = ({
   }
 
   return (
-    <button type={type} disabled={disabled} className={classes} {...props}>
+    <button
+      onClick={onClick}
+      onAuxClick={onAuxClick}
+      id={id}
+      type={type}
+      disabled={disabled}
+      className={classes}
+      {...props}
+    >
       {icon}
       {children}
     </button>

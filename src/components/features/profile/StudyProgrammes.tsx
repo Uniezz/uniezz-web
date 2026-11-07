@@ -1,3 +1,4 @@
+import { captureAnalytics } from '@/utils/analytics';
 import { useTranslation } from 'react-i18next';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -98,7 +99,11 @@ function ProgrammeCard({
   return (
     <UIPanel surface="tint" className="rounded-programme p-4">
       <UIUnsavedChanges dirty={isDirty} />
-      <form onSubmit={handleSubmit(save)}>
+      <form
+        onSubmit={handleSubmit(save, () =>
+          captureAnalytics('programme_update_form_validation_failed'),
+        )}
+      >
         <fieldset disabled={isPending}>
           <details className="group [interpolate-size:allow-keywords] details-content:h-0 details-content:overflow-hidden details-content:transition-[height,content-visibility] details-content:transition-discrete details-content:duration-200 open:details-content:h-auto motion-reduce:details-content:transition-none">
             <summary className="flex cursor-pointer list-none flex-wrap items-center justify-between gap-3 [&::-webkit-details-marker]:hidden">

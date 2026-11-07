@@ -3,8 +3,10 @@ import { createRoot } from 'react-dom/client';
 import { RouterProvider, createRouteMask, createRouter } from '@tanstack/react-router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { SkulletProvider } from 'skullet/react';
-
+import posthog from 'posthog-js';
+import { PostHogProvider } from '@posthog/react';
 import './schemas/env';
+import { createAnalyticsMutationCache, sanitizeAnalyticsEvent } from './utils/analytics';
 import { routeTree } from './routeTree.gen';
 
 import './i18n';
@@ -54,7 +56,7 @@ const profileRouteMask = createRouteMask({
   params: true,
   search: ({ studentSearch }) => ({ studentSearch }),
 });
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({ mutationCache: createAnalyticsMutationCache(posthog) });
 const router = createRouter({
   routeTree,
   routeMasks: [
@@ -78,20 +80,34 @@ const rootElement = document.getElementById('root');
 if (!rootElement) {
   throw new Error('Root element #root not found');
 }
+posthog.init(import.meta.env.VITE_POSTHOG_PROJECT_TOKEN, {
+  api_host: import.meta.env.VITE_POSTHOG_HOST,
+  defaults: 'latest',
+  capture_pageview: 'history_change',
+  capture_pageleave: true,
+  disable_scroll_properties: false,
+  autocapture: true,
+  mask_all_text: true,
+  mask_all_element_attributes: true,
+  disable_session_recording: true,
+  before_send: sanitizeAnalyticsEvent,
+});
 
 createRoot(rootElement).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <SkulletProvider
-        mode="dark"
-        theme={{
-          dark: { base: 'rgb(255 255 255 / 0.2)', highlight: 'rgb(255 255 255 / 0.3)' },
-          animation: 'pulse',
-          radius: '0.375rem',
-        }}
-      >
-        <RouterProvider router={router} />
-      </SkulletProvider>
-    </QueryClientProvider>
+    <PostHogProvider client={posthog}>
+      <QueryClientProvider client={queryClient}>
+        <SkulletProvider
+          mode="dark"
+          theme={{
+            dark: { base: 'rgb(255 255 255 / 0.2)', highlight: 'rgb(255 255 255 / 0.3)' },
+            animation: 'pulse',
+            radius: '0.375rem',
+          }}
+        >
+          <RouterProvider router={router} />
+        </SkulletProvider>
+      </QueryClientProvider>
+    </PostHogProvider>
   </StrictMode>,
 );

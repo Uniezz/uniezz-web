@@ -1,3 +1,4 @@
+import { captureAnalytics, trackLocalAction } from '@/utils/analytics';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -32,7 +33,13 @@ export function UploadMaterial({
       title={t('exams.action')}
       description={t('app.metadataOnly')}
     >
-      <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className="space-y-4"
+        onSubmit={handleSubmit(
+          (values) => trackLocalAction('material_add', () => onSubmit(values)),
+          () => captureAnalytics('material_form_validation_failed'),
+        )}
+      >
         <UIField label={t('app.subject')} error={errors.subject ? t('app.required') : undefined}>
           <input
             autoComplete="off"

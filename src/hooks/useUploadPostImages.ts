@@ -5,6 +5,7 @@ import { useUploadImage } from './useUploadImage';
 export function useUploadPostImages() {
   const { mutateAsync: uploadImage } = useUploadImage('feed');
   const { data: previous, mutateAsync: upload } = useMutation({
+    meta: { analyticsAction: 'images_upload_batch' },
     mutationKey: ['feed', 'upload-images'],
     mutationFn: ({ files, uploaded }: { files: File[]; uploaded: UploadedPostImage[] }) =>
       uploadPostImages(files, uploaded, uploadImage),

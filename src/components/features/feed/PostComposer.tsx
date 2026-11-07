@@ -1,3 +1,4 @@
+import { captureAnalytics } from '@/utils/analytics';
 import { useState } from 'react';
 import { ChevronLeft, Send } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -108,6 +109,8 @@ export function PostComposer({
                 }
               },
               (errors) => {
+                captureAnalytics('post_form_validation_failed');
+
                 if (errors.images) toast.error(t('postComposer.photosError'));
               },
             )}

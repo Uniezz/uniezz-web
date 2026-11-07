@@ -1,3 +1,4 @@
+import { captureAnalytics } from '@/utils/analytics';
 import { Check } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { FormProvider } from 'react-hook-form';
@@ -54,14 +55,17 @@ export function ProfileEditor({ profile }: { profile: components['schemas']['Pro
           <div className="space-y-4.5">
             <form
               id="profile-form"
-              onSubmit={handleSubmit(async (data) => {
-                try {
-                  await saveProfile(data);
-                  toast.success(t('app.saved'));
-                } catch {
-                  toast.error(t('apiState.profileSaveError'));
-                }
-              })}
+              onSubmit={handleSubmit(
+                async (data) => {
+                  try {
+                    await saveProfile(data);
+                    toast.success(t('app.saved'));
+                  } catch {
+                    toast.error(t('apiState.profileSaveError'));
+                  }
+                },
+                () => captureAnalytics('profile_form_validation_failed'),
+              )}
             >
               <fieldset disabled={isPending}>
                 <PersonalDetails />

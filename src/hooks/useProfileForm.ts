@@ -36,6 +36,7 @@ export function useProfileForm(profile: components['schemas']['Profile']) {
     isSuccess,
     isPending: isSaving,
   } = useMutation({
+    meta: { analyticsAction: 'profile_update' },
     mutationKey: ['profile', 'update'],
     mutationFn: async (values: ProfileSubmission) => {
       const uploaded = values.avatarFile

@@ -11,6 +11,7 @@ type SaveProgrammeVariables = {
 export function useProfileProgrammes() {
   const queryClient = useQueryClient();
   const { mutateAsync: saveProgramme, isPending: isSaving } = useMutation({
+    meta: { analyticsAction: 'programme_save' },
     mutationKey: ['profile', 'programmes', 'save'],
     mutationFn: ({ programme, id }: SaveProgrammeVariables) =>
       saveProgrammeApi(
@@ -45,6 +46,7 @@ export function useProfileProgrammes() {
     },
   });
   const { mutateAsync: removeProgramme, isPending: isRemoving } = useMutation({
+    meta: { analyticsAction: 'programme_delete' },
     mutationKey: ['profile', 'programmes', 'delete'],
     mutationFn: deleteProgramme,
     onSuccess: (_, id) => {
