@@ -6,6 +6,7 @@ import { SkulletProvider } from 'skullet/react';
 import posthog from 'posthog-js';
 import { PostHogProvider } from '@posthog/react';
 import './schemas/env';
+import { createAnalyticsMutationCache, sanitizeAnalyticsEvent } from './utils/analytics';
 import { routeTree } from './routeTree.gen';
 
 import './i18n';
@@ -55,7 +56,7 @@ const profileRouteMask = createRouteMask({
   params: true,
   search: ({ studentSearch }) => ({ studentSearch }),
 });
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({ mutationCache: createAnalyticsMutationCache(posthog) });
 const router = createRouter({
   routeTree,
   routeMasks: [
@@ -82,6 +83,14 @@ if (!rootElement) {
 posthog.init(import.meta.env.VITE_POSTHOG_PROJECT_TOKEN, {
   api_host: import.meta.env.VITE_POSTHOG_HOST,
   defaults: 'latest',
+  capture_pageview: 'history_change',
+  capture_pageleave: true,
+  disable_scroll_properties: false,
+  autocapture: true,
+  mask_all_text: true,
+  mask_all_element_attributes: true,
+  disable_session_recording: true,
+  before_send: sanitizeAnalyticsEvent,
 });
 
 createRoot(rootElement).render(

@@ -5,6 +5,7 @@ import type { postSubmission } from '@/utils/feed';
 export function useCreateFeedPost() {
   const queryClient = useQueryClient();
   return useMutation({
+    meta: { analyticsAction: 'post_create' },
     mutationKey: ['feed', 'create-post'],
     mutationFn: ({ body, key }: ReturnType<typeof postSubmission>) => createFeedPost(body, key),
     onSuccess: (post) => {

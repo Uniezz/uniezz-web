@@ -1,3 +1,4 @@
+import { captureAnalytics } from '@/utils/analytics';
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, useWatch } from 'react-hook-form';
@@ -81,24 +82,27 @@ export function ReportButton({
       >
         <form
           className="space-y-4"
-          onSubmit={handleSubmit(async ({ reason, details }) => {
-            try {
-              await createReport({ targetType, targetId, reason, details: details || undefined });
-              changeOpen(false);
-              toast.success(t('report.sent'));
-            } catch (error) {
-              const status = error instanceof Error ? error.cause : undefined;
-              toast.error(
-                t(
-                  status === 409
-                    ? 'report.duplicate'
-                    : status === 429
-                      ? 'report.rateLimit'
-                      : 'apiState.error',
-                ),
-              );
-            }
-          })}
+          onSubmit={handleSubmit(
+            async ({ reason, details }) => {
+              try {
+                await createReport({ targetType, targetId, reason, details: details || undefined });
+                changeOpen(false);
+                toast.success(t('report.sent'));
+              } catch (error) {
+                const status = error instanceof Error ? error.cause : undefined;
+                toast.error(
+                  t(
+                    status === 409
+                      ? 'report.duplicate'
+                      : status === 429
+                        ? 'report.rateLimit'
+                        : 'apiState.error',
+                  ),
+                );
+              }
+            },
+            () => captureAnalytics('report_form_validation_failed'),
+          )}
         >
           <fieldset disabled={isPending} className="space-y-4">
             <UIField

@@ -1,3 +1,5 @@
+import type { MouseEvent } from 'react';
+import { captureAnalytics } from '@/utils/analytics';
 import { Link, createFileRoute } from '@tanstack/react-router';
 import { ArrowUpRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -15,6 +17,11 @@ export const Route = createFileRoute('/')({ component: LandingPage });
 function LandingPage() {
   const { t } = useTranslation();
   const { data: universities = [], isPending, isError } = useUniversities();
+
+  const handleSignInClick = (event: MouseEvent<HTMLElement>) => {
+    if (event.button !== 0 && event.button !== 1) return;
+    captureAnalytics('landing_sign_in_clicked', { cta: 'landing-sign-in-header' });
+  };
 
   return (
     <div className="landing-page bg-app min-h-svh overflow-x-clip text-white">
@@ -44,7 +51,14 @@ function LandingPage() {
         </nav>
         <div className="flex items-center gap-2 sm:gap-3">
           <UILanguageSwitcher />
-          <UIButton navigateTo="/login" bg="secondary" size="sm">
+          <UIButton
+            onClick={handleSignInClick}
+            onAuxClick={handleSignInClick}
+            id="landing-sign-in-header"
+            navigateTo="/login"
+            bg="secondary"
+            size="sm"
+          >
             {t('landing.signIn')}
             <ArrowUpRight size={16} aria-hidden />
           </UIButton>

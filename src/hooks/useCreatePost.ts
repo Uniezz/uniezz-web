@@ -11,6 +11,7 @@ export function useCreatePost() {
   const { variables, isError, mutateAsync: createPost } = useCreateFeedPost();
 
   return useMutation({
+    meta: { analyticsAction: 'post_publish' },
     mutationKey: ['feed', 'create'],
     mutationFn: async (values: PostSchema) => {
       if (!profile) throw new Error('Profile unavailable');

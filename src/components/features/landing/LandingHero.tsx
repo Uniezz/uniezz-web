@@ -1,3 +1,5 @@
+import type { MouseEvent } from 'react';
+import { captureAnalytics } from '@/utils/analytics';
 import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useLandingScroll } from '@/hooks/useLandingScroll';
@@ -7,6 +9,10 @@ import { LandingFeedPreview } from './LandingFeedPreview';
 export function LandingHero() {
   const { t } = useTranslation();
   const { ref, activeStep, isPinned } = useLandingScroll(2);
+  const handleSignInClick = (event: MouseEvent<HTMLElement>) => {
+    if (event.button !== 0 && event.button !== 1) return;
+    captureAnalytics('landing_sign_in_clicked', { cta: 'landing-sign-in-hero' });
+  };
   return (
     <section ref={ref} id="life" className="landing-opening" aria-labelledby="landing-title">
       <div className="landing-opening-stage">
@@ -16,7 +22,14 @@ export function LandingHero() {
           </h1>
           <div className="landing-opening-intro">
             <p>{t('landing.hero.description')}</p>
-            <UIButton navigateTo="/login" bg="transparent" className="landing-cta mt-6">
+            <UIButton
+              id="landing-sign-in-hero"
+              onClick={handleSignInClick}
+              onAuxClick={handleSignInClick}
+              navigateTo="/login"
+              bg="transparent"
+              className="landing-cta mt-6"
+            >
               {t('landing.findPeople')}
               <ArrowUpRight size={18} aria-hidden />
             </UIButton>

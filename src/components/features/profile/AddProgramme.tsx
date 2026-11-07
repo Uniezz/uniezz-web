@@ -1,3 +1,4 @@
+import { captureAnalytics } from '@/utils/analytics';
 import { useState } from 'react';
 import { Building2, Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -111,7 +112,12 @@ export function AddProgramme({
             </div>
           </UIField>
           {exists && <p className="text-label text-secondary">{t('app.programmeExists')}</p>}
-          <UIButton disabled={exists || isPending} onClick={handleSubmit(addProgramme)}>
+          <UIButton
+            disabled={exists || isPending}
+            onClick={handleSubmit(addProgramme, () =>
+              captureAnalytics('programme_add_form_validation_failed'),
+            )}
+          >
             {t('app.addProgramme')}
           </UIButton>
         </div>

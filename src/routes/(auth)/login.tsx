@@ -1,3 +1,4 @@
+import { captureAnalytics } from '@/utils/analytics';
 import { AuthPage } from '@/components';
 import { useUniversities } from '@/hooks';
 import { UIButton, UIRow, UIText } from '@/ui/components';
@@ -21,8 +22,13 @@ function LoginPage() {
 
   const handleContinue = () => {
     if (!selectedUniversity) return;
+    captureAnalytics('sign_in_started', {
+      method: selectedUniversity.authMethod,
+      university: selectedUniversity.id,
+    });
 
     if (selectedUniversity.authMethod === 'USOS') {
+      captureAnalytics('sign_in_redirected', { method: 'USOS' });
       startUniversityLogin(selectedUniversity.id);
       return;
     }
