@@ -66,6 +66,7 @@ export function ConversationList({
             .map((c) => (
               <button
                 key={c.id}
+                data-ph-capture-attribute-label="Open conversation"
                 onClick={() => onOpen(c.id)}
                 aria-current={selected === c.id ? 'true' : undefined}
                 className={`flex w-full items-center gap-3 rounded-2xl border border-transparent p-2.5 text-left transition-colors hover:bg-white-5 ${selected === c.id ? 'border-white-10 bg-white-10' : ''}`}

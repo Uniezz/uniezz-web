@@ -71,6 +71,7 @@ function FeedPostPage() {
         <Link
           to="/feed"
           search={{ postId: undefined }}
+          data-ph-capture-attribute-label={t('app.back')}
           className="inline-flex items-center gap-2 text-label text-secondary"
         >
           <ChevronLeft className="size-4" /> {t('app.back')}
@@ -113,6 +114,7 @@ function FeedPostPage() {
       <div className="flex items-center justify-between gap-3">
         <Link
           to="/connections/students/$profileId"
+          data-ph-capture-attribute-label="Open post author profile"
           params={{ profileId: post.author.id }}
           search={{ studentSearch: undefined }}
           className="flex w-fit items-center gap-3 rounded-sm hover:underline focus-visible:outline-2 focus-visible:outline-blue"
@@ -144,6 +146,7 @@ function FeedPostPage() {
         <Link
           to="/feed"
           search={{ postId: undefined }}
+          data-ph-capture-attribute-label={t('feed.title')}
           className="mb-5 inline-flex min-h-11 items-center gap-2 px-2 py-2 text-label text-secondary transition-colors hover:text-white xl:absolute xl:top-0 xl:-left-32 xl:mb-0"
         >
           <ChevronLeft className="size-5" /> {t('feed.title')}
@@ -308,6 +311,7 @@ function FeedPostPage() {
             ) : previous ? (
               <Link
                 to="/feed/post/$postId"
+                data-ph-capture-attribute-label={t('app.previousPost')}
                 params={{ postId: previous.id }}
                 search={{ postId: previous.id }}
                 aria-label={t('app.previousPost')}
@@ -321,6 +325,7 @@ function FeedPostPage() {
             {next && (
               <Link
                 to="/feed/post/$postId"
+                data-ph-capture-attribute-label={t('app.nextPost')}
                 params={{ postId: next.id }}
                 search={{ postId: next.id }}
                 aria-label={t('app.nextPost')}

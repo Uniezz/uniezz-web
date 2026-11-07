@@ -163,6 +163,7 @@ export function CreateGroup({
               <span className="min-w-0 flex-1 truncate">{name}</span>
               <button
                 type="button"
+                data-ph-capture-attribute-label="Remove group member"
                 aria-label={`${t('app.remove')} ${name}`}
                 onClick={() =>
                   setValue(

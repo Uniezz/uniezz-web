@@ -12,7 +12,7 @@ export function FinishLoginPage({ error }: FinishLoginPageProps) {
       bottomText={error || 'Please wait while we finish your USOS sign-in.'}
     >
       {error ? (
-        <UIButton navigateTo="/login">
+        <UIButton navigateTo="/login" aria-label="Back to universities">
           <UIText className="text-ink">Back to universities</UIText>
         </UIButton>
       ) : null}

@@ -31,6 +31,7 @@ export function GuideMap({
             <button
               key={place.name}
               style={{ left: `${place.x}%`, top: `${place.y}%` }}
+              data-ph-capture-attribute-label={place.name}
               aria-pressed={selected === i}
               onClick={() => onSelect(i)}
               className={`absolute flex -translate-x-1/2 items-center gap-1 rounded-full px-3 py-1.75 text-detail font-semibold whitespace-nowrap shadow-lg focus-visible:outline-2 focus-visible:outline-blue ${selected === i ? 'bg-white text-ink' : 'bg-ink-70 text-white'}`}

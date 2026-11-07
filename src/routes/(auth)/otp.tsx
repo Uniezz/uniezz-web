@@ -47,6 +47,9 @@ function OtpPage() {
       beforeTitle={
         <button
           type="button"
+          data-ph-capture-attribute-label={
+            isEmailStep ? t('auth.backToUniversities') : t('auth.otp.changeEmail')
+          }
           onClick={onBackPress}
           className="flex items-center gap-2 self-start rounded text-secondary outline-none hover:text-white focus-visible:ring-2 focus-visible:ring-blue"
         >
@@ -92,6 +95,7 @@ function OtpPage() {
               </UIText>
               <button
                 type="button"
+                data-ph-capture-attribute-label={t('auth.otp.resend')}
                 onClick={onResendPress}
                 disabled={isPending}
                 className="rounded text-periwinkle outline-none hover:text-white focus-visible:ring-2 focus-visible:ring-blue disabled:opacity-40"

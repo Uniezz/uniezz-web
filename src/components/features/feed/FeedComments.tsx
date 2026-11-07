@@ -35,6 +35,7 @@ export function FeedCommentItem({
           {!comment.deleted && comment.author ? (
             <Link
               to="/connections/students/$profileId"
+              data-ph-capture-attribute-label="Open comment author profile"
               params={{ profileId: comment.author.id }}
               search={{ studentSearch: undefined }}
               className="rounded-sm hover:underline focus-visible:outline-2 focus-visible:outline-blue"

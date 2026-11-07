@@ -54,11 +54,21 @@ function ProfileBack() {
   );
 
   return canGoBack ? (
-    <button type="button" onClick={() => router.history.back()} className={className}>
+    <button
+      type="button"
+      onClick={() => router.history.back()}
+      data-ph-capture-attribute-label={t('app.back')}
+      className={className}
+    >
       {content}
     </button>
   ) : (
-    <Link to="/connections/students" search={{ studentSearch }} className={className}>
+    <Link
+      to="/connections/students"
+      search={{ studentSearch }}
+      data-ph-capture-attribute-label={t('app.back')}
+      className={className}
+    >
       {content}
     </Link>
   );

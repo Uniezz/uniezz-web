@@ -18,6 +18,7 @@ export function ConnectionsList({
         <button
           key={person.id}
           type="button"
+          data-ph-capture-attribute-label="Open connection"
           onClick={() => onOpen(person.id)}
           aria-current={selected === person.id ? 'true' : undefined}
           className={`flex w-full items-center gap-3 rounded-2xl border border-transparent p-2.5 text-left transition-colors hover:bg-white-5 ${selected === person.id ? 'border-white-10 bg-white-10' : ''}`}

@@ -9,6 +9,7 @@ export function AuthBrand() {
     <div className="flex flex-1 flex-col justify-between py-2 md:min-h-[calc(100svh-64px)]">
       <Link
         to="/"
+        data-ph-capture-attribute-label={t('common.appName')}
         aria-label={t('common.appName')}
         className="flex min-h-11 w-fit items-center gap-0.5 rounded-lg text-xxl font-semibold tracking-tight text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue"
       >

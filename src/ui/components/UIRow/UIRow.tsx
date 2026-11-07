@@ -19,6 +19,7 @@ export const UIRow = ({ iconText, iconSrc, topText, fullName, onClick, selected 
       onClick={onClick}
       className={cn(rowstyles({ selected }))}
       title={fullName}
+      data-ph-capture-attribute-label={fullName}
       aria-label={fullName}
       aria-pressed={Boolean(selected)}
     >

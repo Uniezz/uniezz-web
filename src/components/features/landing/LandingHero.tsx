@@ -54,7 +54,11 @@ export function LandingHero() {
           </div>
         </div>
         <div className="landing-hero-bottom">
-          <a href="#unicat" className="landing-text-link">
+          <a
+            href="#unicat"
+            data-ph-capture-attribute-label={t('landing.hero.scroll')}
+            className="landing-text-link"
+          >
             {t('landing.hero.scroll')}
             <ArrowDown size={14} aria-hidden />
           </a>

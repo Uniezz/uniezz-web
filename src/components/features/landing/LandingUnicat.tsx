@@ -21,7 +21,11 @@ export function LandingUnicat() {
           </div>
           <div>
             <p className="text-lg leading-relaxed text-white/80">{t('landing.unicat.note')}</p>
-            <a href="#explore" className="landing-text-link mt-5 text-body">
+            <a
+              href="#explore"
+              data-ph-capture-attribute-label={t('landing.unicat.action')}
+              className="landing-text-link mt-5 text-body"
+            >
               {t('landing.unicat.action')}
               <ArrowDown size={16} aria-hidden />
             </a>

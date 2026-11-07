@@ -30,6 +30,7 @@ export function LandingJoinTitle() {
         onAuxClick={handleSignInClick}
         to="/login"
         className="landing-join-heading-link"
+        data-ph-capture-attribute-label={title}
         aria-label={title}
       >
         {words.map((word, wordIndex) => {

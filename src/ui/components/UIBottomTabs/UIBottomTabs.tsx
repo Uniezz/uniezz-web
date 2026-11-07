@@ -19,6 +19,7 @@ export const UIBottomTabs = () => {
           search={matchRoute({ to, fuzzy: true }) ? ((() => RESET_TAB_SEARCH) as never) : undefined}
           activeProps={{ className: bottomTabStateStyles({ active: true }) }}
           inactiveProps={{ className: bottomTabStateStyles({ active: false }) }}
+          data-ph-capture-attribute-label={t(labelKey)}
           className={bottomTabStyles()}
         >
           <Icon size={19} />

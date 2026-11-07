@@ -14,5 +14,7 @@
 - Use conventional commit subjects with a lowercase type prefix, such as `feat:` or `fix:`.
 - Reuse existing UI components, hooks, API functions, schemas, and query patterns.
 - Keep API calls in `src/api`, query and mutation logic in `src/hooks`, route composition in `src/routes`, and feature UI in `src/components/features`.
+- Track every user action through PostHog. Autocapture already records clicks, changes, submits, pageviews, page leaves, and scroll depth; add a named `captureAnalytics` event only for outcomes autocapture cannot see, such as success or failure, and track mutations with `meta.analyticsAction`.
+- Give every clickable element a clear action description in `data-ph-capture-attribute-label`, because PostHog masks DOM text. `UIButton` derives it from its `aria-label` or plain-text children; set it explicitly on raw `button`, `a`, `Link`, and other shared controls. When the element shows user content, such as names, messages, post titles, or tags, use a fixed description such as `"Open conversation"` and never the content itself.
 - Preserve existing behavior unless the request calls for changing it.
 - Do not start a development server unless the user explicitly asks.

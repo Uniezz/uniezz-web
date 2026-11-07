@@ -23,6 +23,7 @@ export function UITopbar({ title, subtitle, action, search, children }: UITopbar
       </div>
       <Link
         to="/profile"
+        data-ph-capture-attribute-label={t('app.profile')}
         aria-label={t('app.profile')}
         className="rounded-full bg-white-10 p-2 lg:hidden"
       >

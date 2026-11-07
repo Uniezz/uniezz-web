@@ -70,7 +70,8 @@ chat messages, group creation, and study material details emit outcomes with
 
 ## Privacy and verification
 
-DOM text and element attributes are masked. Request/response bodies, form values,
+DOM text and element attributes are masked; clicks carry a readable `label` property from
+`data-ph-capture-attribute-label` (fixed descriptions on elements that show user content). Request/response bodies, form values,
 error messages, and files are not included in custom events. URL query strings and
 fragments are stripped, including nested initial/referrer attribution, and post
 and profile IDs are replaced with route placeholders. Session replay is disabled.

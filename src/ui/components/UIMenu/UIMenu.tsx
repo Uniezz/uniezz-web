@@ -39,6 +39,7 @@ export const UIMenu = ({ options, value, onSelect, className, ...props }: UIMenu
             key={option.value}
             size="md"
             bg="transparent"
+            data-ph-capture-attribute-label={option.label}
             aria-current={isActive}
             className={menuOptionStyles({ active: isActive })}
             onClick={() => onSelect(option.value)}

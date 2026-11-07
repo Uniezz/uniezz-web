@@ -40,6 +40,7 @@ export function FeedPostCard({ post }: { post: FeedPost }) {
               <p className="text-label font-medium text-white-80">
                 <Link
                   to="/connections/students/$profileId"
+                  data-ph-capture-attribute-label="Open post author profile"
                   params={{ profileId: post.author.id }}
                   search={{ studentSearch: undefined }}
                   className="relative z-20 rounded-sm hover:underline focus-visible:outline-2 focus-visible:outline-blue"
@@ -82,6 +83,7 @@ export function FeedPostCard({ post }: { post: FeedPost }) {
         to="/feed/post/$postId"
         params={{ postId: post.id }}
         search={{ postId: post.id }}
+        data-ph-capture-attribute-label="Open post"
         aria-label={`${t('app.viewPost')}: ${post.title}`}
         skullet-ignore=""
         className="absolute inset-0 z-10 rounded-3xl focus-visible:outline-2 focus-visible:outline-blue"

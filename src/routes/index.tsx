@@ -29,6 +29,7 @@ function LandingPage() {
         <Link
           to="/"
           className="flex items-center gap-0.5 text-xl font-semibold tracking-tight"
+          data-ph-capture-attribute-label={t('common.appName')}
           aria-label={t('common.appName')}
         >
           {/* The icon is the "u", so the wordmark reads as one word: [u]niezz. */}
@@ -39,13 +40,25 @@ function LandingPage() {
           aria-label={t('landing.navigation')}
           className="hidden items-center gap-7 text-body text-secondary lg:flex"
         >
-          <a className="landing-text-link" href="#explore">
+          <a
+            className="landing-text-link"
+            data-ph-capture-attribute-label={t('landing.navCommunity')}
+            href="#explore"
+          >
             {t('landing.navCommunity')}
           </a>
-          <a className="landing-text-link" href="#unicat">
+          <a
+            className="landing-text-link"
+            data-ph-capture-attribute-label={t('landing.unicat.nav')}
+            href="#unicat"
+          >
             {t('landing.unicat.nav')}
           </a>
-          <a className="landing-text-link" href="#join">
+          <a
+            className="landing-text-link"
+            data-ph-capture-attribute-label={t('landing.navJoin')}
+            href="#join"
+          >
             {t('landing.navJoin')}
           </a>
         </nav>

@@ -76,6 +76,7 @@ function AppLayout() {
         <div className="flex flex-wrap gap-3">
           {APP_STORES.map((store) => (
             <button
+              data-ph-capture-attribute-label={store.name}
               key={store.name}
               disabled
               className="flex flex-1 items-center gap-3 rounded-2xl border border-white/30 bg-ink/20 p-4 text-left"
@@ -92,7 +93,11 @@ function AppLayout() {
             </button>
           ))}
         </div>
-        <Link to="/" className="mt-6 inline-block text-sm underline">
+        <Link
+          to="/"
+          data-ph-capture-attribute-label={t('app.home')}
+          className="mt-6 inline-block text-sm underline"
+        >
           {t('app.home')}
         </Link>
       </UIDialog>
