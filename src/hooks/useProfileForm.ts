@@ -14,6 +14,7 @@ function defaults(profile: components['schemas']['Profile']): ProfileFormSchema 
     interests: profile.interests?.join(', ') ?? '',
     privacy: profile.privacy,
     photo: profile.avatarUrl ?? '/app/avatar.png',
+    avatarFile: undefined,
   };
 }
 
