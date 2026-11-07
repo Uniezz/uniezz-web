@@ -56,9 +56,6 @@ export function useProfileForm(profile: components['schemas']['Profile']) {
       queryClient.setQueryData(['profile', 'me'], saved);
       reset(defaults(saved));
       resetUpload();
-    },
-    onSettled: () => {
-      void queryClient.invalidateQueries({ queryKey: ['profile'] });
       void queryClient.invalidateQueries({ queryKey: ['profiles'] });
     },
   });
