@@ -3,7 +3,8 @@ import { createRoot } from 'react-dom/client';
 import { RouterProvider, createRouteMask, createRouter } from '@tanstack/react-router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { SkulletProvider } from 'skullet/react';
-
+import posthog from 'posthog-js';
+import { PostHogProvider } from '@posthog/react';
 import './schemas/env';
 import { routeTree } from './routeTree.gen';
 
@@ -78,20 +79,26 @@ const rootElement = document.getElementById('root');
 if (!rootElement) {
   throw new Error('Root element #root not found');
 }
+posthog.init(import.meta.env.VITE_POSTHOG_PROJECT_TOKEN, {
+  api_host: import.meta.env.VITE_POSTHOG_HOST,
+  defaults: 'latest',
+});
 
 createRoot(rootElement).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <SkulletProvider
-        mode="dark"
-        theme={{
-          dark: { base: 'rgb(255 255 255 / 0.2)', highlight: 'rgb(255 255 255 / 0.3)' },
-          animation: 'pulse',
-          radius: '0.375rem',
-        }}
-      >
-        <RouterProvider router={router} />
-      </SkulletProvider>
-    </QueryClientProvider>
+    <PostHogProvider client={posthog}>
+      <QueryClientProvider client={queryClient}>
+        <SkulletProvider
+          mode="dark"
+          theme={{
+            dark: { base: 'rgb(255 255 255 / 0.2)', highlight: 'rgb(255 255 255 / 0.3)' },
+            animation: 'pulse',
+            radius: '0.375rem',
+          }}
+        >
+          <RouterProvider router={router} />
+        </SkulletProvider>
+      </QueryClientProvider>
+    </PostHogProvider>
   </StrictMode>,
 );
