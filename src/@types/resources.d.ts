@@ -214,6 +214,7 @@ export default interface Resources {
     "feed": {
       "allTypes": "All types",
       "anyTime": "Any time",
+      "clearAll": "Clear all",
       "date": "Date",
       "filters": "Feed filters",
       "posts": "Posts",

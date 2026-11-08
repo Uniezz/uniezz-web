@@ -37,6 +37,7 @@ export default defineConfig(({ mode }) => ({
               const response = await proxyApi(
                 request,
                 loadEnv(mode, process.cwd(), 'VITE_').VITE_API_URL,
+                true,
               );
               res.statusCode = response.status;
               response.headers.forEach((value, name) => res.setHeader(name, value));

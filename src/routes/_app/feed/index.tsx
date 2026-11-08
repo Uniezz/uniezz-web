@@ -29,6 +29,11 @@ function FeedIndexPage() {
   }, [search]);
   const [filters, setFilters] = useState<Parameters<typeof FeedFilterBar>[0]['filters']>({});
   const { type, university, from } = filters;
+  const openNewPost = () =>
+    navigate({
+      to: '/feed/post/new-post',
+      search: { postId: undefined, postFrom: undefined, feedRoute: 'new-post' },
+    });
 
   return (
     <>
@@ -49,12 +54,7 @@ function FeedIndexPage() {
             bg="secondary"
             aria-label={t('app.newPost')}
             title={t('app.newPost')}
-            onClick={() =>
-              navigate({
-                to: '/feed/post/new-post',
-                search: { postId: undefined, postFrom: undefined, feedRoute: 'new-post' },
-              })
-            }
+            onClick={openNewPost}
           >
             <Plus size={18} aria-hidden="true" />
           </UIButton>

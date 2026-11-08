@@ -71,7 +71,8 @@
     "today": "Today",
     "thisWeek": "This week",
     "thisMonth": "This month",
-    "thisYear": "This year"
+    "thisYear": "This year",
+    "clearAll": "Clear all"
   },
   "faq": {
     "title": "FAQ",
