@@ -2,7 +2,7 @@ import { Link, useLocation } from '@tanstack/react-router';
 import { Images } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { FeedPost } from '@/@types';
-import { UIAvatar, UIPanel, UIUniversityLogo } from '@/ui/components';
+import { UIAvatar, UIPanel, UITag, UIUniversityLogo } from '@/ui/components';
 import { cn } from '@/ui/cn';
 import { authorName, isAuthorProfilePath, postDate } from '@/utils/feed';
 import { useMyProfile } from '@/hooks';
@@ -24,10 +24,10 @@ export function FeedPostCard({ post }: { post: FeedPost }) {
               className="size-full object-cover transition-transform duration-300 ease-out motion-safe:group-hover:scale-105"
             />
             {(post.mediaUrls?.length ?? 0) > 1 && (
-              <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-ink-70 px-2.5 py-1 text-detail font-semibold text-white">
+              <UITag color="glass" className="absolute top-3 left-3">
                 <Images className="size-4" aria-hidden="true" />
                 {post.mediaUrls?.length}
-              </span>
+              </UITag>
             )}
           </div>
         )}

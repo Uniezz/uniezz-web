@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { UIButton } from '@/ui/components';
+import { UIButton, UITag } from '@/ui/components';
 
 export function PostMedia({ images }: { images: string[] }) {
   const { t } = useTranslation();
@@ -36,12 +36,9 @@ export function PostMedia({ images }: { images: string[] }) {
           >
             <ChevronRight size={18} aria-hidden="true" />
           </UIButton>
-          <span
-            aria-live="polite"
-            className="absolute right-3 bottom-3 rounded-full bg-ink-70 px-3 py-1 text-detail font-semibold text-white"
-          >
+          <UITag color="glass" aria-live="polite" className="absolute right-3 bottom-3">
             {index + 1} / {images.length}
-          </span>
+          </UITag>
         </>
       )}
     </div>

@@ -14,6 +14,8 @@ export * from './UISegmented';
 export * from './UISelect';
 export * from './UIUniversityLogo';
 export * from './UIChip';
+export * from './UITag';
+export * from './UIBadge';
 export * from './UIField';
 export * from './UISwitch';
 export * from './UIDialog';
