@@ -29,7 +29,6 @@ function FeedIndexPage() {
   }, [search]);
   const [filters, setFilters] = useState<Parameters<typeof FeedFilterBar>[0]['filters']>({});
   const { type, university, from } = filters;
-  const hasFilters = Boolean(type || university || from);
   const openNewPost = () =>
     navigate({
       to: '/feed/post/new-post',
@@ -41,15 +40,6 @@ function FeedIndexPage() {
       <UITopbar title={t('feed.title')} subtitle={t('app.feedSubtitle')}>
         <div className="flex w-full flex-wrap items-center gap-3 sm:w-auto">
           <FeedFilterBar filters={filters} onChange={setFilters} />
-          <UIButton
-            className="shrink-0 backdrop-blur-[40px]"
-            size="sm"
-            bg="secondary"
-            disabled={!hasFilters}
-            onClick={() => setFilters({})}
-          >
-            {t('feed.clearAll')}
-          </UIButton>
           <div className="min-w-0 flex-1 sm:w-75 sm:flex-none">
             <UISearch
               value={search}
