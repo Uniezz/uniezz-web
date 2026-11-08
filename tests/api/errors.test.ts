@@ -97,7 +97,7 @@ test('unauthorized protected requests redirect and still reject', async () => {
     configurable: true,
     value: {
       location: {
-        assign: (url: string) => {
+        replace: (url: string) => {
           location = url;
         },
       },

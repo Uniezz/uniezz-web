@@ -1,14 +1,34 @@
 import { BrandBackground, UIBottomTabs, UIDialog, UISidebar } from '@/ui/components';
-import { Outlet, createFileRoute, Link, retainSearchParams } from '@tanstack/react-router';
+import {
+  Outlet,
+  createFileRoute,
+  Link,
+  redirect,
+  retainSearchParams,
+} from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { Toaster } from 'react-hot-toast';
 import { useMyProfile } from '@/hooks';
+import { myProfileQueryOptions } from '@/hooks/useMyProfile';
+import { ApiRequestError } from '@/api/errors';
 import { authorName } from '@/utils/feed';
 import { useNarrowViewport } from '@/hooks/useNarrowViewport';
 import { isMobileDevice, shouldBlockMobile } from '@/utils';
 import { optionalSearchStringSchema, returnPathSchema } from '@/schemas';
 import { APP_STORES } from '@/utils/stores';
 export const Route = createFileRoute('/_app')({
+  // Runs on every visit to a closed page, including Back. A guest goes to sign-in
+  // with `replace`, so the closed page is not kept in history.
+  beforeLoad: async ({ context }) => {
+    try {
+      await context.queryClient.ensureQueryData(myProfileQueryOptions());
+    } catch (error) {
+      if (error instanceof ApiRequestError && error.status === 401) {
+        throw redirect({ to: '/login', replace: true });
+      }
+      throw error;
+    }
+  },
   validateSearch: (
     search: Record<string, unknown>,
   ): {

@@ -43,7 +43,7 @@ export function useSignOut() {
       } catch {
         // Analytics must not prevent signing out.
       }
-      window.location.assign('/login');
+      window.location.replace('/login');
     },
   });
 }
