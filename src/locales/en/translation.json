@@ -88,7 +88,8 @@
     "anyTime": "Any time",
     "today": "Today",
     "lastWeek": "Last 7 days",
-    "lastMonth": "Last 30 days"
+    "lastMonth": "Last 30 days",
+    "clearAll": "Clear all"
   },
   "guide": {
     "action": "Suggest a place",

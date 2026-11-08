@@ -244,6 +244,7 @@ export default interface Resources {
       "action": "Create post",
       "allTypes": "All types",
       "anyTime": "Any time",
+      "clearAll": "Clear all",
       "date": "Date",
       "filters": "Feed filters",
       "lastMonth": "Last 30 days",
