@@ -1,3 +1,4 @@
+import { ApiRequestError } from '@/api/errors';
 import { captureAnalytics } from '@/utils/analytics';
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -89,7 +90,7 @@ export function ReportButton({
                 changeOpen(false);
                 toast.success(t('report.sent'));
               } catch (error) {
-                const status = error instanceof Error ? error.cause : undefined;
+                const status = error instanceof ApiRequestError ? error.status : undefined;
                 toast.error(
                   t(
                     status === 409

@@ -3,13 +3,11 @@ import type { FeedFilters } from '@/@types';
 import { api } from './client';
 
 export async function updateFeedComment({ id, content }: { id: string; content: string }) {
-  const { data, error } = await api.PATCH('/feed/comments/{id}', {
+  const { data } = await api.PATCH('/feed/comments/{id}', {
     params: { path: { id } },
     body: { content },
   });
-  if (error) throw new Error(error.error);
-  if (!data) throw new Error('Missing comment response');
-  return data;
+  return data!;
 }
 
 export async function updateFeedPost({
@@ -19,20 +17,16 @@ export async function updateFeedPost({
   id: string;
   body: components['schemas']['UpdatePostInputBody'];
 }) {
-  const { data, error } = await api.PATCH('/feed/posts/{id}', { params: { path: { id } }, body });
-  if (error) throw new Error(error.error);
-  if (!data) throw new Error('Missing post response');
-  return data;
+  const { data } = await api.PATCH('/feed/posts/{id}', { params: { path: { id } }, body });
+  return data!;
 }
 
 export async function deleteFeedPost(id: string) {
-  const { error } = await api.DELETE('/feed/posts/{id}', { params: { path: { id } } });
-  if (error) throw new Error(error.error);
+  await api.DELETE('/feed/posts/{id}', { params: { path: { id } } });
 }
 
 export async function deleteFeedComment(id: string) {
-  const { error } = await api.DELETE('/feed/comments/{id}', { params: { path: { id } } });
-  if (error) throw new Error(error.error);
+  await api.DELETE('/feed/comments/{id}', { params: { path: { id } } });
 }
 
 export async function setFeedLike({
@@ -55,56 +49,56 @@ export async function setFeedLike({
       ? await api.PUT('/feed/comments/{id}/like', { params })
       : await api.DELETE('/feed/comments/{id}/like', { params });
   }
-  if (result.error) throw new Error(result.error.error);
-  if (!result.data) throw new Error('Missing like response');
-  return result.data;
+  return result.data!;
 }
 
 export async function getFeedPosts(filters: FeedFilters = {}, cursor?: string) {
-  const { data, error } = await api.GET('/feed/posts', {
+  const { data } = await api.GET('/feed/posts', {
     params: { query: { limit: 20, ...filters, cursor } },
   });
-  if (error) throw new Error(error.error);
-  if (!data) throw new Error('Missing feed response');
-  return data;
+  return data!;
+}
+
+export async function getFeaturedFeedPosts() {
+  const { data } = await api.GET('/feed/posts/featured');
+  return data!;
+}
+
+export async function getFeedPostNavigation(id: string) {
+  const { data } = await api.GET('/feed/posts/{id}/navigation', {
+    params: { path: { id } },
+  });
+  return data!;
 }
 
 export async function getFeedPost(id: string) {
-  const { data, error } = await api.GET('/feed/posts/{id}', { params: { path: { id } } });
-  if (error) throw new Error(error.error);
-  if (!data) throw new Error('Missing post response');
-  return data;
+  const { data } = await api.GET('/feed/posts/{id}', { params: { path: { id } } });
+  return data!;
 }
 
 export async function createFeedPost(
   body: components['schemas']['CreatePostInputBody'],
   key: string,
 ) {
-  const { data, error } = await api.POST('/feed/posts', {
+  const { data } = await api.POST('/feed/posts', {
     body,
     params: { header: { 'Idempotency-Key': key } },
   });
-  if (error) throw new Error(error.error);
-  if (!data) throw new Error('Missing post response');
-  return data;
+  return data!;
 }
 
 export async function getFeedComments(id: string, cursor?: string) {
-  const { data, error } = await api.GET('/feed/posts/{id}/comments', {
+  const { data } = await api.GET('/feed/posts/{id}/comments', {
     params: { path: { id }, query: { cursor, limit: 20 } },
   });
-  if (error) throw new Error(error.error);
-  if (!data) throw new Error('Missing comments response');
-  return data;
+  return data!;
 }
 
 export async function getCommentReplies(id: string, cursor?: string) {
-  const { data, error } = await api.GET('/feed/comments/{id}/replies', {
+  const { data } = await api.GET('/feed/comments/{id}/replies', {
     params: { path: { id }, query: { cursor, limit: 20 } },
   });
-  if (error) throw new Error(error.error);
-  if (!data) throw new Error('Missing replies response');
-  return data;
+  return data!;
 }
 
 export async function createFeedComment({
@@ -118,11 +112,9 @@ export async function createFeedComment({
   key: string;
   replyToCommentId?: string;
 }) {
-  const { data, error } = await api.POST('/feed/posts/{id}/comments', {
+  const { data } = await api.POST('/feed/posts/{id}/comments', {
     params: { path: { id }, header: { 'Idempotency-Key': key } },
     body: { content, replyToCommentId },
   });
-  if (error) throw new Error(error.error);
-  if (!data) throw new Error('Missing comment response');
-  return data;
+  return data!;
 }

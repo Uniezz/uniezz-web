@@ -14,6 +14,8 @@ import {
   getFeedComments,
   getFeedPost,
   getFeedPosts,
+  getFeaturedFeedPosts,
+  getFeedPostNavigation,
   setFeedLike,
   updateFeedComment,
   updateFeedPost,
@@ -69,7 +71,7 @@ export function useDeleteFeedPost() {
     mutationFn: deleteFeedPost,
     onSuccess: (_, id) => {
       queryClient.removeQueries({ queryKey: ['feed', 'post', id], exact: true });
-      void queryClient.invalidateQueries({ queryKey: ['feed', 'posts'] });
+      void queryClient.invalidateQueries({ queryKey: ['feed'] });
     },
   });
 }
@@ -93,8 +95,12 @@ export function useFeedLike() {
   return useMutation({
     meta: { analyticsAction: 'post_like_set' },
     mutationFn: setFeedLike,
-    onSuccess: ({ liked, likesCount }, { id }) =>
-      patchFeedItem(queryClient, id, { likedByMe: liked, likesCount }),
+    onSuccess: ({ liked, likesCount }, { id, kind }) => {
+      patchFeedItem(queryClient, id, { likedByMe: liked, likesCount });
+      if (kind === 'post') {
+        void queryClient.invalidateQueries({ queryKey: ['feed', 'featured'] });
+      }
+    },
   });
 }
 
@@ -106,6 +112,17 @@ export function useFeedPosts(filters: FeedFilters = {}) {
     placeholderData: keepPreviousData,
     initialPageParam: undefined as string | undefined,
     getNextPageParam: (page) => page.nextCursor ?? undefined,
+  });
+}
+
+export function useFeaturedFeedPosts() {
+  return useQuery({ queryKey: ['feed', 'featured'], queryFn: getFeaturedFeedPosts });
+}
+
+export function useFeedPostNavigation(id: string) {
+  return useQuery({
+    queryKey: ['feed', 'navigation', id],
+    queryFn: () => getFeedPostNavigation(id),
   });
 }
 

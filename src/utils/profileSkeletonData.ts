@@ -5,6 +5,8 @@ export const sampleProfile: components['schemas']['Profile'] = {
   firstName: 'Student',
   lastName: 'Name',
   avatarUrl: null,
+  gender: null,
+  language: 'pl',
   universityId: 'umcs',
   bio: null,
   email: null,

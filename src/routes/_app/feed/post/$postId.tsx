@@ -8,7 +8,7 @@ import type { FeedComment } from '@/@types';
 import { cn } from '@/ui/cn';
 import { inputStyles } from '@/ui/components/UIInput/variants';
 import { UIAvatar, UIButton, UIEmojiPicker, UIEmpty, UIPanel, UIQueryError } from '@/ui/components';
-import { useFeedPosts, useFeedPost, useFeedComments, useCreateComment } from '@/hooks';
+import { useFeedPostNavigation, useFeedPost, useFeedComments, useCreateComment } from '@/hooks';
 import { authorName } from '@/utils/feed';
 import { FeedCommentItem, FeedCommentsSkeleton } from '@/components/features/feed/FeedComments';
 import { FeedLikeButton } from '@/components/features/feed/FeedLikeButton';
@@ -43,12 +43,11 @@ function FeedPostPage() {
     refetch: refetchPost,
   } = useFeedPost(postId);
   const {
-    data: feedData,
-    isPending: isFeedPending,
-    hasNextPage: hasMorePosts,
-    isFetchingNextPage: isFetchingMorePosts,
-    fetchNextPage: fetchMorePosts,
-  } = useFeedPosts();
+    data: navigation,
+    isPending: isNavigationPending,
+    isError: isNavigationError,
+    refetch: refetchNavigation,
+  } = useFeedPostNavigation(postId);
   const {
     data: commentData,
     isPending: areCommentsPending,
@@ -59,11 +58,9 @@ function FeedPostPage() {
     fetchNextPage: fetchMoreComments,
   } = useFeedComments(postId);
   const { createComment, isPending: isCreatingComment } = useCreateComment();
-  const feedPosts = feedData?.pages.flatMap((page) => page.items ?? []) ?? [];
   const [commentDraft, setCommentDraft] = useState('');
   const [replyTo, setReplyTo] = useState<FeedComment | null>(null);
   const [isCommentMultiline, setIsCommentMultiline] = useState(false);
-  const index = feedPosts.findIndex((post) => post.id === postId);
   const post = loadedPost ?? (isPostPending ? samplePost : undefined);
   if (!post) {
     return (
@@ -81,9 +78,8 @@ function FeedPostPage() {
     );
   }
 
-  // shortcut: Adjacent navigation covers loaded feed pages until the API provides neighbours.
-  const previous = index > 0 ? feedPosts[index - 1] : undefined;
-  const next = index >= 0 ? feedPosts[index + 1] : undefined;
+  const previous = navigation?.previousId;
+  const next = navigation?.nextId;
   const comments = isPostPending
     ? [sampleComment, { ...sampleComment, id: 'skeleton-2' }]
     : (commentData?.pages.flatMap((page) => page.items ?? []) ?? []);
@@ -273,11 +269,12 @@ function FeedPostPage() {
               </form>
             </UIPanel>
           </div>
+          {isNavigationError && <UIQueryError retry={() => void refetchNavigation()} />}
           <nav
             aria-label={t('app.postNavigation')}
             className="pointer-events-none absolute inset-y-0 -right-32 -left-32 grid min-h-11 grid-cols-[8rem_minmax(0,1fr)_8rem] items-center max-xl:static max-xl:mt-5 max-xl:flex max-xl:justify-between"
           >
-            {isFeedPending ? (
+            {isNavigationPending ? (
               <>
                 <Skeleton
                   loading
@@ -312,8 +309,8 @@ function FeedPostPage() {
               <Link
                 to="/feed/post/$postId"
                 data-ph-capture-attribute-label={t('app.previousPost')}
-                params={{ postId: previous.id }}
-                search={{ postId: previous.id }}
+                params={{ postId: previous }}
+                search={{ postId: previous }}
                 aria-label={t('app.previousPost')}
                 className="hover:bg-white-15 pointer-events-auto col-start-1 row-start-1 grid size-11 shrink-0 place-items-center justify-self-center rounded-full bg-white-10"
               >
@@ -326,27 +323,15 @@ function FeedPostPage() {
               <Link
                 to="/feed/post/$postId"
                 data-ph-capture-attribute-label={t('app.nextPost')}
-                params={{ postId: next.id }}
-                search={{ postId: next.id }}
+                params={{ postId: next }}
+                search={{ postId: next }}
                 aria-label={t('app.nextPost')}
                 className="hover:bg-white-15 pointer-events-auto col-start-3 row-start-1 grid size-11 shrink-0 place-items-center justify-self-center rounded-full bg-white-10"
               >
                 <ChevronRight className="size-5" />
               </Link>
             )}
-            {!next && hasMorePosts && index >= 0 ? (
-              <UIButton
-                bg="secondary"
-                size="pill"
-                className="pointer-events-auto col-start-3 row-start-1 justify-self-center"
-                disabled={isFetchingMorePosts}
-                onClick={() => void fetchMorePosts()}
-              >
-                {t('apiState.loadMore')}
-              </UIButton>
-            ) : (
-              !next && <span skullet-ignore="" className="col-start-3 row-start-1" />
-            )}
+            {!next && <span skullet-ignore="" className="col-start-3 row-start-1" />}
           </nav>
         </div>
       </div>

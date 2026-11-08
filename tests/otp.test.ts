@@ -4,12 +4,14 @@ let result: {
   data?: { token: string; expiresAt: string };
   response: { ok: boolean; status: number };
 };
+let failure: Error | undefined;
 let sent: { path: string; body: unknown };
 
 mock.module('../src/api/client.ts', () => ({
   api: {
     POST: async (path: string, { body }: { body: unknown }) => {
       sent = { path, body };
+      if (failure) throw failure;
       return result;
     },
   },
@@ -35,6 +37,7 @@ test('accepts verification and reports invalid codes', async () => {
   await verifyOtpCode(body);
   expect(sent).toEqual({ path: '/auth/otp/verify', body });
 
-  result = { response: { ok: false, status: 401 } };
-  expect(verifyOtpCode(body)).rejects.toThrow('Wrong or expired code');
+  failure = new Error('Wrong or expired code');
+  await expect(verifyOtpCode(body)).rejects.toThrow('Wrong or expired code');
+  failure = undefined;
 });
