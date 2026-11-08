@@ -2,8 +2,7 @@ import { SlidersHorizontal } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import type { FeedFilters, Option } from '@/@types';
-import { useUniversities } from '@/hooks';
-import { useDropdown } from '@/hooks/useDropdown';
+import { useDropdown, useUniversities } from '@/hooks';
 import { UIButton, UISelect } from '@/ui/components';
 import { datePresetFrom, type DatePreset } from '@/utils/feed';
 
