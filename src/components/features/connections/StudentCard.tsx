@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router';
+import { Link, useLocation } from '@tanstack/react-router';
 import { ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { components } from '@/@types/schema';
@@ -15,11 +15,13 @@ export function StudentCard({
   university?: string;
 }) {
   const { t } = useTranslation();
+  const href = useLocation({ select: (location) => location.href });
   return (
     <Link
       to="/connections/students/$profileId"
       params={{ profileId: student.id }}
-      search={{ studentSearch: search }}
+      data-ph-capture-attribute-label="Open student profile"
+      search={{ studentSearch: search, from: href }}
       className="group flex min-h-22 items-center gap-4 px-4 py-4 transition-colors hover:bg-white-5 focus-visible:relative focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-blue sm:px-6"
     >
       <UIAvatar

@@ -6,7 +6,7 @@ import { useMyProfile } from '@/hooks';
 import { authorName } from '@/utils/feed';
 import { useNarrowViewport } from '@/hooks/useNarrowViewport';
 import { isMobileDevice, shouldBlockMobile } from '@/utils';
-import { optionalSearchStringSchema } from '@/schemas';
+import { optionalSearchStringSchema, returnPathSchema } from '@/schemas';
 import { APP_STORES } from '@/utils/stores';
 export const Route = createFileRoute('/_app')({
   validateSearch: (
@@ -16,10 +16,13 @@ export const Route = createFileRoute('/_app')({
     chatType?: 'groups' | 'connections' | undefined;
     chatRoute?: 'new-group' | undefined;
     postId?: string;
+    /** Where the open post was opened from; travels with `postId` so a reopened post keeps its Back. */
+    postFrom?: string;
     feedRoute?: 'new-post';
   } => {
     const conversationId = optionalSearchStringSchema.parse(search.conversationId);
     const postId = optionalSearchStringSchema.parse(search.postId);
+    const postFrom = returnPathSchema.parse(search.postFrom);
     const feedRoute = search.feedRoute === 'new-post' ? search.feedRoute : undefined;
     const chatType =
       search.chatType === 'groups' || search.chatType === 'connections'
@@ -31,12 +34,20 @@ export const Route = createFileRoute('/_app')({
       ...(conversationId ? { conversationId } : {}),
       ...(chatRoute ? { chatRoute } : {}),
       ...(postId ? { postId } : {}),
+      ...(postFrom ? { postFrom } : {}),
       ...(feedRoute ? { feedRoute } : {}),
     };
   },
   search: {
     middlewares: [
-      retainSearchParams(['chatType', 'conversationId', 'chatRoute', 'postId', 'feedRoute']),
+      retainSearchParams([
+        'chatType',
+        'conversationId',
+        'chatRoute',
+        'postId',
+        'postFrom',
+        'feedRoute',
+      ]),
     ],
   },
   component: AppLayout,
@@ -51,7 +62,7 @@ function AppLayout() {
     narrow,
   );
   return (
-    <BrandBackground variant="app" className="flex min-h-svh">
+    <BrandBackground variant="app" className="app-shell-background flex min-h-svh">
       <UISidebar
         className="sticky top-0 hidden h-svh lg:flex"
         user={{
@@ -76,6 +87,7 @@ function AppLayout() {
         <div className="flex flex-wrap gap-3">
           {APP_STORES.map((store) => (
             <button
+              data-ph-capture-attribute-label={store.name}
               key={store.name}
               disabled
               className="flex flex-1 items-center gap-3 rounded-2xl border border-white/30 bg-ink/20 p-4 text-left"
@@ -92,7 +104,11 @@ function AppLayout() {
             </button>
           ))}
         </div>
-        <Link to="/" className="mt-6 inline-block text-sm underline">
+        <Link
+          to="/"
+          data-ph-capture-attribute-label={t('app.home')}
+          className="mt-6 inline-block text-sm underline"
+        >
           {t('app.home')}
         </Link>
       </UIDialog>

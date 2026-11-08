@@ -81,6 +81,7 @@ export function LandingTour() {
             <button
               key={id}
               type="button"
+              data-ph-capture-attribute-label={t(label)}
               onClick={() => goToChapter(index)}
               aria-current={isPinned && activeStep === index ? 'step' : undefined}
               className="landing-chapter-link"

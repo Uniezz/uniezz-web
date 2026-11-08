@@ -64,6 +64,7 @@ export function PostTagsField({ control }: { control: Control<PostSchema> }) {
               {tag}
               <button
                 type="button"
+                data-ph-capture-attribute-label="Remove tag"
                 aria-label={`${t('app.remove')} ${tag}`}
                 className="ml-1.5 rounded-sm text-secondary transition-colors hover:text-danger focus-visible:outline-2 focus-visible:outline-blue"
                 onPointerDown={(event) => event.preventDefault()}

@@ -13,7 +13,6 @@ export default interface Resources {
       "editPost": "Edit post",
       "error": "Could not load or save your changes. Please try again.",
       "hideReplies": "Hide replies",
-      "imageError": "Choose a valid JPG, PNG or WebP image under 10 MB.",
       "like": "Like",
       "loadMore": "Load more",
       "loadedSearch": "Search covers loaded posts. Load more to search older posts.",
@@ -43,7 +42,6 @@ export default interface Resources {
       "allUniversitiesHint": "Visible to students of every university",
       "back": "Back",
       "changePhoto": "Change photo",
-      "cheapGroceries": "Cheap groceries near campus",
       "clearSearch": "Clear search",
       "close": "Close",
       "comments": "Comments",
@@ -56,7 +54,6 @@ export default interface Resources {
       "discardChanges": "Discard changes",
       "discardChangesDescription": "Your unsaved changes will be lost if you leave now.",
       "discardGroupDescription": "Your group details will be lost if you leave now.",
-      "dorms": "Dorms",
       "download": "Download",
       "downloads": "Downloads",
       "edit": "Edit",
@@ -66,15 +63,11 @@ export default interface Resources {
       "feedSubtitle": "What’s happening in Lublin",
       "firstName": "First name",
       "friends": "Friends",
-      "going": "Going",
-      "groceries": "Groceries",
       "groupDescription": "Start a conversation with several students.",
       "groupName": "Group name",
       "groupPlaceholder": "e.g. Discrete maths study group",
       "groups": "Groups",
-      "hangouts": "Hangouts",
       "home": "Back to home",
-      "join": "Join",
       "keepEditing": "Keep editing",
       "lastName": "Last name",
       "liveNow": "Live now",
@@ -90,7 +83,6 @@ export default interface Resources {
       "modeOfStudiesFullTime": "Full-time",
       "modeOfStudiesPartTime": "Part-time",
       "myUploads": "My uploads",
-      "nearby": "Nearby",
       "newPost": "New post",
       "nextPost": "Next post",
       "noDocument": "No downloadable document was supplied with this design.",
@@ -111,10 +103,8 @@ export default interface Resources {
       "rating": "Rating",
       "remove": "Remove",
       "required": "Enter a valid value.",
-      "reset": "Reset filters and profiles",
       "saveChanges": "Save changes",
       "saved": "Saved",
-      "savedLocally": "Changes saved locally until you leave this screen.",
       "sayHi": "Say hi",
       "searchConversations": "Search conversations",
       "searchEmoji": "Search emoji",
@@ -152,8 +142,6 @@ export default interface Resources {
       "unsavedGroupTitle": "Discard this group?",
       "uploadedBy": "Uploaded by",
       "viewPost": "View post",
-      "visibilityDescription": "Let other students find you by name and study programme.",
-      "visibleToStudents": "Visible to students",
       "writeMessage": "Write a message",
       "yearOfStudy": "Year of study",
       "yourProfile": "Your profile"
@@ -161,15 +149,9 @@ export default interface Resources {
     "auth": {
       "backToUniversities": "Back to universities",
       "brand": {
-        "communityText": "Meet people across UMCS, KUL, Politechnika, Przyrodniczy and WSEI.",
-        "communityTitle": "Feed, chat and connections",
         "description": "Feed, chat, past papers and people from UMCS, KUL, Politechnika, Przyrodniczy and WSEI. Sign in with the account your university already gave you.",
-        "examsText": "A shared archive of past papers, syllabi and honest professor ratings.",
-        "examsTitle": "Exams and course reviews",
         "headline": "Every student in Lublin, one place.",
-        "privacy": "uniezz never sees or stores your university password.",
-        "verifiedText": "Every account is checked against the university directory before it goes live.",
-        "verifiedTitle": "Verified students only"
+        "privacy": "uniezz never sees or stores your university password."
       },
       "errors": {
         "codeInvalid": "Enter the 6-digit code we sent you.",
@@ -178,10 +160,8 @@ export default interface Resources {
       },
       "login": {
         "continueWith": "Continue with {{provider}}",
-        "notice": "Only active students of the five Lublin universities can create an account. Staff and alumni accounts are rejected.",
         "subtitle": "Choose your university to sign in with USOS or a university email code.",
-        "title": "Sign in",
-        "yourUniversity": "YOUR UNIVERSITY"
+        "title": "Sign in"
       },
       "otp": {
         "changeEmail": "Change email",
@@ -196,21 +176,12 @@ export default interface Resources {
         "emailTitle": "Provide your university email",
         "notice": "Email sign-in confirms your university domain only. Faculty and year of study stay self-declared until your account is linked to USOS or your university directory.",
         "resend": "Resend code",
-        "resendIn": "Resend in {{time}}",
         "send": "Send code",
         "verify": "Verify and continue"
-      },
-      "terms": "By continuing you agree to the Terms of Use and Privacy Policy · GDPR",
-      "usos": {
-        "notice": "UMCS students sign in on USOS. We only receive the identity USOS sends back.",
-        "open": "Open USOS login",
-        "subtitle": "You'll finish signing in on UMCS's own USOS page. uniezz never sees your password.",
-        "title": "Continue with UMCS"
       }
     },
     "chat": {
       "action": "New group",
-      "subtitle": "Direct messages and group chats",
       "title": "Chat"
     },
     "common": {
@@ -241,23 +212,18 @@ export default interface Resources {
       "title": "FAQ"
     },
     "feed": {
-      "action": "Create post",
       "allTypes": "All types",
       "anyTime": "Any time",
       "clearAll": "Clear all",
       "date": "Date",
       "filters": "Feed filters",
-      "lastMonth": "Last 30 days",
-      "lastWeek": "Last 7 days",
-      "subtitle": "What's happening across Lublin",
+      "posts": "Posts",
+      "thisMonth": "This month",
+      "thisWeek": "This week",
+      "thisYear": "This year",
       "title": "Feed",
       "today": "Today",
       "type": "Post type"
-    },
-    "guide": {
-      "action": "Suggest a place",
-      "subtitle": "Everything you need to live in Lublin",
-      "title": "Guide"
     },
     "landing": {
       "appsSoon": "Coming soon",
@@ -267,10 +233,8 @@ export default interface Resources {
         "statement": "Built by students, for students."
       },
       "hero": {
-        "account": "Start with your university account.",
         "caption": "See what students are talking about, or post something of your own.",
         "description": "Meet students from Lublin universities. Ask questions, share events, and find people beyond your class.",
-        "eyebrow": "STUDENT LIFE IN LUBLIN",
         "scroll": "SCROLL TO EXPLORE",
         "serif": "In Lublin.",
         "title": "Student life."
@@ -293,7 +257,6 @@ export default interface Resources {
       "navJoin": "How to join",
       "navigation": "Page sections",
       "preview": {
-        "city": "Lublin",
         "faqOne": "When does the semester start?",
         "faqThree": "Where can I find my timetable?",
         "faqTwo": "How do I get a student ID?",
@@ -347,7 +310,6 @@ export default interface Resources {
       },
       "unicat": {
         "action": "Why uniezz?",
-        "alt": "cazy, the black cat from uniezz",
         "name": "cazy",
         "nav": "Meet cazy",
         "note": "The uniezz team likes him. You will too :)",
@@ -364,18 +326,12 @@ export default interface Resources {
       "duplicatePhoto": "This photo has already been added.",
       "eventDetails": "Event details",
       "eventPlaceholder": "Give your event a name",
-      "justNow": "Just now",
-      "location": "Location",
-      "locationPlaceholder": "Venue, address, or online meeting link",
       "nextPhoto": "Next photo",
-      "photo": "Photo (optional)",
-      "photoHint": "JPG, PNG or WebP · up to 10 MB",
       "photoPreview": "Selected post photo",
       "photos": "Photos (optional)",
       "photosError": "Choose up to 10 valid JPG, PNG or WebP images, up to 10 MB each.",
       "photosHint": "Up to 10 photos · JPG, PNG or WebP · 10 MB each",
       "post": "Post",
-      "preview": "Preview in Feed",
       "previousPhoto": "Previous photo",
       "publish": "Publish",
       "published": "Post published",
@@ -412,16 +368,13 @@ export default interface Resources {
       "user": "Report user"
     },
     "sidebar": {
-      "academics": "ACADEMICS",
-      "collapse": "Collapse sidebar",
-      "expand": "Expand sidebar",
-      "mainNavigation": "Main navigation",
-      "settings": "Settings"
+      "mainNavigation": "Main navigation"
     },
     "students": {
       "allStudents": "All students",
       "bio": "Bio",
       "bioError": "Bio must be 500 characters or fewer.",
+      "bioPlaceholder": "Tell other students what you study, love, or are looking for",
       "interests": "Interests",
       "interestsError": "Use up to 10 interests, each up to 30 characters.",
       "interestsHint": "Separate interests with commas",
@@ -433,10 +386,7 @@ export default interface Resources {
     },
     "topbar": {
       "changeLanguage": "Change language",
-      "languageCode": "EN",
-      "notifications": "Notifications",
-      "search": "Search",
-      "searchPlaceholder": "Search posts, people, courses…"
+      "languageCode": "EN"
     }
   }
 }

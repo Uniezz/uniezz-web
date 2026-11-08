@@ -14,6 +14,8 @@ import {
   getFeedComments,
   getFeedPost,
   getFeedPosts,
+  getFeaturedFeedPosts,
+  getFeedPostNavigation,
   setFeedLike,
   updateFeedComment,
   updateFeedPost,
@@ -44,6 +46,7 @@ function patchFeedItem(queryClient: QueryClient, id: string, patch: Record<strin
 export function useUpdateFeedComment() {
   const queryClient = useQueryClient();
   return useMutation({
+    meta: { analyticsAction: 'comment_update' },
     mutationFn: updateFeedComment,
     onSuccess: (comment) => patchFeedItem(queryClient, comment.id, comment),
   });
@@ -52,6 +55,7 @@ export function useUpdateFeedComment() {
 export function useUpdateFeedPost() {
   const queryClient = useQueryClient();
   return useMutation({
+    meta: { analyticsAction: 'post_update' },
     mutationFn: updateFeedPost,
     onSuccess: (post) => {
       queryClient.setQueryData(['feed', 'post', post.id], post);
@@ -63,10 +67,11 @@ export function useUpdateFeedPost() {
 export function useDeleteFeedPost() {
   const queryClient = useQueryClient();
   return useMutation({
+    meta: { analyticsAction: 'post_delete' },
     mutationFn: deleteFeedPost,
     onSuccess: (_, id) => {
       queryClient.removeQueries({ queryKey: ['feed', 'post', id], exact: true });
-      void queryClient.invalidateQueries({ queryKey: ['feed', 'posts'] });
+      void queryClient.invalidateQueries({ queryKey: ['feed'] });
     },
   });
 }
@@ -74,6 +79,7 @@ export function useDeleteFeedPost() {
 export function useDeleteFeedComment() {
   const queryClient = useQueryClient();
   return useMutation({
+    meta: { analyticsAction: 'comment_delete' },
     mutationFn: deleteFeedComment,
     onSuccess: () =>
       Promise.all([
@@ -87,9 +93,14 @@ export function useDeleteFeedComment() {
 export function useFeedLike() {
   const queryClient = useQueryClient();
   return useMutation({
+    meta: { analyticsAction: 'post_like_set' },
     mutationFn: setFeedLike,
-    onSuccess: ({ liked, likesCount }, { id }) =>
-      patchFeedItem(queryClient, id, { likedByMe: liked, likesCount }),
+    onSuccess: ({ liked, likesCount }, { id, kind }) => {
+      patchFeedItem(queryClient, id, { likedByMe: liked, likesCount });
+      if (kind === 'post') {
+        void queryClient.invalidateQueries({ queryKey: ['feed', 'featured'] });
+      }
+    },
   });
 }
 
@@ -101,6 +112,17 @@ export function useFeedPosts(filters: FeedFilters = {}) {
     placeholderData: keepPreviousData,
     initialPageParam: undefined as string | undefined,
     getNextPageParam: (page) => page.nextCursor ?? undefined,
+  });
+}
+
+export function useFeaturedFeedPosts() {
+  return useQuery({ queryKey: ['feed', 'featured'], queryFn: getFeaturedFeedPosts });
+}
+
+export function useFeedPostNavigation(id: string) {
+  return useQuery({
+    queryKey: ['feed', 'navigation', id],
+    queryFn: () => getFeedPostNavigation(id),
   });
 }
 
@@ -130,6 +152,7 @@ export function useCommentReplies(id: string, enabled: boolean) {
 export function useCreateComment() {
   const queryClient = useQueryClient();
   const { mutateAsync, variables, isError, isPending } = useMutation({
+    meta: { analyticsAction: 'comment_create' },
     mutationKey: ['feed', 'create-comment'],
     mutationFn: createFeedComment,
     onSuccess: (_, { id, replyToCommentId }) =>

@@ -14,6 +14,7 @@ function defaults(profile: components['schemas']['Profile']): ProfileFormSchema 
     interests: profile.interests?.join(', ') ?? '',
     privacy: profile.privacy,
     photo: profile.avatarUrl ?? '/app/avatar.png',
+    avatarFile: undefined,
   };
 }
 
@@ -30,11 +31,8 @@ export function useProfileForm(profile: components['schemas']['Profile']) {
     reset: resetUpload,
     isPending: isUploading,
   } = useUploadImage('avatar');
-  const {
-    mutateAsync: saveProfile,
-    isSuccess,
-    isPending: isSaving,
-  } = useMutation({
+  const { mutateAsync: saveProfile, isPending: isSaving } = useMutation({
+    meta: { analyticsAction: 'profile_update' },
     mutationKey: ['profile', 'update'],
     mutationFn: async (values: ProfileSubmission) => {
       const uploaded = values.avatarFile
@@ -55,11 +53,8 @@ export function useProfileForm(profile: components['schemas']['Profile']) {
       queryClient.setQueryData(['profile', 'me'], saved);
       reset(defaults(saved));
       resetUpload();
-    },
-    onSettled: () => {
-      void queryClient.invalidateQueries({ queryKey: ['profile'] });
       void queryClient.invalidateQueries({ queryKey: ['profiles'] });
     },
   });
-  return { form, saveProfile, isSuccess, isPending: isSaving || isUploading };
+  return { form, saveProfile, isPending: isSaving || isUploading };
 }

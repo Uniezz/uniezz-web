@@ -111,6 +111,7 @@ export function ConnectionFilterPanel({ form }: { form: UseFormReturn<Connection
           {universities.map(({ id }) => (
             <UIChip
               key={id}
+              data-ph-capture-attribute-label={id.toUpperCase()}
               selected={selectedUniversities.includes(id)}
               className="inline-flex items-center gap-1.5 py-1.5 pl-1.5"
               onClick={() =>
@@ -140,6 +141,7 @@ export function ConnectionFilterPanel({ form }: { form: UseFormReturn<Connection
                 return (
                   <UIChip
                     key={label}
+                    data-ph-capture-attribute-label={label}
                     selected={selected}
                     onClick={() =>
                       form.setValue(

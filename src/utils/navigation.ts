@@ -14,13 +14,14 @@ const ACADEMICS_NAV: NavItem[] = [
 
 export const NAV_GROUPS: NavGroup[] = [
   { items: MAIN_NAV },
-  { titleKey: 'sidebar.academics', items: ACADEMICS_NAV },
+  { section: 'academics', items: ACADEMICS_NAV },
 ];
 
 // The app layout carries sub-route state (open post, chat) across links; pressing the current
 // tab drops it so the tab opens at its root.
 export const RESET_TAB_SEARCH = {
   postId: undefined,
+  postFrom: undefined,
   feedRoute: undefined,
   chatType: undefined,
   conversationId: undefined,

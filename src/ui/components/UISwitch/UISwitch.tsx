@@ -19,6 +19,7 @@ export const UISwitch = ({ checked, onChange, label, className }: UISwitchProps)
         type="button"
         role="switch"
         aria-checked={checked}
+        data-ph-capture-attribute-label={label}
         aria-labelledby={id}
         onClick={() => onChange(!checked)}
         className={switchStyles({ checked })}

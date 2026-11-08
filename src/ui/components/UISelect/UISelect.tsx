@@ -28,6 +28,7 @@ export const UISelect = ({ value, options, onChange, label, className }: UISelec
     <>
       <button
         type="button"
+        data-ph-capture-attribute-label={label}
         popoverTarget={menuId}
         aria-label={`${label}: ${selected?.label ?? ''}`}
         style={{ anchorName: anchor }}

@@ -12,21 +12,19 @@ export async function uploadImage(
   ) {
     throw new Error('Invalid image');
   }
-  const { data, error } = await api.POST('/media/uploads', {
+  const { data } = await api.POST('/media/uploads', {
     body: {
       kind,
       size: file.size,
       contentType: file.type as components['schemas']['CreateUploadInputBody']['contentType'],
     },
   });
-  if (error) throw new Error(error.error);
-  if (!data) throw new Error('Missing upload response');
-  const response = await fetch(data.uploadUrl, {
+  const response = await fetch(data!.uploadUrl, {
     method: 'PUT',
-    headers: data.headers,
+    headers: data!.headers,
     body: file,
     credentials: 'omit',
   });
   if (!response.ok) throw new Error('Image upload failed');
-  return data.mediaId;
+  return data!.mediaId;
 }

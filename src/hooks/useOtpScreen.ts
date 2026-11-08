@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { captureAnalytics } from '@/utils/analytics';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
@@ -12,10 +14,12 @@ export const useOtpScreen = (university: string) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { mutateAsync: requestCode, isPending: isRequesting } = useMutation({
+    meta: { analyticsAction: 'otp_request' },
     mutationKey: ['auth', 'request-otp'],
     mutationFn: requestOtpCode,
   });
   const { mutateAsync: verifyCode, isPending: isVerifying } = useMutation({
+    meta: { analyticsAction: 'otp_verify' },
     mutationKey: ['auth', 'verify-otp'],
     mutationFn: verifyOtpCode,
   });
@@ -41,6 +45,10 @@ export const useOtpScreen = (university: string) => {
   const code = useWatch({ control, name: 'code' });
   const isEmailStep = step === 'email';
 
+  useEffect(() => {
+    captureAnalytics('sign_in_step_viewed', { method: 'OTP', step });
+  }, [step]);
+
   const onEmailChange = (value: string) => {
     setValue('email', value, {
       shouldValidate: isSubmitted && isEmailStep,
@@ -53,27 +61,33 @@ export const useOtpScreen = (university: string) => {
     clearErrors('code');
   };
 
-  const onButtonPress = handleSubmit(async (data) => {
-    if (isPending) return;
+  const onButtonPress = handleSubmit(
+    async (data) => {
+      if (isPending) return;
 
-    try {
-      if (data.step === 'email') {
-        await requestCode({ email: data.email, university });
-        setValue('step', 'code');
-        setValue('code', '');
-      } else {
-        await verifyCode({ code: data.code, email: data.email, university });
-        queryClient.clear();
-        navigate({ to: '/feed', replace: true });
+      try {
+        if (data.step === 'email') {
+          await requestCode({ email: data.email, university });
+          setValue('step', 'code');
+          setValue('code', '');
+        } else {
+          await verifyCode({ code: data.code, email: data.email, university });
+          captureAnalytics('sign_in_succeeded', { method: 'OTP' });
+          queryClient.clear();
+          navigate({ to: '/feed', replace: true });
+        }
+      } catch (error) {
+        captureAnalytics('sign_in_failed', { method: 'OTP', step: data.step });
+        setError(data.step, {
+          message: error instanceof Error ? error.message : 'Please try again.',
+        });
       }
-    } catch (error) {
-      setError(data.step, {
-        message: error instanceof Error ? error.message : 'Please try again.',
-      });
-    }
-  });
+    },
+    () => captureAnalytics('otp_form_validation_failed'),
+  );
 
   const onBackPress = () => {
+    captureAnalytics('sign_in_back_clicked', { method: 'OTP', step });
     if (!isEmailStep) {
       clearErrors();
       setValue('step', 'email');

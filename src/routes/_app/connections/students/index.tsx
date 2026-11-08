@@ -29,6 +29,7 @@ function StudentsPage() {
       <div className="shrink-0">
         <Link
           to="/connections"
+          data-ph-capture-attribute-label={t('connections.title')}
           className="mb-4 inline-flex min-h-11 items-center gap-2 text-label text-secondary hover:text-white focus-visible:outline-2 focus-visible:outline-blue"
         >
           <ChevronLeft className="size-5" aria-hidden="true" />

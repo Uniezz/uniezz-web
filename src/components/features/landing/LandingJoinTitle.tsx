@@ -1,3 +1,5 @@
+import type { MouseEvent } from 'react';
+import { captureAnalytics } from '@/utils/analytics';
 import { animated, easings, useInView, useReducedMotion, useSpring } from '@react-spring/web';
 import { Link } from '@tanstack/react-router';
 import { ArrowUpRight } from 'lucide-react';
@@ -16,9 +18,21 @@ export function LandingJoinTitle() {
     config: { duration: 3400, easing: easings.linear },
   });
   const words = title.split(' ');
+  const handleSignInClick = (event: MouseEvent<HTMLElement>) => {
+    if (event.button !== 0 && event.button !== 1) return;
+    captureAnalytics('landing_sign_in_clicked', { cta: 'landing-sign-in-join' });
+  };
   return (
     <h2 ref={ref} id="join-title">
-      <Link to="/login" className="landing-join-heading-link" aria-label={title}>
+      <Link
+        id="landing-sign-in-join"
+        onClick={handleSignInClick}
+        onAuxClick={handleSignInClick}
+        to="/login"
+        className="landing-join-heading-link"
+        data-ph-capture-attribute-label={title}
+        aria-label={title}
+      >
         {words.map((word, wordIndex) => {
           const offset = words.slice(0, wordIndex).join(' ').length + (wordIndex ? 1 : 0);
           return (

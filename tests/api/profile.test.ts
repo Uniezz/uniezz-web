@@ -16,21 +16,21 @@ mock.module('../../src/api/client.ts', () => ({
 }));
 const { getProfiles, getPublicProfile, deleteMyAvatar } = await import('../../src/api/profile.ts');
 
-test('student search sends the name and cursor to the backend', async () => {
+test('student search sends the query and cursor to the backend', async () => {
   await getProfiles('Jan', 'next-page');
   expect(request).toEqual({
     method: 'GET',
     path: '/profiles',
-    options: { params: { query: { name: 'Jan', cursor: 'next-page' } } },
+    options: { params: { query: { q: 'Jan', cursor: 'next-page' } } },
   });
 });
 
-test('the student list omits the name filter when browsing all students', async () => {
+test('the student list omits the query filter when browsing all students', async () => {
   await getProfiles('', 'next-page');
   expect(request).toEqual({
     method: 'GET',
     path: '/profiles',
-    options: { params: { query: { name: undefined, cursor: 'next-page' } } },
+    options: { params: { query: { q: undefined, cursor: 'next-page' } } },
   });
 });
 

@@ -7,7 +7,7 @@ export type UIFieldProps = {
   /** The field's constraint, always shown; highlighted while the value breaks it. */
   hint?: string;
   error?: string;
-  /** Shows `count/maxLength` inside the control; give the control the same `maxLength`. */
+  /** Shows `count/maxLength` inside the control while focused or near the limit; give the control the same `maxLength`. */
   maxLength?: number;
   count?: number;
   children: ReactNode;
@@ -49,13 +49,16 @@ export const UIField = ({
       ) : (
         <span
           onBeforeInput={onBeforeInput}
-          className="relative block [&>input]:pr-20 [&>textarea]:pb-7"
+          className="group relative block [&>input]:pr-20 [&>textarea]:pb-7"
         >
           {children}
           <span
             ref={counterRef}
             aria-hidden="true"
-            className={fieldCounterStyles({ invalid: Boolean(error) })}
+            className={fieldCounterStyles({
+              invalid: Boolean(error),
+              quiet: !error && count < maxLength * 0.8,
+            })}
           >
             {count}/{maxLength}
           </span>

@@ -66,6 +66,7 @@ export const UIInput = ({
         {clearButton && text ? (
           <button
             type="button"
+            data-ph-capture-attribute-label={clearButton.label}
             aria-label={clearButton.label}
             onClick={clearButton.onClear}
             className="flex size-6 shrink-0 items-center justify-center text-danger"

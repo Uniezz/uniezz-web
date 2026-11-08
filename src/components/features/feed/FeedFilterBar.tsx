@@ -4,17 +4,7 @@ import type { FeedFilters, Option } from '@/@types';
 import { useUniversities } from '@/hooks';
 import { cn } from '@/ui/cn';
 import { UISelect } from '@/ui/components';
-
-const DAY = 24 * 60 * 60 * 1000;
-const DATE_PRESETS = { today: 0, week: 6, month: 29 } as const;
-type DatePreset = keyof typeof DATE_PRESETS;
-
-/** Midnight N days ago, so the value (and the query key) stays the same for the whole day. */
-export function datePresetFrom(preset: DatePreset) {
-  const midnight = new Date();
-  midnight.setHours(0, 0, 0, 0);
-  return new Date(midnight.getTime() - DATE_PRESETS[preset] * DAY).toISOString();
-}
+import { datePresetFrom, type DatePreset } from '@/utils/feed';
 
 export function FeedFilterBar({
   filters,
@@ -60,8 +50,9 @@ export function FeedFilterBar({
         options={[
           { value: '', label: t('feed.anyTime') },
           { value: 'today', label: t('feed.today') },
-          { value: 'week', label: t('feed.lastWeek') },
-          { value: 'month', label: t('feed.lastMonth') },
+          { value: 'week', label: t('feed.thisWeek') },
+          { value: 'month', label: t('feed.thisMonth') },
+          { value: 'year', label: t('feed.thisYear') },
         ]}
         onSelect={(date) => {
           const preset = (date || undefined) as DatePreset | undefined;

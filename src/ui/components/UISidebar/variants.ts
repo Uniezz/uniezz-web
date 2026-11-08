@@ -15,14 +15,6 @@ export const sidebarStyles = cva(
   },
 );
 
-export const sidebarHeaderStyles = cva('flex items-center pt-1 pb-7');
-
-export const sidebarMarkStyles = cva('size-10 shrink-0 overflow-hidden rounded-lg p-0');
-
-export const sidebarSettingsStyles = cva(
-  'shrink-0 rounded-md text-secondary outline-none hover:text-white focus-visible:ring-2 focus-visible:ring-blue',
-);
-
 export const sidebarGroupStyles = cva('flex flex-col gap-1', {
   variants: {
     collapsed: {
@@ -38,8 +30,6 @@ export const sidebarGroupStyles = cva('flex flex-col gap-1', {
     collapsed: false,
   },
 });
-
-export const sidebarCaptionStyles = cva('text-caption font-semibold tracking-[0.8px] text-muted');
 
 export const sidebarUserStyles = cva('mt-auto flex items-center rounded-[14px]', {
   variants: {

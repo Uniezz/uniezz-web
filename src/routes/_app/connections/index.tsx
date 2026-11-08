@@ -42,6 +42,7 @@ function ConnectionsPage() {
         <Link
           to="/connections/students"
           search={{ studentSearch: undefined }}
+          data-ph-capture-attribute-label={t('students.allStudents')}
           className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-white-10 bg-white-5 px-4 text-label font-semibold transition-colors hover:bg-white-10 focus-visible:outline-2 focus-visible:outline-blue"
         >
           {t('students.allStudents')}

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from '@tanstack/react-router';
+import { Link, useRouter, useSearch } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 
@@ -10,7 +10,8 @@ import { ReportButton } from '@/components/features/reports/ReportButton';
 
 export function FeedPostActions({ post }: { post: FeedPost }) {
   const { t } = useTranslation();
-  const navigate = useNavigate();
+  const router = useRouter();
+  const { postFrom } = useSearch({ strict: false });
   const { data: profile } = useMyProfile();
   const { mutateAsync: deletePost, isPending: isDeleting } = useDeleteFeedPost();
   const [confirmDelete, setConfirmDelete] = useState(false);
@@ -30,6 +31,7 @@ export function FeedPostActions({ post }: { post: FeedPost }) {
         <Link
           to="/feed/post/edit-post/$postId"
           params={{ postId: post.id }}
+          data-ph-capture-attribute-label={t('app.edit')}
           search={{ postId: post.id, feedRoute: undefined }}
           className="text-label font-semibold text-white focus-visible:outline-2 focus-visible:outline-blue"
         >
@@ -61,7 +63,8 @@ export function FeedPostActions({ post }: { post: FeedPost }) {
               try {
                 await deletePost(post.id);
                 toast.success(t('apiState.postDeleted'));
-                void navigate({ to: '/feed', search: { postId: undefined, feedRoute: undefined } });
+                // Replace the deleted post's entry, so Back can't reopen it.
+                router.history.replace(postFrom ?? '/feed');
               } catch {
                 toast.error(t('apiState.error'));
               }

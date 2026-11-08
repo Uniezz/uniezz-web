@@ -33,6 +33,7 @@ export const UINavItem = ({
       to={to}
       search={isCurrentTab ? ((() => RESET_TAB_SEARCH) as never) : undefined}
       title={collapsed ? label : undefined}
+      data-ph-capture-attribute-label={label}
       aria-label={collapsed ? label : undefined}
       className="block rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-blue"
     >

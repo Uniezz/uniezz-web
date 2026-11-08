@@ -1,36 +1,18 @@
-import { MeshGradient } from '@paper-design/shaders-react';
 import { BrandBackground, UIButton, UILanguageSwitcher, UIText } from '@/ui/components';
-import { useReducedMotion } from '@react-spring/web';
 import { type ReactNode } from 'react';
 import { AuthBrand } from './AuthBrand';
-
-// Feed palette (ink, blue, violet); screen-blended so the dark parts leave the feed background visible.
-const GLOW_COLORS = ['#0c0d14', '#0c0d14', '#0c0d14', '#5b7cff'];
 
 type AuthLayoutProps = {
   children: ReactNode;
 };
 
 export const AuthLayout = ({ children }: AuthLayoutProps) => {
-  const reduceMotion = useReducedMotion();
-
   return (
     <main className="min-h-svh">
       <BrandBackground
         variant="app"
         className="relative flex min-h-svh flex-col overflow-hidden md:flex-row"
       >
-        <MeshGradient
-          className="pointer-events-none absolute inset-0 opacity-45 mix-blend-screen"
-          colors={GLOW_COLORS}
-          distortion={0.8}
-          swirl={0.6}
-          grainMixer={0.35}
-          grainOverlay={0.15}
-          scale={0.7}
-          speed={reduceMotion ? 0 : 0.4}
-        />
-        <div className="pointer-events-none absolute inset-0 bg-ink/35" />
         <div className="relative flex flex-1 px-6 py-8 sm:px-12 lg:px-16">
           <AuthBrand />
         </div>

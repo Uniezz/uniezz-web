@@ -1,5 +1,5 @@
 import { createFileRoute, redirect } from '@tanstack/react-router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
@@ -22,13 +22,18 @@ function FeedIndexPage() {
   const navigate = Route.useNavigate();
   const { t } = useTranslation();
   const [search, setSearch] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
+  useEffect(() => {
+    const timeout = window.setTimeout(() => setDebouncedSearch(search), 300);
+    return () => window.clearTimeout(timeout);
+  }, [search]);
   const [filters, setFilters] = useState<Parameters<typeof FeedFilterBar>[0]['filters']>({});
   const { type, university, from } = filters;
   const hasFilters = Boolean(type || university || from);
   const openNewPost = () =>
     navigate({
       to: '/feed/post/new-post',
-      search: { postId: undefined, feedRoute: 'new-post' },
+      search: { postId: undefined, postFrom: undefined, feedRoute: 'new-post' },
     });
 
   return (
@@ -65,8 +70,8 @@ function FeedIndexPage() {
           </UIButton>
         </div>
       </UITopbar>
-      <TopPosts search={search} />
-      <FeedPosts search={search} filters={{ type, university, from }} />
+      {!debouncedSearch.trim() && <TopPosts />}
+      <FeedPosts search={debouncedSearch} filters={{ type, university, from }} />
     </>
   );
 }

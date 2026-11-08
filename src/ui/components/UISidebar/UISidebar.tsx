@@ -115,14 +115,18 @@ export function UISidebar({ user, counts, className, ...props }: UISidebarProps)
 
   return (
     <aside className={cn(sidebarStyles(), className)} {...props}>
-      <Link to="/feed" className="mb-5.5 px-2.5 text-lg font-semibold tracking-[-0.6px]">
+      <Link
+        to="/feed"
+        data-ph-capture-attribute-label={t('common.appName')}
+        className="mb-5.5 px-2.5 text-lg font-semibold tracking-[-0.6px]"
+      >
         {t('common.appName')}
       </Link>
       <nav ref={navRef} aria-label={t('sidebar.mainNavigation')} className="relative flex flex-col">
-        {NAV_GROUPS.map(({ titleKey, items }) => (
+        {NAV_GROUPS.map(({ section, items }) => (
           <div
-            key={titleKey ?? 'main'}
-            className={sidebarGroupStyles({ section: Boolean(titleKey) })}
+            key={section ?? 'main'}
+            className={sidebarGroupStyles({ section: Boolean(section) })}
           >
             {items.map(({ labelKey, ...item }) => (
               <UINavItem key={item.to} {...item} label={t(labelKey)} count={counts?.[item.to]} />
@@ -162,6 +166,7 @@ export function UISidebar({ user, counts, className, ...props }: UISidebarProps)
       </nav>
       <Link
         to="/profile"
+        data-ph-capture-attribute-label={t('app.profile')}
         aria-label={t('app.profile')}
         className={cn(
           sidebarUserStyles(),

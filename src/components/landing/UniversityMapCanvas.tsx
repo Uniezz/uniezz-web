@@ -206,6 +206,7 @@ export function UniversityMapCanvas({
                   key={university.id}
                   type="button"
                   role="option"
+                  data-ph-capture-attribute-label={university.name}
                   aria-selected="false"
                   onClick={() => focusUniversity(university)}
                   className="block w-full px-4 py-3 text-left text-sm text-white/85 hover:bg-white/10 focus-visible:bg-white/10 focus-visible:outline-none"
@@ -223,6 +224,7 @@ export function UniversityMapCanvas({
       <div className="absolute right-4 bottom-12 z-10 flex flex-col overflow-hidden border border-white/15 bg-[#171922]/95 backdrop-blur-sm">
         <button
           type="button"
+          data-ph-capture-attribute-label={t('landing.map.zoomIn')}
           aria-label={t('landing.map.zoomIn')}
           onClick={() => mapRef.current?.zoomIn()}
           className="grid size-11 place-items-center text-[#f2eee6] hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-[#a9baff]"
@@ -231,6 +233,7 @@ export function UniversityMapCanvas({
         </button>
         <button
           type="button"
+          data-ph-capture-attribute-label={t('landing.map.zoomOut')}
           aria-label={t('landing.map.zoomOut')}
           onClick={() => mapRef.current?.zoomOut()}
           className="grid size-11 place-items-center border-t border-white/10 text-[#f2eee6] hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-[#a9baff]"

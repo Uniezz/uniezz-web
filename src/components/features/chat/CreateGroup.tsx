@@ -1,3 +1,4 @@
+import { captureAnalytics, trackLocalAction } from '@/utils/analytics';
 import { useState } from 'react';
 import { ArrowLeft, Minus, Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -93,8 +94,10 @@ export function CreateGroup({
       )}
       <form
         className="flex min-h-0 flex-1 flex-col gap-5"
-        onSubmit={handleSubmit(({ name, members }) =>
-          onCreate(name, members, imageUrl || undefined),
+        onSubmit={handleSubmit(
+          ({ name, members }) =>
+            trackLocalAction('group_create', () => onCreate(name, members, imageUrl || undefined)),
+          () => captureAnalytics('group_form_validation_failed'),
         )}
       >
         <div className="flex items-center gap-3">
@@ -160,6 +163,7 @@ export function CreateGroup({
               <span className="min-w-0 flex-1 truncate">{name}</span>
               <button
                 type="button"
+                data-ph-capture-attribute-label="Remove group member"
                 aria-label={`${t('app.remove')} ${name}`}
                 onClick={() =>
                   setValue(

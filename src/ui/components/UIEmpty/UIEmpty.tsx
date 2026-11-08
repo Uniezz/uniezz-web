@@ -19,29 +19,18 @@ export const UIEmpty = ({ children }: UIEmptyProps) => {
   );
 };
 
-/** The animated black cat in its own night-sky window, for layouts that place the text themselves. */
-export const UIEmptyCat = ({ className }: { className?: string }) => (
-  <div
-    aria-hidden="true"
-    className={cn(
-      'nav-item-active relative overflow-hidden rounded-none border-0 after:hidden',
-      className,
-    )}
-  >
-    <CatScene className="absolute inset-0" />
-  </div>
-);
-
 function CatScene({ className }: { className?: string }) {
   return (
     <div aria-hidden="true" className={cn('relative', className)}>
       {/* Contact shadow, so the cat sits on something instead of floating. */}
       <span className="absolute bottom-[4%] left-1/2 z-10 h-[7%] w-[34%] -translate-x-1/2 rounded-[50%] bg-black/45 blur-[3px]" />
-      {/* Animated SVG (SMIL); an <img> keeps it out of the JS bundle and still plays it. */}
-      <img
-        src="/app/empty-cat.svg"
-        alt=""
-        className="absolute inset-x-0 bottom-0 z-10 mx-auto h-[88%] w-auto max-w-none"
+      {/* Animated SVG (SMIL). <object> gives every mount its own document and clock; an <img>
+          shares Chrome's cached image, whose animation can stay paused when the empty state remounts. */}
+      <object
+        data="/app/empty-cat.svg"
+        type="image/svg+xml"
+        tabIndex={-1}
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-10 mx-auto aspect-[1495/805] h-[88%] w-auto max-w-none"
       />
     </div>
   );
