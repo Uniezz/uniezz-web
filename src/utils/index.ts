@@ -12,5 +12,4 @@ export * from './connections';
 export * from './CHATMOCKS';
 export * from './EXAMSMOCKS';
 export * from './CONNECTIONSMOCKS';
-export * from './GUIDEMOCKS';
 export * from './image';

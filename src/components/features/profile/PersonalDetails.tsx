@@ -54,6 +54,7 @@ export function PersonalDetails() {
           <textarea
             className="app-control h-28 resize-none"
             {...register('bio')}
+            placeholder={t('students.bioPlaceholder')}
             maxLength={500}
             aria-invalid={Boolean(errors.bio)}
           />

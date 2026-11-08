@@ -1,1 +1,0 @@
-export { UIImage } from './UIImage';

@@ -45,11 +45,14 @@ function EditPostPage() {
     return <UIQueryError retry={() => void (postError ? refetchPost() : refetchProfile())} />;
   if (profile.id !== post.author.id) return <UIEmpty />;
 
-  function backToPost() {
+  // Replaces the form's entry, so Back can't reopen it; retained `postFrom` keeps the post's Back.
+  function backToPost(ignoreBlocker = false) {
     void navigate({
       to: '/feed/post/$postId',
       params: { postId },
       search: { postId, feedRoute: undefined },
+      replace: true,
+      ignoreBlocker,
     });
   }
 
@@ -57,7 +60,7 @@ function EditPostPage() {
     <PostComposer
       post={post}
       isPending={isPending}
-      onCancel={backToPost}
+      onCancel={() => backToPost()}
       onSubmit={async (values) => {
         const original = postFormDefaults(post);
         await updatePost({
@@ -73,12 +76,7 @@ function EditPostPage() {
           },
         });
         toast.success(t('app.saved'));
-        void navigate({
-          to: '/feed/post/$postId',
-          params: { postId },
-          search: { postId, feedRoute: undefined },
-          ignoreBlocker: true,
-        });
+        backToPost(true);
       }}
     />
   );

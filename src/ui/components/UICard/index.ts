@@ -1,1 +1,0 @@
-export { UICard } from './UICard';

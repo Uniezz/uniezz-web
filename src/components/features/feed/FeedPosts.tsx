@@ -1,10 +1,9 @@
-import { cn } from '@/ui/cn';
 import type { FeedFilters } from '@/@types';
 import { useState } from 'react';
 import { Masonry, useInfiniteLoader, type RenderComponentProps } from 'masonic';
+import type { FeedPost } from '@/@types';
 import { Skeleton } from 'skullet/react';
 import { useTranslation } from 'react-i18next';
-import type { FeedPost } from '@/@types';
 import { UIButton, UIEmpty, UIQueryError } from '@/ui/components';
 import { useFeedPosts } from '@/hooks';
 import { samplePost } from '@/utils/feedSkeletonData';
@@ -47,26 +46,27 @@ export function FeedPosts({ search, filters }: { search: string; filters?: FeedF
     },
     { threshold: 4 },
   );
-  // Masonic caches positions by index and throws when the list gets shorter (search, a deletion),
-  // so the grid remounts only then. Reordered items are re-measured by Masonic itself.
-  const [layout, setLayout] = useState({ count: items.length, key: 0 });
-  if (items.length !== layout.count) {
-    setLayout({ count: items.length, key: layout.key + Number(items.length < layout.count) });
+  // Masonic caches positions by index, so the grid remounts unless posts were only appended
+  // (next page): a shorter list throws, and a new first post (prepend, new search) overlaps cards.
+  const first = items[0]?.id;
+  const [layout, setLayout] = useState({ count: items.length, first, key: 0 });
+  if (items.length !== layout.count || first !== layout.first) {
+    const appended = items.length > layout.count && first === layout.first;
+    setLayout({ count: items.length, first, key: layout.key + Number(!appended) });
   }
+
   return (
     <Skeleton loading={isPending} label={t('apiState.loading')}>
       {isPending ? (
         <FeedPostsSkeleton />
       ) : (
-        <div
-          className={cn('space-y-6 transition-opacity duration-200 motion-safe:animate-rise-in')}
-        >
+        <div className="space-y-6 transition-opacity duration-200 motion-safe:animate-rise-in">
           {items.length > 0 ? (
             <Masonry
               key={layout.key}
               items={items}
               itemKey={(post) => post.id}
-              columnWidth={352}
+              columnWidth={300}
               columnGutter={24}
               maxColumnCount={3}
               render={FeedCard}

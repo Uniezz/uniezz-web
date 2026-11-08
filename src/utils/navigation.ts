@@ -21,6 +21,7 @@ export const NAV_GROUPS: NavGroup[] = [
 // tab drops it so the tab opens at its root.
 export const RESET_TAB_SEARCH = {
   postId: undefined,
+  postFrom: undefined,
   feedRoute: undefined,
   chatType: undefined,
   conversationId: undefined,

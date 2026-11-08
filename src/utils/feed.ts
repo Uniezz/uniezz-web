@@ -74,3 +74,21 @@ export function postSubmission(
     ? previous
     : { body, key: crypto.randomUUID() };
 }
+
+const DAY = 24 * 60 * 60 * 1000;
+const DATE_PRESET_DAYS = { today: 1, week: 7, month: 30, year: 365 } as const;
+export type DatePreset = keyof typeof DATE_PRESET_DAYS;
+
+/** Rolling window ending now: the last 24 hours, 7, 30 or 365 days. */
+export function datePresetFrom(preset: DatePreset, now = new Date()) {
+  return new Date(now.getTime() - DATE_PRESET_DAYS[preset] * DAY).toISOString();
+}
+
+/** Whether `path` (pathname, optionally with a query) is this author's profile, so linking to it again would only loop back. */
+export function isAuthorProfilePath(path: string | undefined, authorId: string, myId?: string) {
+  const pathname = path?.split('?')[0];
+  return (
+    pathname === `/connections/students/${authorId}` ||
+    (pathname === '/profile' && authorId === myId)
+  );
+}

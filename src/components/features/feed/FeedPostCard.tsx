@@ -1,13 +1,16 @@
-import { Link } from '@tanstack/react-router';
+import { Link, useLocation } from '@tanstack/react-router';
 import { Images } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { FeedPost } from '@/@types';
 import { UIAvatar, UIPanel, UIUniversityLogo } from '@/ui/components';
 import { cn } from '@/ui/cn';
-import { authorName, postDate } from '@/utils/feed';
+import { authorName, isAuthorProfilePath, postDate } from '@/utils/feed';
+import { useMyProfile } from '@/hooks';
 
 export function FeedPostCard({ post }: { post: FeedPost }) {
   const { t, i18n } = useTranslation();
+  const href = useLocation({ select: (location) => location.href });
+  const { data: me } = useMyProfile();
   const image = post.mediaUrls?.[0];
   const isQuestion = post.type === 'question';
   return (
@@ -38,15 +41,20 @@ export function FeedPostCard({ post }: { post: FeedPost }) {
             <UIAvatar size="regular" imgSrc={post.author.avatarUrl ?? '/app/avatar.png'} alt="" />
             <div className="min-w-0">
               <p className="text-label font-medium text-white-80">
-                <Link
-                  to="/connections/students/$profileId"
-                  data-ph-capture-attribute-label="Open post author profile"
-                  params={{ profileId: post.author.id }}
-                  search={{ studentSearch: undefined }}
-                  className="relative z-20 rounded-sm hover:underline focus-visible:outline-2 focus-visible:outline-blue"
-                >
-                  {authorName(post.author) || t('apiState.student')}
-                </Link>
+                {/* Already on the author's profile: a link would only reload this page. */}
+                {isAuthorProfilePath(href, post.author.id, me?.id) ? (
+                  authorName(post.author) || t('apiState.student')
+                ) : (
+                  <Link
+                    to="/connections/students/$profileId"
+                    data-ph-capture-attribute-label="Open post author profile"
+                    params={{ profileId: post.author.id }}
+                    search={{ studentSearch: undefined, from: href }}
+                    className="relative z-20 rounded-sm hover:underline focus-visible:outline-2 focus-visible:outline-blue"
+                  >
+                    {authorName(post.author) || t('apiState.student')}
+                  </Link>
+                )}
               </p>
               <p className="mt-1 flex items-center gap-1.5 text-detail text-secondary">
                 <UIUniversityLogo universityId={post.author.universityId} size="xs" />
@@ -82,7 +90,7 @@ export function FeedPostCard({ post }: { post: FeedPost }) {
       <Link
         to="/feed/post/$postId"
         params={{ postId: post.id }}
-        search={{ postId: post.id }}
+        search={{ postId: post.id, postFrom: href }}
         data-ph-capture-attribute-label="Open post"
         aria-label={`${t('app.viewPost')}: ${post.title}`}
         skullet-ignore=""

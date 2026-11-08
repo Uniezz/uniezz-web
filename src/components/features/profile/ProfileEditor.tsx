@@ -13,14 +13,13 @@ import { StudyProgrammes } from './StudyProgrammes';
 
 export function ProfileEditor({ profile }: { profile: components['schemas']['Profile'] }) {
   const { t } = useTranslation();
-  const { form, saveProfile, isSuccess, isPending: isSaving } = useProfileForm(profile);
+  const { form, saveProfile, isPending: isSaving } = useProfileForm(profile);
   const { mutateAsync: deleteAvatar, isPending: isDeleting } = useDeleteAvatar();
   const isPending = isSaving || isDeleting;
   const {
     handleSubmit,
     formState: { isDirty },
   } = form;
-  const saved = isSuccess && !isDirty;
   return (
     <FormProvider {...form}>
       <UIUnsavedChanges dirty={isDirty} />
@@ -29,12 +28,12 @@ export function ProfileEditor({ profile }: { profile: components['schemas']['Pro
           <UIButton
             type="submit"
             form="profile-form"
-            disabled={isPending}
+            disabled={isPending || !isDirty}
             size="sm"
             leftIcon={Check}
             className="h-9 min-h-9 shrink-0 px-3 py-0 text-detail whitespace-nowrap"
           >
-            {saved ? t('app.saved') : t('app.saveChanges')}
+            {isDirty ? t('app.saveChanges') : t('app.saved')}
           </UIButton>
         </UITopbar>
         <div className="grid min-w-0 items-start gap-5 xl:grid-cols-[310px_minmax(0,1fr)]">

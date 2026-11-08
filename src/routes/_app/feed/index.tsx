@@ -52,7 +52,7 @@ function FeedIndexPage() {
             onClick={() =>
               navigate({
                 to: '/feed/post/new-post',
-                search: { postId: undefined, feedRoute: 'new-post' },
+                search: { postId: undefined, postFrom: undefined, feedRoute: 'new-post' },
               })
             }
           >

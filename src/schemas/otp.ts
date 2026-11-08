@@ -20,10 +20,7 @@ export const codeOtpSchema = z.object({
 
 export const otpSchema = z.discriminatedUnion('step', [emailOtpSchema, codeOtpSchema]);
 
-export type EmailOtpSchema = z.infer<typeof emailOtpSchema>;
-export type CodeOtpSchema = z.infer<typeof codeOtpSchema>;
 export type OtpSchema = z.infer<typeof otpSchema>;
-export type OtpStep = OtpSchema['step'];
 
 export const otpDefaultValues: OtpSchema = {
   step: 'email',

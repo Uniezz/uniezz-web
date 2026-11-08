@@ -67,9 +67,11 @@
     "allTypes": "Wszystkie typy",
     "date": "Data",
     "anyTime": "Cały okres",
+    "posts": "Posty",
     "today": "Dzisiaj",
-    "lastWeek": "Ostatnie 7 dni",
-    "lastMonth": "Ostatnie 30 dni"
+    "thisWeek": "Ten tydzień",
+    "thisMonth": "Ten miesiąc",
+    "thisYear": "Ten rok"
   },
   "faq": {
     "title": "Częste pytania",
@@ -377,6 +379,7 @@
     "search": "Szukaj studentów po imieniu i nazwisku",
     "bio": "O mnie",
     "bioError": "Opis może mieć maksymalnie 500 znaków.",
+    "bioPlaceholder": "Napisz innym studentom, co studiujesz, co lubisz albo czego szukasz",
     "interests": "Zainteresowania",
     "interestsHint": "Oddziel zainteresowania przecinkami",
     "interestsError": "Dodaj do 10 zainteresowań, każde do 30 znaków.",

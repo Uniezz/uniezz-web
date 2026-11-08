@@ -67,9 +67,11 @@
     "allTypes": "All types",
     "date": "Date",
     "anyTime": "Any time",
+    "posts": "Posts",
     "today": "Today",
-    "lastWeek": "Last 7 days",
-    "lastMonth": "Last 30 days"
+    "thisWeek": "This week",
+    "thisMonth": "This month",
+    "thisYear": "This year"
   },
   "faq": {
     "title": "FAQ",
@@ -377,6 +379,7 @@
     "search": "Search students by name",
     "bio": "Bio",
     "bioError": "Bio must be 500 characters or fewer.",
+    "bioPlaceholder": "Tell other students what you study, love, or are looking for",
     "interests": "Interests",
     "interestsHint": "Separate interests with commas",
     "interestsError": "Use up to 10 interests, each up to 30 characters.",

@@ -1,2 +1,2 @@
-export { UIEmpty, UIEmptyCat } from './UIEmpty';
+export { UIEmpty } from './UIEmpty';
 export type { UIEmptyProps } from './UIEmpty';

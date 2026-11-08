@@ -31,11 +31,7 @@ export function useProfileForm(profile: components['schemas']['Profile']) {
     reset: resetUpload,
     isPending: isUploading,
   } = useUploadImage('avatar');
-  const {
-    mutateAsync: saveProfile,
-    isSuccess,
-    isPending: isSaving,
-  } = useMutation({
+  const { mutateAsync: saveProfile, isPending: isSaving } = useMutation({
     meta: { analyticsAction: 'profile_update' },
     mutationKey: ['profile', 'update'],
     mutationFn: async (values: ProfileSubmission) => {
@@ -60,5 +56,5 @@ export function useProfileForm(profile: components['schemas']['Profile']) {
       void queryClient.invalidateQueries({ queryKey: ['profiles'] });
     },
   });
-  return { form, saveProfile, isSuccess, isPending: isSaving || isUploading };
+  return { form, saveProfile, isPending: isSaving || isUploading };
 }

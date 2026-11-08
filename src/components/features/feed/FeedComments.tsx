@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from '@tanstack/react-router';
+import { Link, useLocation } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 import { Skeleton } from 'skullet/react';
@@ -20,6 +20,7 @@ export function FeedCommentItem({
   onReply: (comment: FeedComment) => void;
 }) {
   const { t } = useTranslation();
+  const href = useLocation({ select: (location) => location.href });
   const [expanded, setExpanded] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [editing, setEditing] = useState(false);
@@ -37,7 +38,7 @@ export function FeedCommentItem({
               to="/connections/students/$profileId"
               data-ph-capture-attribute-label="Open comment author profile"
               params={{ profileId: comment.author.id }}
-              search={{ studentSearch: undefined }}
+              search={{ studentSearch: undefined, from: href }}
               className="rounded-sm hover:underline focus-visible:outline-2 focus-visible:outline-blue"
             >
               {authorName(comment.author) || t('apiState.student')}

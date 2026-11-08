@@ -41,13 +41,13 @@ const postRouteMask = createRouteMask({
   from: '/feed/post/$postId',
   to: '/feed/post/$postId',
   params: true,
-  search: (search) => ({ ...search, postId: undefined }),
+  search: (search) => ({ ...search, postId: undefined, postFrom: undefined }),
 });
 const newPostRouteMask = createRouteMask({
   routeTree,
   from: '/feed/post/new-post',
   to: '/feed/post/new-post',
-  search: (search) => ({ ...search, feedRoute: undefined, postId: undefined }),
+  search: (search) => ({ ...search, feedRoute: undefined, postId: undefined, postFrom: undefined }),
 });
 const profileRouteMask = createRouteMask({
   routeTree,
@@ -68,6 +68,9 @@ const router = createRouter({
     profileRouteMask,
   ],
   context: { queryClient },
+  // Scroll is remembered per address, so returning to a page (Back opens it anew) restores it.
+  scrollRestoration: true,
+  getScrollRestorationKey: (location) => location.href,
 });
 
 declare module '@tanstack/react-router' {

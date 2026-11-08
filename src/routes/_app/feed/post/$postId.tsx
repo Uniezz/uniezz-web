@@ -1,4 +1,4 @@
-import { createFileRoute, Link, redirect } from '@tanstack/react-router';
+import { createFileRoute, Link, redirect, useLocation, useRouter } from '@tanstack/react-router';
 import { ChevronLeft, ChevronRight, Send, CornerUpLeft, X } from 'lucide-react';
 import { type FormEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -8,8 +8,14 @@ import type { FeedComment } from '@/@types';
 import { cn } from '@/ui/cn';
 import { inputStyles } from '@/ui/components/UIInput/variants';
 import { UIAvatar, UIButton, UIEmojiPicker, UIEmpty, UIPanel, UIQueryError } from '@/ui/components';
-import { useFeedPostNavigation, useFeedPost, useFeedComments, useCreateComment } from '@/hooks';
-import { authorName } from '@/utils/feed';
+import {
+  useFeedPostNavigation,
+  useFeedPost,
+  useFeedComments,
+  useCreateComment,
+  useMyProfile,
+} from '@/hooks';
+import { authorName, isAuthorProfilePath } from '@/utils/feed';
 import { FeedCommentItem, FeedCommentsSkeleton } from '@/components/features/feed/FeedComments';
 import { FeedLikeButton } from '@/components/features/feed/FeedLikeButton';
 import { sampleComment, samplePost } from '@/utils/feedSkeletonData';
@@ -58,6 +64,10 @@ function FeedPostPage() {
     fetchNextPage: fetchMoreComments,
   } = useFeedComments(postId);
   const { createComment, isPending: isCreatingComment } = useCreateComment();
+  const router = useRouter();
+  const href = useLocation({ select: (location) => location.href });
+  const { postFrom } = Route.useSearch();
+  const { data: me } = useMyProfile();
   const [commentDraft, setCommentDraft] = useState('');
   const [replyTo, setReplyTo] = useState<FeedComment | null>(null);
   const [isCommentMultiline, setIsCommentMultiline] = useState(false);
@@ -67,7 +77,7 @@ function FeedPostPage() {
       <div className="space-y-4">
         <Link
           to="/feed"
-          search={{ postId: undefined }}
+          search={{ postId: undefined, postFrom: undefined }}
           data-ph-capture-attribute-label={t('app.back')}
           className="inline-flex items-center gap-2 text-label text-secondary"
         >
@@ -105,21 +115,31 @@ function FeedPostPage() {
 
   const hasMedia = (post.mediaUrls?.length ?? 0) > 0;
 
+  const author = (
+    <>
+      <UIAvatar size="md" imgSrc={post.author.avatarUrl ?? '/app/avatar.png'} alt="" />
+      <p className="text-label font-medium text-white">
+        {authorName(post.author) || t('apiState.student')}
+      </p>
+    </>
+  );
   const postHeader = (
     <>
       <div className="flex items-center justify-between gap-3">
-        <Link
-          to="/connections/students/$profileId"
-          data-ph-capture-attribute-label="Open post author profile"
-          params={{ profileId: post.author.id }}
-          search={{ studentSearch: undefined }}
-          className="flex w-fit items-center gap-3 rounded-sm hover:underline focus-visible:outline-2 focus-visible:outline-blue"
-        >
-          <UIAvatar size="md" imgSrc={post.author.avatarUrl ?? '/app/avatar.png'} alt="" />
-          <p className="text-label font-medium text-white">
-            {authorName(post.author) || t('apiState.student')}
-          </p>
-        </Link>
+        {/* Opened from the author's profile: Back already returns there, a link would only loop. */}
+        {isAuthorProfilePath(postFrom, post.author.id, me?.id) ? (
+          <div className="flex w-fit items-center gap-3">{author}</div>
+        ) : (
+          <Link
+            to="/connections/students/$profileId"
+            data-ph-capture-attribute-label="Open post author profile"
+            params={{ profileId: post.author.id }}
+            search={{ studentSearch: undefined, from: href }}
+            className="flex w-fit items-center gap-3 rounded-sm hover:underline focus-visible:outline-2 focus-visible:outline-blue"
+          >
+            {author}
+          </Link>
+        )}
         {post.type !== 'announcement' && (
           <span className="app-tag shrink-0 border-white-20 bg-surface px-2 py-1">
             {post.type === 'question' ? t('app.question') : t('app.event')}
@@ -139,14 +159,14 @@ function FeedPostPage() {
   return (
     <Skeleton loading={isPostPending} label={t('apiState.loading')}>
       <div className="relative mx-auto max-w-5xl">
-        <Link
-          to="/feed"
-          search={{ postId: undefined }}
-          data-ph-capture-attribute-label={t('feed.title')}
+        <button
+          type="button"
+          onClick={() => router.history.push(postFrom ?? '/feed')}
+          data-ph-capture-attribute-label={postFrom ? t('app.back') : t('feed.title')}
           className="mb-5 inline-flex min-h-11 items-center gap-2 px-2 py-2 text-label text-secondary transition-colors hover:text-white xl:absolute xl:top-0 xl:-left-32 xl:mb-0"
         >
-          <ChevronLeft className="size-5" /> {t('feed.title')}
-        </Link>
+          <ChevronLeft className="size-5" /> {postFrom ? t('app.back') : t('feed.title')}
+        </button>
         <div inert={isPostPending} className="relative">
           <div className="grid min-w-0 items-stretch gap-5 md:h-[calc(100svh-9rem)] md:min-h-0 md:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.75fr)] xl:h-[calc(100svh-56px)]">
             {hasMedia ? (
@@ -310,7 +330,7 @@ function FeedPostPage() {
                 to="/feed/post/$postId"
                 data-ph-capture-attribute-label={t('app.previousPost')}
                 params={{ postId: previous }}
-                search={{ postId: previous }}
+                search={{ postId: previous, postFrom }}
                 aria-label={t('app.previousPost')}
                 className="hover:bg-white-15 pointer-events-auto col-start-1 row-start-1 grid size-11 shrink-0 place-items-center justify-self-center rounded-full bg-white-10"
               >
@@ -324,7 +344,7 @@ function FeedPostPage() {
                 to="/feed/post/$postId"
                 data-ph-capture-attribute-label={t('app.nextPost')}
                 params={{ postId: next }}
-                search={{ postId: next }}
+                search={{ postId: next, postFrom }}
                 aria-label={t('app.nextPost')}
                 className="hover:bg-white-15 pointer-events-auto col-start-3 row-start-1 grid size-11 shrink-0 place-items-center justify-self-center rounded-full bg-white-10"
               >

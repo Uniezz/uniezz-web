@@ -19,19 +19,6 @@ export const UIEmpty = ({ children }: UIEmptyProps) => {
   );
 };
 
-/** The animated black cat in its own night-sky window, for layouts that place the text themselves. */
-export const UIEmptyCat = ({ className }: { className?: string }) => (
-  <div
-    aria-hidden="true"
-    className={cn(
-      'nav-item-active relative overflow-hidden rounded-none border-0 after:hidden',
-      className,
-    )}
-  >
-    <CatScene className="absolute inset-0" />
-  </div>
-);
-
 function CatScene({ className }: { className?: string }) {
   return (
     <div aria-hidden="true" className={cn('relative', className)}>
