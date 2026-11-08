@@ -9,7 +9,7 @@ export const buttonStyles = cva(
         md: 'min-h-12 px-5.5 py-3.5 text-body leading-[1.2]',
         lg: 'min-h-12 px-6 py-3 text-base',
         pill: 'min-h-9 px-4 py-2 text-label leading-[1.2]',
-        icon: 'size-9.5 p-2',
+        icon: 'size-11 p-2.5',
       },
       bg: {
         primary: 'border-white bg-white text-ink enabled:hover:bg-white/85',

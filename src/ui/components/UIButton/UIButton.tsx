@@ -38,7 +38,7 @@ export const UIButton = ({
     .join('')
     .trim();
   const analyticsLabel = props['aria-label'] ?? (visibleText || undefined);
-  const icon = LeftIcon ? <LeftIcon className={iconColorClass[leftIconColor]} size={16} /> : null;
+  const icon = LeftIcon ? <LeftIcon className={iconColorClass[leftIconColor]} size={17} /> : null;
 
   if (navigateTo) {
     return (
