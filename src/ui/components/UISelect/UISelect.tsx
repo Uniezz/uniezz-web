@@ -63,7 +63,7 @@ export const UISelect = ({ value, options, onChange, label, className }: UISelec
           margin: '8px 0',
           positionTryFallbacks: 'flip-block',
         }}
-        className="max-h-72 overflow-y-auto not-open:hidden"
+        className="max-h-72 overflow-y-auto bg-surface not-open:hidden"
         onSelect={(next) => {
           onChange(next);
           document.getElementById(menuId)?.hidePopover();
