@@ -1,28 +1,35 @@
 const SESSION_COOKIE = '__Host-uniezz-session';
+// Local dev runs on plain http, where Safari drops Secure and __Host- cookies.
+const DEV_SESSION_COOKIE = 'uniezz-session';
 const SESSION_SECONDS = 30 * 24 * 60 * 60;
 const LOGIN_PATHS = new Set(['/auth/exchange', '/auth/otp/verify']);
 const SAFE_METHODS = new Set(['GET', 'HEAD', 'OPTIONS']);
 
-function sessionCookie(token: string, maxAge: number): string {
+function sessionCookie(token: string, maxAge: number, dev: boolean): string {
+  if (dev)
+    return `${DEV_SESSION_COOKIE}=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${maxAge}`;
   return `${SESSION_COOKIE}=${token}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=${maxAge}`;
 }
 
-function sessionToken(request: Request): string | undefined {
+function sessionToken(request: Request, dev: boolean): string | undefined {
+  const name = dev ? DEV_SESSION_COOKIE : SESSION_COOKIE;
   const cookie = request.headers
     .get('cookie')
     ?.split(';')
     .map((part) => part.trim());
-  const value = cookie
-    ?.find((part) => part.startsWith(`${SESSION_COOKIE}=`))
-    ?.slice(SESSION_COOKIE.length + 1);
+  const value = cookie?.find((part) => part.startsWith(`${name}=`))?.slice(name.length + 1);
   return value && /^[A-Za-z0-9_-]{43}$/.test(value) ? value : undefined;
 }
 
-export async function proxyApi(request: Request, backendUrl: string): Promise<Response> {
+export async function proxyApi(
+  request: Request,
+  backendUrl: string,
+  dev = false,
+): Promise<Response> {
   const url = new URL(request.url);
   const path = url.pathname.slice('/api'.length);
   const isLogin = LOGIN_PATHS.has(path) && request.method === 'POST';
-  const token = sessionToken(request);
+  const token = sessionToken(request, dev);
 
   if (!SAFE_METHODS.has(request.method) && request.headers.get('origin') !== url.origin) {
     return new Response('Forbidden', { status: 403, headers: { 'Cache-Control': 'no-store' } });
@@ -33,7 +40,7 @@ export async function proxyApi(request: Request, backendUrl: string): Promise<Re
   if (path === '/auth/logout' && request.method === 'POST') {
     return new Response(null, {
       status: 204,
-      headers: { 'Set-Cookie': sessionCookie('', 0), 'Cache-Control': 'no-store' },
+      headers: { 'Set-Cookie': sessionCookie('', 0, dev), 'Cache-Control': 'no-store' },
     });
   }
 
@@ -87,13 +94,17 @@ export async function proxyApi(request: Request, backendUrl: string): Promise<Re
     }
     return new Response(null, {
       status: 204,
-      headers: { 'Set-Cookie': sessionCookie(data.token, maxAge), 'Cache-Control': 'no-store' },
+      headers: {
+        'Set-Cookie': sessionCookie(data.token, maxAge, dev),
+        'Cache-Control': 'no-store',
+      },
     });
   }
 
   if (token && !path.startsWith('/auth/')) {
-    if (upstream.status === 401) responseHeaders.set('Set-Cookie', sessionCookie('', 0));
-    else if (upstream.ok) responseHeaders.set('Set-Cookie', sessionCookie(token, SESSION_SECONDS));
+    if (upstream.status === 401) responseHeaders.set('Set-Cookie', sessionCookie('', 0, dev));
+    else if (upstream.ok)
+      responseHeaders.set('Set-Cookie', sessionCookie(token, SESSION_SECONDS, dev));
   }
   return new Response(upstream.body, {
     status: upstream.status,
