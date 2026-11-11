@@ -206,8 +206,21 @@
   },
   "exams": {
     "action": "Dodaj materiał",
+    "anySemester": "Każdy semestr",
+    "deleteFile": "Usuń plik",
+    "deleteFileDescription": "Plik zostanie usunięty dla wszystkich.",
+    "deleteFileTitle": "Usunąć plik?",
+    "difficulty": "Trudność {{difficulty}}/5",
+    "fileDeleted": "Plik usunięty",
+    "rate": "Oceń na {{value}} z 5",
+    "search": "Szukaj",
+    "semesterNumber": "Semestr {{semester}}",
     "subtitle": "Zadania z poprzednich egzaminów, opinie o przedmiotach i oceny wykładowców",
-    "title": "Egzaminy i przedmioty"
+    "title": "Egzaminy i przedmioty",
+    "typeColloquium": "Kolokwium",
+    "typeExam": "Egzamin",
+    "typeLab": "Sprawozdania",
+    "typeNotes": "Notatki"
   },
   "faq": {
     "empty": "Nie ma tu jeszcze pytań.",

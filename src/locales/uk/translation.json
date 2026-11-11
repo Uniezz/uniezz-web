@@ -206,8 +206,21 @@
   },
   "exams": {
     "action": "Додати матеріал",
+    "anySemester": "Будь-який семестр",
+    "deleteFile": "Видалити файл",
+    "deleteFileDescription": "Файл буде видалено для всіх.",
+    "deleteFileTitle": "Видалити файл?",
+    "difficulty": "Складність {{difficulty}}/5",
+    "fileDeleted": "Файл видалено",
+    "rate": "Оцінити на {{value}} з 5",
+    "search": "Шукати",
+    "semesterNumber": "Семестр {{semester}}",
     "subtitle": "Завдання з попередніх іспитів, відгуки про предмети та оцінки викладачів",
-    "title": "Іспити та предмети"
+    "title": "Іспити та предмети",
+    "typeColloquium": "Колоквіум",
+    "typeExam": "Іспит",
+    "typeLab": "Лабораторні звіти",
+    "typeNotes": "Нотатки"
   },
   "faq": {
     "empty": "Тут ще немає запитань.",

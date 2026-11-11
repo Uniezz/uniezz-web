@@ -2,26 +2,10 @@ import { createContext, useState } from 'react';
 import { Outlet, createFileRoute, redirect } from '@tanstack/react-router';
 
 import type { Conversation, Message } from '@/@types';
-import type { components } from '@/@types/schema';
 // TODO(api): Replace mock conversations and local chat mutations with API queries and mutations.
-import { CHATMOCKS, createGroupConversation } from '@/utils';
-import { authorName } from '@/utils/feed';
+import { CHATMOCKS, connectionConversation, createGroupConversation } from '@/utils';
 import { useConnectionsList } from '@/hooks';
 import { ConversationList } from '@/components/features/chat';
-
-function connectionConversation(profile: components['schemas']['ProfileSummary']): Conversation {
-  return {
-    id: profile.id,
-    name: authorName(profile),
-    preview: '',
-    time: '',
-    group: false,
-    unread: 0,
-    image: 0,
-    imageUrl: profile.avatarUrl ?? undefined,
-    messages: [],
-  };
-}
 
 // TODO(api): Remove this mock-state context when chat queries and mutations are API-backed.
 export const ChatGroupRouteContext = createContext<{

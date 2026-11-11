@@ -1,6 +1,5 @@
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import type { ConnectionFilters } from '@/@types';
-import type { components } from '@/@types/schema';
+import type { ConnectionFilters, Discovery } from '@/@types';
 import { actOnCandidate, discoverConnections, getConnections } from '@/api';
 import { captureAnalytics } from '@/utils/analytics';
 
@@ -22,15 +21,12 @@ export function useCandidateAction() {
         void queryClient.invalidateQueries({ queryKey: ['connections', 'list'] });
       }
       let emptied = false;
-      queryClient.setQueriesData<components['schemas']['DiscoverOutputBody']>(
-        { queryKey: ['connections', 'discover'] },
-        (data) => {
-          if (!data) return data;
-          const items = data.items?.filter((card) => card.candidateId !== candidateId) ?? [];
-          emptied ||= items.length === 0;
-          return { ...data, items };
-        },
-      );
+      queryClient.setQueriesData<Discovery>({ queryKey: ['connections', 'discover'] }, (data) => {
+        if (!data) return data;
+        const items = data.items?.filter((card) => card.candidateId !== candidateId) ?? [];
+        emptied ||= items.length === 0;
+        return { ...data, items };
+      });
       // The server skips students already liked or passed, so an empty batch means "fetch the next one".
       if (emptied) void queryClient.invalidateQueries({ queryKey: ['connections', 'discover'] });
     },

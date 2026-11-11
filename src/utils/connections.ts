@@ -1,4 +1,4 @@
-import type { ConnectionFilters } from '@/@types';
+import type { ConnectionFilters, StudyLevel } from '@/@types';
 import type { operations } from '@/@types/schema';
 
 export const defaultConnectionFilters: ConnectionFilters = {
@@ -32,3 +32,11 @@ export function toDiscoverQuery({
     sharedInterests: matchInterests || undefined,
   };
 }
+
+export const studyLevelLabels = {
+  first_cycle: 'app.studyLevelFirstCycle',
+  second_cycle: 'app.studyLevelSecondCycle',
+  long_cycle: 'app.studyLevelLongCycle',
+  third_cycle: 'app.studyLevelThirdCycle',
+  phd_school: 'app.studyLevelPhdSchool',
+} as const satisfies Record<StudyLevel, string>;

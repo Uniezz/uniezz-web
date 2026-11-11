@@ -206,8 +206,21 @@
   },
   "exams": {
     "action": "Upload material",
+    "anySemester": "Any semester",
+    "deleteFile": "Delete file",
+    "deleteFileDescription": "The file will be removed for everyone.",
+    "deleteFileTitle": "Delete file?",
+    "difficulty": "Difficulty {{difficulty}}/5",
+    "fileDeleted": "File deleted",
+    "rate": "Rate {{value}} out of 5",
+    "search": "Search",
+    "semesterNumber": "Semester {{semester}}",
     "subtitle": "Past papers, course reviews and professor ratings",
-    "title": "Exams & Courses"
+    "title": "Exams & Courses",
+    "typeColloquium": "Colloquium",
+    "typeExam": "Exam",
+    "typeLab": "Lab reports",
+    "typeNotes": "Notes"
   },
   "faq": {
     "empty": "No questions here yet.",

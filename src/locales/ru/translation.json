@@ -206,8 +206,21 @@
   },
   "exams": {
     "action": "Добавить материал",
+    "anySemester": "Любой семестр",
+    "deleteFile": "Удалить файл",
+    "deleteFileDescription": "Файл будет удалён для всех.",
+    "deleteFileTitle": "Удалить файл?",
+    "difficulty": "Сложность {{difficulty}}/5",
+    "fileDeleted": "Файл удалён",
+    "rate": "Оценить на {{value}} из 5",
+    "search": "Искать",
+    "semesterNumber": "Семестр {{semester}}",
     "subtitle": "Задания с прошлых экзаменов, отзывы о предметах и оценки преподавателей",
-    "title": "Экзамены и предметы"
+    "title": "Экзамены и предметы",
+    "typeColloquium": "Коллоквиум",
+    "typeExam": "Экзамен",
+    "typeLab": "Лабораторные отчёты",
+    "typeNotes": "Конспекты"
   },
   "faq": {
     "empty": "Здесь пока нет вопросов.",

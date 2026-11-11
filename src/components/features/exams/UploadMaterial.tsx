@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-// TODO(api): Replace mock options and local metadata-only submission with API-backed upload data and mutations.
-import { EXAMSMOCKS } from '@/utils';
+// TODO(api): Upload the file and attach it to a course once POST /media/uploads accepts kind exam (Uniezz/uniezz-backend#79).
+import { useUniversities } from '@/hooks';
 import { UIButton, UIDialog, UIField } from '@/ui/components';
 import { uploadSchema, type UploadSchema } from '@/schemas';
 
@@ -16,13 +16,14 @@ export function UploadMaterial({
   onSubmit: (data: UploadSchema) => void;
 }) {
   const { t } = useTranslation();
+  const { data: universities = [] } = useUniversities();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<UploadSchema>({
     resolver: zodResolver(uploadSchema),
-    defaultValues: { university: 'Politechnika', type: 'Exam' },
+    defaultValues: { type: 'Exam' },
   });
   return (
     <UIDialog
@@ -50,8 +51,10 @@ export function UploadMaterial({
         </UIField>
         <UIField label={t('app.university')}>
           <select className="app-control" {...register('university')}>
-            {EXAMSMOCKS.universities.map((u) => (
-              <option key={u}>{u}</option>
+            {universities.map(({ id, name }) => (
+              <option key={id} value={id}>
+                {name}
+              </option>
             ))}
           </select>
         </UIField>

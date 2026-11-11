@@ -2,23 +2,13 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 import { Skeleton } from 'skullet/react';
-import type { ConnectionFilters, StudyLevel } from '@/@types';
-import type { components } from '@/@types/schema';
+import type { ConnectionFilters, DiscoveryCard } from '@/@types';
 import { useCandidateAction, useDiscovery, useUniversities } from '@/hooks';
 import { ReportButton } from '@/components/features/reports/ReportButton';
 import { UIEmpty, UIPanel, UIQueryError } from '@/ui/components';
 import { cn } from '@/ui/cn';
+import { studyLevelLabels } from '@/utils';
 import { DiscoveryActions } from './DiscoveryActions';
-
-type Card = components['schemas']['Card'];
-
-const levelLabels = {
-  first_cycle: 'app.studyLevelFirstCycle',
-  second_cycle: 'app.studyLevelSecondCycle',
-  long_cycle: 'app.studyLevelLongCycle',
-  third_cycle: 'app.studyLevelThirdCycle',
-  phd_school: 'app.studyLevelPhdSchool',
-} as const satisfies Record<StudyLevel, string>;
 
 const panelClass =
   'relative flex min-h-100 flex-col overflow-hidden rounded-feature p-0 xl:h-[calc(100svh-9.5rem)] xl:min-h-140';
@@ -102,12 +92,14 @@ export function DiscoveryProfile({ filters }: DiscoveryProfileProps) {
   );
 }
 
-function CandidateCard({ card }: { card: Card }) {
+function CandidateCard({ card }: { card: DiscoveryCard }) {
   const { t } = useTranslation();
   const { data: universities = [] } = useUniversities();
   const university = universities.find(({ id }) => id === card.universityId)?.name;
   const shared = new Set(card.sharedInterests?.map((interest) => interest.toLowerCase()));
-  const meta = [university, card.level && t(levelLabels[card.level])].filter(Boolean).join(', ');
+  const meta = [university, card.level && t(studyLevelLabels[card.level])]
+    .filter(Boolean)
+    .join(', ');
 
   return (
     <div className="flex flex-1 flex-col gap-6 p-6">

@@ -14,3 +14,7 @@ export type ConnectionFilters = {
 };
 
 export type Gender = 'male' | 'female';
+
+/** An anonymous discovery card: no name, photos or user id until a match. */
+export type DiscoveryCard = components['schemas']['Card'];
+export type Discovery = components['schemas']['DiscoverOutputBody'];
