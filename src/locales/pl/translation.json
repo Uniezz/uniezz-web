@@ -185,15 +185,20 @@
     "appName": "uniezz"
   },
   "connections": {
+    "anonymousStudent": "Student",
     "anyFaculty": "Dowolny wydział",
     "emptyDescription": "Nie ma już profili spełniających wybrane kryteria. Zmień filtry lub zajrzyj później.",
     "emptyTitle": "Na razie nikogo",
     "everyone": "Wszystkich",
     "filters": "Filtry",
+    "iWantTo": "Chcę…",
+    "interests": "Zainteresowania",
     "lookingFor": "Szukam",
     "matchInterests": "Wspólne zainteresowania",
+    "matched": "Jest dopasowanie! Znajdziesz tę osobę w czacie.",
     "men": "Mężczyzn",
     "resetFilters": "Wyczyść",
+    "sharedInterest": "wspólne z tobą",
     "showMe": "Pokaż mi",
     "subtitle": "Poznawaj studentów ze wszystkich pięciu uczelni",
     "title": "Znajomości",
@@ -206,6 +211,8 @@
   },
   "faq": {
     "empty": "Nie ma tu jeszcze pytań.",
+    "noResults": "Żadne pytanie nie pasuje do wyszukiwania.",
+    "search": "Szukaj pytań",
     "title": "Częste pytania"
   },
   "feed": {
@@ -348,6 +355,7 @@
     "type": "Typ posta"
   },
   "report": {
+    "candidate": "Zgłoś profil",
     "comment": "Zgłoś komentarz",
     "description": "Wybierz powód i opcjonalnie podaj szczegóły.",
     "details": "Szczegóły (opcjonalnie)",

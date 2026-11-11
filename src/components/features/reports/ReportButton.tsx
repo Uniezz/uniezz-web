@@ -49,7 +49,9 @@ export function ReportButton({
       ? t('report.post')
       : targetType === 'comment'
         ? t('report.comment')
-        : t('report.user');
+        : targetType === 'candidate'
+          ? t('report.candidate')
+          : t('report.user');
 
   function changeOpen(next: boolean) {
     setOpen(next);

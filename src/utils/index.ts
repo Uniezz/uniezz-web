@@ -11,5 +11,4 @@ export * from './connections';
 // TODO(api): Remove these mock exports when their consumers are API-backed.
 export * from './CHATMOCKS';
 export * from './EXAMSMOCKS';
-export * from './CONNECTIONSMOCKS';
 export * from './image';

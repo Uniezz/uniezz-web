@@ -5,3 +5,5 @@ export * from './useMyProfile';
 export * from './useProfileProgrammes';
 export * from './useProfiles';
 export * from './useDropdown';
+export * from './useFaq';
+export * from './useConnections';

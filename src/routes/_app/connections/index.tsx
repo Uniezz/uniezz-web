@@ -1,41 +1,18 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useForm, useWatch } from 'react-hook-form';
 
-// TODO(api): Replace mock discovery defaults and local actions with API data and mutations.
-import { CONNECTIONSMOCKS, matchesConnectionFilters } from '@/utils';
+import { defaultConnectionFilters } from '@/utils';
 import type { ConnectionFilters } from '@/@types';
 import { UITopbar } from '@/ui/components';
-import { useMyProfile } from '@/hooks';
-import {
-  DiscoveryProfile,
-  DiscoveryActions,
-  ConnectionFilterPanel,
-} from '@/components/features/connections';
+import { DiscoveryProfile, ConnectionFilterPanel } from '@/components/features/connections';
 
 export const Route = createFileRoute('/_app/connections/')({ component: ConnectionsPage });
 function ConnectionsPage() {
   const { t } = useTranslation();
-  const [passed, setPassed] = useState(false);
-  const [connected, setConnected] = useState(false);
-  const [leaving, setLeaving] = useState<'left' | 'right' | null>(null);
-  // Swipes the card away first; without motion there's no animationend, so move on at once.
-  const leave = (direction: 'left' | 'right') => {
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches) setPassed(true);
-    else setLeaving(direction);
-  };
-  const { data: me } = useMyProfile();
-  const filters = useForm<ConnectionFilters>({ defaultValues: CONNECTIONSMOCKS.defaultFilters });
-  const values = { ...CONNECTIONSMOCKS.defaultFilters, ...useWatch({ control: filters.control }) };
-  const showProfile =
-    !passed &&
-    matchesConnectionFilters(
-      values as ConnectionFilters,
-      CONNECTIONSMOCKS.candidate,
-      me?.interests ?? [],
-    );
+  const filters = useForm<ConnectionFilters>({ defaultValues: defaultConnectionFilters });
+  const values = { ...defaultConnectionFilters, ...useWatch({ control: filters.control }) };
   return (
     <>
       <UITopbar title={t('connections.title')} subtitle={t('connections.subtitle')}>
@@ -51,24 +28,7 @@ function ConnectionsPage() {
       </UITopbar>
       <div className="grid items-start gap-6 xl:grid-cols-[620px_minmax(0,1fr)] xl:items-stretch">
         <div className="min-w-0 space-y-4">
-          <DiscoveryProfile
-            showProfile={showProfile}
-            leaving={leaving}
-            onLeft={() => {
-              setPassed(true);
-              setLeaving(null);
-            }}
-          >
-            <DiscoveryActions
-              showProfile={showProfile && !leaving}
-              connected={connected}
-              onPass={() => leave('left')}
-              onConnect={() => {
-                setConnected(true);
-                leave('right');
-              }}
-            />
-          </DiscoveryProfile>
+          <DiscoveryProfile filters={values as ConnectionFilters} />
         </div>
         <aside className="relative">
           <ConnectionFilterPanel form={filters} />

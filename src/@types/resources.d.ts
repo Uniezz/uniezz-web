@@ -187,15 +187,20 @@ export default interface Resources {
       "appName": "uniezz"
     },
     "connections": {
+      "anonymousStudent": "Student",
       "anyFaculty": "Any faculty",
       "emptyDescription": "You have seen everyone who matches. Widen your filters or check back later.",
       "emptyTitle": "No one here yet",
       "everyone": "Everyone",
       "filters": "Filters",
+      "iWantTo": "I want to…",
+      "interests": "Interests",
       "lookingFor": "Looking for",
       "matchInterests": "Match interests",
+      "matched": "It's a match! You can find them in Chat.",
       "men": "Men",
       "resetFilters": "Reset",
+      "sharedInterest": "shared with you",
       "showMe": "Show me",
       "subtitle": "Meet students across all five universities",
       "title": "Connections",
@@ -208,6 +213,8 @@ export default interface Resources {
     },
     "faq": {
       "empty": "No questions here yet.",
+      "noResults": "No questions match your search.",
+      "search": "Search questions",
       "title": "FAQ"
     },
     "feed": {
@@ -350,6 +357,7 @@ export default interface Resources {
       "type": "Post type"
     },
     "report": {
+      "candidate": "Report profile",
       "comment": "Report comment",
       "description": "Choose a reason and add any details that may help.",
       "details": "Details (optional)",

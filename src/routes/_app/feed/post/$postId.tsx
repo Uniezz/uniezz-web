@@ -8,6 +8,8 @@ import type { FeedComment } from '@/@types';
 import { cn } from '@/ui/cn';
 import { inputStyles } from '@/ui/components/UIInput/variants';
 import { UIAvatar, UIButton, UIEmojiPicker, UIEmpty, UIPanel, UIQueryError } from '@/ui/components';
+import { listComponents } from '@/ui/virtuoso';
+import { Virtuoso } from 'react-virtuoso';
 import {
   useFeedPostNavigation,
   useFeedPost,
@@ -15,6 +17,7 @@ import {
   useCreateComment,
   useMyProfile,
 } from '@/hooks';
+import { useNarrowViewport } from '@/hooks/useNarrowViewport';
 import { authorName, isAuthorProfilePath } from '@/utils/feed';
 import { FeedCommentItem, FeedCommentsSkeleton } from '@/components/features/feed/FeedComments';
 import { FeedLikeButton } from '@/components/features/feed/FeedLikeButton';
@@ -70,6 +73,7 @@ function FeedPostPage() {
   const { postFrom } = Route.useSearch();
   const { data: me } = useMyProfile();
   const [commentDraft, setCommentDraft] = useState('');
+  const isNarrow = useNarrowViewport();
   const [replyTo, setReplyTo] = useState<FeedComment | null>(null);
   const [isCommentMultiline, setIsCommentMultiline] = useState(false);
   const post = loadedPost ?? (isPostPending ? samplePost : undefined);
@@ -192,23 +196,31 @@ function FeedPostPage() {
                 {postActions}
               </div>
               <section aria-label={t('app.comments')} className="flex min-h-0 flex-1 flex-col">
-                <div className="min-h-0 flex-1 space-y-5 overflow-y-auto p-5.5 sm:p-6">
-                  {areCommentsPending && !isPostPending && <FeedCommentsSkeleton />}
-                  {comments.map((comment) => (
-                    <FeedCommentItem key={comment.id} comment={comment} onReply={setReplyTo} />
-                  ))}
-                  {areCommentsError && <UIQueryError retry={() => void refetchComments()} />}
-                  {hasMoreComments && (
-                    <UIButton
-                      bg="secondary"
-                      size="pill"
-                      disabled={isFetchingMoreComments}
-                      onClick={() => void fetchMoreComments()}
-                    >
-                      {t('apiState.loadMore')}
-                    </UIButton>
+                <Virtuoso
+                  data={comments}
+                  computeItemKey={(_, comment) => comment.id}
+                  endReached={() => {
+                    if (hasMoreComments && !isFetchingMoreComments && !areCommentsError) {
+                      void fetchMoreComments();
+                    }
+                  }}
+                  components={listComponents}
+                  // Below md the page has no fixed height and scrolls as a whole.
+                  useWindowScroll={isNarrow}
+                  aria-label={t('app.comments')}
+                  className="min-h-0 flex-1"
+                  itemContent={(_, comment) => (
+                    <div role="listitem" className="px-5.5 pt-5 sm:px-6">
+                      <FeedCommentItem comment={comment} onReply={setReplyTo} />
+                    </div>
                   )}
-                </div>
+                />
+                {areCommentsPending && !isPostPending && (
+                  <div className="p-5.5 sm:p-6">
+                    <FeedCommentsSkeleton />
+                  </div>
+                )}
+                {areCommentsError && <UIQueryError retry={() => void refetchComments()} />}
               </section>
               <form onSubmit={sendComment} className="shrink-0 border-t border-white-10 p-4 sm:p-5">
                 {replyTo && (

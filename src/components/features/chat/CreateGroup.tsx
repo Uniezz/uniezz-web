@@ -6,7 +6,9 @@ import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useBlocker } from '@tanstack/react-router';
 
+import { Virtuoso } from 'react-virtuoso';
 import { UIButton, UIAvatar, UIField, UIDialog, UISearch } from '@/ui/components';
+import { listComponents } from '@/ui/virtuoso';
 // TODO(api): Load group members and image choices from API-backed data.
 import { CHATMOCKS, matchesSearch } from '@/utils';
 import { readImageFile } from '@/utils/image';
@@ -182,30 +184,35 @@ export function CreateGroup({
           ))}
         </div>
         <p className="text-caption font-semibold text-muted uppercase">{t('app.suggested')}</p>
-        <div className="scrollbar-gray min-h-0 flex-1 space-y-4 overflow-y-auto">
-          {CHATMOCKS.students
-            .filter((s) => !members.includes(s.name) && matchesSearch(search, s.name, s.meta))
-            .map((s) => (
-              <div key={s.name} className="flex items-center justify-between gap-3">
-                <div className="flex min-w-0 items-center gap-3">
-                  <UIAvatar size="md" imgSrc={avatarForMember(s.name)} alt="" aria-hidden="true" />
-                  <div className="min-w-0">
-                    <strong className="text-label font-medium">{s.name}</strong>
-                    <p className="text-micro text-muted">{s.meta}</p>
-                  </div>
+        <Virtuoso
+          data={CHATMOCKS.students.filter(
+            (s) => !members.includes(s.name) && matchesSearch(search, s.name, s.meta),
+          )}
+          computeItemKey={(_, s) => s.name}
+          components={listComponents}
+          aria-label={t('app.suggested')}
+          className="scrollbar-gray min-h-0 flex-1"
+          itemContent={(_, s) => (
+            <div role="listitem" className="flex items-center justify-between gap-3 pb-4">
+              <div className="flex min-w-0 items-center gap-3">
+                <UIAvatar size="md" imgSrc={avatarForMember(s.name)} alt="" aria-hidden="true" />
+                <div className="min-w-0">
+                  <strong className="text-label font-medium">{s.name}</strong>
+                  <p className="text-micro text-muted">{s.meta}</p>
                 </div>
-                <UIButton
-                  bg="transparent"
-                  size="icon"
-                  aria-label={`${t('app.add')} ${s.name}`}
-                  className="group border-transparent bg-transparent enabled:hover:border-transparent enabled:hover:bg-transparent"
-                  onClick={() => setValue('members', [...members, s.name], { shouldDirty: true })}
-                >
-                  <Plus size={16} className="transition-transform group-hover:scale-125" />
-                </UIButton>
               </div>
-            ))}
-        </div>
+              <UIButton
+                bg="transparent"
+                size="icon"
+                aria-label={`${t('app.add')} ${s.name}`}
+                className="group border-transparent bg-transparent enabled:hover:border-transparent enabled:hover:bg-transparent"
+                onClick={() => setValue('members', [...members, s.name], { shouldDirty: true })}
+              >
+                <Plus size={16} className="transition-transform group-hover:scale-125" />
+              </UIButton>
+            </div>
+          )}
+        />
         <div className="flex items-center justify-start gap-3">
           {errors.members && (
             <p className="text-detail text-warning" role="alert">

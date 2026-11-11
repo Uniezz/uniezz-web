@@ -1,8 +1,10 @@
 import { SquarePen } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useForm, useWatch } from 'react-hook-form';
+import { Virtuoso } from 'react-virtuoso';
 import type { Conversation } from '@/@types';
 import { UIAvatar, UIButton, UIEmpty, UIPanel, UISearch, UISegmented } from '@/ui/components';
+import { listComponents } from '@/ui/virtuoso';
 import { matchesSearch } from '@/utils';
 import { ConnectionsList } from './ConnectionsList';
 
@@ -26,6 +28,9 @@ export function ConversationList({
   const { t } = useTranslation();
   const form = useForm<{ search: string }>({ defaultValues: { search: '' } });
   const { search = '' } = useWatch({ control: form.control });
+  const visible = conversations.filter(
+    (c) => matchesSearch(search, c.name, c.preview) && (filter !== 'groups' || c.group),
+  );
   return (
     <UIPanel className={`${hidden ? 'hidden md:flex' : 'flex'} min-h-0 flex-col px-3 py-5`}>
       <div className="mb-3.5 flex items-center justify-between px-2">
@@ -55,17 +60,20 @@ export function ConversationList({
           }
         />
       </div>
-      <div className="min-h-0 flex-1 space-y-0.5 overflow-auto">
-        {filter === 'connections' ? (
-          <ConnectionsList selected={selected} onOpen={onOpen} />
-        ) : (
-          conversations
-            .filter(
-              (c) => matchesSearch(search, c.name, c.preview) && (filter !== 'groups' || c.group),
-            )
-            .map((c) => (
+      {filter === 'connections' ? (
+        <ConnectionsList selected={selected} onOpen={onOpen} />
+      ) : visible.length === 0 ? (
+        <UIEmpty />
+      ) : (
+        <Virtuoso
+          data={visible}
+          computeItemKey={(_, c) => c.id}
+          components={listComponents}
+          aria-label={t('chat.title')}
+          className="min-h-0 flex-1"
+          itemContent={(_, c) => (
+            <div role="listitem" className="pb-0.5">
               <button
-                key={c.id}
                 data-ph-capture-attribute-label="Open conversation"
                 onClick={() => onOpen(c.id)}
                 aria-current={selected === c.id ? 'true' : undefined}
@@ -88,13 +96,10 @@ export function ConversationList({
                   )}
                 </span>
               </button>
-            ))
-        )}
-        {filter !== 'connections' &&
-          !conversations.some(
-            (c) => matchesSearch(search, c.name, c.preview) && (filter !== 'groups' || c.group),
-          ) && <UIEmpty />}
-      </div>
+            </div>
+          )}
+        />
+      )}
     </UIPanel>
   );
 }

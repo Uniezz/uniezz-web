@@ -5,3 +5,5 @@ export * from './profile';
 export * from './media';
 export * from './reports';
 export * from './auth';
+export * from './faq';
+export * from './connections';

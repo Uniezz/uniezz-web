@@ -121,6 +121,176 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/connections": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List the logged-in student's matches
+         * @description Newest first, paginated by cursor. Students blocked either way are left out.
+         */
+        get: operations["listConnections"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/connections/blocks/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Block a student
+         * @description Each student stops seeing the other in discovery, the profile list, the profile, connections, and the feed: posts, comments and the featured list. Blocking twice changes nothing.
+         */
+        put: operations["blockStudent"];
+        post?: never;
+        /**
+         * Remove a block
+         * @description Succeeds when there is no such block.
+         */
+        delete: operations["unblockStudent"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/connections/candidates/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Like or pass a discovery card
+         * @description A like cannot be undone; at most 50 likes per 24 hours. A pass hides the student for 30 days from the latest pass. Mutual likes in the same mode create one connection. Returns 404 when the candidate id belongs to another viewer or has expired, or when the two students can no longer meet in this mode.
+         */
+        put: operations["actOnCandidate"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/connections/discover": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Discover anonymous students
+         * @description A deck of up to limit cards, best match first, with no cursor: liked, hidden, blocked and connected students and those passed in the last 30 days are left out, so the next call shows the next cards. Both students must be open to the mode, and dating shows only adults. A card never contains the user id, name, photos, faculty, programme or year; issuing its candidateId is the only write.
+         */
+        get: operations["discoverConnections"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/connections/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get what Connections may show about the logged-in student */
+        get: operations["getMyConnectionPreferences"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Set what Connections may show about the logged-in student
+         * @description A missing field keeps its current value. Birth date is used only to compute age.
+         */
+        patch: operations["updateMyConnectionPreferences"];
+        trace?: never;
+    };
+    "/connections/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Remove a match for both students */
+        delete: operations["deleteConnection"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/faq": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List published FAQ entries
+         * @description Published entries only, newest first. A proposal or a rejected entry is never returned. An empty FAQ is an empty list.
+         */
+        get: operations["listFaqEntries"];
+        put?: never;
+        /**
+         * Publish an FAQ entry
+         * @description Stores the question and answer as published. Only one hardcoded address may call this. Everyone else gets 403.
+         */
+        post: operations["publishFaqEntry"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/faq/proposals": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List the signed-in student's FAQ proposals
+         * @description The caller's proposals only, newest first, including proposed, published and rejected. Other students' proposals are absent.
+         */
+        get: operations["listMyFaqProposals"];
+        put?: never;
+        /**
+         * Propose an FAQ entry
+         * @description Stores the question and answer as proposed. It stays out of the published list until a moderator decides.
+         */
+        post: operations["createFaqProposal"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/feed/comments/{id}": {
         parameters: {
             query?: never;
@@ -554,10 +724,250 @@ export interface paths {
         get?: never;
         put?: never;
         /**
-         * Report a post, comment or student
+         * Report a post, comment, student, exam file or course
          * @description One report per target and reporter; at most 5 reports per clock hour (UTC).
          */
         post: operations["createReport"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/study/comments/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete the student's own comment on a course
+         * @description A comment that is already gone, or that another student wrote, is left as it is and the call still succeeds.
+         */
+        delete: operations["deleteComment"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/study/courses": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List courses
+         * @description Newest first. Filters combine: a course must match every filter that is set.
+         */
+        get: operations["listCourses"];
+        put?: never;
+        /**
+         * Create a course
+         * @description Adds a course to the catalogue of a university. A student may create, upload and comment up to 30 times an hour in total.
+         */
+        post: operations["createCourse"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/study/courses/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get a course
+         * @description Returns the course with its average rating.
+         */
+        get: operations["getCourse"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Update the name, description or difficulty of the student's own course
+         * @description Only the student who created the course may change it; for anyone else the course is not found. Omitted fields stay unchanged.
+         */
+        patch: operations["updateCourse"];
+        trace?: never;
+    };
+    "/study/courses/{id}/comments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List the comments on a course
+         * @description Oldest first. Comments of blocked students are left out.
+         */
+        get: operations["listCourseComments"];
+        put?: never;
+        /**
+         * Comment on a course
+         * @description Comments are shown without their author. Counts toward the limit of 30 creates an hour.
+         */
+        post: operations["addCourseComment"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/study/courses/{id}/files": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List the files of a course
+         * @description Newest first. Files of blocked students are left out.
+         */
+        get: operations["listCourseFiles"];
+        put?: never;
+        /**
+         * Attach a file to a course
+         * @description The file is a PDF up to 20 MB or a JPEG, PNG or WebP up to 10 MB, uploaded with kind exam. Counts toward the limit of 30 creates an hour.
+         */
+        post: operations["addCourseFile"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/study/courses/{id}/rating": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Rate a course
+         * @description One rating per student; rating again replaces the previous one. Returns the course with its new average.
+         */
+        put: operations["rateCourse"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/study/files": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Search files of all courses
+         * @description Newest first. Filters combine and apply to the course of the file. Files of blocked students are left out.
+         */
+        get: operations["searchFiles"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/study/files/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get a file
+         * @description A file of a blocked student is not found.
+         */
+        get: operations["getFile"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete the student's own file
+         * @description Deletes the file and its upload. A file that is already gone, or that another student uploaded, is left as it is and the call still succeeds.
+         */
+        delete: operations["deleteFile"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/study/professors": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List professors
+         * @description Current staff of the universities Uniezz serves, as listed in POL-on, ordered by name. The list is refreshed monthly; ratings stay.
+         */
+        get: operations["listProfessors"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/study/professors/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get a professor
+         * @description A professor who left the POL-on list is not found.
+         */
+        get: operations["getProfessor"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/study/professors/{id}/rating": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Rate a professor
+         * @description One rating per student; rating again replaces the previous one. A professor who left the POL-on list cannot be rated.
+         */
+        put: operations["rateProfessor"];
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -568,6 +978,38 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        ActOnCandidateInputBody: {
+            /** @enum {string} */
+            action: "like" | "pass";
+            /** @enum {string} */
+            mode: "friends" | "studyBuddy" | "dating";
+        };
+        ActionResult: {
+            /** @description Present when this like created the match */
+            connection?: components["schemas"]["Connection"];
+            matched: boolean;
+        };
+        AddCourseCommentInputBody: {
+            /**
+             * @description Up to 1000 characters after HTML is stripped
+             * @example Hard, but the lectures help a lot.
+             */
+            content: string;
+        };
+        AddCourseFileInputBody: {
+            /**
+             * Format: uuid
+             * @description Upload created with POST /media/uploads and kind exam
+             */
+            mediaId: string;
+            /**
+             * @description 3 to 150 characters after HTML is stripped
+             * @example Midterm 2024, group A
+             */
+            title: string;
+            /** @enum {string} */
+            type: "exam" | "colloquium" | "lab" | "notes";
+        };
         Author: {
             avatarUrl: string | null;
             /** @example Jan */
@@ -576,6 +1018,32 @@ export interface components {
             id: string;
             /** @example Kowalski */
             lastName: string | null;
+            /** @example umcs */
+            universityId: string;
+        };
+        Card: {
+            /**
+             * Format: int64
+             * @description Null when the student has not set a birth date
+             */
+            age: number | null;
+            /** @description Null when the student has none */
+            bio: string | null;
+            /**
+             * Format: uuid
+             * @description Opaque token, valid only for this viewer, for 30 days after it was first issued
+             */
+            candidateId: string;
+            /** @description Null when the student has none */
+            intent: string | null;
+            interests: string[] | null;
+            /**
+             * @description Of the primary programme; null when unknown
+             * @enum {string|null}
+             */
+            level: "first_cycle" | "second_cycle" | "long_cycle" | "third_cycle" | "phd_school" | null;
+            /** @description The interests the viewer also has */
+            sharedInterests: string[] | null;
             /** @example umcs */
             universityId: string;
         };
@@ -604,11 +1072,113 @@ export interface components {
             /** @description Comment this reply answers; null for a root comment or when that comment was deleted */
             replyToCommentId: string | null;
         };
+        Connection: {
+            /** Format: date-time */
+            connectedAt: string;
+            /** Format: uuid */
+            id: string;
+            /** @enum {string} */
+            mode: "friends" | "studyBuddy" | "dating";
+            profile: components["schemas"]["ProfileSummary"];
+        };
+        Course: {
+            /** @example Limits, derivatives and integrals of one variable. */
+            description: string;
+            /**
+             * Format: int64
+             * @example 4
+             */
+            difficulty: number;
+            /** @example Faculty of Mathematics, Physics and Computer Science */
+            faculty: string;
+            /** Format: uuid */
+            id: string;
+            /** @description True when the signed-in student created the course and may edit it */
+            isMine: boolean;
+            /** @example Calculus I */
+            name: string;
+            /**
+             * Format: double
+             * @description Average student rating from 1 to 5, 0 when nobody rated yet
+             * @example 4.2
+             */
+            ratingAverage: number;
+            /**
+             * Format: int64
+             * @example 17
+             */
+            ratingCount: number;
+            /**
+             * Format: int64
+             * @example 1
+             */
+            semester: number;
+            /** @example Computer Science */
+            subject: string;
+            /** @example umcs */
+            universityId: string;
+        };
+        CourseComment: {
+            /** @example Hard, but the lectures help a lot. */
+            content: string;
+            /** Format: uuid */
+            courseId: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: uuid */
+            id: string;
+            /** @description True when the signed-in student wrote the comment and may delete it */
+            isMine: boolean;
+        };
+        CourseFile: {
+            /** Format: uuid */
+            authorId: string;
+            /** Format: uuid */
+            courseId: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: uuid */
+            id: string;
+            /** @example Midterm 2024, group A */
+            title: string;
+            /** @enum {string} */
+            type: "exam" | "colloquium" | "lab" | "notes";
+            /** @description Short-lived link to the PDF or image */
+            url: string;
+        };
         CreateCommentInputBody: {
             /** @description 1–1000 characters after HTML is stripped */
             content: string;
             /** @description Comment to reply to; a reply to a reply joins the same thread */
             replyToCommentId?: string;
+        };
+        CreateCourseInputBody: {
+            /** @description Up to 5000 characters after HTML is stripped */
+            description: string;
+            /**
+             * Format: int64
+             * @example 4
+             */
+            difficulty: number;
+            /** @description 3 to 150 characters after HTML is stripped */
+            faculty: string;
+            /**
+             * @description 3 to 150 characters after HTML is stripped
+             * @example Calculus I
+             */
+            name: string;
+            /**
+             * Format: int64
+             * @example 1
+             */
+            semester: number;
+            /**
+             * @description 3 to 150 characters after HTML is stripped
+             * @example Computer Science
+             */
+            subject: string;
+            /** @example umcs */
+            universityId: string;
         };
         CreatePostInputBody: {
             /** @description 10–5000 characters after HTML is stripped */
@@ -640,7 +1210,7 @@ export interface components {
             /** Format: uuid */
             targetId: string;
             /** @enum {string} */
-            targetType: "post" | "comment" | "user";
+            targetType: "post" | "comment" | "user" | "candidate" | "file" | "course";
         };
         CreateUploadInputBody: {
             /**
@@ -658,6 +1228,19 @@ export interface components {
              * @description Exact file size in bytes; 5 MiB max for avatars, 10 MiB for banners, feed and chat
              */
             size: number;
+        };
+        DiscoverOutputBody: {
+            items: components["schemas"]["Card"][] | null;
+        };
+        Entry: {
+            answer: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: uuid */
+            id: string;
+            question: string;
+            /** @enum {string} */
+            status: "proposed" | "published" | "rejected";
         };
         ErrorBody: {
             /**
@@ -730,9 +1313,39 @@ export interface components {
             /** @description Pass as cursor to get the next page; null on the last page */
             nextCursor: string | null;
         };
+        ListConnectionsOutputBody: {
+            items: components["schemas"]["Connection"][] | null;
+            /** @description Pass as cursor to get the next page; null on the last page */
+            nextCursor: string | null;
+        };
+        ListCourseCommentsOutputBody: {
+            items: components["schemas"]["CourseComment"][] | null;
+            /** @description Null on the last page */
+            nextCursor: string | null;
+        };
+        ListCourseFilesOutputBody: {
+            items: components["schemas"]["CourseFile"][] | null;
+            /** @description Null on the last page */
+            nextCursor: string | null;
+        };
+        ListCoursesOutputBody: {
+            items: components["schemas"]["Course"][] | null;
+            /** @description Null on the last page */
+            nextCursor: string | null;
+        };
+        ListEntriesOutputBody: {
+            items: components["schemas"]["Entry"][] | null;
+            /** @description Pass as cursor to get the next page; null on the last page */
+            nextCursor: string | null;
+        };
         ListPostsOutputBody: {
             items: components["schemas"]["Post"][] | null;
             /** @description Pass as cursor to get the next page; null on the last page */
+            nextCursor: string | null;
+        };
+        ListProfessorsOutputBody: {
+            items: components["schemas"]["Professor"][] | null;
+            /** @description Null on the last page */
             nextCursor: string | null;
         };
         ListProfilesOutputBody: {
@@ -811,6 +1424,45 @@ export interface components {
              * @description Nearest newer post, or null at the start
              */
             previousId: string | null;
+        };
+        Preferences: {
+            /**
+             * Format: date
+             * @description Null until set
+             * @example 2003-05-17
+             */
+            birthDate: string | null;
+            /**
+             * @description Shown on the student's discovery card. Null when unset.
+             * @example Looking for a climbing partner
+             */
+            intent: string | null;
+            /** @description Who the student can discover and be discovered as */
+            openTo: ("friends" | "studyBuddy" | "dating")[] | null;
+        };
+        Professor: {
+            /**
+             * @description Degree as POL-on lists it, null when POL-on has none
+             * @example dr hab.
+             */
+            degree: string | null;
+            /** Format: uuid */
+            id: string;
+            /** @example Anna Maria Nowak */
+            name: string;
+            /**
+             * Format: double
+             * @description Average student rating from 1 to 5, 0 when nobody rated yet
+             * @example 4.5
+             */
+            ratingAverage: number;
+            /**
+             * Format: int64
+             * @example 12
+             */
+            ratingCount: number;
+            /** @example umcs */
+            universityId: string;
         };
         Profile: {
             /** @description URL of the avatar image, null when the student has none */
@@ -937,6 +1589,12 @@ export interface components {
             /** Format: int64 */
             yearOfStudy?: number;
         };
+        ProposalRequest: {
+            /** @description 1 to 2000 characters after HTML is stripped */
+            answer: string;
+            /** @description 3 to 200 characters after HTML is stripped */
+            question: string;
+        };
         PublicProfile: {
             avatarUrl: string | null;
             bio: string | null;
@@ -979,6 +1637,20 @@ export interface components {
              */
             yearOfStudy: number | null;
         };
+        RateCourseInputBody: {
+            /**
+             * Format: int64
+             * @example 4
+             */
+            rating: number;
+        };
+        RateProfessorInputBody: {
+            /**
+             * Format: int64
+             * @example 5
+             */
+            rating: number;
+        };
         Report: {
             /** Format: date-time */
             createdAt: string;
@@ -991,11 +1663,27 @@ export interface components {
             status: "pending" | "reviewed" | "dismissed";
             /** Format: uuid */
             targetId: string;
-            /** @enum {string} */
-            targetType: "post" | "comment" | "user";
+            targetType: string;
+        };
+        SavePreferencesInputBody: {
+            /**
+             * Format: date
+             * @description Age must be 16 to 100
+             * @example 2003-05-17
+             */
+            birthDate?: string;
+            /** @description Up to 200 characters after HTML is stripped. An empty string clears it. */
+            intent?: string;
+            /** @description dating needs an age of at least 18, else returns 400 dating_requires_adult */
+            openTo?: ("friends" | "studyBuddy" | "dating")[] | null;
         };
         SaveState: {
             saved: boolean;
+        };
+        SearchFilesOutputBody: {
+            items: components["schemas"]["CourseFile"][] | null;
+            /** @description Null on the last page */
+            nextCursor: string | null;
         };
         UniversityDTO: {
             /**
@@ -1025,6 +1713,20 @@ export interface components {
         };
         UpdateCommentInputBody: {
             content: string;
+        };
+        UpdateCourseInputBody: {
+            /** @description Up to 5000 characters after HTML is stripped */
+            description?: string;
+            /**
+             * Format: int64
+             * @example 4
+             */
+            difficulty?: number;
+            /**
+             * @description 3 to 150 characters after HTML is stripped
+             * @example Calculus I
+             */
+            name?: string;
         };
         UpdateMeInputBody: {
             /**
@@ -1399,6 +2101,734 @@ export interface operations {
             };
             /** @description Bad Request */
             400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    listConnections: {
+        parameters: {
+            query?: {
+                /** @description nextCursor from the previous page; omit for the first page */
+                cursor?: string;
+                /** @description Maximum number of items in the page */
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ListConnectionsOutputBody"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    blockStudent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The blocked student's profile id */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    unblockStudent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The blocked student's profile id */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    actOnCandidate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ActOnCandidateInputBody"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ActionResult"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Too Many Requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    discoverConnections: {
+        parameters: {
+            query: {
+                mode: "friends" | "studyBuddy" | "dating";
+                /** @description Only students of these universities; repeat the parameter for several */
+                university?: string[] | null;
+                /** @description studyBuddy only. Students who hide their faculty never match. */
+                faculty?: string;
+                /** @description studyBuddy only */
+                level?: ("first_cycle" | "second_cycle" | "long_cycle" | "third_cycle" | "phd_school")[] | null;
+                gender?: "male" | "female";
+                /** @description Only students with at least one interest in common */
+                sharedInterests?: boolean;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DiscoverOutputBody"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    getMyConnectionPreferences: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Preferences"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    updateMyConnectionPreferences: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SavePreferencesInputBody"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Preferences"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    deleteConnection: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    listFaqEntries: {
+        parameters: {
+            query?: {
+                /** @description nextCursor from the previous page; omit for the first page */
+                cursor?: string;
+                /** @description Maximum number of items in the page */
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ListEntriesOutputBody"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    publishFaqEntry: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ProposalRequest"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Entry"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    listMyFaqProposals: {
+        parameters: {
+            query?: {
+                /** @description nextCursor from the previous page; omit for the first page */
+                cursor?: string;
+                /** @description Maximum number of items in the page */
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ListEntriesOutputBody"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    createFaqProposal: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ProposalRequest"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Entry"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -3381,6 +4811,1062 @@ export interface operations {
             };
             /** @description Too Many Requests */
             429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    deleteComment: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    listCourses: {
+        parameters: {
+            query?: {
+                /** @description nextCursor from the previous page; omit for the first page */
+                cursor?: string;
+                /** @description Maximum number of items in the page */
+                limit?: number;
+                universityId?: string;
+                /** @description Exact faculty name */
+                faculty?: string;
+                /** @description Exact subject name */
+                subject?: string;
+                /** @description 0 or omitted for every semester */
+                semester?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ListCoursesOutputBody"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    createCourse: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateCourseInputBody"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Course"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Too Many Requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    getCourse: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Course"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    updateCourse: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateCourseInputBody"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Course"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    listCourseComments: {
+        parameters: {
+            query?: {
+                /** @description nextCursor from the previous page; omit for the first page */
+                cursor?: string;
+                /** @description Maximum number of items in the page */
+                limit?: number;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ListCourseCommentsOutputBody"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    addCourseComment: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AddCourseCommentInputBody"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CourseComment"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Too Many Requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    listCourseFiles: {
+        parameters: {
+            query?: {
+                /** @description nextCursor from the previous page; omit for the first page */
+                cursor?: string;
+                /** @description Maximum number of items in the page */
+                limit?: number;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ListCourseFilesOutputBody"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    addCourseFile: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AddCourseFileInputBody"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CourseFile"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Too Many Requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    rateCourse: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RateCourseInputBody"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Course"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    searchFiles: {
+        parameters: {
+            query?: {
+                /** @description nextCursor from the previous page; omit for the first page */
+                cursor?: string;
+                /** @description Maximum number of items in the page */
+                limit?: number;
+                /** @description Up to 5 words of at least 3 characters, matched against the file title and the course subject */
+                q?: string;
+                universityId?: string;
+                /** @description Exact faculty name of the course */
+                faculty?: string;
+                /** @description Exact subject name of the course */
+                subject?: string;
+                /** @description 0 or omitted for every semester */
+                semester?: number;
+                /** @description Only files uploaded by the signed-in student */
+                mine?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SearchFilesOutputBody"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    getFile: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CourseFile"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    deleteFile: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    listProfessors: {
+        parameters: {
+            query?: {
+                /** @description nextCursor from the previous page; omit for the first page */
+                cursor?: string;
+                /** @description Maximum number of items in the page */
+                limit?: number;
+                universityId?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ListProfessorsOutputBody"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    getProfessor: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Professor"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    rateProfessor: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RateProfessorInputBody"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Professor"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
                 headers: {
                     [name: string]: unknown;
                 };

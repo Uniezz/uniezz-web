@@ -16,7 +16,7 @@ import {
   UIUniversityLogo,
 } from '@/ui/components';
 // TODO(api): Replace mock defaults with API-backed discovery filtering.
-import { CONNECTIONSMOCKS, facultyKey } from '@/utils';
+import { defaultConnectionFilters, facultyKey } from '@/utils';
 
 function toggle<T>(list: T[], value: T) {
   return list.includes(value) ? list.filter((item) => item !== value) : [...list, value];
@@ -166,7 +166,7 @@ export function ConnectionFilterPanel({ form }: { form: UseFormReturn<Connection
           size="pill"
           bg="transparent"
           className="-ml-2 min-h-0 gap-1 self-start border-0 px-2 py-1 text-micro text-secondary enabled:hover:bg-transparent enabled:hover:text-danger"
-          onClick={() => form.reset({ ...CONNECTIONSMOCKS.defaultFilters, mode })}
+          onClick={() => form.reset({ ...defaultConnectionFilters, mode })}
         >
           <Minus className="size-3.5" aria-hidden="true" />
           {t('connections.resetFilters')}
