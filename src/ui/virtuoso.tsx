@@ -11,6 +11,21 @@ export const gridComponents: GridComponents = {
   Item: (props) => <div {...props} role="listitem" />,
 };
 
-export const tableComponents: Pick<TableComponents, 'Table'> = {
-  Table: (props) => <table {...props} className="w-full min-w-[640px] text-left text-body" />,
-};
+/**
+ * A fixed-layout table: columns keep their width while rows scroll in and out, instead of resizing
+ * to whatever rows are on screen. Empty strings share the leftover width. Call once at module level.
+ */
+export function fixedTable(columnWidths: string[]): Pick<TableComponents, 'Table'> {
+  return {
+    Table: ({ children, ...props }) => (
+      <table {...props} className="w-full min-w-[640px] table-fixed text-left text-body">
+        <colgroup>
+          {columnWidths.map((width, index) => (
+            <col key={index} style={width ? { width } : undefined} />
+          ))}
+        </colgroup>
+        {children}
+      </table>
+    ),
+  };
+}

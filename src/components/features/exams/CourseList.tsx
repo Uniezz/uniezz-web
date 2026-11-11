@@ -4,9 +4,12 @@ import { TableVirtuoso } from 'react-virtuoso';
 import { useSearch } from '@tanstack/react-router';
 import { useCourses, useRateCourse, useUniversities } from '@/hooks';
 import { UIEmpty, UIPanel, UIQueryError } from '@/ui/components';
-import { tableComponents } from '@/ui/virtuoso';
+import { fixedTable } from '@/ui/virtuoso';
 import { matchesSearch } from '@/utils';
 import { RatingInput } from './RatingInput';
+
+// Name columns share the spare width; the rest fit their longest label in every language.
+const tableComponents = fixedTable(['', '', '7.5rem', '9rem', '13rem']);
 
 export function CourseList() {
   const { t } = useTranslation();

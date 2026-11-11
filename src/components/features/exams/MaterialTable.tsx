@@ -5,11 +5,14 @@ import toast from 'react-hot-toast';
 import { TableVirtuoso } from 'react-virtuoso';
 import { useSearch } from '@tanstack/react-router';
 import type { StudyFile } from '@/@types';
-import { tableComponents } from '@/ui/virtuoso';
+import { fixedTable } from '@/ui/virtuoso';
 import { getStudyFile } from '@/api';
 import { studyFileTypeLabels } from '@/utils';
 import { useDeleteStudyFile, useMyProfile, useStudyFiles } from '@/hooks';
 import { UIButton, UIDialog, UIEmpty, UIPanel, UIQueryError } from '@/ui/components';
+
+// Name columns share the spare width; the rest fit their longest label in every language.
+const tableComponents = fixedTable(['', '10rem', '9rem', '6.5rem']);
 
 export function MaterialTable() {
   const { t, i18n } = useTranslation();
