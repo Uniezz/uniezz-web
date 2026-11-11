@@ -36,7 +36,7 @@ function ProfilePage() {
   return (
     <>
       <ProfileEditor profile={profile} />
-      <ProfilePosts authorId={profile.id} />
+      <ProfilePosts authorId={profile.id} collections />
     </>
   );
 }

@@ -18,6 +18,7 @@ import {
 import { authorName, isAuthorProfilePath } from '@/utils/feed';
 import { FeedCommentItem, FeedCommentsSkeleton } from '@/components/features/feed/FeedComments';
 import { FeedLikeButton } from '@/components/features/feed/FeedLikeButton';
+import { FeedSaveButton } from '@/components/features/feed/FeedSaveButton';
 import { sampleComment, samplePost } from '@/utils/feedSkeletonData';
 import { FeedPostActions } from '@/components/features/feed/FeedPostActions';
 import { PostMedia } from '@/components/features/feed/PostMedia';
@@ -152,6 +153,7 @@ function FeedPostPage() {
   const postActions = (
     <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
       <FeedLikeButton id={post.id} kind="post" liked={post.likedByMe} count={post.likesCount} />
+      <FeedSaveButton id={post.id} saved={post.savedByMe} />
       <FeedPostActions post={post} />
     </div>
   );

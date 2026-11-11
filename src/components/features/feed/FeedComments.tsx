@@ -26,6 +26,15 @@ export function FeedCommentItem({
   const [editing, setEditing] = useState(false);
   const { data: profile } = useMyProfile();
   const { mutateAsync: deleteComment, isPending: isDeleting } = useDeleteFeedComment();
+  async function removeComment(): Promise<void> {
+    try {
+      await deleteComment(comment.id);
+      setConfirmDelete(false);
+      toast.success(t('apiState.commentDeleted'));
+    } catch {
+      toast.error(t('apiState.error'));
+    }
+  }
   const { data, isPending, isError, refetch, hasNextPage, isFetchingNextPage, fetchNextPage } =
     useCommentReplies(comment.id, expanded && comment.parentId === null);
   return (
@@ -148,19 +157,7 @@ export function FeedCommentItem({
             <UIButton bg="secondary" disabled={isDeleting} onClick={() => setConfirmDelete(false)}>
               {t('postComposer.cancel')}
             </UIButton>
-            <UIButton
-              bg="danger"
-              disabled={isDeleting}
-              onClick={async () => {
-                try {
-                  await deleteComment(comment.id);
-                  setConfirmDelete(false);
-                  toast.success(t('apiState.commentDeleted'));
-                } catch {
-                  toast.error(t('apiState.error'));
-                }
-              }}
-            >
+            <UIButton bg="danger" disabled={isDeleting} onClick={removeComment}>
               {t('app.remove')}
             </UIButton>
           </div>

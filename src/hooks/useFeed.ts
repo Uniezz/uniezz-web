@@ -16,7 +16,10 @@ import {
   getFeedPosts,
   getFeaturedFeedPosts,
   getFeedPostNavigation,
+  getLikedFeedPosts,
+  getSavedFeedPosts,
   setFeedLike,
+  setFeedSave,
   updateFeedComment,
   updateFeedPost,
 } from '@/api';
@@ -99,15 +102,50 @@ export function useFeedLike() {
       patchFeedItem(queryClient, id, { likedByMe: liked, likesCount });
       if (kind === 'post') {
         void queryClient.invalidateQueries({ queryKey: ['feed', 'featured'] });
+        // Liking changes membership in the caller's liked list, so drop the cached pages.
+        void queryClient.invalidateQueries({ queryKey: ['feed', 'liked'] });
       }
     },
   });
 }
 
-export function useFeedPosts(filters: FeedFilters = {}) {
+export function useFeedSave() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    meta: { analyticsAction: 'post_save_set' },
+    mutationFn: setFeedSave,
+    // Saved flips instantly; onError rolls back to the snapshot taken here.
+    onMutate: async ({ id, saved }) => {
+      await queryClient.cancelQueries({ queryKey: ['feed'] });
+      const previous = queryClient.getQueriesData({ queryKey: ['feed'] });
+      patchFeedItem(queryClient, id, { savedByMe: saved });
+      return { previous };
+    },
+    onError: (_, __, context) => {
+      for (const [key, value] of context?.previous ?? []) {
+        queryClient.setQueryData(key, value);
+      }
+    },
+    onSuccess: ({ saved }, { id }) => {
+      patchFeedItem(queryClient, id, { savedByMe: saved });
+      // Saving changes membership in the caller's saved list, so drop the cached pages.
+      void queryClient.invalidateQueries({ queryKey: ['feed', 'saved'] });
+    },
+  });
+}
+
+/** Which list of posts to show: the feed query, or the caller's liked or saved posts. */
+export type FeedPostSource = 'posts' | 'liked' | 'saved';
+
+export function useFeedPosts(filters: FeedFilters = {}, source: FeedPostSource = 'posts') {
   return useInfiniteQuery({
-    queryKey: ['feed', 'posts', filters],
-    queryFn: ({ pageParam }) => getFeedPosts(filters, pageParam),
+    queryKey: ['feed', source, filters],
+    queryFn: ({ pageParam }) =>
+      source === 'liked'
+        ? getLikedFeedPosts(pageParam)
+        : source === 'saved'
+          ? getSavedFeedPosts(pageParam)
+          : getFeedPosts(filters, pageParam),
     // Keeps the current posts on screen while a filter change loads, instead of a skeleton flash.
     placeholderData: keepPreviousData,
     initialPageParam: undefined as string | undefined,

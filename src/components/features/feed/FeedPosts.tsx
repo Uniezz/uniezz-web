@@ -5,7 +5,7 @@ import type { FeedPost } from '@/@types';
 import { Skeleton } from 'skullet/react';
 import { useTranslation } from 'react-i18next';
 import { UIButton, UIEmpty, UIQueryError } from '@/ui/components';
-import { useFeedPosts } from '@/hooks';
+import { useFeedPosts, type FeedPostSource } from '@/hooks';
 import { samplePost } from '@/utils/feedSkeletonData';
 import { FeedPostCard } from './FeedPostCard';
 
@@ -23,7 +23,16 @@ function FeedPostsSkeleton() {
   );
 }
 
-export function FeedPosts({ search, filters }: { search: string; filters?: FeedFilters }) {
+export function FeedPosts({
+  search,
+  filters,
+  source = 'posts',
+}: {
+  search: string;
+  filters?: FeedFilters;
+  /** Search and filters only apply to the feed; liked and saved ignore them. */
+  source?: FeedPostSource;
+}) {
   const { t } = useTranslation();
   const {
     data,
@@ -35,7 +44,7 @@ export function FeedPosts({ search, filters }: { search: string; filters?: FeedF
     isFetching,
     isFetchingNextPage,
     fetchNextPage,
-  } = useFeedPosts({ ...filters, q: search.trim() || undefined });
+  } = useFeedPosts({ ...filters, q: search.trim() || undefined }, source);
 
   const items = data?.pages.flatMap((page) => page.items ?? []) ?? [];
   const maybeLoadMore = useInfiniteLoader(

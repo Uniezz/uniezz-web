@@ -21,6 +21,7 @@ export const samplePost: FeedPost = {
   commentsCount: 0,
   likesCount: 0,
   likedByMe: false,
+  savedByMe: false,
 };
 
 export const sampleComment: FeedComment = {

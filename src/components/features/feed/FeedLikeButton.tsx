@@ -20,6 +20,15 @@ export function FeedLikeButton({
   const { t } = useTranslation();
   const { mutateAsync, isPending } = useFeedLike();
   const [popping, setPopping] = useState(false);
+  async function toggleLike(): Promise<void> {
+    // Without motion there's no animationend to clear the pop, so skip it.
+    if (!liked && !matchMedia('(prefers-reduced-motion: reduce)').matches) setPopping(true);
+    try {
+      await mutateAsync({ id, kind, liked: !liked });
+    } catch {
+      toast.error(t('apiState.error'));
+    }
+  }
   return (
     <UIButton
       bg="transparent"
@@ -31,15 +40,7 @@ export function FeedLikeButton({
       disabled={isPending}
       aria-label={t(liked ? 'apiState.unlike' : 'apiState.like')}
       aria-pressed={liked}
-      onClick={async () => {
-        // Without motion there's no animationend to clear the pop, so skip it.
-        if (!liked && !matchMedia('(prefers-reduced-motion: reduce)').matches) setPopping(true);
-        try {
-          await mutateAsync({ id, kind, liked: !liked });
-        } catch {
-          toast.error(t('apiState.error'));
-        }
-      }}
+      onClick={toggleLike}
     >
       <Heart
         size={16}

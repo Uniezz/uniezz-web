@@ -15,6 +15,16 @@ export function FeedPostActions({ post }: { post: FeedPost }) {
   const { data: profile } = useMyProfile();
   const { mutateAsync: deletePost, isPending: isDeleting } = useDeleteFeedPost();
   const [confirmDelete, setConfirmDelete] = useState(false);
+  async function removePost(): Promise<void> {
+    try {
+      await deletePost(post.id);
+      toast.success(t('apiState.postDeleted'));
+      // Replace the deleted post's entry, so Back can't reopen it.
+      router.history.replace(postFrom ?? '/feed');
+    } catch {
+      toast.error(t('apiState.error'));
+    }
+  }
 
   if (!profile) return null;
   if (profile.id !== post.author.id) {
@@ -56,20 +66,7 @@ export function FeedPostActions({ post }: { post: FeedPost }) {
           <UIButton bg="secondary" disabled={isDeleting} onClick={() => setConfirmDelete(false)}>
             {t('postComposer.cancel')}
           </UIButton>
-          <UIButton
-            bg="danger"
-            disabled={isDeleting}
-            onClick={async () => {
-              try {
-                await deletePost(post.id);
-                toast.success(t('apiState.postDeleted'));
-                // Replace the deleted post's entry, so Back can't reopen it.
-                router.history.replace(postFrom ?? '/feed');
-              } catch {
-                toast.error(t('apiState.error'));
-              }
-            }}
-          >
+          <UIButton bg="danger" disabled={isDeleting} onClick={removePost}>
             {t('app.remove')}
           </UIButton>
         </div>

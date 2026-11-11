@@ -216,9 +216,49 @@ export interface paths {
         };
         /**
          * Get featured feed posts
-         * @description Up to five posts visible in the regular feed, ranked by likes received during the current calendar week (Monday 00:00 to next Monday 00:00, Europe/Warsaw). Posts of any age and type qualify with at least one remaining like from that week. Ties use createdAt and ID descending. Rankings update when likes are added or removed; posts leave on deletion, when outranked, or when the week changes. An empty section returns items: [].
+         * @description Up to five posts visible in the regular feed, ranked by likes received during the current calendar week (Monday 00:00 to next Monday 00:00, Europe/Warsaw). Posts of any age and type qualify with at least one remaining like from that week and at least one ready image. Ties use createdAt and ID descending. Rankings update when likes are added or removed; posts leave on deletion, when outranked, when the last image is gone, or when the week changes. Every item has an image. An empty section returns items: [].
          */
         get: operations["listFeaturedFeedPosts"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/feed/posts/liked": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List posts liked by the signed-in student
+         * @description The caller's likes only, newest like first, then post ID descending. Each item is the same post as in the feed, including likedByMe and savedByMe. A deleted post, or a like that was removed, is absent. Keep the same limit when following a cursor.
+         */
+        get: operations["listLikedFeedPosts"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/feed/posts/saved": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List posts saved by the signed-in student
+         * @description The caller's saves only, newest save first, then post ID descending. Each item is the same post as in the feed, including likedByMe and savedByMe. A deleted post is absent. Keep the same limit when following a cursor.
+         */
+        get: operations["listSavedFeedPosts"];
         put?: never;
         post?: never;
         delete?: never;
@@ -317,6 +357,30 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/feed/posts/{id}/save": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Save a post
+         * @description Idempotent: saving a post again changes nothing. A missing post returns 404.
+         */
+        put: operations["saveFeedPost"];
+        post?: never;
+        /**
+         * Remove a saved post
+         * @description Idempotent: removing a save that is not there changes nothing. A missing post returns 404.
+         */
+        delete: operations["unsaveFeedPost"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/media/uploads": {
         parameters: {
             query?: never;
@@ -352,6 +416,26 @@ export interface paths {
          * @description Clears the avatar and deletes its file. Succeeds when there is no avatar.
          */
         delete: operations["deleteMyAvatar"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/profile/banner": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Remove the logged-in student's banner
+         * @description Clears the banner and deletes its file. Succeeds when there is no banner.
+         */
+        delete: operations["deleteMyBanner"];
         options?: never;
         head?: never;
         patch?: never;
@@ -568,10 +652,10 @@ export interface components {
              * @description What the file will be used for
              * @enum {string}
              */
-            kind: "avatar" | "feed" | "chat";
+            kind: "avatar" | "banner" | "feed" | "chat";
             /**
              * Format: int64
-             * @description Exact file size in bytes; 5 MiB max for avatars, 10 MiB for feed and chat
+             * @description Exact file size in bytes; 5 MiB max for avatars, 10 MiB for banners, feed and chat
              */
             size: number;
         };
@@ -605,8 +689,8 @@ export interface components {
             eventDate: string | null;
             /** Format: uuid */
             id: string;
-            /** @description First available post image, or null */
-            imageUrl: string | null;
+            /** @description First available post image */
+            imageUrl: string;
             title: string;
             university: string;
         };
@@ -705,6 +789,7 @@ export interface components {
             /** Format: int64 */
             likesCount: number;
             mediaUrls: string[] | null;
+            savedByMe: boolean;
             tags: string[] | null;
             title: string;
             /** @enum {string} */
@@ -730,6 +815,8 @@ export interface components {
         Profile: {
             /** @description URL of the avatar image, null when the student has none */
             avatarUrl: string | null;
+            /** @description URL of the banner image, null when the student has none */
+            bannerUrl: string | null;
             /**
              * @description Plain text, up to 500 characters
              * @example Second-year CS student, into climbing.
@@ -789,6 +876,11 @@ export interface components {
             };
             /** @description Study programmes, primary first; empty when the student has none */
             programmes: components["schemas"]["Programme"][] | null;
+            /**
+             * @description Link to the song the student associates with themselves. Null when unset.
+             * @example https://open.spotify.com/track/4cOdK2wGLETKBW3PvgPWqT
+             */
+            songUrl: string | null;
             /** @example umcs */
             universityId: string;
         };
@@ -864,6 +956,8 @@ export interface components {
             lastName: string | null;
             /** @description Primary first */
             programmes: components["schemas"]["PublicProgramme"][] | null;
+            /** @description Link to the song the student associates with themselves. Null when unset. Always visible, with no privacy toggle. */
+            songUrl: string | null;
             /** @example umcs */
             universityId: string;
         };
@@ -900,6 +994,9 @@ export interface components {
             /** @enum {string} */
             targetType: "post" | "comment" | "user";
         };
+        SaveState: {
+            saved: boolean;
+        };
         UniversityDTO: {
             /**
              * @description Authentication method used by the university
@@ -935,6 +1032,11 @@ export interface components {
              * @description mediaId of an avatar uploaded through createMediaUpload; the previous avatar is deleted
              */
             avatarMediaId?: string;
+            /**
+             * Format: uuid
+             * @description mediaId of a banner uploaded through createMediaUpload; the previous banner is deleted
+             */
+            bannerMediaId?: string;
             /** @description Plain text; HTML is stripped and the result may be up to 500 characters. An empty string clears it. */
             bio?: string;
             firstName?: string;
@@ -966,6 +1068,8 @@ export interface components {
                  */
                 showYear: boolean;
             };
+            /** @description http or https URL, up to 500 characters. An empty string clears it. Anything else returns 400 invalid_input and leaves the saved link unchanged. */
+            songUrl?: string;
         };
         UpdatePostInputBody: {
             content?: string;
@@ -989,7 +1093,7 @@ export interface components {
             };
             /**
              * Format: uuid
-             * @description ID to pass to the endpoint that uses the file, e.g. avatarMediaId
+             * @description ID to pass to the endpoint that uses the file, e.g. avatarMediaId or bannerMediaId
              */
             mediaId: string;
             /** @description Presigned URL to PUT the file to, with the headers below */
@@ -1838,6 +1942,128 @@ export interface operations {
             };
         };
     };
+    listLikedFeedPosts: {
+        parameters: {
+            query?: {
+                /** @description nextCursor from the previous page; omit for the first page */
+                cursor?: string;
+                /** @description Maximum number of items in the page */
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ListPostsOutputBody"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    listSavedFeedPosts: {
+        parameters: {
+            query?: {
+                /** @description nextCursor from the previous page; omit for the first page */
+                cursor?: string;
+                /** @description Maximum number of items in the page */
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ListPostsOutputBody"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
     getFeedPost: {
         parameters: {
             query?: never;
@@ -2392,6 +2618,122 @@ export interface operations {
             };
         };
     };
+    saveFeedPost: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SaveState"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    unsaveFeedPost: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SaveState"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
     createMediaUpload: {
         parameters: {
             query?: never;
@@ -2453,6 +2795,42 @@ export interface operations {
         };
     };
     deleteMyAvatar: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    deleteMyBanner: {
         parameters: {
             query?: never;
             header?: never;

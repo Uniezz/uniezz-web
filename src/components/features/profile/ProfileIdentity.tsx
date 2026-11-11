@@ -50,6 +50,15 @@ export function ProfileIdentity({
       setReadingImage(false);
     }
   }
+  async function removePhoto(): Promise<void> {
+    try {
+      await onRemoveAvatar();
+      setPreview('');
+      clearErrors('avatarFile');
+    } catch {
+      toast.error(t('apiState.error'));
+    }
+  }
   return (
     <div className="space-y-4">
       <UIPanel surface="tint" className="rounded-profile text-center">
@@ -85,15 +94,7 @@ export function ProfileIdentity({
             size="pill"
             className="mt-2 text-danger"
             disabled={readingImage}
-            onClick={async () => {
-              try {
-                await onRemoveAvatar();
-                setPreview('');
-                clearErrors('avatarFile');
-              } catch {
-                toast.error(t('apiState.error'));
-              }
-            }}
+            onClick={removePhoto}
           >
             {t('students.removePhoto')}
           </UIButton>
