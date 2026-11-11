@@ -1,6 +1,6 @@
 import posthog from 'posthog-js';
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { deleteMyAvatar, getProfiles, getPublicProfile, signOut } from '@/api';
+import { deleteMyAvatar, deleteMyBanner, getProfiles, getPublicProfile, signOut } from '@/api';
 import type { components } from '@/@types/schema';
 
 export function useProfileSearch(q: string) {
@@ -27,6 +27,20 @@ export function useDeleteAvatar() {
       );
       void queryClient.invalidateQueries({ queryKey: ['profiles'] });
       void queryClient.invalidateQueries({ queryKey: ['feed'] });
+    },
+  });
+}
+
+export function useDeleteBanner() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    meta: { analyticsAction: 'banner_delete' },
+    mutationFn: deleteMyBanner,
+    onSuccess: () => {
+      queryClient.setQueryData<components['schemas']['Profile']>(['profile', 'me'], (profile) =>
+        profile ? { ...profile, bannerUrl: null } : profile,
+      );
+      void queryClient.invalidateQueries({ queryKey: ['profiles'] });
     },
   });
 }

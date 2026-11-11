@@ -3,7 +3,7 @@ import { Check } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { FormProvider } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { useDeleteAvatar } from '@/hooks/useProfiles';
+import { useDeleteAvatar, useDeleteBanner } from '@/hooks/useProfiles';
 import { useProfileForm } from '@/hooks/useProfileForm';
 import type { components } from '@/@types/schema';
 import { UIButton, UITopbar, UIUnsavedChanges } from '@/ui/components';
@@ -15,7 +15,8 @@ export function ProfileEditor({ profile }: { profile: components['schemas']['Pro
   const { t } = useTranslation();
   const { form, saveProfile, isPending: isSaving } = useProfileForm(profile);
   const { mutateAsync: deleteAvatar, isPending: isDeleting } = useDeleteAvatar();
-  const isPending = isSaving || isDeleting;
+  const { mutateAsync: deleteBanner, isPending: isDeletingBanner } = useDeleteBanner();
+  const isPending = isSaving || isDeleting || isDeletingBanner;
   const {
     handleSubmit,
     formState: { isDirty },
@@ -40,6 +41,15 @@ export function ProfileEditor({ profile }: { profile: components['schemas']['Pro
           <fieldset disabled={isPending}>
             <ProfileIdentity
               universityId={profile.universityId}
+              onRemoveBanner={async () => {
+                if (form.getValues('bannerFile')) {
+                  form.resetField('bannerFile');
+                  return;
+                }
+                if (form.getValues('banner')) await deleteBanner();
+                form.resetField('banner', { defaultValue: '' });
+                form.resetField('bannerFile');
+              }}
               onRemoveAvatar={async () => {
                 if (form.getValues('avatarFile')) {
                   form.resetField('avatarFile');

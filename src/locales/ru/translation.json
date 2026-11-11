@@ -40,6 +40,8 @@
     "allUniversities": "Все университеты",
     "allUniversitiesHint": "Видят студенты всех университетов",
     "back": "Назад",
+    "bannerError": "Выберите корректное изображение JPG, PNG или WebP до 10 МБ.",
+    "changeBanner": "Изменить баннер",
     "changePhoto": "Изменить фото",
     "clearSearch": "Очистить поиск",
     "close": "Закрыть",
@@ -376,9 +378,14 @@
     "interestsError": "Добавь до 10 интересов, каждый — до 30 символов.",
     "interestsHint": "Разделяй интересы запятыми",
     "noResults": "Студенты не найдены",
+    "removeBanner": "Удалить баннер",
     "removePhoto": "Удалить фото",
     "results": "Результаты поиска",
     "search": "Поиск студентов по имени или фамилии",
+    "song": "Песня",
+    "songError": "Используйте ссылку http или https, до 500 символов.",
+    "songHint": "Ссылка на песню, которая вас описывает — Spotify, YouTube, где угодно",
+    "songPlaceholder": "https://open.spotify.com/track/…",
     "tryAnotherName": "Попробуй ввести другое имя или фамилию."
   },
   "topbar": {

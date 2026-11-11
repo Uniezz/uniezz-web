@@ -25,6 +25,12 @@ export const avatarImageSchema = z
   .max(5 * 1024 * 1024)
   .mime(['image/jpeg', 'image/png', 'image/webp']);
 
+export const bannerImageSchema = z
+  .file()
+  .min(1)
+  .max(10 * 1024 * 1024)
+  .mime(['image/jpeg', 'image/png', 'image/webp']);
+
 export const profileFormSchema = profileSchema.extend({
   privacy: z.object({ showEmail: z.boolean(), showFaculty: z.boolean(), showYear: z.boolean() }),
   photo: z.string(),
@@ -42,6 +48,14 @@ export const profileFormSchema = profileSchema.extend({
     )
     .pipe(z.array(z.string().max(30)).max(10)),
   avatarFile: avatarImageSchema.optional(),
+  banner: z.string(),
+  bannerFile: bannerImageSchema.optional(),
+  /** An empty string clears the song; otherwise http or https only, like the API. */
+  song: z
+    .string()
+    .trim()
+    .max(500)
+    .pipe(z.union([z.literal(''), z.url({ protocol: /^https?$/ })])),
 });
 export type ProfileFormSchema = z.input<typeof profileFormSchema>;
 export type ProfileSubmission = z.output<typeof profileFormSchema>;

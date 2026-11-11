@@ -1,4 +1,4 @@
-import { Heart, UserRound } from 'lucide-react';
+import { Heart, Music2, UserRound } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { components } from '@/@types/schema';
 import { useMyProfile, useUniversities } from '@/hooks';
@@ -14,7 +14,7 @@ export function PublicProfile({ profile }: { profile: components['schemas']['Pub
   const university =
     universities?.find((item) => item.id === profile.universityId)?.name ??
     profile.universityId.toUpperCase();
-  const hasPersonalDetails = Boolean(profile.bio || profile.interests?.length);
+  const hasPersonalDetails = Boolean(profile.bio || profile.interests?.length || profile.songUrl);
   const hasStudyDetails = Boolean(profile.programmes?.length);
 
   return (
@@ -97,6 +97,23 @@ export function PublicProfile({ profile }: { profile: components['schemas']['Pub
                         </span>
                       ))}
                     </div>
+                  </section>
+                )}
+                {profile.songUrl && (
+                  <section className="space-y-4">
+                    <h2 className="flex items-center gap-3 text-label font-semibold">
+                      <Music2 className="size-4.5 text-sky" aria-hidden="true" />
+                      {t('students.song')}
+                    </h2>
+                    <a
+                      href={profile.songUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      data-ph-capture-attribute-label="Open song"
+                      className="inline-block max-w-full truncate rounded-sm text-detail text-secondary hover:text-white hover:underline focus-visible:outline-2 focus-visible:outline-blue"
+                    >
+                      {profile.songUrl}
+                    </a>
                   </section>
                 )}
               </div>

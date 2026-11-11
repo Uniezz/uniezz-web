@@ -40,6 +40,8 @@
     "allUniversities": "Wszystkie uczelnie",
     "allUniversitiesHint": "Widoczne dla studentów wszystkich uczelni",
     "back": "Wstecz",
+    "bannerError": "Wybierz prawidłowy obraz JPG, PNG lub WebP do 10 MB.",
+    "changeBanner": "Zmień baner",
     "changePhoto": "Zmień zdjęcie",
     "clearSearch": "Wyczyść wyszukiwanie",
     "close": "Zamknij",
@@ -376,9 +378,14 @@
     "interestsError": "Dodaj do 10 zainteresowań, każde do 30 znaków.",
     "interestsHint": "Oddziel zainteresowania przecinkami",
     "noResults": "Nie znaleziono studentów",
+    "removeBanner": "Usuń baner",
     "removePhoto": "Usuń zdjęcie",
     "results": "Wyniki wyszukiwania",
     "search": "Szukaj studentów po imieniu i nazwisku",
+    "song": "Piosenka",
+    "songError": "Podaj link http lub https, do 500 znaków.",
+    "songHint": "Link do piosenki, która Cię opisuje — Spotify, YouTube, gdziekolwiek",
+    "songPlaceholder": "https://open.spotify.com/track/…",
     "tryAnotherName": "Spróbuj wpisać inne imię lub nazwisko."
   },
   "topbar": {

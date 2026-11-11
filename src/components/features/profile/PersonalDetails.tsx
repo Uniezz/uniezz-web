@@ -10,7 +10,10 @@ export function PersonalDetails() {
     control,
     formState: { errors },
   } = useFormContext<ProfileFormSchema>();
-  const [first = '', last = '', bio = ''] = useWatch({ control, name: ['first', 'last', 'bio'] });
+  const [first = '', last = '', bio = '', song = ''] = useWatch({
+    control,
+    name: ['first', 'last', 'bio', 'song'],
+  });
   return (
     <UIPanel surface="tint" className="rounded-profile">
       <h2 className="mb-4 text-md font-bold">{t('app.personalDetails')}</h2>
@@ -71,6 +74,21 @@ export function PersonalDetails() {
             placeholder={t('students.interestsHint')}
             autoComplete="off"
             aria-invalid={Boolean(errors.interests)}
+          />
+        </UIField>
+        <UIField
+          label={t('students.song')}
+          hint={t('students.songHint')}
+          error={errors.song && t('students.songError')}
+          maxLength={500}
+          count={song.length}
+        >
+          <input
+            className="app-control"
+            {...register('song')}
+            placeholder={t('students.songPlaceholder')}
+            autoComplete="off"
+            aria-invalid={Boolean(errors.song)}
           />
         </UIField>
       </div>

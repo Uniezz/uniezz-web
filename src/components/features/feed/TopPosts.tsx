@@ -23,9 +23,7 @@ export function TopPosts() {
           data-ph-capture-attribute-label="Open featured post"
           className="group relative h-47 min-w-36 flex-1 overflow-hidden rounded-story bg-surface text-left focus-visible:outline-2 focus-visible:outline-blue"
         >
-          {post.imageUrl && (
-            <img src={post.imageUrl} alt="" className="absolute inset-0 size-full object-cover" />
-          )}
+          <img src={post.imageUrl} alt="" className="absolute inset-0 size-full object-cover" />
           <span className="absolute inset-0 bg-linear-to-t from-ink-90 via-ink-0 to-ink-0" />
           {post.eventDate && (
             <span className="absolute top-2.5 left-2.5 rounded-full border border-white-20 bg-ink-40 px-2.25 py-1 text-micro font-bold backdrop-blur-[12px]">

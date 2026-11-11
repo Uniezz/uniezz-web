@@ -42,6 +42,8 @@ export default interface Resources {
       "allUniversities": "All universities",
       "allUniversitiesHint": "Visible to students of every university",
       "back": "Back",
+      "bannerError": "Choose a valid JPG, PNG or WebP image under 10 MB.",
+      "changeBanner": "Change banner",
       "changePhoto": "Change photo",
       "clearSearch": "Clear search",
       "close": "Close",
@@ -378,9 +380,14 @@ export default interface Resources {
       "interestsError": "Use up to 10 interests, each up to 30 characters.",
       "interestsHint": "Separate interests with commas",
       "noResults": "No students found",
+      "removeBanner": "Remove banner",
       "removePhoto": "Remove photo",
       "results": "Search results",
       "search": "Search students by name",
+      "song": "Song",
+      "songError": "Use an http or https link, up to 500 characters.",
+      "songHint": "Link to the song that represents you — Spotify, YouTube, anywhere",
+      "songPlaceholder": "https://open.spotify.com/track/…",
       "tryAnotherName": "Try a different name."
     },
     "topbar": {

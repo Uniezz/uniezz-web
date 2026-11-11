@@ -15,6 +15,9 @@ function defaults(profile: components['schemas']['Profile']): ProfileFormSchema 
     privacy: profile.privacy,
     photo: profile.avatarUrl ?? '/app/avatar.png',
     avatarFile: undefined,
+    banner: profile.bannerUrl ?? '',
+    bannerFile: undefined,
+    song: profile.songUrl ?? '',
   };
 }
 
@@ -26,19 +29,30 @@ export function useProfileForm(profile: components['schemas']['Profile']) {
   });
   const { reset } = form;
   const {
-    data: uploadedImage,
+    data: uploadedAvatar,
     mutateAsync: uploadAvatar,
-    reset: resetUpload,
-    isPending: isUploading,
+    reset: resetAvatarUpload,
+    isPending: isUploadingAvatar,
   } = useUploadImage('avatar');
+  const {
+    data: uploadedBanner,
+    mutateAsync: uploadBanner,
+    reset: resetBannerUpload,
+    isPending: isUploadingBanner,
+  } = useUploadImage('banner');
   const { mutateAsync: saveProfile, isPending: isSaving } = useMutation({
     meta: { analyticsAction: 'profile_update' },
     mutationKey: ['profile', 'update'],
     mutationFn: async (values: ProfileSubmission) => {
-      const uploaded = values.avatarFile
-        ? uploadedImage?.file === values.avatarFile
-          ? uploadedImage
+      const avatar = values.avatarFile
+        ? uploadedAvatar?.file === values.avatarFile
+          ? uploadedAvatar
           : await uploadAvatar(values.avatarFile)
+        : undefined;
+      const banner = values.bannerFile
+        ? uploadedBanner?.file === values.bannerFile
+          ? uploadedBanner
+          : await uploadBanner(values.bannerFile)
         : undefined;
       return updateMyProfile({
         firstName: values.first,
@@ -46,15 +60,18 @@ export function useProfileForm(profile: components['schemas']['Profile']) {
         bio: values.bio,
         interests: values.interests,
         privacy: values.privacy,
-        avatarMediaId: uploaded?.mediaId,
+        avatarMediaId: avatar?.mediaId,
+        bannerMediaId: banner?.mediaId,
+        songUrl: values.song,
       });
     },
     onSuccess: (saved) => {
       queryClient.setQueryData(['profile', 'me'], saved);
       reset(defaults(saved));
-      resetUpload();
+      resetAvatarUpload();
+      resetBannerUpload();
       void queryClient.invalidateQueries({ queryKey: ['profiles'] });
     },
   });
-  return { form, saveProfile, isPending: isSaving || isUploading };
+  return { form, saveProfile, isPending: isSaving || isUploadingAvatar || isUploadingBanner };
 }

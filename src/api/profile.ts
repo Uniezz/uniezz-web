@@ -28,6 +28,10 @@ export async function deleteMyAvatar() {
   await api.DELETE('/profile/avatar');
 }
 
+export async function deleteMyBanner() {
+  await api.DELETE('/profile/banner');
+}
+
 export async function getProfiles(q: string, cursor?: string) {
   const { data } = await api.GET('/profiles', {
     params: { query: { q: q || undefined, cursor } },
