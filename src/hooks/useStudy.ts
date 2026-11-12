@@ -21,6 +21,7 @@ import {
   rateProfessor,
   searchStudyFiles,
   updateCourse,
+  uploadStudyMaterial,
 } from '@/api';
 import type {
   AddCourseCommentInput,
@@ -181,5 +182,12 @@ export function useDeleteCourseComment() {
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['study', 'courses'] });
     },
+  });
+}
+
+export function useUploadStudyMaterial() {
+  return useMutation({
+    meta: { analyticsAction: 'study_material_upload' },
+    mutationFn: async (file: File) => ({ file, mediaId: await uploadStudyMaterial(file) }),
   });
 }

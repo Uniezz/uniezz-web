@@ -1,10 +1,11 @@
+import type { ConnectionFilterPanelProps } from '@/@types';
 import { useId, type ReactNode } from 'react';
 import { useIsMutating } from '@tanstack/react-query';
 import { ChevronDown, Mars, Minus, SlidersHorizontal, Venus } from 'lucide-react';
-import { useWatch, type UseFormReturn } from 'react-hook-form';
+import { useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import type { ConnectionFilters, Gender, StudyLevel } from '@/@types';
+import type { Gender, StudyLevel } from '@/@types';
 import { useMyConnectionPreferences, useUniversities } from '@/hooks';
 import { useDropdown } from '@/hooks/useDropdown';
 import { cn } from '@/ui/cn';
@@ -34,13 +35,7 @@ function FilterSection({ label, children }: { label: string; children: ReactNode
   );
 }
 
-export function ConnectionFilterPanel({
-  form,
-  onApply,
-}: {
-  form: UseFormReturn<ConnectionFilters>;
-  onApply: (filters: ConnectionFilters) => void;
-}) {
+export function ConnectionFilterPanel({ form, onApply }: ConnectionFilterPanelProps) {
   const { t } = useTranslation();
   const preferencesFormId = useId();
   const { data: preferences } = useMyConnectionPreferences();

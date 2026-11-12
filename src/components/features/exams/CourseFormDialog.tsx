@@ -1,38 +1,42 @@
+import type { CreateCourseForm, CourseFormDialogProps } from '@/@types';
 // ai-design-check-ignore-file use-shared-components -- UIField and app-control are the established shared form pattern for react-hook-form in this project.
 import { useTranslation } from 'react-i18next';
-import { useController, useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import toast from 'react-hot-toast';
-import type { Course } from '@/@types';
-import { useCreateCourse, useUpdateCourse, useUniversities, useMyProfile } from '@/hooks';
-import { createCourseSchema, type CreateCourseForm } from '@/schemas';
+import {
+  useAddCourseFile,
+  useCreateCourse,
+  useUpdateCourse,
+  useUniversities,
+  useMyProfile,
+  useUploadStudyMaterial,
+} from '@/hooks';
+import { createCourseFormSchema } from '@/schemas';
 import { captureAnalytics } from '@/utils/analytics';
-import { courseFormDefaults } from '@/utils/exams';
+import { canUploadCourseMaterial, courseFormDefaults, studyFileTypeLabels } from '@/utils/exams';
 import { UIButton, UIDialog, UIField, UIUnsavedChanges } from '@/ui/components';
 
-export function CourseFormDialog({
-  course,
-  onClose,
-}: {
-  course?: Course;
-  onClose: (ignoreBlocker?: boolean) => void;
-}) {
+export function CourseFormDialog({ course, onClose }: CourseFormDialogProps) {
   const { t } = useTranslation();
   const { data: universities = [] } = useUniversities();
   const { data: me } = useMyProfile();
   const { mutateAsync: create, isPending: isCreating } = useCreateCourse();
   const { mutateAsync: update, isPending: isUpdating } = useUpdateCourse();
-  const isPending = isCreating || isUpdating;
+  const { mutateAsync: upload, isPending: isUploading } = useUploadStudyMaterial();
+  const { mutateAsync: attach, isPending: isAttaching } = useAddCourseFile();
+  const isPending = isCreating || isUpdating || isUploading || isAttaching;
   const {
     register,
     control,
     handleSubmit,
     formState: { errors, isDirty },
   } = useForm<CreateCourseForm>({
-    resolver: zodResolver(createCourseSchema),
-    defaultValues: course ?? courseFormDefaults(me),
+    resolver: zodResolver(createCourseFormSchema),
+    defaultValues: course
+      ? { ...course, materials: [], materialType: 'exam' }
+      : courseFormDefaults(me),
   });
-  const { field: universityField } = useController({ control, name: 'universityId' });
   async function submit(values: CreateCourseForm) {
     try {
       if (course) {
@@ -45,7 +49,45 @@ export function CourseFormDialog({
           },
         });
       } else {
-        await create(values);
+        if (
+          values.materials.length > 0 &&
+          !canUploadCourseMaterial(me, {
+            universityId: values.universityId,
+            subject: values.subject,
+            faculty: values.faculty,
+          })
+        ) {
+          toast.error(t('courses.uploadEligibility'));
+          return;
+        }
+        const uploaded = await Promise.all(values.materials.map((file) => upload(file)));
+        const created = await create({
+          name: values.name,
+          description: values.description,
+          difficulty: values.difficulty,
+          universityId: values.universityId,
+          faculty: values.faculty,
+          subject: values.subject,
+          semester: values.semester,
+        });
+        try {
+          await Promise.all(
+            uploaded.map(({ file, mediaId }) =>
+              attach({
+                courseId: created.id,
+                body: {
+                  mediaId,
+                  title: file.name.length < 3 ? `${file.name} file` : file.name.slice(0, 150),
+                  type: values.materialType,
+                },
+              }),
+            ),
+          );
+        } catch {
+          toast.error(t('courses.materialAttachFailed'));
+          onClose(true);
+          return;
+        }
       }
       toast.success(t('courses.saved'));
       onClose(true);
@@ -70,6 +112,48 @@ export function CourseFormDialog({
         onSubmit={handleSubmit(submit, () => captureAnalytics('course_form_validation_failed'))}
       >
         <fieldset disabled={isPending} className="space-y-4">
+          {!course && (
+            <UIField
+              label={t('courses.materials')}
+              hint={t('courses.materialsHint')}
+              error={errors.materials ? t('courses.materialsHint') : undefined}
+            >
+              <Controller
+                name="materials"
+                control={control}
+                render={({ field: { value, onChange, ...field } }) => (
+                  <>
+                    <input
+                      {...field}
+                      type="file"
+                      multiple
+                      accept="application/pdf,image/jpeg,image/png,image/webp"
+                      className="app-control"
+                      data-ph-capture-attribute-label="Choose course materials"
+                      onChange={(event) => onChange(Array.from(event.target.files ?? []))}
+                    />
+                    {value.length > 0 && (
+                      <p className="mt-2 text-detail text-secondary">
+                        {value.map((file) => file.name).join(', ')}
+                      </p>
+                    )}
+                  </>
+                )}
+              />
+              <select
+                className="app-control mt-3"
+                aria-label={t('courses.materialType')}
+                data-ph-capture-attribute-label="Course material type"
+                {...register('materialType')}
+              >
+                {(['exam', 'colloquium', 'lab', 'notes'] as const).map((type) => (
+                  <option key={type} value={type}>
+                    {t(studyFileTypeLabels[type])}
+                  </option>
+                ))}
+              </select>
+            </UIField>
+          )}
           <UIField
             label={t('courses.name')}
             error={errors.name ? t('courses.nameHint') : undefined}
@@ -112,7 +196,7 @@ export function CourseFormDialog({
                 label={t('app.university')}
                 error={errors.universityId ? t('app.required') : undefined}
               >
-                <select className="app-control" {...universityField}>
+                <select className="app-control" {...register('universityId')}>
                   <option value="">{t('courses.chooseUniversity')}</option>
                   {universities.map(({ id, name }) => (
                     <option key={id} value={id}>

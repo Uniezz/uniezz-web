@@ -1,3 +1,4 @@
+import type { UseFormReturn } from 'react-hook-form';
 import type { components } from './schema';
 
 export type StudyLevel = NonNullable<components['schemas']['Programme']['level']>;
@@ -22,3 +23,9 @@ export type Discovery = components['schemas']['DiscoverOutputBody'];
 export type ConnectionPreferences = components['schemas']['Preferences'];
 export type UpdateConnectionPreferencesInput = components['schemas']['SavePreferencesInputBody'];
 export type ActOnCandidateInput = components['schemas']['ActOnCandidateInputBody'];
+
+export type BlockStudentButtonProps = { studentId: string; onBlocked?: () => void };
+export type MatchActionsProps = { connectionId: string; studentId: string };
+export type ConnectionPreferencesProps = { mode: ConnectionFilters['mode']; formId: string; onSaved: () => void };
+export type ConnectionPreferencesFormProps = { preferences: ConnectionPreferences; mode: ConnectionFilters['mode']; formId: string; onSaved: () => void };
+export type ConnectionFilterPanelProps = { form: UseFormReturn<ConnectionFilters>; onApply: (filters: ConnectionFilters) => void };

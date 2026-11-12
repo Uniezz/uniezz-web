@@ -1,3 +1,4 @@
+import type { CourseDetailsDialogProps } from '@/@types';
 import { useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
@@ -8,13 +9,7 @@ import { CourseComments } from './CourseComments';
 import { CourseMaterials } from './CourseMaterials';
 import { RatingInput } from './RatingInput';
 
-export function CourseDetailsDialog({
-  courseId,
-  onClose,
-}: {
-  courseId: string;
-  onClose: () => void;
-}) {
+export function CourseDetailsDialog({ courseId, onClose }: CourseDetailsDialogProps) {
   const { t } = useTranslation();
   const { data: course, isPending, isError, refetch } = useCourse(courseId);
   const { data: universities = [] } = useUniversities();
@@ -23,6 +18,7 @@ export function CourseDetailsDialog({
   return (
     <>
       <UIDialog
+        placement="right"
         open
         onOpenChange={(open) => {
           if (!open) onClose();
@@ -56,7 +52,9 @@ export function CourseDetailsDialog({
               </div>
               <div>
                 <dt className="text-secondary">{t('courses.difficulty')}</dt>
-                <dd>{course.difficulty}/5</dd>
+                <dd className="mt-1">
+                  <RatingInput average={course.difficulty} count={0} readOnly />
+                </dd>
               </div>
             </dl>
             <p className="wrap-anywhere whitespace-pre-wrap">{course.description}</p>

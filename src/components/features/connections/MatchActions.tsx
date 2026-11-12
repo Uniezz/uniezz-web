@@ -1,3 +1,4 @@
+import type { MatchActionsProps } from '@/@types';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
@@ -5,13 +6,7 @@ import { useDeleteConnection } from '@/hooks';
 import { UIButton, UIDialog } from '@/ui/components';
 import { BlockStudentButton } from './BlockStudentButton';
 
-export function MatchActions({
-  connectionId,
-  studentId,
-}: {
-  connectionId: string;
-  studentId: string;
-}) {
+export function MatchActions({ connectionId, studentId }: MatchActionsProps) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const { mutateAsync: unmatch, isPending } = useDeleteConnection();

@@ -2,14 +2,14 @@ import { useNavigate } from '@tanstack/react-router';
 import { BlockStudentButton } from '@/components/features/connections/BlockStudentButton';
 import { Heart, Music2, UserRound } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import type { components } from '@/@types/schema';
+import type { PublicProfileProps } from '@/@types';
 import { useMyProfile, useUniversities } from '@/hooks';
 import { UIPanel, UIUniversityLogo } from '@/ui/components';
 import { ReportButton } from '@/components/features/reports/ReportButton';
 import { authorName } from '@/utils/feed';
 import { cn } from '@/ui/cn';
 
-export function PublicProfile({ profile }: { profile: components['schemas']['PublicProfile'] }) {
+export function PublicProfile({ profile }: PublicProfileProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { data: me } = useMyProfile();
@@ -22,22 +22,34 @@ export function PublicProfile({ profile }: { profile: components['schemas']['Pub
 
   return (
     <UIPanel className="profile-page overflow-hidden p-2">
-      <div
-        className="profile-cover relative h-40 overflow-hidden rounded-2xl sm:h-52"
-        aria-hidden="true"
-      >
+      <div className="profile-cover relative h-40 overflow-hidden rounded-2xl sm:h-52">
         {profile.bannerUrl ? (
           <img src={profile.bannerUrl} alt="" className="absolute inset-0 size-full object-cover" />
         ) : (
           <>
             <div className="profile-cover-orbit" />
             <div className="profile-cover-glass pointer-events-none absolute inset-0 rounded-2xl border border-white-10 bg-white-5 backdrop-blur-sm" />
-            <img
-              src="/favicon.png"
-              alt=""
-              className="absolute right-5 bottom-5 size-12 rounded-xl object-contain sm:right-8"
-            />
           </>
+        )}
+        <img
+          src="/favicon.png"
+          alt=""
+          aria-hidden="true"
+          className="absolute top-3 right-3 size-12 rounded-xl object-contain sm:top-4 sm:right-4"
+        />
+        {me && me.id !== profile.id && (
+          <div className="absolute right-2 bottom-2 z-10 flex flex-col items-end gap-2 rounded-xl border border-white-10 bg-surface/75 px-3 py-2 backdrop-blur-md sm:right-3 sm:bottom-3">
+            <ReportButton targetType="user" targetId={profile.id} />
+            <BlockStudentButton
+              studentId={profile.id}
+              onBlocked={() =>
+                void navigate({
+                  to: '/connections/students',
+                  search: { studentSearch: undefined },
+                })
+              }
+            />
+          </div>
         )}
       </div>
       <div className="px-4 pb-6 sm:px-8 sm:pb-8">
@@ -172,20 +184,6 @@ export function PublicProfile({ profile }: { profile: components['schemas']['Pub
                 )}
               </div>
             )}
-          </div>
-        )}
-        {me && me.id !== profile.id && (
-          <div className="mt-6 flex flex-col items-end gap-3">
-            <ReportButton targetType="user" targetId={profile.id} />
-            <BlockStudentButton
-              studentId={profile.id}
-              onBlocked={() =>
-                void navigate({
-                  to: '/connections/students',
-                  search: { studentSearch: undefined },
-                })
-              }
-            />
           </div>
         )}
       </div>

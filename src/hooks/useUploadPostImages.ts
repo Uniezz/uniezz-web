@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
-import { uploadPostImages, type UploadedPostImage } from '@/utils/feed';
+import { uploadPostImages } from '@/utils/feed';
+import type { UploadPostImagesInput } from '@/@types';
 import { useUploadImage } from './useUploadImage';
 
 export function useUploadPostImages() {
@@ -7,7 +8,7 @@ export function useUploadPostImages() {
   const { data: previous, mutateAsync: upload } = useMutation({
     meta: { analyticsAction: 'images_upload_batch' },
     mutationKey: ['feed', 'upload-images'],
-    mutationFn: ({ files, uploaded }: { files: File[]; uploaded: UploadedPostImage[] }) =>
+    mutationFn: ({ files, uploaded }: UploadPostImagesInput) =>
       uploadPostImages(files, uploaded, uploadImage),
   });
 

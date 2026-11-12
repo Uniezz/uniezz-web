@@ -31,7 +31,9 @@ import { Route as AppConnectionsStudentsProfileIdRouteImport } from './routes/_a
 import { Route as AppExamsCoursesNewRouteImport } from './routes/_app/exams/courses/new'
 import { Route as AppFeedPostPostIdRouteImport } from './routes/_app/feed/post/$postId'
 import { Route as AppFeedPostNewPostRouteImport } from './routes/_app/feed/post/new-post'
+import { Route as AppExamsCoursesCourseIdIndexRouteImport } from './routes/_app/exams/courses/$courseId/index'
 import { Route as AppExamsCoursesCourseIdEditRouteImport } from './routes/_app/exams/courses/$courseId/edit'
+import { Route as AppExamsCoursesCourseIdUploadRouteImport } from './routes/_app/exams/courses/$courseId/upload'
 import { Route as AppFeedPostPostIdEditRouteImport } from './routes/_app/feed/post/$postId/edit'
 
 const IndexRoute = IndexRouteImport.update({
@@ -144,10 +146,22 @@ const AppFeedPostNewPostRoute = AppFeedPostNewPostRouteImport.update({
   path: '/post/new-post',
   getParentRoute: () => AppFeedRouteRoute,
 } as any)
+const AppExamsCoursesCourseIdIndexRoute =
+  AppExamsCoursesCourseIdIndexRouteImport.update({
+    id: '/courses/$courseId/',
+    path: '/courses/$courseId/',
+    getParentRoute: () => AppExamsRoute,
+  } as any)
 const AppExamsCoursesCourseIdEditRoute =
   AppExamsCoursesCourseIdEditRouteImport.update({
     id: '/courses/$courseId/edit',
     path: '/courses/$courseId/edit',
+    getParentRoute: () => AppExamsRoute,
+  } as any)
+const AppExamsCoursesCourseIdUploadRoute =
+  AppExamsCoursesCourseIdUploadRouteImport.update({
+    id: '/courses/$courseId/upload',
+    path: '/courses/$courseId/upload',
     getParentRoute: () => AppExamsRoute,
   } as any)
 const AppFeedPostPostIdEditRoute = AppFeedPostPostIdEditRouteImport.update({
@@ -178,7 +192,9 @@ export interface FileRoutesByFullPath {
   '/feed/post/new-post': typeof AppFeedPostNewPostRoute
   '/connections/students/': typeof AppConnectionsStudentsIndexRoute
   '/exams/courses/$courseId/edit': typeof AppExamsCoursesCourseIdEditRoute
+  '/exams/courses/$courseId/upload': typeof AppExamsCoursesCourseIdUploadRoute
   '/feed/post/$postId/edit': typeof AppFeedPostPostIdEditRoute
+  '/exams/courses/$courseId/': typeof AppExamsCoursesCourseIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -200,7 +216,9 @@ export interface FileRoutesByTo {
   '/feed/post/new-post': typeof AppFeedPostNewPostRoute
   '/connections/students': typeof AppConnectionsStudentsIndexRoute
   '/exams/courses/$courseId/edit': typeof AppExamsCoursesCourseIdEditRoute
+  '/exams/courses/$courseId/upload': typeof AppExamsCoursesCourseIdUploadRoute
   '/feed/post/$postId/edit': typeof AppFeedPostPostIdEditRoute
+  '/exams/courses/$courseId': typeof AppExamsCoursesCourseIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -227,7 +245,9 @@ export interface FileRoutesById {
   '/_app/feed/post/new-post': typeof AppFeedPostNewPostRoute
   '/_app/connections/students/': typeof AppConnectionsStudentsIndexRoute
   '/_app/exams/courses/$courseId/edit': typeof AppExamsCoursesCourseIdEditRoute
+  '/_app/exams/courses/$courseId/upload': typeof AppExamsCoursesCourseIdUploadRoute
   '/_app/feed/post/$postId/edit': typeof AppFeedPostPostIdEditRoute
+  '/_app/exams/courses/$courseId/': typeof AppExamsCoursesCourseIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -253,7 +273,9 @@ export interface FileRouteTypes {
     | '/feed/post/new-post'
     | '/connections/students/'
     | '/exams/courses/$courseId/edit'
+    | '/exams/courses/$courseId/upload'
     | '/feed/post/$postId/edit'
+    | '/exams/courses/$courseId/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -275,7 +297,9 @@ export interface FileRouteTypes {
     | '/feed/post/new-post'
     | '/connections/students'
     | '/exams/courses/$courseId/edit'
+    | '/exams/courses/$courseId/upload'
     | '/feed/post/$postId/edit'
+    | '/exams/courses/$courseId'
   id:
     | '__root__'
     | '/'
@@ -301,7 +325,9 @@ export interface FileRouteTypes {
     | '/_app/feed/post/new-post'
     | '/_app/connections/students/'
     | '/_app/exams/courses/$courseId/edit'
+    | '/_app/exams/courses/$courseId/upload'
     | '/_app/feed/post/$postId/edit'
+    | '/_app/exams/courses/$courseId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -467,11 +493,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppFeedPostNewPostRouteImport
       parentRoute: typeof AppFeedRouteRoute
     }
+    '/_app/exams/courses/$courseId/': {
+      id: '/_app/exams/courses/$courseId/'
+      path: '/courses/$courseId'
+      fullPath: '/exams/courses/$courseId/'
+      preLoaderRoute: typeof AppExamsCoursesCourseIdIndexRouteImport
+      parentRoute: typeof AppExamsRoute
+    }
     '/_app/exams/courses/$courseId/edit': {
       id: '/_app/exams/courses/$courseId/edit'
       path: '/courses/$courseId/edit'
       fullPath: '/exams/courses/$courseId/edit'
       preLoaderRoute: typeof AppExamsCoursesCourseIdEditRouteImport
+      parentRoute: typeof AppExamsRoute
+    }
+    '/_app/exams/courses/$courseId/upload': {
+      id: '/_app/exams/courses/$courseId/upload'
+      path: '/courses/$courseId/upload'
+      fullPath: '/exams/courses/$courseId/upload'
+      preLoaderRoute: typeof AppExamsCoursesCourseIdUploadRouteImport
       parentRoute: typeof AppExamsRoute
     }
     '/_app/feed/post/$postId/edit': {
@@ -544,11 +584,15 @@ const AppFeedRouteRouteWithChildren = AppFeedRouteRoute._addFileChildren(
 interface AppExamsRouteChildren {
   AppExamsCoursesNewRoute: typeof AppExamsCoursesNewRoute
   AppExamsCoursesCourseIdEditRoute: typeof AppExamsCoursesCourseIdEditRoute
+  AppExamsCoursesCourseIdUploadRoute: typeof AppExamsCoursesCourseIdUploadRoute
+  AppExamsCoursesCourseIdIndexRoute: typeof AppExamsCoursesCourseIdIndexRoute
 }
 
 const AppExamsRouteChildren: AppExamsRouteChildren = {
   AppExamsCoursesNewRoute: AppExamsCoursesNewRoute,
   AppExamsCoursesCourseIdEditRoute: AppExamsCoursesCourseIdEditRoute,
+  AppExamsCoursesCourseIdUploadRoute: AppExamsCoursesCourseIdUploadRoute,
+  AppExamsCoursesCourseIdIndexRoute: AppExamsCoursesCourseIdIndexRoute,
 }
 
 const AppExamsRouteWithChildren = AppExamsRoute._addFileChildren(

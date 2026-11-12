@@ -1,10 +1,11 @@
+import type { DownloadStudyFileButtonProps } from '@/@types';
 import { Download } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 import { getStudyFile } from '@/api';
 import { UIButton } from '@/ui/components';
 
-export function DownloadStudyFileButton({ fileId }: { fileId: string }) {
+export function DownloadStudyFileButton({ fileId }: DownloadStudyFileButtonProps) {
   const { t } = useTranslation();
   async function download() {
     // Open synchronously so the browser treats the new tab as part of the click.

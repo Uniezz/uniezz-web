@@ -53,3 +53,19 @@ export const postSchema = z
   });
 
 export type PostSchema = z.infer<typeof postSchema>;
+
+export const feedPostSearchSchema = z.object({
+  postFilters: z
+    .object({
+      q: z.string().max(500).optional(),
+      authorId: z.string().max(120).optional(),
+      university: z.string().max(40).optional(),
+      type: z.enum(['announcement', 'event', 'question']).optional(),
+      from: z.iso.datetime().optional(),
+      to: z.iso.datetime().optional(),
+      limit: z.number().int().min(1).max(50).optional(),
+    })
+    .optional()
+    .catch(undefined),
+  postSource: z.enum(['posts', 'liked', 'saved']).optional().catch(undefined),
+});

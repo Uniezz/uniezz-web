@@ -1,5 +1,5 @@
 import { expect, test } from 'bun:test';
-import { courseFormDefaults } from '../../src/utils/exams';
+import { canUploadCourseMaterial, courseFormDefaults } from '../../src/utils/exams';
 import { sampleProfile } from '../../src/utils/profileSkeletonData';
 
 const programme = sampleProfile.programmes![0]!;
@@ -44,4 +44,36 @@ test('missing profile or programmes leave academic fields blank', () => {
     faculty: '',
     subject: '',
   });
+});
+
+test('material uploads require the same university and primary programme including faculty', () => {
+  const profile = {
+    ...sampleProfile,
+    programmes: [{ ...programme, isPrimary: true, faculty: 'Science', programme: 'Computing' }],
+  };
+  const course = {
+    id: 'course',
+    name: 'Algorithms',
+    description: '',
+    universityId: sampleProfile.universityId,
+    faculty: ' science ',
+    subject: ' computing ',
+    semester: 1,
+    difficulty: 3,
+    ratingAverage: 0,
+    ratingCount: 0,
+    isMine: false,
+  };
+  expect(canUploadCourseMaterial(profile, course)).toBe(true);
+  expect(canUploadCourseMaterial(undefined, course)).toBe(false);
+  expect(canUploadCourseMaterial(profile, undefined)).toBe(false);
+  expect(canUploadCourseMaterial(profile, { ...course, universityId: 'other' })).toBe(false);
+  expect(canUploadCourseMaterial(profile, { ...course, subject: 'Biology' })).toBe(false);
+  expect(canUploadCourseMaterial(profile, { ...course, faculty: 'Arts' })).toBe(false);
+  expect(
+    canUploadCourseMaterial(
+      { ...profile, programmes: [{ ...profile.programmes[0], isPrimary: false }] },
+      course,
+    ),
+  ).toBe(false);
 });

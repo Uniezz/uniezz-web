@@ -1,3 +1,5 @@
+import type { z } from 'zod';
+import type { uploadSchema, examsSearchSchema, createCourseFormSchema, editCourseSchema, courseCommentSchema } from '@/schemas/exams';
 import type { components, operations } from './schema';
 
 
@@ -13,3 +15,17 @@ export type AddCourseCommentInput = components['schemas']['AddCourseCommentInput
 export type CourseFile = components['schemas']['CourseFile'];
 export type AddCourseFileInput = components['schemas']['AddCourseFileInputBody'];
 export type Professor = components['schemas']['Professor'];
+
+export type CourseDetailsDialogProps = { courseId: string; onClose: () => void };
+export type CourseFormDialogProps = { course?: Course; onClose: (ignoreBlocker?: boolean) => void };
+export type CourseCommentsProps = { courseId: string };
+export type CourseMaterialsProps = { courseId: string };
+export type UploadMaterialProps = { courseId: string; onClose: (ignoreBlocker?: boolean) => void };
+export type UploadMaterialButtonProps = { courseId: string };
+export type DownloadStudyFileButtonProps = { fileId: string };
+
+export type UploadSchema = z.infer<typeof uploadSchema>;
+export type ExamsSearch = z.infer<typeof examsSearchSchema>;
+export type CreateCourseForm = z.infer<typeof createCourseFormSchema>;
+export type EditCourseForm = z.infer<typeof editCourseSchema>;
+export type CourseCommentForm = z.infer<typeof courseCommentSchema>;

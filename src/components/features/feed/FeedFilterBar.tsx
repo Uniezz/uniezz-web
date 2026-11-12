@@ -1,20 +1,12 @@
 import { SlidersHorizontal } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import type { FeedFilters, Option } from '@/@types';
+import type { DatePreset, FeedFilterBarProps, FeedFilters, Option } from '@/@types';
 import { useDropdown, useUniversities } from '@/hooks';
 import { UIButton, UISelect } from '@/ui/components';
-import { datePresetFrom, type DatePreset } from '@/utils/feed';
+import { datePresetFrom } from '@/utils/feed';
 
-type FeedFilterValues = FeedFilters & { date?: DatePreset };
-
-export function FeedFilterBar({
-  filters,
-  onChange,
-}: {
-  filters: FeedFilterValues;
-  onChange: (filters: FeedFilterValues) => void;
-}) {
+export function FeedFilterBar({ filters, onChange }: FeedFilterBarProps) {
   const { t } = useTranslation();
   const { data: universities = [] } = useUniversities();
   const { ref, isOpen, toggle } = useDropdown();

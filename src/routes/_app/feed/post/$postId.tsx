@@ -1,24 +1,31 @@
-import { createFileRoute, Link, Outlet, useLocation, useRouter } from '@tanstack/react-router';
+import {
+  createFileRoute,
+  Link,
+  Outlet,
+  useLocation,
+  useRouter,
+  retainSearchParams,
+} from '@tanstack/react-router';
 import { ChevronLeft, ChevronRight, Send, CornerUpLeft, X } from 'lucide-react';
 import { type FormEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Skeleton } from 'skullet/react';
 import toast from 'react-hot-toast';
-import type { FeedComment } from '@/@types';
+import type { FeedComment, FeedPostSearch } from '@/@types';
 import { cn } from '@/ui/cn';
 import { inputStyles } from '@/ui/components/UIInput/variants';
 import { UIAvatar, UIButton, UIEmojiPicker, UIEmpty, UIPanel, UIQueryError } from '@/ui/components';
 import { listComponents } from '@/ui/virtuoso';
 import { Virtuoso } from 'react-virtuoso';
 import {
-  useFeedPostNavigation,
   useFeedPost,
+  useFeedPosts,
   useFeedComments,
   useCreateComment,
   useMyProfile,
 } from '@/hooks';
 import { useNarrowViewport } from '@/hooks/useNarrowViewport';
-import { authorName, isAuthorProfilePath } from '@/utils/feed';
+import { authorName, feedPostNeighbours, isAuthorProfilePath } from '@/utils/feed';
 import { FeedCommentItem, FeedCommentsSkeleton } from '@/components/features/feed/FeedComments';
 import { FeedLikeButton } from '@/components/features/feed/FeedLikeButton';
 import { FeedSaveButton } from '@/components/features/feed/FeedSaveButton';
@@ -26,9 +33,12 @@ import { sampleComment, samplePost } from '@/utils/feedSkeletonData';
 import { FeedPostActions } from '@/components/features/feed/FeedPostActions';
 import { PostMedia } from '@/components/features/feed/PostMedia';
 import { PostDetails } from '@/components/features/feed/PostDetails';
-import { commentSchema } from '@/schemas';
+import { commentSchema, feedPostSearchSchema } from '@/schemas';
 
 export const Route = createFileRoute('/_app/feed/post/$postId')({
+  validateSearch: (search: Record<string, unknown>): FeedPostSearch =>
+    feedPostSearchSchema.parse(search),
+  search: { middlewares: [retainSearchParams(['postFilters', 'postSource'])] },
   remountDeps: ({ params }) => params.postId,
   component: FeedPostPage,
 });
@@ -36,6 +46,7 @@ export const Route = createFileRoute('/_app/feed/post/$postId')({
 function FeedPostPage() {
   const { postId } = Route.useParams();
   const { t } = useTranslation();
+  const { postFrom, postFilters = {}, postSource = 'posts' } = Route.useSearch();
   const {
     data: loadedPost,
     isPending: isPostPending,
@@ -43,11 +54,12 @@ function FeedPostPage() {
     refetch: refetchPost,
   } = useFeedPost(postId);
   const {
-    data: navigation,
+    data: navigationPosts,
     isPending: isNavigationPending,
     isError: isNavigationError,
     refetch: refetchNavigation,
-  } = useFeedPostNavigation(postId);
+  } = useFeedPosts(postFilters, postSource);
+  const navigation = feedPostNeighbours(postId, navigationPosts?.pages);
   const {
     data: commentData,
     isPending: areCommentsPending,
@@ -60,7 +72,6 @@ function FeedPostPage() {
   const { createComment, isPending: isCreatingComment } = useCreateComment();
   const router = useRouter();
   const href = useLocation({ select: (location) => location.href });
-  const { postFrom } = Route.useSearch();
   const { data: me } = useMyProfile();
   const [commentDraft, setCommentDraft] = useState('');
   const isNarrow = useNarrowViewport();
@@ -247,7 +258,7 @@ function FeedPostPage() {
                   <div
                     className={cn(
                       inputStyles(),
-                      'relative py-1 pr-12 focus-within:border-white-10',
+                      'relative py-1 pr-3 focus-within:border-white-10',
                       isCommentMultiline ? 'rounded-2xl' : 'rounded-full',
                     )}
                   >
@@ -277,22 +288,27 @@ function FeedPostPage() {
                     />
                     <UIEmojiPicker
                       disabled={isCreatingComment}
-                      className={cn('-my-1 shrink-0', isCommentMultiline && 'self-end')}
+                      className={cn(
+                        '-my-1 shrink-0 motion-safe:transition-transform motion-safe:duration-200',
+                        !commentDraft.trim() && 'translate-x-11.5',
+                        isCommentMultiline && 'self-end',
+                      )}
                     />
-                    {commentDraft.trim() && (
-                      <UIButton
-                        type="submit"
-                        disabled={isCreatingComment}
-                        size="icon"
-                        bg="transparent"
-                        aria-label={t('app.send')}
-                        className={cn(
-                          'absolute right-1.5 bottom-0 border-transparent enabled:hover:bg-transparent',
-                        )}
-                      >
-                        <Send size={16} aria-hidden="true" />
-                      </UIButton>
-                    )}
+                    <UIButton
+                      type="submit"
+                      disabled={isCreatingComment}
+                      size="icon"
+                      bg="transparent"
+                      aria-label={t('app.send')}
+                      tabIndex={commentDraft.trim() ? 0 : -1}
+                      aria-hidden={!commentDraft.trim()}
+                      className={cn(
+                        '-my-1 shrink-0 self-end border-transparent enabled:hover:bg-transparent motion-safe:transition-opacity motion-safe:duration-200',
+                        !commentDraft.trim() && 'pointer-events-none opacity-0 disabled:opacity-0',
+                      )}
+                    >
+                      <Send size={16} aria-hidden="true" />
+                    </UIButton>
                   </div>
                 </form>
               </UIPanel>
@@ -338,7 +354,7 @@ function FeedPostPage() {
                   to="/feed/post/$postId"
                   data-ph-capture-attribute-label={t('app.previousPost')}
                   params={{ postId: previous }}
-                  search={{ postFrom }}
+                  search={{ postFrom, postFilters, postSource }}
                   aria-label={t('app.previousPost')}
                   className="hover:bg-white-15 pointer-events-auto col-start-1 row-start-1 grid size-11 shrink-0 place-items-center justify-self-center rounded-full bg-white-10"
                 >
@@ -352,7 +368,7 @@ function FeedPostPage() {
                   to="/feed/post/$postId"
                   data-ph-capture-attribute-label={t('app.nextPost')}
                   params={{ postId: next }}
-                  search={{ postFrom }}
+                  search={{ postFrom, postFilters, postSource }}
                   aria-label={t('app.nextPost')}
                   className="hover:bg-white-15 pointer-events-auto col-start-3 row-start-1 grid size-11 shrink-0 place-items-center justify-self-center rounded-full bg-white-10"
                 >

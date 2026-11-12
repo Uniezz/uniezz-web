@@ -1,3 +1,4 @@
+import type { BlockStudentButtonProps } from '@/@types';
 import { useState } from 'react';
 import { CircleSlash } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -5,13 +6,7 @@ import toast from 'react-hot-toast';
 import { useBlockStudent } from '@/hooks';
 import { UIButton, UIDialog } from '@/ui/components';
 
-export function BlockStudentButton({
-  studentId,
-  onBlocked,
-}: {
-  studentId: string;
-  onBlocked?: () => void;
-}) {
+export function BlockStudentButton({ studentId, onBlocked }: BlockStudentButtonProps) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const { mutateAsync: block, isPending } = useBlockStudent();

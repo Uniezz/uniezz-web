@@ -2,20 +2,14 @@ import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import { Bookmark, Heart } from 'lucide-react';
 import { FeedPosts } from '@/components/features/feed/FeedPosts';
-import { useMyProfile, type FeedPostSource } from '@/hooks';
+import { useMyProfile } from '@/hooks';
+import type { FeedPostSource, ProfilePostsProps } from '@/@types';
 import { UISegmented } from '@/ui/components';
 
 const tabs = ['posts', 'liked', 'saved'] as const satisfies readonly FeedPostSource[];
 const tabKeys = { posts: 'feed.posts', liked: 'feed.liked', saved: 'feed.saved' } as const;
 
-export function ProfilePosts({
-  authorId,
-  collections = true,
-}: {
-  authorId: string;
-  /** The liked and saved lists belong to the signed-in student, so only their profile shows them. */
-  collections?: boolean;
-}) {
+export function ProfilePosts({ authorId, collections = true }: ProfilePostsProps) {
   const { t } = useTranslation();
   const { data: me } = useMyProfile();
   const showCollections = collections && me?.id === authorId;

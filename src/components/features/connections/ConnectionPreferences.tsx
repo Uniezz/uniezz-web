@@ -1,20 +1,12 @@
+import type { ConnectionPreferencesFormProps, ConnectionPreferencesProps } from '@/@types';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
-import type { ConnectionFilters, ConnectionPreferences } from '@/@types';
 import { ApiRequestError } from '@/api/errors';
 import { useMyConnectionPreferences, useUpdateMyConnectionPreferences } from '@/hooks';
 import { UIField, UIQueryError } from '@/ui/components';
 
-export function ConnectionPreferences({
-  mode,
-  formId,
-  onSaved,
-}: {
-  mode: ConnectionFilters['mode'];
-  formId: string;
-  onSaved: () => void;
-}) {
+export function ConnectionPreferences({ mode, formId, onSaved }: ConnectionPreferencesProps) {
   const { t } = useTranslation();
   const { data: preferences, isPending, isError, refetch } = useMyConnectionPreferences();
 
@@ -36,12 +28,7 @@ function ConnectionPreferencesForm({
   mode,
   formId,
   onSaved,
-}: {
-  preferences: ConnectionPreferences;
-  mode: ConnectionFilters['mode'];
-  formId: string;
-  onSaved: () => void;
-}) {
+}: ConnectionPreferencesFormProps) {
   const { t } = useTranslation();
   const { mutateAsync: savePreferences, isPending } = useUpdateMyConnectionPreferences();
   const [birthDate, setBirthDate] = useState(preferences?.birthDate ?? '');

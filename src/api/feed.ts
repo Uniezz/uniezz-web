@@ -1,5 +1,4 @@
-import type { components } from '@/@types/schema';
-import type { FeedFilters } from '@/@types';
+import type { FeedFilters, CreateFeedPostInput, UpdateFeedPostRequest } from '@/@types';
 import { api } from './client';
 
 export async function updateFeedComment({ id, content }: { id: string; content: string }) {
@@ -10,13 +9,7 @@ export async function updateFeedComment({ id, content }: { id: string; content: 
   return data!;
 }
 
-export async function updateFeedPost({
-  id,
-  body,
-}: {
-  id: string;
-  body: components['schemas']['UpdatePostInputBody'];
-}) {
+export async function updateFeedPost({ id, body }: UpdateFeedPostRequest) {
   const { data } = await api.PATCH('/feed/posts/{id}', { params: { path: { id } }, body });
   return data!;
 }
@@ -85,22 +78,12 @@ export async function getFeaturedFeedPosts() {
   return data!;
 }
 
-export async function getFeedPostNavigation(id: string) {
-  const { data } = await api.GET('/feed/posts/{id}/navigation', {
-    params: { path: { id } },
-  });
-  return data!;
-}
-
 export async function getFeedPost(id: string) {
   const { data } = await api.GET('/feed/posts/{id}', { params: { path: { id } } });
   return data!;
 }
 
-export async function createFeedPost(
-  body: components['schemas']['CreatePostInputBody'],
-  key: string,
-) {
+export async function createFeedPost(body: CreateFeedPostInput, key: string) {
   const { data } = await api.POST('/feed/posts', {
     body,
     params: { header: { 'Idempotency-Key': key } },

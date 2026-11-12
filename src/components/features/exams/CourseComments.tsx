@@ -1,3 +1,4 @@
+import type { CourseCommentForm, CourseCommentsProps } from '@/@types';
 // ai-design-check-ignore-file use-shared-components -- UIField and app-control are the established shared form pattern for react-hook-form in this project.
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -5,11 +6,11 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import toast from 'react-hot-toast';
 import { useCourseComments, useAddCourseComment, useDeleteCourseComment } from '@/hooks';
-import { courseCommentSchema, type CourseCommentForm } from '@/schemas';
+import { courseCommentSchema } from '@/schemas';
 import { captureAnalytics } from '@/utils/analytics';
 import { UIButton, UIDialog, UIField, UIQueryError } from '@/ui/components';
 
-export function CourseComments({ courseId }: { courseId: string }) {
+export function CourseComments({ courseId }: CourseCommentsProps) {
   const { t, i18n } = useTranslation();
   const { data, isPending, isError, refetch, hasNextPage, fetchNextPage, isFetchingNextPage } =
     useCourseComments(courseId);

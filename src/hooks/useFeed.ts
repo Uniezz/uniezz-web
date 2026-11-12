@@ -14,7 +14,6 @@ import {
   getFeedPost,
   getFeedPosts,
   getFeaturedFeedPosts,
-  getFeedPostNavigation,
   getLikedFeedPosts,
   getSavedFeedPosts,
   setFeedLike,
@@ -22,7 +21,7 @@ import {
   updateFeedComment,
   updateFeedPost,
 } from '@/api';
-import type { FeedFilters } from '@/@types';
+import type { FeedFilters, FeedPostSource } from '@/@types';
 import { patchCachedItem } from '@/utils/query';
 
 export function useUpdateFeedComment() {
@@ -113,11 +112,10 @@ export function useFeedSave() {
   });
 }
 
-/** Which list of posts to show: the feed query, or the caller's liked or saved posts. */
-export type FeedPostSource = 'posts' | 'liked' | 'saved';
-
 export function useFeedPosts(filters: FeedFilters = {}, source: FeedPostSource = 'posts') {
   return useInfiniteQuery({
+    staleTime: 60_000,
+    gcTime: 10 * 60_000,
     queryKey: ['feed', source, filters],
     queryFn: ({ pageParam }) =>
       source === 'liked'
@@ -136,15 +134,13 @@ export function useFeaturedFeedPosts() {
   return useQuery({ queryKey: ['feed', 'featured'], queryFn: getFeaturedFeedPosts });
 }
 
-export function useFeedPostNavigation(id: string) {
-  return useQuery({
-    queryKey: ['feed', 'navigation', id],
-    queryFn: () => getFeedPostNavigation(id),
-  });
-}
-
 export function useFeedPost(id: string) {
-  return useQuery({ queryKey: ['feed', 'post', id], queryFn: () => getFeedPost(id) });
+  return useQuery({
+    staleTime: 60_000,
+    gcTime: 10 * 60_000,
+    queryKey: ['feed', 'post', id],
+    queryFn: () => getFeedPost(id),
+  });
 }
 
 export function useFeedComments(id: string) {

@@ -1,10 +1,8 @@
-import type { components } from '@/@types/schema';
+import type { MediaContentType, MediaKind } from '@/@types';
+import { studyMaterialFileSchema } from '@/schemas/exams';
 import { api } from './client';
 
-export async function uploadImage(
-  file: File,
-  kind: components['schemas']['CreateUploadInputBody']['kind'],
-) {
+export async function uploadImage(file: File, kind: MediaKind) {
   if (
     !['image/jpeg', 'image/png', 'image/webp'].includes(file.type) ||
     file.size === 0 ||
@@ -12,11 +10,20 @@ export async function uploadImage(
   ) {
     throw new Error('Invalid image');
   }
+  return uploadFile(file, kind);
+}
+
+export async function uploadStudyMaterial(file: File) {
+  studyMaterialFileSchema.parse(file);
+  return uploadFile(file, 'exam');
+}
+
+async function uploadFile(file: File, kind: MediaKind) {
   const { data } = await api.POST('/media/uploads', {
     body: {
       kind,
       size: file.size,
-      contentType: file.type as components['schemas']['CreateUploadInputBody']['contentType'],
+      contentType: file.type as MediaContentType,
     },
   });
   const response = await fetch(data!.uploadUrl, {
@@ -25,6 +32,6 @@ export async function uploadImage(
     body: file,
     credentials: 'omit',
   });
-  if (!response.ok) throw new Error('Image upload failed');
+  if (!response.ok) throw new Error('Media upload failed');
   return data!.mediaId;
 }

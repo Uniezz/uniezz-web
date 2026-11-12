@@ -7,3 +7,4 @@ export * from './profile';
 export * from './connections';
 export * from './feed';
 export * from './faq';
+export * from './media';

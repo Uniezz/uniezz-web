@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate, useSearch } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { ChevronDown } from 'lucide-react';
-import type { ExamsSearch } from '@/schemas';
+import type { ExamsSearch } from '@/@types';
 import { useUniversities } from '@/hooks';
 import { UIButton, UISearch, UISegmented } from '@/ui/components';
 
