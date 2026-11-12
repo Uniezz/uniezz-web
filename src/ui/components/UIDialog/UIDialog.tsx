@@ -75,7 +75,9 @@ export const UIDialog = ({
           )}
           <div
             className={
-              placement === 'right' ? 'flex min-h-0 flex-1 flex-col overflow-y-auto' : undefined
+              placement === 'right'
+                ? 'scrollbar-hidden flex min-h-0 flex-1 flex-col overflow-y-auto'
+                : undefined
             }
           >
             {children}

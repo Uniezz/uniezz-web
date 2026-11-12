@@ -1,10 +1,12 @@
-import { Star } from 'lucide-react';
+import { Star, type LucideIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { cn } from '@/ui/cn';
 
 type RatingInputBaseProps = {
   average: number;
   count: number;
+  ariaLabel?: string;
+  icon?: LucideIcon;
 };
 
 export type RatingInputProps = RatingInputBaseProps &
@@ -15,18 +17,21 @@ export type RatingInputProps = RatingInputBaseProps &
         /** Fixed analytics description; never user content. */
         analyticsLabel: string;
         disabled?: boolean;
+        showSummary?: boolean;
         onRate: (rating: number) => void;
       }
   );
 
 export function RatingInput(props: RatingInputProps) {
   const { t } = useTranslation();
+  const Icon = props.icon ?? Star;
   return (
     <div className="flex items-center gap-2">
       <div
         role={props.readOnly ? 'img' : 'group'}
         aria-label={
-          props.readOnly ? t('exams.difficulty', { difficulty: props.average }) : t('app.rating')
+          props.ariaLabel ??
+          (props.readOnly ? t('exams.difficulty', { difficulty: props.average }) : t('app.rating'))
         }
         className="flex"
       >
@@ -36,7 +41,7 @@ export function RatingInput(props: RatingInputProps) {
             !props.readOnly && 'transition-transform group-enabled:group-hover:scale-125',
           );
           if (props.readOnly) {
-            return <Star key={value} size={14} aria-hidden="true" className={className} />;
+            return <Icon key={value} size={14} aria-hidden="true" className={className} />;
           }
           return (
             <button
@@ -48,12 +53,12 @@ export function RatingInput(props: RatingInputProps) {
               onClick={() => props.onRate(value)}
               className="group rounded-full p-1 focus-visible:outline-2 focus-visible:outline-blue disabled:opacity-50"
             >
-              <Star size={14} aria-hidden="true" className={className} />
+              <Icon size={14} aria-hidden="true" className={className} />
             </button>
           );
         })}
       </div>
-      {!props.readOnly && (
+      {!props.readOnly && props.showSummary !== false && (
         <span className="text-label font-semibold">
           {props.count > 0 ? props.average.toFixed(1) : '—'}{' '}
           <span className="text-muted">({props.count})</span>

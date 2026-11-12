@@ -221,11 +221,13 @@
   },
   "courses": {
     "addComment": "Dodaj komentarz",
-    "chooseUniversity": "Wybierz uczelnię",
+    "chooseFiles": "Wybierz pliki",
     "commentAdded": "Komentarz dodany.",
     "commentDeleted": "Komentarz usunięty.",
     "commentHint": "Wpisz od 1 do 1000 znaków.",
     "create": "Dodaj przedmiot",
+    "created": "Przedmiot utworzony.",
+    "creatingCourse": "Tworzenie przedmiotu…",
     "deleteComment": "Usuń komentarz",
     "deleteCommentDescription": "Twój komentarz zostanie trwale usunięty.",
     "description": "Opis",
@@ -246,9 +248,13 @@
     "nameHint": "Wpisz od 3 do 150 znaków.",
     "noComments": "Nie ma jeszcze komentarzy.",
     "noMaterials": "Nie ma jeszcze materiałów.",
+    "noProgrammes": "Dodaj kierunek studiów do profilu, zanim utworzysz przedmiot.",
+    "removeMaterial": "Usuń wybrany plik",
     "saved": "Przedmiot zapisany.",
     "semesterHint": "Wybierz semestr od 1 do 10.",
-    "uploadEligibility": "Możesz dodawać materiały tylko dla swojej uczelni i głównego kierunku studiów."
+    "uploadEligibility": "Możesz dodawać materiały tylko dla swojej uczelni i głównego kierunku studiów.",
+    "uploadingMaterials": "Przesyłanie materiałów…",
+    "validationError": "Sprawdź oznaczone pola i spróbuj ponownie."
   },
   "exams": {
     "action": "Dodaj materiał",

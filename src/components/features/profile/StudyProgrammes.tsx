@@ -189,7 +189,7 @@ function ProgrammeCard({
                         className="text-detail"
                         options={[
                           { value: '', label: '—' },
-                          ...Array.from({ length: 10 }, (_, index) => ({
+                          ...Array.from({ length: 6 }, (_, index) => ({
                             value: String(index + 1),
                             label: t('app.studyYear', { year: index + 1 }),
                           })),

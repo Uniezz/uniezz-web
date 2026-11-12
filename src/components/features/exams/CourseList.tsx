@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
+import { Flame } from 'lucide-react';
 import { TableVirtuoso } from 'react-virtuoso';
 import { Link, useSearch } from '@tanstack/react-router';
 import { useCourses, useRateCourse, useUniversities } from '@/hooks';
@@ -81,7 +82,7 @@ export function CourseList() {
                 </td>
               ))}
               <td className="border-t border-white-5 px-4 py-3">
-                <RatingInput average={course.difficulty} count={0} readOnly />
+                <RatingInput average={course.difficulty} count={0} readOnly icon={Flame} />
               </td>
               <td className="border-t border-white-5 px-4 py-3">
                 <RatingInput

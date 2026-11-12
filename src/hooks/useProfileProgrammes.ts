@@ -1,7 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import type { Programme } from '@/@types';
 import { deleteProgramme, listMyProgrammes, saveProgramme as saveProgrammeApi } from '@/api';
 import type { ProgrammeFormSchema } from '@/schemas';
+
+type MyProgrammes = Awaited<ReturnType<typeof listMyProgrammes>>;
 
 type SaveProgrammeVariables = {
   programme: ProgrammeFormSchema;
@@ -34,15 +35,25 @@ export function useProfileProgrammes() {
         id ?? programme.id,
       ),
     onSuccess: (saved) => {
-      queryClient.setQueryData<Programme[]>(['profile', 'programmes'], (programmes) => {
-        if (!programmes) return programmes;
-        const updated = programmes.map((item) => (item.id === saved.id ? saved : item));
+      queryClient.setQueryData<MyProgrammes>(['profile', 'programmes'], (data) => {
+        if (!data) return data;
+        const updated = (data.programmes ?? []).map((item) =>
+          item.id === saved.id ? saved : item,
+        );
         if (!updated.some((item) => item.id === saved.id)) {
           updated.push(saved);
         }
-        return saved.isPrimary
-          ? [saved, ...updated.map((item) => ({ ...item, isPrimary: false }))]
-          : updated;
+        return {
+          ...data,
+          programmes: saved.isPrimary
+            ? [
+                saved,
+                ...updated
+                  .filter((item) => item.id !== saved.id)
+                  .map((item) => ({ ...item, isPrimary: false })),
+              ]
+            : updated,
+        };
       });
     },
     onSettled: () => {
@@ -55,8 +66,10 @@ export function useProfileProgrammes() {
     mutationKey: ['profile', 'programmes', 'delete'],
     mutationFn: deleteProgramme,
     onSuccess: (_, id) => {
-      queryClient.setQueryData<Programme[]>(['profile', 'programmes'], (programmes) =>
-        programmes ? programmes.filter((item) => item.id !== id) : programmes,
+      queryClient.setQueryData<MyProgrammes>(['profile', 'programmes'], (data) =>
+        data
+          ? { ...data, programmes: (data.programmes ?? []).filter((item) => item.id !== id) }
+          : data,
       );
     },
     onSettled: () => {

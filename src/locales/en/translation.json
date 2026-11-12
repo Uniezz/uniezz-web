@@ -221,11 +221,13 @@
   },
   "courses": {
     "addComment": "Add a comment",
-    "chooseUniversity": "Choose a university",
+    "chooseFiles": "Choose files",
     "commentAdded": "Comment added.",
     "commentDeleted": "Comment deleted.",
     "commentHint": "Enter 1–1000 characters.",
     "create": "Create course",
+    "created": "Course created.",
+    "creatingCourse": "Creating course…",
     "deleteComment": "Delete comment",
     "deleteCommentDescription": "Your comment will be permanently deleted.",
     "description": "Description",
@@ -246,9 +248,13 @@
     "nameHint": "Enter 3–150 characters.",
     "noComments": "No comments yet.",
     "noMaterials": "No materials yet.",
+    "noProgrammes": "Add a study programme to your profile before creating a course.",
+    "removeMaterial": "Remove selected file",
     "saved": "Course saved.",
     "semesterHint": "Choose a semester from 1 to 10.",
-    "uploadEligibility": "You can upload materials only for your university and primary study programme."
+    "uploadEligibility": "You can upload materials only for your university and primary study programme.",
+    "uploadingMaterials": "Uploading materials…",
+    "validationError": "Check the highlighted fields and try again."
   },
   "exams": {
     "action": "Upload material",

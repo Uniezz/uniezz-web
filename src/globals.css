@@ -1206,6 +1206,14 @@ input[type='search']::-webkit-search-cancel-button {
   background-clip: content-box;
 }
 
+.scrollbar-hidden {
+  scrollbar-width: none;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
 @utility bg-mesh {
   background-color: #0c0d14;
   background-image: linear-gradient(90deg, #0c0d14b3, #0c0d1466), url('/auth-background.png');
