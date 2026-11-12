@@ -1,17 +1,21 @@
-import { useState } from 'react';
+import { useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { UIButton } from '@/ui/components';
-import { CourseFormDialog } from './CourseFormDialog';
 
 export function CreateCourseButton() {
   const { t } = useTranslation();
-  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
   return (
-    <>
-      <UIButton size="sm" onClick={() => setOpen(true)}>
-        {t('courses.create')}
-      </UIButton>
-      {open && <CourseFormDialog onClose={() => setOpen(false)} />}
-    </>
+    <UIButton
+      size="sm"
+      onClick={() =>
+        void navigate({
+          to: '/exams/courses/new',
+          search: (previous) => ({ ...previous, tab: 'reviews' }),
+        })
+      }
+    >
+      {t('courses.create')}
+    </UIButton>
   );
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 import { useCourse, useRateCourse, useUniversities } from '@/hooks';
@@ -6,7 +6,6 @@ import { UIButton, UIDialog, UIQueryError } from '@/ui/components';
 import { ReportButton } from '@/components/features/reports/ReportButton';
 import { CourseComments } from './CourseComments';
 import { CourseMaterials } from './CourseMaterials';
-import { CourseFormDialog } from './CourseFormDialog';
 import { RatingInput } from './RatingInput';
 
 export function CourseDetailsDialog({
@@ -20,7 +19,7 @@ export function CourseDetailsDialog({
   const { data: course, isPending, isError, refetch } = useCourse(courseId);
   const { data: universities = [] } = useUniversities();
   const { mutate: rate, isPending: isRating } = useRateCourse();
-  const [isEditing, setIsEditing] = useState(false);
+  const navigate = useNavigate();
   return (
     <>
       <UIDialog
@@ -72,7 +71,17 @@ export function CourseDetailsDialog({
             />
             <div className="flex flex-wrap gap-3">
               {course.isMine && (
-                <UIButton size="sm" bg="secondary" onClick={() => setIsEditing(true)}>
+                <UIButton
+                  size="sm"
+                  bg="secondary"
+                  onClick={() =>
+                    void navigate({
+                      to: '/exams/courses/$courseId/edit',
+                      params: { courseId },
+                      search: (previous) => ({ ...previous, tab: 'reviews' }),
+                    })
+                  }
+                >
                   {t('courses.edit')}
                 </UIButton>
               )}
@@ -83,9 +92,6 @@ export function CourseDetailsDialog({
           </div>
         )}
       </UIDialog>
-      {isEditing && course?.isMine && (
-        <CourseFormDialog course={course} onClose={() => setIsEditing(false)} />
-      )}
     </>
   );
 }

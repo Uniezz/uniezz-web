@@ -1,15 +1,13 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-import { Skeleton } from 'skullet/react';
 import toast from 'react-hot-toast';
 
 import { PostComposer } from '@/components/features/feed/PostComposer';
 import { useFeedPost, useMyProfile, useUpdateFeedPost } from '@/hooks';
-import { UIEmpty, UIQueryError } from '@/ui/components';
-import { samplePost } from '@/utils/feedSkeletonData';
+import { UIDialog, UIEmpty, UIQueryError } from '@/ui/components';
 import { postFormDefaults } from '@/utils/feed';
 
-export const Route = createFileRoute('/_app/feed/post/edit-post/$postId')({
+export const Route = createFileRoute('/_app/feed/post/$postId/edit')({
   remountDeps: ({ params }) => params.postId,
   component: EditPostPage,
 });
@@ -27,33 +25,36 @@ function EditPostPage() {
   const { data: profile, isPending: isLoadingProfile, refetch: refetchProfile } = useMyProfile();
   const { mutateAsync: updatePost, isPending } = useUpdateFeedPost();
 
-  if (isLoadingPost || isLoadingProfile) {
-    return (
-      <Skeleton loading label={t('apiState.loading')}>
-        <div inert>
-          <PostComposer
-            post={samplePost}
-            isPending={false}
-            onCancel={() => {}}
-            onSubmit={async () => {}}
-          />
-        </div>
-      </Skeleton>
-    );
-  }
-  if (!post || !profile)
-    return <UIQueryError retry={() => void (postError ? refetchPost() : refetchProfile())} />;
-  if (profile.id !== post.author.id) return <UIEmpty />;
-
   // Replaces the form's entry, so Back can't reopen it; retained `postFrom` keeps the post's Back.
   function backToPost(ignoreBlocker = false) {
     void navigate({
       to: '/feed/post/$postId',
       params: { postId },
-      search: { postId, feedRoute: undefined },
       replace: true,
       ignoreBlocker,
     });
+  }
+
+  if (isLoadingPost || isLoadingProfile || !post || !profile || profile.id !== post.author.id) {
+    return (
+      <UIDialog
+        open
+        placement="right"
+        onOpenChange={(open) => {
+          if (!open) backToPost();
+        }}
+        title={t('apiState.editPost')}
+        description={t('postComposer.subtitle')}
+      >
+        {isLoadingPost || isLoadingProfile ? (
+          <p role="status">{t('apiState.loading')}</p>
+        ) : !post || !profile ? (
+          <UIQueryError retry={() => void (postError ? refetchPost() : refetchProfile())} />
+        ) : (
+          <UIEmpty />
+        )}
+      </UIDialog>
+    );
   }
 
   return (

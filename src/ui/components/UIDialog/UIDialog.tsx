@@ -19,6 +19,7 @@ export type UIDialogProps = {
   description: string;
   children: ReactNode;
   dismissible?: boolean;
+  placement?: 'center' | 'right';
   className?: string;
 };
 export const UIDialog = ({
@@ -28,6 +29,7 @@ export const UIDialog = ({
   description,
   children,
   dismissible = true,
+  placement = 'center',
   className,
 }: UIDialogProps) => {
   const { t } = useTranslation();
@@ -35,7 +37,7 @@ export const UIDialog = ({
   return (
     <Dialog.Root open={open} onOpenChange={dismissible ? onOpenChange : undefined}>
       <Dialog.Portal>
-        <Dialog.Overlay className={dialogOverlayStyles()} />
+        <Dialog.Overlay className={dialogOverlayStyles({ placement })} />
         <Dialog.Content
           onOpenAutoFocus={() => {
             opener.current =
@@ -53,7 +55,7 @@ export const UIDialog = ({
           onPointerDownOutside={(e) => {
             if (!dismissible) e.preventDefault();
           }}
-          className={cn(dialogStyles(), className)}
+          className={cn(dialogStyles({ placement }), className)}
         >
           <Dialog.Title className={dialogTitleStyles()}>{title}</Dialog.Title>
           <Dialog.Description className={dialogDescriptionStyles()}>
@@ -71,7 +73,13 @@ export const UIDialog = ({
               </UIButton>
             </Dialog.Close>
           )}
-          {children}
+          <div
+            className={
+              placement === 'right' ? 'flex min-h-0 flex-1 flex-col overflow-y-auto' : undefined
+            }
+          >
+            {children}
+          </div>
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>

@@ -1,15 +1,22 @@
 // ai-design-check-ignore-file use-shared-components -- UIField and app-control are the established shared form pattern for react-hook-form in this project.
 import { useTranslation } from 'react-i18next';
-import { useForm } from 'react-hook-form';
+import { useController, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import toast from 'react-hot-toast';
 import type { Course } from '@/@types';
 import { useCreateCourse, useUpdateCourse, useUniversities, useMyProfile } from '@/hooks';
 import { createCourseSchema, type CreateCourseForm } from '@/schemas';
 import { captureAnalytics } from '@/utils/analytics';
-import { UIButton, UIDialog, UIField } from '@/ui/components';
+import { courseFormDefaults } from '@/utils/exams';
+import { UIButton, UIDialog, UIField, UIUnsavedChanges } from '@/ui/components';
 
-export function CourseFormDialog({ course, onClose }: { course?: Course; onClose: () => void }) {
+export function CourseFormDialog({
+  course,
+  onClose,
+}: {
+  course?: Course;
+  onClose: (ignoreBlocker?: boolean) => void;
+}) {
   const { t } = useTranslation();
   const { data: universities = [] } = useUniversities();
   const { data: me } = useMyProfile();
@@ -18,20 +25,14 @@ export function CourseFormDialog({ course, onClose }: { course?: Course; onClose
   const isPending = isCreating || isUpdating;
   const {
     register,
+    control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<CreateCourseForm>({
     resolver: zodResolver(createCourseSchema),
-    defaultValues: course ?? {
-      name: '',
-      description: '',
-      universityId: me?.universityId ?? '',
-      faculty: '',
-      subject: '',
-      semester: 1,
-      difficulty: 3,
-    },
+    defaultValues: course ?? courseFormDefaults(me),
   });
+  const { field: universityField } = useController({ control, name: 'universityId' });
   async function submit(values: CreateCourseForm) {
     try {
       if (course) {
@@ -47,13 +48,14 @@ export function CourseFormDialog({ course, onClose }: { course?: Course; onClose
         await create(values);
       }
       toast.success(t('courses.saved'));
-      onClose();
+      onClose(true);
     } catch {
       toast.error(t('apiState.error'));
     }
   }
   return (
     <UIDialog
+      placement="right"
       open
       onOpenChange={(open) => {
         if (!open) onClose();
@@ -62,6 +64,7 @@ export function CourseFormDialog({ course, onClose }: { course?: Course; onClose
       title={t(course ? 'courses.edit' : 'courses.create')}
       description={t('courses.formDescription')}
     >
+      <UIUnsavedChanges dirty={isDirty} />
       <form
         className="space-y-4"
         onSubmit={handleSubmit(submit, () => captureAnalytics('course_form_validation_failed'))}
@@ -109,7 +112,7 @@ export function CourseFormDialog({ course, onClose }: { course?: Course; onClose
                 label={t('app.university')}
                 error={errors.universityId ? t('app.required') : undefined}
               >
-                <select className="app-control" {...register('universityId')}>
+                <select className="app-control" {...universityField}>
                   <option value="">{t('courses.chooseUniversity')}</option>
                   {universities.map(({ id, name }) => (
                     <option key={id} value={id}>
@@ -147,7 +150,7 @@ export function CourseFormDialog({ course, onClose }: { course?: Course; onClose
           )}
         </fieldset>
         <div className="flex justify-end gap-3">
-          <UIButton bg="secondary" onClick={onClose} disabled={isPending}>
+          <UIButton bg="secondary" onClick={() => onClose()} disabled={isPending}>
             {t('app.cancel')}
           </UIButton>
           <UIButton type="submit" disabled={isPending || (course && !course.isMine)}>

@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import { Bookmark, Heart } from 'lucide-react';
 import { FeedPosts } from '@/components/features/feed/FeedPosts';
-import type { FeedPostSource } from '@/hooks';
+import { useMyProfile, type FeedPostSource } from '@/hooks';
 import { UISegmented } from '@/ui/components';
 
 const tabs = ['posts', 'liked', 'saved'] as const satisfies readonly FeedPostSource[];
@@ -10,17 +10,19 @@ const tabKeys = { posts: 'feed.posts', liked: 'feed.liked', saved: 'feed.saved' 
 
 export function ProfilePosts({
   authorId,
-  collections = false,
+  collections = true,
 }: {
   authorId: string;
   /** The liked and saved lists belong to the signed-in student, so only their profile shows them. */
   collections?: boolean;
 }) {
   const { t } = useTranslation();
+  const { data: me } = useMyProfile();
+  const showCollections = collections && me?.id === authorId;
   const [tab, setTab] = useState<FeedPostSource>('posts');
   return (
     <section className="mt-8 space-y-4">
-      {collections ? (
+      {showCollections ? (
         <UISegmented
           label={t('feed.posts')}
           options={tabs.map((id) => t(tabKeys[id]))}
@@ -34,7 +36,11 @@ export function ProfilePosts({
       ) : (
         <h2 className="text-md font-bold">{t('feed.posts')}</h2>
       )}
-      <FeedPosts search="" filters={tab === 'posts' ? { authorId } : undefined} source={tab} />
+      <FeedPosts
+        search=""
+        filters={!showCollections || tab === 'posts' ? { authorId } : undefined}
+        source={showCollections ? tab : 'posts'}
+      />
     </section>
   );
 }

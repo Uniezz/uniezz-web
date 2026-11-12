@@ -1,5 +1,5 @@
 import { createContext, useState } from 'react';
-import { Outlet, createFileRoute, redirect } from '@tanstack/react-router';
+import { Outlet, createFileRoute } from '@tanstack/react-router';
 
 import type { Conversation, Message } from '@/@types';
 // TODO(api): Replace mock conversations and local chat mutations with API queries and mutations.
@@ -19,11 +19,6 @@ export const ChatGroupRouteContext = createContext<{
 } | null>(null);
 
 export const Route = createFileRoute('/_app/chat')({
-  beforeLoad: ({ location, search }) => {
-    if (location.pathname === '/chat' && search.chatRoute === 'new-group') {
-      throw redirect({ to: '/chat/new-group', search });
-    }
-  },
   component: ChatPage,
 });
 
@@ -83,7 +78,6 @@ function ChatPage() {
       to: '/chat',
       search: (previous) => ({
         ...previous,
-        chatRoute: undefined,
         conversationId: group.id,
       }),
     });
@@ -113,7 +107,6 @@ function ChatPage() {
           setPanel('list');
           void navigate({
             to: '/chat',
-            search: (previous) => ({ ...previous, chatRoute: undefined }),
           });
         },
         onCreate: createGroup,
@@ -137,7 +130,6 @@ function ChatPage() {
             setPanel('thread');
             void navigate({
               to: '/chat/new-group',
-              search: (previous) => ({ ...previous, chatRoute: 'new-group' }),
             });
           }}
           onOpen={openConversation}

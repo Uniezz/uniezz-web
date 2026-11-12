@@ -39,10 +39,9 @@ export function FeedPostActions({ post }: { post: FeedPost }) {
     <>
       <div className="flex flex-wrap gap-4">
         <Link
-          to="/feed/post/edit-post/$postId"
+          to="/feed/post/$postId/edit"
           params={{ postId: post.id }}
           data-ph-capture-attribute-label={t('app.edit')}
-          search={{ postId: post.id, feedRoute: undefined }}
           className="text-label font-semibold text-white focus-visible:outline-2 focus-visible:outline-blue"
         >
           {t('app.edit')}

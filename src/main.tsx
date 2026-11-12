@@ -41,13 +41,13 @@ const postRouteMask = createRouteMask({
   from: '/feed/post/$postId',
   to: '/feed/post/$postId',
   params: true,
-  search: (search) => ({ ...search, postId: undefined, postFrom: undefined }),
+  search: (search) => ({ ...search, postFrom: undefined }),
 });
 const newPostRouteMask = createRouteMask({
   routeTree,
   from: '/feed/post/new-post',
   to: '/feed/post/new-post',
-  search: (search) => ({ ...search, feedRoute: undefined, postId: undefined, postFrom: undefined }),
+  search: (search) => ({ ...search, postFrom: undefined }),
 });
 const profileRouteMask = createRouteMask({
   routeTree,

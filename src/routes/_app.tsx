@@ -34,41 +34,23 @@ export const Route = createFileRoute('/_app')({
   ): {
     conversationId?: string;
     chatType?: 'groups' | 'connections' | undefined;
-    chatRoute?: 'new-group' | undefined;
-    postId?: string;
-    /** Where the open post was opened from; travels with `postId` so a reopened post keeps its Back. */
+    /** Where the open post was opened from, so returning from it keeps its Back. */
     postFrom?: string;
-    feedRoute?: 'new-post';
   } => {
     const conversationId = optionalSearchStringSchema.parse(search.conversationId);
-    const postId = optionalSearchStringSchema.parse(search.postId);
     const postFrom = returnPathSchema.parse(search.postFrom);
-    const feedRoute = search.feedRoute === 'new-post' ? search.feedRoute : undefined;
     const chatType =
       search.chatType === 'groups' || search.chatType === 'connections'
         ? search.chatType
         : undefined;
-    const chatRoute = search.chatRoute === 'new-group' ? search.chatRoute : undefined;
     return {
       ...(chatType ? { chatType } : {}),
       ...(conversationId ? { conversationId } : {}),
-      ...(chatRoute ? { chatRoute } : {}),
-      ...(postId ? { postId } : {}),
       ...(postFrom ? { postFrom } : {}),
-      ...(feedRoute ? { feedRoute } : {}),
     };
   },
   search: {
-    middlewares: [
-      retainSearchParams([
-        'chatType',
-        'conversationId',
-        'chatRoute',
-        'postId',
-        'postFrom',
-        'feedRoute',
-      ]),
-    ],
+    middlewares: [retainSearchParams(['chatType', 'conversationId', 'postFrom'])],
   },
   component: AppLayout,
 });

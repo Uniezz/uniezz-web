@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Outlet } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
 import { examsSearchSchema } from '@/schemas';
@@ -36,6 +36,7 @@ function ExamsPage() {
       ) : (
         <MaterialTable />
       )}
+      <Outlet />
     </div>
   );
 }

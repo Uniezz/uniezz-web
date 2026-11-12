@@ -19,7 +19,6 @@ export function TopPosts() {
           key={post.id}
           to="/feed/post/$postId"
           params={{ postId: post.id }}
-          search={{ postId: post.id }}
           data-ph-capture-attribute-label="Open featured post"
           className="group relative h-47 min-w-36 flex-1 overflow-hidden rounded-story bg-surface text-left focus-visible:outline-2 focus-visible:outline-blue"
         >

@@ -90,7 +90,7 @@ export function FeedPostCard({ post }: { post: FeedPost }) {
       <Link
         to="/feed/post/$postId"
         params={{ postId: post.id }}
-        search={{ postId: post.id, postFrom: href }}
+        search={{ postFrom: href }}
         data-ph-capture-attribute-label="Open post"
         aria-label={`${t('app.viewPost')}: ${post.title}`}
         skullet-ignore=""

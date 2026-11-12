@@ -21,7 +21,6 @@ import { Route as AppFaqRouteImport } from './routes/_app/faq'
 import { Route as AppFeedRouteRouteImport } from './routes/_app/feed/route'
 import { Route as AppGuideRouteImport } from './routes/_app/guide'
 import { Route as AppProfileRouteImport } from './routes/_app/profile'
-import { Route as AuthCallbackRouteImport } from './routes/auth/callback'
 import { Route as AuthDoneRouteImport } from './routes/auth/done'
 import { Route as AppChatIndexRouteImport } from './routes/_app/chat/index'
 import { Route as AppChatNewGroupRouteImport } from './routes/_app/chat/new-group'
@@ -29,9 +28,11 @@ import { Route as AppConnectionsIndexRouteImport } from './routes/_app/connectio
 import { Route as AppFeedIndexRouteImport } from './routes/_app/feed/index'
 import { Route as AppConnectionsStudentsIndexRouteImport } from './routes/_app/connections/students/index'
 import { Route as AppConnectionsStudentsProfileIdRouteImport } from './routes/_app/connections/students/$profileId'
+import { Route as AppExamsCoursesNewRouteImport } from './routes/_app/exams/courses/new'
 import { Route as AppFeedPostPostIdRouteImport } from './routes/_app/feed/post/$postId'
 import { Route as AppFeedPostNewPostRouteImport } from './routes/_app/feed/post/new-post'
-import { Route as AppFeedPostEditPostPostIdRouteImport } from './routes/_app/feed/post/edit-post/$postId'
+import { Route as AppExamsCoursesCourseIdEditRouteImport } from './routes/_app/exams/courses/$courseId/edit'
+import { Route as AppFeedPostPostIdEditRouteImport } from './routes/_app/feed/post/$postId/edit'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -91,11 +92,6 @@ const AppProfileRoute = AppProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => AppRoute,
 } as any)
-const AuthCallbackRoute = AuthCallbackRouteImport.update({
-  id: '/auth/callback',
-  path: '/auth/callback',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AuthDoneRoute = AuthDoneRouteImport.update({
   id: '/auth/done',
   path: '/auth/done',
@@ -133,6 +129,11 @@ const AppConnectionsStudentsProfileIdRoute =
     path: '/connections/students/$profileId',
     getParentRoute: () => AppRoute,
   } as any)
+const AppExamsCoursesNewRoute = AppExamsCoursesNewRouteImport.update({
+  id: '/courses/new',
+  path: '/courses/new',
+  getParentRoute: () => AppExamsRoute,
+} as any)
 const AppFeedPostPostIdRoute = AppFeedPostPostIdRouteImport.update({
   id: '/post/$postId',
   path: '/post/$postId',
@@ -143,12 +144,17 @@ const AppFeedPostNewPostRoute = AppFeedPostNewPostRouteImport.update({
   path: '/post/new-post',
   getParentRoute: () => AppFeedRouteRoute,
 } as any)
-const AppFeedPostEditPostPostIdRoute =
-  AppFeedPostEditPostPostIdRouteImport.update({
-    id: '/post/edit-post/$postId',
-    path: '/post/edit-post/$postId',
-    getParentRoute: () => AppFeedRouteRoute,
+const AppExamsCoursesCourseIdEditRoute =
+  AppExamsCoursesCourseIdEditRouteImport.update({
+    id: '/courses/$courseId/edit',
+    path: '/courses/$courseId/edit',
+    getParentRoute: () => AppExamsRoute,
   } as any)
+const AppFeedPostPostIdEditRoute = AppFeedPostPostIdEditRouteImport.update({
+  id: '/edit',
+  path: '/edit',
+  getParentRoute: () => AppFeedPostPostIdRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -157,42 +163,44 @@ export interface FileRoutesByFullPath {
   '/finish': typeof authFinishRoute
   '/login': typeof authLoginRoute
   '/otp': typeof authOtpRoute
-  '/exams': typeof AppExamsRoute
+  '/exams': typeof AppExamsRouteWithChildren
   '/faq': typeof AppFaqRoute
   '/guide': typeof AppGuideRoute
   '/profile': typeof AppProfileRoute
-  '/auth/callback': typeof AuthCallbackRoute
   '/auth/done': typeof AuthDoneRoute
   '/chat/new-group': typeof AppChatNewGroupRoute
   '/chat/': typeof AppChatIndexRoute
   '/connections/': typeof AppConnectionsIndexRoute
   '/feed/': typeof AppFeedIndexRoute
   '/connections/students/$profileId': typeof AppConnectionsStudentsProfileIdRoute
-  '/feed/post/$postId': typeof AppFeedPostPostIdRoute
+  '/exams/courses/new': typeof AppExamsCoursesNewRoute
+  '/feed/post/$postId': typeof AppFeedPostPostIdRouteWithChildren
   '/feed/post/new-post': typeof AppFeedPostNewPostRoute
   '/connections/students/': typeof AppConnectionsStudentsIndexRoute
-  '/feed/post/edit-post/$postId': typeof AppFeedPostEditPostPostIdRoute
+  '/exams/courses/$courseId/edit': typeof AppExamsCoursesCourseIdEditRoute
+  '/feed/post/$postId/edit': typeof AppFeedPostPostIdEditRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/finish': typeof authFinishRoute
   '/login': typeof authLoginRoute
   '/otp': typeof authOtpRoute
-  '/exams': typeof AppExamsRoute
+  '/exams': typeof AppExamsRouteWithChildren
   '/faq': typeof AppFaqRoute
   '/guide': typeof AppGuideRoute
   '/profile': typeof AppProfileRoute
-  '/auth/callback': typeof AuthCallbackRoute
   '/auth/done': typeof AuthDoneRoute
   '/chat/new-group': typeof AppChatNewGroupRoute
   '/chat': typeof AppChatIndexRoute
   '/connections': typeof AppConnectionsIndexRoute
   '/feed': typeof AppFeedIndexRoute
   '/connections/students/$profileId': typeof AppConnectionsStudentsProfileIdRoute
-  '/feed/post/$postId': typeof AppFeedPostPostIdRoute
+  '/exams/courses/new': typeof AppExamsCoursesNewRoute
+  '/feed/post/$postId': typeof AppFeedPostPostIdRouteWithChildren
   '/feed/post/new-post': typeof AppFeedPostNewPostRoute
   '/connections/students': typeof AppConnectionsStudentsIndexRoute
-  '/feed/post/edit-post/$postId': typeof AppFeedPostEditPostPostIdRoute
+  '/exams/courses/$courseId/edit': typeof AppExamsCoursesCourseIdEditRoute
+  '/feed/post/$postId/edit': typeof AppFeedPostPostIdEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -204,21 +212,22 @@ export interface FileRoutesById {
   '/(auth)/finish': typeof authFinishRoute
   '/(auth)/login': typeof authLoginRoute
   '/(auth)/otp': typeof authOtpRoute
-  '/_app/exams': typeof AppExamsRoute
+  '/_app/exams': typeof AppExamsRouteWithChildren
   '/_app/faq': typeof AppFaqRoute
   '/_app/guide': typeof AppGuideRoute
   '/_app/profile': typeof AppProfileRoute
-  '/auth/callback': typeof AuthCallbackRoute
   '/auth/done': typeof AuthDoneRoute
   '/_app/chat/new-group': typeof AppChatNewGroupRoute
   '/_app/chat/': typeof AppChatIndexRoute
   '/_app/connections/': typeof AppConnectionsIndexRoute
   '/_app/feed/': typeof AppFeedIndexRoute
   '/_app/connections/students/$profileId': typeof AppConnectionsStudentsProfileIdRoute
-  '/_app/feed/post/$postId': typeof AppFeedPostPostIdRoute
+  '/_app/exams/courses/new': typeof AppExamsCoursesNewRoute
+  '/_app/feed/post/$postId': typeof AppFeedPostPostIdRouteWithChildren
   '/_app/feed/post/new-post': typeof AppFeedPostNewPostRoute
   '/_app/connections/students/': typeof AppConnectionsStudentsIndexRoute
-  '/_app/feed/post/edit-post/$postId': typeof AppFeedPostEditPostPostIdRoute
+  '/_app/exams/courses/$courseId/edit': typeof AppExamsCoursesCourseIdEditRoute
+  '/_app/feed/post/$postId/edit': typeof AppFeedPostPostIdEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -233,17 +242,18 @@ export interface FileRouteTypes {
     | '/faq'
     | '/guide'
     | '/profile'
-    | '/auth/callback'
     | '/auth/done'
     | '/chat/new-group'
     | '/chat/'
     | '/connections/'
     | '/feed/'
     | '/connections/students/$profileId'
+    | '/exams/courses/new'
     | '/feed/post/$postId'
     | '/feed/post/new-post'
     | '/connections/students/'
-    | '/feed/post/edit-post/$postId'
+    | '/exams/courses/$courseId/edit'
+    | '/feed/post/$postId/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -254,17 +264,18 @@ export interface FileRouteTypes {
     | '/faq'
     | '/guide'
     | '/profile'
-    | '/auth/callback'
     | '/auth/done'
     | '/chat/new-group'
     | '/chat'
     | '/connections'
     | '/feed'
     | '/connections/students/$profileId'
+    | '/exams/courses/new'
     | '/feed/post/$postId'
     | '/feed/post/new-post'
     | '/connections/students'
-    | '/feed/post/edit-post/$postId'
+    | '/exams/courses/$courseId/edit'
+    | '/feed/post/$postId/edit'
   id:
     | '__root__'
     | '/'
@@ -279,24 +290,24 @@ export interface FileRouteTypes {
     | '/_app/faq'
     | '/_app/guide'
     | '/_app/profile'
-    | '/auth/callback'
     | '/auth/done'
     | '/_app/chat/new-group'
     | '/_app/chat/'
     | '/_app/connections/'
     | '/_app/feed/'
     | '/_app/connections/students/$profileId'
+    | '/_app/exams/courses/new'
     | '/_app/feed/post/$postId'
     | '/_app/feed/post/new-post'
     | '/_app/connections/students/'
-    | '/_app/feed/post/edit-post/$postId'
+    | '/_app/exams/courses/$courseId/edit'
+    | '/_app/feed/post/$postId/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   authRouteRoute: typeof authRouteRouteWithChildren
   AppRoute: typeof AppRouteWithChildren
-  AuthCallbackRoute: typeof AuthCallbackRoute
   AuthDoneRoute: typeof AuthDoneRoute
 }
 
@@ -386,13 +397,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppProfileRouteImport
       parentRoute: typeof AppRoute
     }
-    '/auth/callback': {
-      id: '/auth/callback'
-      path: '/auth/callback'
-      fullPath: '/auth/callback'
-      preLoaderRoute: typeof AuthCallbackRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/auth/done': {
       id: '/auth/done'
       path: '/auth/done'
@@ -442,6 +446,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppConnectionsStudentsProfileIdRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/exams/courses/new': {
+      id: '/_app/exams/courses/new'
+      path: '/courses/new'
+      fullPath: '/exams/courses/new'
+      preLoaderRoute: typeof AppExamsCoursesNewRouteImport
+      parentRoute: typeof AppExamsRoute
+    }
     '/_app/feed/post/$postId': {
       id: '/_app/feed/post/$postId'
       path: '/post/$postId'
@@ -456,12 +467,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppFeedPostNewPostRouteImport
       parentRoute: typeof AppFeedRouteRoute
     }
-    '/_app/feed/post/edit-post/$postId': {
-      id: '/_app/feed/post/edit-post/$postId'
-      path: '/post/edit-post/$postId'
-      fullPath: '/feed/post/edit-post/$postId'
-      preLoaderRoute: typeof AppFeedPostEditPostPostIdRouteImport
-      parentRoute: typeof AppFeedRouteRoute
+    '/_app/exams/courses/$courseId/edit': {
+      id: '/_app/exams/courses/$courseId/edit'
+      path: '/courses/$courseId/edit'
+      fullPath: '/exams/courses/$courseId/edit'
+      preLoaderRoute: typeof AppExamsCoursesCourseIdEditRouteImport
+      parentRoute: typeof AppExamsRoute
+    }
+    '/_app/feed/post/$postId/edit': {
+      id: '/_app/feed/post/$postId/edit'
+      path: '/edit'
+      fullPath: '/feed/post/$postId/edit'
+      preLoaderRoute: typeof AppFeedPostPostIdEditRouteImport
+      parentRoute: typeof AppFeedPostPostIdRoute
     }
   }
 }
@@ -496,28 +514,51 @@ const AppChatRouteRouteWithChildren = AppChatRouteRoute._addFileChildren(
   AppChatRouteRouteChildren,
 )
 
+interface AppFeedPostPostIdRouteChildren {
+  AppFeedPostPostIdEditRoute: typeof AppFeedPostPostIdEditRoute
+}
+
+const AppFeedPostPostIdRouteChildren: AppFeedPostPostIdRouteChildren = {
+  AppFeedPostPostIdEditRoute: AppFeedPostPostIdEditRoute,
+}
+
+const AppFeedPostPostIdRouteWithChildren =
+  AppFeedPostPostIdRoute._addFileChildren(AppFeedPostPostIdRouteChildren)
+
 interface AppFeedRouteRouteChildren {
   AppFeedIndexRoute: typeof AppFeedIndexRoute
-  AppFeedPostPostIdRoute: typeof AppFeedPostPostIdRoute
+  AppFeedPostPostIdRoute: typeof AppFeedPostPostIdRouteWithChildren
   AppFeedPostNewPostRoute: typeof AppFeedPostNewPostRoute
-  AppFeedPostEditPostPostIdRoute: typeof AppFeedPostEditPostPostIdRoute
 }
 
 const AppFeedRouteRouteChildren: AppFeedRouteRouteChildren = {
   AppFeedIndexRoute: AppFeedIndexRoute,
-  AppFeedPostPostIdRoute: AppFeedPostPostIdRoute,
+  AppFeedPostPostIdRoute: AppFeedPostPostIdRouteWithChildren,
   AppFeedPostNewPostRoute: AppFeedPostNewPostRoute,
-  AppFeedPostEditPostPostIdRoute: AppFeedPostEditPostPostIdRoute,
 }
 
 const AppFeedRouteRouteWithChildren = AppFeedRouteRoute._addFileChildren(
   AppFeedRouteRouteChildren,
 )
 
+interface AppExamsRouteChildren {
+  AppExamsCoursesNewRoute: typeof AppExamsCoursesNewRoute
+  AppExamsCoursesCourseIdEditRoute: typeof AppExamsCoursesCourseIdEditRoute
+}
+
+const AppExamsRouteChildren: AppExamsRouteChildren = {
+  AppExamsCoursesNewRoute: AppExamsCoursesNewRoute,
+  AppExamsCoursesCourseIdEditRoute: AppExamsCoursesCourseIdEditRoute,
+}
+
+const AppExamsRouteWithChildren = AppExamsRoute._addFileChildren(
+  AppExamsRouteChildren,
+)
+
 interface AppRouteChildren {
   AppChatRouteRoute: typeof AppChatRouteRouteWithChildren
   AppFeedRouteRoute: typeof AppFeedRouteRouteWithChildren
-  AppExamsRoute: typeof AppExamsRoute
+  AppExamsRoute: typeof AppExamsRouteWithChildren
   AppFaqRoute: typeof AppFaqRoute
   AppGuideRoute: typeof AppGuideRoute
   AppProfileRoute: typeof AppProfileRoute
@@ -529,7 +570,7 @@ interface AppRouteChildren {
 const AppRouteChildren: AppRouteChildren = {
   AppChatRouteRoute: AppChatRouteRouteWithChildren,
   AppFeedRouteRoute: AppFeedRouteRouteWithChildren,
-  AppExamsRoute: AppExamsRoute,
+  AppExamsRoute: AppExamsRouteWithChildren,
   AppFaqRoute: AppFaqRoute,
   AppGuideRoute: AppGuideRoute,
   AppProfileRoute: AppProfileRoute,
@@ -544,7 +585,6 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   authRouteRoute: authRouteRouteWithChildren,
   AppRoute: AppRouteWithChildren,
-  AuthCallbackRoute: AuthCallbackRoute,
   AuthDoneRoute: AuthDoneRoute,
 }
 export const routeTree = rootRouteImport
