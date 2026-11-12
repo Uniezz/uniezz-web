@@ -5,27 +5,21 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { ChevronDown, Save, Trash2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
-import type { components } from '@/@types/schema';
-import { useMyProfile, useProfileProgrammes, useUniversities } from '@/hooks';
+import type { Programme } from '@/@types';
+import { useMyProgrammes, useProfileProgrammes, useUniversities } from '@/hooks';
 import { programmeSchema, type ProgrammeFormSchema } from '@/schemas';
 import { UIButton, UIField, UIPanel, UISelect, UIUnsavedChanges } from '@/ui/components';
 import { AddProgramme } from './AddProgramme';
 
-export function StudyProgrammes({
-  universityId,
-  initialProgrammes,
-}: {
-  universityId: string;
-  initialProgrammes: components['schemas']['Programme'][];
-}) {
+export function StudyProgrammes({ universityId }: { universityId: string }) {
   const { t } = useTranslation();
   const { data: universities } = useUniversities();
   const faculties = (
     universities?.find((university) => university.id === universityId)?.faculties ?? []
   ).map((faculty) => faculty.name);
-  const { data: profile } = useMyProfile();
+  const { data: programmesData } = useMyProgrammes();
+  const programmes = programmesData?.programmes ?? [];
   const { saveProgramme, isSaving, removeProgramme, isRemoving } = useProfileProgrammes();
-  const programmes = profile?.programmes ?? initialProgrammes;
 
   return (
     <div className="space-y-4">
@@ -54,10 +48,10 @@ function ProgrammeCard({
   onSave,
   onRemove,
 }: {
-  programme: components['schemas']['Programme'];
+  programme: Programme;
   faculties: string[];
   isPending: boolean;
-  onSave: (programme: ProgrammeFormSchema) => Promise<components['schemas']['Programme']>;
+  onSave: (programme: ProgrammeFormSchema) => Promise<Programme>;
   onRemove: () => Promise<void>;
 }) {
   const { t } = useTranslation();

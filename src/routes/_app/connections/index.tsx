@@ -1,18 +1,29 @@
+import { useState } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { ArrowUpRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { useForm, useWatch } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 import { defaultConnectionFilters } from '@/utils';
 import type { ConnectionFilters } from '@/@types';
+import { useMyConnectionPreferences } from '@/hooks';
 import { UITopbar } from '@/ui/components';
-import { DiscoveryProfile, ConnectionFilterPanel } from '@/components/features/connections';
+import { ConnectionFilterPanel, DiscoveryProfile } from '@/components/features/connections';
 
 export const Route = createFileRoute('/_app/connections/')({ component: ConnectionsPage });
 function ConnectionsPage() {
   const { t } = useTranslation();
-  const filters = useForm<ConnectionFilters>({ defaultValues: defaultConnectionFilters });
-  const values = { ...defaultConnectionFilters, ...useWatch({ control: filters.control }) };
+  const { data: preferences } = useMyConnectionPreferences();
+  const savedFilters: ConnectionFilters = {
+    ...defaultConnectionFilters,
+    mode: preferences?.openTo?.[0] ?? defaultConnectionFilters.mode,
+  };
+  const filters = useForm<ConnectionFilters>({
+    values: savedFilters,
+    resetOptions: { keepDirtyValues: true },
+  });
+  const [appliedFilters, setAppliedFilters] = useState<ConnectionFilters>();
+  const discoveryFilters = appliedFilters ?? savedFilters;
   return (
     <>
       <UITopbar title={t('connections.title')} subtitle={t('connections.subtitle')}>
@@ -28,10 +39,10 @@ function ConnectionsPage() {
       </UITopbar>
       <div className="grid items-start gap-6 xl:grid-cols-[620px_minmax(0,1fr)] xl:items-stretch">
         <div className="min-w-0 space-y-4">
-          <DiscoveryProfile filters={values as ConnectionFilters} />
+          <DiscoveryProfile filters={discoveryFilters} />
         </div>
         <aside className="relative">
-          <ConnectionFilterPanel form={filters} />
+          <ConnectionFilterPanel form={filters} onApply={setAppliedFilters} />
         </aside>
       </div>
     </>

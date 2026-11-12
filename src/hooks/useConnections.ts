@@ -61,10 +61,12 @@ export function useMyConnectionPreferences() {
 export function useUpdateMyConnectionPreferences() {
   const queryClient = useQueryClient();
   return useMutation({
+    mutationKey: ['connections', 'preferences'],
     meta: { analyticsAction: 'connection_preferences_update' },
     mutationFn: updateMyConnectionPreferences,
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['connections', 'me'] });
+      void queryClient.invalidateQueries({ queryKey: ['connections', 'discover'] });
     },
   });
 }

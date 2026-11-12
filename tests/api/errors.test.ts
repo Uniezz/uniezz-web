@@ -113,3 +113,13 @@ test('unauthorized protected requests redirect and still reject', async () => {
     else Reflect.deleteProperty(globalThis, 'window');
   }
 });
+
+test('dating age rejection preserves the code used by the preferences dialog', async () => {
+  const api = client(Response.json({ error: 'dating_requires_adult' }, { status: 400 }));
+  const error = await api
+    .PATCH('/connections/me', { body: { openTo: ['dating'] } })
+    .catch((error) => error);
+  expect(error).toBeInstanceOf(ApiRequestError);
+  expect(error.status).toBe(400);
+  expect(error.cause).toEqual({ error: 'dating_requires_adult' });
+});

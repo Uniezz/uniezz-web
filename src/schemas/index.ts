@@ -2,6 +2,7 @@ export * from './otp';
 export * from './chat';
 export * from './exams';
 export * from './feed';
+export * from './faq';
 export * from './message';
 export * from './profile';
 export * from './report';
