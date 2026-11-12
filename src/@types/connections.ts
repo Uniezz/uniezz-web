@@ -18,3 +18,7 @@ export type Gender = 'male' | 'female';
 /** An anonymous discovery card: no name, photos or user id until a match. */
 export type DiscoveryCard = components['schemas']['Card'];
 export type Discovery = components['schemas']['DiscoverOutputBody'];
+
+export type ConnectionPreferences = components['schemas']['Preferences'];
+export type UpdateConnectionPreferencesInput = components['schemas']['SavePreferencesInputBody'];
+export type ActOnCandidateInput = components['schemas']['ActOnCandidateInputBody'];

@@ -1,4 +1,11 @@
-import type { CourseQuery, StudyFileQuery } from '@/@types';
+import type {
+  AddCourseCommentInput,
+  AddCourseFileInput,
+  CourseQuery,
+  CreateCourseInput,
+  StudyFileQuery,
+  UpdateCourseInput,
+} from '@/@types';
 import { api } from './client';
 
 export async function searchStudyFiles(query: StudyFileQuery, cursor?: string) {
@@ -25,6 +32,21 @@ export async function getCourses(query: CourseQuery, cursor?: string) {
   return data!;
 }
 
+export async function getCourse(id: string) {
+  const { data } = await api.GET('/study/courses/{id}', { params: { path: { id } } });
+  return data!;
+}
+
+export async function createCourse(body: CreateCourseInput) {
+  const { data } = await api.POST('/study/courses', { body });
+  return data!;
+}
+
+export async function updateCourse(id: string, body: UpdateCourseInput) {
+  const { data } = await api.PATCH('/study/courses/{id}', { params: { path: { id } }, body });
+  return data!;
+}
+
 export async function rateCourse({ id, rating }: { id: string; rating: number }) {
   const { data } = await api.PUT('/study/courses/{id}/rating', {
     params: { path: { id } },
@@ -33,10 +55,45 @@ export async function rateCourse({ id, rating }: { id: string; rating: number })
   return data!;
 }
 
+export async function getCourseComments(id: string, cursor?: string) {
+  const { data } = await api.GET('/study/courses/{id}/comments', {
+    params: { path: { id }, query: { limit: 20, cursor } },
+  });
+  return data!;
+}
+
+export async function addCourseComment(id: string, body: AddCourseCommentInput) {
+  const { data } = await api.POST('/study/courses/{id}/comments', {
+    params: { path: { id } },
+    body,
+  });
+  return data!;
+}
+
+export async function getCourseFiles(id: string, cursor?: string) {
+  const { data } = await api.GET('/study/courses/{id}/files', {
+    params: { path: { id }, query: { limit: 20, cursor } },
+  });
+  return data!;
+}
+
+export async function addCourseFile(id: string, body: AddCourseFileInput) {
+  const { data } = await api.POST('/study/courses/{id}/files', {
+    params: { path: { id } },
+    body,
+  });
+  return data!;
+}
+
 export async function getProfessors(universityId?: string, cursor?: string) {
   const { data } = await api.GET('/study/professors', {
     params: { query: { limit: 20, universityId, cursor } },
   });
+  return data!;
+}
+
+export async function getProfessor(id: string) {
+  const { data } = await api.GET('/study/professors/{id}', { params: { path: { id } } });
   return data!;
 }
 

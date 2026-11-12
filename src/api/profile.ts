@@ -11,6 +11,10 @@ export async function updateMyProfile(body: components['schemas']['UpdateMeInput
   return data!;
 }
 
+export async function deleteMyProfile() {
+  await api.DELETE('/profile/me');
+}
+
 export async function saveProgramme(body: components['schemas']['ProgrammeRequest'], id?: string) {
   const { data } = id
     ? await api.PUT('/profile/programmes/{id}', { params: { path: { id } }, body })
@@ -22,6 +26,11 @@ export async function deleteProgramme(id: string) {
   await api.DELETE('/profile/programmes/{id}', {
     params: { path: { id } },
   });
+}
+
+export async function listMyProgrammes() {
+  const { data } = await api.GET('/profile/programmes');
+  return data!;
 }
 
 export async function deleteMyAvatar() {

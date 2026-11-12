@@ -2,17 +2,33 @@ import {
   keepPreviousData,
   useInfiniteQuery,
   useMutation,
+  useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
 import {
+  addCourseComment,
+  addCourseFile,
+  createCourse,
   deleteStudyFile,
+  getCourse,
+  getCourseComments,
+  getCourseFiles,
   getCourses,
+  getProfessor,
   getProfessors,
   rateCourse,
   rateProfessor,
   searchStudyFiles,
+  updateCourse,
 } from '@/api';
-import type { CourseQuery, StudyFileQuery } from '@/@types';
+import type {
+  AddCourseCommentInput,
+  AddCourseFileInput,
+  CourseQuery,
+  CreateCourseInput,
+  StudyFileQuery,
+  UpdateCourseInput,
+} from '@/@types';
 import { patchCachedItem } from '@/utils/query';
 
 export function useStudyFiles(query: StudyFileQuery) {
@@ -44,6 +60,34 @@ export function useCourses(query: CourseQuery) {
   });
 }
 
+export function useCourse(id: string) {
+  return useQuery({
+    queryKey: ['study', 'courses', id],
+    queryFn: () => getCourse(id),
+    enabled: !!id,
+  });
+}
+
+export function useCreateCourse() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    meta: { analyticsAction: 'course_create' },
+    mutationFn: (body: CreateCourseInput) => createCourse(body),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['study', 'courses'] });
+    },
+  });
+}
+
+export function useUpdateCourse() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    meta: { analyticsAction: 'course_update' },
+    mutationFn: ({ id, body }: { id: string; body: UpdateCourseInput }) => updateCourse(id, body),
+    onSuccess: (course) => patchCachedItem(queryClient, ['study', 'courses'], course.id, course),
+  });
+}
+
 export function useRateCourse() {
   const queryClient = useQueryClient();
   return useMutation({
@@ -53,12 +97,65 @@ export function useRateCourse() {
   });
 }
 
+export function useCourseComments(courseId: string) {
+  return useInfiniteQuery({
+    queryKey: ['study', 'courses', courseId, 'comments'],
+    queryFn: ({ pageParam }) => getCourseComments(courseId, pageParam),
+    initialPageParam: undefined as string | undefined,
+    getNextPageParam: (page) => page.nextCursor ?? undefined,
+    enabled: !!courseId,
+  });
+}
+
+export function useAddCourseComment() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    meta: { analyticsAction: 'course_comment_add' },
+    mutationFn: ({ courseId, body }: { courseId: string; body: AddCourseCommentInput }) =>
+      addCourseComment(courseId, body),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['study', 'courses'] });
+    },
+  });
+}
+
+export function useCourseFiles(courseId: string) {
+  return useInfiniteQuery({
+    queryKey: ['study', 'courses', courseId, 'files'],
+    queryFn: ({ pageParam }) => getCourseFiles(courseId, pageParam),
+    initialPageParam: undefined as string | undefined,
+    getNextPageParam: (page) => page.nextCursor ?? undefined,
+    enabled: !!courseId,
+  });
+}
+
+export function useAddCourseFile() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    meta: { analyticsAction: 'course_file_add' },
+    mutationFn: ({ courseId, body }: { courseId: string; body: AddCourseFileInput }) =>
+      addCourseFile(courseId, body),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['study', 'courses'] });
+      void queryClient.invalidateQueries({ queryKey: ['study', 'files'] });
+    },
+  });
+}
+
 export function useProfessors(universityId?: string) {
   return useInfiniteQuery({
     queryKey: ['study', 'professors', universityId],
     queryFn: ({ pageParam }) => getProfessors(universityId, pageParam),
     initialPageParam: undefined as string | undefined,
     getNextPageParam: (page) => page.nextCursor ?? undefined,
+  });
+}
+
+export function useProfessor(id: string) {
+  return useQuery({
+    queryKey: ['study', 'professors', id],
+    queryFn: () => getProfessor(id),
+    enabled: !!id,
   });
 }
 

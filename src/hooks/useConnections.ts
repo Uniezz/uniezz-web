@@ -1,6 +1,15 @@
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { ConnectionFilters, Discovery } from '@/@types';
-import { actOnCandidate, discoverConnections, getConnections } from '@/api';
+import {
+  actOnCandidate,
+  blockStudent,
+  deleteConnection,
+  discoverConnections,
+  getConnections,
+  getMyConnectionPreferences,
+  unblockStudent,
+  updateMyConnectionPreferences,
+} from '@/api';
 import { captureAnalytics } from '@/utils/analytics';
 
 export function useDiscovery(filters: ConnectionFilters) {
@@ -39,5 +48,59 @@ export function useConnectionsList() {
     queryFn: ({ pageParam }) => getConnections(pageParam),
     initialPageParam: undefined as string | undefined,
     getNextPageParam: (page) => page.nextCursor ?? undefined,
+  });
+}
+
+export function useMyConnectionPreferences() {
+  return useQuery({
+    queryKey: ['connections', 'me'],
+    queryFn: getMyConnectionPreferences,
+  });
+}
+
+export function useUpdateMyConnectionPreferences() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    meta: { analyticsAction: 'connection_preferences_update' },
+    mutationFn: updateMyConnectionPreferences,
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['connections', 'me'] });
+    },
+  });
+}
+
+export function useBlockStudent() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    meta: { analyticsAction: 'connection_block' },
+    mutationFn: blockStudent,
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['connections', 'list'] });
+      void queryClient.invalidateQueries({ queryKey: ['connections', 'discover'] });
+    },
+  });
+}
+
+export function useUnblockStudent() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    meta: { analyticsAction: 'connection_unblock' },
+    mutationFn: unblockStudent,
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['connections', 'list'] });
+      void queryClient.invalidateQueries({ queryKey: ['connections', 'discover'] });
+    },
+  });
+}
+
+export function useDeleteConnection() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    meta: { analyticsAction: 'connection_delete' },
+    mutationFn: deleteConnection,
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['connections', 'list'] });
+      void queryClient.invalidateQueries({ queryKey: ['connections', 'discover'] });
+    },
   });
 }

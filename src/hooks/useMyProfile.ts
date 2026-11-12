@@ -1,5 +1,6 @@
-import { queryOptions, useQuery } from '@tanstack/react-query';
-import { getMyProfile } from '@/api';
+import { queryOptions, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import type { components } from '@/@types/schema';
+import { deleteMyProfile, getMyProfile, listMyProgrammes, updateMyProfile } from '@/api';
 
 export function myProfileQueryOptions() {
   return queryOptions({ queryKey: ['profile', 'me'], queryFn: getMyProfile });
@@ -7,4 +8,33 @@ export function myProfileQueryOptions() {
 
 export function useMyProfile() {
   return useQuery(myProfileQueryOptions());
+}
+
+export function useUpdateMyProfile() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    meta: { analyticsAction: 'profile_update' },
+    mutationFn: (body: components['schemas']['UpdateMeInputBody']) => updateMyProfile(body),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['profile', 'me'] });
+    },
+  });
+}
+
+export function useDeleteMyProfile() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    meta: { analyticsAction: 'profile_delete' },
+    mutationFn: deleteMyProfile,
+    onSuccess: () => {
+      queryClient.clear();
+    },
+  });
+}
+
+export function useMyProgrammes() {
+  return useQuery({
+    queryKey: ['profile', 'programmes'],
+    queryFn: listMyProgrammes,
+  });
 }
