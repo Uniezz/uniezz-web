@@ -17,9 +17,9 @@ const tableComponents = fixedTable(columnWidths);
 
 export function MaterialTable() {
   const { t, i18n } = useTranslation();
-  const { tab, university, semester, q } = useSearch({ from: '/_app/exams' });
+  const { university, semester, q } = useSearch({ from: '/_app/exams' });
   const { data, isPending, isError, refetch, hasNextPage, isFetchingNextPage, fetchNextPage } =
-    useStudyFiles({ q, universityId: university, semester, mine: tab === 'mine' || undefined });
+    useStudyFiles({ q, universityId: university, semester, mine: true });
   const { data: me } = useMyProfile();
   const [toDelete, setToDelete] = useState<StudyFile | null>(null);
   const { mutate: deleteFile, isPending: isDeleting } = useDeleteStudyFile();
@@ -59,7 +59,7 @@ export function MaterialTable() {
               }}
               className="scrollbar-gray min-h-0 flex-1"
               components={tableComponents}
-              aria-label={t(tab === 'mine' ? 'app.myUploads' : 'app.pastPapers')}
+              aria-label={t('app.myUploads')}
               itemContent={(_, file) => (
                 <>
                   <td className="border-t border-white-5 px-4 py-3">

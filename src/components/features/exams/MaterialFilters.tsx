@@ -5,13 +5,12 @@ import type { ExamsSearch } from '@/@types';
 import { useUniversities } from '@/hooks';
 import { UIButton, UISearch, UISegmented, UISelect } from '@/ui/components';
 
-const tabIds = ['papers', 'reviews', 'professors', 'mine'] as const;
-const selectClass =
-  'app-control h-auto w-auto appearance-none rounded-full pr-11 text-label hover:border-white-40 focus:border-white-10 focus:hover:border-white-40';
+const tabIds = ['reviews', 'professors', 'mine'] as const;
+const selectClass = 'app-control h-auto w-auto rounded-full text-label focus:border-white-10';
 
 export function MaterialFilters() {
   const { t } = useTranslation();
-  const { tab = 'papers', university, semester, q } = useSearch({ from: '/_app/exams' });
+  const { tab = 'reviews', university, semester, q } = useSearch({ from: '/_app/exams' });
   const navigate = useNavigate({ from: '/exams' });
   const { data: universities = [] } = useUniversities();
   const setSearch = (patch: Partial<ExamsSearch>) =>
@@ -26,12 +25,7 @@ export function MaterialFilters() {
     setText(q ?? '');
   }
 
-  const tabs: string[] = [
-    t('app.pastPapers'),
-    t('app.courseReviews'),
-    t('app.professorRatings'),
-    t('app.myUploads'),
-  ];
+  const tabs: string[] = [t('app.courseReviews'), t('app.professorRatings'), t('app.myUploads')];
   return (
     <>
       <form
@@ -55,7 +49,7 @@ export function MaterialFilters() {
           value={tabs[tabIds.indexOf(tab)]}
           onChange={(value) => {
             const next = tabIds[tabs.indexOf(value)];
-            setSearch({ tab: next === 'papers' ? undefined : next });
+            setSearch({ tab: next === 'reviews' ? undefined : next });
           }}
         />
         <div className="flex-1" />

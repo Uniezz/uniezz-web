@@ -159,11 +159,11 @@ export function CourseFormDialog({ course, onClose }: CourseFormDialogProps) {
       >
         <fieldset disabled={isSaving} className="space-y-4">
           {!course && (
-            <UIField
-              label={t('courses.materials')}
-              hint={t('courses.materialsHint')}
-              error={errors.materials ? t('courses.materialsHint') : undefined}
+            <fieldset
+              className="flex min-w-0 flex-col gap-1.5 text-micro font-semibold text-secondary"
+              aria-describedby={`${materialsInputId}-hint`}
             >
+              <legend>{t('courses.materials')}</legend>
               <Controller
                 name="materials"
                 control={control}
@@ -201,27 +201,29 @@ export function CourseFormDialog({ course, onClose }: CourseFormDialogProps) {
                     <>
                       <div className="grid grid-cols-[minmax(0,1fr)_minmax(8rem,0.55fr)] gap-3">
                         <div>
-                          <input
-                            {...field}
-                            id={materialsInputId}
-                            type="file"
-                            multiple
-                            accept="application/pdf,image/jpeg,image/png,image/webp"
-                            className="peer sr-only"
-                            disabled={isPending}
-                            data-ph-capture-attribute-label="Choose course materials"
-                            onChange={(event) => {
-                              const files = Array.from(event.target.files ?? []);
-                              event.currentTarget.value = '';
-                              void addMaterials(files);
-                            }}
-                          />
                           <label
                             htmlFor={materialsInputId}
-                            className="app-control flex cursor-pointer items-center justify-between gap-3 peer-focus-visible:outline-2 peer-focus-visible:outline-blue hover:bg-white-5"
+                            data-ph-capture-attribute-label="Choose course materials"
+                            className="group block cursor-pointer"
                           >
-                            <span>{t('courses.chooseFiles')}</span>
-                            <Upload size={18} aria-hidden="true" />
+                            <input
+                              {...field}
+                              id={materialsInputId}
+                              type="file"
+                              multiple
+                              accept="application/pdf,image/jpeg,image/png,image/webp"
+                              className="peer sr-only"
+                              disabled={isPending}
+                              onChange={(event) => {
+                                const files = Array.from(event.target.files ?? []);
+                                event.currentTarget.value = '';
+                                void addMaterials(files);
+                              }}
+                            />
+                            <span className="app-control flex cursor-pointer items-center justify-between gap-3 group-hover:bg-white-10 peer-focus-visible:outline-2 peer-focus-visible:outline-blue peer-disabled:cursor-not-allowed peer-disabled:opacity-40">
+                              <span>{t('courses.chooseFiles')}</span>
+                              <Upload size={18} aria-hidden="true" />
+                            </span>
                           </label>
                         </div>
                         <Controller
@@ -269,7 +271,14 @@ export function CourseFormDialog({ course, onClose }: CourseFormDialogProps) {
                   );
                 }}
               />
-            </UIField>
+              <p
+                id={`${materialsInputId}-hint`}
+                role={errors.materials ? 'alert' : undefined}
+                className={errors.materials ? 'font-medium text-warning' : 'font-medium text-muted'}
+              >
+                {t('courses.materialsHint')}
+              </p>
+            </fieldset>
           )}
           <UIField
             label={t('courses.name')}
@@ -381,7 +390,7 @@ export function CourseFormDialog({ course, onClose }: CourseFormDialogProps) {
                       className="app-control"
                       value={String(field.value)}
                       onChange={(value) => field.onChange(Number(value))}
-                      options={Array.from({ length: 10 }, (_, index) => index + 1).map((value) => ({
+                      options={Array.from({ length: 12 }, (_, index) => index + 1).map((value) => ({
                         value: String(value),
                         label: t('exams.semesterNumber', { semester: value }),
                       }))}

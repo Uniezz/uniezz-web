@@ -14,7 +14,7 @@ export const uploadSchema = z.object({
 
 /** Exams filters live in the URL; bad values fall back to "any" instead of failing the page. */
 export const examsSearchSchema = z.object({
-  tab: z.enum(['papers', 'reviews', 'professors', 'mine']).optional().catch(undefined),
+  tab: z.enum(['reviews', 'professors', 'mine']).optional().catch(undefined),
   university: z.string().max(40).optional().catch(undefined),
   semester: z.coerce.number().int().min(1).max(12).optional().catch(undefined),
   q: optionalSearchStringSchema,
@@ -30,7 +30,7 @@ export const createCourseSchema = editCourseSchema.extend({
   universityId: z.string().trim().min(1).max(32),
   faculty: courseNameSchema,
   subject: courseNameSchema,
-  semester: z.number().int().min(1).max(10),
+  semester: z.number().int().min(1).max(12),
 });
 export const createCourseFormSchema = createCourseSchema.extend({
   materials: z.array(studyMaterialFileSchema).max(10),

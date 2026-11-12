@@ -18,7 +18,6 @@ export type Professor = components['schemas']['Professor'];
 
 export type CourseDetailsDialogProps = { courseId: string; onClose: () => void };
 export type CourseFormDialogProps = { course?: Course; onClose: (ignoreBlocker?: boolean) => void };
-export type CourseCommentsProps = { courseId: string };
 export type CourseMaterialsProps = { courseId: string };
 export type UploadMaterialProps = { courseId: string; onClose: (ignoreBlocker?: boolean) => void };
 export type UploadMaterialButtonProps = { courseId: string };

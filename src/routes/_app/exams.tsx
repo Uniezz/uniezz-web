@@ -18,7 +18,7 @@ export const Route = createFileRoute('/_app/exams')({
 
 function ExamsPage() {
   const { t } = useTranslation();
-  const { tab } = Route.useSearch();
+  const { tab = 'reviews' } = Route.useSearch();
 
   return (
     <div className="flex h-[calc(100svh-136px)] min-h-0 flex-col overflow-hidden lg:h-[calc(100svh-56px)]">

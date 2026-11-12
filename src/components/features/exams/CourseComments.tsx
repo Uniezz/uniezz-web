@@ -1,36 +1,31 @@
-import type { CourseCommentForm, CourseCommentsProps } from '@/@types';
-// ai-design-check-ignore-file use-shared-components -- UIField and app-control are the established shared form pattern for react-hook-form in this project.
-import { useState } from 'react';
+import { useState, type FormEvent, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { Virtuoso } from 'react-virtuoso';
 import toast from 'react-hot-toast';
 import { useCourseComments, useAddCourseComment, useDeleteCourseComment } from '@/hooks';
 import { courseCommentSchema } from '@/schemas';
-import { captureAnalytics } from '@/utils/analytics';
 import { UIButton, UIDialog, UIField, UIQueryError } from '@/ui/components';
+import { listComponents } from '@/ui/virtuoso';
 
-export function CourseComments({ courseId }: CourseCommentsProps) {
+type CourseCommentsProps = { courseId: string; actions: ReactNode };
+
+export function CourseComments({ courseId, actions }: CourseCommentsProps) {
   const { t, i18n } = useTranslation();
   const { data, isPending, isError, refetch, hasNextPage, fetchNextPage, isFetchingNextPage } =
     useCourseComments(courseId);
   const { mutateAsync: add, isPending: isAdding } = useAddCourseComment();
   const { mutateAsync: remove, isPending: isDeleting } = useDeleteCourseComment();
   const [deleteId, setDeleteId] = useState<string | null>(null);
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<CourseCommentForm>({
-    resolver: zodResolver(courseCommentSchema),
-    defaultValues: { content: '' },
-  });
+  const [content, setContent] = useState('');
+  const isCommentValid = courseCommentSchema.safeParse({ content }).success;
   const comments = data?.pages.flatMap((page) => page.items ?? []) ?? [];
-  async function submit(body: CourseCommentForm) {
+  async function submit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const result = courseCommentSchema.safeParse({ content });
+    if (!result.success || isAdding) return;
     try {
-      await add({ courseId, body });
-      reset();
+      await add({ courseId, body: result.data });
+      setContent('');
       toast.success(t('courses.commentAdded'));
     } catch {
       toast.error(t('apiState.error'));
@@ -53,62 +48,64 @@ export function CourseComments({ courseId }: CourseCommentsProps) {
       {!isPending && !isError && comments.length === 0 && (
         <p className="text-secondary">{t('courses.noComments')}</p>
       )}
-      <ul className="divide-y divide-white-10">
-        {comments.map((comment) => (
-          <li key={comment.id} className="space-y-2 py-3">
-            <div className="flex items-center justify-between gap-3">
-              <time dateTime={comment.createdAt} className="text-detail text-secondary">
-                {new Intl.DateTimeFormat(i18n.language, {
-                  dateStyle: 'medium',
-                  timeStyle: 'short',
-                }).format(new Date(comment.createdAt))}
-              </time>
-              {comment.isMine && (
-                <UIButton
-                  size="pill"
-                  bg="secondary"
-                  onClick={() => setDeleteId(comment.id)}
-                  data-ph-capture-attribute-label="Delete course comment"
-                >
-                  {t('app.remove')}
-                </UIButton>
-              )}
+      {comments.length > 0 && (
+        <Virtuoso
+          data={comments}
+          computeItemKey={(_, comment) => comment.id}
+          endReached={() => {
+            if (hasNextPage && !isFetchingNextPage && !isError) void fetchNextPage();
+          }}
+          components={listComponents}
+          aria-label={t('app.comments')}
+          className="scrollbar-gray"
+          style={{ height: '16rem' }}
+          itemContent={(_, comment) => (
+            <div role="listitem" className="pb-5">
+              <article className="min-w-0">
+                <p className="text-label leading-relaxed wrap-anywhere whitespace-pre-wrap text-white-80">
+                  {comment.content}
+                </p>
+                <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2">
+                  <time dateTime={comment.createdAt} className="text-detail text-secondary">
+                    {new Intl.DateTimeFormat(i18n.language, {
+                      dateStyle: 'medium',
+                      timeStyle: 'short',
+                    }).format(new Date(comment.createdAt))}
+                  </time>
+                  {comment.isMine && (
+                    <UIButton
+                      size="pill"
+                      bg="transparent"
+                      className="min-h-0 border-0 p-0 text-danger enabled:hover:bg-transparent"
+                      onClick={() => setDeleteId(comment.id)}
+                      data-ph-capture-attribute-label="Delete course comment"
+                    >
+                      {t('app.remove')}
+                    </UIButton>
+                  )}
+                </div>
+              </article>
             </div>
-            <p className="wrap-anywhere whitespace-pre-wrap">{comment.content}</p>
-          </li>
-        ))}
-      </ul>
-      {isError && <UIQueryError retry={() => void refetch()} />}
-      {hasNextPage && !isError && (
-        <UIButton
-          size="sm"
-          bg="secondary"
-          disabled={isFetchingNextPage}
-          onClick={() => void fetchNextPage()}
-          data-ph-capture-attribute-label="Load more course comments"
-        >
-          {t('apiState.loadMore')}
-        </UIButton>
+          )}
+        />
       )}
-      <form
-        className="space-y-3"
-        onSubmit={handleSubmit(submit, () => captureAnalytics('course_comment_validation_failed'))}
-      >
-        <UIField
-          label={t('courses.addComment')}
-          error={errors.content ? t('courses.commentHint') : undefined}
-        >
+      {isError && <UIQueryError retry={() => void refetch()} />}
+      <form className="space-y-3" onSubmit={submit}>
+        <UIField label={t('courses.addComment')}>
           <textarea
-            className="app-control min-h-24 resize-y"
+            className="app-control max-h-50 min-h-28 resize-y"
             maxLength={1000}
             disabled={isAdding}
-            aria-invalid={Boolean(errors.content)}
-            {...register('content')}
+            value={content}
+            onChange={(event) => setContent(event.target.value)}
           />
         </UIField>
-        <UIButton type="submit" disabled={isAdding}>
-          {t('app.submit')}
-        </UIButton>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex flex-wrap items-center gap-3">{actions}</div>
+          <UIButton type="submit" disabled={isAdding || !isCommentValid}>
+            {t('app.submit')}
+          </UIButton>
+        </div>
       </form>
       <UIDialog
         open={deleteId !== null}

@@ -25,8 +25,9 @@ function EditCoursePage() {
   const { data: course, isPending, isError, refetch } = useCourse(courseId);
   const close = (ignoreBlocker = false) =>
     void navigate({
-      to: '/exams',
-      search: (previous) => ({ ...previous, tab: 'reviews' }),
+      to: '/exams/courses/$courseId',
+      params: { courseId },
+      search: { tab: 'reviews' },
       replace: true,
       ignoreBlocker,
     });

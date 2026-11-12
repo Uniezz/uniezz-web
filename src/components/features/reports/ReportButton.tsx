@@ -24,10 +24,12 @@ export function ReportButton({
   targetType,
   targetId,
   compact = false,
+  danger = false,
 }: {
   targetType: components['schemas']['CreateReportInputBody']['targetType'];
   targetId: string;
   compact?: boolean;
+  danger?: boolean;
 }) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
@@ -73,7 +75,7 @@ export function ReportButton({
         className={
           compact
             ? 'min-h-0 gap-1.5 rounded-full border border-danger/25 bg-danger-soft py-1 pr-2.5 pl-2 text-micro font-semibold text-danger backdrop-blur-md enabled:hover:border-danger/50 enabled:hover:bg-danger/25'
-            : 'min-h-0 gap-1 border-0 p-0 text-secondary enabled:hover:bg-transparent enabled:hover:text-white'
+            : `min-h-0 gap-1 border-0 p-0 ${danger ? 'text-danger enabled:hover:text-danger-hover' : 'text-secondary enabled:hover:text-white'} enabled:hover:bg-transparent`
         }
         onClick={() => changeOpen(true)}
       >

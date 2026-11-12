@@ -10,7 +10,8 @@ export function UploadMaterialButton({ courseId }: UploadMaterialButtonProps) {
   return (
     <UIButton
       size="sm"
-      leftIcon={Upload}
+      bg="secondary"
+      className="min-h-11 w-auto justify-between rounded-xl px-3 py-2.5 text-label font-medium"
       onClick={() =>
         void navigate({
           to: '/exams/courses/$courseId/upload',
@@ -19,7 +20,8 @@ export function UploadMaterialButton({ courseId }: UploadMaterialButtonProps) {
         })
       }
     >
-      {t('exams.action')}
+      {t('courses.chooseFiles')}
+      <Upload size={18} aria-hidden="true" />
     </UIButton>
   );
 }

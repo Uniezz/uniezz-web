@@ -1,9 +1,10 @@
 import type { CourseDetailsDialogProps } from '@/@types';
 import { useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
+import { Flame, Pencil } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useCourse, useRateCourse, useUniversities } from '@/hooks';
-import { UIButton, UIDialog, UIQueryError } from '@/ui/components';
+import { UIButton, UIDialog, UIQueryError, UIUniversityLogo } from '@/ui/components';
 import { ReportButton } from '@/components/features/reports/ReportButton';
 import { CourseComments } from './CourseComments';
 import { CourseMaterials } from './CourseMaterials';
@@ -30,34 +31,42 @@ export function CourseDetailsDialog({ courseId, onClose }: CourseDetailsDialogPr
         {isError && <UIQueryError retry={() => void refetch()} />}
         {course && (
           <div className="space-y-6">
-            <dl className="grid grid-cols-2 gap-3 text-detail">
+            <div>
+              <h3 className="text-micro font-semibold text-secondary">
+                {t('courses.description')}
+              </h3>
+              <p className="mt-1 wrap-anywhere whitespace-pre-wrap">{course.description}</p>
+            </div>
+            <div>
+              <h3 className="text-micro font-semibold text-secondary">{t('courses.difficulty')}</h3>
+              <div className="mt-1">
+                <RatingInput average={course.difficulty} count={0} readOnly icon={Flame} />
+              </div>
+            </div>
+            <dl className="grid grid-cols-2 gap-3 text-label">
               <div>
-                <dt className="text-secondary">{t('app.university')}</dt>
-                <dd>
-                  {universities.find(({ id }) => id === course.universityId)?.name ??
-                    course.universityId}
+                <dt className="text-micro font-semibold text-secondary">{t('app.university')}</dt>
+                <dd className="mt-1 flex items-center gap-2">
+                  <UIUniversityLogo universityId={course.universityId} />
+                  <span className="min-w-0 wrap-anywhere">
+                    {universities.find(({ id }) => id === course.universityId)?.name ??
+                      course.universityId}
+                  </span>
                 </dd>
               </div>
               <div>
-                <dt className="text-secondary">{t('app.faculty')}</dt>
+                <dt className="text-micro font-semibold text-secondary">{t('app.faculty')}</dt>
                 <dd className="wrap-anywhere">{course.faculty}</dd>
               </div>
               <div>
-                <dt className="text-secondary">{t('app.subject')}</dt>
+                <dt className="text-micro font-semibold text-secondary">{t('app.subject')}</dt>
                 <dd className="wrap-anywhere">{course.subject}</dd>
               </div>
               <div>
-                <dt className="text-secondary">{t('app.semester')}</dt>
+                <dt className="text-micro font-semibold text-secondary">{t('app.semester')}</dt>
                 <dd>{course.semester}</dd>
               </div>
-              <div>
-                <dt className="text-secondary">{t('courses.difficulty')}</dt>
-                <dd className="mt-1">
-                  <RatingInput average={course.difficulty} count={0} readOnly />
-                </dd>
-              </div>
             </dl>
-            <p className="wrap-anywhere whitespace-pre-wrap">{course.description}</p>
             <RatingInput
               average={course.ratingAverage}
               count={course.ratingCount}
@@ -67,26 +76,33 @@ export function CourseDetailsDialog({ courseId, onClose }: CourseDetailsDialogPr
                 rate({ id: courseId, rating }, { onError: () => toast.error(t('apiState.error')) })
               }
             />
-            <div className="flex flex-wrap gap-3">
-              {course.isMine && (
-                <UIButton
-                  size="sm"
-                  bg="secondary"
-                  onClick={() =>
-                    void navigate({
-                      to: '/exams/courses/$courseId/edit',
-                      params: { courseId },
-                      search: (previous) => ({ ...previous, tab: 'reviews' }),
-                    })
-                  }
-                >
-                  {t('courses.edit')}
-                </UIButton>
-              )}
-              <ReportButton targetType="course" targetId={courseId} />
-            </div>
             <CourseMaterials courseId={courseId} />
-            <CourseComments courseId={courseId} />
+            <CourseComments
+              courseId={courseId}
+              actions={
+                <>
+                  {course.isMine && (
+                    <UIButton
+                      size="pill"
+                      bg="transparent"
+                      className="min-h-0 gap-1 border-0 p-0 text-secondary enabled:hover:bg-transparent enabled:hover:text-white"
+                      aria-label={t('courses.edit')}
+                      onClick={() =>
+                        void navigate({
+                          to: '/exams/courses/$courseId/edit',
+                          params: { courseId },
+                          search: (previous) => ({ ...previous, tab: 'reviews' }),
+                        })
+                      }
+                    >
+                      <Pencil className="size-3.5" aria-hidden="true" />
+                      {t('courses.edit')}
+                    </UIButton>
+                  )}
+                  <ReportButton targetType="course" targetId={courseId} danger />
+                </>
+              }
+            />
           </div>
         )}
       </UIDialog>

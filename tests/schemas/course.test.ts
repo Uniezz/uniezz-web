@@ -31,10 +31,13 @@ test('difficulty and semester follow the API integer limits', () => {
   for (const difficulty of [0, 6, 1.5, NaN]) {
     expect(createCourseSchema.safeParse({ ...course, difficulty }).success).toBe(false);
   }
-  for (const semester of [0, 11, 1.5, NaN]) {
+  for (const semester of [0, 13, 1.5, NaN]) {
     expect(createCourseSchema.safeParse({ ...course, semester }).success).toBe(false);
   }
   expect(createCourseSchema.safeParse({ ...course, semester: 10, difficulty: 5 }).success).toBe(
+    true,
+  );
+  expect(createCourseSchema.safeParse({ ...course, semester: 12, difficulty: 5 }).success).toBe(
     true,
   );
 });

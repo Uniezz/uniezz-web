@@ -106,7 +106,7 @@ export function UploadMaterial({ courseId, onClose }: UploadMaterialProps) {
               />
             </UIField>
             <UIField
-              label={t('courses.file')}
+              label={t('courses.chooseFiles')}
               hint={t('courses.fileHint')}
               error={errors.file ? t('courses.fileHint') : undefined}
             >
