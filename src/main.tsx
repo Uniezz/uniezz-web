@@ -69,7 +69,11 @@ const router = createRouter({
   ],
   context: { queryClient },
   // Scroll is remembered per address, so returning to a page (Back opens it anew) restores it.
-  scrollRestoration: true,
+  scrollRestoration: ({ location }) =>
+    !(
+      location.pathname.startsWith('/exams/courses/') ||
+      /^\/feed\/post\/(new-post\/?|[^/]+\/edit\/?)$/.test(location.pathname)
+    ),
   getScrollRestorationKey: (location) => location.href,
 });
 

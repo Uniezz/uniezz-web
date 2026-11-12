@@ -43,6 +43,8 @@
     "allUniversitiesHint": "Visible to students of every university",
     "back": "Back",
     "bannerError": "Choose a valid JPG, PNG or WebP image under 10 MB.",
+    "bannerRemoved": "Banner removed.",
+    "removeBannerDescription": "This will remove your profile banner.",
     "cancel": "Cancel",
     "changeBanner": "Change banner",
     "changePhoto": "Change photo",

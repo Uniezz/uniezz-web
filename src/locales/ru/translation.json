@@ -43,6 +43,8 @@
     "allUniversitiesHint": "Видят студенты всех университетов",
     "back": "Назад",
     "bannerError": "Выберите корректное изображение JPG, PNG или WebP до 10 МБ.",
+    "bannerRemoved": "Баннер удалён.",
+    "removeBannerDescription": "Баннер профиля будет удалён.",
     "cancel": "Отмена",
     "changeBanner": "Изменить баннер",
     "changePhoto": "Изменить фото",

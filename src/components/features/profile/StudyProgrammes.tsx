@@ -1,14 +1,15 @@
 import { captureAnalytics } from '@/utils/analytics';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ChevronDown, Save, Trash2 } from 'lucide-react';
+import { Check, Trash2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 import type { Programme } from '@/@types';
 import { useMyProgrammes, useProfileProgrammes, useUniversities } from '@/hooks';
 import { programmeSchema, type ProgrammeFormSchema } from '@/schemas';
-import { UIButton, UIField, UIPanel, UISelect, UIUnsavedChanges } from '@/ui/components';
+import { UIButton, UIDialog, UIField, UIPanel, UISelect, UIUnsavedChanges } from '@/ui/components';
 import { AddProgramme } from './AddProgramme';
 
 export function StudyProgrammes({ universityId }: { universityId: string }) {
@@ -23,20 +24,22 @@ export function StudyProgrammes({ universityId }: { universityId: string }) {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 className="text-md font-bold">{t('app.studyProgrammes')}</h2>
         <AddProgramme programmes={programmes} faculties={faculties} />
       </div>
-      {programmes.map((programme) => (
-        <ProgrammeCard
-          key={programme.id}
-          programme={programme}
-          faculties={faculties}
-          isPending={isSaving || isRemoving}
-          onSave={(values) => saveProgramme({ programme: values, id: programme.id })}
-          onRemove={() => removeProgramme(programme.id)}
-        />
-      ))}
+      <div className="max-h-72 space-y-4 overflow-y-auto">
+        {programmes.map((programme) => (
+          <ProgrammeCard
+            key={programme.id}
+            programme={programme}
+            faculties={faculties}
+            isPending={isSaving || isRemoving}
+            onSave={(values) => saveProgramme({ programme: values, id: programme.id })}
+            onRemove={() => removeProgramme(programme.id)}
+          />
+        ))}
+      </div>
     </div>
   );
 }
@@ -55,6 +58,7 @@ function ProgrammeCard({
   onRemove: () => Promise<void>;
 }) {
   const { t } = useTranslation();
+  const [open, setOpen] = useState(false);
   const {
     control,
     handleSubmit,
@@ -73,6 +77,7 @@ function ProgrammeCard({
       // reset() merges resetOptions; without this, saved fields stay in dirtyFields
       reset(await onSave(values), { keepDirtyValues: false });
       toast.success(t('app.saved'));
+      setOpen(false);
     } catch {
       toast.error(t('apiState.profileSaveError'));
     }
@@ -85,72 +90,59 @@ function ProgrammeCard({
   async function removeProgramme() {
     try {
       await onRemove();
+      setOpen(false);
     } catch {
       toast.error(t('apiState.profileSaveError'));
     }
   }
 
+  function closeEditor() {
+    reset(programme, { keepDirtyValues: false });
+    setOpen(false);
+  }
+
   return (
-    <UIPanel surface="tint" className="rounded-programme p-4">
-      <UIUnsavedChanges dirty={isDirty} />
-      <form
-        onSubmit={handleSubmit(save, () =>
-          captureAnalytics('programme_update_form_validation_failed'),
-        )}
+    <>
+      <UIPanel
+        surface="tint"
+        className="relative flex min-w-0 items-center gap-2 rounded-programme p-4"
       >
-        <fieldset disabled={isPending}>
-          <details className="group [interpolate-size:allow-keywords] details-content:h-0 details-content:overflow-hidden details-content:transition-[height,content-visibility] details-content:transition-discrete details-content:duration-200 open:details-content:h-auto motion-reduce:details-content:transition-none">
-            <summary className="flex cursor-pointer list-none flex-wrap items-center justify-between gap-3 [&::-webkit-details-marker]:hidden">
-              <h3 className="flex min-w-0 flex-1 items-center gap-2 text-section font-bold">
-                {programme.programme}
-                <ChevronDown
-                  size={16}
-                  className="shrink-0 transition-transform group-open:rotate-180"
-                  aria-hidden="true"
-                />
-              </h3>
-              <div className="flex items-center gap-2">
-                {programme.isPrimary ? (
-                  <span className="px-2 py-1 text-micro font-semibold">{t('app.primary')}</span>
-                ) : (
-                  <UIButton
-                    size="pill"
-                    bg="transparent"
-                    className="min-h-0 px-2 py-1 text-micro"
-                    disabled={isPending}
-                    onClick={() => void makePrimary()}
-                  >
-                    {t('app.makePrimary')}
-                  </UIButton>
-                )}
-                {!programme.isPrimary && (
-                  <UIButton
-                    size="pill"
-                    bg="transparent"
-                    className="min-h-0 px-2 py-1 text-micro"
-                    disabled={isPending}
-                    onClick={() => void removeProgramme()}
-                  >
-                    <Trash2 size={12} />
-                    {t('app.remove')}
-                  </UIButton>
-                )}
-                {isDirty && (
-                  <UIButton
-                    type="submit"
-                    size="pill"
-                    bg="secondary"
-                    className="min-h-0 px-2 py-1 text-micro motion-safe:animate-pop-in"
-                    disabled={isPending}
-                  >
-                    <Save size={12} />
-                    {t('app.saveChanges')}
-                  </UIButton>
-                )}
-              </div>
-            </summary>
-            <div className="grid gap-3 pt-3 [&_label>span]:text-[10px] [&_label>span]:font-bold [&_label>span]:tracking-[0.8px] [&_label>span]:text-muted [&_label>span]:uppercase">
-              <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_125px]">
+        <button
+          type="button"
+          data-ph-capture-attribute-label="Edit study programme"
+          aria-label={`${t('app.edit')} ${programme.programme}`}
+          className="absolute inset-0 cursor-pointer rounded-programme focus-visible:outline-2 focus-visible:outline-blue enabled:hover:bg-white-5 disabled:cursor-not-allowed disabled:opacity-40"
+          disabled={isPending}
+          onClick={() => setOpen(true)}
+        />
+        <h3 className="pointer-events-none min-w-0 flex-1 text-section font-bold wrap-anywhere">
+          {programme.programme}
+        </h3>
+        {programme.isPrimary && (
+          <span className="pointer-events-none px-2 py-1 text-micro font-semibold">
+            {t('app.primary')}
+          </span>
+        )}
+      </UIPanel>
+      <UIDialog
+        placement="right"
+        open={open}
+        onOpenChange={(next) => {
+          if (!next) closeEditor();
+        }}
+        dismissible={!isPending}
+        title={programme.programme}
+        description={t('app.studyProgrammes')}
+      >
+        <UIUnsavedChanges dirty={open && isDirty} />
+        <form
+          onSubmit={handleSubmit(save, () =>
+            captureAnalytics('programme_update_form_validation_failed'),
+          )}
+        >
+          <fieldset disabled={isPending}>
+            <div className="grid gap-3 [&_label>span]:text-[10px] [&_label>span]:font-bold [&_label>span]:tracking-[0.8px] [&_label>span]:text-muted [&_label>span]:uppercase">
+              <div className="grid gap-3">
                 <UIField
                   label={t('app.faculty')}
                   error={errors.faculty ? t('app.required') : undefined}
@@ -199,7 +191,7 @@ function ProgrammeCard({
                   />
                 </UIField>
               </div>
-              <div className="grid gap-3 sm:grid-cols-3">
+              <div className="grid gap-3">
                 <UIField label={t('app.studyStatus')} className="rounded-lg bg-white-5 px-2.5 py-2">
                   <Controller
                     control={control}
@@ -266,9 +258,47 @@ function ProgrammeCard({
                 </UIField>
               </div>
             </div>
-          </details>
-        </fieldset>
-      </form>
-    </UIPanel>
+          </fieldset>
+          <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
+            <div className="flex flex-wrap items-center gap-2">
+              {!programme.isPrimary && (
+                <>
+                  <UIButton
+                    bg="transparent"
+                    size="pill"
+                    disabled={isPending}
+                    className="text-secondary enabled:hover:bg-transparent enabled:hover:text-white"
+                    onClick={() => void makePrimary()}
+                  >
+                    <Check size={16} aria-hidden="true" />
+                    {t('app.makePrimary')}
+                  </UIButton>
+                  <UIButton
+                    bg="transparent"
+                    size="pill"
+                    disabled={isPending}
+                    className="text-danger enabled:hover:bg-transparent enabled:hover:text-danger-hover"
+                    onClick={() => void removeProgramme()}
+                  >
+                    <Trash2 size={16} aria-hidden="true" />
+                    {t('app.remove')}
+                  </UIButton>
+                </>
+              )}
+            </div>
+            <div className="flex items-center gap-3">
+              <UIButton bg="secondary" disabled={isPending} onClick={closeEditor}>
+                {t('app.cancel')}
+              </UIButton>
+              {isDirty && (
+                <UIButton type="submit" disabled={isPending}>
+                  {t('app.saveChanges')}
+                </UIButton>
+              )}
+            </div>
+          </div>
+        </form>
+      </UIDialog>
+    </>
   );
 }

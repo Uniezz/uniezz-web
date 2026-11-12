@@ -1157,6 +1157,10 @@ body {
   font-family: var(--font-sans);
 }
 
+body[data-scroll-locked] {
+  width: calc(100% - var(--removed-body-scroll-bar-size, 0px));
+}
+
 * {
   scrollbar-color: var(--color-white-40) transparent;
   scrollbar-width: thin;

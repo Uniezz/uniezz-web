@@ -73,6 +73,7 @@ export function AddProgramme({
         {t('app.addProgramme')}
       </UIButton>
       <UIDialog
+        placement="right"
         open={open}
         onOpenChange={setOpen}
         title={t('app.addProgramme')}

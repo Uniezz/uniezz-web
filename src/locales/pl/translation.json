@@ -43,6 +43,8 @@
     "allUniversitiesHint": "Widoczne dla studentów wszystkich uczelni",
     "back": "Wstecz",
     "bannerError": "Wybierz prawidłowy obraz JPG, PNG lub WebP do 10 MB.",
+    "bannerRemoved": "Baner usunięty.",
+    "removeBannerDescription": "Spowoduje to usunięcie banera profilu.",
     "cancel": "Anuluj",
     "changeBanner": "Zmień baner",
     "changePhoto": "Zmień zdjęcie",

@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useFormContext, useWatch } from 'react-hook-form';
-import { UIEmojiPicker, UIField, UIPanel } from '@/ui/components';
+import { UIEmojiPicker, UIField } from '@/ui/components';
 import { type ProfileFormSchema } from '@/schemas';
 
 export function PersonalDetails() {
@@ -15,7 +15,7 @@ export function PersonalDetails() {
     name: ['first', 'last', 'bio', 'song'],
   });
   return (
-    <UIPanel surface="tint" className="rounded-profile">
+    <div>
       <h2 className="mb-4 text-md font-bold">{t('app.personalDetails')}</h2>
       <div className="grid gap-3.5 sm:grid-cols-2">
         <UIField
@@ -92,6 +92,6 @@ export function PersonalDetails() {
           />
         </UIField>
       </div>
-    </UIPanel>
+    </div>
   );
 }

@@ -5,7 +5,6 @@ import { Skeleton } from 'skullet/react';
 import { myProfileQueryOptions } from '@/hooks/useMyProfile';
 import { UIQueryError } from '@/ui/components';
 import { ProfileEditor } from '@/components/features/profile/ProfileEditor';
-import { ProfilePosts } from '@/components/features/profile/ProfilePosts';
 import { sampleProfile } from '@/utils/profileSkeletonData';
 
 export const Route = createFileRoute('/_app/profile')({
@@ -20,7 +19,7 @@ function ProfileSkeleton() {
   return (
     <Skeleton loading label={t('apiState.loading')}>
       <div inert>
-        <ProfileEditor profile={sampleProfile} />
+        <ProfileEditor profile={sampleProfile} showPosts={false} />
       </div>
     </Skeleton>
   );
@@ -33,10 +32,5 @@ function ProfileError() {
 
 function ProfilePage() {
   const profile = Route.useLoaderData();
-  return (
-    <>
-      <ProfileEditor profile={profile} />
-      <ProfilePosts authorId={profile.id} collections />
-    </>
-  );
+  return <ProfileEditor profile={profile} />;
 }

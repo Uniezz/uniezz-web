@@ -15,7 +15,7 @@ export function ProfilePosts({ authorId, collections = true }: ProfilePostsProps
   const showCollections = collections && me?.id === authorId;
   const [tab, setTab] = useState<FeedPostSource>('posts');
   return (
-    <section className="mt-8 space-y-4">
+    <section className="space-y-4">
       {showCollections ? (
         <UISegmented
           label={t('feed.posts')}
