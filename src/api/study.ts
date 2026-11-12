@@ -104,3 +104,7 @@ export async function rateProfessor({ id, rating }: { id: string; rating: number
   });
   return data!;
 }
+
+export async function deleteCourseComment(id: string) {
+  await api.DELETE('/study/comments/{id}', { params: { path: { id } } });
+}

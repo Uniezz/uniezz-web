@@ -10,6 +10,7 @@ import {
   addCourseFile,
   createCourse,
   deleteStudyFile,
+  deleteCourseComment,
   getCourse,
   getCourseComments,
   getCourseFiles,
@@ -46,7 +47,10 @@ export function useDeleteStudyFile() {
   return useMutation({
     meta: { analyticsAction: 'study_file_delete' },
     mutationFn: deleteStudyFile,
-    onSuccess: () => void queryClient.invalidateQueries({ queryKey: ['study', 'files'] }),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['study', 'files'] });
+      void queryClient.invalidateQueries({ queryKey: ['study', 'courses'] });
+    },
   });
 }
 
@@ -166,5 +170,16 @@ export function useRateProfessor() {
     mutationFn: rateProfessor,
     onSuccess: (professor) =>
       patchCachedItem(queryClient, ['study', 'professors'], professor.id, professor),
+  });
+}
+
+export function useDeleteCourseComment() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    meta: { analyticsAction: 'course_comment_delete' },
+    mutationFn: deleteCourseComment,
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['study', 'courses'] });
+    },
   });
 }

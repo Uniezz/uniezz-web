@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { Download, FileText, Trash2 } from 'lucide-react';
+import { FileText, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 import { TableVirtuoso } from 'react-virtuoso';
 import { useSearch } from '@tanstack/react-router';
 import type { StudyFile } from '@/@types';
 import { fixedTable } from '@/ui/virtuoso';
-import { getStudyFile } from '@/api';
+import { DownloadStudyFileButton } from './DownloadStudyFileButton';
 import { studyFileTypeLabels } from '@/utils';
 import { useDeleteStudyFile, useMyProfile, useStudyFiles } from '@/hooks';
 import { UIButton, UIDialog, UIEmpty, UIPanel, UIQueryError } from '@/ui/components';
@@ -24,21 +24,6 @@ export function MaterialTable() {
   const { mutate: deleteFile, isPending: isDeleting } = useDeleteStudyFile();
   const files = data?.pages.flatMap((page) => page.items ?? []) ?? [];
   const date = new Intl.DateTimeFormat(i18n.language, { dateStyle: 'medium' });
-
-  // The tab opens before the request so popup blockers treat it as the user's click.
-  async function download(id: string) {
-    const tab = window.open('about:blank', '_blank');
-    try {
-      const { url } = await getStudyFile(id);
-      if (tab) {
-        tab.opener = null;
-        tab.location.href = url;
-      }
-    } catch {
-      tab?.close();
-      toast.error(t('apiState.error'));
-    }
-  }
 
   return (
     <UIPanel className="flex min-h-0 flex-1 flex-col overflow-hidden p-2">
@@ -70,14 +55,7 @@ export function MaterialTable() {
               </td>
               <td className="border-t border-white-5 px-4 py-3">
                 <div className="flex justify-end gap-2">
-                  <UIButton
-                    size="icon"
-                    bg="secondary"
-                    aria-label={t('app.download')}
-                    onClick={() => void download(file.id)}
-                  >
-                    <Download size={15} />
-                  </UIButton>
+                  <DownloadStudyFileButton fileId={file.id} />
                   {me?.id === file.authorId && (
                     <UIButton
                       size="icon"

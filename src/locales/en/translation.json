@@ -218,7 +218,14 @@
     "preferences": "Preferences",
     "preferencesDescription": "Set who you want to meet and why.",
     "preferencesSaved": "Preferences saved.",
-    "preferencesTitle": "Connections preferences"
+    "preferencesTitle": "Connections preferences",
+    "block": "Block student",
+    "blockDescription": "You will stop seeing each other in discovery, profiles, matches and the feed.",
+    "studentBlocked": "Student blocked.",
+    "unmatch": "Unmatch",
+    "unmatchDescription": "This match will be removed for both of you.",
+    "unmatched": "Match removed.",
+    "viewProfile": "View profile"
   },
   "exams": {
     "action": "Upload material",
@@ -443,5 +450,29 @@
   "topbar": {
     "changeLanguage": "Change language",
     "languageCode": "EN"
+  },
+  "courses": {
+    "create": "Create course",
+    "edit": "Edit course",
+    "details": "Course details",
+    "formDescription": "Describe the course so other students know what to expect.",
+    "name": "Course name",
+    "description": "Description",
+    "difficulty": "Difficulty (1–5)",
+    "nameHint": "Enter 3–150 characters.",
+    "descriptionHint": "Enter 1–5000 characters.",
+    "difficultyHint": "Choose a whole number from 1 to 5.",
+    "semesterHint": "Choose a semester from 1 to 10.",
+    "chooseUniversity": "Choose a university",
+    "saved": "Course saved.",
+    "materials": "Course materials",
+    "noMaterials": "No materials yet.",
+    "noComments": "No comments yet.",
+    "addComment": "Add a comment",
+    "commentHint": "Enter 1–1000 characters.",
+    "commentAdded": "Comment added.",
+    "commentDeleted": "Comment deleted.",
+    "deleteComment": "Delete comment",
+    "deleteCommentDescription": "Your comment will be permanently deleted."
   }
 }

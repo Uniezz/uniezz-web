@@ -1,9 +1,11 @@
+import { useState } from 'react';
+import { CourseDetailsDialog } from './CourseDetailsDialog';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 import { TableVirtuoso } from 'react-virtuoso';
 import { useSearch } from '@tanstack/react-router';
 import { useCourses, useRateCourse, useUniversities } from '@/hooks';
-import { UIEmpty, UIPanel, UIQueryError } from '@/ui/components';
+import { UIButton, UIEmpty, UIPanel, UIQueryError } from '@/ui/components';
 import { fixedTable } from '@/ui/virtuoso';
 import { matchesSearch } from '@/utils';
 import { RatingInput } from './RatingInput';
@@ -13,6 +15,7 @@ const tableComponents = fixedTable(['', '', '7.5rem', '9rem', '13rem']);
 
 export function CourseList() {
   const { t } = useTranslation();
+  const [courseId, setCourseId] = useState<string | null>(null);
   const { university, semester, q = '' } = useSearch({ from: '/_app/exams' });
   const { data, isPending, isError, refetch, hasNextPage, isFetchingNextPage, fetchNextPage } =
     useCourses({ universityId: university, semester });
@@ -40,7 +43,15 @@ export function CourseList() {
           itemContent={(_, course) => (
             <>
               <td className="border-t border-white-5 px-4 py-3">
-                <p className="font-semibold">{course.name}</p>
+                <UIButton
+                  bg="transparent"
+                  size="pill"
+                  data-ph-capture-attribute-label="Open course details"
+                  className="max-w-full justify-start text-left whitespace-normal"
+                  onClick={() => setCourseId(course.id)}
+                >
+                  {course.name}
+                </UIButton>
                 <p className="mt-1 text-detail font-medium text-secondary">
                   {universities.find(({ id }) => id === course.universityId)?.name}
                 </p>
@@ -73,6 +84,9 @@ export function CourseList() {
         />
       )}
       {isError && <UIQueryError retry={() => void refetch()} />}
+      {courseId && (
+        <CourseDetailsDialog key={courseId} courseId={courseId} onClose={() => setCourseId(null)} />
+      )}
     </UIPanel>
   );
 }

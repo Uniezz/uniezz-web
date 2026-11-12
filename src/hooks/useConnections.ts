@@ -79,6 +79,8 @@ export function useBlockStudent() {
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['connections', 'list'] });
       void queryClient.invalidateQueries({ queryKey: ['connections', 'discover'] });
+      void queryClient.invalidateQueries({ queryKey: ['profiles'] });
+      void queryClient.invalidateQueries({ queryKey: ['feed'] });
     },
   });
 }
@@ -91,6 +93,8 @@ export function useUnblockStudent() {
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['connections', 'list'] });
       void queryClient.invalidateQueries({ queryKey: ['connections', 'discover'] });
+      void queryClient.invalidateQueries({ queryKey: ['profiles'] });
+      void queryClient.invalidateQueries({ queryKey: ['feed'] });
     },
   });
 }

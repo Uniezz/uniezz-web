@@ -5,6 +5,7 @@ import { examsSearchSchema } from '@/schemas';
 import { UITopbar } from '@/ui/components';
 import {
   CourseList,
+  CreateCourseButton,
   MaterialFilters,
   MaterialTable,
   ProfessorList,
@@ -23,7 +24,9 @@ function ExamsPage() {
     <div className="flex h-[calc(100svh-136px)] min-h-0 flex-col overflow-hidden lg:h-[calc(100svh-56px)]">
       <div className="shrink-0">
         {/* Upload returns once POST /media/uploads accepts kind exam (Uniezz/uniezz-backend#79). */}
-        <UITopbar title={t('exams.title')} subtitle={t('exams.subtitle')} />
+        <UITopbar title={t('exams.title')} subtitle={t('exams.subtitle')}>
+          {tab === 'reviews' && <CreateCourseButton />}
+        </UITopbar>
         <MaterialFilters />
       </div>
       {tab === 'reviews' ? (

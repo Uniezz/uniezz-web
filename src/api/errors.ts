@@ -50,6 +50,7 @@ export const apiMiddleware: Middleware = {
     if (response.ok) {
       if (response.status === 204) {
         const allowsNoContent =
+          (request.method === 'PUT' && schemaPath === '/connections/blocks/{id}') ||
           (request.method === 'POST' &&
             ['/auth/otp/request', '/auth/otp/verify', '/auth/exchange'].includes(schemaPath)) ||
           (request.method === 'DELETE' &&
@@ -58,6 +59,11 @@ export const apiMiddleware: Middleware = {
               '/feed/posts/{id}',
               '/profile/avatar',
               '/profile/programmes/{id}',
+              '/connections/{id}',
+              '/connections/blocks/{id}',
+              '/study/comments/{id}',
+              '/study/files/{id}',
+              '/profile/banner',
             ].includes(schemaPath));
         if (!allowsNoContent) {
           throw apiError(`${request.method} ${schemaPath}`, response);

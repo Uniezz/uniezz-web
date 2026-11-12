@@ -123,3 +123,29 @@ test('dating age rejection preserves the code used by the preferences dialog', a
   expect(error.status).toBe(400);
   expect(error.cause).toEqual({ error: 'dating_requires_adult' });
 });
+
+test('blocking, unmatching and course comment deletion accept successful 204 responses', async () => {
+  const api = () => client(new Response(null, { status: 204 }));
+  await api().PUT('/connections/blocks/{id}', { params: { path: { id: 'student-id' } } });
+  for (const path of [
+    '/connections/blocks/{id}',
+    '/connections/{id}',
+    '/study/comments/{id}',
+    '/study/files/{id}',
+  ] as const) {
+    await api().DELETE(path, { params: { path: { id: 'id' } } });
+  }
+});
+
+test('block and unmatch failures still reject instead of reporting success', async () => {
+  await expect(
+    client(Response.json({ error: 'not_found' }, { status: 404 })).PUT('/connections/blocks/{id}', {
+      params: { path: { id: 'student-id' } },
+    }),
+  ).rejects.toThrow('not_found');
+  await expect(
+    client(Response.json({ error: 'not_found' }, { status: 404 })).DELETE('/connections/{id}', {
+      params: { path: { id: 'connection-id' } },
+    }),
+  ).rejects.toThrow('not_found');
+});

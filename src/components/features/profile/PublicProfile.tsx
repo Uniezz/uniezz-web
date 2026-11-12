@@ -1,3 +1,5 @@
+import { useNavigate } from '@tanstack/react-router';
+import { BlockStudentButton } from '@/components/features/connections/BlockStudentButton';
 import { Heart, Music2, UserRound } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { components } from '@/@types/schema';
@@ -9,6 +11,7 @@ import { cn } from '@/ui/cn';
 
 export function PublicProfile({ profile }: { profile: components['schemas']['PublicProfile'] }) {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { data: me } = useMyProfile();
   const { data: universities } = useUniversities();
   const university =
@@ -23,13 +26,19 @@ export function PublicProfile({ profile }: { profile: components['schemas']['Pub
         className="profile-cover relative h-40 overflow-hidden rounded-2xl sm:h-52"
         aria-hidden="true"
       >
-        <div className="profile-cover-orbit" />
-        <div className="profile-cover-glass pointer-events-none absolute inset-0 rounded-2xl border border-white-10 bg-white-5 backdrop-blur-sm" />
-        <img
-          src="/favicon.png"
-          alt=""
-          className="absolute right-5 bottom-5 size-12 rounded-xl object-contain sm:right-8"
-        />
+        {profile.bannerUrl ? (
+          <img src={profile.bannerUrl} alt="" className="absolute inset-0 size-full object-cover" />
+        ) : (
+          <>
+            <div className="profile-cover-orbit" />
+            <div className="profile-cover-glass pointer-events-none absolute inset-0 rounded-2xl border border-white-10 bg-white-5 backdrop-blur-sm" />
+            <img
+              src="/favicon.png"
+              alt=""
+              className="absolute right-5 bottom-5 size-12 rounded-xl object-contain sm:right-8"
+            />
+          </>
+        )}
       </div>
       <div className="px-4 pb-6 sm:px-8 sm:pb-8">
         <div className="relative grid grid-cols-[auto_minmax(0,1fr)] items-end gap-x-5 sm:gap-x-6">
@@ -39,9 +48,6 @@ export function PublicProfile({ profile }: { profile: components['schemas']['Pub
               alt=""
               className="size-24 rounded-full bg-surface object-cover sm:size-32"
             />
-          </div>
-          <div className="flex min-h-11 items-center justify-end sm:col-start-2 sm:row-start-1 sm:pt-3">
-            {me && me.id !== profile.id && <ReportButton targetType="user" targetId={profile.id} />}
           </div>
           <div className="col-span-2 mt-4 min-w-0 space-y-3 sm:col-span-1 sm:col-start-2 sm:row-start-2 sm:mt-2">
             <h1 className="text-xxl leading-tight font-semibold tracking-tight wrap-anywhere sm:text-4xl">
@@ -166,6 +172,20 @@ export function PublicProfile({ profile }: { profile: components['schemas']['Pub
                 )}
               </div>
             )}
+          </div>
+        )}
+        {me && me.id !== profile.id && (
+          <div className="mt-6 flex flex-col items-end gap-3">
+            <ReportButton targetType="user" targetId={profile.id} />
+            <BlockStudentButton
+              studentId={profile.id}
+              onBlocked={() =>
+                void navigate({
+                  to: '/connections/students',
+                  search: { studentSearch: undefined },
+                })
+              }
+            />
           </div>
         )}
       </div>

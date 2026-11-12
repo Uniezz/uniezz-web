@@ -1,3 +1,5 @@
+import { Link } from '@tanstack/react-router';
+import { MatchActions } from '@/components/features/connections/MatchActions';
 import { useTranslation } from 'react-i18next';
 import { useConnectionsList, useUniversities } from '@/hooks';
 import { Virtuoso } from 'react-virtuoso';
@@ -11,7 +13,7 @@ export type ConnectionsListProps = {
 };
 
 export function ConnectionsList({ selected, onOpen }: ConnectionsListProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { data, isPending, isError, refetch, hasNextPage, isFetchingNextPage, fetchNextPage } =
     useConnectionsList();
   const { data: universities = [] } = useUniversities();
@@ -30,7 +32,7 @@ export function ConnectionsList({ selected, onOpen }: ConnectionsListProps) {
         components={listComponents}
         aria-label={t('connections.title')}
         className="min-h-0 flex-1"
-        itemContent={(_, { profile }) => (
+        itemContent={(_, { id, profile, mode, connectedAt }) => (
           <div role="listitem" className="pb-0.5">
             <button
               type="button"
@@ -50,6 +52,24 @@ export function ConnectionsList({ selected, onOpen }: ConnectionsListProps) {
                 </span>
               </span>
             </button>
+            <div className="space-y-2 px-2.5 pb-3">
+              <p className="text-detail text-secondary">
+                {t(`app.${mode}`)} ·{' '}
+                {new Intl.DateTimeFormat(i18n.language, { dateStyle: 'medium' }).format(
+                  new Date(connectedAt),
+                )}
+              </p>
+              <Link
+                to="/connections/students/$profileId"
+                params={{ profileId: profile.id }}
+                search={{ studentSearch: undefined }}
+                data-ph-capture-attribute-label="Open matched profile"
+                className="text-detail underline focus-visible:outline-2 focus-visible:outline-blue"
+              >
+                {t('connections.viewProfile')}
+              </Link>
+              <MatchActions connectionId={id} studentId={profile.id} />
+            </div>
           </div>
         )}
       />

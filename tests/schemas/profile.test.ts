@@ -22,6 +22,8 @@ test('the profile form validates bio, interests and privacy', () => {
     interests: 'music, sport',
     privacy: { showEmail: false, showFaculty: true, showYear: false },
     photo: '/app/avatar.png',
+    banner: '',
+    song: '',
   };
   expect(
     profileFormSchema.parse({ ...profile, bio: ' Hello ', interests: 'music, , sport ' }),

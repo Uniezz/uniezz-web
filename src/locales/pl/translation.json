@@ -218,7 +218,14 @@
     "showMe": "Pokaż mi",
     "subtitle": "Poznawaj studentów ze wszystkich pięciu uczelni",
     "title": "Znajomości",
-    "women": "Kobiety"
+    "women": "Kobiety",
+    "block": "Zablokuj osobę",
+    "blockDescription": "Nie będziecie się widzieć w odkrywaniu osób, profilach, dopasowaniach ani aktualnościach.",
+    "studentBlocked": "Osoba zablokowana.",
+    "unmatch": "Usuń dopasowanie",
+    "unmatchDescription": "To dopasowanie zostanie usunięte dla was obojga.",
+    "unmatched": "Dopasowanie usunięte.",
+    "viewProfile": "Zobacz profil"
   },
   "exams": {
     "action": "Dodaj materiał",
@@ -443,5 +450,29 @@
   "topbar": {
     "changeLanguage": "Zmień język",
     "languageCode": "PL"
+  },
+  "courses": {
+    "create": "Dodaj przedmiot",
+    "edit": "Edytuj przedmiot",
+    "details": "Szczegóły przedmiotu",
+    "formDescription": "Opisz przedmiot, aby inni studenci wiedzieli, czego się spodziewać.",
+    "name": "Nazwa przedmiotu",
+    "description": "Opis",
+    "difficulty": "Trudność (1–5)",
+    "nameHint": "Wpisz od 3 do 150 znaków.",
+    "descriptionHint": "Wpisz od 1 do 5000 znaków.",
+    "difficultyHint": "Wybierz liczbę całkowitą od 1 do 5.",
+    "semesterHint": "Wybierz semestr od 1 do 10.",
+    "chooseUniversity": "Wybierz uczelnię",
+    "saved": "Przedmiot zapisany.",
+    "materials": "Materiały do przedmiotu",
+    "noMaterials": "Nie ma jeszcze materiałów.",
+    "noComments": "Nie ma jeszcze komentarzy.",
+    "addComment": "Dodaj komentarz",
+    "commentHint": "Wpisz od 1 do 1000 znaków.",
+    "commentAdded": "Komentarz dodany.",
+    "commentDeleted": "Komentarz usunięty.",
+    "deleteComment": "Usuń komentarz",
+    "deleteCommentDescription": "Twój komentarz zostanie trwale usunięty."
   }
 }
