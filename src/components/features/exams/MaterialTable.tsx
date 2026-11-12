@@ -5,14 +5,15 @@ import toast from 'react-hot-toast';
 import { TableVirtuoso } from 'react-virtuoso';
 import { useSearch } from '@tanstack/react-router';
 import type { StudyFile } from '@/@types';
-import { fixedTable } from '@/ui/virtuoso';
+import { fixedTable, tableCellTextClass, tableHeaderCellClass } from '@/ui/virtuoso';
 import { DownloadStudyFileButton } from './DownloadStudyFileButton';
 import { studyFileTypeLabels } from '@/utils';
 import { useDeleteStudyFile, useMyProfile, useStudyFiles } from '@/hooks';
 import { UIButton, UIDialog, UIEmpty, UIPanel, UIQueryError } from '@/ui/components';
 
 // Name columns share the spare width; the rest fit their longest label in every language.
-const tableComponents = fixedTable(['', '10rem', '9rem', '6.5rem']);
+const columnWidths = ['', '10rem', '9rem', '6.5rem'];
+const tableComponents = fixedTable(columnWidths);
 
 export function MaterialTable() {
   const { t, i18n } = useTranslation();
@@ -30,48 +31,66 @@ export function MaterialTable() {
       {!isPending && !isError && files.length === 0 ? (
         <UIEmpty />
       ) : (
-        <TableVirtuoso
-          data={files}
-          computeItemKey={(_, file) => file.id}
-          endReached={() => {
-            if (hasNextPage && !isFetchingNextPage && !isError) void fetchNextPage();
-          }}
-          className="scrollbar-gray min-h-0 flex-1"
-          style={{ height: '100%' }}
-          components={tableComponents}
-          itemContent={(_, file) => (
-            <>
-              <td className="border-t border-white-5 px-4 py-3">
-                <div className="flex items-center gap-3">
-                  <FileText size={18} className="shrink-0 text-secondary" aria-hidden="true" />
-                  <span className="font-semibold">{file.title}</span>
-                </div>
-              </td>
-              <td className="border-t border-white-5 px-4 py-3 text-label text-white-80">
-                {t(studyFileTypeLabels[file.type])}
-              </td>
-              <td className="border-t border-white-5 px-4 py-3 text-label text-white-80">
-                {date.format(new Date(file.createdAt))}
-              </td>
-              <td className="border-t border-white-5 px-4 py-3">
-                <div className="flex justify-end gap-2">
-                  <DownloadStudyFileButton fileId={file.id} />
-                  {me?.id === file.authorId && (
-                    <UIButton
-                      size="icon"
-                      bg="secondary"
-                      aria-label={t('exams.deleteFile')}
-                      className="text-danger"
-                      onClick={() => setToDelete(file)}
-                    >
-                      <Trash2 size={15} />
-                    </UIButton>
+        <div className="min-h-0 min-w-0 flex-1 overflow-x-auto">
+          <div className="flex h-full min-w-[640px] flex-col">
+            <table className="w-full table-fixed text-left text-body">
+              <colgroup>
+                {columnWidths.map((width, index) => (
+                  <col key={index} style={width ? { width } : undefined} />
+                ))}
+              </colgroup>
+              <thead>
+                <tr>
+                  {[t('postComposer.title'), t('app.type'), t('feed.date'), t('app.actions')].map(
+                    (label) => (
+                      <th key={label} scope="col" className={tableHeaderCellClass}>
+                        {label}
+                      </th>
+                    ),
                   )}
-                </div>
-              </td>
-            </>
-          )}
-        />
+                </tr>
+              </thead>
+            </table>
+            <TableVirtuoso
+              data={files}
+              computeItemKey={(_, file) => file.id}
+              endReached={() => {
+                if (hasNextPage && !isFetchingNextPage && !isError) void fetchNextPage();
+              }}
+              className="scrollbar-gray min-h-0 flex-1"
+              components={tableComponents}
+              aria-label={t(tab === 'mine' ? 'app.myUploads' : 'app.pastPapers')}
+              itemContent={(_, file) => (
+                <>
+                  <td className="border-t border-white-5 px-4 py-3">
+                    <div className="flex items-center gap-3">
+                      <FileText size={18} className="shrink-0 text-secondary" aria-hidden="true" />
+                      <span className="font-semibold">{file.title}</span>
+                    </div>
+                  </td>
+                  <td className={tableCellTextClass}>{t(studyFileTypeLabels[file.type])}</td>
+                  <td className={tableCellTextClass}>{date.format(new Date(file.createdAt))}</td>
+                  <td className="border-t border-white-5 px-4 py-3">
+                    <div className="flex justify-end gap-2">
+                      <DownloadStudyFileButton fileId={file.id} />
+                      {me?.id === file.authorId && (
+                        <UIButton
+                          size="icon"
+                          bg="secondary"
+                          aria-label={t('exams.deleteFile')}
+                          className="text-danger"
+                          onClick={() => setToDelete(file)}
+                        >
+                          <Trash2 size={15} />
+                        </UIButton>
+                      )}
+                    </div>
+                  </td>
+                </>
+              )}
+            />
+          </div>
+        </div>
       )}
       {isError && <UIQueryError retry={() => void refetch()} />}
       <UIDialog

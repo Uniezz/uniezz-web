@@ -33,6 +33,7 @@ export default interface Resources {
     },
     "app": {
       "accountDeleted": "Account deleted",
+      "actions": "Actions",
       "add": "Add",
       "addComment": "Add a comment…",
       "addEmoji": "Add emoji",
@@ -95,6 +96,7 @@ export default interface Resources {
       "postNavigation": "Post navigation",
       "previousPost": "Previous post",
       "primary": "Primary",
+      "professor": "Professor",
       "professorRatings": "Professor ratings",
       "profile": "Your profile",
       "profileVisibility": "Profile visibility",
@@ -254,6 +256,8 @@ export default interface Resources {
       "removeMaterial": "Remove selected file",
       "saved": "Course saved.",
       "semesterHint": "Choose a semester from 1 to 10.",
+      "subjectHint": "Enter a subject name (3–150 characters).",
+      "subjectPlaceholder": "e.g. Mathematical analysis",
       "uploadEligibility": "You can upload materials only for your university and primary study programme.",
       "uploadingMaterials": "Uploading materials…",
       "validationError": "Check the highlighted fields and try again."

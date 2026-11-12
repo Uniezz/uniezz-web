@@ -4,12 +4,13 @@ import toast from 'react-hot-toast';
 import { TableVirtuoso } from 'react-virtuoso';
 import { useProfessors, useRateProfessor, useUniversities } from '@/hooks';
 import { UIEmpty, UIPanel, UIQueryError } from '@/ui/components';
-import { fixedTable } from '@/ui/virtuoso';
+import { fixedTable, tableCellTextClass, tableHeaderCellClass } from '@/ui/virtuoso';
 import { matchesSearch } from '@/utils';
 import { RatingInput } from './RatingInput';
 
 // Name columns share the spare width; the rest fit their longest label in every language.
-const tableComponents = fixedTable(['', '', '13rem']);
+const columnWidths = ['', '', '13rem'];
+const tableComponents = fixedTable(columnWidths);
 
 export function ProfessorList() {
   const { t } = useTranslation();
@@ -28,40 +29,60 @@ export function ProfessorList() {
       {!isPending && !isError && professors.length === 0 ? (
         <UIEmpty />
       ) : (
-        <TableVirtuoso
-          data={professors}
-          computeItemKey={(_, professor) => professor.id}
-          endReached={() => {
-            if (hasNextPage && !isFetchingNextPage && !isError) void fetchNextPage();
-          }}
-          components={tableComponents}
-          aria-label={t('app.professorRatings')}
-          className="scrollbar-gray min-h-0 flex-1"
-          itemContent={(_, professor) => (
-            <>
-              <td className="border-t border-white-5 px-4 py-3 font-semibold">
-                {[professor.degree, professor.name].filter(Boolean).join(' ')}
-              </td>
-              <td className="border-t border-white-5 px-4 py-3 text-label text-white-80">
-                {universities.find(({ id }) => id === professor.universityId)?.name}
-              </td>
-              <td className="border-t border-white-5 px-4 py-3">
-                <RatingInput
-                  average={professor.ratingAverage}
-                  count={professor.ratingCount}
-                  analyticsLabel="Rate professor"
-                  disabled={isRating}
-                  onRate={(rating) =>
-                    rate(
-                      { id: professor.id, rating },
-                      { onError: () => toast.error(t('apiState.error')) },
-                    )
-                  }
-                />
-              </td>
-            </>
-          )}
-        />
+        <div className="min-h-0 min-w-0 flex-1 overflow-x-auto">
+          <div className="flex h-full min-w-[640px] flex-col">
+            <table className="w-full table-fixed text-left text-body">
+              <colgroup>
+                {columnWidths.map((width, index) => (
+                  <col key={index} style={width ? { width } : undefined} />
+                ))}
+              </colgroup>
+              <thead>
+                <tr>
+                  {[t('app.professor'), t('app.university'), t('app.rating')].map((label) => (
+                    <th key={label} scope="col" className={tableHeaderCellClass}>
+                      {label}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+            </table>
+            <TableVirtuoso
+              data={professors}
+              computeItemKey={(_, professor) => professor.id}
+              endReached={() => {
+                if (hasNextPage && !isFetchingNextPage && !isError) void fetchNextPage();
+              }}
+              components={tableComponents}
+              aria-label={t('app.professorRatings')}
+              className="scrollbar-gray min-h-0 flex-1"
+              itemContent={(_, professor) => (
+                <>
+                  <td className="border-t border-white-5 px-4 py-3 font-semibold">
+                    {[professor.degree, professor.name].filter(Boolean).join(' ')}
+                  </td>
+                  <td className={tableCellTextClass}>
+                    {universities.find(({ id }) => id === professor.universityId)?.name}
+                  </td>
+                  <td className="border-t border-white-5 px-4 py-3">
+                    <RatingInput
+                      average={professor.ratingAverage}
+                      count={professor.ratingCount}
+                      analyticsLabel="Rate professor"
+                      disabled={isRating}
+                      onRate={(rating) =>
+                        rate(
+                          { id: professor.id, rating },
+                          { onError: () => toast.error(t('apiState.error')) },
+                        )
+                      }
+                    />
+                  </td>
+                </>
+              )}
+            />
+          </div>
+        </div>
       )}
       {isError && <UIQueryError retry={() => void refetch()} />}
     </UIPanel>

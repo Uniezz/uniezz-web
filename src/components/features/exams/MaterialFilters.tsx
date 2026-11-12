@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { useNavigate, useSearch } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-import { ChevronDown } from 'lucide-react';
 import type { ExamsSearch } from '@/@types';
 import { useUniversities } from '@/hooks';
-import { UIButton, UISearch, UISegmented } from '@/ui/components';
+import { UIButton, UISearch, UISegmented, UISelect } from '@/ui/components';
 
 const tabIds = ['papers', 'reviews', 'professors', 'mine'] as const;
 const selectClass =
@@ -60,50 +59,34 @@ export function MaterialFilters() {
           }}
         />
         <div className="flex-1" />
-        <label className="relative inline-flex">
-          <select
-            className={selectClass}
-            aria-label={t('app.university')}
-            value={university ?? ''}
-            onChange={(event) => setSearch({ university: event.target.value || undefined })}
-          >
-            <option value="">{t('app.allUniversities')}</option>
-            {universities.map(({ id, name }) => (
-              <option key={id} value={id}>
-                {name}
-              </option>
-            ))}
-          </select>
-          <ChevronDown
-            size={16}
-            aria-hidden="true"
-            className="pointer-events-none absolute top-1/2 right-3.5 -translate-y-1/2 text-white-80"
-          />
-        </label>
+        <UISelect
+          label={t('app.university')}
+          className={selectClass}
+          value={university ?? ''}
+          onChange={(value) => setSearch({ university: value || undefined })}
+          options={[
+            { value: '', label: t('app.allUniversities') },
+            ...universities.map(({ id }) => ({
+              value: id,
+              label: id.toLocaleUpperCase('en'),
+              universityId: id,
+            })),
+          ]}
+        />
         {tab !== 'professors' && (
-          <label className="relative inline-flex">
-            <select
-              className={selectClass}
-              aria-label={t('app.semester')}
-              value={semester ?? ''}
-              onChange={(event) =>
-                setSearch({ semester: event.target.value ? Number(event.target.value) : undefined })
-              }
-            >
-              <option value="">{t('exams.anySemester')}</option>
-              {/* shortcut: semesters 1–12 cover every Polish programme today; read the range from the API if one appears. */}
-              {Array.from({ length: 12 }, (_, index) => index + 1).map((value) => (
-                <option key={value} value={value}>
-                  {t('exams.semesterNumber', { semester: value })}
-                </option>
-              ))}
-            </select>
-            <ChevronDown
-              size={16}
-              aria-hidden="true"
-              className="pointer-events-none absolute top-1/2 right-3.5 -translate-y-1/2 text-white-80"
-            />
-          </label>
+          <UISelect
+            label={t('app.semester')}
+            className={selectClass}
+            value={semester ? String(semester) : ''}
+            onChange={(value) => setSearch({ semester: value ? Number(value) : undefined })}
+            options={[
+              { value: '', label: t('exams.anySemester') },
+              ...Array.from({ length: 12 }, (_, index) => index + 1).map((value) => ({
+                value: String(value),
+                label: t('exams.semesterNumber', { semester: value }),
+              })),
+            ]}
+          />
         )}
       </div>
     </>

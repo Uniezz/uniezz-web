@@ -18,7 +18,14 @@ import { createCourseFormSchema } from '@/schemas';
 import { captureAnalytics } from '@/utils/analytics';
 import { readImageFile } from '@/utils/image';
 import { canUploadCourseMaterial, courseFormDefaults, studyFileTypeLabels } from '@/utils/exams';
-import { UIButton, UIDialog, UIField, UIUniversityLogo, UIUnsavedChanges } from '@/ui/components';
+import {
+  UIButton,
+  UIDialog,
+  UIField,
+  UISelect,
+  UIUniversityLogo,
+  UIUnsavedChanges,
+} from '@/ui/components';
 import { CourseMaterialPreview, courseMaterialKey } from './CourseMaterialPreview';
 import { RatingInput } from './RatingInput';
 
@@ -217,18 +224,24 @@ export function CourseFormDialog({ course, onClose }: CourseFormDialogProps) {
                             <Upload size={18} aria-hidden="true" />
                           </label>
                         </div>
-                        <select
-                          className="app-control"
-                          aria-label={t('courses.materialType')}
-                          data-ph-capture-attribute-label="Course material type"
-                          {...register('materialType')}
-                        >
-                          {(['exam', 'colloquium', 'lab', 'notes'] as const).map((type) => (
-                            <option key={type} value={type}>
-                              {t(studyFileTypeLabels[type])}
-                            </option>
-                          ))}
-                        </select>
+                        <Controller
+                          name="materialType"
+                          control={control}
+                          render={({ field }) => (
+                            <UISelect
+                              label={t('courses.materialType')}
+                              className="app-control"
+                              value={field.value}
+                              onChange={field.onChange}
+                              options={(['exam', 'colloquium', 'lab', 'notes'] as const).map(
+                                (type) => ({
+                                  value: type,
+                                  label: t(studyFileTypeLabels[type]),
+                                }),
+                              )}
+                            />
+                          )}
+                        />
                       </div>
                       {value.length > 0 && (
                         <div
@@ -275,7 +288,7 @@ export function CourseFormDialog({ course, onClose }: CourseFormDialogProps) {
             error={errors.description ? t('courses.descriptionHint') : undefined}
           >
             <textarea
-              className="app-control max-h-100 min-h-28 resize-y"
+              className="app-control max-h-50 min-h-28 resize-y"
               maxLength={5000}
               aria-invalid={Boolean(errors.description)}
               {...register('description')}
@@ -321,24 +334,21 @@ export function CourseFormDialog({ course, onClose }: CourseFormDialogProps) {
               </div>
               {programmes.length > 1 && (
                 <UIField label={t('app.studyProgrammes')}>
-                  <select
+                  <UISelect
+                    label={t('app.studyProgrammes')}
                     className="app-control"
                     value={selectedProgrammeId}
-                    data-ph-capture-attribute-label="Choose course study programme"
-                    onChange={(event) => {
-                      const programme = programmes.find(({ id }) => id === event.target.value);
+                    options={programmes.map((programme) => ({
+                      value: programme.id,
+                      label: `${programme.programme} · ${programme.faculty}`,
+                    }))}
+                    onChange={(id) => {
+                      const programme = programmes.find((item) => item.id === id);
                       if (!programme) return;
                       setSelectedProgrammeId(programme.id);
                       setValue('faculty', programme.faculty, { shouldDirty: true });
-                      setValue('subject', programme.programme, { shouldDirty: true });
                     }}
-                  >
-                    {programmes.map((programme) => (
-                      <option key={programme.id} value={programme.id}>
-                        {programme.programme} · {programme.faculty}
-                      </option>
-                    ))}
-                  </select>
+                  />
                 </UIField>
               )}
               <UIField
@@ -349,21 +359,35 @@ export function CourseFormDialog({ course, onClose }: CourseFormDialogProps) {
               </UIField>
               <UIField
                 label={t('app.subject')}
-                error={errors.subject ? t('courses.nameHint') : undefined}
+                error={errors.subject ? t('courses.subjectHint') : undefined}
               >
-                <input className="app-control" readOnly {...register('subject')} />
+                <input
+                  className="app-control"
+                  maxLength={150}
+                  placeholder={t('courses.subjectPlaceholder')}
+                  {...register('subject')}
+                />
               </UIField>
               <UIField
                 label={t('app.semester')}
                 error={errors.semester ? t('courses.semesterHint') : undefined}
               >
-                <select className="app-control" {...register('semester', { valueAsNumber: true })}>
-                  {Array.from({ length: 10 }, (_, index) => index + 1).map((value) => (
-                    <option key={value} value={value}>
-                      {t('exams.semesterNumber', { semester: value })}
-                    </option>
-                  ))}
-                </select>
+                <Controller
+                  name="semester"
+                  control={control}
+                  render={({ field }) => (
+                    <UISelect
+                      label={t('app.semester')}
+                      className="app-control"
+                      value={String(field.value)}
+                      onChange={(value) => field.onChange(Number(value))}
+                      options={Array.from({ length: 10 }, (_, index) => index + 1).map((value) => ({
+                        value: String(value),
+                        label: t('exams.semesterNumber', { semester: value }),
+                      }))}
+                    />
+                  )}
+                />
               </UIField>
             </>
           )}

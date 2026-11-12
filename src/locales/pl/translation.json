@@ -31,6 +31,7 @@
   },
   "app": {
     "accountDeleted": "Konto zostało usunięte",
+    "actions": "Akcje",
     "add": "Dodaj",
     "addComment": "Dodaj komentarz…",
     "addEmoji": "Dodaj emoji",
@@ -93,6 +94,7 @@
     "postNavigation": "Nawigacja po postach",
     "previousPost": "Poprzedni post",
     "primary": "Główny",
+    "professor": "Wykładowca",
     "professorRatings": "Oceny wykładowców",
     "profile": "Twój profil",
     "profileVisibility": "Widoczność profilu",
@@ -252,6 +254,8 @@
     "removeMaterial": "Usuń wybrany plik",
     "saved": "Przedmiot zapisany.",
     "semesterHint": "Wybierz semestr od 1 do 10.",
+    "subjectHint": "Wpisz nazwę przedmiotu (3–150 znaków).",
+    "subjectPlaceholder": "np. analiza matematyczna",
     "uploadEligibility": "Możesz dodawać materiały tylko dla swojej uczelni i głównego kierunku studiów.",
     "uploadingMaterials": "Przesyłanie materiałów…",
     "validationError": "Sprawdź oznaczone pola i spróbuj ponownie."

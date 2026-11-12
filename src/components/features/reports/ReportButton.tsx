@@ -2,15 +2,15 @@ import { ApiRequestError } from '@/api/errors';
 import { captureAnalytics } from '@/utils/analytics';
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm, useWatch } from 'react-hook-form';
+import { Controller, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { ChevronDown, FlagTriangleRight } from 'lucide-react';
+import { FlagTriangleRight } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 import type { components } from '@/@types/schema';
 import { useCreateReport } from '@/hooks/useCreateReport';
 import { reportSchema, type ReportSchema } from '@/schemas';
-import { UIButton, UIDialog, UIField } from '@/ui/components';
+import { UIButton, UIDialog, UIField, UISelect } from '@/ui/components';
 
 const reasons = [
   { value: 'spam', label: 'report.spam' },
@@ -116,27 +116,25 @@ export function ReportButton({
               label={t('report.reason')}
               error={errors.reason ? t('app.required') : undefined}
             >
-              <span className="relative block">
-                <select
-                  className="app-control appearance-none pr-10 focus:border-white-10 focus-visible:border-white-60"
-                  defaultValue=""
-                  {...register('reason')}
-                  aria-invalid={Boolean(errors.reason)}
-                >
-                  <option value="" disabled>
-                    {t('report.selectReason')}
-                  </option>
-                  {reasons.map(({ value, label: reasonLabel }) => (
-                    <option key={value} value={value}>
-                      {t(reasonLabel)}
-                    </option>
-                  ))}
-                </select>
-                <ChevronDown
-                  className="pointer-events-none absolute top-1/2 right-3.5 size-4 -translate-y-1/2 text-secondary"
-                  aria-hidden="true"
-                />
-              </span>
+              <Controller
+                name="reason"
+                control={control}
+                render={({ field }) => (
+                  <UISelect
+                    label={t('report.reason')}
+                    className="app-control"
+                    value={field.value ?? ''}
+                    onChange={field.onChange}
+                    options={[
+                      { value: '', label: t('report.selectReason') },
+                      ...reasons.map(({ value, label: reasonLabel }) => ({
+                        value,
+                        label: t(reasonLabel),
+                      })),
+                    ]}
+                  />
+                )}
+              />
             </UIField>
             <UIField
               label={t('report.details')}

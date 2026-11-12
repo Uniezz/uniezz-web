@@ -1,11 +1,18 @@
 import type { UploadSchema, UploadMaterialProps } from '@/@types';
 // ai-design-check-ignore-file use-shared-components -- UIField and app-control are the established form controls for react-hook-form.
 import { useTranslation } from 'react-i18next';
-import { useController, useForm } from 'react-hook-form';
+import { Controller, useController, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import toast from 'react-hot-toast';
 import { useCourse, useMyProfile, useAddCourseFile, useUploadStudyMaterial } from '@/hooks';
-import { UIButton, UIDialog, UIField, UIQueryError, UIUnsavedChanges } from '@/ui/components';
+import {
+  UIButton,
+  UIDialog,
+  UIField,
+  UIQueryError,
+  UISelect,
+  UIUnsavedChanges,
+} from '@/ui/components';
 import { uploadSchema } from '@/schemas';
 import { canUploadCourseMaterial, studyFileTypeLabels } from '@/utils/exams';
 import { captureAnalytics } from '@/utils/analytics';
@@ -81,17 +88,22 @@ export function UploadMaterial({ courseId, onClose }: UploadMaterialProps) {
               />
             </UIField>
             <UIField label={t('app.type')}>
-              <select
-                data-ph-capture-attribute-label="Material type"
-                className="app-control"
-                {...register('type')}
-              >
-                {(['exam', 'colloquium', 'lab', 'notes'] as const).map((type) => (
-                  <option key={type} value={type}>
-                    {t(studyFileTypeLabels[type])}
-                  </option>
-                ))}
-              </select>
+              <Controller
+                name="type"
+                control={control}
+                render={({ field }) => (
+                  <UISelect
+                    label={t('app.type')}
+                    className="app-control"
+                    value={field.value}
+                    onChange={field.onChange}
+                    options={(['exam', 'colloquium', 'lab', 'notes'] as const).map((type) => ({
+                      value: type,
+                      label: t(studyFileTypeLabels[type]),
+                    }))}
+                  />
+                )}
+              />
             </UIField>
             <UIField
               label={t('courses.file')}

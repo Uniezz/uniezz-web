@@ -1,5 +1,9 @@
 import type { Components, GridComponents, TableComponents } from 'react-virtuoso';
 
+export const tableHeaderCellClass =
+  'border-b border-white-5 px-4 py-3 text-detail font-semibold text-secondary';
+export const tableCellTextClass = 'border-t border-white-5 px-4 py-3 text-label text-white-80';
+
 // Virtuoso renders plain divs; these roles keep list semantics for screen readers.
 // List rows add role="listitem" on their own root, since a custom Item would pin the row data type to unknown.
 export const listComponents: Pick<Components, 'List'> = {

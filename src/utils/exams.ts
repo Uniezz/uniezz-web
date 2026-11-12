@@ -15,7 +15,7 @@ export function courseFormDefaults(profile: Profile | undefined): CreateCourseFo
     description: '',
     universityId: profile?.universityId ?? '',
     faculty: programme?.faculty ?? '',
-    subject: programme?.programme ?? '',
+    subject: '',
     semester: 1,
     difficulty: 3,
     materials: [],

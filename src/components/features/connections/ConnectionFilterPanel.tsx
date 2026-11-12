@@ -1,20 +1,19 @@
 import type { ConnectionFilterPanelProps } from '@/@types';
 import { useId, type ReactNode } from 'react';
 import { useIsMutating } from '@tanstack/react-query';
-import { ChevronDown, Mars, Minus, SlidersHorizontal, Venus } from 'lucide-react';
+import { Mars, Minus, SlidersHorizontal, Venus } from 'lucide-react';
 import { useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import type { Gender, StudyLevel } from '@/@types';
 import { useMyConnectionPreferences, useUniversities } from '@/hooks';
-import { useDropdown } from '@/hooks/useDropdown';
 import { cn } from '@/ui/cn';
 import {
   UIButton,
   UIChip,
-  UIMenu,
   UIPanel,
   UISegmented,
+  UISelect,
   UISwitch,
   UIUniversityLogo,
 } from '@/ui/components';
@@ -108,7 +107,7 @@ export function ConnectionFilterPanel({ form, onApply }: ConnectionFilterPanelPr
           {universities.map(({ id }) => (
             <UIChip
               key={id}
-              data-ph-capture-attribute-label={id.toUpperCase()}
+              data-ph-capture-attribute-label={id.toLocaleUpperCase('en')}
               selected={selectedUniversities.includes(id)}
               className="inline-flex items-center gap-1.5 py-1.5 pl-1.5"
               onClick={() =>
@@ -118,7 +117,7 @@ export function ConnectionFilterPanel({ form, onApply }: ConnectionFilterPanelPr
               }
             >
               <UIUniversityLogo universityId={id} />
-              {id.toUpperCase()}
+              {id.toLocaleUpperCase('en')}
             </UIChip>
           ))}
         </FilterSection>
@@ -223,7 +222,6 @@ function FacultyPicker({
   onChange: (value: string | null) => void;
 }) {
   const { t } = useTranslation();
-  const { ref, isOpen, toggle: toggleMenu, close } = useDropdown();
   const { data: universities = [] } = useUniversities();
   const anyFaculty = { value: '', label: t('connections.anyFaculty') };
   const options = [
@@ -238,41 +236,13 @@ function FacultyPicker({
         })),
       ),
   ];
-  const selected = options.find((option) => option.value === (value ?? '')) ?? anyFaculty;
-
   return (
-    <div
-      className="relative flex"
-      ref={ref}
-      onKeyDown={(event) => {
-        if (event.key === 'Escape') {
-          close();
-          ref.current?.querySelector('button')?.focus();
-        }
-      }}
-    >
-      <UIButton
-        size="pill"
-        bg="secondary"
-        onClick={toggleMenu}
-        aria-label={t('app.faculty')}
-        aria-expanded={isOpen}
-        className="w-full justify-between gap-2 text-left text-detail font-medium"
-      >
-        <span className="truncate">{selected.label}</span>
-        <ChevronDown size={14} className="shrink-0" aria-hidden="true" />
-      </UIButton>
-      {isOpen && (
-        <UIMenu
-          options={options}
-          value={value ?? ''}
-          className="left-0 max-h-72 w-full max-w-none overflow-y-auto"
-          onSelect={(next) => {
-            onChange(next || null);
-            close();
-          }}
-        />
-      )}
-    </div>
+    <UISelect
+      label={t('app.faculty')}
+      className="min-h-10 w-full rounded-full border border-white-10 bg-white-5 px-4 text-detail font-medium text-white-80 hover:bg-white-10"
+      options={options}
+      value={value ?? ''}
+      onChange={(next) => onChange(next || null)}
+    />
   );
 }
