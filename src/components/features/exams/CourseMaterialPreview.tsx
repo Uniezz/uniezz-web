@@ -25,7 +25,6 @@ export const CourseMaterialPreview = memo(function CourseMaterialPreview({
       ) : (
         <div className="flex size-full flex-col items-center justify-center gap-2 bg-white-5 text-secondary">
           <FileText size={28} aria-hidden="true" />
-          <span className="text-detail font-semibold">PDF</span>
         </div>
       )}
       <span className="absolute inset-x-0 bottom-0 truncate bg-surface/90 px-2 py-2 text-micro text-white-80">
