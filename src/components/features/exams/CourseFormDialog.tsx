@@ -250,7 +250,7 @@ export function CourseFormDialog({ course, onClose }: CourseFormDialogProps) {
                           role="region"
                           aria-label={t('courses.materials')}
                           tabIndex={0}
-                          className="mt-3 flex h-38 max-w-full min-w-0 items-start gap-3 overflow-x-auto overflow-y-hidden rounded-feature [overflow-anchor:none] focus-visible:outline-2 focus-visible:outline-blue"
+                          className="mt-3 flex h-44 max-w-full min-w-0 items-start gap-3 overflow-x-auto overflow-y-hidden rounded-feature [overflow-anchor:none] focus-visible:outline-2 focus-visible:outline-blue"
                         >
                           {value.map((file) => (
                             <CourseMaterialPreview

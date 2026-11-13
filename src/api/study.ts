@@ -15,7 +15,7 @@ export async function searchStudyFiles(query: StudyFileQuery, cursor?: string) {
   return data!;
 }
 
-/** File links are short-lived, so a download asks for a fresh one. */
+/** File links are short-lived, so a preview asks for a fresh one. */
 export async function getStudyFile(id: string) {
   const { data } = await api.GET('/study/files/{id}', { params: { path: { id } } });
   return data!;

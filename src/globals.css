@@ -1421,3 +1421,89 @@ input[type='search']::-webkit-search-cancel-button {
     0 0 0 96px #a9baff08,
     0 0 0 128px #a9baff08;
 }
+
+.file-viewer-host {
+  --file-viewer-bg: var(--color-surface) !important;
+  --file-viewer-content-bg: var(--color-surface) !important;
+  --file-viewer-text: var(--color-white) !important;
+  --file-viewer-muted: var(--color-secondary) !important;
+  --file-viewer-border: var(--color-white-10) !important;
+  --file-viewer-toolbar-bg: var(--color-surface) !important;
+  --file-viewer-toolbar-border: var(--color-white-10) !important;
+  --file-viewer-toolbar-radius: var(--radius-feature) !important;
+  --file-viewer-group-bg: var(--color-white-5) !important;
+  --file-viewer-group-border: var(--color-white-10) !important;
+  --file-viewer-button-color: var(--color-white) !important;
+  --file-viewer-button-hover-bg: var(--color-white-10) !important;
+  --file-viewer-button-hover-color: var(--color-accent-hover) !important;
+  --file-viewer-input-bg: var(--color-surface) !important;
+  --file-viewer-input-color: var(--color-white) !important;
+  --file-viewer-focus-ring: var(--color-blue-40) !important;
+}
+
+.file-viewer-host::part(shell) {
+  --file-viewer-bg: var(--color-surface);
+  --file-viewer-content-bg: var(--color-surface);
+  --file-viewer-text: var(--color-white);
+  --file-viewer-muted: var(--color-secondary);
+  --file-viewer-border: var(--color-white-10);
+  --file-viewer-toolbar-bg: var(--color-surface);
+  --file-viewer-toolbar-border: var(--color-white-10);
+  --file-viewer-group-bg: var(--color-white-5);
+  --file-viewer-group-border: var(--color-white-10);
+  --file-viewer-button-color: var(--color-white);
+  --file-viewer-button-hover-bg: var(--color-white-10);
+  --file-viewer-button-hover-color: var(--color-accent-hover);
+  --file-viewer-input-bg: var(--color-surface);
+  --file-viewer-input-color: var(--color-white);
+}
+
+.file-viewer-host::part(toolbar) {
+  border-color: var(--color-white-10);
+  background: var(--color-surface);
+}
+
+.file-viewer-host::part(button) {
+  color: var(--color-white);
+}
+
+.file-viewer-host::part(content) {
+  background: var(--color-surface);
+}
+
+.file-viewer-host .file-viewer-web-toolbar,
+.file-viewer-host .pdf-toolbar,
+.file-viewer-host .pdf-nav-pane,
+.file-viewer-host .pdf-nav-head,
+.file-viewer-host .pdf-nav-tabs {
+  border-color: var(--color-white-10) !important;
+  background: var(--color-surface) !important;
+}
+
+.file-viewer-host .pdf-shell,
+.file-viewer-host .pdf-wrapper {
+  background: var(--color-surface) !important;
+}
+
+.file-viewer-host .file-viewer-web-toolbar button,
+.file-viewer-host .pdf-toolbar-group,
+.file-viewer-host .pdf-icon-button,
+.file-viewer-host .pdf-scale-button,
+.file-viewer-host .pdf-page-meter,
+.file-viewer-host .pdf-rotation-meter {
+  border-color: var(--color-white-10) !important;
+  background: var(--color-white-5) !important;
+  color: var(--color-white) !important;
+}
+
+.file-viewer-host .file-viewer-web-toolbar button:hover,
+.file-viewer-host .pdf-icon-button:hover:not(:disabled),
+.file-viewer-host .pdf-scale-button:hover {
+  background: var(--color-white-10) !important;
+  color: var(--color-accent-hover) !important;
+}
+
+.file-viewer-host .file-viewer-web-search input {
+  background: var(--color-surface) !important;
+  color: var(--color-white) !important;
+}

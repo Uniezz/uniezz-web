@@ -4,7 +4,7 @@ import { useCourse, useCourseFiles, useMyProfile } from '@/hooks';
 import { UIButton, UIQueryError } from '@/ui/components';
 import { canUploadCourseMaterial, studyFileTypeLabels } from '@/utils';
 import { UploadMaterialButton } from './UploadMaterialButton';
-import { DownloadStudyFileButton } from './DownloadStudyFileButton';
+import { PreviewStudyFileButton } from './PreviewStudyFileButton';
 
 export function CourseMaterials({ courseId }: CourseMaterialsProps) {
   const { t } = useTranslation();
@@ -33,7 +33,7 @@ export function CourseMaterials({ courseId }: CourseMaterialsProps) {
               <p className="font-semibold wrap-anywhere">{file.title}</p>
               <p className="text-detail text-secondary">{t(studyFileTypeLabels[file.type])}</p>
             </div>
-            <DownloadStudyFileButton fileId={file.id} />
+            <PreviewStudyFileButton file={file} />
           </li>
         ))}
       </ul>

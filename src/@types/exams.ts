@@ -21,7 +21,7 @@ export type CourseFormDialogProps = { course?: Course; onClose: (ignoreBlocker?:
 export type CourseMaterialsProps = { courseId: string };
 export type UploadMaterialProps = { courseId: string; onClose: (ignoreBlocker?: boolean) => void };
 export type UploadMaterialButtonProps = { courseId: string };
-export type DownloadStudyFileButtonProps = { fileId: string };
+export type PreviewStudyFileButtonProps = { file: StudyFile };
 
 export type UploadSchema = z.infer<typeof uploadSchema>;
 export type ExamsSearch = z.infer<typeof examsSearchSchema>;

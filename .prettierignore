@@ -1,4 +1,6 @@
 dist
+public/vendor
+public/flyfish-viewer-assets.json
 node_modules
 *.tsbuildinfo
 src/@types

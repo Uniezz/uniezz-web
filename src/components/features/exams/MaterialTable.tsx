@@ -6,7 +6,7 @@ import { TableVirtuoso } from 'react-virtuoso';
 import { useSearch } from '@tanstack/react-router';
 import type { StudyFile } from '@/@types';
 import { fixedTable, tableCellTextClass, tableHeaderCellClass } from '@/ui/virtuoso';
-import { DownloadStudyFileButton } from './DownloadStudyFileButton';
+import { PreviewStudyFileButton } from './PreviewStudyFileButton';
 import { studyFileTypeLabels } from '@/utils';
 import { useDeleteStudyFile, useMyProfile, useStudyFiles } from '@/hooks';
 import { UIButton, UIDialog, UIEmpty, UIPanel, UIQueryError } from '@/ui/components';
@@ -72,13 +72,13 @@ export function MaterialTable() {
                   <td className={tableCellTextClass}>{date.format(new Date(file.createdAt))}</td>
                   <td className="border-t border-white-5 px-4 py-3">
                     <div className="flex justify-end gap-2">
-                      <DownloadStudyFileButton fileId={file.id} />
+                      <PreviewStudyFileButton file={file} />
                       {me?.id === file.authorId && (
                         <UIButton
                           size="icon"
-                          bg="secondary"
+                          bg="transparent"
                           aria-label={t('exams.deleteFile')}
-                          className="text-danger"
+                          className="border-0 text-danger enabled:hover:bg-transparent enabled:hover:text-danger-hover"
                           onClick={() => setToDelete(file)}
                         >
                           <Trash2 size={15} />
