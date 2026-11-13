@@ -114,6 +114,10 @@ export function AddProgramme({
           </UIField>
           {exists && <p className="text-label text-secondary">{t('app.programmeExists')}</p>}
           <UIButton
+            size="pill"
+            bg="transparent"
+            leftIcon={Plus}
+            className="text-secondary enabled:hover:bg-transparent enabled:hover:text-white"
             disabled={exists || isPending}
             onClick={handleSubmit(addProgramme, () =>
               captureAnalytics('programme_add_form_validation_failed'),

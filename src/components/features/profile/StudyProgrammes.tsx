@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Check, Trash2 } from 'lucide-react';
+import { Check, Trash2, X } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 import type { Programme } from '@/@types';
@@ -287,13 +287,29 @@ function ProgrammeCard({
               )}
             </div>
             <div className="flex items-center gap-3">
-              <UIButton bg="secondary" disabled={isPending} onClick={closeEditor}>
-                {t('app.cancel')}
-              </UIButton>
               {isDirty && (
-                <UIButton type="submit" disabled={isPending}>
-                  {t('app.saveChanges')}
-                </UIButton>
+                <>
+                  <UIButton
+                    bg="transparent"
+                    size="pill"
+                    disabled={isPending}
+                    className="text-secondary enabled:hover:bg-transparent enabled:hover:text-white"
+                    onClick={closeEditor}
+                  >
+                    <X size={16} aria-hidden="true" />
+                    {t('app.cancel')}
+                  </UIButton>
+                  <UIButton
+                    type="submit"
+                    bg="transparent"
+                    size="pill"
+                    disabled={isPending}
+                    className="text-secondary enabled:hover:bg-transparent enabled:hover:text-white"
+                  >
+                    <Check size={16} aria-hidden="true" />
+                    {t('app.saveChanges')}
+                  </UIButton>
+                </>
               )}
             </div>
           </div>

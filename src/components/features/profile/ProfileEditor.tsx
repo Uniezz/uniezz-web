@@ -45,7 +45,7 @@ export function ProfileEditor({
             </UIButton>
           )}
         </UITopbar>
-        <div className="grid min-w-0 items-start gap-5 xl:grid-cols-[310px_minmax(0,1fr)]">
+        <div className="grid min-w-0 gap-5 xl:grid-cols-[310px_minmax(0,1fr)]">
           <fieldset disabled={isPending}>
             <ProfileIdentity
               universityId={profile.universityId}
@@ -57,36 +57,38 @@ export function ProfileEditor({
               }}
             />
           </fieldset>
-          <div className="min-w-0 space-y-5">
-            <UIPanel
-              surface="tint"
-              className="grid min-w-0 items-start gap-6 rounded-profile lg:grid-cols-2"
+          <UIPanel
+            surface="tint"
+            className="grid min-w-0 items-start gap-6 rounded-profile lg:grid-cols-2"
+          >
+            <form
+              id="profile-form"
+              className="min-w-0"
+              onSubmit={handleSubmit(
+                async (data) => {
+                  try {
+                    await saveProfile(data);
+                    toast.success(t('app.saved'));
+                  } catch {
+                    toast.error(t('apiState.profileSaveError'));
+                  }
+                },
+                () => captureAnalytics('profile_form_validation_failed'),
+              )}
             >
-              <form
-                id="profile-form"
-                className="min-w-0"
-                onSubmit={handleSubmit(
-                  async (data) => {
-                    try {
-                      await saveProfile(data);
-                      toast.success(t('app.saved'));
-                    } catch {
-                      toast.error(t('apiState.profileSaveError'));
-                    }
-                  },
-                  () => captureAnalytics('profile_form_validation_failed'),
-                )}
-              >
-                <fieldset disabled={isPending}>
-                  <PersonalDetails />
-                </fieldset>
-              </form>
-              <div className="min-w-0">
-                <StudyProgrammes universityId={profile.universityId} />
-              </div>
-            </UIPanel>
-            {showPosts && <ProfilePosts authorId={profile.id} collections />}
-          </div>
+              <fieldset disabled={isPending}>
+                <PersonalDetails />
+              </fieldset>
+            </form>
+            <div className="min-w-0">
+              <StudyProgrammes universityId={profile.universityId} />
+            </div>
+          </UIPanel>
+          {showPosts && (
+            <div className="min-w-0 xl:col-span-2">
+              <ProfilePosts authorId={profile.id} collections />
+            </div>
+          )}
         </div>
       </>
     </FormProvider>
