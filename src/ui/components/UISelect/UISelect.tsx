@@ -12,12 +12,20 @@ export type UISelectProps = {
   /** Accessible name of the control, e.g. the field label */
   label: string;
   className?: string;
+  disabled?: boolean;
 };
 
 // The menu is a native popover anchored to the trigger in CSS: the browser puts it above any
 // overflow: hidden, keeps it attached on scroll, flips it when there's no room below, and closes it
 // on outside click or Escape.
-export const UISelect = ({ value, options, onChange, label, className }: UISelectProps) => {
+export const UISelect = ({
+  value,
+  options,
+  onChange,
+  label,
+  className,
+  disabled,
+}: UISelectProps) => {
   const id = useId();
   const menuId = `select-menu-${id}`;
   const anchor = `--select-${id.replace(/[^\w-]/g, '')}`;
@@ -31,6 +39,7 @@ export const UISelect = ({ value, options, onChange, label, className }: UISelec
         data-ph-capture-attribute-label={label}
         popoverTarget={menuId}
         aria-label={`${label}: ${selected?.label ?? ''}`}
+        disabled={disabled}
         style={{ anchorName: anchor }}
         className={cn(
           'flex w-full min-w-0 items-center justify-between gap-2 text-left outline-none focus-visible:outline-2 focus-visible:outline-blue disabled:opacity-60',
@@ -61,7 +70,7 @@ export const UISelect = ({ value, options, onChange, label, className }: UISelec
           left: 'anchor(left)',
           minWidth: 'anchor-size(width)',
           margin: '8px 0',
-          positionTryFallbacks: 'flip-block',
+          positionTryFallbacks: 'flip-block, flip-inline, flip-block flip-inline',
         }}
         className="max-h-72 overflow-y-auto bg-surface not-open:hidden"
         onSelect={(next) => {

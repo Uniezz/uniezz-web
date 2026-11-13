@@ -6,11 +6,11 @@ import { Skeleton } from 'skullet/react';
 import type { FeedComment } from '@/@types';
 import { useCommentReplies, useDeleteFeedComment, useMyProfile } from '@/hooks';
 import { UIAvatar, UIButton, UIDialog, UIQueryError } from '@/ui/components';
-import { authorName } from '@/utils/feed';
-import { sampleComment } from '@/utils/feedSkeletonData';
+import { authorName } from '@/utils';
+import { sampleComment } from '@/utils';
 import { FeedLikeButton } from './FeedLikeButton';
 import { FeedCommentEditor } from './FeedCommentEditor';
-import { ReportButton } from '@/components/features/reports/ReportButton';
+import { ReportButton } from '@/components/features/reports';
 
 export function FeedCommentItem({
   comment,

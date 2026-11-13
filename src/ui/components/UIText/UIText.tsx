@@ -8,7 +8,7 @@ type TextElement = Extract<
   'p' | 'span' | 'div' | 'label' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
 >;
 
-type UITextProps<T extends TextElement = 'p'> = VariantProps<typeof textStyles> &
+export type UITextProps<T extends TextElement = 'p'> = VariantProps<typeof textStyles> &
   Omit<ComponentProps<T>, 'color'> & {
     as?: T;
   };

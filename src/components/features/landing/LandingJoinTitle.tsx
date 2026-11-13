@@ -1,5 +1,5 @@
 import type { MouseEvent } from 'react';
-import { captureAnalytics } from '@/utils/analytics';
+import { captureAnalytics } from '@/utils';
 import { animated, easings, useInView, useReducedMotion, useSpring } from '@react-spring/web';
 import { Link } from '@tanstack/react-router';
 import { ArrowUpRight } from 'lucide-react';

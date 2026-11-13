@@ -1,16 +1,16 @@
-import { ApiRequestError } from '@/api/errors';
-import { captureAnalytics } from '@/utils/analytics';
+import { ApiRequestError } from '@/api';
+import { captureAnalytics } from '@/utils';
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm, useWatch } from 'react-hook-form';
+import { Controller, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { ChevronDown, FlagTriangleRight } from 'lucide-react';
+import { FlagTriangleRight } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 import type { components } from '@/@types/schema';
-import { useCreateReport } from '@/hooks/useCreateReport';
+import { useCreateReport } from '@/hooks';
 import { reportSchema, type ReportSchema } from '@/schemas';
-import { UIButton, UIDialog, UIField } from '@/ui/components';
+import { UIButton, UIDialog, UIField, UISelect } from '@/ui/components';
 
 const reasons = [
   { value: 'spam', label: 'report.spam' },
@@ -24,10 +24,12 @@ export function ReportButton({
   targetType,
   targetId,
   compact = false,
+  danger = false,
 }: {
   targetType: components['schemas']['CreateReportInputBody']['targetType'];
   targetId: string;
   compact?: boolean;
+  danger?: boolean;
 }) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
@@ -49,7 +51,13 @@ export function ReportButton({
       ? t('report.post')
       : targetType === 'comment'
         ? t('report.comment')
-        : t('report.user');
+        : targetType === 'course'
+          ? t('report.course')
+          : targetType === 'file'
+            ? t('report.material')
+            : targetType === 'candidate'
+              ? t('report.candidate')
+              : t('report.user');
 
   function changeOpen(next: boolean) {
     setOpen(next);
@@ -67,7 +75,7 @@ export function ReportButton({
         className={
           compact
             ? 'min-h-0 gap-1.5 rounded-full border border-danger/25 bg-danger-soft py-1 pr-2.5 pl-2 text-micro font-semibold text-danger backdrop-blur-md enabled:hover:border-danger/50 enabled:hover:bg-danger/25'
-            : 'min-h-0 gap-1 border-0 p-0 text-secondary enabled:hover:bg-transparent enabled:hover:text-white'
+            : `min-h-0 gap-1 border-0 p-0 ${danger ? 'text-danger enabled:hover:text-danger-hover' : 'text-secondary enabled:hover:text-white'} enabled:hover:bg-transparent`
         }
         onClick={() => changeOpen(true)}
       >
@@ -110,27 +118,25 @@ export function ReportButton({
               label={t('report.reason')}
               error={errors.reason ? t('app.required') : undefined}
             >
-              <span className="relative block">
-                <select
-                  className="app-control appearance-none pr-10 focus:border-white-10 focus-visible:border-white-60"
-                  defaultValue=""
-                  {...register('reason')}
-                  aria-invalid={Boolean(errors.reason)}
-                >
-                  <option value="" disabled>
-                    {t('report.selectReason')}
-                  </option>
-                  {reasons.map(({ value, label: reasonLabel }) => (
-                    <option key={value} value={value}>
-                      {t(reasonLabel)}
-                    </option>
-                  ))}
-                </select>
-                <ChevronDown
-                  className="pointer-events-none absolute top-1/2 right-3.5 size-4 -translate-y-1/2 text-secondary"
-                  aria-hidden="true"
-                />
-              </span>
+              <Controller
+                name="reason"
+                control={control}
+                render={({ field }) => (
+                  <UISelect
+                    label={t('report.reason')}
+                    className="app-control"
+                    value={field.value ?? ''}
+                    onChange={field.onChange}
+                    options={[
+                      { value: '', label: t('report.selectReason') },
+                      ...reasons.map(({ value, label: reasonLabel }) => ({
+                        value,
+                        label: t(reasonLabel),
+                      })),
+                    ]}
+                  />
+                )}
+              />
             </UIField>
             <UIField
               label={t('report.details')}

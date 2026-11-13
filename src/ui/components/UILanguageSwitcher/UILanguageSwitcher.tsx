@@ -1,7 +1,7 @@
 import { ChevronDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { useDropdown } from '@/hooks/useDropdown';
+import { useDropdown } from '@/hooks';
 import { LNG_OPTIONS } from '@/utils';
 import { UIButton } from '../UIButton';
 import { UIMenu } from '../UIMenu';

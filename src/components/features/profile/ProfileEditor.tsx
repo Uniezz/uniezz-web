@@ -1,22 +1,28 @@
-import { captureAnalytics } from '@/utils/analytics';
+import { captureAnalytics } from '@/utils';
 import { Check } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { FormProvider } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { useDeleteAvatar, useDeleteBanner } from '@/hooks/useProfiles';
-import { useProfileForm } from '@/hooks/useProfileForm';
+import { useDeleteBanner } from '@/hooks';
+import { useProfileForm } from '@/hooks';
 import type { components } from '@/@types/schema';
-import { UIButton, UITopbar, UIUnsavedChanges } from '@/ui/components';
+import { UIButton, UIPanel, UITopbar, UIUnsavedChanges } from '@/ui/components';
 import { ProfileIdentity } from './ProfileIdentity';
 import { PersonalDetails } from './PersonalDetails';
 import { StudyProgrammes } from './StudyProgrammes';
+import { ProfilePosts } from './ProfilePosts';
 
-export function ProfileEditor({ profile }: { profile: components['schemas']['Profile'] }) {
+export function ProfileEditor({
+  profile,
+  showPosts = true,
+}: {
+  profile: components['schemas']['Profile'];
+  showPosts?: boolean;
+}) {
   const { t } = useTranslation();
   const { form, saveProfile, isPending: isSaving } = useProfileForm(profile);
-  const { mutateAsync: deleteAvatar, isPending: isDeleting } = useDeleteAvatar();
   const { mutateAsync: deleteBanner, isPending: isDeletingBanner } = useDeleteBanner();
-  const isPending = isSaving || isDeleting || isDeletingBanner;
+  const isPending = isSaving || isDeletingBanner;
   const {
     handleSubmit,
     formState: { isDirty },
@@ -26,44 +32,38 @@ export function ProfileEditor({ profile }: { profile: components['schemas']['Pro
       <UIUnsavedChanges dirty={isDirty} />
       <>
         <UITopbar title={t('app.yourProfile')}>
-          <UIButton
-            type="submit"
-            form="profile-form"
-            disabled={isPending || !isDirty}
-            size="sm"
-            leftIcon={Check}
-            className="h-9 min-h-9 shrink-0 px-3 py-0 text-detail whitespace-nowrap"
-          >
-            {isDirty ? t('app.saveChanges') : t('app.saved')}
-          </UIButton>
+          {isDirty && (
+            <UIButton
+              type="submit"
+              form="profile-form"
+              disabled={isPending}
+              size="sm"
+              leftIcon={Check}
+              className="h-9 min-h-9 shrink-0 px-3 py-0 text-detail whitespace-nowrap"
+            >
+              {t('app.saveChanges')}
+            </UIButton>
+          )}
         </UITopbar>
-        <div className="grid min-w-0 items-start gap-5 xl:grid-cols-[310px_minmax(0,1fr)]">
+        <div className="grid min-w-0 gap-5 xl:grid-cols-[310px_minmax(0,1fr)]">
           <fieldset disabled={isPending}>
             <ProfileIdentity
               universityId={profile.universityId}
+              disabled={isPending}
               onRemoveBanner={async () => {
-                if (form.getValues('bannerFile')) {
-                  form.resetField('bannerFile');
-                  return;
-                }
                 if (form.getValues('banner')) await deleteBanner();
                 form.resetField('banner', { defaultValue: '' });
                 form.resetField('bannerFile');
               }}
-              onRemoveAvatar={async () => {
-                if (form.getValues('avatarFile')) {
-                  form.resetField('avatarFile');
-                  return;
-                }
-                if (form.getValues('photo') !== '/app/avatar.png') await deleteAvatar();
-                form.resetField('photo', { defaultValue: '/app/avatar.png' });
-                form.resetField('avatarFile');
-              }}
             />
           </fieldset>
-          <div className="space-y-4.5">
+          <UIPanel
+            surface="tint"
+            className="grid min-w-0 items-start gap-6 rounded-profile lg:grid-cols-2"
+          >
             <form
               id="profile-form"
+              className="min-w-0"
               onSubmit={handleSubmit(
                 async (data) => {
                   try {
@@ -80,11 +80,15 @@ export function ProfileEditor({ profile }: { profile: components['schemas']['Pro
                 <PersonalDetails />
               </fieldset>
             </form>
-            <StudyProgrammes
-              universityId={profile.universityId}
-              initialProgrammes={profile.programmes ?? []}
-            />
-          </div>
+            <div className="min-w-0">
+              <StudyProgrammes universityId={profile.universityId} />
+            </div>
+          </UIPanel>
+          {showPosts && (
+            <div className="min-w-0 xl:col-span-2">
+              <ProfilePosts authorId={profile.id} collections />
+            </div>
+          )}
         </div>
       </>
     </FormProvider>

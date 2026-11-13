@@ -9,7 +9,7 @@ export const programmeSchema = z.object({
   id: z.string().optional(),
   programme: z.string().trim().min(1),
   faculty: z.string().trim().min(1),
-  yearOfStudy: z.number().int().min(1).max(10).nullable(),
+  yearOfStudy: z.number().int().min(1).max(6).nullable(),
   isPrimary: z.boolean(),
   status: z.enum(['active', 'graduated', 'suspended', 'cancelled']),
   level: z

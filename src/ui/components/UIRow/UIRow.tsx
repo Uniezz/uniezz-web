@@ -4,7 +4,7 @@ import { rowstyles } from './variants';
 import { VariantProps } from 'class-variance-authority';
 import { Check } from 'lucide-react';
 
-type UIRowProps = VariantProps<typeof rowstyles> & {
+export type UIRowProps = VariantProps<typeof rowstyles> & {
   iconText: string;
   iconSrc?: string;
   topText: string;

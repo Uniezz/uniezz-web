@@ -18,7 +18,9 @@ export type UIDialogProps = {
   title: string;
   description: string;
   children: ReactNode;
+  footer?: ReactNode;
   dismissible?: boolean;
+  placement?: 'center' | 'right';
   className?: string;
 };
 export const UIDialog = ({
@@ -27,7 +29,9 @@ export const UIDialog = ({
   title,
   description,
   children,
+  footer,
   dismissible = true,
+  placement = 'center',
   className,
 }: UIDialogProps) => {
   const { t } = useTranslation();
@@ -53,7 +57,11 @@ export const UIDialog = ({
           onPointerDownOutside={(e) => {
             if (!dismissible) e.preventDefault();
           }}
-          className={cn(dialogStyles(), className)}
+          className={cn(
+            dialogStyles({ placement }),
+            placement === 'right' && footer && 'bg-surface',
+            className,
+          )}
         >
           <Dialog.Title className={dialogTitleStyles()}>{title}</Dialog.Title>
           <Dialog.Description className={dialogDescriptionStyles()}>
@@ -71,7 +79,16 @@ export const UIDialog = ({
               </UIButton>
             </Dialog.Close>
           )}
-          {children}
+          <div
+            className={
+              placement === 'right'
+                ? `scrollbar-hidden flex min-h-0 flex-1 flex-col ${footer ? 'overflow-hidden' : 'overflow-y-auto'}`
+                : undefined
+            }
+          >
+            {children}
+          </div>
+          {footer}
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>

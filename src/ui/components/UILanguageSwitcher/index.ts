@@ -1,1 +1,1 @@
-export { UILanguageSwitcher } from './UILanguageSwitcher';
+export * from './UILanguageSwitcher';

@@ -1,3 +1,8 @@
-export { DiscoveryProfile } from './DiscoveryProfile';
-export { DiscoveryActions } from './DiscoveryActions';
-export { ConnectionFilterPanel } from './ConnectionFilterPanel';
+export * from './BlockStudentButton';
+export * from './ConnectionFilterPanel';
+export * from './ConnectionPreferences';
+export * from './DiscoveryActions';
+export * from './DiscoveryProfile';
+export * from './MatchActions';
+export * from './StudentCard';
+export * from './StudentSearchResults';

@@ -15,7 +15,8 @@ export function captureAnalytics(
 export function analyticsPath(path: string): string {
   return path
     .replace(/^(\/feed\/post\/)(?!new-post(?:\/|$))[^/]+/, '$1:postId')
-    .replace(/^(\/connections\/students\/)[^/]+/, '$1:profileId');
+    .replace(/^(\/connections\/students\/)[^/]+/, '$1:profileId')
+    .replace(/^(\/exams\/courses\/)(?!new(?:\/|$))[^/]+/, '$1:courseId');
 }
 
 function safeUrl(value: string): string {

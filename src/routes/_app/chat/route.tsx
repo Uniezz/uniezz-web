@@ -1,9 +1,11 @@
 import { createContext, useState } from 'react';
+import posthog from 'posthog-js';
 import { Outlet, createFileRoute, redirect } from '@tanstack/react-router';
 
 import type { Conversation, Message } from '@/@types';
-// TODO(api): Replace mock conversations/connections and local chat mutations with API queries and mutations.
-import { CHATMOCKS, CONNECTIONSMOCKS, createGroupConversation } from '@/utils';
+// TODO(api): Replace mock conversations and local chat mutations with API queries and mutations.
+import { CHATMOCKS, connectionConversation, createGroupConversation } from '@/utils';
+import { useConnectionsList } from '@/hooks';
 import { ConversationList } from '@/components/features/chat';
 
 // TODO(api): Remove this mock-state context when chat queries and mutations are API-backed.
@@ -18,9 +20,9 @@ export const ChatGroupRouteContext = createContext<{
 } | null>(null);
 
 export const Route = createFileRoute('/_app/chat')({
-  beforeLoad: ({ location, search }) => {
-    if (location.pathname === '/chat' && search.chatRoute === 'new-group') {
-      throw redirect({ to: '/chat/new-group', search });
+  beforeLoad: () => {
+    if (posthog.isFeatureEnabled('chat') === false) {
+      throw redirect({ to: '/feed', replace: true });
     }
   },
   component: ChatPage,
@@ -29,6 +31,11 @@ export const Route = createFileRoute('/_app/chat')({
 function ChatPage() {
   const { conversationId, chatType = 'all' } = Route.useSearch();
   const navigate = Route.useNavigate();
+  const { data: connectionPages } = useConnectionsList();
+  const findConnection = (id: string) =>
+    connectionPages?.pages
+      .flatMap((page) => page.items ?? [])
+      .find(({ profile }) => profile.id === id)?.profile;
   const [conversations, setConversations] = useState(() => {
     const conversations = [...CHATMOCKS.initialConversations];
     if (
@@ -40,23 +47,13 @@ function ChatPage() {
     const extra = CHATMOCKS.extraConversations.find(
       (conversation) => conversation.id === conversationId,
     );
-    const connection = CONNECTIONSMOCKS.connections.find((person) => person.id === conversationId);
+    const connection = findConnection(conversationId);
     if (extra) {
       conversations.push(
-        connection ? { ...extra, imageUrl: `/app/kuQtw-${connection.image}.jpg` } : extra,
+        connection?.avatarUrl ? { ...extra, imageUrl: connection.avatarUrl } : extra,
       );
     } else if (connection) {
-      conversations.push({
-        id: connection.id,
-        name: connection.name,
-        preview: '',
-        time: '',
-        group: false,
-        unread: 0,
-        image: 0,
-        imageUrl: `/app/kuQtw-${connection.image}.jpg`,
-        messages: [],
-      });
+      conversations.push(connectionConversation(connection));
     }
     return conversations;
   });
@@ -67,29 +64,14 @@ function ChatPage() {
     conversations.some((conversation) => conversation.id === conversationId) ? 'thread' : 'list',
   );
   function openConversation(id: string): void {
-    const person = CONNECTIONSMOCKS.connections.find((connection) => connection.id === id);
+    const person = findConnection(id);
     setConversations((conversations) => {
       if (conversations.some((conversation) => conversation.id === id)) {
         return conversations.map((conversation) =>
           conversation.id === id ? { ...conversation, unread: 0 } : conversation,
         );
       }
-      return person
-        ? [
-            ...conversations,
-            {
-              id: person.id,
-              name: person.name,
-              preview: '',
-              time: '',
-              group: false,
-              unread: 0,
-              image: 0,
-              imageUrl: `/app/kuQtw-${person.image}.jpg`,
-              messages: [],
-            },
-          ]
-        : conversations;
+      return person ? [...conversations, connectionConversation(person)] : conversations;
     });
     setPanel('thread');
     void navigate({ search: (previous) => ({ ...previous, conversationId: id }) });
@@ -102,7 +84,6 @@ function ChatPage() {
       to: '/chat',
       search: (previous) => ({
         ...previous,
-        chatRoute: undefined,
         conversationId: group.id,
       }),
     });
@@ -132,7 +113,6 @@ function ChatPage() {
           setPanel('list');
           void navigate({
             to: '/chat',
-            search: (previous) => ({ ...previous, chatRoute: undefined }),
           });
         },
         onCreate: createGroup,
@@ -156,7 +136,6 @@ function ChatPage() {
             setPanel('thread');
             void navigate({
               to: '/chat/new-group',
-              search: (previous) => ({ ...previous, chatRoute: 'new-group' }),
             });
           }}
           onOpen={openConversation}

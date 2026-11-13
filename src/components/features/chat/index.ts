@@ -1,4 +1,4 @@
-export { CreateGroup } from './CreateGroup';
-export { ConnectionsList } from './ConnectionsList';
-export { ConversationList } from './ConversationList';
-export { ChatThread } from './ChatThread';
+export * from './ChatThread';
+export * from './ConnectionsList';
+export * from './ConversationList';
+export * from './CreateGroup';

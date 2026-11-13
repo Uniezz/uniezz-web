@@ -1,113 +1,126 @@
 import { useState } from 'react';
-import { Download, FileText, Star } from 'lucide-react';
+import { FileText, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import type { Material } from '@/@types';
-import { UIButton, UIDialog, UIEmpty, UIPanel } from '@/ui/components';
+import toast from 'react-hot-toast';
+import { TableVirtuoso } from 'react-virtuoso';
+import { useSearch } from '@tanstack/react-router';
+import type { StudyFile } from '@/@types';
+import { fixedTable, tableCellTextClass, tableHeaderCellClass } from '@/ui/virtuoso';
+import { PreviewStudyFileButton } from './PreviewStudyFileButton';
+import { studyFileTypeLabels } from '@/utils';
+import { useDeleteStudyFile, useMyProfile, useStudyFiles } from '@/hooks';
+import { UIButton, UIDialog, UIEmpty, UIPanel, UIQueryError } from '@/ui/components';
 
-export function MaterialTable({
-  rows,
-  emptyCategory,
-}: {
-  rows: Material[];
-  emptyCategory: boolean;
-}) {
-  const { t } = useTranslation();
-  const [detail, setDetail] = useState<Material | null>(null);
-  const headers = [
-    t('app.subject'),
-    t('app.type'),
-    t('app.uploadedBy'),
-    t('app.rating'),
-    t('app.downloads'),
-    t('app.download'),
-  ];
-  const columnWidths = ['40%', '12%', '18%', '12%', '10%', '8%'];
+// Name columns share the spare width; the rest fit their longest label in every language.
+const columnWidths = ['', '10rem', '9rem', '6.5rem'];
+const tableComponents = fixedTable(columnWidths);
+
+export function MaterialTable() {
+  const { t, i18n } = useTranslation();
+  const { university, semester, q } = useSearch({ from: '/_app/exams' });
+  const { data, isPending, isError, refetch, hasNextPage, isFetchingNextPage, fetchNextPage } =
+    useStudyFiles({ q, universityId: university, semester, mine: true });
+  const { data: me } = useMyProfile();
+  const [toDelete, setToDelete] = useState<StudyFile | null>(null);
+  const { mutate: deleteFile, isPending: isDeleting } = useDeleteStudyFile();
+  const files = data?.pages.flatMap((page) => page.items ?? []) ?? [];
+  const date = new Intl.DateTimeFormat(i18n.language, { dateStyle: 'medium' });
+
   return (
-    <>
-      <UIPanel className="flex min-h-0 flex-1 flex-col overflow-hidden p-2">
-        {emptyCategory ? (
-          <UIEmpty />
-        ) : (
-          <>
-            <table className="w-full min-w-[760px] text-left text-body">
+    <UIPanel className="flex min-h-0 flex-1 flex-col overflow-hidden p-2">
+      {!isPending && !isError && files.length === 0 ? (
+        <UIEmpty />
+      ) : (
+        <div className="min-h-0 min-w-0 flex-1 overflow-x-auto">
+          <div className="flex h-full min-w-[640px] flex-col">
+            <table className="w-full table-fixed text-left text-body">
               <colgroup>
-                {columnWidths.map((width) => (
-                  <col key={width} style={{ width }} />
+                {columnWidths.map((width, index) => (
+                  <col key={index} style={width ? { width } : undefined} />
                 ))}
               </colgroup>
-              <thead className="text-detail font-medium text-secondary">
+              <thead>
                 <tr>
-                  {headers.map((header) => (
-                    <th key={header} className="px-4 py-3 font-medium">
-                      {header}
-                    </th>
-                  ))}
+                  {[t('postComposer.title'), t('app.type'), t('feed.date'), t('app.actions')].map(
+                    (label) => (
+                      <th key={label} scope="col" className={tableHeaderCellClass}>
+                        {label}
+                      </th>
+                    ),
+                  )}
                 </tr>
               </thead>
             </table>
-            <div className="scrollbar-gray min-h-0 flex-1 overflow-auto">
-              <table className="w-full min-w-[760px] text-left text-body">
-                <colgroup>
-                  {columnWidths.map((width) => (
-                    <col key={width} style={{ width }} />
-                  ))}
-                </colgroup>
-                <tbody>
-                  {rows.map((m, i) => (
-                    <tr
-                      key={`${m.subject}-${i}`}
-                      className={`border-t border-white-5 ${m.subject.startsWith('Thermodynamics') ? 'bg-white-5' : ''}`}
-                    >
-                      <td className="px-4 py-3">
-                        <div className="flex items-center gap-3">
-                          <FileText size={18} className="shrink-0 text-secondary" />
-                          <div>
-                            <span className="font-semibold">{m.subject}</span>
-                            {i === 0 && !m.own && (
-                              <span className="app-tag ml-2 text-sky">{t('app.trending')}</span>
-                            )}
-                            <p className="mt-1 text-detail font-medium text-secondary">
-                              {m.university}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-4 py-3 text-label text-white-80">{m.type}</td>
-                      <td className="px-4 py-3 text-label text-white-80">{m.author}</td>
-                      <td className="px-4 py-3 text-label font-semibold">
-                        <Star size={12} className="mr-1 inline fill-warning text-warning" />
-                        {m.rating} <span className="text-muted">({m.votes})</span>
-                      </td>
-                      <td className="px-4 py-3 text-label text-white-80">{m.downloads}</td>
-                      <td className="px-4 py-3">
+            <TableVirtuoso
+              data={files}
+              computeItemKey={(_, file) => file.id}
+              endReached={() => {
+                if (hasNextPage && !isFetchingNextPage && !isError) void fetchNextPage();
+              }}
+              className="scrollbar-gray min-h-0 flex-1"
+              components={tableComponents}
+              aria-label={t('app.myUploads')}
+              itemContent={(_, file) => (
+                <>
+                  <td className="border-t border-white-5 px-4 py-3">
+                    <div className="flex items-center gap-3">
+                      <FileText size={18} className="shrink-0 text-secondary" aria-hidden="true" />
+                      <span className="font-semibold">{file.title}</span>
+                    </div>
+                  </td>
+                  <td className={tableCellTextClass}>{t(studyFileTypeLabels[file.type])}</td>
+                  <td className={tableCellTextClass}>{date.format(new Date(file.createdAt))}</td>
+                  <td className="border-t border-white-5 px-4 py-3">
+                    <div className="flex justify-end gap-2">
+                      <PreviewStudyFileButton file={file} />
+                      {me?.id === file.authorId && (
                         <UIButton
                           size="icon"
-                          bg="secondary"
-                          aria-label={`${t('app.download')} ${m.subject}`}
-                          onClick={() => setDetail(m)}
+                          bg="transparent"
+                          aria-label={t('exams.deleteFile')}
+                          className="border-0 text-danger enabled:hover:bg-transparent enabled:hover:text-danger-hover"
+                          onClick={() => setToDelete(file)}
                         >
-                          <Download size={15} />
+                          <Trash2 size={15} />
                         </UIButton>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              {rows.length === 0 && <UIEmpty />}
-            </div>
-          </>
-        )}
-      </UIPanel>
-      {detail && (
-        <UIDialog
-          open
-          onOpenChange={() => setDetail(null)}
-          title={detail.subject}
-          description={`${detail.university} · ${detail.type} · ${detail.author}`}
-        >
-          <p className="text-label text-secondary">{t('app.noDocument')}</p>
-        </UIDialog>
+                      )}
+                    </div>
+                  </td>
+                </>
+              )}
+            />
+          </div>
+        </div>
       )}
-    </>
+      {isError && <UIQueryError retry={() => void refetch()} />}
+      <UIDialog
+        open={toDelete !== null}
+        onOpenChange={(open) => !open && setToDelete(null)}
+        title={t('exams.deleteFileTitle')}
+        description={t('exams.deleteFileDescription')}
+      >
+        <div className="flex justify-end gap-3">
+          <UIButton bg="secondary" disabled={isDeleting} onClick={() => setToDelete(null)}>
+            {t('postComposer.cancel')}
+          </UIButton>
+          <UIButton
+            bg="danger"
+            disabled={isDeleting}
+            onClick={() =>
+              toDelete &&
+              deleteFile(toDelete.id, {
+                onSuccess: () => {
+                  setToDelete(null);
+                  toast.success(t('exams.fileDeleted'));
+                },
+                onError: () => toast.error(t('apiState.error')),
+              })
+            }
+          >
+            {t('app.remove')}
+          </UIButton>
+        </div>
+      </UIDialog>
+    </UIPanel>
   );
 }

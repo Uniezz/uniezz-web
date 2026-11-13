@@ -1,2 +1,1 @@
-export { UIField } from './UIField';
-export type { UIFieldProps } from './UIField';
+export * from './UIField';

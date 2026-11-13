@@ -1,7 +1,7 @@
 import { useFrame, useLoader } from '@react-three/fiber';
 import { useEffect, useMemo } from 'react';
 import { TextureLoader } from 'three';
-import { landingCatLoader, prepareLandingCat } from '@/utils/landingCat';
+import { landingCatLoader, prepareLandingCat } from '@/utils';
 
 useLoader.preload(landingCatLoader, '/landing/unicat/cat.glb');
 useLoader.preload(TextureLoader, '/landing/unicat/IMG_1374.PNG');

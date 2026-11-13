@@ -4,7 +4,6 @@ import {
   useMutation,
   useQuery,
   useQueryClient,
-  type QueryClient,
 } from '@tanstack/react-query';
 import {
   createFeedComment,
@@ -15,7 +14,6 @@ import {
   getFeedPost,
   getFeedPosts,
   getFeaturedFeedPosts,
-  getFeedPostNavigation,
   getLikedFeedPosts,
   getSavedFeedPosts,
   setFeedLike,
@@ -23,35 +21,15 @@ import {
   updateFeedComment,
   updateFeedPost,
 } from '@/api';
-import type { FeedFilters } from '@/@types';
-
-// Patches one post or comment in every cached feed query (single items and infinite pages), so a
-// like or edit doesn't refetch every loaded page.
-function patchFeedItem(queryClient: QueryClient, id: string, patch: Record<string, unknown>): void {
-  const update = (item: unknown) =>
-    item && typeof item === 'object' && 'id' in item && item.id === id
-      ? { ...item, ...patch }
-      : item;
-  queryClient.setQueriesData({ queryKey: ['feed'] }, (data: unknown) => {
-    if (!data || typeof data !== 'object' || !('pages' in data) || !Array.isArray(data.pages)) {
-      return update(data);
-    }
-    return {
-      ...data,
-      pages: data.pages.map((page: { items?: unknown[] | null }) => ({
-        ...page,
-        items: page.items?.map(update) ?? page.items,
-      })),
-    };
-  });
-}
+import type { FeedFilters, FeedPostSource } from '@/@types';
+import { patchCachedItem } from '@/utils';
 
 export function useUpdateFeedComment() {
   const queryClient = useQueryClient();
   return useMutation({
     meta: { analyticsAction: 'comment_update' },
     mutationFn: updateFeedComment,
-    onSuccess: (comment) => patchFeedItem(queryClient, comment.id, comment),
+    onSuccess: (comment) => patchCachedItem(queryClient, ['feed'], comment.id, comment),
   });
 }
 
@@ -99,7 +77,7 @@ export function useFeedLike() {
     meta: { analyticsAction: 'post_like_set' },
     mutationFn: setFeedLike,
     onSuccess: ({ liked, likesCount }, { id, kind }) => {
-      patchFeedItem(queryClient, id, { likedByMe: liked, likesCount });
+      patchCachedItem(queryClient, ['feed'], id, { likedByMe: liked, likesCount });
       if (kind === 'post') {
         void queryClient.invalidateQueries({ queryKey: ['feed', 'featured'] });
         // Liking changes membership in the caller's liked list, so drop the cached pages.
@@ -118,7 +96,7 @@ export function useFeedSave() {
     onMutate: async ({ id, saved }) => {
       await queryClient.cancelQueries({ queryKey: ['feed'] });
       const previous = queryClient.getQueriesData({ queryKey: ['feed'] });
-      patchFeedItem(queryClient, id, { savedByMe: saved });
+      patchCachedItem(queryClient, ['feed'], id, { savedByMe: saved });
       return { previous };
     },
     onError: (_, __, context) => {
@@ -127,18 +105,17 @@ export function useFeedSave() {
       }
     },
     onSuccess: ({ saved }, { id }) => {
-      patchFeedItem(queryClient, id, { savedByMe: saved });
+      patchCachedItem(queryClient, ['feed'], id, { savedByMe: saved });
       // Saving changes membership in the caller's saved list, so drop the cached pages.
       void queryClient.invalidateQueries({ queryKey: ['feed', 'saved'] });
     },
   });
 }
 
-/** Which list of posts to show: the feed query, or the caller's liked or saved posts. */
-export type FeedPostSource = 'posts' | 'liked' | 'saved';
-
 export function useFeedPosts(filters: FeedFilters = {}, source: FeedPostSource = 'posts') {
   return useInfiniteQuery({
+    staleTime: 60_000,
+    gcTime: 10 * 60_000,
     queryKey: ['feed', source, filters],
     queryFn: ({ pageParam }) =>
       source === 'liked'
@@ -157,15 +134,13 @@ export function useFeaturedFeedPosts() {
   return useQuery({ queryKey: ['feed', 'featured'], queryFn: getFeaturedFeedPosts });
 }
 
-export function useFeedPostNavigation(id: string) {
-  return useQuery({
-    queryKey: ['feed', 'navigation', id],
-    queryFn: () => getFeedPostNavigation(id),
-  });
-}
-
 export function useFeedPost(id: string) {
-  return useQuery({ queryKey: ['feed', 'post', id], queryFn: () => getFeedPost(id) });
+  return useQuery({
+    staleTime: 60_000,
+    gcTime: 10 * 60_000,
+    queryKey: ['feed', 'post', id],
+    queryFn: () => getFeedPost(id),
+  });
 }
 
 export function useFeedComments(id: string) {

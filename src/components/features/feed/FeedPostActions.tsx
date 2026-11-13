@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 import type { FeedPost } from '@/@types';
 import { useDeleteFeedPost, useMyProfile } from '@/hooks';
 import { UIButton, UIDialog } from '@/ui/components';
-import { ReportButton } from '@/components/features/reports/ReportButton';
+import { ReportButton } from '@/components/features/reports';
 
 export function FeedPostActions({ post }: { post: FeedPost }) {
   const { t } = useTranslation();
@@ -20,7 +20,7 @@ export function FeedPostActions({ post }: { post: FeedPost }) {
       await deletePost(post.id);
       toast.success(t('apiState.postDeleted'));
       // Replace the deleted post's entry, so Back can't reopen it.
-      router.history.replace(postFrom ?? '/feed');
+      await router.navigate({ href: postFrom ?? '/feed', replace: true });
     } catch {
       toast.error(t('apiState.error'));
     }
@@ -39,10 +39,9 @@ export function FeedPostActions({ post }: { post: FeedPost }) {
     <>
       <div className="flex flex-wrap gap-4">
         <Link
-          to="/feed/post/edit-post/$postId"
+          to="/feed/post/$postId/edit"
           params={{ postId: post.id }}
           data-ph-capture-attribute-label={t('app.edit')}
-          search={{ postId: post.id, feedRoute: undefined }}
           className="text-label font-semibold text-white focus-visible:outline-2 focus-visible:outline-blue"
         >
           {t('app.edit')}

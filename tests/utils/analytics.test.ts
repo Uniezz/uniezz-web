@@ -38,6 +38,9 @@ describe('analytics privacy', () => {
     expect(analyticsPath('/connections/students')).toBe('/connections/students');
     expect(analyticsPath('/connections/students/123')).toBe('/connections/students/:profileId');
     expect(analyticsPath('/login')).toBe('/login');
+    expect(analyticsPath('/exams/courses/new')).toBe('/exams/courses/new');
+    expect(analyticsPath('/exams/courses/course-id/edit')).toBe('/exams/courses/:courseId/edit');
+    expect(analyticsPath('/feed/post/post-id/edit')).toBe('/feed/post/:postId/edit');
     expect(sanitizeAnalyticsEvent(null)).toBeNull();
   });
 });

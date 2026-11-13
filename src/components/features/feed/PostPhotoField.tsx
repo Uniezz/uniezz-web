@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import { ImagePlus, Trash2 } from 'lucide-react';
 import { postImagesSchema, type PostSchema } from '@/schemas';
 import { UIButton } from '@/ui/components';
-import { hasDuplicateImages, readImageFile } from '@/utils/image';
+import { hasDuplicateImages, readImageFile } from '@/utils';
 
 export function PostPhotoField({
   control,

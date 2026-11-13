@@ -1,6 +1,8 @@
-export { ProfileIdentity } from './ProfileIdentity';
-export { PersonalDetails } from './PersonalDetails';
-export { StudyProgrammes } from './StudyProgrammes';
-export { AddProgramme } from './AddProgramme';
-export { ProfilePosts } from './ProfilePosts';
-export { ProfileStickyBar } from './ProfileStickyBar';
+export * from './AddProgramme';
+export * from './PersonalDetails';
+export * from './ProfileEditor';
+export * from './ProfileIdentity';
+export * from './ProfilePosts';
+export * from './ProfileStickyBar';
+export * from './PublicProfile';
+export * from './StudyProgrammes';

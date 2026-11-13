@@ -12,6 +12,8 @@ node_modules
 next-env.d.ts
 dist
 dist-ssr
+public/vendor/
+public/flyfish-viewer-assets.json
 *.local
 .env
 .env.*

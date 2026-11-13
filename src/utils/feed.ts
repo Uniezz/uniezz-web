@@ -1,8 +1,12 @@
-import type { FeedPost } from '@/@types';
-import type { components } from '@/@types/schema';
+import type { FeedPostsPage, PostNavigation, UploadedPostImage, FeedPost } from '@/@types';
+import type {
+  CreateFeedPostInput,
+  FeedPostSubmission,
+  FeedAuthorName,
+  PostDateInput,
+  DatePreset,
+} from '@/@types';
 import type { PostSchema } from '@/schemas';
-
-export type UploadedPostImage = { file: File; mediaId: string };
 
 export async function uploadPostImages(
   files: File[],
@@ -48,13 +52,11 @@ export function postFormDefaults(
   };
 }
 
-export function authorName(
-  author?: Pick<components['schemas']['Author'], 'firstName' | 'lastName'>,
-) {
+export function authorName(author?: FeedAuthorName) {
   return [author?.firstName, author?.lastName].filter(Boolean).join(' ');
 }
 
-export function postDate(post: Pick<FeedPost, 'eventDate' | 'createdAt'>, locale: string) {
+export function postDate(post: PostDateInput, locale: string) {
   const date = new Date(post.eventDate ?? post.createdAt);
   return Number.isNaN(date.getTime())
     ? ''
@@ -66,18 +68,17 @@ export function postDate(post: Pick<FeedPost, 'eventDate' | 'createdAt'>, locale
       }).format(date);
 }
 
-export function postSubmission(
-  body: components['schemas']['CreatePostInputBody'],
-  previous?: { body: components['schemas']['CreatePostInputBody']; key: string },
-) {
+export function postSubmission(body: CreateFeedPostInput, previous?: FeedPostSubmission) {
   return previous && JSON.stringify(previous.body) === JSON.stringify(body)
     ? previous
     : { body, key: crypto.randomUUID() };
 }
 
 const DAY = 24 * 60 * 60 * 1000;
-const DATE_PRESET_DAYS = { today: 1, week: 7, month: 30, year: 365 } as const;
-export type DatePreset = keyof typeof DATE_PRESET_DAYS;
+const DATE_PRESET_DAYS = { today: 1, week: 7, month: 30, year: 365 } as const satisfies Record<
+  DatePreset,
+  number
+>;
 
 /** Rolling window ending now: the last 24 hours, 7, 30 or 365 days. */
 export function datePresetFrom(preset: DatePreset, now = new Date()) {
@@ -91,4 +92,13 @@ export function isAuthorProfilePath(path: string | undefined, authorId: string, 
     pathname === `/connections/students/${authorId}` ||
     (pathname === '/profile' && authorId === myId)
   );
+}
+
+export function feedPostNeighbours(id: string, pages: FeedPostsPage[] | undefined): PostNavigation {
+  const ids = pages?.flatMap((page) => page.items?.map((post) => post.id) ?? []) ?? [];
+  const index = ids.indexOf(id);
+  return {
+    previousId: index > 0 ? (ids[index - 1] ?? null) : null,
+    nextId: index >= 0 ? (ids[index + 1] ?? null) : null,
+  };
 }

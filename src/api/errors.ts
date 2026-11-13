@@ -1,6 +1,6 @@
 import type { Middleware } from 'openapi-fetch';
 import type { paths } from '@/@types/schema';
-import { OTP_REQUEST_ERRORS, OTP_VERIFY_ERRORS } from '@/utils/otp';
+import { OTP_REQUEST_ERRORS, OTP_VERIFY_ERRORS } from '@/utils';
 
 type EndpointErrors = { statuses: Record<number, string>; fallback: string };
 const ENDPOINT_ERRORS: Partial<Record<string, EndpointErrors>> = {
@@ -44,12 +44,17 @@ export function apiError(
 
 export const apiMiddleware: Middleware = {
   async onResponse({ request, response, schemaPath }) {
-    if (response.status === 401 && !schemaPath.startsWith('/auth/')) {
+    if (
+      response.status === 401 &&
+      !schemaPath.startsWith('/auth/') &&
+      schemaPath !== '/profile/me'
+    ) {
       window.location.replace('/login');
     }
     if (response.ok) {
       if (response.status === 204) {
         const allowsNoContent =
+          (request.method === 'PUT' && schemaPath === '/connections/blocks/{id}') ||
           (request.method === 'POST' &&
             ['/auth/otp/request', '/auth/otp/verify', '/auth/exchange'].includes(schemaPath)) ||
           (request.method === 'DELETE' &&
@@ -58,6 +63,11 @@ export const apiMiddleware: Middleware = {
               '/feed/posts/{id}',
               '/profile/avatar',
               '/profile/programmes/{id}',
+              '/connections/{id}',
+              '/connections/blocks/{id}',
+              '/study/comments/{id}',
+              '/study/files/{id}',
+              '/profile/banner',
             ].includes(schemaPath));
         if (!allowsNoContent) {
           throw apiError(`${request.method} ${schemaPath}`, response);

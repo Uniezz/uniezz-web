@@ -1,13 +1,13 @@
 import { Link, useLocation } from '@tanstack/react-router';
 import { Images } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import type { FeedPost } from '@/@types';
+import type { FeedPostCardProps } from '@/@types';
 import { UIAvatar, UIPanel, UIUniversityLogo } from '@/ui/components';
 import { cn } from '@/ui/cn';
-import { authorName, isAuthorProfilePath, postDate } from '@/utils/feed';
+import { authorName, isAuthorProfilePath, postDate } from '@/utils';
 import { useMyProfile } from '@/hooks';
 
-export function FeedPostCard({ post }: { post: FeedPost }) {
+export function FeedPostCard({ post, filters, source = 'posts' }: FeedPostCardProps) {
   const { t, i18n } = useTranslation();
   const href = useLocation({ select: (location) => location.href });
   const { data: me } = useMyProfile();
@@ -90,7 +90,7 @@ export function FeedPostCard({ post }: { post: FeedPost }) {
       <Link
         to="/feed/post/$postId"
         params={{ postId: post.id }}
-        search={{ postId: post.id, postFrom: href }}
+        search={{ postFrom: href, postFilters: filters, postSource: source }}
         data-ph-capture-attribute-label="Open post"
         aria-label={`${t('app.viewPost')}: ${post.title}`}
         skullet-ignore=""

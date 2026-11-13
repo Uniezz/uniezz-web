@@ -1,2 +1,1 @@
-export { UISegmented } from './UISegmented';
-export type { UISegmentedProps } from './UISegmented';
+export * from './UISegmented';

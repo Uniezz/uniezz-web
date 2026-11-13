@@ -1,12 +1,20 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import type { components } from '@/@types/schema';
-import { deleteProgramme, saveProgramme as saveProgrammeApi } from '@/api';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { deleteProgramme, listMyProgrammes, saveProgramme as saveProgrammeApi } from '@/api';
 import type { ProgrammeFormSchema } from '@/schemas';
+
+type MyProgrammes = Awaited<ReturnType<typeof listMyProgrammes>>;
 
 type SaveProgrammeVariables = {
   programme: ProgrammeFormSchema;
   id?: string;
 };
+
+export function useMyProgrammes() {
+  return useQuery({
+    queryKey: ['profile', 'programmes'],
+    queryFn: listMyProgrammes,
+  });
+}
 
 export function useProfileProgrammes() {
   const queryClient = useQueryClient();
@@ -27,21 +35,29 @@ export function useProfileProgrammes() {
         id ?? programme.id,
       ),
     onSuccess: (saved) => {
-      queryClient.setQueryData<components['schemas']['Profile']>(['profile', 'me'], (profile) => {
-        if (!profile) return profile;
-        const programmes = (profile.programmes ?? []).filter((item) => item.id !== saved.id);
-        const updated = profile.programmes?.some((item) => item.id === saved.id)
-          ? (profile.programmes ?? []).map((item) => (item.id === saved.id ? saved : item))
-          : [...(profile.programmes ?? []), saved];
+      queryClient.setQueryData<MyProgrammes>(['profile', 'programmes'], (data) => {
+        if (!data) return data;
+        const updated = (data.programmes ?? []).map((item) =>
+          item.id === saved.id ? saved : item,
+        );
+        if (!updated.some((item) => item.id === saved.id)) {
+          updated.push(saved);
+        }
         return {
-          ...profile,
+          ...data,
           programmes: saved.isPrimary
-            ? [saved, ...programmes.map((item) => ({ ...item, isPrimary: false }))]
+            ? [
+                saved,
+                ...updated
+                  .filter((item) => item.id !== saved.id)
+                  .map((item) => ({ ...item, isPrimary: false })),
+              ]
             : updated,
         };
       });
     },
     onSettled: () => {
+      void queryClient.invalidateQueries({ queryKey: ['profile', 'programmes'] });
       void queryClient.invalidateQueries({ queryKey: ['profile', 'me'] });
     },
   });
@@ -50,13 +66,14 @@ export function useProfileProgrammes() {
     mutationKey: ['profile', 'programmes', 'delete'],
     mutationFn: deleteProgramme,
     onSuccess: (_, id) => {
-      queryClient.setQueryData<components['schemas']['Profile']>(['profile', 'me'], (profile) =>
-        profile
-          ? { ...profile, programmes: (profile.programmes ?? []).filter((item) => item.id !== id) }
-          : profile,
+      queryClient.setQueryData<MyProgrammes>(['profile', 'programmes'], (data) =>
+        data
+          ? { ...data, programmes: (data.programmes ?? []).filter((item) => item.id !== id) }
+          : data,
       );
     },
     onSettled: () => {
+      void queryClient.invalidateQueries({ queryKey: ['profile', 'programmes'] });
       void queryClient.invalidateQueries({ queryKey: ['profile', 'me'] });
     },
   });

@@ -1,4 +1,4 @@
-import { captureAnalytics } from '@/utils/analytics';
+import { captureAnalytics } from '@/utils';
 import { AuthPage } from '@/components';
 import { useUniversities } from '@/hooks';
 import { UIButton, UIRow, UIText } from '@/ui/components';

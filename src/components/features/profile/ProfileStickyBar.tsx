@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import type { components } from '@/@types/schema';
 import { UIAvatar, UIUniversityLogo } from '@/ui/components';
 import { cn } from '@/ui/cn';
-import { authorName } from '@/utils/feed';
+import { authorName } from '@/utils';
 
 /** Compact profile row that slides in while the full profile card is scrolled above the viewport. */
 export function ProfileStickyBar({

@@ -5,6 +5,7 @@ import { tanstackRouter } from '@tanstack/router-plugin/vite';
 import react from '@vitejs/plugin-react';
 import { defineConfig, loadEnv } from 'vite';
 import tailwindcss from '@tailwindcss/vite';
+import { fileViewerRenderers } from '@file-viewer/vite-plugin';
 import { proxyApi } from './server/sessionProxy.ts';
 export default defineConfig(({ mode }) => ({
   plugins: [
@@ -16,6 +17,12 @@ export default defineConfig(({ mode }) => ({
     }),
     tailwindcss(),
     react({ compiler: true }),
+    fileViewerRenderers({
+      renderers: ['image', 'pdf'],
+      copyAssets: true,
+      inject: false,
+      chunkStrategy: 'none',
+    }),
     {
       name: 'api-session-proxy',
       configureServer(server) {

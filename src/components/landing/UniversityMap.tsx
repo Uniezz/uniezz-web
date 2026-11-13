@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import type { MapRef } from '@vis.gl/react-maplibre';
-import { landingMotionQuery, useLandingScroll } from '@/hooks/useLandingScroll';
-import { landingMapCamera, landingMapProgressForZoom } from '@/utils/landingMap';
+import { landingMotionQuery, useLandingScroll } from '@/hooks';
+import { landingMapCamera, landingMapProgressForZoom } from '@/utils';
 import { useTranslation } from 'react-i18next';
 import { UniversityMapCanvas } from './UniversityMapCanvas';
 import type { University } from '@/@types/auth';

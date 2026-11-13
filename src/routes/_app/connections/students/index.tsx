@@ -3,7 +3,7 @@ import { ChevronLeft } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import debounce from 'lodash/debounce';
 import { useTranslation } from 'react-i18next';
-import { StudentSearchResults } from '@/components/features/connections/StudentSearchResults';
+import { StudentSearchResults } from '@/components/features/connections';
 import { UITopbar } from '@/ui/components';
 import { optionalSearchStringSchema } from '@/schemas';
 

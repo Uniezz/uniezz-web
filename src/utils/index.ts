@@ -8,8 +8,14 @@ export * from './search';
 export * from './device';
 export * from './chat';
 export * from './connections';
+export * from './exams';
 // TODO(api): Remove these mock exports when their consumers are API-backed.
 export * from './CHATMOCKS';
-export * from './EXAMSMOCKS';
-export * from './CONNECTIONSMOCKS';
 export * from './image';
+export * from './query';
+export * from './analytics';
+export * from './feed';
+export * from './feedSkeletonData';
+export * from './profileSkeletonData';
+export * from './landingCat';
+export * from './landingMap';

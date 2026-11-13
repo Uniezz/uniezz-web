@@ -1,18 +1,31 @@
 import type { MouseEvent } from 'react';
-import { captureAnalytics } from '@/utils/analytics';
-import { Link, createFileRoute } from '@tanstack/react-router';
+import { captureAnalytics } from '@/utils';
+import { Link, createFileRoute, redirect } from '@tanstack/react-router';
 import { ArrowUpRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { UniversityMap } from '@/components/landing';
-import { LandingProgress } from '@/components/features/landing/LandingProgress';
-import { LandingJoin } from '@/components/features/landing/LandingJoin';
-import { LandingHero } from '@/components/features/landing/LandingHero';
-import { LandingTour } from '@/components/features/landing/LandingTour';
-import { LandingUnicat } from '@/components/features/landing/LandingUnicat';
+import { LandingProgress } from '@/components/features/landing';
+import { LandingJoin } from '@/components/features/landing';
+import { LandingHero } from '@/components/features/landing';
+import { LandingTour } from '@/components/features/landing';
+import { LandingUnicat } from '@/components/features/landing';
 import { useUniversities } from '@/hooks';
 import { UIButton, UILanguageSwitcher } from '@/ui/components';
+import { ApiRequestError } from '@/api';
+import { myProfileQueryOptions } from '@/hooks';
 
-export const Route = createFileRoute('/')({ component: LandingPage });
+export const Route = createFileRoute('/')({
+  beforeLoad: async ({ context }) => {
+    try {
+      await context.queryClient.ensureQueryData({ ...myProfileQueryOptions(), retry: false });
+      throw redirect({ to: '/feed', replace: true });
+    } catch (error) {
+      if (error instanceof ApiRequestError && error.status === 401) return;
+      throw error;
+    }
+  },
+  component: LandingPage,
+});
 
 function LandingPage() {
   const { t } = useTranslation();

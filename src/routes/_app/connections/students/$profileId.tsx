@@ -5,10 +5,10 @@ import { useTranslation } from 'react-i18next';
 import { Skeleton } from 'skullet/react';
 import { usePublicProfile } from '@/hooks';
 import { UIQueryError } from '@/ui/components';
-import { PublicProfile } from '@/components/features/profile/PublicProfile';
-import { ProfilePosts } from '@/components/features/profile/ProfilePosts';
-import { ProfileStickyBar } from '@/components/features/profile/ProfileStickyBar';
-import { samplePublicProfile } from '@/utils/profileSkeletonData';
+import { PublicProfile } from '@/components/features/profile';
+import { ProfilePosts } from '@/components/features/profile';
+import { ProfileStickyBar } from '@/components/features/profile';
+import { samplePublicProfile } from '@/utils';
 import { optionalSearchStringSchema, returnPathSchema } from '@/schemas';
 
 export const Route = createFileRoute('/_app/connections/students/$profileId')({
@@ -64,7 +64,7 @@ function ProfileBack() {
   return (
     <button
       type="button"
-      onClick={() => router.history.push(from ?? list)}
+      onClick={() => void router.navigate({ href: from ?? list })}
       data-ph-capture-attribute-label={t('app.back')}
       className="inline-flex min-h-11 items-center gap-2 px-2 py-2 text-label text-secondary transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-blue xl:absolute xl:top-0 xl:-left-32"
     >

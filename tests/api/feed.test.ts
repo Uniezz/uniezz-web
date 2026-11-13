@@ -10,8 +10,7 @@ mock.module('../../src/api/client.ts', () => ({
     },
   },
 }));
-const { getFeedPosts, getFeaturedFeedPosts, getFeedPostNavigation } =
-  await import('../../src/api/feed.ts');
+const { getFeedPosts, getFeaturedFeedPosts } = await import('../../src/api/feed.ts');
 
 test('feed pagination preserves backend search, author and other filters', async () => {
   response = { data: { items: [], nextCursor: null } };
@@ -34,13 +33,4 @@ test('featured posts use the dedicated endpoint and preserve empty results', asy
   response = { data: { items: [] } };
   expect(await getFeaturedFeedPosts()).toEqual({ items: [] });
   expect(request.path).toBe('/feed/posts/featured');
-});
-
-test('navigation returns backend neighbours even without loaded feed pages', async () => {
-  response = { data: { previousId: null, nextId: 'older-post' } };
-  expect(await getFeedPostNavigation('current-post')).toEqual(response.data);
-  expect(request).toEqual({
-    path: '/feed/posts/{id}/navigation',
-    options: { params: { path: { id: 'current-post' } } },
-  });
 });

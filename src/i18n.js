@@ -2,6 +2,9 @@ import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 import en from './locales/en/translation.json';
+import be from './locales/be/translation.json';
+import de from './locales/de/translation.json';
+import es from './locales/es/translation.json';
 import pl from './locales/pl/translation.json';
 import ru from './locales/ru/translation.json';
 import uk from './locales/uk/translation.json';
@@ -16,6 +19,9 @@ i18n
     },
     resources: {
       en: { translation: en },
+      be: { translation: be },
+      es: { translation: es },
+      de: { translation: de },
       pl: { translation: pl },
       uk: { translation: uk },
       ru: { translation: ru },

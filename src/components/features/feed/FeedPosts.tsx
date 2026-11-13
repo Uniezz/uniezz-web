@@ -1,17 +1,12 @@
-import type { FeedFilters } from '@/@types';
-import { useState } from 'react';
+import type { FeedFilters, FeedPost, FeedPostSource } from '@/@types';
+import { useMemo, useState } from 'react';
 import { Masonry, useInfiniteLoader, type RenderComponentProps } from 'masonic';
-import type { FeedPost } from '@/@types';
 import { Skeleton } from 'skullet/react';
 import { useTranslation } from 'react-i18next';
 import { UIButton, UIEmpty, UIQueryError } from '@/ui/components';
-import { useFeedPosts, type FeedPostSource } from '@/hooks';
-import { samplePost } from '@/utils/feedSkeletonData';
+import { useFeedPosts } from '@/hooks';
+import { samplePost } from '@/utils';
 import { FeedPostCard } from './FeedPostCard';
-
-function FeedCard({ data }: RenderComponentProps<FeedPost>) {
-  return <FeedPostCard post={data} />;
-}
 
 function FeedPostsSkeleton() {
   return (
@@ -30,10 +25,20 @@ export function FeedPosts({
 }: {
   search: string;
   filters?: FeedFilters;
-  /** Search and filters only apply to the feed; liked and saved ignore them. */
   source?: FeedPostSource;
 }) {
   const { t } = useTranslation();
+  const queryFilters = useMemo(
+    () => ({ ...filters, q: search.trim() || undefined }),
+    [filters, search],
+  );
+  const renderPost = useMemo(
+    () =>
+      function FeedPostItem({ data }: RenderComponentProps<FeedPost>) {
+        return <FeedPostCard post={data} filters={queryFilters} source={source} />;
+      },
+    [queryFilters, source],
+  );
   const {
     data,
     isPending,
@@ -44,7 +49,7 @@ export function FeedPosts({
     isFetching,
     isFetchingNextPage,
     fetchNextPage,
-  } = useFeedPosts({ ...filters, q: search.trim() || undefined }, source);
+  } = useFeedPosts(queryFilters, source);
 
   const items = data?.pages.flatMap((page) => page.items ?? []) ?? [];
   const maybeLoadMore = useInfiniteLoader(
@@ -78,7 +83,7 @@ export function FeedPosts({
               columnWidth={300}
               columnGutter={24}
               maxColumnCount={3}
-              render={FeedCard}
+              render={renderPost}
               onRender={maybeLoadMore}
               role="list"
             />

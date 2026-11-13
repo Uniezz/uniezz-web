@@ -1,4 +1,4 @@
-import { captureAnalytics } from '@/utils/analytics';
+import { captureAnalytics } from '@/utils';
 import { useState } from 'react';
 import { Building2, Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -6,9 +6,9 @@ import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import toast from 'react-hot-toast';
 import { useProfileProgrammes } from '@/hooks';
-import { useDropdown } from '@/hooks/useDropdown';
+import { useDropdown } from '@/hooks';
 import type { components } from '@/@types/schema';
-import { UIButton, UIDialog, UIField, UIMenu } from '@/ui/components';
+import { UIButton, UIDialog, UIDialogFooter, UIField, UIMenu } from '@/ui/components';
 import { addProgrammeSchema } from '@/schemas';
 
 export function AddProgramme({
@@ -73,54 +73,62 @@ export function AddProgramme({
         {t('app.addProgramme')}
       </UIButton>
       <UIDialog
+        placement="right"
         open={open}
         onOpenChange={setOpen}
         title={t('app.addProgramme')}
         description={t('app.addProgrammeDescription')}
         className="overflow-visible"
       >
-        <div className="space-y-4">
-          <UIField label={t('app.programme')}>
-            <input autoComplete="off" className="app-control" {...register('programme')} />
-          </UIField>
-          <UIField label={t('app.faculty')}>
-            <div
-              className="relative"
-              ref={ref}
-              onKeyDown={(event) => {
-                if (event.key === 'Escape') close();
-              }}
-            >
-              <input
-                autoComplete="off"
-                className="app-control"
-                aria-expanded={isOpen}
-                onFocus={() => !isOpen && toggle()}
-                {...register('faculty', { onChange: () => !isOpen && toggle() })}
-              />
-              {isOpen && facultyOptions.length > 0 && (
-                <UIMenu
-                  options={facultyOptions}
-                  value={faculty}
-                  className="left-0 max-h-60 w-full overflow-y-auto"
-                  onSelect={(value) => {
-                    setValue('faculty', value, { shouldValidate: true });
-                    close();
-                  }}
+        <form
+          className="flex min-h-0 flex-1 flex-col"
+          onSubmit={handleSubmit(addProgramme, () =>
+            captureAnalytics('programme_add_form_validation_failed'),
+          )}
+        >
+          <div className="flex-1 space-y-4">
+            <UIField label={t('app.programme')}>
+              <input autoComplete="off" className="app-control" {...register('programme')} />
+            </UIField>
+            <UIField label={t('app.faculty')}>
+              <div
+                className="relative"
+                ref={ref}
+                onKeyDown={(event) => {
+                  if (event.key === 'Escape') close();
+                }}
+              >
+                <input
+                  autoComplete="off"
+                  className="app-control"
+                  aria-expanded={isOpen}
+                  onFocus={() => !isOpen && toggle()}
+                  {...register('faculty', { onChange: () => !isOpen && toggle() })}
                 />
-              )}
-            </div>
-          </UIField>
-          {exists && <p className="text-label text-secondary">{t('app.programmeExists')}</p>}
-          <UIButton
-            disabled={exists || isPending}
-            onClick={handleSubmit(addProgramme, () =>
-              captureAnalytics('programme_add_form_validation_failed'),
-            )}
-          >
-            {t('app.addProgramme')}
-          </UIButton>
-        </div>
+                {isOpen && facultyOptions.length > 0 && (
+                  <UIMenu
+                    options={facultyOptions}
+                    value={faculty}
+                    className="left-0 max-h-60 w-full overflow-y-auto"
+                    onSelect={(value) => {
+                      setValue('faculty', value, { shouldValidate: true });
+                      close();
+                    }}
+                  />
+                )}
+              </div>
+            </UIField>
+            {exists && <p className="text-label text-secondary">{t('app.programmeExists')}</p>}
+          </div>
+          <UIDialogFooter>
+            <UIButton bg="secondary" type="button" onClick={() => setOpen(false)}>
+              {t('app.cancel')}
+            </UIButton>
+            <UIButton type="submit" leftIcon={Plus} disabled={exists || isPending}>
+              {t('app.addProgramme')}
+            </UIButton>
+          </UIDialogFooter>
+        </form>
       </UIDialog>
     </>
   );

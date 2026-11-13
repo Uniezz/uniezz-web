@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import type { PostSchema } from '@/schemas';
-import { postSubmission } from '@/utils/feed';
+import { postSubmission } from '@/utils';
 import { useMyProfile } from './useMyProfile';
 import { useUploadPostImages } from './useUploadPostImages';
 import { useCreateFeedPost } from './useCreateFeedPost';

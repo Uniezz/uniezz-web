@@ -17,13 +17,17 @@ export const NAV_GROUPS: NavGroup[] = [
   { section: 'academics', items: ACADEMICS_NAV },
 ];
 
-// The app layout carries sub-route state (open post, chat) across links; pressing the current
-// tab drops it so the tab opens at its root.
+export function getNavigationGroups(chatEnabled: boolean): NavGroup[] {
+  if (chatEnabled) return NAV_GROUPS;
+  return NAV_GROUPS.map(({ items, ...group }) => ({
+    ...group,
+    items: items.filter(({ to }) => to !== '/chat'),
+  })).filter(({ items }) => items.length > 0);
+}
+
+// Selecting the current tab clears carried-over return paths and conversation filters.
 export const RESET_TAB_SEARCH = {
-  postId: undefined,
   postFrom: undefined,
-  feedRoute: undefined,
   chatType: undefined,
   conversationId: undefined,
-  chatRoute: undefined,
 };

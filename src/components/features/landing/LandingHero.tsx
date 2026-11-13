@@ -1,8 +1,8 @@
 import type { MouseEvent } from 'react';
-import { captureAnalytics } from '@/utils/analytics';
+import { captureAnalytics } from '@/utils';
 import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { useLandingScroll } from '@/hooks/useLandingScroll';
+import { useLandingScroll } from '@/hooks';
 import { UIButton } from '@/ui/components';
 import { LandingFeedPreview } from './LandingFeedPreview';
 

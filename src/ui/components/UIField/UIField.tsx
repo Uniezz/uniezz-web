@@ -10,6 +10,7 @@ export type UIFieldProps = {
   /** Shows `count/maxLength` inside the control while focused or near the limit; give the control the same `maxLength`. */
   maxLength?: number;
   count?: number;
+  labelAs?: 'label' | 'div';
   children: ReactNode;
   className?: string;
 };
@@ -19,10 +20,12 @@ export const UIField = ({
   error,
   maxLength,
   count = 0,
+  labelAs = 'label',
   children,
   className,
 }: UIFieldProps) => {
   const counterRef = useRef<HTMLSpanElement>(null);
+  const Wrapper = labelAs;
 
   // The browser silently drops input past maxLength; shake the counter so the limit is noticed.
   // React's onBeforeInput fires only for inserted text (typing, paste), with `data` set.
@@ -42,7 +45,7 @@ export const UIField = ({
   };
 
   return (
-    <label className={cn(fieldStyles(), className)}>
+    <Wrapper className={cn(fieldStyles(), className)}>
       <span>{label}</span>
       {maxLength === undefined ? (
         children
@@ -72,6 +75,6 @@ export const UIField = ({
           {error || hint}
         </span>
       )}
-    </label>
+    </Wrapper>
   );
 };

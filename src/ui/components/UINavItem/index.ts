@@ -1,1 +1,1 @@
-export { UINavItem } from './UINavItem';
+export * from './UINavItem';

@@ -2,7 +2,7 @@ import { CalendarDays } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { FeedPost } from '@/@types';
 import { cn } from '@/ui/cn';
-import { postDate } from '@/utils/feed';
+import { postDate } from '@/utils';
 
 export function PostDetails({ post, large = false }: { post: FeedPost; large?: boolean }) {
   const { i18n } = useTranslation();
