@@ -70,7 +70,7 @@ export const UISelect = ({
           left: 'anchor(left)',
           minWidth: 'anchor-size(width)',
           margin: '8px 0',
-          positionTryFallbacks: 'flip-block',
+          positionTryFallbacks: 'flip-block, flip-inline, flip-block flip-inline',
         }}
         className="max-h-72 overflow-y-auto bg-surface not-open:hidden"
         onSelect={(next) => {

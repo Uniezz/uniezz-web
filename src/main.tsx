@@ -21,7 +21,6 @@ try {
 }
 
 const routeMasks = [
-  createRouteMask({ routeTree, from: '/', to: '/', search: () => ({}) }),
   createRouteMask({ routeTree, from: '/login', to: '/', search: () => ({}) }),
   createRouteMask({ routeTree, from: '/otp', to: '/', search: () => ({}) }),
   createRouteMask({ routeTree, from: '/finish', to: '/', search: () => ({}) }),
@@ -62,8 +61,6 @@ const routeMasks = [
     search: () => ({}),
   }),
   createRouteMask({ routeTree, from: '/faq', to: '/', search: () => ({}) }),
-  createRouteMask({ routeTree, from: '/feed', to: '/', search: () => ({}) }),
-  createRouteMask({ routeTree, from: '/feed/', to: '/', search: () => ({}) }),
   createRouteMask({ routeTree, from: '/feed/post/new-post', to: '/', search: () => ({}) }),
   createRouteMask({
     routeTree,
@@ -87,7 +84,6 @@ const router = createRouter({
   routeTree,
   routeMasks,
   context: { queryClient },
-  stringifySearch: () => '',
   defaultNotFoundComponent: UnknownRouteRedirect,
   // Scroll is remembered per address, so returning to a page (Back opens it anew) restores it.
   scrollRestoration: ({ location }) =>

@@ -6,9 +6,10 @@ export const studyMaterialFileSchema = z
   .min(1)
   .mime(['application/pdf', 'image/jpeg', 'image/png', 'image/webp'])
   .refine((file) => file.size <= (file.type === 'application/pdf' ? 20 : 10) * 1024 * 1024);
+export const studyMaterialFilesSchema = z.array(studyMaterialFileSchema).max(10);
 export const uploadSchema = z.object({
   type: z.enum(['exam', 'colloquium', 'lab', 'notes']),
-  files: z.array(studyMaterialFileSchema).min(1).max(10),
+  files: studyMaterialFilesSchema.min(1),
 });
 
 /** Exams filters live in the URL; bad values fall back to "any" instead of failing the page. */
@@ -32,7 +33,7 @@ export const createCourseSchema = editCourseSchema.extend({
   semester: z.number().int().min(1).max(12),
 });
 export const createCourseFormSchema = createCourseSchema.extend({
-  materials: z.array(studyMaterialFileSchema).max(10),
+  materials: studyMaterialFilesSchema,
   materialType: z.enum(['exam', 'colloquium', 'lab', 'notes']),
 });
 

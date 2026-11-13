@@ -1,10 +1,10 @@
 import type { CreateCourseForm, CourseFormDialogProps } from '@/@types';
 // ai-design-check-ignore-file use-shared-components -- UIField and app-control are the established shared form pattern for react-hook-form in this project.
-import { useCallback, useId, useState } from 'react';
+import { useId, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Flame, Upload } from 'lucide-react';
+import { Flame } from 'lucide-react';
 import toast from 'react-hot-toast';
 import {
   useAddCourseFile,
@@ -16,7 +16,6 @@ import {
 } from '@/hooks';
 import { createCourseFormSchema } from '@/schemas';
 import { captureAnalytics } from '@/utils/analytics';
-import { readImageFile } from '@/utils/image';
 import { canUploadCourseMaterial, courseFormDefaults, studyFileTypeLabels } from '@/utils/exams';
 import {
   UIButton,
@@ -26,12 +25,11 @@ import {
   UIUniversityLogo,
   UIUnsavedChanges,
 } from '@/ui/components';
-import { CourseMaterialPreview, courseMaterialKey } from './CourseMaterialPreview';
+import { CourseMaterialsPicker } from './CourseMaterialsPicker';
 import { RatingInput } from './RatingInput';
 
 export function CourseFormDialog({ course, onClose }: CourseFormDialogProps) {
   const materialsInputId = useId();
-  const [materialPreviews, setMaterialPreviews] = useState<{ key: string; src: string }[]>([]);
   const [isReadingMaterials, setIsReadingMaterials] = useState(false);
   const { t } = useTranslation();
   const { data: universities = [] } = useUniversities();
@@ -47,7 +45,6 @@ export function CourseFormDialog({ course, onClose }: CourseFormDialogProps) {
   const {
     register,
     control,
-    getValues,
     setValue,
     handleSubmit,
     formState: { errors, isDirty, isSubmitting },
@@ -58,17 +55,6 @@ export function CourseFormDialog({ course, onClose }: CourseFormDialogProps) {
       : courseFormDefaults(me),
   });
   const isSaving = isPending || isSubmitting;
-  const removeMaterial = useCallback(
-    (key: string) => {
-      setValue(
-        'materials',
-        getValues('materials').filter((file) => courseMaterialKey(file) !== key),
-        { shouldDirty: true, shouldTouch: true, shouldValidate: true },
-      );
-      setMaterialPreviews((previous) => previous.filter((item) => item.key !== key));
-    },
-    [getValues, setValue],
-  );
   async function submit(values: CreateCourseForm) {
     let progressToastId: string | undefined;
     function showProgress(message: string) {
@@ -167,109 +153,39 @@ export function CourseFormDialog({ course, onClose }: CourseFormDialogProps) {
               <Controller
                 name="materials"
                 control={control}
-                render={({ field: { value, onChange, ...field } }) => {
-                  async function addMaterials(files: File[]) {
-                    const selectedKeys = new Set(value.map(courseMaterialKey));
-                    const added = files.filter((file) => {
-                      const key = courseMaterialKey(file);
-                      if (selectedKeys.has(key)) return false;
-                      selectedKeys.add(key);
-                      return true;
-                    });
-                    if (!added.length) return;
-
-                    setIsReadingMaterials(true);
-                    try {
-                      const previews = await Promise.all(
-                        added
-                          .filter((file) => file.type.startsWith('image/'))
-                          .map(async (file) => ({
-                            key: courseMaterialKey(file),
-                            src: await readImageFile(file),
-                          })),
-                      );
-                      setMaterialPreviews((previous) => [...previous, ...previews]);
-                      onChange([...value, ...added]);
-                    } catch {
-                      toast.error(t('courses.fileHint'));
-                    } finally {
-                      setIsReadingMaterials(false);
+                render={({ field: { value } }) => (
+                  <CourseMaterialsPicker
+                    files={value}
+                    disabled={isSaving}
+                    onReadingChange={setIsReadingMaterials}
+                    onFilesChange={(nextFiles) =>
+                      setValue('materials', nextFiles, {
+                        shouldDirty: true,
+                        shouldTouch: true,
+                        shouldValidate: true,
+                      })
                     }
-                  }
-
-                  return (
-                    <>
-                      <div className="grid grid-cols-[minmax(0,1fr)_minmax(8rem,0.55fr)] gap-3">
-                        <div>
-                          <label
-                            htmlFor={materialsInputId}
-                            data-ph-capture-attribute-label="Choose course materials"
-                            className="group block cursor-pointer"
-                          >
-                            <input
-                              {...field}
-                              id={materialsInputId}
-                              type="file"
-                              multiple
-                              accept="application/pdf,image/jpeg,image/png,image/webp"
-                              className="peer sr-only"
-                              disabled={isPending}
-                              onChange={(event) => {
-                                const files = Array.from(event.currentTarget.files ?? []);
-                                event.currentTarget.value = '';
-                                void addMaterials(files);
-                              }}
-                            />
-                            <span className="app-control flex cursor-pointer items-center justify-between gap-3 group-hover:bg-white-10 peer-focus-visible:outline-2 peer-focus-visible:outline-blue peer-disabled:cursor-not-allowed peer-disabled:opacity-40">
-                              <span>{t('courses.chooseFiles')}</span>
-                              <Upload size={18} aria-hidden="true" />
-                            </span>
-                          </label>
-                        </div>
-                        <Controller
-                          name="materialType"
-                          control={control}
-                          render={({ field }) => (
-                            <UISelect
-                              label={t('courses.materialType')}
-                              className="app-control"
-                              value={field.value}
-                              onChange={field.onChange}
-                              options={(['exam', 'colloquium', 'lab', 'notes'] as const).map(
-                                (type) => ({
-                                  value: type,
-                                  label: t(studyFileTypeLabels[type]),
-                                }),
-                              )}
-                            />
+                  >
+                    <Controller
+                      name="materialType"
+                      control={control}
+                      render={({ field }) => (
+                        <UISelect
+                          label={t('courses.materialType')}
+                          className="app-control"
+                          value={field.value}
+                          onChange={field.onChange}
+                          options={(['exam', 'colloquium', 'lab', 'notes'] as const).map(
+                            (type) => ({
+                              value: type,
+                              label: t(studyFileTypeLabels[type]),
+                            }),
                           )}
                         />
-                      </div>
-                      {value.length > 0 && (
-                        <div
-                          role="region"
-                          aria-label={t('courses.materials')}
-                          tabIndex={0}
-                          className="mt-3 flex h-44 max-w-full min-w-0 items-start gap-3 overflow-x-auto overflow-y-hidden rounded-feature [overflow-anchor:none] focus-visible:outline-2 focus-visible:outline-blue"
-                        >
-                          {value.map((file) => (
-                            <CourseMaterialPreview
-                              key={courseMaterialKey(file)}
-                              file={file}
-                              preview={
-                                materialPreviews.find(
-                                  (item) => item.key === courseMaterialKey(file),
-                                )?.src
-                              }
-                              removeLabel={t('courses.removeMaterial')}
-                              onRemove={removeMaterial}
-                            />
-                          ))}
-                        </div>
                       )}
-                    </>
-                  );
-                }}
+                    />
+                  </CourseMaterialsPicker>
+                )}
               />
               <p
                 id={`${materialsInputId}-hint`}
