@@ -20,7 +20,7 @@ export function FeedPostActions({ post }: { post: FeedPost }) {
       await deletePost(post.id);
       toast.success(t('apiState.postDeleted'));
       // Replace the deleted post's entry, so Back can't reopen it.
-      router.history.replace(postFrom ?? '/feed');
+      await router.navigate({ href: postFrom ?? '/feed', replace: true });
     } catch {
       toast.error(t('apiState.error'));
     }

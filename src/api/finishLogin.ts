@@ -5,17 +5,16 @@ import { api } from './client';
 import { ApiRequestError } from './errors';
 
 export async function finishLogin(
-  search: string,
+  search: Record<string, unknown>,
   queryClient: QueryClient,
 ): Promise<{ error: string }> {
-  const params = new URLSearchParams(search);
-  const callbackError = params.get('error');
+  const callbackError = typeof search.error === 'string' ? search.error : undefined;
   if (callbackError) {
     captureAnalytics('sign_in_failed', { method: 'USOS', stage: 'callback' });
     return { error: callbackError };
   }
 
-  const code = params.get('code');
+  const code = typeof search.code === 'string' ? search.code : undefined;
   if (!code) {
     captureAnalytics('sign_in_failed', { method: 'USOS', stage: 'missing_code' });
     return { error: 'The sign-in response did not include a code.' };

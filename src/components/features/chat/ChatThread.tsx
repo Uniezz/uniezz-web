@@ -2,6 +2,7 @@ import { captureAnalytics, trackLocalAction } from '@/utils/analytics';
 import { ArrowLeft, Send } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from '@tanstack/react-router';
 import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -146,13 +147,13 @@ export function ChatThread({
 
 function LinkToHousing() {
   return (
-    <a
-      href="/feed"
+    <Link
+      to="/feed"
       className="mx-auto block max-w-xs rounded-2xl border border-white-10 bg-white-5 p-2 text-micro text-secondary"
     >
       {CHATMOCKS.context}
       <br />
       <strong className="text-label text-white">{CHATMOCKS.housing}</strong>
-    </a>
+    </Link>
   );
 }

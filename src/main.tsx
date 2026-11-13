@@ -20,56 +20,74 @@ try {
   // Storage can be unavailable in private browsing.
 }
 
-const newGroupRouteMask = createRouteMask({
-  routeTree,
-  from: '/chat/new-group',
-  to: '/chat/new-group',
-  search: () => ({}),
-});
-const connectionsRouteMask = createRouteMask({
-  routeTree,
-  from: '/connections/',
-  to: '/connections',
-  search: () => ({}),
-});
-const studentsRouteMask = createRouteMask({
-  routeTree,
-  from: '/connections/students/',
-  to: '/connections/students',
-  search: ({ studentSearch }) => ({ studentSearch }),
-});
-const postRouteMask = createRouteMask({
-  routeTree,
-  from: '/feed/post/$postId',
-  to: '/feed/post/$postId',
-  params: true,
-  search: (search) => ({ ...search, postFrom: undefined }),
-});
-const newPostRouteMask = createRouteMask({
-  routeTree,
-  from: '/feed/post/new-post',
-  to: '/feed/post/new-post',
-  search: (search) => ({ ...search, postFrom: undefined }),
-});
-const profileRouteMask = createRouteMask({
-  routeTree,
-  from: '/connections/students/$profileId',
-  to: '/connections/students/$profileId',
-  params: true,
-  search: ({ studentSearch }) => ({ studentSearch }),
-});
+const routeMasks = [
+  createRouteMask({ routeTree, from: '/', to: '/', search: () => ({}) }),
+  createRouteMask({ routeTree, from: '/login', to: '/', search: () => ({}) }),
+  createRouteMask({ routeTree, from: '/otp', to: '/', search: () => ({}) }),
+  createRouteMask({ routeTree, from: '/finish', to: '/', search: () => ({}) }),
+  createRouteMask({ routeTree, from: '/auth/done', to: '/', search: () => ({}) }),
+  createRouteMask({ routeTree, from: '/chat', to: '/', search: () => ({}) }),
+  createRouteMask({ routeTree, from: '/chat/', to: '/', search: () => ({}) }),
+  createRouteMask({ routeTree, from: '/chat/new-group', to: '/', search: () => ({}) }),
+  createRouteMask({ routeTree, from: '/connections/', to: '/', search: () => ({}) }),
+  createRouteMask({ routeTree, from: '/connections/students/', to: '/', search: () => ({}) }),
+  createRouteMask({
+    routeTree,
+    from: '/connections/students/$profileId',
+    to: '/',
+    params: true,
+    search: () => ({}),
+  }),
+  createRouteMask({ routeTree, from: '/exams', to: '/', search: () => ({}) }),
+  createRouteMask({ routeTree, from: '/exams/courses/new', to: '/', search: () => ({}) }),
+  createRouteMask({
+    routeTree,
+    from: '/exams/courses/$courseId/',
+    to: '/',
+    params: true,
+    search: () => ({}),
+  }),
+  createRouteMask({
+    routeTree,
+    from: '/exams/courses/$courseId/edit',
+    to: '/',
+    params: true,
+    search: () => ({}),
+  }),
+  createRouteMask({
+    routeTree,
+    from: '/exams/courses/$courseId/upload',
+    to: '/',
+    params: true,
+    search: () => ({}),
+  }),
+  createRouteMask({ routeTree, from: '/faq', to: '/', search: () => ({}) }),
+  createRouteMask({ routeTree, from: '/feed', to: '/', search: () => ({}) }),
+  createRouteMask({ routeTree, from: '/feed/', to: '/', search: () => ({}) }),
+  createRouteMask({ routeTree, from: '/feed/post/new-post', to: '/', search: () => ({}) }),
+  createRouteMask({
+    routeTree,
+    from: '/feed/post/$postId',
+    to: '/',
+    params: true,
+    search: () => ({}),
+  }),
+  createRouteMask({
+    routeTree,
+    from: '/feed/post/$postId/edit',
+    to: '/',
+    params: true,
+    search: () => ({}),
+  }),
+  createRouteMask({ routeTree, from: '/guide', to: '/', search: () => ({}) }),
+  createRouteMask({ routeTree, from: '/profile', to: '/', search: () => ({}) }),
+];
 const queryClient = new QueryClient({ mutationCache: createAnalyticsMutationCache(posthog) });
 const router = createRouter({
   routeTree,
-  routeMasks: [
-    newGroupRouteMask,
-    connectionsRouteMask,
-    studentsRouteMask,
-    postRouteMask,
-    newPostRouteMask,
-    profileRouteMask,
-  ],
+  routeMasks,
   context: { queryClient },
+  stringifySearch: () => '',
   defaultNotFoundComponent: UnknownRouteRedirect,
   // Scroll is remembered per address, so returning to a page (Back opens it anew) restores it.
   scrollRestoration: ({ location }) =>

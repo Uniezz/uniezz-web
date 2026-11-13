@@ -169,7 +169,7 @@ function FeedPostPage() {
         <div className="relative mx-auto max-w-5xl">
           <button
             type="button"
-            onClick={() => router.history.push(postFrom ?? '/feed')}
+            onClick={() => void router.navigate({ href: postFrom ?? '/feed' })}
             data-ph-capture-attribute-label={postFrom ? t('app.back') : t('feed.title')}
             className="mb-5 inline-flex min-h-11 items-center gap-2 px-2 py-2 text-label text-secondary transition-colors hover:text-white xl:absolute xl:top-0 xl:-left-32 xl:mb-0"
           >
