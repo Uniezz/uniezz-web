@@ -7,9 +7,9 @@ import {
   navItemLabelStyles,
   navItemStyles,
 } from './variants';
-import { RESET_TAB_SEARCH } from '@/utils/navigation';
+import { RESET_TAB_SEARCH } from '@/utils';
 
-type UINavItemProps = {
+export type UINavItemProps = {
   to: LinkProps['to'];
   label: string;
   leftIcon: LucideIcon;

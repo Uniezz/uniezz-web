@@ -2,7 +2,7 @@ import type { ConnectionPreferencesFormProps, ConnectionPreferencesProps } from 
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
-import { ApiRequestError } from '@/api/errors';
+import { ApiRequestError } from '@/api';
 import { useMyConnectionPreferences, useUpdateMyConnectionPreferences } from '@/hooks';
 import { UIField, UIQueryError } from '@/ui/components';
 

@@ -4,7 +4,7 @@ import { Upload } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 import { studyMaterialFilesSchema } from '@/schemas';
-import { readImageFile } from '@/utils/image';
+import { readImageFile } from '@/utils';
 import { CourseMaterialPreview, courseMaterialKey } from './CourseMaterialPreview';
 
 export type CourseMaterialsPickerProps = {

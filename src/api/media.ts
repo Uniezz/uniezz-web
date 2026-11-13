@@ -1,5 +1,5 @@
 import type { MediaContentType, MediaKind } from '@/@types';
-import { studyMaterialFileSchema } from '@/schemas/exams';
+import { studyMaterialFileSchema } from '@/schemas';
 import { api } from './client';
 
 export async function uploadImage(file: File, kind: MediaKind) {

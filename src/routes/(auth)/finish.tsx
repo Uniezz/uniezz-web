@@ -1,4 +1,4 @@
-import { finishLogin } from '@/api/finishLogin';
+import { finishLogin } from '@/api';
 import { FinishLoginPage } from '@/components';
 import { createFileRoute } from '@tanstack/react-router';
 

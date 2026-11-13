@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { uploadPostImages } from '@/utils/feed';
+import { uploadPostImages } from '@/utils';
 import type { UploadPostImagesInput } from '@/@types';
 import { useUploadImage } from './useUploadImage';
 

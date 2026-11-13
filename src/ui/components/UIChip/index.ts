@@ -1,2 +1,1 @@
-export { UIChip } from './UIChip';
-export type { UIChipProps } from './UIChip';
+export * from './UIChip';

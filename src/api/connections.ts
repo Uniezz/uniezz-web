@@ -3,7 +3,7 @@ import type {
   ConnectionFilters,
   UpdateConnectionPreferencesInput,
 } from '@/@types';
-import { toDiscoverQuery } from '@/utils/connections';
+import { toDiscoverQuery } from '@/utils';
 import { api } from './client';
 
 export async function discoverConnections(filters: ConnectionFilters) {

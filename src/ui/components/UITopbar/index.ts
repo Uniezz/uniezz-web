@@ -1,1 +1,1 @@
-export { UITopbar } from './UITopbar';
+export * from './UITopbar';

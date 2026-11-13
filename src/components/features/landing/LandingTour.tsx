@@ -1,4 +1,4 @@
-import { useLandingScroll } from '@/hooks/useLandingScroll';
+import { useLandingScroll } from '@/hooks';
 import { useTranslation } from 'react-i18next';
 import { LandingFeedPreview } from './LandingFeedPreview';
 import { LandingPeoplePreview } from './LandingPeoplePreview';

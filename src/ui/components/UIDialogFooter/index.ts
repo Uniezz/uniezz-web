@@ -1,2 +1,1 @@
-export { UIDialogFooter } from './UIDialogFooter';
-export type { UIDialogFooterProps } from './UIDialogFooter';
+export * from './UIDialogFooter';

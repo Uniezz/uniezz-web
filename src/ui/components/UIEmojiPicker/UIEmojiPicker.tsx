@@ -2,7 +2,7 @@ import { EmojiPicker } from 'frimousse';
 import { FaceSlightlySmiling } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-import { useDropdown } from '@/hooks/useDropdown';
+import { useDropdown } from '@/hooks';
 import { cn } from '../../cn';
 import { UIButton } from '../UIButton';
 import { emojiPickerStyles, emojiSearchStyles, emojiStyles } from './variants';

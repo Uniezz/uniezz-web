@@ -1,6 +1,6 @@
 import { createFileRoute, redirect } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-import { CourseFormDialog } from '@/components/features/exams/CourseFormDialog';
+import { CourseFormDialog } from '@/components/features/exams';
 import { useCourse } from '@/hooks';
 import { UIDialog, UIEmpty, UIQueryError } from '@/ui/components';
 

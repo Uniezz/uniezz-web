@@ -1,1 +1,1 @@
-export { UISidebar } from './UISidebar';
+export * from './UISidebar';

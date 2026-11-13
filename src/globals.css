@@ -1232,9 +1232,8 @@ input[type='search']::-webkit-search-cancel-button {
   background-color: #0c0d14;
 
   &::before {
-    position: absolute;
-    inset: 0 0 auto;
-    height: max(1100px, 100svh);
+    position: fixed;
+    inset: 0;
     z-index: -1;
     pointer-events: none;
     content: '';

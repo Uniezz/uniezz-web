@@ -15,8 +15,8 @@ import {
   UIUnsavedChanges,
 } from '@/ui/components';
 import { uploadSchema } from '@/schemas';
-import { canUploadCourseMaterial, studyFileTypeLabels } from '@/utils/exams';
-import { captureAnalytics } from '@/utils/analytics';
+import { canUploadCourseMaterial, studyFileTypeLabels } from '@/utils';
+import { captureAnalytics } from '@/utils';
 import { CourseMaterialsPicker } from './CourseMaterialsPicker';
 
 export function UploadMaterial({ courseId, onClose }: UploadMaterialProps) {

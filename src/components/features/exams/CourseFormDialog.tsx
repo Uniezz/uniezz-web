@@ -15,8 +15,8 @@ import {
   useUploadStudyMaterial,
 } from '@/hooks';
 import { createCourseFormSchema } from '@/schemas';
-import { captureAnalytics } from '@/utils/analytics';
-import { canUploadCourseMaterial, courseFormDefaults, studyFileTypeLabels } from '@/utils/exams';
+import { captureAnalytics } from '@/utils';
+import { canUploadCourseMaterial, courseFormDefaults, studyFileTypeLabels } from '@/utils';
 import {
   UIButton,
   UIDialog,

@@ -1,4 +1,4 @@
-import { captureAnalytics } from '@/utils/analytics';
+import { captureAnalytics } from '@/utils';
 import { useState } from 'react';
 import { Building2, Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -6,7 +6,7 @@ import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import toast from 'react-hot-toast';
 import { useProfileProgrammes } from '@/hooks';
-import { useDropdown } from '@/hooks/useDropdown';
+import { useDropdown } from '@/hooks';
 import type { components } from '@/@types/schema';
 import { UIButton, UIDialog, UIDialogFooter, UIField, UIMenu } from '@/ui/components';
 import { addProgrammeSchema } from '@/schemas';

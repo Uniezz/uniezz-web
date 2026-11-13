@@ -1,10 +1,10 @@
-import { captureAnalytics } from '@/utils/analytics';
+import { captureAnalytics } from '@/utils';
 import { Check } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { FormProvider } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { useDeleteBanner } from '@/hooks/useProfiles';
-import { useProfileForm } from '@/hooks/useProfileForm';
+import { useDeleteBanner } from '@/hooks';
+import { useProfileForm } from '@/hooks';
 import type { components } from '@/@types/schema';
 import { UIButton, UIPanel, UITopbar, UIUnsavedChanges } from '@/ui/components';
 import { ProfileIdentity } from './ProfileIdentity';

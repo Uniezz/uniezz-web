@@ -7,7 +7,7 @@ export * from './UINavItem';
 export * from './UISidebar';
 export * from './UIText';
 export * from './UITopbar';
-export * from './UIRow/UIRow';
+export * from './UIRow';
 export * from './UIPanel';
 export * from './UISearch';
 export * from './UISegmented';

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import type { DatePreset, FeedFilterBarProps, FeedFilters, Option } from '@/@types';
 import { useDropdown, useUniversities } from '@/hooks';
 import { UIButton, UISelect } from '@/ui/components';
-import { datePresetFrom } from '@/utils/feed';
+import { datePresetFrom } from '@/utils';
 
 export function FeedFilterBar({ filters, onChange }: FeedFilterBarProps) {
   const { t } = useTranslation();

@@ -1,5 +1,5 @@
 import type { z } from 'zod';
-import type { uploadSchema, examsSearchSchema, createCourseFormSchema, editCourseSchema, courseCommentSchema } from '@/schemas/exams';
+import type { uploadSchema, examsSearchSchema, createCourseFormSchema, editCourseSchema, courseCommentSchema } from '@/schemas';
 import type { components, operations } from './schema';
 
 

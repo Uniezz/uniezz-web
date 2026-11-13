@@ -3,7 +3,7 @@ import { ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { components } from '@/@types/schema';
 import { UIAvatar, UIUniversityLogo } from '@/ui/components';
-import { authorName } from '@/utils/feed';
+import { authorName } from '@/utils';
 
 export function StudentCard({
   student,

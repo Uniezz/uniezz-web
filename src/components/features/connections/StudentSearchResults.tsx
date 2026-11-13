@@ -4,7 +4,7 @@ import { useProfileSearch, useUniversities } from '@/hooks';
 import { VirtuosoGrid } from 'react-virtuoso';
 import { UIEmpty, UIPanel, UIQueryError } from '@/ui/components';
 import { gridComponents } from '@/ui/virtuoso';
-import { sampleProfile } from '@/utils/profileSkeletonData';
+import { sampleProfile } from '@/utils';
 import { StudentCard } from './StudentCard';
 
 // Virtuoso renders whole rows, so the first item on screen always starts a row and odd children sit in the left column.

@@ -1,5 +1,5 @@
 import { createFileRoute, redirect } from '@tanstack/react-router';
-import { UploadMaterial } from '@/components/features/exams/UploadMaterial';
+import { UploadMaterial } from '@/components/features/exams';
 
 export const Route = createFileRoute('/_app/exams/courses/$courseId/upload')({
   beforeLoad: ({ search, params }) => {

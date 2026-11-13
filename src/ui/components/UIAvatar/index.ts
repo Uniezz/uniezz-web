@@ -1,1 +1,1 @@
-export { UIAvatar } from './UIAvatar';
+export * from './UIAvatar';

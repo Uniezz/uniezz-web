@@ -5,7 +5,7 @@ import { Children, type ComponentProps, type MouseEventHandler, type ReactNode }
 import { cn } from '../../cn';
 import { buttonStyles, iconColorClass } from './variants';
 
-type UIButtonProps = VariantProps<typeof buttonStyles> &
+export type UIButtonProps = VariantProps<typeof buttonStyles> &
   Omit<ComponentProps<'button'>, 'onClick' | 'onAuxClick'> & {
     onClick?: MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>;
     onAuxClick?: MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>;

@@ -22,7 +22,7 @@ import {
   updateFeedPost,
 } from '@/api';
 import type { FeedFilters, FeedPostSource } from '@/@types';
-import { patchCachedItem } from '@/utils/query';
+import { patchCachedItem } from '@/utils';
 
 export function useUpdateFeedComment() {
   const queryClient = useQueryClient();

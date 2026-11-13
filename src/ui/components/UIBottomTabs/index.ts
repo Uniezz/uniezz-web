@@ -1,1 +1,1 @@
-export { UIBottomTabs } from './UIBottomTabs';
+export * from './UIBottomTabs';

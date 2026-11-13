@@ -1,11 +1,11 @@
 import { Link } from '@tanstack/react-router';
-import { MatchActions } from '@/components/features/connections/MatchActions';
+import { MatchActions } from '@/components/features/connections';
 import { useTranslation } from 'react-i18next';
 import { useConnectionsList, useUniversities } from '@/hooks';
 import { Virtuoso } from 'react-virtuoso';
 import { UIAvatar, UIEmpty, UIQueryError } from '@/ui/components';
 import { listComponents } from '@/ui/virtuoso';
-import { authorName } from '@/utils/feed';
+import { authorName } from '@/utils';
 
 export type ConnectionsListProps = {
   selected: string;

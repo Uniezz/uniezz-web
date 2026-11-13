@@ -4,7 +4,7 @@ import { useLayoutEffect, useRef, useState, type ComponentProps } from 'react';
 import { useTranslation } from 'react-i18next';
 import { cn } from '../../cn';
 import { UINavItem } from '../UINavItem';
-import { getNavigationGroups } from '@/utils/navigation';
+import { getNavigationGroups } from '@/utils';
 import { sidebarStyles, sidebarGroupStyles, sidebarUserStyles } from './variants';
 export type UISidebarProps = ComponentProps<'aside'> & {
   user: { initials: string; name: string; meta: string; avatar?: string };

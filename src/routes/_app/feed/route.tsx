@@ -1,5 +1,5 @@
 import { createFileRoute, Outlet, useRouterState } from '@tanstack/react-router';
-import { FeedPage } from '@/components/features/feed/FeedPage';
+import { FeedPage } from '@/components/features/feed';
 
 export const Route = createFileRoute('/_app/feed')({ component: FeedLayout });
 

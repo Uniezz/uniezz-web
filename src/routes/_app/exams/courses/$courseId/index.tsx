@@ -1,5 +1,5 @@
 import { createFileRoute, redirect } from '@tanstack/react-router';
-import { CourseDetailsDialog } from '@/components/features/exams/CourseDetailsDialog';
+import { CourseDetailsDialog } from '@/components/features/exams';
 
 export const Route = createFileRoute('/_app/exams/courses/$courseId/')({
   beforeLoad: ({ search, params }) => {

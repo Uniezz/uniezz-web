@@ -4,7 +4,7 @@ import { cn } from '../../cn';
 import { UIText } from '../UIText';
 import { inputStyles } from './variants';
 
-type UIInputProps = Omit<ComponentProps<'input'>, 'value' | 'onChange'> & {
+export type UIInputProps = Omit<ComponentProps<'input'>, 'value' | 'onChange'> & {
   text: string;
   onTextChange?: (newValue: string) => void;
   errorText?: string;

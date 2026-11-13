@@ -2,10 +2,10 @@ import { createFileRoute } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 
-import { PostComposer } from '@/components/features/feed/PostComposer';
+import { PostComposer } from '@/components/features/feed';
 import { useFeedPost, useMyProfile, useUpdateFeedPost } from '@/hooks';
 import { UIDialog, UIEmpty, UIQueryError } from '@/ui/components';
-import { postFormDefaults } from '@/utils/feed';
+import { postFormDefaults } from '@/utils';
 
 export const Route = createFileRoute('/_app/feed/post/$postId/edit')({
   remountDeps: ({ params }) => params.postId,

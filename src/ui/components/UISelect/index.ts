@@ -1,2 +1,1 @@
-export { UISelect } from './UISelect';
-export type { UISelectProps } from './UISelect';
+export * from './UISelect';

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import type { PostSchema } from '@/schemas';
 import { UIButton, UIMenu } from '@/ui/components';
-import { useDropdown } from '@/hooks/useDropdown';
+import { useDropdown } from '@/hooks';
 
 type PostType = PostSchema['type'];
 

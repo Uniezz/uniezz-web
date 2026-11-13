@@ -1,4 +1,4 @@
-import { captureAnalytics, trackLocalAction } from '@/utils/analytics';
+import { captureAnalytics, trackLocalAction } from '@/utils';
 import { ArrowLeft, Send } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';

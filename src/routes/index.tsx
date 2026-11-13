@@ -1,18 +1,18 @@
 import type { MouseEvent } from 'react';
-import { captureAnalytics } from '@/utils/analytics';
+import { captureAnalytics } from '@/utils';
 import { Link, createFileRoute, redirect } from '@tanstack/react-router';
 import { ArrowUpRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { UniversityMap } from '@/components/landing';
-import { LandingProgress } from '@/components/features/landing/LandingProgress';
-import { LandingJoin } from '@/components/features/landing/LandingJoin';
-import { LandingHero } from '@/components/features/landing/LandingHero';
-import { LandingTour } from '@/components/features/landing/LandingTour';
-import { LandingUnicat } from '@/components/features/landing/LandingUnicat';
+import { LandingProgress } from '@/components/features/landing';
+import { LandingJoin } from '@/components/features/landing';
+import { LandingHero } from '@/components/features/landing';
+import { LandingTour } from '@/components/features/landing';
+import { LandingUnicat } from '@/components/features/landing';
 import { useUniversities } from '@/hooks';
 import { UIButton, UILanguageSwitcher } from '@/ui/components';
-import { ApiRequestError } from '@/api/errors';
-import { myProfileQueryOptions } from '@/hooks/useMyProfile';
+import { ApiRequestError } from '@/api';
+import { myProfileQueryOptions } from '@/hooks';
 
 export const Route = createFileRoute('/')({
   beforeLoad: async ({ context }) => {

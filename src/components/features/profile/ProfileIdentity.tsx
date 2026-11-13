@@ -5,7 +5,7 @@ import { useController, useFormContext, useWatch } from 'react-hook-form';
 import { Camera, ImagePlus, LogOut, Trash2, X } from 'lucide-react';
 
 import { useSignOut, useUniversities } from '@/hooks';
-import { useDeleteMyProfile } from '@/hooks/useMyProfile';
+import { useDeleteMyProfile } from '@/hooks';
 import {
   UIButton,
   UIDialog,
@@ -15,7 +15,7 @@ import {
   UIUniversityLogo,
 } from '@/ui/components';
 import { type ProfileFormSchema } from '@/schemas';
-import { readImageFile } from '@/utils/image';
+import { readImageFile } from '@/utils';
 import { cn } from '@/ui/cn';
 
 export function ProfileIdentity({

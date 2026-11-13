@@ -1,2 +1,1 @@
-export { UISearch } from './UISearch';
-export type { UISearchProps } from './UISearch';
+export * from './UISearch';

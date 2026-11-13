@@ -9,13 +9,13 @@ import {
 import { useTranslation } from 'react-i18next';
 import { Toaster } from 'react-hot-toast';
 import { useMyProfile } from '@/hooks';
-import { myProfileQueryOptions } from '@/hooks/useMyProfile';
-import { ApiRequestError } from '@/api/errors';
-import { authorName } from '@/utils/feed';
-import { useNarrowViewport } from '@/hooks/useNarrowViewport';
+import { myProfileQueryOptions } from '@/hooks';
+import { ApiRequestError } from '@/api';
+import { authorName } from '@/utils';
+import { useNarrowViewport } from '@/hooks';
 import { isMobileDevice, shouldBlockMobile } from '@/utils';
 import { optionalSearchStringSchema, returnPathSchema } from '@/schemas';
-import { APP_STORES } from '@/utils/stores';
+import { APP_STORES } from '@/utils';
 export const Route = createFileRoute('/_app')({
   // Runs on every visit to a closed page, including Back. A guest goes to sign-in
   // with `replace`, so the closed page is not kept in history.

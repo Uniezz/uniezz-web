@@ -6,7 +6,7 @@ import { UIButton } from '../UIButton';
 import { UIUniversityLogo } from '../UIUniversityLogo';
 import { menuIconStyles, menuOptionStyles, menuStyles } from './variants';
 
-type UIMenuProps = Omit<ComponentProps<'div'>, 'onSelect' | 'ref'> & {
+export type UIMenuProps = Omit<ComponentProps<'div'>, 'onSelect' | 'ref'> & {
   options: Option[];
   value: string;
   onSelect: (value: string) => void;

@@ -1,4 +1,4 @@
-import { captureAnalytics, trackLocalAction } from '@/utils/analytics';
+import { captureAnalytics, trackLocalAction } from '@/utils';
 import { useState } from 'react';
 import { ArrowLeft, Minus, Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -11,7 +11,7 @@ import { UIButton, UIAvatar, UIField, UIDialog, UISearch } from '@/ui/components
 import { listComponents } from '@/ui/virtuoso';
 // TODO(api): Load group members and image choices from API-backed data.
 import { CHATMOCKS, matchesSearch } from '@/utils';
-import { readImageFile } from '@/utils/image';
+import { readImageFile } from '@/utils';
 import { avatarImageSchema, groupSchema, type GroupSchema } from '@/schemas';
 
 const avatarForMember = (name: string): string => {

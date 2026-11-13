@@ -10,7 +10,7 @@ import {
   unblockStudent,
   updateMyConnectionPreferences,
 } from '@/api';
-import { captureAnalytics } from '@/utils/analytics';
+import { captureAnalytics } from '@/utils';
 
 export function useDiscovery(filters: ConnectionFilters) {
   return useQuery({

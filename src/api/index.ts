@@ -8,3 +8,6 @@ export * from './auth';
 export * from './faq';
 export * from './connections';
 export * from './study';
+export * from './client';
+export * from './errors';
+export * from './finishLogin';

@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { useFeaturedFeedPosts } from '@/hooks';
 import { UIQueryError } from '@/ui/components';
-import { postDate } from '@/utils/feed';
+import { postDate } from '@/utils';
 
 export function TopPosts() {
   const { t, i18n } = useTranslation();

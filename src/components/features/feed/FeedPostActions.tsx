@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 import type { FeedPost } from '@/@types';
 import { useDeleteFeedPost, useMyProfile } from '@/hooks';
 import { UIButton, UIDialog } from '@/ui/components';
-import { ReportButton } from '@/components/features/reports/ReportButton';
+import { ReportButton } from '@/components/features/reports';
 
 export function FeedPostActions({ post }: { post: FeedPost }) {
   const { t } = useTranslation();

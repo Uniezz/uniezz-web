@@ -7,7 +7,7 @@ import {
 } from './variants';
 import { Link, useMatchRoute } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-import { getNavigationGroups, RESET_TAB_SEARCH } from '@/utils/navigation';
+import { getNavigationGroups, RESET_TAB_SEARCH } from '@/utils';
 export const UIBottomTabs = () => {
   const { t } = useTranslation();
   const matchRoute = useMatchRoute();

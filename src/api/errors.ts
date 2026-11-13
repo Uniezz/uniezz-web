@@ -1,6 +1,6 @@
 import type { Middleware } from 'openapi-fetch';
 import type { paths } from '@/@types/schema';
-import { OTP_REQUEST_ERRORS, OTP_VERIFY_ERRORS } from '@/utils/otp';
+import { OTP_REQUEST_ERRORS, OTP_VERIFY_ERRORS } from '@/utils';
 
 type EndpointErrors = { statuses: Record<number, string>; fallback: string };
 const ENDPOINT_ERRORS: Partial<Record<string, EndpointErrors>> = {

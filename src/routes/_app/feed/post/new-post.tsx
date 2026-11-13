@@ -1,8 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
-import { PostComposer } from '@/components/features/feed/PostComposer';
-import { useCreatePost } from '@/hooks/useCreatePost';
+import { PostComposer } from '@/components/features/feed';
+import { useCreatePost } from '@/hooks';
 
 export const Route = createFileRoute('/_app/feed/post/new-post')({
   component: NewPostPage,

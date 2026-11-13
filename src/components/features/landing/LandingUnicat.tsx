@@ -1,6 +1,6 @@
 import { ArrowDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { useLandingScroll } from '@/hooks/useLandingScroll';
+import { useLandingScroll } from '@/hooks';
 import { LandingCatPortrait } from './LandingCatPortrait';
 
 export function LandingUnicat() {

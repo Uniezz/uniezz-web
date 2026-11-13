@@ -3,7 +3,7 @@ import { type ComponentProps } from 'react';
 import { cn } from '../../cn';
 import { avatarStatusStyles, avatarStyles, avatarTextStyles } from './variants';
 
-type UIAvatarProps = Omit<VariantProps<typeof avatarStyles>, 'withImage'> &
+export type UIAvatarProps = Omit<VariantProps<typeof avatarStyles>, 'withImage'> &
   ComponentProps<'div'> & {
     imgSrc?: string;
     avatarSymbols?: string;

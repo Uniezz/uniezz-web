@@ -5,7 +5,7 @@ import { Skeleton } from 'skullet/react';
 import { useTranslation } from 'react-i18next';
 import { UIButton, UIEmpty, UIQueryError } from '@/ui/components';
 import { useFeedPosts } from '@/hooks';
-import { samplePost } from '@/utils/feedSkeletonData';
+import { samplePost } from '@/utils';
 import { FeedPostCard } from './FeedPostCard';
 
 function FeedPostsSkeleton() {

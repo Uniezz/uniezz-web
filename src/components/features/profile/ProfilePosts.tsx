@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
-import { FeedPosts } from '@/components/features/feed/FeedPosts';
+import { FeedPosts } from '@/components/features/feed';
 import { useMyProfile } from '@/hooks';
 import type { FeedPostSource, ProfilePostsProps } from '@/@types';
 
@@ -19,7 +19,7 @@ export function ProfilePosts({ authorId, collections = true }: ProfilePostsProps
         <div
           role="tablist"
           aria-label={t('feed.posts')}
-          className="flex gap-6 border-b border-white-10"
+          className="sticky top-0 z-30 -mx-4 flex gap-6 border-b border-white-10 bg-transparent px-4 pt-2 backdrop-blur-sm sm:-mx-7 sm:px-7 lg:-mx-10 lg:px-10"
         >
           {tabs.map((id) => {
             const selected = id === tab;

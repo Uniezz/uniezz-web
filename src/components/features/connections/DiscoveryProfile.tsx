@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import { Skeleton } from 'skullet/react';
 import type { ConnectionFilters, DiscoveryCard } from '@/@types';
 import { useCandidateAction, useDiscovery, useUniversities } from '@/hooks';
-import { ReportButton } from '@/components/features/reports/ReportButton';
+import { ReportButton } from '@/components/features/reports';
 import { UIEmpty, UIPanel, UIQueryError } from '@/ui/components';
 import { cn } from '@/ui/cn';
 import { studyLevelLabels } from '@/utils';

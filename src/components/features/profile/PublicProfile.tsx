@@ -1,12 +1,12 @@
 import { useNavigate } from '@tanstack/react-router';
-import { BlockStudentButton } from '@/components/features/connections/BlockStudentButton';
+import { BlockStudentButton } from '@/components/features/connections';
 import { Heart, Music2, UserRound } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { PublicProfileProps } from '@/@types';
 import { useMyProfile, useUniversities } from '@/hooks';
 import { UIPanel, UIUniversityLogo } from '@/ui/components';
-import { ReportButton } from '@/components/features/reports/ReportButton';
-import { authorName } from '@/utils/feed';
+import { ReportButton } from '@/components/features/reports';
+import { authorName } from '@/utils';
 import { cn } from '@/ui/cn';
 
 export function PublicProfile({ profile }: PublicProfileProps) {

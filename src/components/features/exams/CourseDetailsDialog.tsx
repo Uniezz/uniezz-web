@@ -14,7 +14,7 @@ import {
   UIQueryError,
   UIUniversityLogo,
 } from '@/ui/components';
-import { ReportButton } from '@/components/features/reports/ReportButton';
+import { ReportButton } from '@/components/features/reports';
 import { CourseComments } from './CourseComments';
 import { CourseMaterials } from './CourseMaterials';
 import { RatingInput } from './RatingInput';

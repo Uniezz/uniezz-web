@@ -1,5 +1,5 @@
-import { ApiRequestError } from '@/api/errors';
-import { captureAnalytics } from '@/utils/analytics';
+import { ApiRequestError } from '@/api';
+import { captureAnalytics } from '@/utils';
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm, useWatch } from 'react-hook-form';
@@ -8,7 +8,7 @@ import { FlagTriangleRight } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 import type { components } from '@/@types/schema';
-import { useCreateReport } from '@/hooks/useCreateReport';
+import { useCreateReport } from '@/hooks';
 import { reportSchema, type ReportSchema } from '@/schemas';
 import { UIButton, UIDialog, UIField, UISelect } from '@/ui/components';
 

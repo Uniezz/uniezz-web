@@ -31,7 +31,7 @@ import type {
   StudyFileQuery,
   UpdateCourseInput,
 } from '@/@types';
-import { patchCachedItem } from '@/utils/query';
+import { patchCachedItem } from '@/utils';
 
 export function useStudyFiles(query: StudyFileQuery) {
   return useInfiniteQuery({

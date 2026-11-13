@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import type { FeedPostCardProps } from '@/@types';
 import { UIAvatar, UIPanel, UIUniversityLogo } from '@/ui/components';
 import { cn } from '@/ui/cn';
-import { authorName, isAuthorProfilePath, postDate } from '@/utils/feed';
+import { authorName, isAuthorProfilePath, postDate } from '@/utils';
 import { useMyProfile } from '@/hooks';
 
 export function FeedPostCard({ post, filters, source = 'posts' }: FeedPostCardProps) {

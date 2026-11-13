@@ -1,8 +1,8 @@
 import { createFileRoute, redirect } from '@tanstack/react-router';
 import toast from 'react-hot-toast';
-import { CourseFormDialog } from '@/components/features/exams/CourseFormDialog';
+import { CourseFormDialog } from '@/components/features/exams';
 import i18n from '@/i18n';
-import { myProfileQueryOptions } from '@/hooks/useMyProfile';
+import { myProfileQueryOptions } from '@/hooks';
 
 export const Route = createFileRoute('/_app/exams/courses/new')({
   beforeLoad: async ({ context, search }) => {

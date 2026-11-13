@@ -13,7 +13,7 @@ import { useMemo, useState, type RefObject } from 'react';
 import { useTranslation } from 'react-i18next';
 import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
 import { type Campus, type CampusProperties } from '@/@types';
-import { landingMapCamera } from '@/utils/landingMap';
+import { landingMapCamera } from '@/utils';
 import type { University } from '@/@types/auth';
 import {
   addUniversityLogo,

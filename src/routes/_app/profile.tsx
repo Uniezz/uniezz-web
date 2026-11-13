@@ -2,10 +2,10 @@ import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { Skeleton } from 'skullet/react';
 
-import { myProfileQueryOptions } from '@/hooks/useMyProfile';
+import { myProfileQueryOptions } from '@/hooks';
 import { UIQueryError } from '@/ui/components';
-import { ProfileEditor } from '@/components/features/profile/ProfileEditor';
-import { sampleProfile } from '@/utils/profileSkeletonData';
+import { ProfileEditor } from '@/components/features/profile';
+import { sampleProfile } from '@/utils';
 
 export const Route = createFileRoute('/_app/profile')({
   loader: ({ context }) => context.queryClient.ensureQueryData(myProfileQueryOptions()),

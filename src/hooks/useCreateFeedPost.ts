@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createFeedPost } from '@/api';
-import type { postSubmission } from '@/utils/feed';
+import type { postSubmission } from '@/utils';
 
 export function useCreateFeedPost() {
   const queryClient = useQueryClient();

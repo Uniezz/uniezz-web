@@ -5,10 +5,10 @@ import { useTranslation } from 'react-i18next';
 import { Skeleton } from 'skullet/react';
 import { usePublicProfile } from '@/hooks';
 import { UIQueryError } from '@/ui/components';
-import { PublicProfile } from '@/components/features/profile/PublicProfile';
-import { ProfilePosts } from '@/components/features/profile/ProfilePosts';
-import { ProfileStickyBar } from '@/components/features/profile/ProfileStickyBar';
-import { samplePublicProfile } from '@/utils/profileSkeletonData';
+import { PublicProfile } from '@/components/features/profile';
+import { ProfilePosts } from '@/components/features/profile';
+import { ProfileStickyBar } from '@/components/features/profile';
+import { samplePublicProfile } from '@/utils';
 import { optionalSearchStringSchema, returnPathSchema } from '@/schemas';
 
 export const Route = createFileRoute('/_app/connections/students/$profileId')({

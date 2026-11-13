@@ -1,4 +1,4 @@
-import { captureAnalytics } from '@/utils/analytics';
+import { captureAnalytics } from '@/utils';
 import { useState } from 'react';
 import { Send } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 import type { FeedPost } from '@/@types';
 import { useMyProfile } from '@/hooks';
 import { parsePostTagDraft, postSchema, postTagAdditionSchema, type PostSchema } from '@/schemas';
-import { postFormDefaults } from '@/utils/feed';
+import { postFormDefaults } from '@/utils';
 import {
   UIButton,
   UIEmojiPicker,

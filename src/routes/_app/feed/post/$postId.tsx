@@ -24,15 +24,15 @@ import {
   useCreateComment,
   useMyProfile,
 } from '@/hooks';
-import { useNarrowViewport } from '@/hooks/useNarrowViewport';
-import { authorName, feedPostNeighbours, isAuthorProfilePath } from '@/utils/feed';
-import { FeedCommentItem, FeedCommentsSkeleton } from '@/components/features/feed/FeedComments';
-import { FeedLikeButton } from '@/components/features/feed/FeedLikeButton';
-import { FeedSaveButton } from '@/components/features/feed/FeedSaveButton';
-import { sampleComment, samplePost } from '@/utils/feedSkeletonData';
-import { FeedPostActions } from '@/components/features/feed/FeedPostActions';
-import { PostMedia } from '@/components/features/feed/PostMedia';
-import { PostDetails } from '@/components/features/feed/PostDetails';
+import { useNarrowViewport } from '@/hooks';
+import { authorName, feedPostNeighbours, isAuthorProfilePath } from '@/utils';
+import { FeedCommentItem, FeedCommentsSkeleton } from '@/components/features/feed';
+import { FeedLikeButton } from '@/components/features/feed';
+import { FeedSaveButton } from '@/components/features/feed';
+import { sampleComment, samplePost } from '@/utils';
+import { FeedPostActions } from '@/components/features/feed';
+import { PostMedia } from '@/components/features/feed';
+import { PostDetails } from '@/components/features/feed';
 import { commentSchema, feedPostSearchSchema } from '@/schemas';
 
 export const Route = createFileRoute('/_app/feed/post/$postId')({
