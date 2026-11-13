@@ -1,5 +1,6 @@
 import { createContext, useState } from 'react';
-import { Outlet, createFileRoute } from '@tanstack/react-router';
+import posthog from 'posthog-js';
+import { Outlet, createFileRoute, redirect } from '@tanstack/react-router';
 
 import type { Conversation, Message } from '@/@types';
 // TODO(api): Replace mock conversations and local chat mutations with API queries and mutations.
@@ -19,6 +20,11 @@ export const ChatGroupRouteContext = createContext<{
 } | null>(null);
 
 export const Route = createFileRoute('/_app/chat')({
+  beforeLoad: () => {
+    if (posthog.isFeatureEnabled('chat') === false) {
+      throw redirect({ to: '/feed', replace: true });
+    }
+  },
   component: ChatPage,
 });
 

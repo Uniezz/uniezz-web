@@ -1,9 +1,10 @@
+import { useFeatureFlagEnabled } from '@posthog/react';
 import { Link, useRouterState } from '@tanstack/react-router';
 import { useLayoutEffect, useRef, useState, type ComponentProps } from 'react';
 import { useTranslation } from 'react-i18next';
 import { cn } from '../../cn';
 import { UINavItem } from '../UINavItem';
-import { NAV_GROUPS } from '@/utils/navigation';
+import { getNavigationGroups } from '@/utils/navigation';
 import { sidebarStyles, sidebarGroupStyles, sidebarUserStyles } from './variants';
 export type UISidebarProps = ComponentProps<'aside'> & {
   user: { initials: string; name: string; meta: string; avatar?: string };
@@ -85,6 +86,8 @@ function jumpCat(cat: HTMLElement, fromOffset: number) {
 
 export function UISidebar({ user, counts, className, ...props }: UISidebarProps) {
   const { t } = useTranslation();
+  const chatEnabled = useFeatureFlagEnabled('chat') === true;
+  const navigationGroups = getNavigationGroups(chatEnabled);
   const navRef = useRef<HTMLElement>(null);
   const pathname = useRouterState({ select: (state) => state.location.pathname });
   const [highlight, setHighlight] = useState<{ top: number; height: number } | null>(null);
@@ -123,7 +126,7 @@ export function UISidebar({ user, counts, className, ...props }: UISidebarProps)
         {t('common.appName')}
       </Link>
       <nav ref={navRef} aria-label={t('sidebar.mainNavigation')} className="relative flex flex-col">
-        {NAV_GROUPS.map(({ section, items }) => (
+        {navigationGroups.map(({ section, items }) => (
           <div
             key={section ?? 'main'}
             className={sidebarGroupStyles({ section: Boolean(section) })}
