@@ -7,9 +7,8 @@ export const studyMaterialFileSchema = z
   .mime(['application/pdf', 'image/jpeg', 'image/png', 'image/webp'])
   .refine((file) => file.size <= (file.type === 'application/pdf' ? 20 : 10) * 1024 * 1024);
 export const uploadSchema = z.object({
-  title: z.string().trim().min(3).max(150),
   type: z.enum(['exam', 'colloquium', 'lab', 'notes']),
-  file: studyMaterialFileSchema,
+  files: z.array(studyMaterialFileSchema).min(1).max(10),
 });
 
 /** Exams filters live in the URL; bad values fall back to "any" instead of failing the page. */

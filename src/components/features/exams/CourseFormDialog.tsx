@@ -215,7 +215,7 @@ export function CourseFormDialog({ course, onClose }: CourseFormDialogProps) {
                               className="peer sr-only"
                               disabled={isPending}
                               onChange={(event) => {
-                                const files = Array.from(event.target.files ?? []);
+                                const files = Array.from(event.currentTarget.files ?? []);
                                 event.currentTarget.value = '';
                                 void addMaterials(files);
                               }}

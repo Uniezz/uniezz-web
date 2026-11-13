@@ -1481,12 +1481,22 @@ input[type='search']::-webkit-search-cancel-button {
 }
 
 .file-viewer-host .pdf-shell,
-.file-viewer-host .pdf-wrapper {
+.file-viewer-host .pdf-wrapper,
+.file-viewer-host .file-viewer-web-source-status {
   background: var(--color-surface) !important;
+  color: var(--color-white) !important;
+}
+
+.file-viewer-host .pdf-toolbar-group--rotate {
+  display: none !important;
 }
 
 .file-viewer-host .file-viewer-web-toolbar button,
 .file-viewer-host .pdf-toolbar-group,
+.file-viewer-host .pdf-page-button,
+.file-viewer-host .pdf-outline-empty,
+.file-viewer-host .pdf-state,
+.file-viewer-host .pdf-outline-button,
 .file-viewer-host .pdf-icon-button,
 .file-viewer-host .pdf-scale-button,
 .file-viewer-host .pdf-page-meter,
@@ -1498,12 +1508,82 @@ input[type='search']::-webkit-search-cancel-button {
 
 .file-viewer-host .file-viewer-web-toolbar button:hover,
 .file-viewer-host .pdf-icon-button:hover:not(:disabled),
-.file-viewer-host .pdf-scale-button:hover {
+.file-viewer-host .pdf-scale-button:hover,
+.file-viewer-host .pdf-page-button:hover,
+.file-viewer-host .pdf-outline-button:hover,
+.file-viewer-host .pdf-nav-tabs button:hover,
+.file-viewer-host .pdf-nav-tabs button.active {
+  border-color: var(--color-blue-40) !important;
   background: var(--color-white-10) !important;
   color: var(--color-accent-hover) !important;
 }
 
-.file-viewer-host .file-viewer-web-search input {
+.file-viewer-host .file-viewer-web-search input,
+.file-viewer-host .pdf-page-button input {
   background: var(--color-surface) !important;
   color: var(--color-white) !important;
+}
+
+.file-viewer-host .file-viewer-web-search input::placeholder {
+  color: var(--color-secondary) !important;
+}
+
+.file-viewer-host .pdf-nav-pane,
+.file-viewer-host .pdf-outline-button,
+.file-viewer-host .pdf-page-button,
+.file-viewer-host .pdf-page-meter,
+.file-viewer-host .pdf-rotation-meter,
+.file-viewer-host .pdf-outline-title,
+.file-viewer-host .pdf-nav-tabs button {
+  color: var(--color-white) !important;
+}
+
+.file-viewer-host .pdf-page-meter strong,
+.file-viewer-host .pdf-nav-head strong {
+  color: var(--color-white) !important;
+}
+
+.file-viewer-host .pdf-state--error {
+  border-color: var(--color-danger) !important;
+  color: var(--color-danger) !important;
+}
+
+.file-viewer-host .file-viewer-web-source-status strong {
+  color: var(--color-white) !important;
+}
+
+.file-viewer-host .file-viewer-web-source-status p {
+  color: var(--color-secondary) !important;
+}
+
+.file-viewer-host .file-viewer-web-toolbar button:focus-visible,
+.file-viewer-host .pdf-icon-button:focus-visible,
+.file-viewer-host .pdf-scale-button:focus-visible,
+.file-viewer-host .pdf-page-button:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.file-viewer-host .pdf-icon-button:focus,
+.file-viewer-host .pdf-scale-button:focus,
+.file-viewer-host .pdf-page-button:focus {
+  border-color: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.file-viewer-host .file-viewer-web-toolbar button:disabled,
+.file-viewer-host .pdf-icon-button:disabled,
+.file-viewer-host .pdf-scale-button:disabled,
+.file-viewer-host .pdf-page-button:disabled {
+  color: var(--color-white-40) !important;
+}
+
+.file-viewer-host .file-viewer-web-source-status a,
+.file-viewer-host .file-viewer-web-source-status button {
+  color: var(--color-accent-hover) !important;
+}
+
+.file-viewer-host .pdf-page-thumb--thumbnail {
+  border-color: var(--color-white-10) !important;
 }

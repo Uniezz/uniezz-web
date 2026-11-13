@@ -11,7 +11,9 @@ const options: ViewerOptions = {
   theme: 'dark',
   ui: { surfaceBackground: '#161822' },
   pdf: { assetBaseUrl: import.meta.env.BASE_URL },
+  image: { rotation: false },
   toolbar: {
+    theme: false,
     download: false,
     print: false,
     exportHtml: false,
