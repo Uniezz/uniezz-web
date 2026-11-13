@@ -1,6 +1,6 @@
 import type { MouseEvent } from 'react';
 import { captureAnalytics } from '@/utils/analytics';
-import { Link, createFileRoute } from '@tanstack/react-router';
+import { Link, createFileRoute, redirect } from '@tanstack/react-router';
 import { ArrowUpRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { UniversityMap } from '@/components/landing';
@@ -11,8 +11,21 @@ import { LandingTour } from '@/components/features/landing/LandingTour';
 import { LandingUnicat } from '@/components/features/landing/LandingUnicat';
 import { useUniversities } from '@/hooks';
 import { UIButton, UILanguageSwitcher } from '@/ui/components';
+import { ApiRequestError } from '@/api/errors';
+import { myProfileQueryOptions } from '@/hooks/useMyProfile';
 
-export const Route = createFileRoute('/')({ component: LandingPage });
+export const Route = createFileRoute('/')({
+  beforeLoad: async ({ context }) => {
+    try {
+      await context.queryClient.ensureQueryData({ ...myProfileQueryOptions(), retry: false });
+      throw redirect({ to: '/feed', replace: true });
+    } catch (error) {
+      if (error instanceof ApiRequestError && error.status === 401) return;
+      throw error;
+    }
+  },
+  component: LandingPage,
+});
 
 function LandingPage() {
   const { t } = useTranslation();

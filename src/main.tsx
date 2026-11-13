@@ -1,6 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { RouterProvider, createRouteMask, createRouter } from '@tanstack/react-router';
+import { Navigate, RouterProvider, createRouteMask, createRouter } from '@tanstack/react-router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { SkulletProvider } from 'skullet/react';
 import posthog from 'posthog-js';
@@ -8,6 +8,8 @@ import { PostHogProvider } from '@posthog/react';
 import './schemas/env';
 import { createAnalyticsMutationCache, sanitizeAnalyticsEvent } from './utils/analytics';
 import { routeTree } from './routeTree.gen';
+import { useMyProfile } from './hooks';
+import { ApiRequestError } from './api/errors';
 
 import './i18n';
 
@@ -68,6 +70,7 @@ const router = createRouter({
     profileRouteMask,
   ],
   context: { queryClient },
+  defaultNotFoundComponent: UnknownRouteRedirect,
   // Scroll is remembered per address, so returning to a page (Back opens it anew) restores it.
   scrollRestoration: ({ location }) =>
     !(
@@ -76,6 +79,17 @@ const router = createRouter({
     ),
   getScrollRestorationKey: (location) => location.href,
 });
+
+function UnknownRouteRedirect() {
+  const { error, isPending } = useMyProfile();
+  if (isPending) return null;
+  return (
+    <Navigate
+      to={error instanceof ApiRequestError && error.status === 401 ? '/' : '/feed'}
+      replace
+    />
+  );
+}
 
 declare module '@tanstack/react-router' {
   interface Register {

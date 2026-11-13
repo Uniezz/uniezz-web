@@ -44,7 +44,11 @@ export function apiError(
 
 export const apiMiddleware: Middleware = {
   async onResponse({ request, response, schemaPath }) {
-    if (response.status === 401 && !schemaPath.startsWith('/auth/')) {
+    if (
+      response.status === 401 &&
+      !schemaPath.startsWith('/auth/') &&
+      schemaPath !== '/profile/me'
+    ) {
       window.location.replace('/login');
     }
     if (response.ok) {
