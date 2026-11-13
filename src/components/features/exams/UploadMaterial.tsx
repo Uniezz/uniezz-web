@@ -6,7 +6,14 @@ import { Controller, useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import toast from 'react-hot-toast';
 import { useCourse, useMyProfile, useAddCourseFile, useUploadStudyMaterial } from '@/hooks';
-import { UIButton, UIDialog, UIQueryError, UISelect, UIUnsavedChanges } from '@/ui/components';
+import {
+  UIButton,
+  UIDialog,
+  UIDialogFooter,
+  UIQueryError,
+  UISelect,
+  UIUnsavedChanges,
+} from '@/ui/components';
 import { uploadSchema } from '@/schemas';
 import { canUploadCourseMaterial, studyFileTypeLabels } from '@/utils/exams';
 import { captureAnalytics } from '@/utils/analytics';
@@ -72,12 +79,12 @@ export function UploadMaterial({ courseId, onClose }: UploadMaterialProps) {
         <p role="alert">{t('courses.uploadEligibility')}</p>
       ) : (
         <form
-          className="space-y-4"
+          className="flex min-h-0 flex-1 flex-col gap-4"
           onSubmit={handleSubmit(submit, () =>
             captureAnalytics('study_material_validation_failed'),
           )}
         >
-          <fieldset disabled={isPending} className="space-y-4">
+          <fieldset disabled={isPending} className="flex-1 space-y-4">
             <fieldset
               className="flex min-w-0 flex-col gap-1.5 text-micro font-semibold text-secondary"
               aria-describedby="course-materials-hint"
@@ -121,14 +128,14 @@ export function UploadMaterial({ courseId, onClose }: UploadMaterialProps) {
               </p>
             </fieldset>
           </fieldset>
-          <div className="flex justify-end gap-3">
+          <UIDialogFooter>
             <UIButton bg="secondary" disabled={isPending} onClick={() => onClose()}>
               {t('app.cancel')}
             </UIButton>
             <UIButton type="submit" disabled={isPending}>
               {t('exams.action')}
             </UIButton>
-          </div>
+          </UIDialogFooter>
         </form>
       )}
     </UIDialog>

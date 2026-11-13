@@ -7,13 +7,19 @@ export function PostMedia({ images }: { images: string[] }) {
   const { t } = useTranslation();
   const [selected, setSelected] = useState(0);
   const index = Math.min(selected, Math.max(0, images.length - 1));
+
   return (
     <div className="bg-ink-20 relative flex aspect-[4/3] items-center justify-center md:aspect-auto md:h-full">
-      <img
-        src={images[index]}
-        alt={`${t('postComposer.photoPreview')} ${index + 1}`}
-        className="absolute inset-0 size-full object-cover"
-      />
+      {images.map((src, imageIndex) => (
+        <img
+          key={src}
+          src={src}
+          alt={imageIndex === index ? `${t('postComposer.photoPreview')} ${index + 1}` : ''}
+          aria-hidden={imageIndex === index ? undefined : true}
+          decoding="async"
+          className={`absolute inset-0 size-full object-cover ${imageIndex === index ? 'opacity-100' : 'opacity-0'}`}
+        />
+      ))}
       {images.length > 1 && (
         <>
           <UIButton

@@ -1,14 +1,6 @@
 import { cva } from 'class-variance-authority';
 
-export const dialogOverlayStyles = cva('fixed inset-0 z-50', {
-  variants: {
-    placement: {
-      center: 'bg-black/70 backdrop-blur-md',
-      right: 'bg-black/40 backdrop-blur-md',
-    },
-  },
-  defaultVariants: { placement: 'center' },
-});
+export const dialogOverlayStyles = cva('fixed inset-0 z-50 bg-black/40 backdrop-blur-md');
 
 export const dialogTitleStyles = cva('pr-8 text-xl font-bold');
 

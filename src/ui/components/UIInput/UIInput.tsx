@@ -53,7 +53,7 @@ export const UIInput = ({
           {...props}
           id={inputId}
           autoComplete={props.autoComplete ?? 'off'}
-          className="min-w-0 flex-1 bg-transparent text-white outline-none placeholder:text-muted"
+          className={`min-w-0 flex-1 bg-transparent text-white outline-none placeholder:text-muted ${type === 'search' ? '[&::-webkit-search-cancel-button]:hidden' : ''}`}
           type={type}
           value={text}
           onChange={(e) => onTextChange?.(e.target.value)}

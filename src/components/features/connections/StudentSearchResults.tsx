@@ -1,5 +1,4 @@
 import { useTranslation } from 'react-i18next';
-import { Search } from 'lucide-react';
 import { Skeleton } from 'skullet/react';
 import { useProfileSearch, useUniversities } from '@/hooks';
 import { VirtuosoGrid } from 'react-virtuoso';
@@ -33,15 +32,6 @@ export function StudentSearchResults({ search, name }: { search: string; name: s
       )}
       {(loading || students.length > 0) && (
         <UIPanel surface="tint" className="flex min-h-0 flex-1 flex-col overflow-hidden p-0">
-          <div className="flex shrink-0 flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b border-white-10 px-4 py-4 sm:px-6">
-            <h2 className="flex items-center gap-2.5 text-label font-semibold">
-              <Search className="size-4 text-sky" aria-hidden="true" />
-              {t(search.trim() ? 'students.results' : 'students.allStudents')}
-            </h2>
-            {search.trim() && (
-              <p className="min-w-0 text-detail wrap-anywhere text-secondary">{search.trim()}</p>
-            )}
-          </div>
           {loading ? (
             <Skeleton loading label={t('apiState.loading')}>
               <div inert className={gridClass}>

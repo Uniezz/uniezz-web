@@ -1,5 +1,5 @@
 import { captureAnalytics } from '@/utils/analytics';
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -9,7 +9,15 @@ import toast from 'react-hot-toast';
 import type { Programme } from '@/@types';
 import { useMyProgrammes, useProfileProgrammes, useUniversities } from '@/hooks';
 import { programmeSchema, type ProgrammeFormSchema } from '@/schemas';
-import { UIButton, UIDialog, UIField, UIPanel, UISelect, UIUnsavedChanges } from '@/ui/components';
+import {
+  UIButton,
+  UIDialog,
+  UIDialogFooter,
+  UIField,
+  UIPanel,
+  UISelect,
+  UIUnsavedChanges,
+} from '@/ui/components';
 import { AddProgramme } from './AddProgramme';
 
 export function StudyProgrammes({ universityId }: { universityId: string }) {
@@ -59,6 +67,7 @@ function ProgrammeCard({
 }) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
+  const formId = useId();
   const {
     control,
     handleSubmit,
@@ -133,14 +142,76 @@ function ProgrammeCard({
         dismissible={!isPending}
         title={programme.programme}
         description={t('app.studyProgrammes')}
+        footer={
+          <UIDialogFooter className="justify-between">
+            <div className="flex flex-wrap items-center gap-2">
+              {!programme.isPrimary && (
+                <>
+                  <UIButton
+                    bg="transparent"
+                    size="pill"
+                    disabled={isPending}
+                    className="text-secondary enabled:hover:bg-transparent enabled:hover:text-white"
+                    onClick={() => void makePrimary()}
+                  >
+                    <Check size={16} aria-hidden="true" />
+                    {t('app.makePrimary')}
+                  </UIButton>
+                  <UIButton
+                    bg="transparent"
+                    size="pill"
+                    disabled={isPending}
+                    className="text-danger enabled:hover:bg-transparent enabled:hover:text-danger-hover"
+                    onClick={() => void removeProgramme()}
+                  >
+                    <Trash2 size={16} aria-hidden="true" />
+                    {t('app.remove')}
+                  </UIButton>
+                </>
+              )}
+            </div>
+            <div className="flex items-center gap-3">
+              {isDirty && (
+                <>
+                  <UIButton
+                    bg="transparent"
+                    size="pill"
+                    disabled={isPending}
+                    className="text-secondary enabled:hover:bg-transparent enabled:hover:text-white"
+                    onClick={closeEditor}
+                  >
+                    <X size={16} aria-hidden="true" />
+                    {t('app.cancel')}
+                  </UIButton>
+                  <UIButton
+                    type="submit"
+                    form={formId}
+                    bg="transparent"
+                    size="pill"
+                    disabled={isPending}
+                    className="text-secondary enabled:hover:bg-transparent enabled:hover:text-white"
+                  >
+                    <Check size={16} aria-hidden="true" />
+                    {t('app.saveChanges')}
+                  </UIButton>
+                </>
+              )}
+            </div>
+          </UIDialogFooter>
+        }
       >
         <UIUnsavedChanges dirty={open && isDirty} />
         <form
+          id={formId}
+          className="flex min-h-0 flex-1 flex-col"
           onSubmit={handleSubmit(save, () =>
             captureAnalytics('programme_update_form_validation_failed'),
           )}
         >
-          <fieldset disabled={isPending}>
+          <fieldset
+            disabled={isPending}
+            className="scrollbar-hidden min-h-0 flex-1 overflow-y-auto"
+          >
             <div className="grid gap-3 [&_label>span]:text-[10px] [&_label>span]:font-bold [&_label>span]:tracking-[0.8px] [&_label>span]:text-muted [&_label>span]:uppercase">
               <div className="grid gap-3">
                 <UIField
@@ -259,60 +330,6 @@ function ProgrammeCard({
               </div>
             </div>
           </fieldset>
-          <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
-            <div className="flex flex-wrap items-center gap-2">
-              {!programme.isPrimary && (
-                <>
-                  <UIButton
-                    bg="transparent"
-                    size="pill"
-                    disabled={isPending}
-                    className="text-secondary enabled:hover:bg-transparent enabled:hover:text-white"
-                    onClick={() => void makePrimary()}
-                  >
-                    <Check size={16} aria-hidden="true" />
-                    {t('app.makePrimary')}
-                  </UIButton>
-                  <UIButton
-                    bg="transparent"
-                    size="pill"
-                    disabled={isPending}
-                    className="text-danger enabled:hover:bg-transparent enabled:hover:text-danger-hover"
-                    onClick={() => void removeProgramme()}
-                  >
-                    <Trash2 size={16} aria-hidden="true" />
-                    {t('app.remove')}
-                  </UIButton>
-                </>
-              )}
-            </div>
-            <div className="flex items-center gap-3">
-              {isDirty && (
-                <>
-                  <UIButton
-                    bg="transparent"
-                    size="pill"
-                    disabled={isPending}
-                    className="text-secondary enabled:hover:bg-transparent enabled:hover:text-white"
-                    onClick={closeEditor}
-                  >
-                    <X size={16} aria-hidden="true" />
-                    {t('app.cancel')}
-                  </UIButton>
-                  <UIButton
-                    type="submit"
-                    bg="transparent"
-                    size="pill"
-                    disabled={isPending}
-                    className="text-secondary enabled:hover:bg-transparent enabled:hover:text-white"
-                  >
-                    <Check size={16} aria-hidden="true" />
-                    {t('app.saveChanges')}
-                  </UIButton>
-                </>
-              )}
-            </div>
-          </div>
         </form>
       </UIDialog>
     </>

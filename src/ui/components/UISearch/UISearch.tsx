@@ -9,18 +9,29 @@ export type UISearchProps = {
   onChange: (value: string) => void;
   label: string;
   className?: string;
+  hideIcon?: boolean;
+  hideClearButton?: boolean;
 };
-export const UISearch = ({ value, onChange, label, className }: UISearchProps) => {
+export const UISearch = ({
+  value,
+  onChange,
+  label,
+  className,
+  hideIcon = false,
+  hideClearButton = false,
+}: UISearchProps) => {
   const { t } = useTranslation();
   return (
     <UIInput
       type="search"
       text={value}
       onTextChange={onChange}
-      iconLeft={Search}
+      iconLeft={hideIcon ? undefined : Search}
       aria-label={label}
       placeholder={label}
-      clearButton={{ label: t('app.clearSearch'), onClear: () => onChange('') }}
+      clearButton={
+        hideClearButton ? undefined : { label: t('app.clearSearch'), onClear: () => onChange('') }
+      }
       className={cn(searchStyles(), className)}
     />
   );

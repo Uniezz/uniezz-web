@@ -14,6 +14,7 @@ import {
   UIEmojiPicker,
   UIField,
   UIDialog,
+  UIDialogFooter,
   UIQueryError,
   UIUnsavedChanges,
 } from '@/ui/components';
@@ -196,7 +197,7 @@ export function PostComposer({
             {profileError && <UIQueryError retry={() => void refetchProfile()} />}
           </fieldset>
         </div>
-        <div className="flex shrink-0 flex-wrap items-center justify-end gap-3 border-t border-white-10 pt-4">
+        <UIDialogFooter>
           <UIButton bg="secondary" onClick={onCancel} disabled={isPending}>
             {t('postComposer.cancel')}
           </UIButton>
@@ -208,7 +209,7 @@ export function PostComposer({
           >
             {post ? t('app.saveChanges') : t('postComposer.publish')}
           </UIButton>
-        </div>
+        </UIDialogFooter>
       </form>
     </UIDialog>
   );

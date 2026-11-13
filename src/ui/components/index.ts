@@ -17,6 +17,7 @@ export * from './UIChip';
 export * from './UIField';
 export * from './UISwitch';
 export * from './UIDialog';
+export * from './UIDialogFooter';
 export * from './UIEmpty';
 export * from './UIQueryError';
 export * from './UIBottomTabs';

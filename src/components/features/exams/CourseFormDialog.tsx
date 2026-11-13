@@ -20,6 +20,7 @@ import { canUploadCourseMaterial, courseFormDefaults, studyFileTypeLabels } from
 import {
   UIButton,
   UIDialog,
+  UIDialogFooter,
   UIField,
   UISelect,
   UIUniversityLogo,
@@ -30,6 +31,7 @@ import { RatingInput } from './RatingInput';
 
 export function CourseFormDialog({ course, onClose }: CourseFormDialogProps) {
   const materialsInputId = useId();
+  const formId = `${materialsInputId}-form`;
   const [isReadingMaterials, setIsReadingMaterials] = useState(false);
   const { t } = useTranslation();
   const { data: universities = [] } = useUniversities();
@@ -134,16 +136,35 @@ export function CourseFormDialog({ course, onClose }: CourseFormDialogProps) {
       dismissible={!isSaving}
       title={t(course ? 'courses.edit' : 'courses.create')}
       description={t('courses.formDescription')}
+      footer={
+        <UIDialogFooter>
+          <UIButton bg="secondary" onClick={() => onClose()} disabled={isSaving}>
+            {t('app.cancel')}
+          </UIButton>
+          <UIButton
+            type="submit"
+            form={formId}
+            disabled={isSaving || (course && !course.isMine)}
+            aria-busy={isSaving}
+          >
+            {t('app.save')}
+          </UIButton>
+        </UIDialogFooter>
+      }
     >
       <UIUnsavedChanges dirty={isDirty} />
       <form
-        className="space-y-4"
+        id={formId}
+        className="flex min-h-0 flex-1 flex-col gap-4"
         onSubmit={handleSubmit(submit, () => {
           captureAnalytics('course_form_validation_failed');
           toast.error(t('courses.validationError'));
         })}
       >
-        <fieldset disabled={isSaving} className="space-y-4">
+        <fieldset
+          disabled={isSaving}
+          className="scrollbar-hidden min-h-0 flex-1 space-y-4 overflow-y-auto"
+        >
           {!course && (
             <fieldset
               className="flex min-w-0 flex-col gap-1.5 text-micro font-semibold text-secondary"
@@ -317,18 +338,6 @@ export function CourseFormDialog({ course, onClose }: CourseFormDialogProps) {
             </>
           )}
         </fieldset>
-        <div className="flex justify-end gap-3">
-          <UIButton bg="secondary" onClick={() => onClose()} disabled={isSaving}>
-            {t('app.cancel')}
-          </UIButton>
-          <UIButton
-            type="submit"
-            disabled={isSaving || (course && !course.isMine)}
-            aria-busy={isSaving}
-          >
-            {t('app.save')}
-          </UIButton>
-        </div>
       </form>
     </UIDialog>
   );

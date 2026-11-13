@@ -1,10 +1,19 @@
 import type { CourseDetailsDialogProps } from '@/@types';
+import { useId, useState, type FormEvent } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { Flame, Pencil } from 'lucide-react';
 import toast from 'react-hot-toast';
-import { useCourse, useRateCourse, useUniversities } from '@/hooks';
-import { UIButton, UIDialog, UIQueryError, UIUniversityLogo } from '@/ui/components';
+import { useAddCourseComment, useCourse, useRateCourse, useUniversities } from '@/hooks';
+import { courseCommentSchema } from '@/schemas';
+import {
+  UIButton,
+  UIDialog,
+  UIDialogFooter,
+  UIField,
+  UIQueryError,
+  UIUniversityLogo,
+} from '@/ui/components';
 import { ReportButton } from '@/components/features/reports/ReportButton';
 import { CourseComments } from './CourseComments';
 import { CourseMaterials } from './CourseMaterials';
@@ -15,7 +24,23 @@ export function CourseDetailsDialog({ courseId, onClose }: CourseDetailsDialogPr
   const { data: course, isPending, isError, refetch } = useCourse(courseId);
   const { data: universities = [] } = useUniversities();
   const { mutate: rate, isPending: isRating } = useRateCourse();
+  const { mutateAsync: addComment, isPending: isAddingComment } = useAddCourseComment();
+  const [comment, setComment] = useState('');
+  const commentFormId = useId();
+  const isCommentValid = courseCommentSchema.safeParse({ content: comment }).success;
   const navigate = useNavigate();
+  async function submitComment(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const result = courseCommentSchema.safeParse({ content: comment });
+    if (!result.success || isAddingComment) return;
+    try {
+      await addComment({ courseId, body: result.data });
+      setComment('');
+      toast.success(t('courses.commentAdded'));
+    } catch {
+      toast.error(t('apiState.error'));
+    }
+  }
   return (
     <>
       <UIDialog
@@ -26,11 +51,45 @@ export function CourseDetailsDialog({ courseId, onClose }: CourseDetailsDialogPr
         }}
         title={t('courses.details')}
         description={course?.name ?? t('apiState.loading')}
+        footer={
+          course && (
+            <UIDialogFooter className="justify-between">
+              <div className="flex flex-wrap items-center gap-3">
+                {course.isMine && (
+                  <UIButton
+                    size="pill"
+                    bg="transparent"
+                    className="min-h-0 gap-1 border-0 p-0 text-secondary enabled:hover:bg-transparent enabled:hover:text-white"
+                    aria-label={t('courses.edit')}
+                    onClick={() =>
+                      void navigate({
+                        to: '/exams/courses/$courseId/edit',
+                        params: { courseId },
+                        search: (previous) => ({ ...previous, tab: 'reviews' }),
+                      })
+                    }
+                  >
+                    <Pencil className="size-3.5" aria-hidden="true" />
+                    {t('courses.edit')}
+                  </UIButton>
+                )}
+                <ReportButton targetType="course" targetId={courseId} danger />
+              </div>
+              <UIButton
+                type="submit"
+                form={commentFormId}
+                disabled={isAddingComment || !isCommentValid}
+              >
+                {t('app.submit')}
+              </UIButton>
+            </UIDialogFooter>
+          )
+        }
       >
         {isPending && <p role="status">{t('apiState.loading')}</p>}
         {isError && <UIQueryError retry={() => void refetch()} />}
         {course && (
-          <div className="space-y-6">
+          <div className="scrollbar-hidden min-h-0 flex-1 space-y-6 overflow-y-auto">
             <div>
               <h3 className="text-micro font-semibold text-secondary">
                 {t('courses.description')}
@@ -77,32 +136,18 @@ export function CourseDetailsDialog({ courseId, onClose }: CourseDetailsDialogPr
               }
             />
             <CourseMaterials courseId={courseId} />
-            <CourseComments
-              courseId={courseId}
-              actions={
-                <>
-                  {course.isMine && (
-                    <UIButton
-                      size="pill"
-                      bg="transparent"
-                      className="min-h-0 gap-1 border-0 p-0 text-secondary enabled:hover:bg-transparent enabled:hover:text-white"
-                      aria-label={t('courses.edit')}
-                      onClick={() =>
-                        void navigate({
-                          to: '/exams/courses/$courseId/edit',
-                          params: { courseId },
-                          search: (previous) => ({ ...previous, tab: 'reviews' }),
-                        })
-                      }
-                    >
-                      <Pencil className="size-3.5" aria-hidden="true" />
-                      {t('courses.edit')}
-                    </UIButton>
-                  )}
-                  <ReportButton targetType="course" targetId={courseId} danger />
-                </>
-              }
-            />
+            <CourseComments courseId={courseId} />
+            <form id={commentFormId} className="mt-6" onSubmit={submitComment}>
+              <UIField label={t('courses.addComment')}>
+                <textarea
+                  className="app-control max-h-50 min-h-28 resize-y"
+                  maxLength={1000}
+                  disabled={isAddingComment}
+                  value={comment}
+                  onChange={(event) => setComment(event.target.value)}
+                />
+              </UIField>
+            </form>
           </div>
         )}
       </UIDialog>
