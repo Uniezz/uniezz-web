@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { FileText, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import toast from 'react-hot-toast';
 import { TableVirtuoso } from 'react-virtuoso';
 import { useSearch } from '@tanstack/react-router';
 import type { StudyFile } from '@/@types';
 import { fixedTable, tableCellTextClass, tableHeaderCellClass } from '@/ui/virtuoso';
 import { PreviewStudyFileButton } from './PreviewStudyFileButton';
-import { studyFileTypeLabels } from '@/utils';
+import { studyFileTypeLabels, toast } from '@/utils';
 import { useDeleteStudyFile, useMyProfile, useStudyFiles } from '@/hooks';
 import { UIButton, UIDialog, UIEmpty, UIPanel, UIQueryError } from '@/ui/components';
 

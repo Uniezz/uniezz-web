@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-import toast from 'react-hot-toast';
+import { toast } from '@/utils';
 import { PostComposer } from '@/components/features/feed';
 import { useCreatePost } from '@/hooks';
 

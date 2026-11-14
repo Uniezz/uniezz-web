@@ -8,18 +8,19 @@ import { useTranslation } from 'react-i18next';
 import { requestOtpCode, verifyOtpCode } from '@/api';
 import { otpDefaultValues, otpSchema, type OtpSchema } from '@/schemas';
 import { CELL_COUNT } from '@/utils';
+import i18n from '@/i18n';
 
 export const useOtpScreen = (university: string) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { mutateAsync: requestCode, isPending: isRequesting } = useMutation({
-    meta: { analyticsAction: 'otp_request' },
+    meta: { analyticsAction: 'otp_request', progress: () => i18n.t('progress.otpRequest') },
     mutationKey: ['auth', 'request-otp'],
     mutationFn: requestOtpCode,
   });
   const { mutateAsync: verifyCode, isPending: isVerifying } = useMutation({
-    meta: { analyticsAction: 'otp_verify' },
+    meta: { analyticsAction: 'otp_verify', progress: () => i18n.t('progress.otpVerify') },
     mutationKey: ['auth', 'verify-otp'],
     mutationFn: verifyOtpCode,
   });

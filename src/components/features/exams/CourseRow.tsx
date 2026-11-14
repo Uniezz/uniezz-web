@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { Link } from '@tanstack/react-router';
 import { Flame } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import toast from 'react-hot-toast';
+import { toast } from '@/utils';
 import type { Course } from '@/@types';
 import { useRateCourse } from '@/hooks';
 import { tableCellTextClass } from '@/ui/virtuoso';

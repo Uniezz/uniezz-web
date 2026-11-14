@@ -1,8 +1,7 @@
-import { captureAnalytics } from '@/utils';
+import { captureAnalytics, toast } from '@/utils';
 import { Check } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { FormProvider } from 'react-hook-form';
-import toast from 'react-hot-toast';
 import { useDeleteBanner } from '@/hooks';
 import { useProfileForm } from '@/hooks';
 import type { components } from '@/@types/schema';

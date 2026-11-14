@@ -23,11 +23,12 @@ import {
 } from '@/api';
 import type { FeedFilters, FeedPostSource } from '@/@types';
 import { patchCachedItem } from '@/utils';
+import i18n from '@/i18n';
 
 export function useUpdateFeedComment() {
   const queryClient = useQueryClient();
   return useMutation({
-    meta: { analyticsAction: 'comment_update' },
+    meta: { analyticsAction: 'comment_update', progress: () => i18n.t('progress.commentUpdate') },
     mutationFn: updateFeedComment,
     onSuccess: (comment) => patchCachedItem(queryClient, ['feed'], comment.id, comment),
   });
@@ -36,7 +37,7 @@ export function useUpdateFeedComment() {
 export function useUpdateFeedPost() {
   const queryClient = useQueryClient();
   return useMutation({
-    meta: { analyticsAction: 'post_update' },
+    meta: { analyticsAction: 'post_update', progress: () => i18n.t('progress.postUpdate') },
     mutationFn: updateFeedPost,
     onSuccess: (post) => {
       queryClient.setQueryData(['feed', 'post', post.id], post);
@@ -48,7 +49,7 @@ export function useUpdateFeedPost() {
 export function useDeleteFeedPost() {
   const queryClient = useQueryClient();
   return useMutation({
-    meta: { analyticsAction: 'post_delete' },
+    meta: { analyticsAction: 'post_delete', progress: () => i18n.t('progress.postDelete') },
     mutationFn: deleteFeedPost,
     onSuccess: (_, id) => {
       queryClient.removeQueries({ queryKey: ['feed', 'post', id], exact: true });
@@ -60,7 +61,7 @@ export function useDeleteFeedPost() {
 export function useDeleteFeedComment() {
   const queryClient = useQueryClient();
   return useMutation({
-    meta: { analyticsAction: 'comment_delete' },
+    meta: { analyticsAction: 'comment_delete', progress: () => i18n.t('progress.commentDelete') },
     mutationFn: deleteFeedComment,
     onSuccess: () =>
       Promise.all([
@@ -165,7 +166,7 @@ export function useCommentReplies(id: string, enabled: boolean) {
 export function useCreateComment() {
   const queryClient = useQueryClient();
   const { mutateAsync, variables, isError, isPending } = useMutation({
-    meta: { analyticsAction: 'comment_create' },
+    meta: { analyticsAction: 'comment_create', progress: () => i18n.t('progress.commentCreate') },
     mutationKey: ['feed', 'create-comment'],
     mutationFn: createFeedComment,
     onSuccess: (_, { id, replyToCommentId }) =>

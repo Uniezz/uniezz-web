@@ -11,6 +11,7 @@ import {
   updateMyConnectionPreferences,
 } from '@/api';
 import { captureAnalytics } from '@/utils';
+import i18n from '@/i18n';
 
 export function useDiscovery(filters: ConnectionFilters) {
   return useQuery({
@@ -62,7 +63,10 @@ export function useUpdateMyConnectionPreferences() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationKey: ['connections', 'preferences'],
-    meta: { analyticsAction: 'connection_preferences_update' },
+    meta: {
+      analyticsAction: 'connection_preferences_update',
+      progress: () => i18n.t('progress.connectionPreferencesUpdate'),
+    },
     mutationFn: updateMyConnectionPreferences,
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['connections', 'me'] });
@@ -74,7 +78,10 @@ export function useUpdateMyConnectionPreferences() {
 export function useBlockStudent() {
   const queryClient = useQueryClient();
   return useMutation({
-    meta: { analyticsAction: 'connection_block' },
+    meta: {
+      analyticsAction: 'connection_block',
+      progress: () => i18n.t('progress.connectionBlock'),
+    },
     mutationFn: blockStudent,
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['connections', 'list'] });
@@ -88,7 +95,10 @@ export function useBlockStudent() {
 export function useUnblockStudent() {
   const queryClient = useQueryClient();
   return useMutation({
-    meta: { analyticsAction: 'connection_unblock' },
+    meta: {
+      analyticsAction: 'connection_unblock',
+      progress: () => i18n.t('progress.connectionUnblock'),
+    },
     mutationFn: unblockStudent,
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['connections', 'list'] });
@@ -102,7 +112,10 @@ export function useUnblockStudent() {
 export function useDeleteConnection() {
   const queryClient = useQueryClient();
   return useMutation({
-    meta: { analyticsAction: 'connection_delete' },
+    meta: {
+      analyticsAction: 'connection_delete',
+      progress: () => i18n.t('progress.connectionDelete'),
+    },
     mutationFn: deleteConnection,
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['connections', 'list'] });

@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { deleteProgramme, listMyProgrammes, saveProgramme as saveProgrammeApi } from '@/api';
 import type { ProgrammeFormSchema } from '@/schemas';
+import i18n from '@/i18n';
 
 type MyProgrammes = Awaited<ReturnType<typeof listMyProgrammes>>;
 
@@ -19,7 +20,7 @@ export function useMyProgrammes() {
 export function useProfileProgrammes() {
   const queryClient = useQueryClient();
   const { mutateAsync: saveProgramme, isPending: isSaving } = useMutation({
-    meta: { analyticsAction: 'programme_save' },
+    meta: { analyticsAction: 'programme_save', progress: () => i18n.t('progress.programmeSave') },
     mutationKey: ['profile', 'programmes', 'save'],
     mutationFn: ({ programme, id }: SaveProgrammeVariables) =>
       saveProgrammeApi(
@@ -62,7 +63,10 @@ export function useProfileProgrammes() {
     },
   });
   const { mutateAsync: removeProgramme, isPending: isRemoving } = useMutation({
-    meta: { analyticsAction: 'programme_delete' },
+    meta: {
+      analyticsAction: 'programme_delete',
+      progress: () => i18n.t('progress.programmeDelete'),
+    },
     mutationKey: ['profile', 'programmes', 'delete'],
     mutationFn: deleteProgramme,
     onSuccess: (_, id) => {

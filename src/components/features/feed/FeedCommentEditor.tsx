@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import toast from 'react-hot-toast';
+import { toast } from '@/utils';
 import type { FeedComment } from '@/@types';
 import { useUpdateFeedComment } from '@/hooks';
 import { UIButton, UIEmojiPicker } from '@/ui/components';

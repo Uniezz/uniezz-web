@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Virtuoso } from 'react-virtuoso';
-import toast from 'react-hot-toast';
+import { toast } from '@/utils';
 import { useCourseComments, useDeleteCourseComment } from '@/hooks';
 import { UIButton, UIDialog, UIQueryError } from '@/ui/components';
 import { listComponents } from '@/ui/virtuoso';

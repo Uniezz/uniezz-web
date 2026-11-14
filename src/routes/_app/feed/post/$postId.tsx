@@ -10,7 +10,6 @@ import { ChevronLeft, ChevronRight, Send, CornerUpLeft, X } from 'lucide-react';
 import { type FormEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Skeleton } from 'skullet/react';
-import toast from 'react-hot-toast';
 import type { FeedComment, FeedPostSearch } from '@/@types';
 import { cn } from '@/ui/cn';
 import { inputStyles } from '@/ui/components/UIInput/variants';
@@ -25,7 +24,7 @@ import {
   useMyProfile,
 } from '@/hooks';
 import { useNarrowViewport } from '@/hooks';
-import { authorName, feedPostNeighbours, isAuthorProfilePath } from '@/utils';
+import { authorName, feedPostNeighbours, isAuthorProfilePath, toast } from '@/utils';
 import { FeedCommentItem, FeedCommentsSkeleton } from '@/components/features/feed';
 import { FeedLikeButton } from '@/components/features/feed';
 import { FeedSaveButton } from '@/components/features/feed';

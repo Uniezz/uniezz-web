@@ -2,6 +2,7 @@ import '@tanstack/react-query';
 
 declare module '@tanstack/react-query' {
   interface Register {
-    mutationMeta: { analyticsAction: string };
+    // progress: loading toast text while the request runs; omit for instant toggles.
+    mutationMeta: { analyticsAction: string; progress?: () => string };
   }
 }

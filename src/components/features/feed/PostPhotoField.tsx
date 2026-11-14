@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { useController, type Control } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import toast from 'react-hot-toast';
 import { ImagePlus, Trash2 } from 'lucide-react';
 import { postImagesSchema, type PostSchema } from '@/schemas';
 import { UIButton } from '@/ui/components';
-import { hasDuplicateImages, readImageFile } from '@/utils';
+import { hasDuplicateImages, readImageFile, toast } from '@/utils';
 
 export function PostPhotoField({
   control,

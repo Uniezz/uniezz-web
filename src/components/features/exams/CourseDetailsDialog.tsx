@@ -3,7 +3,7 @@ import { useId, useState, type FormEvent } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { Flame, Pencil, Trash2 } from 'lucide-react';
-import toast from 'react-hot-toast';
+import { toast } from '@/utils';
 import {
   useAddCourseComment,
   useCourse,

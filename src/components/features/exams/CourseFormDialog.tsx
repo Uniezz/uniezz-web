@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Flame } from 'lucide-react';
-import toast from 'react-hot-toast';
 import {
   useAddCourseFile,
   useCreateCourse,
@@ -15,7 +14,7 @@ import {
   useUploadStudyMaterial,
 } from '@/hooks';
 import { createCourseFormSchema } from '@/schemas';
-import { captureAnalytics } from '@/utils';
+import { captureAnalytics, toast } from '@/utils';
 import { canUploadCourseMaterial, courseFormDefaults, studyFileTypeLabels } from '@/utils';
 import {
   UIButton,
@@ -58,10 +57,6 @@ export function CourseFormDialog({ course, onClose }: CourseFormDialogProps) {
   });
   const isSaving = isPending || isSubmitting;
   async function submit(values: CreateCourseForm) {
-    let progressToastId: string | undefined;
-    function showProgress(message: string) {
-      progressToastId = toast.loading(message, { id: progressToastId });
-    }
     try {
       if (course) {
         await update({
@@ -89,10 +84,8 @@ export function CourseFormDialog({ course, onClose }: CourseFormDialogProps) {
       }
       let uploaded: Awaited<ReturnType<typeof upload>>[] = [];
       if (values.materials.length > 0) {
-        showProgress(t('courses.uploadingMaterials'));
         uploaded = await Promise.all(values.materials.map((file) => upload(file)));
       }
-      showProgress(t('courses.creatingCourse'));
       const created = await create({
         name: values.name,
         description: values.description,
@@ -116,14 +109,14 @@ export function CourseFormDialog({ course, onClose }: CourseFormDialogProps) {
           ),
         );
       } catch {
-        toast.error(t('courses.materialAttachFailed'), { id: progressToastId });
+        toast.error(t('courses.materialAttachFailed'));
         onClose(true);
         return;
       }
-      toast.success(t('courses.created'), { id: progressToastId });
+      toast.success(t('courses.created'));
       onClose(true);
     } catch {
-      toast.error(t('apiState.error'), { id: progressToastId });
+      toast.error(t('apiState.error'));
     }
   }
   return (

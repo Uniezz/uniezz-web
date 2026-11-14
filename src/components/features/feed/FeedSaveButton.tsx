@@ -1,7 +1,7 @@
 import { Bookmark } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import toast from 'react-hot-toast';
+import { toast } from '@/utils';
 import { useFeedSave } from '@/hooks';
 import { UIButton } from '@/ui/components';
 import { cn } from '@/ui/cn';

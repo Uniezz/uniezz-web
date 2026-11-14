@@ -1,6 +1,6 @@
 import { useSearch } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-import toast from 'react-hot-toast';
+import { toast } from '@/utils';
 import { TableVirtuoso } from 'react-virtuoso';
 import { useProfessors, useRateProfessor, useUniversities } from '@/hooks';
 import { UIEmpty, UIPanel, UIQueryError } from '@/ui/components';

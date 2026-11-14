@@ -4,6 +4,7 @@ import { postSubmission } from '@/utils';
 import { useMyProfile } from './useMyProfile';
 import { useUploadPostImages } from './useUploadPostImages';
 import { useCreateFeedPost } from './useCreateFeedPost';
+import i18n from '@/i18n';
 
 export function useCreatePost() {
   const { data: profile } = useMyProfile();
@@ -11,7 +12,7 @@ export function useCreatePost() {
   const { variables, isError, mutateAsync: createPost } = useCreateFeedPost();
 
   return useMutation({
-    meta: { analyticsAction: 'post_publish' },
+    meta: { analyticsAction: 'post_publish', progress: () => i18n.t('progress.postCreate') },
     mutationKey: ['feed', 'create'],
     mutationFn: async (values: PostSchema) => {
       if (!profile) throw new Error('Profile unavailable');

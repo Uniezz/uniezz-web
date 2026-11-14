@@ -2,10 +2,9 @@ import type { PreviewStudyFileButtonProps } from '@/@types';
 import { lazy, Suspense, useState } from 'react';
 import { Eye } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import toast from 'react-hot-toast';
 import { getStudyFile } from '@/api';
 import { UIButton, UIDialog } from '@/ui/components';
-import { studyFileTypeLabels } from '@/utils';
+import { studyFileTypeLabels, toast } from '@/utils';
 
 const CourseFileViewer = lazy(() => import('./CourseFileViewer'));
 

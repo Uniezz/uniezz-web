@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Controller, useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import toast from 'react-hot-toast';
 import { useCourse, useMyProfile, useAddCourseFile, useUploadStudyMaterial } from '@/hooks';
 import {
   UIButton,
@@ -15,7 +14,7 @@ import {
   UIUnsavedChanges,
 } from '@/ui/components';
 import { uploadSchema } from '@/schemas';
-import { canUploadCourseMaterial, studyFileTypeLabels } from '@/utils';
+import { canUploadCourseMaterial, studyFileTypeLabels, toast } from '@/utils';
 import { captureAnalytics } from '@/utils';
 import { CourseMaterialsPicker } from './CourseMaterialsPicker';
 

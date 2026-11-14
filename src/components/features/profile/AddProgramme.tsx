@@ -1,10 +1,9 @@
-import { captureAnalytics } from '@/utils';
+import { captureAnalytics, toast } from '@/utils';
 import { useState } from 'react';
 import { Building2, Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import toast from 'react-hot-toast';
 import { useProfileProgrammes } from '@/hooks';
 import { useDropdown } from '@/hooks';
 import type { components } from '@/@types/schema';
@@ -120,7 +119,7 @@ export function AddProgramme({
             </UIField>
             {exists && <p className="text-label text-secondary">{t('app.programmeExists')}</p>}
           </div>
-          <UIDialogFooter>
+          <UIDialogFooter className="bg-transparent">
             <UIButton bg="secondary" type="button" onClick={() => setOpen(false)}>
               {t('app.cancel')}
             </UIButton>

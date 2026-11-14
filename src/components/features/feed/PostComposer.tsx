@@ -1,10 +1,9 @@
-import { captureAnalytics } from '@/utils';
+import { captureAnalytics, toast } from '@/utils';
 import { useState } from 'react';
 import { Send } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import toast from 'react-hot-toast';
 import type { FeedPost } from '@/@types';
 import { useMyProfile } from '@/hooks';
 import { parsePostTagDraft, postSchema, postTagAdditionSchema, type PostSchema } from '@/schemas';
@@ -197,7 +196,7 @@ export function PostComposer({
             {profileError && <UIQueryError retry={() => void refetchProfile()} />}
           </fieldset>
         </div>
-        <UIDialogFooter>
+        <UIDialogFooter className="bg-transparent">
           <UIButton bg="secondary" onClick={onCancel} disabled={isPending}>
             {t('postComposer.cancel')}
           </UIButton>

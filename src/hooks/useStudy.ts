@@ -34,6 +34,7 @@ import type {
   UpdateCourseInput,
 } from '@/@types';
 import { patchCachedItem } from '@/utils';
+import i18n from '@/i18n';
 
 export function useStudyFiles(query: StudyFileQuery) {
   return useInfiniteQuery({
@@ -48,7 +49,10 @@ export function useStudyFiles(query: StudyFileQuery) {
 export function useDeleteStudyFile() {
   const queryClient = useQueryClient();
   return useMutation({
-    meta: { analyticsAction: 'study_file_delete' },
+    meta: {
+      analyticsAction: 'study_file_delete',
+      progress: () => i18n.t('progress.studyFileDelete'),
+    },
     mutationFn: deleteStudyFile,
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['study', 'files'] });
@@ -78,7 +82,7 @@ export function useCourse(id: string) {
 export function useCreateCourse() {
   const queryClient = useQueryClient();
   return useMutation({
-    meta: { analyticsAction: 'course_create' },
+    meta: { analyticsAction: 'course_create', progress: () => i18n.t('courses.creatingCourse') },
     mutationFn: (body: CreateCourseInput) => createCourse(body),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['study', 'courses'] });
@@ -89,7 +93,7 @@ export function useCreateCourse() {
 export function useUpdateCourse() {
   const queryClient = useQueryClient();
   return useMutation({
-    meta: { analyticsAction: 'course_update' },
+    meta: { analyticsAction: 'course_update', progress: () => i18n.t('progress.courseUpdate') },
     mutationFn: ({ id, body }: { id: string; body: UpdateCourseInput }) => updateCourse(id, body),
     onSuccess: (course) => patchCachedItem(queryClient, ['study', 'courses'], course.id, course),
   });
@@ -98,7 +102,7 @@ export function useUpdateCourse() {
 export function useDeleteCourse() {
   const queryClient = useQueryClient();
   return useMutation({
-    meta: { analyticsAction: 'course_delete' },
+    meta: { analyticsAction: 'course_delete', progress: () => i18n.t('progress.courseDelete') },
     mutationFn: deleteCourse,
     onSuccess: (_, id) => {
       queryClient.removeQueries({ queryKey: ['study', 'courses', id] });
@@ -130,7 +134,10 @@ export function useCourseComments(courseId: string) {
 export function useAddCourseComment() {
   const queryClient = useQueryClient();
   return useMutation({
-    meta: { analyticsAction: 'course_comment_add' },
+    meta: {
+      analyticsAction: 'course_comment_add',
+      progress: () => i18n.t('progress.commentCreate'),
+    },
     mutationFn: ({ courseId, body }: { courseId: string; body: AddCourseCommentInput }) =>
       addCourseComment(courseId, body),
     onSuccess: () => {
@@ -152,7 +159,7 @@ export function useCourseFiles(courseId: string) {
 export function useAddCourseFile() {
   const queryClient = useQueryClient();
   return useMutation({
-    meta: { analyticsAction: 'course_file_add' },
+    meta: { analyticsAction: 'course_file_add', progress: () => i18n.t('progress.courseFileAdd') },
     mutationFn: ({ courseId, body }: { courseId: string; body: AddCourseFileInput }) =>
       addCourseFile(courseId, body),
     onSuccess: () => {
@@ -193,7 +200,10 @@ export function useRateProfessor() {
 export function useDeleteCourseComment() {
   const queryClient = useQueryClient();
   return useMutation({
-    meta: { analyticsAction: 'course_comment_delete' },
+    meta: {
+      analyticsAction: 'course_comment_delete',
+      progress: () => i18n.t('progress.commentDelete'),
+    },
     mutationFn: deleteCourseComment,
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['study', 'courses'] });
@@ -203,7 +213,10 @@ export function useDeleteCourseComment() {
 
 export function useUploadStudyMaterial() {
   return useMutation({
-    meta: { analyticsAction: 'study_material_upload' },
+    meta: {
+      analyticsAction: 'study_material_upload',
+      progress: () => i18n.t('courses.uploadingMaterials'),
+    },
     mutationFn: async (file: File) => ({ file, mediaId: await uploadStudyMaterial(file) }),
   });
 }

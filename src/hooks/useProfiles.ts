@@ -2,6 +2,7 @@ import posthog from 'posthog-js';
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { deleteMyAvatar, deleteMyBanner, getProfiles, getPublicProfile, signOut } from '@/api';
 import type { components } from '@/@types/schema';
+import i18n from '@/i18n';
 
 export function useProfileSearch(q: string) {
   return useInfiniteQuery({
@@ -19,7 +20,7 @@ export function usePublicProfile(id: string) {
 export function useDeleteAvatar() {
   const queryClient = useQueryClient();
   return useMutation({
-    meta: { analyticsAction: 'avatar_delete' },
+    meta: { analyticsAction: 'avatar_delete', progress: () => i18n.t('progress.avatarDelete') },
     mutationFn: deleteMyAvatar,
     onSuccess: () => {
       queryClient.setQueryData<components['schemas']['Profile']>(['profile', 'me'], (profile) =>
@@ -34,7 +35,7 @@ export function useDeleteAvatar() {
 export function useDeleteBanner() {
   const queryClient = useQueryClient();
   return useMutation({
-    meta: { analyticsAction: 'banner_delete' },
+    meta: { analyticsAction: 'banner_delete', progress: () => i18n.t('progress.bannerDelete') },
     mutationFn: deleteMyBanner,
     onSuccess: () => {
       queryClient.setQueryData<components['schemas']['Profile']>(['profile', 'me'], (profile) =>
@@ -48,7 +49,7 @@ export function useDeleteBanner() {
 export function useSignOut() {
   const queryClient = useQueryClient();
   return useMutation({
-    meta: { analyticsAction: 'sign_out' },
+    meta: { analyticsAction: 'sign_out', progress: () => i18n.t('progress.signOut') },
     mutationFn: signOut,
     onSuccess: () => {
       queryClient.clear();

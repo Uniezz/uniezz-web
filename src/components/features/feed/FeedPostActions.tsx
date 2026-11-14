@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useRouter, useSearch } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-import toast from 'react-hot-toast';
+import { toast } from '@/utils';
 
 import type { FeedPost } from '@/@types';
 import { useDeleteFeedPost, useMyProfile } from '@/hooks';

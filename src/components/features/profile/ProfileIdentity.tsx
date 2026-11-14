@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useController, useFormContext, useWatch } from 'react-hook-form';
 import { Camera, ImagePlus, LogOut, Trash2, X } from 'lucide-react';
@@ -15,7 +14,7 @@ import {
   UIUniversityLogo,
 } from '@/ui/components';
 import { type ProfileFormSchema } from '@/schemas';
-import { readImageFile } from '@/utils';
+import { readImageFile, toast } from '@/utils';
 import { cn } from '@/ui/cn';
 
 export function ProfileIdentity({

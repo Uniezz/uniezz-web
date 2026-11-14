@@ -5,6 +5,7 @@ import type { components } from '@/@types/schema';
 import { updateMyProfile } from '@/api';
 import { profileFormSchema, type ProfileFormSchema, type ProfileSubmission } from '@/schemas';
 import { useUploadImage } from './useUploadImage';
+import i18n from '@/i18n';
 
 function defaults(profile: components['schemas']['Profile']): ProfileFormSchema {
   return {
@@ -41,7 +42,7 @@ export function useProfileForm(profile: components['schemas']['Profile']) {
     isPending: isUploadingBanner,
   } = useUploadImage('banner');
   const { mutateAsync: saveProfile, isPending: isSaving } = useMutation({
-    meta: { analyticsAction: 'profile_update' },
+    meta: { analyticsAction: 'profile_update', progress: () => i18n.t('progress.profileUpdate') },
     mutationKey: ['profile', 'update'],
     mutationFn: async (values: ProfileSubmission) => {
       const avatar = values.avatarFile

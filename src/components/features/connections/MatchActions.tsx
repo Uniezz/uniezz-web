@@ -1,7 +1,7 @@
 import type { MatchActionsProps } from '@/@types';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import toast from 'react-hot-toast';
+import { toast } from '@/utils';
 import { useDeleteConnection } from '@/hooks';
 import { UIButton, UIDialog } from '@/ui/components';
 import { BlockStudentButton } from './BlockStudentButton';

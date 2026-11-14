@@ -1,11 +1,10 @@
 import { ApiRequestError } from '@/api';
-import { captureAnalytics } from '@/utils';
+import { captureAnalytics, toast } from '@/utils';
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { FlagTriangleRight } from 'lucide-react';
-import toast from 'react-hot-toast';
 
 import type { components } from '@/@types/schema';
 import { useCreateReport } from '@/hooks';

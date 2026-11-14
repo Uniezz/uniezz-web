@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import toast from 'react-hot-toast';
 import { Skeleton } from 'skullet/react';
 import type { ConnectionFilters, DiscoveryCard } from '@/@types';
 import { useCandidateAction, useDiscovery, useUniversities } from '@/hooks';
 import { ReportButton } from '@/components/features/reports';
 import { UIEmpty, UIPanel, UIQueryError } from '@/ui/components';
 import { cn } from '@/ui/cn';
-import { studyLevelLabels } from '@/utils';
+import { studyLevelLabels, toast } from '@/utils';
 import { DiscoveryActions } from './DiscoveryActions';
 
 const panelClass =
@@ -81,7 +80,7 @@ export function DiscoveryProfile({ filters }: DiscoveryProfileProps) {
       )}
     >
       <CandidateCard card={card} />
-      <div className="px-6 pb-6">
+      <div className="shrink-0 px-6 pb-6">
         <DiscoveryActions
           disabled={isActing}
           onPass={() => decide('pass')}
@@ -102,8 +101,8 @@ function CandidateCard({ card }: { card: DiscoveryCard }) {
     .join(', ');
 
   return (
-    <div className="flex flex-1 flex-col gap-6 p-6">
-      <div className="flex items-start justify-between gap-4">
+    <div className="flex min-h-0 flex-1 flex-col gap-6 p-6">
+      <div className="flex shrink-0 items-start justify-between gap-4">
         <div className="min-w-0">
           <h2 className="text-profile-name font-bold tracking-[-1.2px]">
             {card.age === null
@@ -115,18 +114,28 @@ function CandidateCard({ card }: { card: DiscoveryCard }) {
         <ReportButton targetType="candidate" targetId={card.candidateId} compact />
       </div>
       {card.intent && (
-        <div>
+        <div className="flex min-h-0 flex-col">
           <p className="mb-2 text-detail text-sky">{t('connections.iWantTo')}</p>
-          <p className="text-section leading-[1.4] font-medium">{card.intent}</p>
+          <p className="min-h-0 overflow-y-auto text-section leading-[1.4] font-medium wrap-anywhere">
+            {card.intent}
+          </p>
         </div>
       )}
-      {card.bio && <p className="text-base text-white-80">{card.bio}</p>}
+      {card.bio && (
+        <p className="min-h-0 overflow-y-auto text-base wrap-anywhere text-white-80">{card.bio}</p>
+      )}
       {card.interests && card.interests.length > 0 && (
-        <ul className="flex flex-wrap gap-2" aria-label={t('connections.interests')}>
+        <ul
+          className="scrollbar-hidden -mx-6 mt-auto flex shrink-0 gap-2 overflow-x-auto px-6"
+          aria-label={t('connections.interests')}
+        >
           {card.interests.map((interest) => {
             const isShared = shared.has(interest.toLowerCase());
             return (
-              <li key={interest} className={cn('app-tag', isShared && 'text-sky')}>
+              <li
+                key={interest}
+                className={cn('app-tag shrink-0 whitespace-nowrap', isShared && 'text-sky')}
+              >
                 {interest}
                 {isShared && <span className="sr-only">, {t('connections.sharedInterest')}</span>}
               </li>

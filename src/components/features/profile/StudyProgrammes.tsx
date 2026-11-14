@@ -1,10 +1,9 @@
-import { captureAnalytics } from '@/utils';
+import { captureAnalytics, toast } from '@/utils';
 import { useId, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Check, Trash2, X } from 'lucide-react';
-import toast from 'react-hot-toast';
 
 import type { Programme } from '@/@types';
 import { useMyProgrammes, useProfileProgrammes, useUniversities } from '@/hooks';

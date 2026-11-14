@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { Link, useLocation } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-import toast from 'react-hot-toast';
 import { Skeleton } from 'skullet/react';
 import type { FeedComment } from '@/@types';
 import { useCommentReplies, useDeleteFeedComment, useMyProfile } from '@/hooks';
 import { UIAvatar, UIButton, UIDialog, UIQueryError } from '@/ui/components';
-import { authorName } from '@/utils';
+import { authorName, toast } from '@/utils';
 import { sampleComment } from '@/utils';
 import { FeedLikeButton } from './FeedLikeButton';
 import { FeedCommentEditor } from './FeedCommentEditor';

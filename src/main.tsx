@@ -7,6 +7,7 @@ import posthog from 'posthog-js';
 import { PostHogProvider } from '@posthog/react';
 import './schemas/env';
 import { createAnalyticsMutationCache, sanitizeAnalyticsEvent } from './utils/analytics';
+import { showMutationProgress } from './utils/mutationProgress';
 import { routeTree } from './routeTree.gen';
 import { useMyProfile } from './hooks';
 import { ApiRequestError } from './api/errors';
@@ -82,6 +83,7 @@ const routeMasks = [
   createRouteMask({ routeTree, from: '/profile', to: '/', search: () => ({}) }),
 ];
 const queryClient = new QueryClient({ mutationCache: createAnalyticsMutationCache(posthog) });
+showMutationProgress(queryClient.getMutationCache());
 const router = createRouter({
   routeTree,
   routeMasks,

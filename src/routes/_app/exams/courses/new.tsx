@@ -1,5 +1,5 @@
 import { createFileRoute, redirect } from '@tanstack/react-router';
-import toast from 'react-hot-toast';
+import { toast } from '@/utils';
 import { CourseFormDialog } from '@/components/features/exams';
 import i18n from '@/i18n';
 import { myProfileQueryOptions } from '@/hooks';

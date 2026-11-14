@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import toast from 'react-hot-toast';
+import { toast } from '@/utils';
 import { useCreateFaqProposal } from '@/hooks';
 import { faqProposalSchema, type FaqProposalFormSchema } from '@/schemas';
 import { UIButton, UIDialog, UIField } from '@/ui/components';
@@ -51,7 +51,7 @@ export function FaqProposalDialog({ open, onClose }: { open: boolean; onClose: (
         </UIField>
         <UIField label={t('faq.answer')} error={errors.answer ? t('app.required') : undefined}>
           <textarea
-            className="app-control min-h-28 resize-y"
+            className="app-control h-62.5 resize-none"
             maxLength={2000}
             placeholder={t('faq.answerPlaceholder')}
             {...register('answer')}
