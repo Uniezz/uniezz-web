@@ -31,12 +31,10 @@ function ConnectionPreferencesForm({
 }: ConnectionPreferencesFormProps) {
   const { t } = useTranslation();
   const { mutateAsync: savePreferences, isPending } = useUpdateMyConnectionPreferences();
-  const [birthDate, setBirthDate] = useState(preferences?.birthDate ?? '');
   const [intent, setIntent] = useState(preferences?.intent ?? '');
   async function save() {
     try {
       await savePreferences({
-        ...(birthDate ? { birthDate } : {}),
         intent,
         openTo: [mode],
       });
@@ -64,15 +62,6 @@ function ConnectionPreferencesForm({
       }}
     >
       <h3 className="text-micro font-semibold text-secondary">{t('connections.preferences')}</h3>
-      <UIField label={t('connections.birthDate')} hint={t('connections.birthDateHint')}>
-        <input
-          type="date"
-          className="app-control [color-scheme:dark]"
-          value={birthDate}
-          max={new Date().toISOString().slice(0, 10)}
-          onChange={(event) => setBirthDate(event.target.value)}
-        />
-      </UIField>
       <UIField label={t('connections.intent')}>
         <input
           autoComplete="off"

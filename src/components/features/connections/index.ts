@@ -1,3 +1,4 @@
+export * from './BirthDatePrompt';
 export * from './BlockStudentButton';
 export * from './ConnectionFilterPanel';
 export * from './ConnectionPreferences';

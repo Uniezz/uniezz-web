@@ -192,10 +192,13 @@ export default interface Resources {
       "appName": "uniezz"
     },
     "connections": {
+      "ageSubmitted": "Age submitted",
       "anonymousStudent": "Student",
       "anyFaculty": "Any faculty",
       "birthDate": "Birth date",
-      "birthDateHint": "Used to check age eligibility: connections are for ages 16–100; dating requires 18+.",
+      "birthDateHint": "Used to check age eligibility: connections are for ages 16+; dating requires 18+.",
+      "birthDateInvalid": "Enter a valid birth date. You must be at least 16.",
+      "birthDateOnce": "Enter your real birth date — it can be set only once.",
       "block": "Block student",
       "blockDescription": "You will stop seeing each other in discovery, profiles, matches and the feed.",
       "datingRequiresAdult": "To enable dating, enter a birth date confirming you are at least 18.",

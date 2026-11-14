@@ -1,5 +1,6 @@
 export * from './otp';
 export * from './chat';
+export * from './connections';
 export * from './exams';
 export * from './feed';
 export * from './faq';

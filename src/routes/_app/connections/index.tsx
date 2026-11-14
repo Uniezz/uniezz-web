@@ -8,7 +8,11 @@ import { defaultConnectionFilters } from '@/utils';
 import type { ConnectionFilters } from '@/@types';
 import { useMyConnectionPreferences } from '@/hooks';
 import { UITopbar } from '@/ui/components';
-import { ConnectionFilterPanel, DiscoveryProfile } from '@/components/features/connections';
+import {
+  BirthDatePrompt,
+  ConnectionFilterPanel,
+  DiscoveryProfile,
+} from '@/components/features/connections';
 
 export const Route = createFileRoute('/_app/connections/')({ component: ConnectionsPage });
 function ConnectionsPage() {
@@ -45,6 +49,7 @@ function ConnectionsPage() {
           <ConnectionFilterPanel form={filters} onApply={setAppliedFilters} />
         </aside>
       </div>
+      <BirthDatePrompt />
     </>
   );
 }
