@@ -9,6 +9,7 @@ import {
   addCourseComment,
   addCourseFile,
   createCourse,
+  deleteCourse,
   deleteStudyFile,
   deleteCourseComment,
   getCourse,
@@ -28,6 +29,7 @@ import type {
   AddCourseFileInput,
   CourseQuery,
   CreateCourseInput,
+  ProfessorQuery,
   StudyFileQuery,
   UpdateCourseInput,
 } from '@/@types';
@@ -93,6 +95,19 @@ export function useUpdateCourse() {
   });
 }
 
+export function useDeleteCourse() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    meta: { analyticsAction: 'course_delete' },
+    mutationFn: deleteCourse,
+    onSuccess: (_, id) => {
+      queryClient.removeQueries({ queryKey: ['study', 'courses', id] });
+      void queryClient.invalidateQueries({ queryKey: ['study', 'courses'] });
+      void queryClient.invalidateQueries({ queryKey: ['study', 'files'] });
+    },
+  });
+}
+
 export function useRateCourse() {
   const queryClient = useQueryClient();
   return useMutation({
@@ -147,10 +162,11 @@ export function useAddCourseFile() {
   });
 }
 
-export function useProfessors(universityId?: string) {
+export function useProfessors(query: ProfessorQuery) {
   return useInfiniteQuery({
-    queryKey: ['study', 'professors', universityId],
-    queryFn: ({ pageParam }) => getProfessors(universityId, pageParam),
+    queryKey: ['study', 'professors', query],
+    queryFn: ({ pageParam }) => getProfessors(query, pageParam),
+    placeholderData: keepPreviousData,
     initialPageParam: undefined as string | undefined,
     getNextPageParam: (page) => page.nextCursor ?? undefined,
   });

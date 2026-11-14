@@ -2,9 +2,15 @@ import type { CourseDetailsDialogProps } from '@/@types';
 import { useId, useState, type FormEvent } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-import { Flame, Pencil } from 'lucide-react';
+import { Flame, Pencil, Trash2 } from 'lucide-react';
 import toast from 'react-hot-toast';
-import { useAddCourseComment, useCourse, useRateCourse, useUniversities } from '@/hooks';
+import {
+  useAddCourseComment,
+  useCourse,
+  useDeleteCourse,
+  useRateCourse,
+  useUniversities,
+} from '@/hooks';
 import { courseCommentSchema } from '@/schemas';
 import {
   UIButton,
@@ -25,6 +31,8 @@ export function CourseDetailsDialog({ courseId, onClose }: CourseDetailsDialogPr
   const { data: universities = [] } = useUniversities();
   const { mutate: rate, isPending: isRating } = useRateCourse();
   const { mutateAsync: addComment, isPending: isAddingComment } = useAddCourseComment();
+  const { mutate: deleteCourse, isPending: isDeleting } = useDeleteCourse();
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [comment, setComment] = useState('');
   const commentFormId = useId();
   const isCommentValid = courseCommentSchema.safeParse({ content: comment }).success;
@@ -71,6 +79,18 @@ export function CourseDetailsDialog({ courseId, onClose }: CourseDetailsDialogPr
                   >
                     <Pencil className="size-3.5" aria-hidden="true" />
                     {t('courses.edit')}
+                  </UIButton>
+                )}
+                {course.isMine && (
+                  <UIButton
+                    size="pill"
+                    bg="transparent"
+                    className="min-h-0 gap-1 border-0 p-0 text-danger enabled:hover:bg-transparent enabled:hover:text-danger-hover"
+                    aria-label={t('courses.delete')}
+                    onClick={() => setIsDeleteOpen(true)}
+                  >
+                    <Trash2 className="size-3.5" aria-hidden="true" />
+                    {t('courses.delete')}
                   </UIButton>
                 )}
                 <ReportButton targetType="course" targetId={courseId} danger />
@@ -130,6 +150,7 @@ export function CourseDetailsDialog({ courseId, onClose }: CourseDetailsDialogPr
               average={course.ratingAverage}
               count={course.ratingCount}
               analyticsLabel="Rate course"
+              myRating={course.myRating}
               disabled={isRating}
               onRate={(rating) =>
                 rate({ id: courseId, rating }, { onError: () => toast.error(t('apiState.error')) })
@@ -150,6 +171,33 @@ export function CourseDetailsDialog({ courseId, onClose }: CourseDetailsDialogPr
             </form>
           </div>
         )}
+      </UIDialog>
+      <UIDialog
+        open={isDeleteOpen}
+        onOpenChange={(open) => !open && setIsDeleteOpen(false)}
+        title={t('courses.deleteTitle')}
+        description={t('courses.deleteDescription')}
+      >
+        <div className="flex justify-end gap-3">
+          <UIButton bg="secondary" disabled={isDeleting} onClick={() => setIsDeleteOpen(false)}>
+            {t('app.cancel')}
+          </UIButton>
+          <UIButton
+            bg="danger"
+            disabled={isDeleting}
+            onClick={() =>
+              deleteCourse(courseId, {
+                onSuccess: () => {
+                  toast.success(t('courses.deleted'));
+                  onClose();
+                },
+                onError: () => toast.error(t('apiState.error')),
+              })
+            }
+          >
+            {t('app.remove')}
+          </UIButton>
+        </div>
       </UIDialog>
     </>
   );

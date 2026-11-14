@@ -66,6 +66,7 @@ export const apiMiddleware: Middleware = {
               '/connections/{id}',
               '/connections/blocks/{id}',
               '/study/comments/{id}',
+              '/study/courses/{id}',
               '/study/files/{id}',
               '/profile/banner',
             ].includes(schemaPath));

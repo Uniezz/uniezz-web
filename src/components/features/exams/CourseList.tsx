@@ -4,7 +4,6 @@ import { useSearch } from '@tanstack/react-router';
 import { useCourses, useUniversities } from '@/hooks';
 import { UIEmpty, UIPanel, UIQueryError } from '@/ui/components';
 import { fixedTable, tableHeaderCellClass } from '@/ui/virtuoso';
-import { matchesSearch } from '@/utils';
 import { CourseRow } from './CourseRow';
 
 // Name columns share the spare width; the rest fit their longest label in every language.
@@ -15,12 +14,9 @@ export function CourseList() {
   const { t } = useTranslation();
   const { university, semester, q = '' } = useSearch({ from: '/_app/exams' });
   const { data, isPending, isError, refetch, hasNextPage, isFetchingNextPage, fetchNextPage } =
-    useCourses({ universityId: university, semester });
+    useCourses({ universityId: university, semester, q });
   const { data: universities = [] } = useUniversities();
-  // shortcut: GET /study/courses has no text search, so search filters loaded pages; add `q` server-side if students miss courses.
-  const courses = (data?.pages.flatMap((page) => page.items ?? []) ?? []).filter((course) =>
-    matchesSearch(q, course.name, course.subject, course.faculty),
-  );
+  const courses = data?.pages.flatMap((page) => page.items ?? []) ?? [];
 
   return (
     <UIPanel className="flex min-h-0 flex-1 flex-col overflow-hidden p-2">

@@ -3,6 +3,7 @@ import type {
   AddCourseFileInput,
   CourseQuery,
   CreateCourseInput,
+  ProfessorQuery,
   StudyFileQuery,
   UpdateCourseInput,
 } from '@/@types';
@@ -47,6 +48,10 @@ export async function updateCourse(id: string, body: UpdateCourseInput) {
   return data!;
 }
 
+export async function deleteCourse(id: string) {
+  await api.DELETE('/study/courses/{id}', { params: { path: { id } } });
+}
+
 export async function rateCourse({ id, rating }: { id: string; rating: number }) {
   const { data } = await api.PUT('/study/courses/{id}/rating', {
     params: { path: { id } },
@@ -85,9 +90,9 @@ export async function addCourseFile(id: string, body: AddCourseFileInput) {
   return data!;
 }
 
-export async function getProfessors(universityId?: string, cursor?: string) {
+export async function getProfessors(query: ProfessorQuery, cursor?: string) {
   const { data } = await api.GET('/study/professors', {
-    params: { query: { limit: 20, universityId, cursor } },
+    params: { query: { limit: 20, ...query, cursor } },
   });
   return data!;
 }

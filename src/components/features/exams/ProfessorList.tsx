@@ -5,7 +5,6 @@ import { TableVirtuoso } from 'react-virtuoso';
 import { useProfessors, useRateProfessor, useUniversities } from '@/hooks';
 import { UIEmpty, UIPanel, UIQueryError } from '@/ui/components';
 import { fixedTable, tableCellTextClass, tableHeaderCellClass } from '@/ui/virtuoso';
-import { matchesSearch } from '@/utils';
 import { RatingInput } from './RatingInput';
 
 // Name columns share the spare width; the rest fit their longest label in every language.
@@ -16,13 +15,10 @@ export function ProfessorList() {
   const { t } = useTranslation();
   const { university, q = '' } = useSearch({ from: '/_app/exams' });
   const { data, isPending, isError, refetch, hasNextPage, isFetchingNextPage, fetchNextPage } =
-    useProfessors(university);
+    useProfessors({ universityId: university, q });
   const { data: universities = [] } = useUniversities();
-  const { mutate: rate, isPending: isRating } = useRateProfessor();
-  // shortcut: GET /study/professors has no text search, so search filters loaded pages; add `q` server-side if students miss professors.
-  const professors = (data?.pages.flatMap((page) => page.items ?? []) ?? []).filter((professor) =>
-    matchesSearch(q, professor.name),
-  );
+  const { mutate: rate, isPending: isRating, variables: pendingRate } = useRateProfessor();
+  const professors = data?.pages.flatMap((page) => page.items ?? []) ?? [];
 
   return (
     <UIPanel className="flex min-h-0 flex-1 flex-col overflow-hidden p-2">
@@ -68,8 +64,9 @@ export function ProfessorList() {
                     <RatingInput
                       average={professor.ratingAverage}
                       count={professor.ratingCount}
+                      myRating={professor.myRating}
                       analyticsLabel="Rate professor"
-                      disabled={isRating}
+                      disabled={isRating && pendingRate.id === professor.id}
                       onRate={(rating) =>
                         rate(
                           { id: professor.id, rating },
