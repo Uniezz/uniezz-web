@@ -44,6 +44,7 @@ export const CourseRow = memo(function CourseRow({
         <RatingInput
           average={course.ratingAverage}
           count={course.ratingCount}
+          myRating={course.myRating}
           analyticsLabel="Rate course"
           disabled={isRating}
           onRate={(rating) =>

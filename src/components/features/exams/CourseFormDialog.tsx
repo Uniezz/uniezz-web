@@ -251,6 +251,7 @@ export function CourseFormDialog({ course, onClose }: CourseFormDialogProps) {
                 <RatingInput
                   average={field.value}
                   count={0}
+                  myRating={field.value}
                   analyticsLabel="Set course difficulty"
                   ariaLabel={t('courses.difficulty')}
                   showSummary={false}
