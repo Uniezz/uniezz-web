@@ -2,6 +2,7 @@ import { CalendarDays } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { FeedPost } from '@/@types';
 import { cn } from '@/ui/cn';
+import { UITags } from '@/ui/components';
 import { postDate } from '@/utils';
 
 export function PostDetails({ post, large = false }: { post: FeedPost; large?: boolean }) {
@@ -34,15 +35,7 @@ export function PostDetails({ post, large = false }: { post: FeedPost; large?: b
           {post.content}
         </p>
       )}
-      {post.tags && post.tags.length > 0 && (
-        <div className="flex flex-wrap gap-2">
-          {post.tags.map((tag) => (
-            <span key={tag} className="app-hashtag wrap-anywhere">
-              {tag}
-            </span>
-          ))}
-        </div>
-      )}
+      <UITags tags={post.tags} variant="hashtag" />
     </>
   );
 }

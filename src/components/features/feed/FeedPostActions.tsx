@@ -30,7 +30,7 @@ export function FeedPostActions({ post }: { post: FeedPost }) {
   if (profile.id !== post.author.id) {
     return (
       <div className="flex flex-wrap gap-4">
-        <ReportButton targetType="post" targetId={post.id} />
+        <ReportButton targetType="post" targetId={post.id} danger />
       </div>
     );
   }

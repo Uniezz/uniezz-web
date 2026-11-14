@@ -1,10 +1,9 @@
 import { useNavigate } from '@tanstack/react-router';
 import { BlockStudentButton } from '@/components/features/connections';
-import { Heart, Music2, UserRound } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { PublicProfileProps } from '@/@types';
 import { useMyProfile, useUniversities } from '@/hooks';
-import { UIPanel, UIUniversityLogo } from '@/ui/components';
+import { UIPanel, UITags, UIUniversityLogo } from '@/ui/components';
 import { ReportButton } from '@/components/features/reports';
 import { authorName } from '@/utils';
 import { cn } from '@/ui/cn';
@@ -39,7 +38,7 @@ export function PublicProfile({ profile }: PublicProfileProps) {
         />
         {me && me.id !== profile.id && (
           <div className="absolute right-2 bottom-2 z-10 flex flex-col items-end gap-2 rounded-xl border border-white-10 bg-surface/75 px-3 py-2 backdrop-blur-md sm:right-3 sm:bottom-3">
-            <ReportButton targetType="user" targetId={profile.id} />
+            <ReportButton targetType="user" targetId={profile.id} danger />
             <BlockStudentButton
               studentId={profile.id}
               onBlocked={() =>
@@ -62,7 +61,10 @@ export function PublicProfile({ profile }: PublicProfileProps) {
             />
           </div>
           <div className="col-span-2 mt-4 min-w-0 space-y-3 sm:col-span-1 sm:col-start-2 sm:row-start-2 sm:mt-2">
-            <h1 className="text-xxl leading-tight font-semibold tracking-tight wrap-anywhere sm:text-4xl">
+            <h1
+              title={authorName(profile) || undefined}
+              className="line-clamp-2 text-xxl leading-tight font-semibold tracking-tight wrap-anywhere sm:text-4xl"
+            >
               {authorName(profile) || t('apiState.student')}
             </h1>
             <p className="flex items-center gap-2 text-label leading-relaxed text-white-80">
@@ -93,10 +95,7 @@ export function PublicProfile({ profile }: PublicProfileProps) {
               <div className="min-w-0 space-y-8">
                 {profile.bio && (
                   <section className="space-y-4">
-                    <h2 className="flex items-center gap-3 text-label font-semibold">
-                      <UserRound className="size-4.5 text-sky" aria-hidden="true" />
-                      {t('students.bio')}
-                    </h2>
+                    <h2 className="text-label font-semibold">{t('students.bio')}</h2>
                     <p className="max-w-prose text-body leading-relaxed wrap-anywhere whitespace-pre-wrap text-white-80">
                       {profile.bio}
                     </p>
@@ -104,25 +103,13 @@ export function PublicProfile({ profile }: PublicProfileProps) {
                 )}
                 {profile.interests && profile.interests.length > 0 && (
                   <section className="space-y-4">
-                    <h2 className="flex items-center gap-3 text-label font-semibold">
-                      <Heart className="size-4.5 text-sky" aria-hidden="true" />
-                      {t('students.interests')}
-                    </h2>
-                    <div className="flex flex-wrap gap-2">
-                      {profile.interests.map((interest) => (
-                        <span key={interest} className="app-tag wrap-anywhere">
-                          {interest}
-                        </span>
-                      ))}
-                    </div>
+                    <h2 className="text-label font-semibold">{t('students.interests')}</h2>
+                    <UITags tags={profile.interests} label={t('students.interests')} />
                   </section>
                 )}
                 {profile.songUrl && (
                   <section className="space-y-4">
-                    <h2 className="flex items-center gap-3 text-label font-semibold">
-                      <Music2 className="size-4.5 text-sky" aria-hidden="true" />
-                      {t('students.song')}
-                    </h2>
+                    <h2 className="text-label font-semibold">{t('students.song')}</h2>
                     <a
                       href={profile.songUrl}
                       target="_blank"
@@ -147,7 +134,7 @@ export function PublicProfile({ profile }: PublicProfileProps) {
                 {profile.programmes && profile.programmes.length > 0 && (
                   <section className="space-y-5">
                     <h2 className="text-label font-semibold">{t('app.studyProgrammes')}</h2>
-                    <ul className="divide-y divide-white-10">
+                    <ul className="max-h-120 divide-y divide-white-10 overflow-y-auto pr-2">
                       {profile.programmes.map((programme, index) => (
                         <li
                           key={index}

@@ -4,7 +4,7 @@ import { Skeleton } from 'skullet/react';
 import type { ConnectionFilters, DiscoveryCard } from '@/@types';
 import { useCandidateAction, useDiscovery, useUniversities } from '@/hooks';
 import { ReportButton } from '@/components/features/reports';
-import { UIEmpty, UIPanel, UIQueryError } from '@/ui/components';
+import { UIEmpty, UIPanel, UIQueryError, UITags } from '@/ui/components';
 import { cn } from '@/ui/cn';
 import { studyLevelLabels, toast } from '@/utils';
 import { DiscoveryActions } from './DiscoveryActions';
@@ -124,25 +124,13 @@ function CandidateCard({ card }: { card: DiscoveryCard }) {
       {card.bio && (
         <p className="min-h-0 overflow-y-auto text-base wrap-anywhere text-white-80">{card.bio}</p>
       )}
-      {card.interests && card.interests.length > 0 && (
-        <ul
-          className="scrollbar-hidden -mx-6 mt-auto flex shrink-0 gap-2 overflow-x-auto px-6"
-          aria-label={t('connections.interests')}
-        >
-          {card.interests.map((interest) => {
-            const isShared = shared.has(interest.toLowerCase());
-            return (
-              <li
-                key={interest}
-                className={cn('app-tag shrink-0 whitespace-nowrap', isShared && 'text-sky')}
-              >
-                {interest}
-                {isShared && <span className="sr-only">, {t('connections.sharedInterest')}</span>}
-              </li>
-            );
-          })}
-        </ul>
-      )}
+      <UITags
+        tags={card.interests}
+        label={t('connections.interests')}
+        highlight={(interest) => shared.has(interest.toLowerCase())}
+        highlightLabel={t('connections.sharedInterest')}
+        className="-mx-6 mt-auto shrink-0 px-6"
+      />
     </div>
   );
 }

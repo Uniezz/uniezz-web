@@ -2,7 +2,7 @@ import { Link, useLocation } from '@tanstack/react-router';
 import { Images } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { FeedPostCardProps } from '@/@types';
-import { UIAvatar, UIPanel, UIUniversityLogo } from '@/ui/components';
+import { UIAvatar, UIPanel, UITags, UIUniversityLogo } from '@/ui/components';
 import { cn } from '@/ui/cn';
 import { authorName, isAuthorProfilePath, postDate } from '@/utils';
 import { useMyProfile } from '@/hooks';
@@ -15,7 +15,10 @@ export function FeedPostCard({ post, filters, source = 'posts' }: FeedPostCardPr
   const isQuestion = post.type === 'question';
   return (
     <div className="group relative">
-      <UIPanel surface="tint" className="overflow-hidden bg-ink/20 p-0 backdrop-blur-[48px]">
+      <UIPanel
+        surface="tint"
+        className="transform-gpu overflow-hidden bg-ink/20 p-0 backdrop-blur-[48px]"
+      >
         {image && !isQuestion && (
           <div className="relative h-50 overflow-hidden rounded-t-card">
             <img
@@ -66,20 +69,7 @@ export function FeedPostCard({ post, filters, source = 'posts' }: FeedPostCardPr
           <h2 className="text-card-title font-semibold tracking-[-0.6px] wrap-anywhere">
             {post.title}
           </h2>
-          {post.tags && post.tags.length > 0 && (
-            <div className="mt-3 flex flex-wrap gap-1.5">
-              {post.tags.slice(0, 3).map((tag) => (
-                <span key={tag} className="app-hashtag wrap-anywhere">
-                  {tag}
-                </span>
-              ))}
-              {post.tags.length > 3 && (
-                <span className="app-hashtag text-secondary before:content-none">
-                  +{post.tags.length - 3}
-                </span>
-              )}
-            </div>
-          )}
+          <UITags tags={post.tags} variant="hashtag" max={1} className="mt-3 gap-1.5" />
         </div>
       </UIPanel>
       {post.type !== 'announcement' && (
