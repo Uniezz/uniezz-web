@@ -2,6 +2,7 @@ import { type ReactNode } from 'react';
 import { Link } from '@tanstack/react-router';
 import { type LucideIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { cn } from '../../cn';
 import { UIButton } from '../UIButton';
 import { UISearch } from '../UISearch';
 export type UITopbarProps = {
@@ -10,11 +11,19 @@ export type UITopbarProps = {
   action?: { label: string; icon: LucideIcon; onClick?: () => void };
   search?: { value: string; onChange: (value: string) => void; label: string };
   children?: ReactNode;
+  sticky?: boolean;
 };
-export function UITopbar({ title, subtitle, action, search, children }: UITopbarProps) {
+export function UITopbar({ title, subtitle, action, search, children, sticky }: UITopbarProps) {
   const { t } = useTranslation();
   return (
-    <header className="mb-6 flex flex-wrap items-end gap-3">
+    <header
+      className={cn(
+        'mb-6 flex flex-wrap items-end gap-3',
+        // Bleeds over <main> padding so content scrolls under the blurred bar.
+        sticky &&
+          'scroll-blur sticky top-0 z-30 -mx-4 -mt-6 px-4 pt-6 pb-4 sm:-mx-7 sm:px-7 lg:-mx-10 lg:-mt-7 lg:px-10 lg:pt-7',
+      )}
+    >
       <div className="min-w-0 flex-1">
         {subtitle && (
           <p className="mb-1.5 text-body leading-[1.2] font-medium text-secondary">{subtitle}</p>

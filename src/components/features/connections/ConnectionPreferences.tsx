@@ -67,7 +67,7 @@ function ConnectionPreferencesForm({
       <UIField label={t('connections.birthDate')} hint={t('connections.birthDateHint')}>
         <input
           type="date"
-          className="app-control"
+          className="app-control [color-scheme:dark]"
           value={birthDate}
           max={new Date().toISOString().slice(0, 10)}
           onChange={(event) => setBirthDate(event.target.value)}
