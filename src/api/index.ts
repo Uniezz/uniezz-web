@@ -11,4 +11,5 @@ export * from './study';
 export * from './client';
 export * from './errors';
 export * from './finishLogin';
+export * from './invites';
 export * from './rewards';

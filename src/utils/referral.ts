@@ -29,3 +29,15 @@ export function clearInviteCode(): void {
     // Storage may be unavailable in restricted browser contexts.
   }
 }
+
+// An https link opens the app where it's installed (associated domains, verified app links) and this site elsewhere.
+export function inviteUrl(code: string): string {
+  return `https://uniezz.pl/invite/${encodeURIComponent(code)}`;
+}
+
+const INVITE_REDEEM_DAYS = 7;
+
+/** The API accepts an invite code only during an account's first 7 days. */
+export function canRedeemInvite(createdAt: string, now = Date.now()): boolean {
+  return now - Date.parse(createdAt) < INVITE_REDEEM_DAYS * 24 * 60 * 60_000;
+}
