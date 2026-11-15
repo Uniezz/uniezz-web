@@ -1,11 +1,17 @@
 [
   {
-    "relation": ["delegate_permission/common.handle_all_urls"],
+    "relation": [
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.get_login_creds"
+    ],
     "target": {
       "namespace": "android_app",
       "package_name": "com.uniezz",
       "sha256_cert_fingerprints": [
-        "E6:93:E9:72:4D:43:05:37:E0:5D:45:C0:7F:7D:0F:1A:03:1E:D5:C8:1F:A6:B0:EF:E5:64:00:A8:BD:91:49:D2"
+        "E6:93:E9:72:4D:43:05:37:E0:5D:45:C0:7F:7D:0F:1A:03:1E:D5:C8:1F:A6:B0:EF:E5:64:00:A8:BD:91:49:D2",
+        "26:96:BB:6F:E3:14:D6:62:78:1B:EC:2D:06:3D:CA:23:F7:E0:B3:0C:DC:BA:F8:89:91:95:31:03:28:4B:6E:29",
+        "B4:F4:60:B1:EF:B8:8B:D1:9E:4B:36:CB:18:81:DE:CA:E3:A2:6A:B3:69:54:32:8B:5D:FF:96:41:5A:AB:83:63",
+        "E6:F8:C9:44:72:92:57:53:38:00:F2:CB:79:A9:1A:E1:1F:2B:F5:C6:B8:9A:42:71:0E:34:0F:71:C3:29:8C:A1"
       ]
     }
   }
