@@ -8,6 +8,7 @@ export function PersonalDetails({ showHeading = true }: { showHeading?: boolean 
   const {
     register,
     control,
+    setValue,
     formState: { errors },
   } = useFormContext<ProfileFormSchema>();
   const [first = '', last = '', bio = '', song = ''] = useWatch({
@@ -26,7 +27,9 @@ export function PersonalDetails({ showHeading = true }: { showHeading?: boolean 
         >
           <input
             className="app-control"
-            {...register('first')}
+            {...register('first', {
+              onBlur: (e) => setValue('first', e.target.value.trim(), { shouldValidate: true }),
+            })}
             autoComplete="off"
             maxLength={100}
             aria-invalid={Boolean(errors.first)}
@@ -40,7 +43,9 @@ export function PersonalDetails({ showHeading = true }: { showHeading?: boolean 
         >
           <input
             className="app-control"
-            {...register('last')}
+            {...register('last', {
+              onBlur: (e) => setValue('last', e.target.value.trim(), { shouldValidate: true }),
+            })}
             autoComplete="off"
             maxLength={100}
             aria-invalid={Boolean(errors.last)}
