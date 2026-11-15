@@ -141,6 +141,9 @@ export function UniversityMapCanvas({
         // Below zoom 5 the tiles drop the country codes the Poland border filter needs.
         minZoom={5}
         maxZoom={15}
+        // Scroll drives the camera every frame: cap retina pixels and skip label fades to keep it smooth.
+        pixelRatio={Math.min(window.devicePixelRatio, 1.5)}
+        fadeDuration={0}
         workerUrl={workerUrl}
         interactiveLayerIds={INTERACTIVE_LAYER_IDS}
         onLoad={onMapLoad}

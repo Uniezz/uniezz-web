@@ -357,7 +357,8 @@
     padding-block: 40px 80px;
     opacity: clamp(0, calc(1 - var(--progress, 0) * 3), 1);
     transform: scale(calc(1 + var(--progress, 0) * 5));
-    filter: blur(calc(var(--progress, 0) * 14px));
+    /* No filter: a per-frame blur on a full-screen layer drops frames on weak GPUs and phones. */
+    will-change: transform, opacity;
   }
   .landing-opening-front[inert] {
     visibility: hidden;
@@ -401,7 +402,7 @@
     transform: translateY(calc((1 - var(--progress, 0)) * 35px));
   }
   .landing-tour {
-    height: 650svh;
+    height: 750svh;
   }
   .landing-tour-stage {
     display: flex;
@@ -589,7 +590,7 @@
 
 .landing-tour-tabs {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 18px;
   margin-top: 25px;
   border-top: 1px solid var(--landing-line);
@@ -718,6 +719,32 @@
 }
 .landing-faq-list li span:last-child {
   color: #a9baff;
+}
+.landing-coins-sheet {
+  transform: rotate(3deg);
+}
+.landing-coins-balance {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 22px;
+  font-variant-numeric: tabular-nums;
+  color: #ffd66b;
+}
+.landing-coins-check {
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid #a9baff60;
+  border-radius: 999px;
+}
+.landing-coins-check[data-done='true'] {
+  border-color: #3dd68c;
+  background: #3dd68c;
+  color: #0c0d14;
 }
 .landing-progress {
   --yarn-size: 36px;

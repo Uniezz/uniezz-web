@@ -372,6 +372,7 @@ export default interface Resources {
         "interestCoffee": "Coffee",
         "interestMusic": "Music",
         "interestWalks": "Walks",
+        "inviteFriend": "Invite a friend",
         "materialOne": "Calculus · practice questions",
         "messageOne": "Library after class?",
         "messageThree": "Works for me.",
@@ -393,6 +394,10 @@ export default interface Resources {
         "chat": {
           "body": "We’re adding direct messages and group chats for classmates and friends.",
           "title": "Private and group chats."
+        },
+        "coins": {
+          "body": "Earn coins when you like and reply. Finish today’s quests for a bonus. Invite a friend: you get 100 coins, they get 50.",
+          "title": "Coins for being around."
         },
         "faq": {
           "body": "We’re making a space for the questions students ask most.",

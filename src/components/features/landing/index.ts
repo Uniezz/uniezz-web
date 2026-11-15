@@ -1,5 +1,6 @@
 export * from './LandingCatPortrait';
 export * from './LandingChatPreview';
+export * from './LandingCoinsPreview';
 export * from './LandingFaqPreview';
 export * from './LandingFeedPreview';
 export * from './LandingHero';

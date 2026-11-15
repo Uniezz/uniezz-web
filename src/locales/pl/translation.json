@@ -370,6 +370,7 @@
       "interestCoffee": "Kawa",
       "interestMusic": "Muzyka",
       "interestWalks": "Spacery",
+      "inviteFriend": "Zaproś znajomego",
       "materialOne": "Analiza matematyczna · zadania",
       "messageOne": "Biblioteka po zajęciach?",
       "messageThree": "Pasuje mi.",
@@ -391,6 +392,10 @@
       "chat": {
         "body": "Pracujemy nad prywatnymi wiadomościami i czatami grupowymi dla znajomych i osób z twojej grupy.",
         "title": "Wiadomości i czaty grupowe."
+      },
+      "coins": {
+        "body": "Zdobywaj monety za polubienia i odpowiedzi. Ukończ dzisiejsze zadania, by dostać bonus. Zaproś znajomego: ty dostajesz 100 monet, on 50.",
+        "title": "Monety za bycie aktywnym."
       },
       "faq": {
         "body": "Przygotowujemy sekcję z najczęstszymi pytaniami studentów.",

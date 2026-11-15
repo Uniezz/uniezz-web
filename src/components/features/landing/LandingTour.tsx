@@ -6,8 +6,10 @@ import { LandingProfilePreview } from './LandingProfilePreview';
 import { LandingChatPreview } from './LandingChatPreview';
 import { LandingStudyPreview } from './LandingStudyPreview';
 import { LandingFaqPreview } from './LandingFaqPreview';
+import { LandingCoinsPreview } from './LandingCoinsPreview';
 
 const chapters = [
+  { id: 'coins', label: 'rewards.title', Preview: LandingCoinsPreview },
   { id: 'feed', label: 'feed.title', Preview: LandingFeedPreview },
   {
     id: 'people',

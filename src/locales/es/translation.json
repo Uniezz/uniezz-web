@@ -370,6 +370,7 @@
       "interestCoffee": "Café",
       "interestMusic": "Música",
       "interestWalks": "Paseos",
+      "inviteFriend": "Invitar a un amigo",
       "materialOne": "Cálculo · preguntas de práctica",
       "messageOne": "¿Biblioteca después de clase?",
       "messageThree": "Funciona para mí.",
@@ -391,6 +392,10 @@
       "chat": {
         "body": "Estamos agregando mensajes directos y chats grupales para compañeros de clase y amigos.",
         "title": "Chats privados y grupales."
+      },
+      "coins": {
+        "body": "Gana monedas al dar me gusta y responder. Completa las misiones de hoy para obtener un bonus. Invita a un amigo: tú recibes 100 monedas y él 50.",
+        "title": "Monedas por participar."
       },
       "faq": {
         "body": "Estamos creando un espacio para las preguntas que más hacen los estudiantes.",
