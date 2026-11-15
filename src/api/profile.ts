@@ -1,5 +1,6 @@
 import type { components } from '@/@types/schema';
 import { api } from './client';
+import { isNewProfile } from '@/utils';
 
 export async function getMyProfile() {
   const { data } = await api.GET('/profile/me');
@@ -51,4 +52,13 @@ export async function getProfiles(q: string, cursor?: string) {
 export async function getPublicProfile(id: string) {
   const { data } = await api.GET('/profiles/{id}', { params: { path: { id } } });
   return data!;
+}
+
+/** Where a just-signed-in student lands: onboarding for a new account, otherwise the feed. */
+export async function homeAfterSignIn(): Promise<'/onboarding' | '/feed'> {
+  try {
+    return isNewProfile((await getMyProfile()).createdAt) ? '/onboarding' : '/feed';
+  } catch {
+    return '/feed';
+  }
 }

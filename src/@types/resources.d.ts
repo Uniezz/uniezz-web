@@ -58,6 +58,7 @@ export default interface Resources {
       "dating": "Dating",
       "deleteAccount": "Delete account",
       "deleteAccountDescription": "You’ll permanently lose your coins and connections with other students. Your posts and study programmes will also be deleted. This can’t be undone.",
+      "deleteAccountSignInAgain": "For your security, deleting an account needs a recent sign-in. Sign in again, then delete your account within 15 minutes.",
       "deleteAccountTitle": "Delete account?",
       "discardChanges": "Discard changes",
       "discardChangesDescription": "Your unsaved changes will be lost if you leave now.",
@@ -120,6 +121,7 @@ export default interface Resources {
       "searchUploads": "Search uploads",
       "semester": "Semester",
       "send": "Send",
+      "signInAgain": "Sign in again",
       "signOut": "Sign out",
       "studyBuddy": "Study buddy",
       "studyLevel": "Level",
@@ -421,6 +423,13 @@ export default interface Resources {
         "note": "The uniezz team likes him. You will too :)",
         "title": "Meet cazy."
       }
+    },
+    "onboarding": {
+      "finish": "Finish",
+      "next": "Next",
+      "skip": "Skip",
+      "step": "Step {{current}} of {{total}}",
+      "title": "Set up your profile"
     },
     "postComposer": {
       "addPhoto": "Add a photo",

@@ -22,6 +22,7 @@ import { Route as AppExamsRouteImport } from './routes/_app/exams'
 import { Route as AppFaqRouteImport } from './routes/_app/faq'
 import { Route as AppFeedRouteRouteImport } from './routes/_app/feed/route'
 import { Route as AppGuideRouteImport } from './routes/_app/guide'
+import { Route as AppOnboardingRouteImport } from './routes/_app/onboarding'
 import { Route as AppProfileRouteImport } from './routes/_app/profile'
 import { Route as AppRewardsRouteImport } from './routes/_app/rewards'
 import { Route as AuthDoneRouteImport } from './routes/auth/done'
@@ -101,6 +102,11 @@ const AppFeedRouteRoute = AppFeedRouteRouteImport.update({
 const AppGuideRoute = AppGuideRouteImport.update({
   id: '/guide',
   path: '/guide',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppOnboardingRoute = AppOnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
   getParentRoute: () => AppRoute,
 } as any)
 const AppProfileRoute = AppProfileRouteImport.update({
@@ -206,6 +212,7 @@ export interface FileRoutesByFullPath {
   '/exams': typeof AppExamsRouteWithChildren
   '/faq': typeof AppFaqRoute
   '/guide': typeof AppGuideRoute
+  '/onboarding': typeof AppOnboardingRoute
   '/profile': typeof AppProfileRoute
   '/rewards': typeof AppRewardsRoute
   '/auth/done': typeof AuthDoneRoute
@@ -234,6 +241,7 @@ export interface FileRoutesByTo {
   '/exams': typeof AppExamsRouteWithChildren
   '/faq': typeof AppFaqRoute
   '/guide': typeof AppGuideRoute
+  '/onboarding': typeof AppOnboardingRoute
   '/profile': typeof AppProfileRoute
   '/rewards': typeof AppRewardsRoute
   '/auth/done': typeof AuthDoneRoute
@@ -267,6 +275,7 @@ export interface FileRoutesById {
   '/_app/exams': typeof AppExamsRouteWithChildren
   '/_app/faq': typeof AppFaqRoute
   '/_app/guide': typeof AppGuideRoute
+  '/_app/onboarding': typeof AppOnboardingRoute
   '/_app/profile': typeof AppProfileRoute
   '/_app/rewards': typeof AppRewardsRoute
   '/auth/done': typeof AuthDoneRoute
@@ -299,6 +308,7 @@ export interface FileRouteTypes {
     | '/exams'
     | '/faq'
     | '/guide'
+    | '/onboarding'
     | '/profile'
     | '/rewards'
     | '/auth/done'
@@ -327,6 +337,7 @@ export interface FileRouteTypes {
     | '/exams'
     | '/faq'
     | '/guide'
+    | '/onboarding'
     | '/profile'
     | '/rewards'
     | '/auth/done'
@@ -359,6 +370,7 @@ export interface FileRouteTypes {
     | '/_app/exams'
     | '/_app/faq'
     | '/_app/guide'
+    | '/_app/onboarding'
     | '/_app/profile'
     | '/_app/rewards'
     | '/auth/done'
@@ -479,6 +491,13 @@ declare module '@tanstack/react-router' {
       path: '/guide'
       fullPath: '/guide'
       preLoaderRoute: typeof AppGuideRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/onboarding': {
+      id: '/_app/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof AppOnboardingRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/profile': {
@@ -684,6 +703,7 @@ interface AppRouteChildren {
   AppExamsRoute: typeof AppExamsRouteWithChildren
   AppFaqRoute: typeof AppFaqRoute
   AppGuideRoute: typeof AppGuideRoute
+  AppOnboardingRoute: typeof AppOnboardingRoute
   AppProfileRoute: typeof AppProfileRoute
   AppRewardsRoute: typeof AppRewardsRoute
   AppConnectionsIndexRoute: typeof AppConnectionsIndexRoute
@@ -697,6 +717,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppExamsRoute: AppExamsRouteWithChildren,
   AppFaqRoute: AppFaqRoute,
   AppGuideRoute: AppGuideRoute,
+  AppOnboardingRoute: AppOnboardingRoute,
   AppProfileRoute: AppProfileRoute,
   AppRewardsRoute: AppRewardsRoute,
   AppConnectionsIndexRoute: AppConnectionsIndexRoute,

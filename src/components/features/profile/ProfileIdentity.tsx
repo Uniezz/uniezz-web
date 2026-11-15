@@ -14,6 +14,7 @@ import {
   UIUniversityLogo,
 } from '@/ui/components';
 import { type ProfileFormSchema } from '@/schemas';
+import { apiErrorCode } from '@/api';
 import { readImageFile, toast } from '@/utils';
 import { cn } from '@/ui/cn';
 
@@ -21,10 +22,12 @@ export function ProfileIdentity({
   universityId,
   disabled,
   onRemoveBanner,
+  showAccountActions = true,
 }: {
   universityId: string;
   disabled: boolean;
   onRemoveBanner: () => Promise<void>;
+  showAccountActions?: boolean;
 }) {
   const { data: universities } = useUniversities();
   const { mutate: signOut, isPending: isSigningOut } = useSignOut();
@@ -57,6 +60,7 @@ export function ProfileIdentity({
   const [readingBanner, setReadingBanner] = useState(false);
   const [showRemoveBannerConfirm, setShowRemoveBannerConfirm] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [deleteNeedsSignIn, setDeleteNeedsSignIn] = useState(false);
   async function changePhoto(file?: File): Promise<void> {
     if (!file) return;
     setAvatarFile(file);
@@ -226,26 +230,32 @@ export function ProfileIdentity({
           <span className="text-detail font-semibold">{t('topbar.changeLanguage')}</span>
           <UILanguageSwitcher />
         </div>
-        <UIButton
-          bg="transparent"
-          size="pill"
-          className="mt-4 w-full text-danger"
-          disabled={isSigningOut || isDeletingProfile}
-          onClick={() => signOut(undefined, { onError: () => toast.error(t('apiState.error')) })}
-        >
-          <LogOut size={16} aria-hidden="true" />
-          {t('app.signOut')}
-        </UIButton>
-        <UIButton
-          bg="transparent"
-          size="pill"
-          className="mt-2 w-full text-danger"
-          disabled={isSigningOut || isDeletingProfile}
-          onClick={() => setShowDeleteConfirm(true)}
-        >
-          <Trash2 size={16} aria-hidden="true" />
-          {t('app.deleteAccount')}
-        </UIButton>
+        {showAccountActions && (
+          <>
+            <UIButton
+              bg="transparent"
+              size="pill"
+              className="mt-4 w-full text-danger"
+              disabled={isSigningOut || isDeletingProfile}
+              onClick={() =>
+                signOut(undefined, { onError: () => toast.error(t('apiState.error')) })
+              }
+            >
+              <LogOut size={16} aria-hidden="true" />
+              {t('app.signOut')}
+            </UIButton>
+            <UIButton
+              bg="transparent"
+              size="pill"
+              className="mt-2 w-full text-danger"
+              disabled={isSigningOut || isDeletingProfile}
+              onClick={() => setShowDeleteConfirm(true)}
+            >
+              <Trash2 size={16} aria-hidden="true" />
+              {t('app.deleteAccount')}
+            </UIButton>
+          </>
+        )}
       </UIPanel>
       <UIDialog
         open={showRemoveBannerConfirm}
@@ -272,7 +282,9 @@ export function ProfileIdentity({
         onOpenChange={setShowDeleteConfirm}
         dismissible={!isDeletingProfile}
         title={t('app.deleteAccountTitle')}
-        description={t('app.deleteAccountDescription')}
+        description={
+          deleteNeedsSignIn ? t('app.deleteAccountSignInAgain') : t('app.deleteAccountDescription')
+        }
       >
         <div className="flex justify-end gap-3">
           <UIButton
@@ -282,20 +294,37 @@ export function ProfileIdentity({
           >
             {t('app.cancel')}
           </UIButton>
-          <UIButton
-            bg="danger"
-            disabled={isDeletingProfile}
-            onClick={async () => {
-              try {
-                await deleteMyProfile();
-                toast.success(t('app.accountDeleted'));
-              } catch {
-                toast.error(t('apiState.error'));
+          {deleteNeedsSignIn ? (
+            <UIButton
+              bg="danger"
+              disabled={isSigningOut}
+              onClick={() =>
+                signOut(undefined, { onError: () => toast.error(t('apiState.error')) })
               }
-            }}
-          >
-            {t('app.deleteAccount')}
-          </UIButton>
+            >
+              {t('app.signInAgain')}
+            </UIButton>
+          ) : (
+            <UIButton
+              bg="danger"
+              disabled={isDeletingProfile}
+              onClick={async () => {
+                try {
+                  await deleteMyProfile();
+                  toast.success(t('app.accountDeleted'));
+                } catch (error) {
+                  // The API only deletes accounts signed in within the last 15 minutes.
+                  if (apiErrorCode(error) === 'reauthentication_required') {
+                    setDeleteNeedsSignIn(true);
+                  } else {
+                    toast.error(t('apiState.error'));
+                  }
+                }
+              }}
+            >
+              {t('app.deleteAccount')}
+            </UIButton>
+          )}
         </div>
       </UIDialog>
     </div>

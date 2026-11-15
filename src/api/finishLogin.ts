@@ -2,6 +2,7 @@ import { captureAnalytics, clearInviteCode } from '@/utils';
 import type { QueryClient } from '@tanstack/react-query';
 import { redirect } from '@tanstack/react-router';
 import { api } from './client';
+import { homeAfterSignIn } from './profile';
 import { ApiRequestError } from './errors';
 
 export async function finishLogin(
@@ -41,5 +42,5 @@ export async function finishLogin(
   captureAnalytics('sign_in_succeeded', { method: 'USOS' });
   clearInviteCode();
   queryClient.clear();
-  throw redirect({ to: '/feed', replace: true });
+  throw redirect({ to: await homeAfterSignIn(), replace: true });
 }

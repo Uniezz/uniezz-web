@@ -56,6 +56,7 @@
     "dating": "Tener una cita",
     "deleteAccount": "Eliminar cuenta",
     "deleteAccountDescription": "Perderás para siempre tus monedas y las conexiones que hayas creado con otros estudiantes. También se eliminarán tus publicaciones y programas de estudio. No se puede deshacer.",
+    "deleteAccountSignInAgain": "Por seguridad, eliminar la cuenta requiere un inicio de sesión reciente. Vuelve a iniciar sesión y elimina tu cuenta en los próximos 15 minutos.",
     "deleteAccountTitle": "¿Eliminar cuenta?",
     "discardChanges": "Descartar cambios",
     "discardChangesDescription": "Los cambios no guardados se perderán si sales ahora.",
@@ -118,6 +119,7 @@
     "searchUploads": "Buscar archivos subidos",
     "semester": "Semestre",
     "send": "Enviar",
+    "signInAgain": "Volver a iniciar sesión",
     "signOut": "desconectar",
     "studyBuddy": "compañero de estudio",
     "studyLevel": "Nivel",
@@ -419,6 +421,13 @@
       "note": "Le agrada al equipo uniezz. Tú también lo harás :)",
       "title": "Conoce a cazy."
     }
+  },
+  "onboarding": {
+    "finish": "Finalizar",
+    "next": "Siguiente",
+    "skip": "Omitir",
+    "step": "Paso {{current}} de {{total}}",
+    "title": "Completa tu perfil"
   },
   "postComposer": {
     "addPhoto": "Añadir una foto",

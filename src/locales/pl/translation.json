@@ -56,6 +56,7 @@
     "dating": "Randki",
     "deleteAccount": "Usuń konto",
     "deleteAccountDescription": "Bezpowrotnie stracisz monety i wszystkie nawiązane znajomości. Usunięte zostaną też Twoje posty i kierunki studiów. Tej operacji nie można cofnąć.",
+    "deleteAccountSignInAgain": "Ze względów bezpieczeństwa usunięcie konta wymaga niedawnego logowania. Zaloguj się ponownie, a potem usuń konto w ciągu 15 minut.",
     "deleteAccountTitle": "Usunąć konto?",
     "discardChanges": "Odrzuć zmiany",
     "discardChangesDescription": "Jeśli teraz wyjdziesz, niezapisane zmiany zostaną utracone.",
@@ -118,6 +119,7 @@
     "searchUploads": "Szukaj przesłanych materiałów",
     "semester": "Semestr",
     "send": "Wyślij",
+    "signInAgain": "Zaloguj się ponownie",
     "signOut": "Wyloguj się",
     "studyBuddy": "Wspólna nauka",
     "studyLevel": "Poziom studiów",
@@ -419,6 +421,13 @@
       "note": "Ekipa uniezz go lubi. Ty też go polubisz :)",
       "title": "Poznaj kota cazy."
     }
+  },
+  "onboarding": {
+    "finish": "Zakończ",
+    "next": "Dalej",
+    "skip": "Pomiń",
+    "step": "Krok {{current}} z {{total}}",
+    "title": "Uzupełnij profil"
   },
   "postComposer": {
     "addPhoto": "Dodaj zdjęcie",

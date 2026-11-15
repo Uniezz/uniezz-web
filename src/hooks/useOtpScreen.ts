@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
 import { useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { requestOtpCode, verifyOtpCode } from '@/api';
+import { homeAfterSignIn, requestOtpCode, verifyOtpCode } from '@/api';
 import { otpDefaultValues, otpSchema, type OtpSchema } from '@/schemas';
 import { CELL_COUNT } from '@/utils';
 import i18n from '@/i18n';
@@ -81,7 +81,7 @@ export const useOtpScreen = (university: string) => {
           captureAnalytics('sign_in_succeeded', { method: 'OTP' });
           clearInviteCode();
           queryClient.clear();
-          navigate({ to: '/feed', replace: true });
+          navigate({ to: await homeAfterSignIn(), replace: true });
         }
       } catch (error) {
         captureAnalytics('sign_in_failed', { method: 'OTP', step: data.step });

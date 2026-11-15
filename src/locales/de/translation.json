@@ -56,6 +56,7 @@
     "dating": "Dating",
     "deleteAccount": "Konto löschen",
     "deleteAccountDescription": "Deine Münzen und Verbindungen zu anderen Studierenden gehen unwiderruflich verloren. Auch deine Beiträge und Studiengänge werden gelöscht. Das lässt sich nicht rückgängig machen.",
+    "deleteAccountSignInAgain": "Aus Sicherheitsgründen erfordert das Löschen des Kontos eine aktuelle Anmeldung. Melde dich erneut an und lösche dein Konto innerhalb von 15 Minuten.",
     "deleteAccountTitle": "Konto löschen?",
     "discardChanges": "Änderungen verwerfen",
     "discardChangesDescription": "Ihre nicht gespeicherten Änderungen gehen verloren, wenn Sie jetzt gehen.",
@@ -118,6 +119,7 @@
     "searchUploads": "Eigene Uploads suchen",
     "semester": "Semester",
     "send": "Schicken",
+    "signInAgain": "Erneut anmelden",
     "signOut": "Abmelden",
     "studyBuddy": "Studienfreund",
     "studyLevel": "Ebene",
@@ -419,6 +421,13 @@
       "note": "Das uniezz-Team mag ihn. Das wirst du auch :)",
       "title": "Treffen Sie cazy."
     }
+  },
+  "onboarding": {
+    "finish": "Fertig",
+    "next": "Weiter",
+    "skip": "Überspringen",
+    "step": "Schritt {{current}} von {{total}}",
+    "title": "Profil einrichten"
   },
   "postComposer": {
     "addPhoto": "Fügen Sie ein Foto hinzu",

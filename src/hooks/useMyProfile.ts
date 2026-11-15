@@ -29,6 +29,7 @@ export function useDeleteMyProfile() {
     mutationFn: deleteMyProfile,
     onSuccess: () => {
       queryClient.clear();
+      window.location.replace('/login');
     },
   });
 }

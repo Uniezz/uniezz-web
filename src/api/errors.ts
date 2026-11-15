@@ -77,6 +77,7 @@ export const apiMiddleware: Middleware = {
               '/study/courses/{id}',
               '/study/files/{id}',
               '/profile/banner',
+              '/profile/me',
             ].includes(schemaPath));
         if (!allowsNoContent) {
           throw apiError(`${request.method} ${schemaPath}`, response);
