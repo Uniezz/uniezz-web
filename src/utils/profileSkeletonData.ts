@@ -11,6 +11,7 @@ export const sampleProfile: components['schemas']['Profile'] = {
   language: 'pl',
   universityId: 'umcs',
   bio: null,
+  coins: 0,
   email: null,
   interests: null,
   createdAt: '2026-01-01T12:00:00Z',

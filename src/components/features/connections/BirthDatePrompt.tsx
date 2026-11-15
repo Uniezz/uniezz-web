@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from '@/utils';
+import { apiErrorCode } from '@/api';
 import { useMyConnectionPreferences, useUpdateMyConnectionPreferences } from '@/hooks';
 import { birthDateSchema, type BirthDateFormSchema } from '@/schemas';
 import { UIButton, UIDialog, UIField } from '@/ui/components';
@@ -37,8 +38,9 @@ export function BirthDatePrompt() {
       await savePreferences(values);
       setDismissed(true);
       toast.success(t('connections.ageSubmitted'));
-    } catch {
-      toast.error(t('apiState.error'));
+    } catch (error) {
+      const immutable = apiErrorCode(error) === 'birth_date_immutable';
+      toast.error(t(immutable ? 'connections.birthDateImmutable' : 'apiState.error'));
     }
   }
 

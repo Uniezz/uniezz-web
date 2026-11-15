@@ -21,6 +21,7 @@ import { Route as AppFaqRouteImport } from './routes/_app/faq'
 import { Route as AppFeedRouteRouteImport } from './routes/_app/feed/route'
 import { Route as AppGuideRouteImport } from './routes/_app/guide'
 import { Route as AppProfileRouteImport } from './routes/_app/profile'
+import { Route as AppRewardsRouteImport } from './routes/_app/rewards'
 import { Route as AuthDoneRouteImport } from './routes/auth/done'
 import { Route as AppChatIndexRouteImport } from './routes/_app/chat/index'
 import { Route as AppChatNewGroupRouteImport } from './routes/_app/chat/new-group'
@@ -92,6 +93,11 @@ const AppGuideRoute = AppGuideRouteImport.update({
 const AppProfileRoute = AppProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppRewardsRoute = AppRewardsRouteImport.update({
+  id: '/rewards',
+  path: '/rewards',
   getParentRoute: () => AppRoute,
 } as any)
 const AuthDoneRoute = AuthDoneRouteImport.update({
@@ -181,6 +187,7 @@ export interface FileRoutesByFullPath {
   '/faq': typeof AppFaqRoute
   '/guide': typeof AppGuideRoute
   '/profile': typeof AppProfileRoute
+  '/rewards': typeof AppRewardsRoute
   '/auth/done': typeof AuthDoneRoute
   '/chat/new-group': typeof AppChatNewGroupRoute
   '/chat/': typeof AppChatIndexRoute
@@ -205,6 +212,7 @@ export interface FileRoutesByTo {
   '/faq': typeof AppFaqRoute
   '/guide': typeof AppGuideRoute
   '/profile': typeof AppProfileRoute
+  '/rewards': typeof AppRewardsRoute
   '/auth/done': typeof AuthDoneRoute
   '/chat/new-group': typeof AppChatNewGroupRoute
   '/chat': typeof AppChatIndexRoute
@@ -234,6 +242,7 @@ export interface FileRoutesById {
   '/_app/faq': typeof AppFaqRoute
   '/_app/guide': typeof AppGuideRoute
   '/_app/profile': typeof AppProfileRoute
+  '/_app/rewards': typeof AppRewardsRoute
   '/auth/done': typeof AuthDoneRoute
   '/_app/chat/new-group': typeof AppChatNewGroupRoute
   '/_app/chat/': typeof AppChatIndexRoute
@@ -262,6 +271,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/guide'
     | '/profile'
+    | '/rewards'
     | '/auth/done'
     | '/chat/new-group'
     | '/chat/'
@@ -286,6 +296,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/guide'
     | '/profile'
+    | '/rewards'
     | '/auth/done'
     | '/chat/new-group'
     | '/chat'
@@ -314,6 +325,7 @@ export interface FileRouteTypes {
     | '/_app/faq'
     | '/_app/guide'
     | '/_app/profile'
+    | '/_app/rewards'
     | '/auth/done'
     | '/_app/chat/new-group'
     | '/_app/chat/'
@@ -421,6 +433,13 @@ declare module '@tanstack/react-router' {
       path: '/profile'
       fullPath: '/profile'
       preLoaderRoute: typeof AppProfileRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/rewards': {
+      id: '/_app/rewards'
+      path: '/rewards'
+      fullPath: '/rewards'
+      preLoaderRoute: typeof AppRewardsRouteImport
       parentRoute: typeof AppRoute
     }
     '/auth/done': {
@@ -606,6 +625,7 @@ interface AppRouteChildren {
   AppFaqRoute: typeof AppFaqRoute
   AppGuideRoute: typeof AppGuideRoute
   AppProfileRoute: typeof AppProfileRoute
+  AppRewardsRoute: typeof AppRewardsRoute
   AppConnectionsIndexRoute: typeof AppConnectionsIndexRoute
   AppConnectionsStudentsProfileIdRoute: typeof AppConnectionsStudentsProfileIdRoute
   AppConnectionsStudentsIndexRoute: typeof AppConnectionsStudentsIndexRoute
@@ -618,6 +638,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppFaqRoute: AppFaqRoute,
   AppGuideRoute: AppGuideRoute,
   AppProfileRoute: AppProfileRoute,
+  AppRewardsRoute: AppRewardsRoute,
   AppConnectionsIndexRoute: AppConnectionsIndexRoute,
   AppConnectionsStudentsProfileIdRoute: AppConnectionsStudentsProfileIdRoute,
   AppConnectionsStudentsIndexRoute: AppConnectionsStudentsIndexRoute,

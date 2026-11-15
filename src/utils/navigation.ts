@@ -1,10 +1,13 @@
 import { BookOpen, CircleHelp, MessageCircle, House, Users } from 'lucide-react';
+// Direct path: the components barrel imports these utils back.
+import { UICoin } from '@/ui/components/UICoin';
 import { type NavGroup, type NavItem } from '@/@types';
 
 const MAIN_NAV: NavItem[] = [
   { to: '/feed', labelKey: 'feed.title', leftIcon: House },
   { to: '/chat', labelKey: 'chat.title', leftIcon: MessageCircle },
   { to: '/connections', labelKey: 'connections.title', leftIcon: Users },
+  { to: '/rewards', labelKey: 'rewards.title', leftIcon: UICoin, tone: 'amber' },
 ];
 
 const ACADEMICS_NAV: NavItem[] = [

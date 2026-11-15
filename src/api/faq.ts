@@ -20,3 +20,13 @@ export async function publishFaqEntry(body: FaqProposalRequest) {
   const { data } = await api.POST('/faq', { body });
   return data!;
 }
+
+export async function getPendingFaqProposals(cursor?: string) {
+  const { data } = await api.GET('/faq/proposals/pending', { params: { query: { cursor } } });
+  return data!;
+}
+
+export async function approveFaqProposal(id: string) {
+  const { data } = await api.PUT('/faq/proposals/{id}/approval', { params: { path: { id } } });
+  return data!;
+}

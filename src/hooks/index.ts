@@ -16,3 +16,4 @@ export * from './useNarrowViewport';
 export * from './useProfileForm';
 export * from './useUploadImage';
 export * from './useUploadPostImages';
+export * from './useRewards';

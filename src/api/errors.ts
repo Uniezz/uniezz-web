@@ -27,6 +27,14 @@ export class ApiRequestError extends Error {
   }
 }
 
+/** The backend's error code, such as `dating_requires_adult`, when the error carries one. */
+export function apiErrorCode(error: unknown): string | undefined {
+  const cause = error instanceof ApiRequestError ? error.cause : undefined;
+  return cause && typeof cause === 'object' && 'error' in cause && typeof cause.error === 'string'
+    ? cause.error
+    : undefined;
+}
+
 export function apiError(
   operation: string,
   response: Response,

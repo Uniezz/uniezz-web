@@ -3,11 +3,13 @@ import { Link, useRouterState } from '@tanstack/react-router';
 import { useLayoutEffect, useRef, useState, type ComponentProps } from 'react';
 import { useTranslation } from 'react-i18next';
 import { cn } from '../../cn';
+import { UICoin } from '../UICoin';
 import { UINavItem } from '../UINavItem';
 import { getNavigationGroups } from '@/utils';
 import { sidebarStyles, sidebarGroupStyles, sidebarUserStyles } from './variants';
 export type UISidebarProps = ComponentProps<'aside'> & {
-  user: { initials: string; name: string; meta: string; avatar?: string };
+  /** `coins`: the student's Uniezz coin balance, shown beside their name. */
+  user: { initials: string; name: string; meta: string; avatar?: string; coins?: number };
   counts?: Record<string, number>;
 };
 const CAT_SIZE = 24;
@@ -178,11 +180,21 @@ export function UISidebar({ user, counts, className, ...props }: UISidebarProps)
         activeProps={{ className: 'nav-item-active border border-white-10' }}
       >
         <span className="relative z-10 flex min-w-0 items-center gap-2.5">
-          <img
-            src={user.avatar ?? '/app/avatar.png'}
-            alt=""
-            className="size-8.5 shrink-0 rounded-full object-cover"
-          />
+          <span className="relative shrink-0">
+            <img
+              src={user.avatar ?? '/app/avatar.png'}
+              alt=""
+              className="size-8.5 rounded-full object-cover"
+            />
+            {user.coins !== undefined && (
+              // Overlaps the avatar's bottom edge, so the name keeps its full width.
+              <span className="absolute -bottom-1.5 left-1/2 flex -translate-x-1/2 items-center gap-0.5 rounded-full border border-amber-30 bg-ink px-1 text-[10px] leading-[13px] font-semibold tabular-nums">
+                <UICoin className="size-2.5" />
+                {user.coins}
+                <span className="sr-only">{t('rewards.balance')}</span>
+              </span>
+            )}
+          </span>
           <span className="flex min-w-0 flex-col gap-1">
             <strong className="truncate text-label">{user.name}</strong>
             <span className="truncate text-detail text-secondary">{user.meta}</span>

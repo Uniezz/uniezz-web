@@ -39,7 +39,9 @@ export const navItemLabelStyles = cva('truncate text-body leading-[1.2]', {
       true: 'font-semibold text-white',
       false: 'font-medium text-white-60',
     },
+    tone: { amber: '' },
   },
+  compoundVariants: [{ active: true, tone: 'amber', className: 'text-amber' }],
   defaultVariants: {
     active: false,
   },

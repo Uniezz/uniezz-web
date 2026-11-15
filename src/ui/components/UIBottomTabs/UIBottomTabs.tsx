@@ -1,3 +1,4 @@
+import { cn } from '../../cn';
 import { useFeatureFlagEnabled } from '@posthog/react';
 import {
   bottomTabsStyles,
@@ -16,14 +17,14 @@ export const UIBottomTabs = () => {
     <nav aria-label={t('sidebar.mainNavigation')} className={bottomTabsStyles()}>
       {navigationGroups
         .flatMap((g) => g.items)
-        .map(({ to, labelKey, leftIcon: Icon }) => (
+        .map(({ to, labelKey, leftIcon: Icon, tone }) => (
           <Link
             key={to}
             to={to}
             search={
               matchRoute({ to, fuzzy: true }) ? ((() => RESET_TAB_SEARCH) as never) : undefined
             }
-            activeProps={{ className: bottomTabStateStyles({ active: true }) }}
+            activeProps={{ className: cn(bottomTabStateStyles({ active: true, tone })) }}
             inactiveProps={{ className: bottomTabStateStyles({ active: false }) }}
             data-ph-capture-attribute-label={t(labelKey)}
             className={bottomTabStyles()}

@@ -4,7 +4,7 @@ import { useNavigate, useSearch } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import type { ExamsSearch } from '@/@types';
 import { useUniversities } from '@/hooks';
-import { UIButton, UISearch, UISelect } from '@/ui/components';
+import { UIButton, UISearch, UISelect, UISubTabs } from '@/ui/components';
 import { CreateCourseButton } from './CreateCourseButton';
 
 const tabIds = ['reviews', 'professors', 'mine'] as const;
@@ -48,39 +48,13 @@ export function MaterialFilters() {
   );
   return (
     <div className="mb-5.5 space-y-4">
-      <div
-        role="tablist"
-        aria-label={t('exams.title')}
-        className="flex gap-6 border-b border-white-10"
-      >
-        {tabIds.map((id, index) => {
-          const selected = id === tab;
-          return (
-            <button
-              key={id}
-              id={`exams-tab-${id}`}
-              type="button"
-              role="tab"
-              aria-selected={selected}
-              aria-controls="exams-tab-panel"
-              tabIndex={selected ? 0 : -1}
-              data-ph-capture-attribute-label={`View exams ${id}`}
-              className={`flex-1 border-b-2 px-1 pb-3 text-center text-label font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-blue ${selected ? 'border-white text-white' : 'border-transparent text-secondary hover:text-white'}`}
-              onClick={() => selectTab(id)}
-              onKeyDown={(event) => {
-                if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
-                event.preventDefault();
-                const direction = event.key === 'ArrowRight' ? 1 : -1;
-                const next = tabIds[(index + direction + tabIds.length) % tabIds.length];
-                selectTab(next);
-                document.getElementById(`exams-tab-${next}`)?.focus();
-              }}
-            >
-              {tabs[index]}
-            </button>
-          );
-        })}
-      </div>
+      <UISubTabs
+        tabs={tabIds.map((id, index) => ({ id, label: tabs[index] }))}
+        value={tab}
+        onChange={selectTab}
+        label={t('exams.title')}
+        idPrefix="exams"
+      />
       <div className="flex min-w-0 items-center gap-2">
         <form
           role="search"

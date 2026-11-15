@@ -221,7 +221,7 @@ export interface paths {
         head?: never;
         /**
          * Set what Connections may show about the logged-in student
-         * @description A missing field keeps its current value. Birth date is used only to compute age.
+         * @description A missing field keeps its current value. Birth date is used only to compute age; saving it for the first time pays 10 Uniezz coins.
          */
         patch: operations["updateMyConnectionPreferences"];
         trace?: never;
@@ -285,6 +285,46 @@ export interface paths {
          * @description Stores the question and answer as proposed. It stays out of the published list until a moderator decides.
          */
         post: operations["createFaqProposal"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/faq/proposals/pending": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List FAQ proposals waiting for a moderator
+         * @description Every student's proposals that are not published yet, newest first. Only an FAQ publisher may call this; everyone else gets 403.
+         */
+        get: operations["listPendingFaqProposals"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/faq/proposals/{id}/approval": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Approve an FAQ proposal and publish it
+         * @description Only an FAQ publisher may call this. Approving pays the author 5 Uniezz coins once, unless the publisher approves their own proposal; approving an entry that is already published changes nothing. A rejected or unknown entry is 404.
+         */
+        put: operations["approveFaqProposal"];
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -475,7 +515,10 @@ export interface paths {
          */
         get: operations["listFeedComments"];
         put?: never;
-        /** Comment on a post or reply to a comment */
+        /**
+         * Comment on a post or reply to a comment
+         * @description The first comment or reply on another student's post pays 1 Uniezz coin.
+         */
         post: operations["createFeedComment"];
         delete?: never;
         options?: never;
@@ -493,7 +536,7 @@ export interface paths {
         get?: never;
         /**
          * Like a post
-         * @description Idempotent: repeating it changes nothing.
+         * @description Idempotent: repeating it changes nothing. The first like on another student's post pays you and the author 1 Uniezz coin each; unliking does not take them back.
          */
         put: operations["likeFeedPost"];
         post?: never;
@@ -634,7 +677,7 @@ export interface paths {
         head?: never;
         /**
          * Update the logged-in student's profile
-         * @description Changes only the fields that are present. Returns the updated profile.
+         * @description Changes only the fields that are present. Returns the updated profile. The update that first fills first name, last name, gender, avatar, banner, bio, song link and interests pays 50 Uniezz coins once.
          */
         patch: operations["updateMyProfile"];
         trace?: never;
@@ -735,6 +778,46 @@ export interface paths {
          * @description One report per target and reporter; at most 5 reports per clock hour (UTC).
          */
         post: operations["createReport"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/rewards/me/grants": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List the coins the logged-in student has earned
+         * @description Newest first, paginated by cursor. Coins are only earned; nothing spends them yet.
+         */
+        get: operations["listMyCoinGrants"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/rewards/me/quests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get the logged-in student's quests for today
+         * @description Progress resets at midnight Europe/Warsaw. Finishing every quest pays the reward once a day; undoing an action later does not take progress back.
+         */
+        get: operations["getMyDailyQuests"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -1058,6 +1141,20 @@ export interface components {
             /** @example umcs */
             universityId: string;
         };
+        CoinGrant: {
+            /**
+             * Format: int64
+             * @example 10
+             */
+            amount: number;
+            /** Format: date-time */
+            createdAt: string;
+            /**
+             * @description What earned the coins. welcome: the new account. like_given: liking another student's post. like_received: another student liked your post. comment: the first comment or reply on another student's post. profile_complete: filling every profile field. birth_date: the first birth date saved in connections. referral: a student you invited signed up. daily_quests: finishing every daily quest. faq_approved: a moderator approved your FAQ proposal. More values may be added; show a generic label for unknown ones.
+             * @enum {string}
+             */
+            reason: "welcome" | "like_given" | "like_received" | "comment" | "profile_complete" | "birth_date" | "referral" | "daily_quests" | "faq_approved";
+        };
         Comment: {
             /** @description Missing when deleted */
             author?: components["schemas"]["Author"];
@@ -1169,6 +1266,37 @@ export interface components {
             /** @description Comment to reply to; a reply to a reply joins the same thread */
             replyToCommentId?: string;
         };
+        CreateCommentOutputBody: {
+            /** @description Missing when deleted */
+            author?: components["schemas"]["Author"];
+            /**
+             * Format: int64
+             * @description Uniezz coins this request paid you, daily quest reward included; 0 when it paid nothing
+             * @example 1
+             */
+            coinsEarned: number;
+            /** @description Null when deleted */
+            content: string | null;
+            /** Format: date-time */
+            createdAt: string;
+            /** @description A deleted comment is listed only while it still has replies */
+            deleted: boolean;
+            /** Format: date-time */
+            editedAt: string | null;
+            /** Format: uuid */
+            id: string;
+            likedByMe: boolean;
+            /** Format: int64 */
+            likesCount: number;
+            /** @description Root comment of the thread; null for a root comment */
+            parentId: string | null;
+            /** Format: uuid */
+            postId: string;
+            /** Format: int64 */
+            repliesCount: number;
+            /** @description Comment this reply answers; null for a root comment or when that comment was deleted */
+            replyToCommentId: string | null;
+        };
         CreateCourseInputBody: {
             /** @description Up to 5000 characters after HTML is stripped */
             description: string;
@@ -1219,6 +1347,40 @@ export interface components {
              */
             university: string;
         };
+        CreatePostOutputBody: {
+            author: components["schemas"]["Author"];
+            /**
+             * Format: int64
+             * @description Uniezz coins this request paid you, daily quest reward included; 0 when it paid nothing
+             * @example 1
+             */
+            coinsEarned: number;
+            /** Format: int64 */
+            commentsCount: number;
+            content: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            editedAt: string | null;
+            /** Format: date-time */
+            eventDate: string | null;
+            /** Format: uuid */
+            id: string;
+            likedByMe: boolean;
+            /** Format: int64 */
+            likesCount: number;
+            mediaUrls: string[] | null;
+            savedByMe: boolean;
+            tags: string[] | null;
+            title: string;
+            /** @enum {string} */
+            type: "announcement" | "event" | "question";
+            /**
+             * @description Target university, or all
+             * @example umcs
+             */
+            university: string;
+        };
         CreateReportInputBody: {
             /** @description Up to 1000 characters after HTML is stripped */
             details?: string;
@@ -1245,6 +1407,28 @@ export interface components {
              * @description Exact file size in bytes; 5 MiB max for avatars, 10 MiB for banners, feed, chat and exam images, 20 MiB for exam PDFs
              */
             size: number;
+        };
+        DailyQuests: {
+            /** @description True once every quest is done today and the reward was paid */
+            completed: boolean;
+            /**
+             * Format: date
+             * @description Today in Europe/Warsaw
+             * @example 2026-11-15
+             */
+            day: string;
+            quests: components["schemas"]["QuestProgress"][] | null;
+            /**
+             * Format: date-time
+             * @description Next midnight in Europe/Warsaw, when progress starts over
+             */
+            resetsAt: string;
+            /**
+             * Format: int64
+             * @description Coins paid once every quest of the day is done
+             * @example 10
+             */
+            reward: number;
         };
         DiscoverOutputBody: {
             items: components["schemas"]["Card"][] | null;
@@ -1320,6 +1504,17 @@ export interface components {
             /** @description token to be used in Authorization header for subsequent requests */
             token: string;
         };
+        LikePostOutputBody: {
+            /**
+             * Format: int64
+             * @description Uniezz coins this request paid you, daily quest reward included; 0 when it paid nothing
+             * @example 1
+             */
+            coinsEarned: number;
+            liked: boolean;
+            /** Format: int64 */
+            likesCount: number;
+        };
         LikeState: {
             liked: boolean;
             /** Format: int64 */
@@ -1351,6 +1546,16 @@ export interface components {
             nextCursor: string | null;
         };
         ListEntriesOutputBody: {
+            items: components["schemas"]["Entry"][] | null;
+            /** @description Pass as cursor to get the next page; null on the last page */
+            nextCursor: string | null;
+        };
+        ListMyCoinGrantsOutputBody: {
+            items: components["schemas"]["CoinGrant"][] | null;
+            /** @description Pass as cursor to get the next page; null on the last page */
+            nextCursor: string | null;
+        };
+        ListPendingProposalsOutputBody: {
             items: components["schemas"]["Entry"][] | null;
             /** @description Pass as cursor to get the next page; null on the last page */
             nextCursor: string | null;
@@ -1497,6 +1702,12 @@ export interface components {
              * @example Second-year CS student, into climbing.
              */
             bio: string | null;
+            /**
+             * Format: int64
+             * @description Uniezz coins the student has earned. Only the student sees them, and nothing spends them yet.
+             * @example 100
+             */
+            coins: number;
             /** Format: date-time */
             createdAt: string;
             /**
@@ -1662,6 +1873,21 @@ export interface components {
              */
             yearOfStudy: number | null;
         };
+        QuestProgress: {
+            done: boolean;
+            /**
+             * Format: int64
+             * @example 1
+             */
+            progress: number;
+            /** @description like: like other students' posts; reply: reply to another student's comment; post: create a post */
+            quest: string;
+            /**
+             * Format: int64
+             * @example 3
+             */
+            target: number;
+        };
         RateCourseInputBody: {
             /**
              * Format: int64
@@ -1693,7 +1919,7 @@ export interface components {
         SavePreferencesInputBody: {
             /**
              * Format: date
-             * @description Age must be 16 to 100
+             * @description Age must be 16 to 100. Can be set only once: sending a different date after one is saved returns 400 birth_date_immutable; sending the same date again succeeds.
              * @example 2003-05-17
              */
             birthDate?: string;
@@ -1701,6 +1927,27 @@ export interface components {
             intent?: string;
             /** @description dating needs an age of at least 18, else returns 400 dating_requires_adult */
             openTo?: ("friends" | "studyBuddy" | "dating")[] | null;
+        };
+        SavePreferencesOutputBody: {
+            /**
+             * Format: date
+             * @description Null until set
+             * @example 2003-05-17
+             */
+            birthDate: string | null;
+            /**
+             * Format: int64
+             * @description Uniezz coins this request paid you, daily quest reward included; 0 when it paid nothing
+             * @example 1
+             */
+            coinsEarned: number;
+            /**
+             * @description Shown on the student's discovery card. Null when unset.
+             * @example Looking for a climbing partner
+             */
+            intent: string | null;
+            /** @description Who the student can discover and be discovered as */
+            openTo: ("friends" | "studyBuddy" | "dating")[] | null;
         };
         SaveState: {
             saved: boolean;
@@ -1797,6 +2044,90 @@ export interface components {
             };
             /** @description http or https URL, up to 500 characters. An empty string clears it. Anything else returns 400 invalid_input and leaves the saved link unchanged. */
             songUrl?: string;
+        };
+        UpdateMeOutputBody: {
+            /** @description URL of the avatar image, null when the student has none */
+            avatarUrl: string | null;
+            /** @description URL of the banner image, null when the student has none */
+            bannerUrl: string | null;
+            /**
+             * @description Plain text, up to 500 characters
+             * @example Second-year CS student, into climbing.
+             */
+            bio: string | null;
+            /**
+             * Format: int64
+             * @description Uniezz coins the student has earned. Only the student sees them, and nothing spends them yet.
+             * @example 100
+             */
+            coins: number;
+            /**
+             * Format: int64
+             * @description Uniezz coins this request paid you, daily quest reward included; 0 when it paid nothing
+             * @example 1
+             */
+            coinsEarned: number;
+            /** Format: date-time */
+            createdAt: string;
+            /**
+             * @description University email, null when USOS did not share it
+             * @example jan.kowalski@umcs.pl
+             */
+            email: string | null;
+            /** @example Jan */
+            firstName: string | null;
+            /**
+             * @description Set once; null until set. Visible to other students, with no privacy toggle.
+             * @enum {string|null}
+             */
+            gender: "male" | "female" | null;
+            /**
+             * Format: uuid
+             * @description User ID
+             */
+            id: string;
+            /**
+             * @description Up to 10 tags
+             * @example [
+             *       "climbing",
+             *       "go"
+             *     ]
+             */
+            interests: string[] | null;
+            /**
+             * @description Interface language; defaults to pl
+             * @enum {string}
+             */
+            language: "en" | "pl" | "uk" | "ru" | "be" | "de" | "es";
+            /** @example Kowalski */
+            lastName: string | null;
+            /** @description Which profile fields other students see. A missing setting keeps its current value. */
+            privacy: {
+                /**
+                 * @description Show the university email to other students
+                 * @default false
+                 */
+                showEmail: boolean;
+                /**
+                 * @description Show the faculty of each study programme
+                 * @default true
+                 */
+                showFaculty: boolean;
+                /**
+                 * @description Show the year of study of each study programme
+                 * @default true
+                 */
+                showYear: boolean;
+            };
+            /** @description Study programmes, primary first; empty when the student has none */
+            programmes: components["schemas"]["Programme"][] | null;
+            /**
+             * @description Link to the song the student associates with themselves. Null when unset.
+             * @example https://open.spotify.com/track/4cOdK2wGLETKBW3PvgPWqT
+             */
+            songUrl: string | null;
+            /** @example umcs */
+            universityId: string;
         };
         UpdatePostInputBody: {
             content?: string;
@@ -2533,7 +2864,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Preferences"];
+                    "application/json": components["schemas"]["SavePreferencesOutputBody"];
                 };
             };
             /** @description Bad Request */
@@ -2854,6 +3185,143 @@ export interface operations {
             };
             /** @description Unauthorized */
             401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    listPendingFaqProposals: {
+        parameters: {
+            query?: {
+                /** @description nextCursor from the previous page; omit for the first page */
+                cursor?: string;
+                /** @description Maximum number of items in the page */
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ListPendingProposalsOutputBody"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    approveFaqProposal: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Entry"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Not Found */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -3309,7 +3777,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Post"];
+                    "application/json": components["schemas"]["CreatePostOutputBody"];
                 };
             };
             /** @description Bad Request */
@@ -3819,7 +4287,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Comment"];
+                    "application/json": components["schemas"]["CreateCommentOutputBody"];
                 };
             };
             /** @description Bad Request */
@@ -3895,7 +4363,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["LikeState"];
+                    "application/json": components["schemas"]["LikePostOutputBody"];
                 };
             };
             /** @description Unauthorized */
@@ -4423,7 +4891,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Profile"];
+                    "application/json": components["schemas"]["UpdateMeOutputBody"];
                 };
             };
             /** @description Bad Request */
@@ -4881,6 +5349,105 @@ export interface operations {
             };
             /** @description Too Many Requests */
             429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    listMyCoinGrants: {
+        parameters: {
+            query?: {
+                /** @description nextCursor from the previous page; omit for the first page */
+                cursor?: string;
+                /** @description Maximum number of items in the page */
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ListMyCoinGrantsOutputBody"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    getMyDailyQuests: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DailyQuests"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
                 headers: {
                     [name: string]: unknown;
                 };

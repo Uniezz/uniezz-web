@@ -2,7 +2,7 @@ import type { ConnectionPreferencesFormProps, ConnectionPreferencesProps } from 
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from '@/utils';
-import { ApiRequestError } from '@/api';
+import { apiErrorCode } from '@/api';
 import { useMyConnectionPreferences, useUpdateMyConnectionPreferences } from '@/hooks';
 import { UIField, UIQueryError } from '@/ui/components';
 
@@ -41,12 +41,7 @@ function ConnectionPreferencesForm({
       onSaved();
       toast.success(t('connections.preferencesSaved'));
     } catch (error) {
-      const cause = error instanceof ApiRequestError ? error.cause : undefined;
-      const needsAdult =
-        cause &&
-        typeof cause === 'object' &&
-        'error' in cause &&
-        cause.error === 'dating_requires_adult';
+      const needsAdult = apiErrorCode(error) === 'dating_requires_adult';
       toast.error(t(needsAdult ? 'connections.datingRequiresAdult' : 'apiState.error'));
     }
   }

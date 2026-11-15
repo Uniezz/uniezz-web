@@ -1,5 +1,4 @@
 import { Link, useMatchRoute, type LinkProps } from '@tanstack/react-router';
-import { type LucideIcon } from 'lucide-react';
 import { cn } from '../../cn';
 import {
   navItemBadgeStyles,
@@ -7,12 +6,14 @@ import {
   navItemLabelStyles,
   navItemStyles,
 } from './variants';
+import type { NavItem } from '@/@types';
 import { RESET_TAB_SEARCH } from '@/utils';
 
 export type UINavItemProps = {
   to: LinkProps['to'];
   label: string;
-  leftIcon: LucideIcon;
+  leftIcon: NavItem['leftIcon'];
+  tone?: NavItem['tone'];
   count?: number;
   collapsed?: boolean;
   className?: string;
@@ -22,6 +23,7 @@ export const UINavItem = ({
   to,
   label,
   leftIcon: LeftIcon,
+  tone,
   count,
   collapsed,
   className,
@@ -49,7 +51,7 @@ export const UINavItem = ({
               ) : null}
             </span>
             {collapsed ? null : (
-              <span className={navItemLabelStyles({ active: isActive })}>{label}</span>
+              <span className={cn(navItemLabelStyles({ active: isActive, tone }))}>{label}</span>
             )}
           </span>
         </div>

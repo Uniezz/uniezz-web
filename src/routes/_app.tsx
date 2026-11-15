@@ -73,6 +73,7 @@ function AppLayout() {
             name: authorName(profile) || t('app.profile'),
             meta: profile?.universityId.toUpperCase() ?? '',
             avatar: profile?.avatarUrl ?? '/app/avatar.png',
+            coins: profile?.coins,
           }}
           counts={{ '/chat': 2, '/connections': 2 }}
         />

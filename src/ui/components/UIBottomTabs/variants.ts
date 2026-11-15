@@ -11,5 +11,9 @@ export const bottomTabStyles = cva(
 export const bottomTabLabelStyles = cva('max-w-full truncate');
 
 export const bottomTabStateStyles = cva('', {
-  variants: { active: { true: 'bg-white-10 text-white', false: 'text-muted' } },
+  variants: {
+    active: { true: 'bg-white-10 text-white', false: 'text-muted' },
+    tone: { amber: '' },
+  },
+  compoundVariants: [{ active: true, tone: 'amber', className: 'text-amber' }],
 });
