@@ -332,6 +332,7 @@
     "type": "Tipo de publicación"
   },
   "landing": {
+    "appsDownload": "Descárgalo en",
     "appsSoon": "Muy pronto",
     "findPeople": "Encuentra a tu gente",
     "footer": {

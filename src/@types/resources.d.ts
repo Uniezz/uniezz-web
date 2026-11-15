@@ -334,6 +334,7 @@ export default interface Resources {
       "type": "Post type"
     },
     "landing": {
+      "appsDownload": "Download on the",
       "appsSoon": "Coming soon",
       "findPeople": "Find your people",
       "footer": {
