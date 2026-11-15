@@ -1302,7 +1302,10 @@ input[type='search']::-webkit-search-cancel-button {
     background-color: rgb(12 13 20 / 0.6);
     backdrop-filter: blur(24px);
 
+    /* Starts clear: with nothing to scroll the timeline is inactive and only these base styles apply. */
     @supports (animation-timeline: scroll()) {
+      background-color: transparent;
+      backdrop-filter: none;
       animation: scroll-blur-in linear both;
       animation-timeline: scroll();
       animation-range: 0 24px;
@@ -1314,6 +1317,10 @@ input[type='search']::-webkit-search-cancel-button {
   from {
     background-color: transparent;
     backdrop-filter: blur(0);
+  }
+  to {
+    background-color: rgb(12 13 20 / 0.6);
+    backdrop-filter: blur(24px);
   }
 }
 
