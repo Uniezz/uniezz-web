@@ -30,6 +30,9 @@ export async function proxyApi(
   const path = url.pathname.slice('/api'.length);
   const isLogin = LOGIN_PATHS.has(path) && request.method === 'POST';
   const token = sessionToken(request, dev);
+  // Sign-in endpoints run without a session; the invite endpoints under /auth/ need one.
+  const sendsSession =
+    token !== undefined && (!path.startsWith('/auth/') || path.startsWith('/auth/invites/'));
 
   if (!SAFE_METHODS.has(request.method) && request.headers.get('origin') !== url.origin) {
     return new Response('Forbidden', { status: 403, headers: { 'Cache-Control': 'no-store' } });
@@ -52,7 +55,7 @@ export async function proxyApi(
   headers.delete('authorization');
   headers.delete('host');
   headers.set('accept-encoding', 'identity');
-  if (token && !path.startsWith('/auth/')) headers.set('Authorization', `Bearer ${token}`);
+  if (sendsSession) headers.set('Authorization', `Bearer ${token}`);
   const upstream = await fetch(
     new Request(target, {
       method: request.method,
@@ -101,7 +104,7 @@ export async function proxyApi(
     });
   }
 
-  if (token && !path.startsWith('/auth/')) {
+  if (sendsSession) {
     if (upstream.status === 401) responseHeaders.set('Set-Cookie', sessionCookie('', 0, dev));
     else if (upstream.ok)
       responseHeaders.set('Set-Cookie', sessionCookie(token, SESSION_SECONDS, dev));
