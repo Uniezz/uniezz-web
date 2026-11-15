@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { captureAnalytics } from '@/utils';
+import { captureAnalytics, clearInviteCode, getInviteCode } from '@/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
@@ -72,8 +72,14 @@ export const useOtpScreen = (university: string) => {
           setValue('step', 'code');
           setValue('code', '');
         } else {
-          await verifyCode({ code: data.code, email: data.email, university });
+          await verifyCode({
+            code: data.code,
+            email: data.email,
+            university,
+            referralCode: getInviteCode(),
+          });
           captureAnalytics('sign_in_succeeded', { method: 'OTP' });
+          clearInviteCode();
           queryClient.clear();
           navigate({ to: '/feed', replace: true });
         }

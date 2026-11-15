@@ -25,6 +25,7 @@ import { Route as AppGuideRouteImport } from './routes/_app/guide'
 import { Route as AppProfileRouteImport } from './routes/_app/profile'
 import { Route as AppRewardsRouteImport } from './routes/_app/rewards'
 import { Route as AuthDoneRouteImport } from './routes/auth/done'
+import { Route as InviteCodeRouteImport } from './routes/invite.$code'
 import { Route as AppChatIndexRouteImport } from './routes/_app/chat/index'
 import { Route as AppChatNewGroupRouteImport } from './routes/_app/chat/new-group'
 import { Route as AppConnectionsIndexRouteImport } from './routes/_app/connections/index'
@@ -117,6 +118,11 @@ const AuthDoneRoute = AuthDoneRouteImport.update({
   path: '/auth/done',
   getParentRoute: () => rootRouteImport,
 } as any)
+const InviteCodeRoute = InviteCodeRouteImport.update({
+  id: '/invite/$code',
+  path: '/invite/$code',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppChatIndexRoute = AppChatIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -203,6 +209,7 @@ export interface FileRoutesByFullPath {
   '/profile': typeof AppProfileRoute
   '/rewards': typeof AppRewardsRoute
   '/auth/done': typeof AuthDoneRoute
+  '/invite/$code': typeof InviteCodeRoute
   '/chat/new-group': typeof AppChatNewGroupRoute
   '/chat/': typeof AppChatIndexRoute
   '/connections/': typeof AppConnectionsIndexRoute
@@ -230,6 +237,7 @@ export interface FileRoutesByTo {
   '/profile': typeof AppProfileRoute
   '/rewards': typeof AppRewardsRoute
   '/auth/done': typeof AuthDoneRoute
+  '/invite/$code': typeof InviteCodeRoute
   '/chat/new-group': typeof AppChatNewGroupRoute
   '/chat': typeof AppChatIndexRoute
   '/connections': typeof AppConnectionsIndexRoute
@@ -262,6 +270,7 @@ export interface FileRoutesById {
   '/_app/profile': typeof AppProfileRoute
   '/_app/rewards': typeof AppRewardsRoute
   '/auth/done': typeof AuthDoneRoute
+  '/invite/$code': typeof InviteCodeRoute
   '/_app/chat/new-group': typeof AppChatNewGroupRoute
   '/_app/chat/': typeof AppChatIndexRoute
   '/_app/connections/': typeof AppConnectionsIndexRoute
@@ -293,6 +302,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/rewards'
     | '/auth/done'
+    | '/invite/$code'
     | '/chat/new-group'
     | '/chat/'
     | '/connections/'
@@ -320,6 +330,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/rewards'
     | '/auth/done'
+    | '/invite/$code'
     | '/chat/new-group'
     | '/chat'
     | '/connections'
@@ -351,6 +362,7 @@ export interface FileRouteTypes {
     | '/_app/profile'
     | '/_app/rewards'
     | '/auth/done'
+    | '/invite/$code'
     | '/_app/chat/new-group'
     | '/_app/chat/'
     | '/_app/connections/'
@@ -373,6 +385,7 @@ export interface RootRouteChildren {
   PrivacyRoute: typeof PrivacyRoute
   TermsRoute: typeof TermsRoute
   AuthDoneRoute: typeof AuthDoneRoute
+  InviteCodeRoute: typeof InviteCodeRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -487,6 +500,13 @@ declare module '@tanstack/react-router' {
       path: '/auth/done'
       fullPath: '/auth/done'
       preLoaderRoute: typeof AuthDoneRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/invite/$code': {
+      id: '/invite/$code'
+      path: '/invite/$code'
+      fullPath: '/invite/$code'
+      preLoaderRoute: typeof InviteCodeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_app/chat/': {
@@ -693,6 +713,7 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyRoute: PrivacyRoute,
   TermsRoute: TermsRoute,
   AuthDoneRoute: AuthDoneRoute,
+  InviteCodeRoute: InviteCodeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -1,8 +1,7 @@
-import { captureAnalytics } from '@/utils';
+import { captureAnalytics, getInviteCode, startUniversityLogin } from '@/utils';
 import { AuthPage } from '@/components';
 import { useUniversities } from '@/hooks';
 import { UIButton, UIRow, UIText } from '@/ui/components';
-import { startUniversityLogin } from '@/utils';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { ArrowRight } from 'lucide-react';
 import { useState } from 'react';
@@ -22,6 +21,7 @@ function LoginPage() {
 
   const handleContinue = () => {
     if (!selectedUniversity) return;
+    const referralCode = getInviteCode();
     captureAnalytics('sign_in_started', {
       method: selectedUniversity.authMethod,
       university: selectedUniversity.id,
@@ -29,7 +29,7 @@ function LoginPage() {
 
     if (selectedUniversity.authMethod === 'USOS') {
       captureAnalytics('sign_in_redirected', { method: 'USOS' });
-      startUniversityLogin(selectedUniversity.id);
+      startUniversityLogin(selectedUniversity.id, referralCode);
       return;
     }
 

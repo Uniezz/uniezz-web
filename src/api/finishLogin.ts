@@ -1,4 +1,4 @@
-import { captureAnalytics } from '@/utils';
+import { captureAnalytics, clearInviteCode } from '@/utils';
 import type { QueryClient } from '@tanstack/react-query';
 import { redirect } from '@tanstack/react-router';
 import { api } from './client';
@@ -39,6 +39,7 @@ export async function finishLogin(
 
   captureAnalytics('login_exchange_succeeded');
   captureAnalytics('sign_in_succeeded', { method: 'USOS' });
+  clearInviteCode();
   queryClient.clear();
   throw redirect({ to: '/feed', replace: true });
 }

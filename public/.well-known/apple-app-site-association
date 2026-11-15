@@ -1,0 +1,10 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["ZSVCJ3UTY6.com.uniezz"],
+        "components": [{ "/": "/invite/*" }]
+      }
+    ]
+  }
+}
