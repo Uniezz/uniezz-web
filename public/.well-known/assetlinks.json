@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.uniezz",
+      "sha256_cert_fingerprints": [
+        "E6:93:E9:72:4D:43:05:37:E0:5D:45:C0:7F:7D:0F:1A:03:1E:D5:C8:1F:A6:B0:EF:E5:64:00:A8:BD:91:49:D2"
+      ]
+    }
+  }
+]
