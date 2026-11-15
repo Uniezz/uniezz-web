@@ -12,6 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as authRouteRouteImport } from './routes/(auth)/route'
 import { Route as AppRouteImport } from './routes/_app'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as authFinishRouteImport } from './routes/(auth)/finish'
 import { Route as authLoginRouteImport } from './routes/(auth)/login'
 import { Route as authOtpRouteImport } from './routes/(auth)/otp'
@@ -48,6 +50,16 @@ const authRouteRoute = authRouteRouteImport.update({
 } as any)
 const AppRoute = AppRouteImport.update({
   id: '/_app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
 const authFinishRoute = authFinishRouteImport.update({
@@ -178,6 +190,8 @@ const AppFeedPostPostIdEditRoute = AppFeedPostPostIdEditRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/privacy': typeof PrivacyRoute
+  '/terms': typeof TermsRoute
   '/chat': typeof AppChatRouteRouteWithChildren
   '/feed': typeof AppFeedRouteRouteWithChildren
   '/finish': typeof authFinishRoute
@@ -205,6 +219,8 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/privacy': typeof PrivacyRoute
+  '/terms': typeof TermsRoute
   '/finish': typeof authFinishRoute
   '/login': typeof authLoginRoute
   '/otp': typeof authOtpRoute
@@ -233,6 +249,8 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/(auth)': typeof authRouteRouteWithChildren
   '/_app': typeof AppRouteWithChildren
+  '/privacy': typeof PrivacyRoute
+  '/terms': typeof TermsRoute
   '/_app/chat': typeof AppChatRouteRouteWithChildren
   '/_app/feed': typeof AppFeedRouteRouteWithChildren
   '/(auth)/finish': typeof authFinishRoute
@@ -262,6 +280,8 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/privacy'
+    | '/terms'
     | '/chat'
     | '/feed'
     | '/finish'
@@ -289,6 +309,8 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/privacy'
+    | '/terms'
     | '/finish'
     | '/login'
     | '/otp'
@@ -316,6 +338,8 @@ export interface FileRouteTypes {
     | '/'
     | '/(auth)'
     | '/_app'
+    | '/privacy'
+    | '/terms'
     | '/_app/chat'
     | '/_app/feed'
     | '/(auth)/finish'
@@ -346,6 +370,8 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   authRouteRoute: typeof authRouteRouteWithChildren
   AppRoute: typeof AppRouteWithChildren
+  PrivacyRoute: typeof PrivacyRoute
+  TermsRoute: typeof TermsRoute
   AuthDoneRoute: typeof AuthDoneRoute
 }
 
@@ -370,6 +396,20 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(auth)/finish': {
@@ -650,6 +690,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   authRouteRoute: authRouteRouteWithChildren,
   AppRoute: AppRouteWithChildren,
+  PrivacyRoute: PrivacyRoute,
+  TermsRoute: TermsRoute,
   AuthDoneRoute: AuthDoneRoute,
 }
 export const routeTree = rootRouteImport

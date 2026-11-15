@@ -1,8 +1,10 @@
 import { useTranslation } from 'react-i18next';
+import { Link } from '@tanstack/react-router';
 import { LandingJoinTitle } from './LandingJoinTitle';
 
 export function LandingJoin() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isPolish = i18n.resolvedLanguage === 'pl';
   const steps = [
     { title: t('landing.steps.universityTitle'), body: t('landing.steps.universityBody') },
     { title: t('landing.steps.verifyTitle'), body: t('landing.steps.verifyBody') },
@@ -23,9 +25,28 @@ export function LandingJoin() {
           <p className="landing-join-statement">{t('landing.footer.statement')}</p>
           <LandingJoinTitle />
         </div>
-        <footer className="landing-join-footer">
+        <footer className="landing-join-footer flex-wrap">
           <span>{t('common.appName').toLowerCase()}</span>
           <p>{t('landing.footer.copyright')}</p>
+          <nav
+            aria-label={isPolish ? 'Informacje prawne' : 'Legal information'}
+            className="flex gap-4"
+          >
+            <Link
+              to="/privacy"
+              data-ph-capture-attribute-label={isPolish ? 'Polityka prywatności' : 'Privacy policy'}
+              className="hover:text-white"
+            >
+              {isPolish ? 'Polityka prywatności' : 'Privacy policy'}
+            </Link>
+            <Link
+              to="/terms"
+              data-ph-capture-attribute-label={isPolish ? 'Regulamin' : 'Terms and conditions'}
+              className="hover:text-white"
+            >
+              {isPolish ? 'Regulamin' : 'Terms and conditions'}
+            </Link>
+          </nav>
         </footer>
       </div>
     </section>
