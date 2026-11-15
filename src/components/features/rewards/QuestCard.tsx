@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import type { DailyQuests } from '@/@types';
 import { UICoin, UIPanel } from '@/ui/components';
 import { cn } from '@/ui/cn';
-import { questLabel } from '@/utils';
+import { formatCompactNumber, questLabel } from '@/utils';
 
 export type QuestCardProps = { quests: DailyQuests };
 
@@ -34,7 +34,8 @@ export function QuestCard({ quests }: QuestCardProps) {
                     quest.done ? 'text-success' : 'text-secondary',
                   )}
                 >
-                  {progress}/{quest.target}
+                  {formatCompactNumber(progress, i18n.resolvedLanguage)}/
+                  {formatCompactNumber(quest.target, i18n.resolvedLanguage)}
                 </span>
               </div>
               <div
@@ -62,7 +63,7 @@ export function QuestCard({ quests }: QuestCardProps) {
       >
         <UICoin />
         {t(quests.completed ? 'rewards.questsDone' : 'rewards.questsReward', {
-          amount: quests.reward,
+          amount: formatCompactNumber(quests.reward, i18n.resolvedLanguage),
         })}
       </p>
     </UIPanel>

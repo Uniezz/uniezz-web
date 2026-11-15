@@ -1,13 +1,15 @@
+import { useId } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from '@/utils';
 import { useCreateFaqProposal } from '@/hooks';
 import { faqProposalSchema, type FaqProposalFormSchema } from '@/schemas';
-import { UIButton, UIDialog, UIField } from '@/ui/components';
+import { UIButton, UIDialog, UIDialogFooter, UIField } from '@/ui/components';
 
 export function FaqProposalDialog({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { t } = useTranslation();
+  const formId = useId();
   const { mutateAsync: createProposal, isPending } = useCreateFaqProposal();
   const {
     register,
@@ -32,14 +34,29 @@ export function FaqProposalDialog({ open, onClose }: { open: boolean; onClose: (
 
   return (
     <UIDialog
+      placement="right"
       open={open}
       onOpenChange={(next) => {
         if (!next) onClose();
       }}
       title={t('faq.proposeTitle')}
       description={t('faq.proposeDescription')}
+      footer={
+        <UIDialogFooter>
+          <UIButton bg="secondary" onClick={onClose} disabled={isPending}>
+            {t('app.cancel')}
+          </UIButton>
+          <UIButton type="submit" form={formId} disabled={isPending}>
+            {t('faq.submitProposal')}
+          </UIButton>
+        </UIDialogFooter>
+      }
     >
-      <form className="space-y-4" onSubmit={handleSubmit(submit)}>
+      <form
+        id={formId}
+        className="flex min-h-0 flex-1 flex-col gap-4"
+        onSubmit={handleSubmit(submit)}
+      >
         <UIField label={t('faq.question')} error={errors.question ? t('app.required') : undefined}>
           <input
             autoComplete="off"
@@ -57,14 +74,6 @@ export function FaqProposalDialog({ open, onClose }: { open: boolean; onClose: (
             {...register('answer')}
           />
         </UIField>
-        <div className="flex justify-end gap-3">
-          <UIButton bg="secondary" onClick={onClose} disabled={isPending}>
-            {t('app.cancel')}
-          </UIButton>
-          <UIButton type="submit" disabled={isPending}>
-            {t('faq.submitProposal')}
-          </UIButton>
-        </div>
       </form>
     </UIDialog>
   );

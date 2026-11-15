@@ -4,11 +4,12 @@ import { useTranslation } from 'react-i18next';
 import { CoinGrants, QuestCard, RewardsShopSoon } from '@/components/features/rewards';
 import { useMyDailyQuests, useMyProfile } from '@/hooks';
 import { UICoin, UIPanel, UIQueryError, UISubTabs, UITopbar } from '@/ui/components';
+import { formatCompactNumber } from '@/utils/numberFormat';
 
 export const Route = createFileRoute('/_app/rewards')({ component: RewardsPage });
 
 function RewardsPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { data: profile } = useMyProfile();
   const { data: quests, isPending, isError, refetch } = useMyDailyQuests();
   const [tab, setTab] = useState<'earn' | 'spend'>('earn');
@@ -20,7 +21,7 @@ function RewardsPage() {
           {t('rewards.balance')}
           <UICoin className="size-6" />
           <span className="text-section font-semibold text-white tabular-nums">
-            {profile?.coins ?? 0}
+            {formatCompactNumber(profile?.coins ?? 0, i18n.resolvedLanguage)}
           </span>
         </p>
       </UITopbar>

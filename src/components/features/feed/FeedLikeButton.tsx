@@ -1,7 +1,7 @@
 import { Heart } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { toast } from '@/utils';
+import { formatCompactNumber, toast } from '@/utils';
 import { useFeedLike } from '@/hooks';
 import { UIButton } from '@/ui/components';
 import { cn } from '@/ui/cn';
@@ -17,7 +17,7 @@ export function FeedLikeButton({
   liked: boolean;
   count: number;
 }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { mutateAsync, isPending } = useFeedLike();
   const [popping, setPopping] = useState(false);
   async function toggleLike(): Promise<void> {
@@ -38,7 +38,7 @@ export function FeedLikeButton({
         liked && 'text-danger',
       )}
       disabled={isPending}
-      aria-label={t(liked ? 'apiState.unlike' : 'apiState.like')}
+      aria-label={`${t(liked ? 'apiState.unlike' : 'apiState.like')} (${new Intl.NumberFormat(i18n.resolvedLanguage).format(count)})`}
       aria-pressed={liked}
       onClick={toggleLike}
     >
@@ -49,7 +49,7 @@ export function FeedLikeButton({
         onAnimationEnd={() => setPopping(false)}
         aria-hidden="true"
       />{' '}
-      {count}
+      {formatCompactNumber(count, i18n.resolvedLanguage)}
     </UIButton>
   );
 }

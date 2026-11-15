@@ -4,6 +4,7 @@ import { useLayoutEffect, useRef, useState, type ComponentProps } from 'react';
 import { useTranslation } from 'react-i18next';
 import { cn } from '../../cn';
 import { UICoin } from '../UICoin';
+import { formatCompactNumber } from '@/utils/numberFormat';
 import { UINavItem } from '../UINavItem';
 import { getNavigationGroups } from '@/utils';
 import { sidebarStyles, sidebarGroupStyles, sidebarUserStyles } from './variants';
@@ -87,7 +88,7 @@ function jumpCat(cat: HTMLElement, fromOffset: number) {
 }
 
 export function UISidebar({ user, counts, className, ...props }: UISidebarProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const chatEnabled = useFeatureFlagEnabled('chat') === true;
   const navigationGroups = getNavigationGroups(chatEnabled);
   const navRef = useRef<HTMLElement>(null);
@@ -188,9 +189,11 @@ export function UISidebar({ user, counts, className, ...props }: UISidebarProps)
             />
             {user.coins !== undefined && (
               // Overlaps the avatar's bottom edge, so the name keeps its full width.
-              <span className="absolute -bottom-1.5 left-1/2 flex -translate-x-1/2 items-center gap-0.5 rounded-full border border-amber-30 bg-ink px-1 text-[10px] leading-[13px] font-semibold tabular-nums">
+              <span className="absolute -bottom-1.5 left-1/2 flex -translate-x-1/2 items-center gap-0.5 rounded-full border border-amber-30 bg-ink px-1 text-micro font-semibold tabular-nums">
                 <UICoin className="size-2.5" />
-                {user.coins}
+                <span aria-hidden="true">
+                  {formatCompactNumber(user.coins, i18n.resolvedLanguage)}
+                </span>
                 <span className="sr-only">{t('rewards.balance')}</span>
               </span>
             )}

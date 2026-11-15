@@ -4,6 +4,7 @@ import baseToast from 'react-hot-toast';
 // Direct path: the components barrel pulls in the API client and its env check.
 import { UICoin } from '@/ui/components/UICoin';
 import i18n from '@/i18n';
+import { formatCompactNumber } from './numberFormat';
 
 /** Coins a mutation response says it paid; 0 when it has no `coinsEarned`. */
 export function coinsEarned(data: unknown): number {
@@ -46,10 +47,15 @@ export function showCoinRewards(queryClient: QueryClient) {
     // One fixed id: nested mutations (publish wraps create) report the same coins twice.
     // shortcut: two different rewards at the same moment show only the last; sum them if that happens.
     if (count > 0) {
-      baseToast(i18n.t('rewards.coinsEarned', { amount: count }), {
-        id: 'coin-reward',
-        icon: createElement(UICoin, { className: 'size-5' }),
-      });
+      baseToast(
+        i18n.t('rewards.coinsEarned', {
+          amount: formatCompactNumber(count, i18n.resolvedLanguage),
+        }),
+        {
+          id: 'coin-reward',
+          icon: createElement(UICoin, { className: 'size-5' }),
+        },
+      );
       playCoinSound();
     }
   });

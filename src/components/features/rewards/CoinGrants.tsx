@@ -3,7 +3,7 @@ import { Virtuoso } from 'react-virtuoso';
 import { useMyCoinGrants } from '@/hooks';
 import { UIEmpty, UIQueryError } from '@/ui/components';
 import { listComponents } from '@/ui/virtuoso';
-import { coinGrantReasonLabel } from '@/utils';
+import { coinGrantReasonLabel, formatCompactNumber } from '@/utils';
 
 /** The coins the student has earned, newest first. */
 export function CoinGrants() {
@@ -46,7 +46,7 @@ export function CoinGrants() {
             {formatDate.format(new Date(grant.createdAt))}
           </span>
           <span className="w-12 shrink-0 text-right font-semibold tabular-nums">
-            +{grant.amount}
+            +{formatCompactNumber(grant.amount, i18n.resolvedLanguage)}
           </span>
         </div>
       )}
