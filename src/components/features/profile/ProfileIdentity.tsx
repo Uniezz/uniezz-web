@@ -22,12 +22,10 @@ export function ProfileIdentity({
   universityId,
   disabled,
   onRemoveBanner,
-  showAccountActions = true,
 }: {
   universityId: string;
   disabled: boolean;
   onRemoveBanner: () => Promise<void>;
-  showAccountActions?: boolean;
 }) {
   const { data: universities } = useUniversities();
   const { mutate: signOut, isPending: isSigningOut } = useSignOut();
@@ -230,32 +228,26 @@ export function ProfileIdentity({
           <span className="text-detail font-semibold">{t('topbar.changeLanguage')}</span>
           <UILanguageSwitcher />
         </div>
-        {showAccountActions && (
-          <>
-            <UIButton
-              bg="transparent"
-              size="pill"
-              className="mt-4 w-full text-danger"
-              disabled={isSigningOut || isDeletingProfile}
-              onClick={() =>
-                signOut(undefined, { onError: () => toast.error(t('apiState.error')) })
-              }
-            >
-              <LogOut size={16} aria-hidden="true" />
-              {t('app.signOut')}
-            </UIButton>
-            <UIButton
-              bg="transparent"
-              size="pill"
-              className="mt-2 w-full text-danger"
-              disabled={isSigningOut || isDeletingProfile}
-              onClick={() => setShowDeleteConfirm(true)}
-            >
-              <Trash2 size={16} aria-hidden="true" />
-              {t('app.deleteAccount')}
-            </UIButton>
-          </>
-        )}
+        <UIButton
+          bg="transparent"
+          size="pill"
+          className="mt-4 w-full text-danger"
+          disabled={isSigningOut || isDeletingProfile}
+          onClick={() => signOut(undefined, { onError: () => toast.error(t('apiState.error')) })}
+        >
+          <LogOut size={16} aria-hidden="true" />
+          {t('app.signOut')}
+        </UIButton>
+        <UIButton
+          bg="transparent"
+          size="pill"
+          className="mt-2 w-full text-danger"
+          disabled={isSigningOut || isDeletingProfile}
+          onClick={() => setShowDeleteConfirm(true)}
+        >
+          <Trash2 size={16} aria-hidden="true" />
+          {t('app.deleteAccount')}
+        </UIButton>
       </UIPanel>
       <UIDialog
         open={showRemoveBannerConfirm}

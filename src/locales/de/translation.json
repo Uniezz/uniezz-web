@@ -56,7 +56,7 @@
     "dating": "Dating",
     "deleteAccount": "Konto löschen",
     "deleteAccountDescription": "Deine Münzen und Verbindungen zu anderen Studierenden gehen unwiderruflich verloren. Auch deine Beiträge und Studiengänge werden gelöscht. Das lässt sich nicht rückgängig machen.",
-    "deleteAccountSignInAgain": "Aus Sicherheitsgründen erfordert das Löschen des Kontos eine aktuelle Anmeldung. Melde dich erneut an und lösche dein Konto innerhalb von 15 Minuten.",
+    "deleteAccountSignInAgain": "Um dein Konto zu löschen, melde dich zuerst neu an. Aus Sicherheitsgründen geht das nur innerhalb von 15 Minuten nach der Anmeldung.",
     "deleteAccountTitle": "Konto löschen?",
     "discardChanges": "Änderungen verwerfen",
     "discardChangesDescription": "Ihre nicht gespeicherten Änderungen gehen verloren, wenn Sie jetzt gehen.",
@@ -394,8 +394,8 @@
         "title": "Privat- und Gruppenchats."
       },
       "coins": {
-        "body": "Sammle Coins, wenn du likest und antwortest. Schließe die heutigen Aufgaben ab und hol dir einen Bonus. Lade Freunde ein: Du bekommst 100 Coins, sie 50.",
-        "title": "Coins fürs Dabeisein."
+        "body": "Like Beiträge und antworte, um Münzen zu bekommen. Für die täglichen Aufgaben gibt’s einen Bonus. Lade Freunde ein: Du bekommst 100 Münzen, sie 50.",
+        "title": "Sammle Münzen."
       },
       "faq": {
         "body": "Wir schaffen einen Raum für die Fragen, die Studierende am häufigsten stellen.",
@@ -428,11 +428,23 @@
     }
   },
   "onboarding": {
+    "details": {
+      "description": "Dein Name, ein paar Worte über dich und was dich interessiert.",
+      "title": "Stell dich vor."
+    },
     "finish": "Fertig",
     "next": "Weiter",
+    "photo": {
+      "description": "Es erscheint neben deinen Beiträgen und Nachrichten, damit andere wissen, mit wem sie schreiben.",
+      "hint": "JPG, PNG oder WebP, bis 5 MB.",
+      "title": "Füg ein Foto hinzu."
+    },
+    "programmes": {
+      "description": "Füg deinen Studiengang hinzu, damit dich Leute aus deiner Fakultät finden.",
+      "title": "Was studierst du?"
+    },
     "skip": "Überspringen",
-    "step": "Schritt {{current}} von {{total}}",
-    "title": "Profil einrichten"
+    "step": "Schritt {{current}} von {{total}}"
   },
   "postComposer": {
     "addPhoto": "Fügen Sie ein Foto hinzu",

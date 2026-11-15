@@ -3,7 +3,7 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import { UIEmojiPicker, UIField } from '@/ui/components';
 import { type ProfileFormSchema } from '@/schemas';
 
-export function PersonalDetails() {
+export function PersonalDetails({ showHeading = true }: { showHeading?: boolean }) {
   const { t } = useTranslation();
   const {
     register,
@@ -16,7 +16,7 @@ export function PersonalDetails() {
   });
   return (
     <div>
-      <h2 className="mb-4 text-md font-bold">{t('app.personalDetails')}</h2>
+      {showHeading && <h2 className="mb-4 text-md font-bold">{t('app.personalDetails')}</h2>}
       <div className="grid gap-3.5 sm:grid-cols-2">
         <UIField
           label={t('app.firstName')}

@@ -56,7 +56,7 @@
     "dating": "Tener una cita",
     "deleteAccount": "Eliminar cuenta",
     "deleteAccountDescription": "Perderás para siempre tus monedas y las conexiones que hayas creado con otros estudiantes. También se eliminarán tus publicaciones y programas de estudio. No se puede deshacer.",
-    "deleteAccountSignInAgain": "Por seguridad, eliminar la cuenta requiere un inicio de sesión reciente. Vuelve a iniciar sesión y elimina tu cuenta en los próximos 15 minutos.",
+    "deleteAccountSignInAgain": "Para eliminar tu cuenta, primero vuelve a iniciar sesión. Por seguridad, solo puedes hacerlo en los 15 minutos siguientes.",
     "deleteAccountTitle": "¿Eliminar cuenta?",
     "discardChanges": "Descartar cambios",
     "discardChangesDescription": "Los cambios no guardados se perderán si sales ahora.",
@@ -394,8 +394,8 @@
         "title": "Chats privados y grupales."
       },
       "coins": {
-        "body": "Gana monedas al dar me gusta y responder. Completa las misiones de hoy para obtener un bonus. Invita a un amigo: tú recibes 100 monedas y él 50.",
-        "title": "Monedas por participar."
+        "body": "Da me gusta y responde para ganar monedas. Completa las misiones diarias para llevarte un bonus. Invita a un amigo: tú recibes 100 monedas y él 50.",
+        "title": "Gana monedas."
       },
       "faq": {
         "body": "Estamos creando un espacio para las preguntas que más hacen los estudiantes.",
@@ -428,11 +428,23 @@
     }
   },
   "onboarding": {
+    "details": {
+      "description": "Tu nombre, unas palabras sobre ti y lo que te gusta.",
+      "title": "Preséntate."
+    },
     "finish": "Finalizar",
     "next": "Siguiente",
+    "photo": {
+      "description": "Aparecerá junto a tus publicaciones y mensajes, para que sepan con quién hablan.",
+      "hint": "JPG, PNG o WebP, hasta 5 MB.",
+      "title": "Añade una foto."
+    },
+    "programmes": {
+      "description": "Añade tu carrera para que te encuentre la gente de tu facultad.",
+      "title": "¿Qué estudias?"
+    },
     "skip": "Omitir",
-    "step": "Paso {{current}} de {{total}}",
-    "title": "Completa tu perfil"
+    "step": "Paso {{current}} de {{total}}"
   },
   "postComposer": {
     "addPhoto": "Añadir una foto",

@@ -58,7 +58,7 @@ export default interface Resources {
       "dating": "Dating",
       "deleteAccount": "Delete account",
       "deleteAccountDescription": "You’ll permanently lose your coins and connections with other students. Your posts and study programmes will also be deleted. This can’t be undone.",
-      "deleteAccountSignInAgain": "For your security, deleting an account needs a recent sign-in. Sign in again, then delete your account within 15 minutes.",
+      "deleteAccountSignInAgain": "To delete your account, sign in again first. For your safety, you can only do it within 15 minutes of signing in.",
       "deleteAccountTitle": "Delete account?",
       "discardChanges": "Discard changes",
       "discardChangesDescription": "Your unsaved changes will be lost if you leave now.",
@@ -396,8 +396,8 @@ export default interface Resources {
           "title": "Private and group chats."
         },
         "coins": {
-          "body": "Earn coins when you like and reply. Finish today’s quests for a bonus. Invite a friend: you get 100 coins, they get 50.",
-          "title": "Coins for being around."
+          "body": "Like posts and reply to get coins. Finish the daily quests for a bonus. Invite a friend and you get 100 coins, they get 50.",
+          "title": "Earn coins."
         },
         "faq": {
           "body": "We’re making a space for the questions students ask most.",
@@ -430,11 +430,23 @@ export default interface Resources {
       }
     },
     "onboarding": {
+      "details": {
+        "description": "Your name, a few words about you and what you’re into.",
+        "title": "Introduce yourself."
+      },
       "finish": "Finish",
       "next": "Next",
+      "photo": {
+        "description": "It shows next to your posts and messages, so people know who they’re talking to.",
+        "hint": "JPG, PNG or WebP, up to 5 MB.",
+        "title": "Add a photo."
+      },
+      "programmes": {
+        "description": "Add your programme so people from your faculty can find you.",
+        "title": "What do you study?"
+      },
       "skip": "Skip",
-      "step": "Step {{current}} of {{total}}",
-      "title": "Set up your profile"
+      "step": "Step {{current}} of {{total}}"
     },
     "postComposer": {
       "addPhoto": "Add a photo",

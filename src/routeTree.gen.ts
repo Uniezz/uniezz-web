@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as authRouteRouteImport } from './routes/(auth)/route'
 import { Route as AppRouteImport } from './routes/_app'
+import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as authFinishRouteImport } from './routes/(auth)/finish'
@@ -22,7 +23,6 @@ import { Route as AppExamsRouteImport } from './routes/_app/exams'
 import { Route as AppFaqRouteImport } from './routes/_app/faq'
 import { Route as AppFeedRouteRouteImport } from './routes/_app/feed/route'
 import { Route as AppGuideRouteImport } from './routes/_app/guide'
-import { Route as AppOnboardingRouteImport } from './routes/_app/onboarding'
 import { Route as AppProfileRouteImport } from './routes/_app/profile'
 import { Route as AppRewardsRouteImport } from './routes/_app/rewards'
 import { Route as AuthDoneRouteImport } from './routes/auth/done'
@@ -52,6 +52,11 @@ const authRouteRoute = authRouteRouteImport.update({
 } as any)
 const AppRoute = AppRouteImport.update({
   id: '/_app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingRoute = OnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacyRoute = PrivacyRouteImport.update({
@@ -102,11 +107,6 @@ const AppFeedRouteRoute = AppFeedRouteRouteImport.update({
 const AppGuideRoute = AppGuideRouteImport.update({
   id: '/guide',
   path: '/guide',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppOnboardingRoute = AppOnboardingRouteImport.update({
-  id: '/onboarding',
-  path: '/onboarding',
   getParentRoute: () => AppRoute,
 } as any)
 const AppProfileRoute = AppProfileRouteImport.update({
@@ -202,6 +202,7 @@ const AppFeedPostPostIdEditRoute = AppFeedPostPostIdEditRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/onboarding': typeof OnboardingRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/chat': typeof AppChatRouteRouteWithChildren
@@ -212,7 +213,6 @@ export interface FileRoutesByFullPath {
   '/exams': typeof AppExamsRouteWithChildren
   '/faq': typeof AppFaqRoute
   '/guide': typeof AppGuideRoute
-  '/onboarding': typeof AppOnboardingRoute
   '/profile': typeof AppProfileRoute
   '/rewards': typeof AppRewardsRoute
   '/auth/done': typeof AuthDoneRoute
@@ -233,6 +233,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/onboarding': typeof OnboardingRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/finish': typeof authFinishRoute
@@ -241,7 +242,6 @@ export interface FileRoutesByTo {
   '/exams': typeof AppExamsRouteWithChildren
   '/faq': typeof AppFaqRoute
   '/guide': typeof AppGuideRoute
-  '/onboarding': typeof AppOnboardingRoute
   '/profile': typeof AppProfileRoute
   '/rewards': typeof AppRewardsRoute
   '/auth/done': typeof AuthDoneRoute
@@ -265,6 +265,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/(auth)': typeof authRouteRouteWithChildren
   '/_app': typeof AppRouteWithChildren
+  '/onboarding': typeof OnboardingRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/_app/chat': typeof AppChatRouteRouteWithChildren
@@ -275,7 +276,6 @@ export interface FileRoutesById {
   '/_app/exams': typeof AppExamsRouteWithChildren
   '/_app/faq': typeof AppFaqRoute
   '/_app/guide': typeof AppGuideRoute
-  '/_app/onboarding': typeof AppOnboardingRoute
   '/_app/profile': typeof AppProfileRoute
   '/_app/rewards': typeof AppRewardsRoute
   '/auth/done': typeof AuthDoneRoute
@@ -298,6 +298,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/onboarding'
     | '/privacy'
     | '/terms'
     | '/chat'
@@ -308,7 +309,6 @@ export interface FileRouteTypes {
     | '/exams'
     | '/faq'
     | '/guide'
-    | '/onboarding'
     | '/profile'
     | '/rewards'
     | '/auth/done'
@@ -329,6 +329,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/onboarding'
     | '/privacy'
     | '/terms'
     | '/finish'
@@ -337,7 +338,6 @@ export interface FileRouteTypes {
     | '/exams'
     | '/faq'
     | '/guide'
-    | '/onboarding'
     | '/profile'
     | '/rewards'
     | '/auth/done'
@@ -360,6 +360,7 @@ export interface FileRouteTypes {
     | '/'
     | '/(auth)'
     | '/_app'
+    | '/onboarding'
     | '/privacy'
     | '/terms'
     | '/_app/chat'
@@ -370,7 +371,6 @@ export interface FileRouteTypes {
     | '/_app/exams'
     | '/_app/faq'
     | '/_app/guide'
-    | '/_app/onboarding'
     | '/_app/profile'
     | '/_app/rewards'
     | '/auth/done'
@@ -394,6 +394,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   authRouteRoute: typeof authRouteRouteWithChildren
   AppRoute: typeof AppRouteWithChildren
+  OnboardingRoute: typeof OnboardingRoute
   PrivacyRoute: typeof PrivacyRoute
   TermsRoute: typeof TermsRoute
   AuthDoneRoute: typeof AuthDoneRoute
@@ -421,6 +422,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding': {
+      id: '/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof OnboardingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacy': {
@@ -491,13 +499,6 @@ declare module '@tanstack/react-router' {
       path: '/guide'
       fullPath: '/guide'
       preLoaderRoute: typeof AppGuideRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/onboarding': {
-      id: '/_app/onboarding'
-      path: '/onboarding'
-      fullPath: '/onboarding'
-      preLoaderRoute: typeof AppOnboardingRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/profile': {
@@ -703,7 +704,6 @@ interface AppRouteChildren {
   AppExamsRoute: typeof AppExamsRouteWithChildren
   AppFaqRoute: typeof AppFaqRoute
   AppGuideRoute: typeof AppGuideRoute
-  AppOnboardingRoute: typeof AppOnboardingRoute
   AppProfileRoute: typeof AppProfileRoute
   AppRewardsRoute: typeof AppRewardsRoute
   AppConnectionsIndexRoute: typeof AppConnectionsIndexRoute
@@ -717,7 +717,6 @@ const AppRouteChildren: AppRouteChildren = {
   AppExamsRoute: AppExamsRouteWithChildren,
   AppFaqRoute: AppFaqRoute,
   AppGuideRoute: AppGuideRoute,
-  AppOnboardingRoute: AppOnboardingRoute,
   AppProfileRoute: AppProfileRoute,
   AppRewardsRoute: AppRewardsRoute,
   AppConnectionsIndexRoute: AppConnectionsIndexRoute,
@@ -731,6 +730,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   authRouteRoute: authRouteRouteWithChildren,
   AppRoute: AppRouteWithChildren,
+  OnboardingRoute: OnboardingRoute,
   PrivacyRoute: PrivacyRoute,
   TermsRoute: TermsRoute,
   AuthDoneRoute: AuthDoneRoute,
