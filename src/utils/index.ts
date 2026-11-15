@@ -19,7 +19,6 @@ export * from './mutationProgress';
 export * from './feed';
 export * from './feedSkeletonData';
 export * from './profileSkeletonData';
-export * from './landingCat';
 export * from './landingMap';
 export * from './rewards';
 export * from './numberFormat';

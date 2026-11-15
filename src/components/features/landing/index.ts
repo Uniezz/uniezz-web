@@ -1,5 +1,3 @@
-export * from './LandingCatCanvas';
-export * from './LandingCatModel';
 export * from './LandingCatPortrait';
 export * from './LandingChatPreview';
 export * from './LandingFaqPreview';

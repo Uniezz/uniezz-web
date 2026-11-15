@@ -1,24 +1,13 @@
-import { useInView, useReducedMotion } from '@react-spring/web';
-import { CatchBoundary } from '@tanstack/react-router';
-import { lazy, Suspense } from 'react';
-
-const LandingCatCanvas = lazy(() =>
-  import('./LandingCatCanvas').then((module) => ({ default: module.LandingCatCanvas })),
-);
+import { useReducedMotion } from '@react-spring/web';
 
 export function LandingCatPortrait() {
-  const [ref, inView] = useInView();
   const reducedMotion = useReducedMotion();
-  const fallback = <img src="/app/sidebar-cat.png" alt="" loading="lazy" />;
   return (
-    <div ref={ref} className="landing-unicat-portrait" aria-hidden>
-      {reducedMotion && fallback}
+    <div className="landing-unicat-portrait" aria-hidden>
+      {reducedMotion && <img src="/app/sidebar-cat.png" alt="" loading="lazy" />}
+      {/* <object>, not <img>: each mount gets its own SMIL clock (see UIEmpty). */}
       {reducedMotion === false && (
-        <CatchBoundary getResetKey={() => 'landing-cat'} errorComponent={() => fallback}>
-          <Suspense fallback={null}>
-            <LandingCatCanvas isVisible={inView} />
-          </Suspense>
-        </CatchBoundary>
+        <object data="/app/empty-cat.svg" type="image/svg+xml" tabIndex={-1} />
       )}
     </div>
   );
