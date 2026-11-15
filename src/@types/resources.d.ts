@@ -57,7 +57,7 @@ export default interface Resources {
       "createGroup": "Create group",
       "dating": "Dating",
       "deleteAccount": "Delete account",
-      "deleteAccountDescription": "Your profile, posts, and study programmes will be deleted. This can’t be undone.",
+      "deleteAccountDescription": "You’ll permanently lose your coins and connections with other students. Your posts and study programmes will also be deleted. This can’t be undone.",
       "deleteAccountTitle": "Delete account?",
       "discardChanges": "Discard changes",
       "discardChangesDescription": "Your unsaved changes will be lost if you leave now.",

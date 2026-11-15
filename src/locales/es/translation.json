@@ -55,7 +55,7 @@
     "createGroup": "Crear grupo",
     "dating": "Tener una cita",
     "deleteAccount": "Eliminar cuenta",
-    "deleteAccountDescription": "Se eliminarán su perfil, publicaciones y programas de estudio. Esto no se puede deshacer.",
+    "deleteAccountDescription": "Perderás para siempre tus monedas y las conexiones que hayas creado con otros estudiantes. También se eliminarán tus publicaciones y programas de estudio. No se puede deshacer.",
     "deleteAccountTitle": "¿Eliminar cuenta?",
     "discardChanges": "Descartar cambios",
     "discardChangesDescription": "Los cambios no guardados se perderán si sales ahora.",
@@ -507,9 +507,9 @@
   "rewards": {
     "balance": "Tus monedas",
     "coinsEarned": "Monedas Uniezz: +{{amount}}",
-    "historyEmpty": "Aún no tienes monedas. Da me gusta, responde y publica para ganarlas.",
+    "historyEmpty": "Aún no tienes monedas. Dale me gusta a publicaciones, responde a comentarios y publica para conseguirlas.",
     "historyTitle": "Historial",
-    "questLike": "Da me gusta a publicaciones de otros",
+    "questLike": "Dale me gusta a las publicaciones de otros estudiantes",
     "questOther": "Misión",
     "questPost": "Crea una publicación",
     "questReply": "Responde a un comentario",
@@ -529,8 +529,8 @@
     "reasonWelcome": "Bono de bienvenida",
     "shopSoon": "Tienda próximamente",
     "shopSoonDescription": "Pronto podrás gastar tus monedas aquí.",
-    "tabEarn": "Gana",
-    "tabSpend": "Gasta",
+    "tabEarn": "Ganar",
+    "tabSpend": "Gastar",
     "title": "Recompensas"
   },
   "sidebar": {
