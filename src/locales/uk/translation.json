@@ -571,13 +571,13 @@
     "title": "Нагороди"
   },
   "seo": {
-    "appTitle": "",
-    "defaultDescription": "",
-    "homeTitle": "",
-    "privacyDescription": "",
-    "privacyTitle": "",
-    "termsDescription": "",
-    "termsTitle": ""
+    "appTitle": "uniezz",
+    "defaultDescription": "Знайомся зі студентами люблінських університетів. Став запитання, ділися подіями й знаходь друзів поза своєю групою.",
+    "homeTitle": "uniezz — студентське життя у Любліні",
+    "privacyDescription": "Як Uniezz збирає, використовує і захищає ваші персональні дані.",
+    "privacyTitle": "Політика конфіденційності — uniezz",
+    "termsDescription": "Умови користування студентською спільнотою Uniezz у Любліні.",
+    "termsTitle": "Умови користування — uniezz"
   },
   "sidebar": {
     "mainNavigation": "Головна навігація"

@@ -571,13 +571,13 @@
     "title": "Награды"
   },
   "seo": {
-    "appTitle": "",
-    "defaultDescription": "",
-    "homeTitle": "",
-    "privacyDescription": "",
-    "privacyTitle": "",
-    "termsDescription": "",
-    "termsTitle": ""
+    "appTitle": "uniezz",
+    "defaultDescription": "Знакомься со студентами люблинских университетов. Задавай вопросы, делись событиями и находи друзей за пределами своей группы.",
+    "homeTitle": "uniezz — студенческая жизнь в Люблине",
+    "privacyDescription": "Как Uniezz собирает, использует и защищает ваши персональные данные.",
+    "privacyTitle": "Политика конфиденциальности — uniezz",
+    "termsDescription": "Правила пользования студенческим сообществом Uniezz в Люблине.",
+    "termsTitle": "Условия использования — uniezz"
   },
   "sidebar": {
     "mainNavigation": "Главная навигация"

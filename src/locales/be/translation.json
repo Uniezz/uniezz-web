@@ -571,13 +571,13 @@
     "title": "Узнагароды"
   },
   "seo": {
-    "appTitle": "",
-    "defaultDescription": "",
-    "homeTitle": "",
-    "privacyDescription": "",
-    "privacyTitle": "",
-    "termsDescription": "",
-    "termsTitle": ""
+    "appTitle": "uniezz",
+    "defaultDescription": "Знаёмцеся са студэнтамі Люблінскіх універсітэтаў. Задавайце пытанні, дзяліцеся падзеямі і знаходзьце людзей за межамі вашага класа.",
+    "homeTitle": "uniezz — студэнцкае жыццё ў Любліне",
+    "privacyDescription": "Як Uniezz збірае, выкарыстоўвае і абараняе вашы персанальныя даныя.",
+    "privacyTitle": "Палітыка прыватнасці — uniezz",
+    "termsDescription": "Умовы карыстання студэнцкай супольнасцю Uniezz у Любліне.",
+    "termsTitle": "Правілы карыстання — uniezz"
   },
   "sidebar": {
     "mainNavigation": "Галоўная навігацыя"

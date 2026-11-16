@@ -571,13 +571,13 @@
     "title": "Belohnungen"
   },
   "seo": {
-    "appTitle": "",
-    "defaultDescription": "",
-    "homeTitle": "",
-    "privacyDescription": "",
-    "privacyTitle": "",
-    "termsDescription": "",
-    "termsTitle": ""
+    "appTitle": "uniezz",
+    "defaultDescription": "Treffen Sie Studenten der Lubliner Universitäten. Stellen Sie Fragen, teilen Sie Ereignisse und finden Sie Leute außerhalb Ihrer Klasse.",
+    "homeTitle": "uniezz — Studentenleben in Lublin",
+    "privacyDescription": "Wie Uniezz Ihre personenbezogenen Daten erhebt, nutzt und schützt.",
+    "privacyTitle": "Datenschutzerklärung — uniezz",
+    "termsDescription": "Bedingungen für die Nutzung der Uniezz-Studierendengemeinschaft in Lublin.",
+    "termsTitle": "Nutzungsbedingungen — uniezz"
   },
   "sidebar": {
     "mainNavigation": "Hauptnavigation"

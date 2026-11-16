@@ -571,13 +571,13 @@
     "title": "Recompensas"
   },
   "seo": {
-    "appTitle": "",
-    "defaultDescription": "",
-    "homeTitle": "",
-    "privacyDescription": "",
-    "privacyTitle": "",
-    "termsDescription": "",
-    "termsTitle": ""
+    "appTitle": "uniezz",
+    "defaultDescription": "Conozca a estudiantes de las universidades de Lublin. Haga preguntas, comparta eventos y encuentre personas más allá de su clase.",
+    "homeTitle": "uniezz — vida estudiantil en Lublin",
+    "privacyDescription": "Cómo Uniezz recopila, utiliza y protege sus datos personales.",
+    "privacyTitle": "Política de privacidad — uniezz",
+    "termsDescription": "Condiciones de uso de la comunidad estudiantil Uniezz en Lublin.",
+    "termsTitle": "Términos de servicio — uniezz"
   },
   "sidebar": {
     "mainNavigation": "Navegación principal"
