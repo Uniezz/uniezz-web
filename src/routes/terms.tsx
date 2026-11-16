@@ -1,8 +1,12 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { LegalPage, type LegalSection } from '@/components/features/legal';
+import { termsRouteHead } from '@/utils/routeHead';
 
-export const Route = createFileRoute('/terms')({ component: TermsPage });
+export const Route = createFileRoute('/terms')({
+  head: () => termsRouteHead(),
+  component: TermsPage,
+});
 
 function TermsPage() {
   const { i18n } = useTranslation();

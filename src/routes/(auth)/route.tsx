@@ -5,7 +5,10 @@ import { useNarrowViewport } from '@/hooks';
 import { isMobileDevice, shouldBlockMobile } from '@/utils';
 import { UIDialog } from '@/ui/components';
 
+import { privateRouteHead } from '@/utils/routeHead';
+
 export const Route = createFileRoute('/(auth)')({
+  head: ({ matches }) => privateRouteHead(matches[matches.length - 1]!.pathname),
   component: AuthRoute,
 });
 

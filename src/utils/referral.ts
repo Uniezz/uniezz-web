@@ -1,3 +1,5 @@
+import { SITE_ORIGIN } from '@/utils/site';
+
 const INVITE_CODE_KEY = 'uniezz:invite-code';
 const INVITE_CODE_PATTERN = /^[A-Z0-9]{7}$/;
 
@@ -32,7 +34,7 @@ export function clearInviteCode(): void {
 
 // An https link opens the app where it's installed (associated domains, verified app links) and this site elsewhere.
 export function inviteUrl(code: string): string {
-  return `https://uniezz.pl/invite/${encodeURIComponent(code)}`;
+  return `${SITE_ORIGIN}/invite/${encodeURIComponent(code)}`;
 }
 
 const INVITE_REDEEM_DAYS = 7;

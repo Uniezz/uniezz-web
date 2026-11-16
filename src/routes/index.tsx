@@ -13,8 +13,10 @@ import { useUniversities } from '@/hooks';
 import { UIButton, UILanguageSwitcher } from '@/ui/components';
 import { ApiRequestError } from '@/api';
 import { myProfileQueryOptions } from '@/hooks';
+import { homeRouteHead } from '@/utils/routeHead';
 
 export const Route = createFileRoute('/')({
+  head: () => homeRouteHead(),
   beforeLoad: async ({ context }) => {
     try {
       await context.queryClient.ensureQueryData({ ...myProfileQueryOptions(), retry: false });

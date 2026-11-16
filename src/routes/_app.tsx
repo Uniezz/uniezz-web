@@ -15,7 +15,10 @@ import { useNarrowViewport } from '@/hooks';
 import { isMobileDevice, shouldBlockMobile } from '@/utils';
 import { optionalSearchStringSchema, returnPathSchema } from '@/schemas';
 import { APP_STORES } from '@/utils';
+import { privateRouteHead } from '@/utils/routeHead';
+
 export const Route = createFileRoute('/_app')({
+  head: ({ matches }) => privateRouteHead(matches[matches.length - 1]!.pathname),
   // Runs on every visit to a closed page, including Back. A guest goes to sign-in
   // with `replace`, so the closed page is not kept in history.
   beforeLoad: async ({ context }) => {

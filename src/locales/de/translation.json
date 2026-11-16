@@ -570,6 +570,15 @@
     "tabSpend": "Ausgeben",
     "title": "Belohnungen"
   },
+  "seo": {
+    "appTitle": "",
+    "defaultDescription": "",
+    "homeTitle": "",
+    "privacyDescription": "",
+    "privacyTitle": "",
+    "termsDescription": "",
+    "termsTitle": ""
+  },
   "sidebar": {
     "mainNavigation": "Hauptnavigation"
   },

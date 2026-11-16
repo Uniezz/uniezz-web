@@ -570,6 +570,15 @@
     "tabSpend": "Трать",
     "title": "Награды"
   },
+  "seo": {
+    "appTitle": "",
+    "defaultDescription": "",
+    "homeTitle": "",
+    "privacyDescription": "",
+    "privacyTitle": "",
+    "termsDescription": "",
+    "termsTitle": ""
+  },
   "sidebar": {
     "mainNavigation": "Главная навигация"
   },

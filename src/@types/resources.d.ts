@@ -572,6 +572,15 @@ export default interface Resources {
       "tabSpend": "Spend",
       "title": "Rewards"
     },
+    "seo": {
+      "appTitle": "uniezz",
+      "defaultDescription": "Meet students from Lublin universities. Ask questions, share events, and find people beyond your class.",
+      "homeTitle": "uniezz — student life in Lublin",
+      "privacyDescription": "How Uniezz collects, uses, and protects your personal data.",
+      "privacyTitle": "Privacy policy — uniezz",
+      "termsDescription": "Terms and rules for using the Uniezz student community in Lublin.",
+      "termsTitle": "Terms of service — uniezz"
+    },
     "sidebar": {
       "mainNavigation": "Main navigation"
     },

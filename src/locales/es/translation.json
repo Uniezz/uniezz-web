@@ -570,6 +570,15 @@
     "tabSpend": "Gastar",
     "title": "Recompensas"
   },
+  "seo": {
+    "appTitle": "",
+    "defaultDescription": "",
+    "homeTitle": "",
+    "privacyDescription": "",
+    "privacyTitle": "",
+    "termsDescription": "",
+    "termsTitle": ""
+  },
   "sidebar": {
     "mainNavigation": "Navegación principal"
   },

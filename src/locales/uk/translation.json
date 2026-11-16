@@ -570,6 +570,15 @@
     "tabSpend": "Витрачай",
     "title": "Нагороди"
   },
+  "seo": {
+    "appTitle": "",
+    "defaultDescription": "",
+    "homeTitle": "",
+    "privacyDescription": "",
+    "privacyTitle": "",
+    "termsDescription": "",
+    "termsTitle": ""
+  },
   "sidebar": {
     "mainNavigation": "Головна навігація"
   },

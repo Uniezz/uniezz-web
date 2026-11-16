@@ -570,6 +570,15 @@
     "tabSpend": "Wydawaj",
     "title": "Nagrody"
   },
+  "seo": {
+    "appTitle": "uniezz",
+    "defaultDescription": "Poznaj studentów lubelskich uczelni. Zadawaj pytania, dziel się wydarzeniami i znajduj ludzi poza swoją grupą.",
+    "homeTitle": "uniezz — życie studenckie w Lublinie",
+    "privacyDescription": "Jak Uniezz zbiera, wykorzystuje i chroni Twoje dane osobowe.",
+    "privacyTitle": "Polityka prywatności — uniezz",
+    "termsDescription": "Warunki korzystania ze społeczności studenckiej Uniezz w Lublinie.",
+    "termsTitle": "Regulamin — uniezz"
+  },
   "sidebar": {
     "mainNavigation": "Nawigacja główna"
   },

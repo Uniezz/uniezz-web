@@ -1,8 +1,12 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { LegalPage, type LegalSection } from '@/components/features/legal';
+import { privacyRouteHead } from '@/utils/routeHead';
 
-export const Route = createFileRoute('/privacy')({ component: PrivacyPage });
+export const Route = createFileRoute('/privacy')({
+  head: () => privacyRouteHead(),
+  component: PrivacyPage,
+});
 
 function PrivacyPage() {
   const { i18n } = useTranslation();

@@ -1,0 +1,20 @@
+User-agent: *
+Allow: /
+Allow: /privacy
+Allow: /terms
+Disallow: /feed
+Disallow: /chat
+Disallow: /connections
+Disallow: /exams
+Disallow: /profile
+Disallow: /rewards
+Disallow: /faq
+Disallow: /guide
+Disallow: /onboarding
+Disallow: /login
+Disallow: /otp
+Disallow: /finish
+Disallow: /auth/
+Disallow: /invite/
+
+Sitemap: https://uniezz.pl/sitemap.xml
