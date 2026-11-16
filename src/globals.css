@@ -717,7 +717,7 @@
 .landing-faq-list li + li {
   border-top: 1px solid #a9baff30;
 }
-.landing-faq-list li span:last-child {
+.landing-faq-list li > span:last-child {
   color: #a9baff;
 }
 .landing-coins-sheet {

@@ -1,4 +1,4 @@
-import { BrandBackground, UIButton, UILanguageSwitcher, UIText } from '@/ui/components';
+import { BrandBackground, UILanguageSwitcher, UIText } from '@/ui/components';
 import { type ReactNode } from 'react';
 import { AuthBrand } from './AuthBrand';
 
@@ -23,14 +23,7 @@ export const AuthLayout = ({ children, aside }: AuthLayoutProps) => {
         </div>
         {/* Phone: bottom sheet. Tablet and up: full-height side panel. */}
         <section className="relative flex flex-col border-t border-white/10 bg-ink/50 px-6 pt-8 pb-10 shadow-2xl backdrop-blur-xs sm:px-12 md:w-1/2 md:justify-center md:border-t-0 md:border-l md:px-8 md:py-12 lg:w-1/3 lg:min-w-110 lg:px-12">
-          <div className="mx-auto flex w-full max-w-110 flex-col">
-            {import.meta.env.DEV && !aside ? (
-              <UIButton bg="secondary" size="pill" navigateTo="/feed" className="mb-6 self-end">
-                Skip login (dev) → Feed
-              </UIButton>
-            ) : null}
-            {children}
-          </div>
+          <div className="mx-auto flex w-full max-w-110 flex-col">{children}</div>
         </section>
       </BrandBackground>
     </main>
