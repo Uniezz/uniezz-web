@@ -11,7 +11,12 @@ export function LandingProgress() {
       <animated.span className="landing-progress-thread" style={{ scaleY: scrollYProgress }} />
       <animated.div
         className="landing-yarn-ball"
-        style={{ top: scrollYProgress.to((progress) => `${progress * 100}%`) }}
+        // transform instead of top: moving top re-runs layout on every scroll frame.
+        style={{
+          transform: scrollYProgress.to(
+            (progress) => `translate(-50%, calc(-50% + ${progress * 40}vh))`,
+          ),
+        }}
       >
         <animated.img
           src="/landing/yarn-ball.png"

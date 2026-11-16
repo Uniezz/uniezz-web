@@ -765,8 +765,10 @@
   background: #9eace7;
   transform-origin: top;
 }
+/* Travels the 40vh thread height via transform, set in LandingProgress. */
 .landing-yarn-ball {
   position: absolute;
+  top: 0;
   left: 50%;
   width: var(--yarn-size);
   height: var(--yarn-size);
@@ -1023,6 +1025,27 @@
   }
   .landing-map-heading h2 {
     font-size: 54px;
+  }
+  /* The art box is ~28svh here: sheets must stay compact or they spill over the copy and tabs. */
+  .landing-faq-art {
+    padding: 0;
+  }
+  .landing-faq-sheet {
+    width: 100%;
+    padding: 12px 18px 0;
+  }
+  .landing-faq-sheet .landing-faq-sheet-title {
+    padding-bottom: 8px;
+    font-size: 18px;
+    white-space: nowrap;
+  }
+  .landing-coins-sheet .landing-coins-balance {
+    font-size: 16px;
+  }
+  .landing-faq-sheet li {
+    padding-block: 6px;
+    font-size: 13px;
+    line-height: 1.3;
   }
 }
 

@@ -24,8 +24,107 @@
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="uniezz: Student life. In Lublin." />
     <meta name="twitter:card" content="summary_large_image" />
+    <!-- Inline so the splash shows before the stylesheet and fonts arrive; main.tsx removes it. -->
+    <style>
+      #splash {
+        position: fixed;
+        inset: 0;
+        z-index: 2147483647;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        background: #0c0d14;
+        transition: opacity 400ms ease;
+      }
+      #splash[data-hidden] {
+        opacity: 0;
+        pointer-events: none;
+      }
+      /* The blurred U of the mobile UIPage backdrop, drawn from the logo path so it has no edges.
+         Sized so the U is 48.4% of min(100vw, 600px) wide, centred 42% of that from the top. */
+      #splash-backdrop {
+        position: absolute;
+        top: calc(min(100vw, 600px) * -0.1045);
+        left: 50%;
+        width: calc(min(100vw, 600px) * 1.024);
+        height: calc(min(100vw, 600px) * 1.024);
+        transform: translateX(-50%);
+        /* CSS blur: the SVG feGaussianBlur rendered visible colour bands. */
+        filter: blur(calc(min(100vw, 600px) * 0.05));
+      }
+      #splash-cover {
+        position: absolute;
+        inset: 0;
+        background: #0c0d14;
+        transition: opacity 700ms cubic-bezier(0.65, 0, 0.35, 1);
+      }
+      /* Same png, size and shine as the mobile app splash (uniezz-mobile SplashLogo). */
+      #splash-logo-svg {
+        position: relative;
+        width: min(390px, 100vw);
+        height: min(390px, 100vw);
+        transition:
+          transform 700ms cubic-bezier(0.65, 0, 0.35, 1),
+          opacity 700ms cubic-bezier(0.65, 0, 0.35, 1);
+      }
+      #splash[data-landing] #splash-cover {
+        opacity: 0;
+      }
+      #splash[data-landing] #splash-logo-svg {
+        opacity: 0;
+        transform: var(--splash-land);
+      }
+      #splash-shine {
+        animation: splash-shine 900ms ease-in-out 200ms infinite both;
+      }
+      @keyframes splash-shine {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(1211px);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #splash-shine {
+          animation: none;
+        }
+        #splash[data-landing] #splash-logo-svg {
+          transform: none;
+        }
+      }
+    </style>
   </head>
   <body>
+    <div id="splash" aria-hidden="true">
+      <svg id="splash-backdrop" viewBox="0 0 1024 1024">
+        <path
+          d="M296 271C282 271 273 280 273 300L270 550C270 680 370 778 512 778C654 778 754 680 754 550L751 300C751 280 742 271 728 271C721 271 715 274 709 279L626 343C608 357 601 372 601 395L599 545C599 600 560 640 512 640C464 640 425 600 425 545L423 395C423 372 416 357 398 343L315 279C309 274 303 271 296 271Z"
+          fill="#262c4a"
+        />
+      </svg>
+      <div id="splash-cover"></div>
+      <svg id="splash-logo-svg" viewBox="0 0 1024 1024">
+        <defs>
+          <linearGradient id="splash-gradient" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#a8aebe" stop-opacity="0" />
+            <stop offset="0.5" stop-color="#a8aebe" stop-opacity="0.85" />
+            <stop offset="1" stop-color="#a8aebe" stop-opacity="0" />
+          </linearGradient>
+          <clipPath id="splash-logo">
+            <path
+              d="M296 271C282 271 273 280 273 300L270 550C270 680 370 778 512 778C654 778 754 680 754 550L751 300C751 280 742 271 728 271C721 271 715 274 709 279L626 343C608 357 601 372 601 395L599 545C599 600 560 640 512 640C464 640 425 600 425 545L423 395C423 372 416 357 398 343L315 279C309 274 303 271 296 271Z"
+            />
+          </clipPath>
+        </defs>
+        <image href="/splash-screen.png" width="1024" height="1024" />
+        <g clip-path="url(#splash-logo)">
+          <g transform="translate(0 271) skewX(-45)" fill="url(#splash-gradient)">
+            <rect id="splash-shine" x="50" y="0" width="220" height="507" />
+          </g>
+        </g>
+      </svg>
+    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

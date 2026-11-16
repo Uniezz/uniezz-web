@@ -24,10 +24,17 @@ export function useLandingScroll(
     const motion = matchMedia(landingMotionQuery);
     let previousProgress = -1;
     let previousPinned = false;
-    const update = () => {
-      const { top, height } = section.getBoundingClientRect();
+    // Geometry is measured on resize only: reading it on every scroll frame, after another
+    // section wrote --progress, forced a layout per section per frame and made phones stutter.
+    let sectionTop = 0;
+    let distance = 0;
+    const measure = () => {
       const stageHeight = section.firstElementChild?.clientHeight ?? window.innerHeight - 80;
-      const distance = height - stageHeight;
+      sectionTop = section.getBoundingClientRect().top + window.scrollY;
+      distance = section.offsetHeight - stageHeight;
+    };
+    const update = () => {
+      const top = sectionTop - window.scrollY;
       const progress =
         motion.matches && distance > 0 ? Math.min(1, Math.max(0, (80 - top) / distance)) : 0;
       section.style.setProperty('--progress', String(progress));
@@ -41,10 +48,16 @@ export function useLandingScroll(
     updateRef.current = update;
     const configure = () => {
       setIsPinned(motion.matches);
+      measure();
       update();
     };
-    const resize = new ResizeObserver(update);
+    const resize = new ResizeObserver(() => {
+      measure();
+      update();
+    });
     resize.observe(section);
+    // Content above the section (images, fonts) moves it without resizing it.
+    resize.observe(document.body);
     if (section.firstElementChild) resize.observe(section.firstElementChild);
     configure();
     motion.addEventListener('change', configure);

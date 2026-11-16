@@ -9,6 +9,7 @@ import './schemas/env';
 import { createAnalyticsMutationCache, sanitizeAnalyticsEvent } from './utils/analytics';
 import { showMutationProgress } from './utils/mutationProgress';
 import { showCoinRewards } from './utils/coinRewards';
+import { hideSplashWhenReady } from './utils/splash';
 import { routeTree } from './routeTree.gen';
 import { useMyProfile } from './hooks';
 import { ApiRequestError } from './api/errors';
@@ -153,3 +154,5 @@ createRoot(rootElement).render(
     </PostHogProvider>
   </StrictMode>,
 );
+
+void hideSplashWhenReady(router);
