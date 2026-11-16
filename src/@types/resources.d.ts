@@ -154,7 +154,7 @@ export default interface Resources {
     "auth": {
       "backToUniversities": "Back to universities",
       "brand": {
-        "description": "Feed, chat, past papers and people from UMCS, KUL, Politechnika, Przyrodniczy and WSEI. Sign in with the account your university already gave you.",
+        "description": "Feed, chat, past exams and people from Lublin universities. Sign in with the account your university already gave you.",
         "headline": "Every student in Lublin, one place.",
         "privacy": "uniezz never sees or stores your university password."
       },
@@ -223,7 +223,7 @@ export default interface Resources {
       "sharedInterest": "shared with you",
       "showMe": "Show me",
       "studentBlocked": "Student blocked.",
-      "subtitle": "Meet students across all five universities",
+      "subtitle": "Meet students from every university in Lublin",
       "title": "Connections",
       "unmatch": "Unmatch",
       "unmatchDescription": "This match will be removed for both of you.",

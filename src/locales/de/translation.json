@@ -152,7 +152,7 @@
   "auth": {
     "backToUniversities": "Zurück zu den Universitäten",
     "brand": {
-      "description": "Feed, Chat, vergangene Beiträge und Leute von UMCS, KUL, Politechnika, Przyrodniczy und WSEI. Melden Sie sich mit dem Konto an, das Sie bereits von Ihrer Universität erhalten haben.",
+      "description": "Feed, Chat, alte Prüfungen und Leute von den Lubliner Hochschulen. Melde dich mit dem Konto an, das du von deiner Uni bekommen hast.",
       "headline": "Jeder Student in Lublin, ein Ort.",
       "privacy": "uniezz sieht oder speichert niemals Ihr Universitätspasswort."
     },
@@ -221,7 +221,7 @@
     "sharedInterest": "mit Ihnen geteilt",
     "showMe": "Zeig mir",
     "studentBlocked": "Student blockiert.",
-    "subtitle": "Treffen Sie Studierende aller fünf Universitäten",
+    "subtitle": "Triff Studierende aller Lubliner Hochschulen",
     "title": "Verbindungen",
     "unmatch": "Nicht übereinstimmend",
     "unmatchDescription": "Diese Übereinstimmung wird für Sie beide entfernt.",

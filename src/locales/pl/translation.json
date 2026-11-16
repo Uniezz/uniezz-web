@@ -152,7 +152,7 @@
   "auth": {
     "backToUniversities": "Wróć do wyboru uczelni",
     "brand": {
-      "description": "Aktualności, czat, zadania z poprzednich egzaminów i studenci UMCS, KUL, Politechniki Lubelskiej, Uniwersytetu Przyrodniczego oraz WSEI. Zaloguj się swoim kontem uczelnianym.",
+      "description": "Aktualności, czat, zadania z poprzednich egzaminów i studenci lubelskich uczelni. Zaloguj się swoim kontem uczelnianym.",
       "headline": "Wszyscy studenci Lublina w jednym miejscu.",
       "privacy": "uniezz nie ma dostępu do twojego hasła uczelnianego i go nie przechowuje."
     },
@@ -221,7 +221,7 @@
     "sharedInterest": "wspólne z tobą",
     "showMe": "Pokaż mi",
     "studentBlocked": "Osoba zablokowana.",
-    "subtitle": "Poznawaj studentów ze wszystkich pięciu uczelni",
+    "subtitle": "Poznawaj studentów ze wszystkich lubelskich uczelni",
     "title": "Znajomości",
     "unmatch": "Usuń dopasowanie",
     "unmatchDescription": "To dopasowanie zostanie usunięte dla was obojga.",
