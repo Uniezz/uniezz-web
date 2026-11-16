@@ -35,7 +35,7 @@ export function CourseList() {
                 <tr>
                   {[
                     t('courses.name'),
-                    t('app.subject'),
+                    t('app.programme'),
                     t('app.semester'),
                     t('courses.difficulty'),
                     t('app.rating'),

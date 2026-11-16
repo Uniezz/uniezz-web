@@ -138,7 +138,7 @@ export function CourseDetailsDialog({ courseId, onClose }: CourseDetailsDialogPr
                 <dd className="wrap-anywhere">{course.faculty}</dd>
               </div>
               <div>
-                <dt className="text-micro font-semibold text-secondary">{t('app.subject')}</dt>
+                <dt className="text-micro font-semibold text-secondary">{t('app.programme')}</dt>
                 <dd className="wrap-anywhere">{course.subject}</dd>
               </div>
               <div>

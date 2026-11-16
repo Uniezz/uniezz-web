@@ -138,7 +138,6 @@ export default interface Resources {
       "studyStatusGraduated": "Graduated",
       "studyStatusSuspended": "Suspended",
       "studyYear": "Year {{year}}",
-      "subject": "Subject",
       "submit": "Submit",
       "suggested": "Suggested",
       "todayLabel": "Today",
@@ -268,8 +267,8 @@ export default interface Resources {
       "removeMaterial": "Remove selected file",
       "saved": "Course saved.",
       "semesterHint": "Choose a semester from 1 to 12.",
-      "subjectHint": "Enter a subject name (3–150 characters).",
-      "subjectPlaceholder": "e.g. Mathematical analysis",
+      "subjectHint": "Enter your programme name (3–150 characters).",
+      "subjectPlaceholder": "e.g. Computer Science",
       "uploadEligibility": "You can upload materials only for your university and primary study programme.",
       "uploadingMaterials": "Uploading materials…",
       "validationError": "Check the highlighted fields and try again."

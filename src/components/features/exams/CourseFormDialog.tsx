@@ -298,7 +298,7 @@ export function CourseFormDialog({ course, onClose }: CourseFormDialogProps) {
                 <input className="app-control" readOnly {...register('faculty')} />
               </UIField>
               <UIField
-                label={t('app.subject')}
+                label={t('app.programme')}
                 error={errors.subject ? t('courses.subjectHint') : undefined}
               >
                 <input
