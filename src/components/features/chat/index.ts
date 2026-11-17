@@ -1,4 +1,5 @@
 export * from './ChatDraftImages';
+export * from './ChatFileChip';
 export * from './ChatImagePreview';
 export * from './ChatMessageImages';
 export * from './ChatThread';
