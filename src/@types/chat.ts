@@ -1,4 +1,5 @@
-export type Message = { text: string; outgoing: boolean; time: string };
+export type MessageAttachment = { name: string; url: string; mediaId: string };
+export type Message = { text: string; outgoing: boolean; time: string; attachments?: MessageAttachment[] };
 export type Conversation = {
   id: string;
   name: string;

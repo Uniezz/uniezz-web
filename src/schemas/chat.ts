@@ -9,3 +9,10 @@ export const groupSchema = z.object({
 });
 
 export type GroupSchema = z.infer<typeof groupSchema>;
+
+export const chatAttachmentSchema = z
+  .instanceof(File)
+  .refine((file) => ['image/jpeg', 'image/png', 'image/webp'].includes(file.type))
+  .refine((file) => file.size > 0 && file.size <= 10 * 1024 * 1024);
+
+export const MAX_CHAT_IMAGES = 5;
