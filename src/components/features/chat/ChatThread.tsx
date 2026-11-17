@@ -12,6 +12,8 @@ import { UIAvatar, UIButton, UIEmojiPicker, UIEmpty, UIPanel } from '@/ui/compon
 import { textFormSchema, type TextFormSchema } from '@/schemas';
 // TODO(api): Replace mock chat status and context content with API-backed conversation data.
 import { CHATMOCKS } from '@/utils';
+import { ChatImagePreview, type ChatPreviewState } from './ChatImagePreview';
+import { ChatMessageImages } from './ChatMessageImages';
 
 export function ChatThread({
   current,
@@ -29,6 +31,7 @@ export function ChatThread({
     mode: 'onChange',
   });
   const [isMultiline, setIsMultiline] = useState(false);
+  const [preview, setPreview] = useState<ChatPreviewState | null>(null);
   const messageDraft = useWatch({ control, name: 'text' });
   const submit = handleSubmit(
     ({ text }) => {
@@ -87,7 +90,13 @@ export function ChatThread({
               <div
                 className={`max-w-[85%] rounded-story px-3.5 py-2.5 text-body leading-[1.4] md:max-w-[420px] ${m.outgoing ? 'rounded-br-[6px] bg-blue' : 'rounded-bl-[6px] border border-white-10 bg-white-10'}`}
               >
-                <p className="break-words whitespace-pre-wrap">{m.text}</p>
+                {m.attachments && (
+                  <ChatMessageImages
+                    images={m.attachments}
+                    onOpen={(index) => setPreview({ images: m.attachments ?? [], index })}
+                  />
+                )}
+                {m.text && <p className="break-words whitespace-pre-wrap">{m.text}</p>}
                 <span
                   className={`mt-1 block text-right text-caption ${m.outgoing ? 'text-white-80' : 'text-secondary'}`}
                 >
@@ -141,6 +150,11 @@ export function ChatThread({
           </UIButton>
         )}
       </form>
+      <ChatImagePreview
+        preview={preview}
+        onIndexChange={(index) => setPreview((previous) => previous && { ...previous, index })}
+        onClose={() => setPreview(null)}
+      />
     </UIPanel>
   );
 }
