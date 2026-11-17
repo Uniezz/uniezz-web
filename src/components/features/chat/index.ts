@@ -1,4 +1,4 @@
-export * from './ChatDraftImages';
+export * from './ChatDraftAttachments';
 export * from './ChatFileChip';
 export * from './ChatImagePreview';
 export * from './ChatMessageImages';
