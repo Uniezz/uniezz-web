@@ -1,24 +1,27 @@
 import { captureAnalytics, toast, trackLocalAction } from '@/utils';
-import { ArrowLeft, ImagePlus, Send } from 'lucide-react';
+import { ArrowLeft, Paperclip, Send } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from '@tanstack/react-router';
 import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import type { Message, Conversation } from '@/@types';
+import type { Message, MessageAttachment, Conversation } from '@/@types';
 import { cn } from '@/ui/cn';
 import { UIAvatar, UIButton, UIEmojiPicker, UIEmpty, UIPanel } from '@/ui/components';
 import {
-  MAX_CHAT_IMAGES,
+  MAX_CHAT_ATTACHMENTS,
+  chatAttachmentAccept,
   chatAttachmentSchema,
+  isChatImage,
   textFormSchema,
   type TextFormSchema,
 } from '@/schemas';
 import { useUploadImage } from '@/hooks';
 // TODO(api): Replace mock chat status and context content with API-backed conversation data.
 import { CHATMOCKS } from '@/utils';
-import { ChatDraftImages, type ChatDraftImage } from './ChatDraftImages';
+import { ChatDraftAttachments, type ChatDraftAttachment } from './ChatDraftAttachments';
+import { ChatFileChip } from './ChatFileChip';
 import { ChatImagePreview, type ChatPreviewState } from './ChatImagePreview';
 import { ChatMessageImages } from './ChatMessageImages';
 
@@ -39,21 +42,21 @@ export function ChatThread({
   });
   const [isMultiline, setIsMultiline] = useState(false);
   const fileInput = useRef<HTMLInputElement>(null);
-  const [drafts, setDrafts] = useState<ChatDraftImage[]>([]);
+  const [drafts, setDrafts] = useState<ChatDraftAttachment[]>([]);
   const [isSending, setIsSending] = useState(false);
   const [preview, setPreview] = useState<ChatPreviewState | null>(null);
   const { mutateAsync: uploadImage } = useUploadImage('chat');
   const messageDraft = useWatch({ control, name: 'text' });
   const hasContent = Boolean(messageDraft?.trim()) || drafts.length > 0;
 
-  function addImages(files: File[]) {
+  function addAttachments(files: File[]) {
     if (!files.length) return;
     if (files.some((file) => !chatAttachmentSchema.safeParse(file).success)) {
       toast.error(t('app.attachmentError'));
       return;
     }
-    if (drafts.length + files.length > MAX_CHAT_IMAGES) {
-      toast.error(t('app.attachmentLimit', { max: MAX_CHAT_IMAGES }));
+    if (drafts.length + files.length > MAX_CHAT_ATTACHMENTS) {
+      toast.error(t('app.attachmentLimit', { max: MAX_CHAT_ATTACHMENTS }));
       return;
     }
     setDrafts((previous) => [
@@ -62,18 +65,21 @@ export function ChatThread({
     ]);
   }
 
-  function removeImage(id: string) {
+  function removeAttachment(id: string) {
     const removed = drafts.find((draft) => draft.id === id);
     if (removed) URL.revokeObjectURL(removed.url);
     setDrafts((previous) => previous.filter((draft) => draft.id !== id));
   }
 
   // TODO(api): Send the uploaded mediaIds with the message through the chat API once it exists.
+  // TODO(api): Upload files too once the chat upload kind accepts them; they stay local for now.
   async function sendMessage(text: string) {
     setIsSending(true);
     try {
       const mediaIds = await Promise.all(
-        drafts.map(async ({ file }) => (await uploadImage(file)).mediaId),
+        drafts.map(async ({ file }) =>
+          isChatImage(file) ? (await uploadImage(file)).mediaId : undefined,
+        ),
       );
       onSend({
         text,
@@ -85,6 +91,8 @@ export function ChatThread({
           ? drafts.map(({ file, url }, index) => ({
               name: file.name,
               url,
+              size: file.size,
+              contentType: file.type,
               mediaId: mediaIds[index],
             }))
           : undefined,
@@ -93,7 +101,7 @@ export function ChatThread({
       reset({ text: '' });
       setIsMultiline(false);
     } catch (error) {
-      console.error('Chat image upload failed', error);
+      console.error('Chat attachment upload failed', error);
       toast.error(t('app.attachmentUploadError'));
     } finally {
       setIsSending(false);
@@ -154,12 +162,10 @@ export function ChatThread({
               <div
                 className={`max-w-[85%] rounded-story px-3.5 py-2.5 text-body leading-[1.4] md:max-w-[420px] ${m.outgoing ? 'rounded-br-[6px] bg-blue' : 'rounded-bl-[6px] border border-white-10 bg-white-10'}`}
               >
-                {m.attachments && (
-                  <ChatMessageImages
-                    images={m.attachments}
-                    onOpen={(index) => setPreview({ images: m.attachments ?? [], index })}
-                  />
-                )}
+                <MessageAttachments
+                  attachments={m.attachments}
+                  onOpenImage={(images, index) => setPreview({ images, index })}
+                />
                 {m.text && <p className="break-words whitespace-pre-wrap">{m.text}</p>}
                 <span
                   className={`mt-1 block text-right text-caption ${m.outgoing ? 'text-white-80' : 'text-secondary'}`}
@@ -184,42 +190,43 @@ export function ChatThread({
         )}
         onSubmit={submit}
       >
-        <ChatDraftImages
+        <ChatDraftAttachments
           drafts={drafts}
           disabled={isSending}
-          onOpen={(index) =>
+          onOpenImage={(id) => {
+            const images = drafts.filter(({ file }) => isChatImage(file));
             setPreview({
-              images: drafts.map(({ file, url }) => ({ url, name: file.name })),
-              index,
-            })
-          }
-          onRemove={removeImage}
+              images: images.map(({ file, url }) => ({ url, name: file.name })),
+              index: images.findIndex((draft) => draft.id === id),
+            });
+          }}
+          onRemove={removeAttachment}
         />
         <div className="flex items-end gap-2 p-2 pl-4">
           <input
             ref={fileInput}
             type="file"
             multiple
-            accept="image/jpeg,image/png,image/webp"
+            accept={chatAttachmentAccept}
             className="sr-only"
             tabIndex={-1}
             aria-hidden="true"
             onChange={(event) => {
               const files = Array.from(event.target.files ?? []);
               event.target.value = '';
-              addImages(files);
+              addAttachments(files);
             }}
           />
           <UIButton
             type="button"
             size="icon"
             bg="transparent"
-            aria-label={t('app.attachImage')}
-            disabled={isSending || drafts.length >= MAX_CHAT_IMAGES}
+            aria-label={t('app.attachFile')}
+            disabled={isSending || drafts.length >= MAX_CHAT_ATTACHMENTS}
             className="shrink-0 text-secondary enabled:hover:bg-transparent enabled:hover:text-white"
             onClick={() => fileInput.current?.click()}
           >
-            <ImagePlus size={20} aria-hidden="true" />
+            <Paperclip size={20} aria-hidden="true" />
           </UIButton>
           <textarea
             autoComplete="off"
@@ -272,5 +279,39 @@ function LinkToHousing() {
       <br />
       <strong className="text-label text-white">{CHATMOCKS.housing}</strong>
     </Link>
+  );
+}
+
+function MessageAttachments({
+  attachments,
+  onOpenImage,
+}: {
+  attachments: MessageAttachment[] | undefined;
+  onOpenImage: (images: { url: string; name: string }[], index: number) => void;
+}) {
+  const { t } = useTranslation();
+  if (!attachments?.length) return null;
+  const images = attachments.filter(({ contentType }) => isChatImage({ type: contentType }));
+  const files = attachments.filter(({ contentType }) => !isChatImage({ type: contentType }));
+  return (
+    <>
+      {images.length > 0 && (
+        <ChatMessageImages images={images} onOpen={(index) => onOpenImage(images, index)} />
+      )}
+      {files.map((file) => (
+        <a
+          key={file.url}
+          href={file.url}
+          download={file.name}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={t('app.openFile')}
+          data-ph-capture-attribute-label="Open chat file"
+          className="mb-1 block w-64 max-w-full focus-visible:outline-2 focus-visible:outline-blue"
+        >
+          <ChatFileChip name={file.name} size={file.size} />
+        </a>
+      ))}
+    </>
   );
 }
