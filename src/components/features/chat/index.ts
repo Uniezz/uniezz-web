@@ -1,3 +1,4 @@
+export * from './ChatImagePreview';
 export * from './ChatThread';
 export * from './ConnectionsList';
 export * from './ConversationList';
