@@ -94,7 +94,7 @@ function ChatPage() {
         conversation.id === id
           ? {
               ...conversation,
-              preview: message.text,
+              preview: message.text || message.attachments?.[0]?.name || '',
               messages: [...conversation.messages, message],
             }
           : conversation,

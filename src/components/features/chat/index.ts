@@ -1,3 +1,7 @@
+export * from './ChatDraftAttachments';
+export * from './ChatFileChip';
+export * from './ChatImagePreview';
+export * from './ChatMessageImages';
 export * from './ChatThread';
 export * from './ConnectionsList';
 export * from './ConversationList';
