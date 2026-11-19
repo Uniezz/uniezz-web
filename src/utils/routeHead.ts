@@ -71,6 +71,15 @@ export function termsRouteHead() {
   });
 }
 
+export function childSafetyRouteHead() {
+  return buildPageHead({
+    title: i18n.t('seo.childSafetyTitle'),
+    description: i18n.t('seo.childSafetyDescription'),
+    canonicalPath: '/child-safety',
+    robots: 'index, follow',
+  });
+}
+
 export function privateRouteHead(canonicalPath: string) {
   return buildPageHead({
     title: i18n.t('seo.appTitle'),

@@ -46,6 +46,15 @@ export function LandingJoin() {
             >
               {isPolish ? 'Regulamin' : 'Terms and conditions'}
             </Link>
+            <Link
+              to="/child-safety"
+              data-ph-capture-attribute-label={
+                isPolish ? 'Standardy bezpieczeństwa dzieci' : 'Child safety standards'
+              }
+              className="hover:text-white"
+            >
+              {isPolish ? 'Bezpieczeństwo dzieci' : 'Child safety'}
+            </Link>
           </nav>
         </footer>
       </div>

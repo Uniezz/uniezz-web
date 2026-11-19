@@ -590,6 +590,8 @@ export default interface Resources {
       "homeTitle": "uniezz — student life in Lublin",
       "privacyDescription": "How Uniezz collects, uses, and protects your personal data.",
       "privacyTitle": "Privacy policy — uniezz",
+      "childSafetyDescription": "How uniezz prohibits child sexual abuse and exploitation (CSAE) and how to report it.",
+      "childSafetyTitle": "Child safety standards — uniezz",
       "termsDescription": "Terms and rules for using the Uniezz student community in Lublin.",
       "termsTitle": "Terms of service — uniezz"
     },

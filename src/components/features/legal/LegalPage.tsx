@@ -78,6 +78,15 @@ export function LegalPage({ title, intro, sections, children }: LegalPageProps) 
           >
             {isPolish ? 'Regulamin' : 'Terms and conditions'}
           </Link>
+          <Link
+            to="/child-safety"
+            data-ph-capture-attribute-label={
+              isPolish ? 'Standardy bezpieczeństwa dzieci' : 'Child safety standards'
+            }
+            className="hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky"
+          >
+            {isPolish ? 'Bezpieczeństwo dzieci' : 'Child safety'}
+          </Link>
           <a
             href="mailto:info@madis.it.com"
             data-ph-capture-attribute-label={isPolish ? 'Kontakt' : 'Contact'}

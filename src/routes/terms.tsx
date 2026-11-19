@@ -39,25 +39,31 @@ function TermsPage() {
           ],
         },
         {
-          title: '5. Zgłoszenia i moderacja',
+          title: '5. Bezpieczeństwo dzieci (CSAE)',
+          paragraphs: [
+            'Aplikacja uniezz ma zerową tolerancję dla Child Sexual Abuse and Exploitation (CSAE), w tym child sexual abuse material (CSAM). Zabronione jest tworzenie, przesyłanie, udostępnianie lub żądanie takich treści oraz wykorzystywanie uniezz do uwodzenia lub wykorzystywania osób małoletnich. Usuwamy te treści, zamykamy konta i zawiadamiamy organy, gdy wymaga tego prawo. Szczegóły i kontakt: strona standardów bezpieczeństwa dzieci oraz info@madis.it.com.',
+          ],
+        },
+        {
+          title: '6. Zgłoszenia i moderacja',
           paragraphs: [
             'Możesz zgłaszać profile, posty i komentarze naruszające te zasady lub prawo, korzystając z funkcji zgłoszenia. Możemy sprawdzić zgłoszoną treść i ograniczyć jej widoczność, usunąć ją lub zawiesić konto. Podejmujemy działania proporcjonalnie do rodzaju naruszenia i dostępnych informacji. W sprawie decyzji moderacyjnej możesz napisać na info@madis.it.com.',
           ],
         },
         {
-          title: '6. Monety i funkcje serwisu',
+          title: '7. Monety i funkcje serwisu',
           paragraphs: [
             'Monety i nagrody są elementami funkcji Uniezz, nie mają wartości pieniężnej, nie są pieniędzmi elektronicznymi i nie można ich wypłacić ani przenieść poza konto. Możemy zmieniać lub wycofywać funkcje, o ile pozwala na to prawo.',
           ],
         },
         {
-          title: '7. Dostępność i odpowiedzialność',
+          title: '8. Dostępność i odpowiedzialność',
           paragraphs: [
             'Staramy się utrzymywać Uniezz, ale nie gwarantujemy nieprzerwanego lub wolnego od błędów działania. Możemy czasowo ograniczyć dostęp w celu konserwacji, bezpieczeństwa lub naprawy. Regulamin nie ogranicza praw konsumenta ani odpowiedzialności, której nie można wyłączyć na mocy prawa.',
           ],
         },
         {
-          title: '8. Zmiany regulaminu i prawo',
+          title: '9. Zmiany regulaminu i prawo',
           paragraphs: [
             'Możemy aktualizować regulamin, publikując jego nową wersję pod tym adresem. Do korzystania z Uniezz stosuje się prawo polskie, z zachowaniem bezwzględnie obowiązujących praw konsumenta. Pytania i zgłoszenia dotyczące regulaminu kieruj na info@madis.it.com.',
           ],
@@ -90,25 +96,31 @@ function TermsPage() {
           ],
         },
         {
-          title: '5. Reports and moderation',
+          title: '5. Child safety (CSAE)',
+          paragraphs: [
+            'The uniezz app has a zero-tolerance policy for Child Sexual Abuse and Exploitation (CSAE), including child sexual abuse material (CSAM). Do not create, upload, share, or request such content, and do not use uniezz to groom or exploit anyone under 18. We remove this content, terminate accounts, and notify authorities where the law requires it. Details and contact: the child safety standards page and info@madis.it.com.',
+          ],
+        },
+        {
+          title: '6. Reports and moderation',
           paragraphs: [
             'You can report profiles, posts and comments that violate these rules or the law using the in-service reporting feature. We may review reported content and limit its visibility, remove it or suspend an account. We take action in proportion to the type of issue and information available. To ask us about a moderation decision, contact info@madis.it.com.',
           ],
         },
         {
-          title: '6. Coins and service features',
+          title: '7. Coins and service features',
           paragraphs: [
             'Coins and rewards are features of Uniezz. They have no cash value, are not electronic money, and cannot be withdrawn or transferred outside your account. We may change or withdraw features where permitted by law.',
           ],
         },
         {
-          title: '7. Availability and liability',
+          title: '8. Availability and liability',
           paragraphs: [
             'We work to keep Uniezz available but do not guarantee uninterrupted or error-free operation. We may temporarily restrict access for maintenance, security or repairs. These Terms do not limit consumer rights or liability that cannot be excluded under applicable law.',
           ],
         },
         {
-          title: '8. Changes and governing law',
+          title: '9. Changes and governing law',
           paragraphs: [
             'We may update these Terms by publishing a new version at this address. Polish law applies to use of Uniezz, subject to mandatory consumer rights. Send questions and complaints about these Terms to info@madis.it.com.',
           ],
