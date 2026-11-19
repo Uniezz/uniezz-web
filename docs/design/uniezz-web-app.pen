@@ -19612,20 +19612,104 @@
       "name": "00b · Chat Kit · v2",
       "clip": true,
       "width": 1440,
+      "height": 1260,
       "fill": "$ink",
       "layout": "vertical",
-      "gap": 40,
-      "padding": 56,
+      "gap": 56,
+      "padding": [
+        56,
+        64
+      ],
       "children": [
         {
-          "type": "text",
-          "id": "Wfgla",
-          "name": "Kit title",
-          "fill": "$white",
-          "content": "Chat kit",
-          "fontFamily": "$font",
-          "fontSize": 28,
-          "fontWeight": "700"
+          "type": "frame",
+          "id": "a9aUg",
+          "layoutPosition": "absolute",
+          "x": 0,
+          "y": 0,
+          "name": "Backdrop",
+          "width": 1440,
+          "height": 1260,
+          "fill": [
+            {
+              "type": "gradient",
+              "gradientType": "radial",
+              "enabled": true,
+              "rotation": 0,
+              "size": {
+                "width": 1.2,
+                "height": 0.6
+              },
+              "colors": [
+                {
+                  "color": "$blue40",
+                  "position": 0
+                },
+                {
+                  "color": "$blue0",
+                  "position": 1
+                }
+              ],
+              "center": {
+                "x": 0.85,
+                "y": 0.05
+              }
+            },
+            {
+              "type": "gradient",
+              "gradientType": "radial",
+              "enabled": true,
+              "rotation": 0,
+              "size": {
+                "width": 1,
+                "height": 0.6
+              },
+              "colors": [
+                {
+                  "color": "$violet20",
+                  "position": 0
+                },
+                {
+                  "color": "$violet0",
+                  "position": 1
+                }
+              ],
+              "center": {
+                "x": 0.1,
+                "y": 0.6
+              }
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "RkWmu",
+          "name": "Head",
+          "layout": "vertical",
+          "gap": 8,
+          "children": [
+            {
+              "type": "text",
+              "id": "TtDVw",
+              "name": "Title",
+              "fill": "$white",
+              "content": "Uniezz Chat Kit",
+              "fontFamily": "$font",
+              "fontSize": 40,
+              "fontWeight": "700",
+              "letterSpacing": -1.4
+            },
+            {
+              "type": "text",
+              "id": "cw6xj",
+              "name": "Sub",
+              "fill": "$white60",
+              "content": "Reusable chat parts. Same dark glass, Geist and blue accent as the main UI Kit.",
+              "fontFamily": "$font",
+              "fontSize": 15,
+              "fontWeight": "normal"
+            }
+          ]
         },
         {
           "type": "frame",
@@ -19633,28 +19717,19 @@
           "name": "Section · MESSAGE BUBBLES",
           "width": "fill_container",
           "stroke": "$white10",
-          "strokeWidth": {
-            "bottom": 1
-          },
           "layout": "vertical",
-          "gap": 6,
-          "padding": [
-            0,
-            0,
-            32,
-            0
-          ],
+          "gap": 20,
           "children": [
             {
               "type": "text",
               "id": "G5zjnS",
               "name": "Title",
-              "fill": "$white60",
+              "fill": "$white",
               "content": "MESSAGE BUBBLES",
               "fontFamily": "$font",
-              "fontSize": 12,
-              "fontWeight": "700",
-              "letterSpacing": 1
+              "fontSize": 20,
+              "fontWeight": "600",
+              "letterSpacing": -0.4
             },
             {
               "type": "text",
@@ -19671,13 +19746,7 @@
               "id": "xNx4E",
               "name": "Row",
               "width": "fill_container",
-              "gap": 32,
-              "padding": [
-                16,
-                0,
-                0,
-                0
-              ],
+              "gap": 24,
               "children": [
                 {
                   "type": "frame",
@@ -19690,11 +19759,11 @@
                       "type": "text",
                       "id": "KcQJy",
                       "name": "Caption",
-                      "fill": "$white40",
+                      "fill": "$white60",
                       "content": "UIMessage / In",
                       "fontFamily": "$font",
-                      "fontSize": 11,
-                      "fontWeight": "normal"
+                      "fontSize": 13,
+                      "fontWeight": "600"
                     },
                     {
                       "type": "frame",
@@ -19798,11 +19867,11 @@
                       "type": "text",
                       "id": "c2qKd",
                       "name": "Caption",
-                      "fill": "$white40",
+                      "fill": "$white60",
                       "content": "In · group, with sender",
                       "fontFamily": "$font",
-                      "fontSize": 11,
-                      "fontWeight": "normal"
+                      "fontSize": 13,
+                      "fontWeight": "600"
                     },
                     {
                       "id": "JwK0Q",
@@ -19832,11 +19901,11 @@
                       "type": "text",
                       "id": "c5Qtq",
                       "name": "Caption",
-                      "fill": "$white40",
+                      "fill": "$white60",
                       "content": "In · middle of group",
                       "fontFamily": "$font",
-                      "fontSize": 11,
-                      "fontWeight": "normal"
+                      "fontSize": 13,
+                      "fontWeight": "600"
                     },
                     {
                       "id": "rDutW",
@@ -19865,11 +19934,11 @@
                       "type": "text",
                       "id": "f7R3i",
                       "name": "Caption",
-                      "fill": "$white40",
+                      "fill": "$white60",
                       "content": "UIMessage / Out",
                       "fontFamily": "$font",
-                      "fontSize": 11,
-                      "fontWeight": "normal"
+                      "fontSize": 13,
+                      "fontWeight": "600"
                     },
                     {
                       "type": "frame",
@@ -19968,11 +20037,11 @@
                       "type": "text",
                       "id": "l1IW0G",
                       "name": "Caption",
-                      "fill": "$white40",
+                      "fill": "$white60",
                       "content": "Out · edited, sent",
                       "fontFamily": "$font",
-                      "fontSize": 11,
-                      "fontWeight": "normal"
+                      "fontSize": 13,
+                      "fontWeight": "600"
                     },
                     {
                       "id": "DH4P6",
@@ -19998,28 +20067,19 @@
           "name": "Section · SMALL PARTS",
           "width": "fill_container",
           "stroke": "$white10",
-          "strokeWidth": {
-            "bottom": 1
-          },
           "layout": "vertical",
-          "gap": 6,
-          "padding": [
-            0,
-            0,
-            32,
-            0
-          ],
+          "gap": 20,
           "children": [
             {
               "type": "text",
               "id": "dCMuS",
               "name": "Title",
-              "fill": "$white60",
+              "fill": "$white",
               "content": "SMALL PARTS",
               "fontFamily": "$font",
-              "fontSize": 12,
-              "fontWeight": "700",
-              "letterSpacing": 1
+              "fontSize": 20,
+              "fontWeight": "600",
+              "letterSpacing": -0.4
             },
             {
               "type": "text",
@@ -20036,13 +20096,7 @@
               "id": "IILSw",
               "name": "Row",
               "width": "fill_container",
-              "gap": 32,
-              "padding": [
-                16,
-                0,
-                0,
-                0
-              ],
+              "gap": 24,
               "children": [
                 {
                   "type": "frame",
@@ -20055,11 +20109,11 @@
                       "type": "text",
                       "id": "T5MEaD",
                       "name": "Caption",
-                      "fill": "$white40",
+                      "fill": "$white60",
                       "content": "UIDateChip",
                       "fontFamily": "$font",
-                      "fontSize": 11,
-                      "fontWeight": "normal"
+                      "fontSize": 13,
+                      "fontWeight": "600"
                     },
                     {
                       "type": "frame",
@@ -20098,11 +20152,11 @@
                       "type": "text",
                       "id": "YzXxk",
                       "name": "Caption",
-                      "fill": "$white40",
+                      "fill": "$white60",
                       "content": "UIReaction",
                       "fontFamily": "$font",
-                      "fontSize": 11,
-                      "fontWeight": "normal"
+                      "fontSize": 13,
+                      "fontWeight": "600"
                     },
                     {
                       "type": "frame",
@@ -20155,11 +20209,11 @@
                       "type": "text",
                       "id": "Cy7sK",
                       "name": "Caption",
-                      "fill": "$white40",
+                      "fill": "$white60",
                       "content": "UIReaction · yours",
                       "fontFamily": "$font",
-                      "fontSize": 11,
-                      "fontWeight": "normal"
+                      "fontSize": 13,
+                      "fontWeight": "600"
                     },
                     {
                       "id": "pSNtJ",
@@ -20186,28 +20240,19 @@
           "name": "Section · CONTEXT CARD",
           "width": "fill_container",
           "stroke": "$white10",
-          "strokeWidth": {
-            "bottom": 1
-          },
           "layout": "vertical",
-          "gap": 6,
-          "padding": [
-            0,
-            0,
-            32,
-            0
-          ],
+          "gap": 20,
           "children": [
             {
               "type": "text",
               "id": "Dkq7U",
               "name": "Title",
-              "fill": "$white60",
+              "fill": "$white",
               "content": "CONTEXT CARD",
               "fontFamily": "$font",
-              "fontSize": 12,
-              "fontWeight": "700",
-              "letterSpacing": 1
+              "fontSize": 20,
+              "fontWeight": "600",
+              "letterSpacing": -0.4
             },
             {
               "type": "text",
@@ -20224,13 +20269,7 @@
               "id": "ctwMg",
               "name": "Row",
               "width": "fill_container",
-              "gap": 32,
-              "padding": [
-                16,
-                0,
-                0,
-                0
-              ],
+              "gap": 24,
               "children": [
                 {
                   "type": "frame",
@@ -20243,11 +20282,11 @@
                       "type": "text",
                       "id": "E3xJH",
                       "name": "Caption",
-                      "fill": "$white40",
+                      "fill": "$white60",
                       "content": "UIContextCard",
                       "fontFamily": "$font",
-                      "fontSize": 11,
-                      "fontWeight": "normal"
+                      "fontSize": 13,
+                      "fontWeight": "600"
                     },
                     {
                       "type": "frame",
@@ -20372,28 +20411,19 @@
           "name": "Section · COMPOSER",
           "width": "fill_container",
           "stroke": "$white10",
-          "strokeWidth": {
-            "bottom": 1
-          },
           "layout": "vertical",
-          "gap": 6,
-          "padding": [
-            0,
-            0,
-            32,
-            0
-          ],
+          "gap": 20,
           "children": [
             {
               "type": "text",
               "id": "B8cUG6",
               "name": "Title",
-              "fill": "$white60",
+              "fill": "$white",
               "content": "COMPOSER",
               "fontFamily": "$font",
-              "fontSize": 12,
-              "fontWeight": "700",
-              "letterSpacing": 1
+              "fontSize": 20,
+              "fontWeight": "600",
+              "letterSpacing": -0.4
             },
             {
               "type": "text",
@@ -20410,13 +20440,7 @@
               "id": "K1Trp2",
               "name": "Row",
               "width": "fill_container",
-              "gap": 32,
-              "padding": [
-                16,
-                0,
-                0,
-                0
-              ],
+              "gap": 24,
               "children": [
                 {
                   "type": "frame",
@@ -20429,11 +20453,11 @@
                       "type": "text",
                       "id": "B44Fy4",
                       "name": "Caption",
-                      "fill": "$white40",
+                      "fill": "$white60",
                       "content": "UIChatComposer",
                       "fontFamily": "$font",
-                      "fontSize": 11,
-                      "fontWeight": "normal"
+                      "fontSize": 13,
+                      "fontWeight": "600"
                     },
                     {
                       "type": "frame",
