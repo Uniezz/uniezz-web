@@ -27,6 +27,8 @@ export function useProfileForm(profile: components['schemas']['Profile']) {
   const form = useForm<ProfileFormSchema, unknown, ProfileSubmission>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: defaults(profile),
+    mode: 'onSubmit',
+    reValidateMode: 'onSubmit',
   });
   const { reset } = form;
   const {
@@ -58,7 +60,7 @@ export function useProfileForm(profile: components['schemas']['Profile']) {
       return updateMyProfile({
         firstName: values.first,
         lastName: values.last,
-        bio: values.bio,
+        bio: values.bio.trim(),
         interests: values.interests,
         privacy: values.privacy,
         avatarMediaId: avatar?.mediaId,
@@ -68,10 +70,9 @@ export function useProfileForm(profile: components['schemas']['Profile']) {
     },
     onSuccess: (saved) => {
       queryClient.setQueryData(['profile', 'me'], saved);
-      reset(defaults(saved));
+      reset(defaults(saved), { keepDirtyValues: false });
       resetAvatarUpload();
       resetBannerUpload();
-      void queryClient.invalidateQueries({ queryKey: ['profiles'] });
     },
   });
   return { form, saveProfile, isPending: isSaving || isUploadingAvatar || isUploadingBanner };

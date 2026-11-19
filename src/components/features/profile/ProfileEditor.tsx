@@ -1,7 +1,7 @@
 import { captureAnalytics, toast } from '@/utils';
 import { Check } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { FormProvider } from 'react-hook-form';
+import { FormProvider, useFormState } from 'react-hook-form';
 import { useDeleteBanner } from '@/hooks';
 import { useProfileForm } from '@/hooks';
 import type { components } from '@/@types/schema';
@@ -22,10 +22,9 @@ export function ProfileEditor({
   const { form, saveProfile, isPending: isSaving } = useProfileForm(profile);
   const { mutateAsync: deleteBanner, isPending: isDeletingBanner } = useDeleteBanner();
   const isPending = isSaving || isDeletingBanner;
-  const {
-    handleSubmit,
-    formState: { isDirty },
-  } = form;
+  const { handleSubmit, control } = form;
+  const { isDirty: formIsDirty, dirtyFields } = useFormState({ control });
+  const isDirty = formIsDirty || Object.keys(dirtyFields).length > 0;
   return (
     <FormProvider {...form}>
       <UIUnsavedChanges dirty={isDirty} />
@@ -45,17 +44,15 @@ export function ProfileEditor({
           )}
         </UITopbar>
         <div className="grid min-w-0 gap-5 xl:grid-cols-[310px_minmax(0,1fr)]">
-          <fieldset disabled={isPending}>
-            <ProfileIdentity
-              universityId={profile.universityId}
-              disabled={isPending}
-              onRemoveBanner={async () => {
-                if (form.getValues('banner')) await deleteBanner();
-                form.resetField('banner', { defaultValue: '' });
-                form.resetField('bannerFile');
-              }}
-            />
-          </fieldset>
+          <ProfileIdentity
+            universityId={profile.universityId}
+            disabled={isPending}
+            onRemoveBanner={async () => {
+              if (form.getValues('banner')) await deleteBanner();
+              form.resetField('banner', { defaultValue: '' });
+              form.resetField('bannerFile');
+            }}
+          />
           <UIPanel
             surface="tint"
             className="grid min-w-0 items-start gap-6 rounded-profile lg:grid-cols-2"

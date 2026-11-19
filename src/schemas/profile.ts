@@ -34,10 +34,7 @@ export const bannerImageSchema = z
 export const profileFormSchema = profileSchema.extend({
   privacy: z.object({ showEmail: z.boolean(), showFaculty: z.boolean(), showYear: z.boolean() }),
   photo: z.string(),
-  bio: z
-    .string()
-    .max(500)
-    .transform((value) => value.trim()),
+  bio: z.string().max(500),
   interests: z
     .string()
     .transform((value) =>

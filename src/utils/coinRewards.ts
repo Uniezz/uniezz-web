@@ -3,6 +3,7 @@ import { createElement } from 'react';
 import baseToast from 'react-hot-toast';
 // Direct path: the components barrel pulls in the API client and its env check.
 import { UICoin } from '@/ui/components/UICoin';
+import type { components } from '@/@types/schema';
 import i18n from '@/i18n';
 import { formatCompactNumber } from './numberFormat';
 
@@ -43,7 +44,14 @@ export function showCoinRewards(queryClient: QueryClient) {
     // Likes, replies and posts move quest progress even when they pay nothing.
     void queryClient.invalidateQueries({ queryKey: ['rewards'] });
     const count = coinsEarned(data);
-    if (count > 0) void queryClient.invalidateQueries({ queryKey: ['profile', 'me'] });
+    const mutationKey = event.mutation.options.mutationKey;
+    const profilePatchAlreadyWroteMe =
+      Array.isArray(mutationKey) && mutationKey[0] === 'profile' && mutationKey[1] === 'update';
+    if (count > 0 && !profilePatchAlreadyWroteMe) {
+      queryClient.setQueryData<components['schemas']['Profile']>(['profile', 'me'], (profile) =>
+        profile ? { ...profile, coins: profile.coins + count } : profile,
+      );
+    }
     // One fixed id: nested mutations (publish wraps create) report the same coins twice.
     // shortcut: two different rewards at the same moment show only the last; sum them if that happens.
     if (count > 0) {

@@ -31,6 +31,7 @@ test('the profile form validates bio, interests and privacy', () => {
     ...profile,
     first: 'Jan',
     last: 'Kowalski',
+    bio: ' Hello ',
     interests: ['music', 'sport'],
   });
   expect(profileFormSchema.safeParse({ ...profile, bio: 'x'.repeat(501) }).success).toBe(false);
