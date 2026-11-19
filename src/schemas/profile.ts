@@ -31,29 +31,37 @@ export const bannerImageSchema = z
   .max(10 * 1024 * 1024)
   .mime(['image/jpeg', 'image/png', 'image/webp']);
 
+export function parseProfileInterests(value: string) {
+  return value
+    .split(',')
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
+function isSongUrl(value: string) {
+  const song = value.trim();
+  if (!song) return true;
+  try {
+    const url = new URL(song);
+    return url.protocol === 'http:' || url.protocol === 'https:';
+  } catch {
+    return false;
+  }
+}
+
 export const profileFormSchema = profileSchema.extend({
   privacy: z.object({ showEmail: z.boolean(), showFaculty: z.boolean(), showYear: z.boolean() }),
   photo: z.string(),
   bio: z.string().max(500),
-  interests: z
-    .string()
-    .transform((value) =>
-      value
-        .split(',')
-        .map((item) => item.trim())
-        .filter(Boolean),
-    )
-    .pipe(z.array(z.string().max(30)).max(10)),
+  interests: z.string().refine((value) => {
+    const items = parseProfileInterests(value);
+    return items.length <= 10 && items.every((item) => item.length <= 30);
+  }),
   avatarFile: avatarImageSchema.optional(),
   banner: z.string(),
   bannerFile: bannerImageSchema.optional(),
   /** An empty string clears the song; otherwise http or https only, like the API. */
-  song: z
-    .string()
-    .trim()
-    .max(500)
-    .pipe(z.union([z.literal(''), z.url({ protocol: /^https?$/ })])),
+  song: z.string().max(500).refine(isSongUrl),
 });
-export type ProfileFormSchema = z.input<typeof profileFormSchema>;
-export type ProfileSubmission = z.output<typeof profileFormSchema>;
+export type ProfileFormSchema = z.infer<typeof profileFormSchema>;
 export type ProgrammeFormSchema = z.infer<typeof programmeSchema>;

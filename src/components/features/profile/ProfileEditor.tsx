@@ -1,7 +1,7 @@
 import { captureAnalytics, toast } from '@/utils';
 import { Check } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { FormProvider, useFormState } from 'react-hook-form';
+import { FormProvider } from 'react-hook-form';
 import { useDeleteBanner } from '@/hooks';
 import { useProfileForm } from '@/hooks';
 import type { components } from '@/@types/schema';
@@ -19,16 +19,14 @@ export function ProfileEditor({
   showPosts?: boolean;
 }) {
   const { t } = useTranslation();
-  const { form, saveProfile, isPending: isSaving } = useProfileForm(profile);
+  const { form, saveProfile, isDirty, isPending: isSaving } = useProfileForm(profile);
   const { mutateAsync: deleteBanner, isPending: isDeletingBanner } = useDeleteBanner();
   const isPending = isSaving || isDeletingBanner;
-  const { handleSubmit, control } = form;
-  const { isDirty: formIsDirty, dirtyFields } = useFormState({ control });
-  const isDirty = formIsDirty || Object.keys(dirtyFields).length > 0;
+  const { handleSubmit } = form;
   return (
     <FormProvider {...form}>
-      <UIUnsavedChanges dirty={isDirty} />
       <>
+        <UIUnsavedChanges dirty={isDirty} />
         <UITopbar title={t('app.yourProfile')}>
           {isDirty && (
             <UIButton
@@ -72,9 +70,7 @@ export function ProfileEditor({
                 () => captureAnalytics('profile_form_validation_failed'),
               )}
             >
-              <fieldset disabled={isPending}>
-                <PersonalDetails />
-              </fieldset>
+              <PersonalDetails />
             </form>
             <div className="min-w-0">
               <StudyProgrammes universityId={profile.universityId} />

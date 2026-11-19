@@ -17,11 +17,8 @@ export function OnboardingWizard({ profile }: { profile: components['schemas']['
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [step, setStep] = useState(0);
-  const { form, saveProfile, isPending } = useProfileForm(profile);
-  const {
-    handleSubmit,
-    formState: { isDirty },
-  } = form;
+  const { form, saveProfile, isDirty, isPending } = useProfileForm(profile);
+  const { handleSubmit } = form;
   const isLast = step === ONBOARDING_STEPS.length - 1;
 
   // Photo and details share one form, so they are saved together when leaving the details step.

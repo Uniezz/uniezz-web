@@ -4,7 +4,7 @@ import {
   avatarImageSchema,
   profileSchema,
   profileFormSchema,
-} from '../../src/schemas';
+} from '../../src/schemas/profile';
 
 test('profile names must be nonempty and are normalized', () => {
   expect(profileSchema.parse({ first: ' Jan ', last: ' Kowalski ' })).toEqual({
@@ -32,7 +32,7 @@ test('the profile form validates bio, interests and privacy', () => {
     first: 'Jan',
     last: 'Kowalski',
     bio: ' Hello ',
-    interests: ['music', 'sport'],
+    interests: 'music, , sport ',
   });
   expect(profileFormSchema.safeParse({ ...profile, bio: 'x'.repeat(501) }).success).toBe(false);
   expect(profileFormSchema.safeParse({ ...profile, interests: 'x'.repeat(31) }).success).toBe(

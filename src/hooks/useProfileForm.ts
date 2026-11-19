@@ -1,9 +1,9 @@
-import { useForm } from 'react-hook-form';
+import { useForm, useFormState } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import type { components } from '@/@types/schema';
 import { updateMyProfile } from '@/api';
-import { profileFormSchema, type ProfileFormSchema, type ProfileSubmission } from '@/schemas';
+import { parseProfileInterests, profileFormSchema, type ProfileFormSchema } from '@/schemas';
 import { useUploadImage } from './useUploadImage';
 import i18n from '@/i18n';
 
@@ -13,7 +13,7 @@ function defaults(profile: components['schemas']['Profile']): ProfileFormSchema 
     last: profile.lastName ?? '',
     bio: profile.bio ?? '',
     interests: profile.interests?.join(', ') ?? '',
-    privacy: profile.privacy,
+    privacy: { ...profile.privacy },
     photo: profile.avatarUrl ?? '/app/avatar.png',
     avatarFile: undefined,
     banner: profile.bannerUrl ?? '',
@@ -24,13 +24,13 @@ function defaults(profile: components['schemas']['Profile']): ProfileFormSchema 
 
 export function useProfileForm(profile: components['schemas']['Profile']) {
   const queryClient = useQueryClient();
-  const form = useForm<ProfileFormSchema, unknown, ProfileSubmission>({
+  const form = useForm<ProfileFormSchema>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: defaults(profile),
     mode: 'onSubmit',
     reValidateMode: 'onSubmit',
   });
-  const { reset } = form;
+  const { isDirty } = useFormState({ control: form.control });
   const {
     data: uploadedAvatar,
     mutateAsync: uploadAvatar,
@@ -46,7 +46,7 @@ export function useProfileForm(profile: components['schemas']['Profile']) {
   const { mutateAsync: saveProfile, isPending: isSaving } = useMutation({
     meta: { analyticsAction: 'profile_update', progress: () => i18n.t('progress.profileUpdate') },
     mutationKey: ['profile', 'update'],
-    mutationFn: async (values: ProfileSubmission) => {
+    mutationFn: async (values: ProfileFormSchema) => {
       const avatar = values.avatarFile
         ? uploadedAvatar?.file === values.avatarFile
           ? uploadedAvatar
@@ -61,19 +61,24 @@ export function useProfileForm(profile: components['schemas']['Profile']) {
         firstName: values.first,
         lastName: values.last,
         bio: values.bio.trim(),
-        interests: values.interests,
+        interests: parseProfileInterests(values.interests),
         privacy: values.privacy,
         avatarMediaId: avatar?.mediaId,
         bannerMediaId: banner?.mediaId,
-        songUrl: values.song,
+        songUrl: values.song.trim(),
       });
     },
     onSuccess: (saved) => {
       queryClient.setQueryData(['profile', 'me'], saved);
-      reset(defaults(saved), { keepDirtyValues: false });
+      form.reset(defaults(saved), { keepFieldsRef: true });
       resetAvatarUpload();
       resetBannerUpload();
     },
   });
-  return { form, saveProfile, isPending: isSaving || isUploadingAvatar || isUploadingBanner };
+  return {
+    form,
+    saveProfile,
+    isDirty,
+    isPending: isSaving || isUploadingAvatar || isUploadingBanner,
+  };
 }
