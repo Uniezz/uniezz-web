@@ -1,6 +1,6 @@
 # uniezz design
 
-Last edited: 2026-11-03.
+Last edited: 2026-11-18.
 
 Editable source: [uniezz-web-app.pen](uniezz-web-app.pen), opened with pen.dev.
 
@@ -30,6 +30,22 @@ These older screen exports are retained for design reference. Features and navig
 | 06  | [Connections](exports/web/06-connections.png)                              | [Study](exports/ios/05-study.png)                    |
 | 07  | [Student Guide](exports/web/07-student-guide.png)                          | [Guide](exports/ios/06-guide.png)                    |
 | 08  | [Moderation Sign In](exports/web/08-moderation-sign-in.png)                | [Moderation](exports/ios/07-moderation.png)          |
+
+## Chat redesign (v3)
+
+[CHAT-FEATURES.md](CHAT-FEATURES.md) is a plain-language guide to every chat feature, with the frame where you can see it. [CHAT.md](CHAT.md) describes the chat redesign: features, states, and backend needs. These frames are a design proposal and are not implemented yet.
+
+| #   | Frame                                                       |
+| --- | ----------------------------------------------------------- |
+| 05a | [Thread v3](exports/web/05a-chat-thread-v3.png)             |
+| 05b | [Composer states](exports/web/05b-chat-composer-states.png) |
+| 05c | [Message menu](exports/web/05c-chat-message-menu.png)       |
+| 05d | [Group and info panel](exports/web/05d-chat-group.png)      |
+| 05e | [List states](exports/web/05e-chat-list-states.png)         |
+| 05g | [System states](exports/web/05g-chat-system-states.png)     |
+| 05h | [More features](exports/web/05h-chat-more-features.png)     |
+| 05i | [Student tools](exports/web/05i-chat-student-tools.png)     |
+| 00b | [Chat kit components](exports/web/00b-chat-kit.png)         |
 
 Also: [Web UI Kit](exports/kit/00-ui-kit.png) · [iOS UIKit](exports/kit/uikit.png) · [States & Variants](exports/kit/states-variants.png)
 
