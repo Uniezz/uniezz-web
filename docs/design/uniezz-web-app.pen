@@ -1,5 +1,5 @@
 {
-  "version": "2.21",
+  "version": "2.22",
   "children": [
     {
       "type": "frame",
@@ -23394,7 +23394,7 @@
                   "fill": "$white60",
                   "textGrowth": "fixed-width",
                   "width": "fill_container",
-                  "content": "Picker opens above the composer. Recent emojis come first.",
+                  "content": "We keep the existing emoji picker. This grid is only an example.",
                   "lineHeight": 1.4,
                   "fontFamily": "$font",
                   "fontSize": 12,
@@ -24635,7 +24635,7 @@
           "id": "ufDxq",
           "name": "Subtitle",
           "fill": "$white60",
-          "content": "Hover shows react, reply, more. Long press does the same on mobile.",
+          "content": "Hover shows react, reply, more. Right-click opens the same menu.",
           "fontFamily": "$font",
           "fontSize": 14,
           "fontWeight": "normal"
@@ -25553,7 +25553,7 @@
                       "id": "e2NZy",
                       "name": "Label",
                       "fill": "$white60",
-                      "content": "FAILED",
+                      "content": "SEND ERROR · TOAST AND DRAFT",
                       "fontFamily": "$font",
                       "fontSize": 12,
                       "fontWeight": "700",
@@ -25574,99 +25574,74 @@
                       "children": [
                         {
                           "type": "frame",
-                          "id": "Q2zCN",
-                          "name": "Out",
+                          "id": "fcdru",
+                          "name": "Toast",
                           "width": "fill_container",
-                          "layout": "vertical",
-                          "gap": 6,
-                          "justifyContent": "end",
-                          "alignItems": "end",
+                          "justifyContent": "center",
                           "children": [
                             {
                               "type": "frame",
-                              "id": "TUF9q",
-                              "name": "Bubble",
-                              "fill": "#000000",
-                              "cornerRadius": [
-                                20,
-                                20,
-                                6,
-                                20
-                              ],
-                              "stroke": "$red",
+                              "id": "K0AlnO",
+                              "name": "Toast pill",
+                              "fill": "$surface",
+                              "cornerRadius": 999,
+                              "stroke": "$white20",
                               "strokeWidth": 1,
+                              "gap": 10,
                               "padding": [
                                 10,
-                                14
+                                16
                               ],
-                              "children": [
-                                {
-                                  "type": "text",
-                                  "id": "ru9w6",
-                                  "name": "Text",
-                                  "fill": "$white",
-                                  "content": "See you at 17:30",
-                                  "fontFamily": "$font",
-                                  "fontSize": 15,
-                                  "fontWeight": "normal"
-                                }
-                              ]
-                            },
-                            {
-                              "type": "frame",
-                              "id": "q5PjJ",
-                              "name": "Failed row",
-                              "gap": 8,
                               "alignItems": "center",
                               "children": [
                                 {
                                   "type": "icon",
-                                  "id": "y4Vn3e",
+                                  "id": "OHCko",
                                   "name": "Icon",
-                                  "width": 14,
-                                  "height": 14,
+                                  "width": 18,
+                                  "height": 18,
                                   "icon": "circle-alert",
                                   "library": "lucide",
                                   "fill": "$red"
                                 },
                                 {
                                   "type": "text",
-                                  "id": "ub3eN",
-                                  "name": "Label",
-                                  "fill": "$red",
-                                  "content": "Not sent. Check your connection.",
+                                  "id": "BXr1c",
+                                  "name": "Text",
+                                  "fill": "$white",
+                                  "content": "Message not sent. Try again.",
                                   "fontFamily": "$font",
-                                  "fontSize": 12,
-                                  "fontWeight": "normal"
-                                },
-                                {
-                                  "type": "frame",
-                                  "id": "CIqzF",
-                                  "name": "Retry",
-                                  "fill": "$white10",
-                                  "cornerRadius": 999,
-                                  "padding": [
-                                    5,
-                                    12
-                                  ],
-                                  "justifyContent": "center",
-                                  "alignItems": "center",
-                                  "children": [
-                                    {
-                                      "type": "text",
-                                      "id": "q6CCxn",
-                                      "name": "Label",
-                                      "fill": "$white",
-                                      "content": "Retry",
-                                      "fontFamily": "$font",
-                                      "fontSize": 14,
-                                      "fontWeight": "600"
-                                    }
-                                  ]
+                                  "fontSize": 14,
+                                  "fontWeight": "600"
                                 }
                               ]
                             }
                           ]
+                        },
+                        {
+                          "id": "RQKqd",
+                          "type": "ref",
+                          "ref": "BvNnF",
+                          "name": "Composer with draft",
+                          "width": "fill_container",
+                          "descendants": {
+                            "P7f1y": {
+                              "content": "See you at 17:30",
+                              "fill": "$white"
+                            }
+                          }
+                        },
+                        {
+                          "type": "text",
+                          "id": "zwTA2",
+                          "name": "Note",
+                          "fill": "$white60",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "The text stays in the message field as a draft. There is no failed bubble.",
+                          "fontFamily": "$font",
+                          "fontSize": 12,
+                          "fontWeight": "normal"
                         }
                       ]
                     }
@@ -25737,7 +25712,7 @@
                               "fill": "$amber",
                               "textGrowth": "fixed-width",
                               "width": "fill_container",
-                              "content": "You are offline. Messages will send when you reconnect.",
+                              "content": "You are offline. Check your connection.",
                               "fontFamily": "$font",
                               "fontSize": 13,
                               "fontWeight": "normal"
@@ -27901,7 +27876,7 @@
           "id": "ldjpJ",
           "name": "Subtitle",
           "fill": "$white60",
-          "content": "Pinned chats stay on top. Typing and drafts replace the preview. Swipe or right-click for actions.",
+          "content": "Pinned chats stay on top. Typing and drafts replace the preview. Right-click a row for actions.",
           "fontFamily": "$font",
           "fontSize": 14,
           "fontWeight": "normal"
@@ -28956,263 +28931,10 @@
                   "children": [
                     {
                       "type": "text",
-                      "id": "uUb04",
-                      "name": "Section",
-                      "fill": "$white60",
-                      "content": "SWIPE LEFT (MOBILE) / RIGHT-CLICK (WEB)",
-                      "fontFamily": "$font",
-                      "fontSize": 11,
-                      "fontWeight": "700",
-                      "letterSpacing": 1
-                    },
-                    {
-                      "type": "frame",
-                      "id": "U0Kqe9",
-                      "name": "Swipe row",
-                      "clip": true,
-                      "width": "fill_container",
-                      "height": 66,
-                      "cornerRadius": 16,
-                      "children": [
-                        {
-                          "type": "frame",
-                          "id": "g491BN",
-                          "name": "Conv · Taras Hnatiuk",
-                          "width": 190,
-                          "height": "fill_container",
-                          "fill": "$white0",
-                          "cornerRadius": 16,
-                          "gap": 12,
-                          "padding": 10,
-                          "alignItems": "center",
-                          "children": [
-                            {
-                              "type": "frame",
-                              "id": "N0AkWK",
-                              "name": "Avatar wrap",
-                              "width": 44,
-                              "height": 44,
-                              "children": [
-                                {
-                                  "type": "frame",
-                                  "id": "P3D9lf",
-                                  "name": "Avatar",
-                                  "width": 44,
-                                  "height": 44,
-                                  "fill": {
-                                    "type": "image",
-                                    "enabled": true,
-                                    "url": "https://images.unsplash.com/photo-1604494747044-2e080876c5f1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3OTI5Mzc5MjN8&ixlib=rb-4.1.0&q=80&w=1080",
-                                    "mode": "cover"
-                                  },
-                                  "cornerRadius": 22
-                                }
-                              ]
-                            },
-                            {
-                              "type": "frame",
-                              "id": "Peza2",
-                              "name": "Text",
-                              "width": "fill_container",
-                              "layout": "vertical",
-                              "gap": 3,
-                              "children": [
-                                {
-                                  "type": "frame",
-                                  "id": "bykct",
-                                  "name": "Top",
-                                  "width": "fill_container",
-                                  "gap": 6,
-                                  "alignItems": "center",
-                                  "children": [
-                                    {
-                                      "type": "text",
-                                      "id": "pK4Qx",
-                                      "name": "Name",
-                                      "fill": "$white",
-                                      "content": "Taras Hnatiuk",
-                                      "fontFamily": "$font",
-                                      "fontSize": 15,
-                                      "fontWeight": "600"
-                                    },
-                                    {
-                                      "type": "frame",
-                                      "id": "n0EVG",
-                                      "name": "Spacer",
-                                      "width": "fill_container",
-                                      "height": 1
-                                    },
-                                    {
-                                      "type": "text",
-                                      "id": "I6SikV",
-                                      "name": "Time",
-                                      "fill": "$sky",
-                                      "content": "Mon",
-                                      "fontFamily": "$font",
-                                      "fontSize": 12,
-                                      "fontWeight": "normal"
-                                    }
-                                  ]
-                                },
-                                {
-                                  "type": "frame",
-                                  "id": "JfNRn",
-                                  "name": "Bottom",
-                                  "width": "fill_container",
-                                  "gap": 8,
-                                  "alignItems": "center",
-                                  "children": [
-                                    {
-                                      "type": "text",
-                                      "id": "OBzba",
-                                      "name": "Preview",
-                                      "fill": "$white",
-                                      "textGrowth": "fixed-width",
-                                      "width": "fill_container",
-                                      "content": "Bring your student ID",
-                                      "fontFamily": "$font",
-                                      "fontSize": 14,
-                                      "fontWeight": "600"
-                                    },
-                                    {
-                                      "type": "frame",
-                                      "id": "KrRUW",
-                                      "name": "Unread",
-                                      "fill": "$blue",
-                                      "cornerRadius": 999,
-                                      "padding": [
-                                        2,
-                                        7
-                                      ],
-                                      "children": [
-                                        {
-                                          "type": "text",
-                                          "id": "lzuUy",
-                                          "name": "Count",
-                                          "fill": "$white",
-                                          "content": "1",
-                                          "fontFamily": "$font",
-                                          "fontSize": 11,
-                                          "fontWeight": "700"
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "type": "frame",
-                          "id": "iH5Ud",
-                          "name": "Pin",
-                          "width": 62,
-                          "height": "fill_container",
-                          "fill": "$blue",
-                          "layout": "vertical",
-                          "gap": 4,
-                          "justifyContent": "center",
-                          "alignItems": "center",
-                          "children": [
-                            {
-                              "type": "icon",
-                              "id": "Y0GbtV",
-                              "name": "Icon",
-                              "width": 18,
-                              "height": 18,
-                              "icon": "pin",
-                              "library": "lucide",
-                              "fill": "$white"
-                            },
-                            {
-                              "type": "text",
-                              "id": "m9Ini",
-                              "name": "Label",
-                              "fill": "$white",
-                              "content": "Pin",
-                              "fontFamily": "$font",
-                              "fontSize": 11,
-                              "fontWeight": "600"
-                            }
-                          ]
-                        },
-                        {
-                          "type": "frame",
-                          "id": "wwvxm",
-                          "name": "Mute",
-                          "width": 62,
-                          "height": "fill_container",
-                          "fill": "$amber",
-                          "layout": "vertical",
-                          "gap": 4,
-                          "justifyContent": "center",
-                          "alignItems": "center",
-                          "children": [
-                            {
-                              "type": "icon",
-                              "id": "PXK5H",
-                              "name": "Icon",
-                              "width": 18,
-                              "height": 18,
-                              "icon": "bell-off",
-                              "library": "lucide",
-                              "fill": "$ink"
-                            },
-                            {
-                              "type": "text",
-                              "id": "OVn7e",
-                              "name": "Label",
-                              "fill": "$ink",
-                              "content": "Mute",
-                              "fontFamily": "$font",
-                              "fontSize": 11,
-                              "fontWeight": "600"
-                            }
-                          ]
-                        },
-                        {
-                          "type": "frame",
-                          "id": "YKX01",
-                          "name": "Archive",
-                          "width": 62,
-                          "height": "fill_container",
-                          "fill": "$white20",
-                          "layout": "vertical",
-                          "gap": 4,
-                          "justifyContent": "center",
-                          "alignItems": "center",
-                          "children": [
-                            {
-                              "type": "icon",
-                              "id": "H7cFD",
-                              "name": "Icon",
-                              "width": 18,
-                              "height": 18,
-                              "icon": "archive",
-                              "library": "lucide",
-                              "fill": "$white"
-                            },
-                            {
-                              "type": "text",
-                              "id": "x49Y6S",
-                              "name": "Label",
-                              "fill": "$white",
-                              "content": "Archive",
-                              "fontFamily": "$font",
-                              "fontSize": 11,
-                              "fontWeight": "600"
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      "type": "text",
                       "id": "C4Fl1",
                       "name": "Section",
                       "fill": "$white60",
-                      "content": "MENU",
+                      "content": "RIGHT-CLICK MENU (WEB)",
                       "fontFamily": "$font",
                       "fontSize": 11,
                       "fontWeight": "700",
@@ -31869,280 +31591,6 @@
               "layout": "vertical",
               "gap": 28,
               "children": [
-                {
-                  "type": "frame",
-                  "id": "HEafv",
-                  "name": "Idea · Block user",
-                  "width": "fill_container",
-                  "fill": "$surface60",
-                  "cornerRadius": 24,
-                  "stroke": "$white10",
-                  "strokeWidth": 1,
-                  "layout": "vertical",
-                  "gap": 14,
-                  "padding": 20,
-                  "children": [
-                    {
-                      "type": "frame",
-                      "id": "VBXnC",
-                      "name": "Head",
-                      "width": "fill_container",
-                      "gap": 10,
-                      "alignItems": "center",
-                      "children": [
-                        {
-                          "type": "text",
-                          "id": "Yxm4S",
-                          "name": "Title",
-                          "fill": "$white",
-                          "textGrowth": "fixed-width",
-                          "width": "fill_container",
-                          "content": "Block user",
-                          "fontFamily": "$font",
-                          "fontSize": 18,
-                          "fontWeight": "700"
-                        },
-                        {
-                          "type": "frame",
-                          "id": "bU5eH",
-                          "name": "Tag",
-                          "fill": "$blue20",
-                          "cornerRadius": 999,
-                          "padding": [
-                            3,
-                            10
-                          ],
-                          "children": [
-                            {
-                              "type": "text",
-                              "id": "YJ7Es",
-                              "name": "Label",
-                              "fill": "$sky",
-                              "content": "IN SCOPE",
-                              "fontFamily": "$font",
-                              "fontSize": 10.5,
-                              "fontWeight": "700",
-                              "letterSpacing": 0.6
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      "type": "text",
-                      "id": "MyjAB",
-                      "name": "Means",
-                      "fill": "$white80",
-                      "textGrowth": "fixed-width",
-                      "width": "fill_container",
-                      "content": "A blocked person cannot message you. You also stop seeing their messages in shared groups only if you choose it. You can unblock at any time.",
-                      "lineHeight": 1.45,
-                      "fontFamily": "$font",
-                      "fontSize": 14,
-                      "fontWeight": "normal"
-                    },
-                    {
-                      "type": "frame",
-                      "id": "fBYax",
-                      "name": "Mockup",
-                      "width": "fill_container",
-                      "fill": "$ink70",
-                      "cornerRadius": 16,
-                      "stroke": "$white5",
-                      "strokeWidth": 1,
-                      "layout": "vertical",
-                      "gap": 10,
-                      "padding": 16,
-                      "children": [
-                        {
-                          "type": "frame",
-                          "id": "y1WXRa",
-                          "name": "Block dialog",
-                          "width": "fill_container",
-                          "fill": "$surface",
-                          "cornerRadius": 20,
-                          "stroke": "$white10",
-                          "strokeWidth": 1,
-                          "layout": "vertical",
-                          "gap": 12,
-                          "padding": 16,
-                          "alignItems": "center",
-                          "children": [
-                            {
-                              "type": "frame",
-                              "id": "sFdIo",
-                              "name": "Avatar",
-                              "width": 48,
-                              "height": 48,
-                              "fill": {
-                                "type": "image",
-                                "enabled": true,
-                                "url": "https://images.unsplash.com/photo-1508870504324-7768c2509d8b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3OTI5Mzc5MjR8&ixlib=rb-4.1.0&q=80&w=1080",
-                                "mode": "cover"
-                              },
-                              "cornerRadius": 24
-                            },
-                            {
-                              "type": "text",
-                              "id": "S10Er",
-                              "name": "Title",
-                              "fill": "$white",
-                              "content": "Block Marta Zielinska?",
-                              "fontFamily": "$font",
-                              "fontSize": 17,
-                              "fontWeight": "700"
-                            },
-                            {
-                              "type": "text",
-                              "id": "wHYy4",
-                              "name": "Text",
-                              "fill": "$white60",
-                              "textGrowth": "fixed-width",
-                              "width": "fill_container",
-                              "content": "She will not be able to message you or see when you are online.",
-                              "lineHeight": 1.4,
-                              "textAlign": "center",
-                              "fontFamily": "$font",
-                              "fontSize": 13,
-                              "fontWeight": "normal"
-                            },
-                            {
-                              "type": "frame",
-                              "id": "xDJ4E",
-                              "name": "Option",
-                              "width": "fill_container",
-                              "gap": 10,
-                              "alignItems": "center",
-                              "children": [
-                                {
-                                  "type": "text",
-                                  "id": "v1PrX",
-                                  "name": "Label",
-                                  "fill": "$white",
-                                  "textGrowth": "fixed-width",
-                                  "width": "fill_container",
-                                  "content": "Also report this person",
-                                  "fontFamily": "$font",
-                                  "fontSize": 14,
-                                  "fontWeight": "normal"
-                                },
-                                {
-                                  "type": "frame",
-                                  "id": "VZSZU",
-                                  "name": "Switch",
-                                  "width": 40,
-                                  "height": 24,
-                                  "fill": "$blue",
-                                  "cornerRadius": 12,
-                                  "padding": [
-                                    0,
-                                    3
-                                  ],
-                                  "justifyContent": "end",
-                                  "alignItems": "center",
-                                  "children": [
-                                    {
-                                      "type": "ellipse",
-                                      "id": "jMGO6",
-                                      "name": "Knob",
-                                      "fill": "$white",
-                                      "width": 18,
-                                      "height": 18
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "frame",
-                              "id": "uSIdH",
-                              "name": "Block",
-                              "width": "fill_container",
-                              "fill": "$red",
-                              "cornerRadius": 999,
-                              "padding": [
-                                9,
-                                16
-                              ],
-                              "justifyContent": "center",
-                              "alignItems": "center",
-                              "children": [
-                                {
-                                  "type": "text",
-                                  "id": "JUHwS",
-                                  "name": "Label",
-                                  "fill": "$white",
-                                  "content": "Block",
-                                  "fontFamily": "$font",
-                                  "fontSize": 14,
-                                  "fontWeight": "600"
-                                }
-                              ]
-                            },
-                            {
-                              "type": "frame",
-                              "id": "vIjWh",
-                              "name": "Cancel",
-                              "width": "fill_container",
-                              "fill": "$white10",
-                              "cornerRadius": 999,
-                              "padding": [
-                                9,
-                                16
-                              ],
-                              "justifyContent": "center",
-                              "alignItems": "center",
-                              "children": [
-                                {
-                                  "type": "text",
-                                  "id": "sQVvG",
-                                  "name": "Label",
-                                  "fill": "$white",
-                                  "content": "Cancel",
-                                  "fontFamily": "$font",
-                                  "fontSize": 14,
-                                  "fontWeight": "600"
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      "type": "frame",
-                      "id": "Oi2jK",
-                      "name": "When",
-                      "width": "fill_container",
-                      "gap": 8,
-                      "children": [
-                        {
-                          "type": "text",
-                          "id": "N24Tf",
-                          "name": "Label",
-                          "fill": "$white60",
-                          "content": "Useful when",
-                          "fontFamily": "$font",
-                          "fontSize": 12,
-                          "fontWeight": "700"
-                        },
-                        {
-                          "type": "text",
-                          "id": "YWAt6",
-                          "name": "Text",
-                          "fill": "$white60",
-                          "textGrowth": "fixed-width",
-                          "width": "fill_container",
-                          "content": "Someone keeps writing after you said no, or a stranger spams your requests.",
-                          "lineHeight": 1.4,
-                          "fontFamily": "$font",
-                          "fontSize": 12,
-                          "fontWeight": "normal"
-                        }
-                      ]
-                    }
-                  ]
-                },
                 {
                   "type": "frame",
                   "id": "fSRmQ",
@@ -35085,259 +34533,6 @@
                           "textGrowth": "fixed-width",
                           "width": "fill_container",
                           "content": "A busy group chat makes noise, but you still do not want to miss your name.",
-                          "lineHeight": 1.4,
-                          "fontFamily": "$font",
-                          "fontSize": 12,
-                          "fontWeight": "normal"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "frame",
-                  "id": "C0lms",
-                  "name": "Idea · Verified student badge",
-                  "width": "fill_container",
-                  "fill": "$surface60",
-                  "cornerRadius": 24,
-                  "stroke": "$white10",
-                  "strokeWidth": 1,
-                  "layout": "vertical",
-                  "gap": 14,
-                  "padding": 20,
-                  "children": [
-                    {
-                      "type": "frame",
-                      "id": "wepKN",
-                      "name": "Head",
-                      "width": "fill_container",
-                      "gap": 10,
-                      "alignItems": "center",
-                      "children": [
-                        {
-                          "type": "text",
-                          "id": "HjHZk",
-                          "name": "Title",
-                          "fill": "$white",
-                          "textGrowth": "fixed-width",
-                          "width": "fill_container",
-                          "content": "Verified student badge",
-                          "fontFamily": "$font",
-                          "fontSize": 18,
-                          "fontWeight": "700"
-                        },
-                        {
-                          "type": "frame",
-                          "id": "MBWwt",
-                          "name": "Tag",
-                          "fill": "$blue20",
-                          "cornerRadius": 999,
-                          "padding": [
-                            3,
-                            10
-                          ],
-                          "children": [
-                            {
-                              "type": "text",
-                              "id": "H7P3ol",
-                              "name": "Label",
-                              "fill": "$sky",
-                              "content": "IN SCOPE",
-                              "fontFamily": "$font",
-                              "fontSize": 10.5,
-                              "fontWeight": "700",
-                              "letterSpacing": 0.6
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      "type": "text",
-                      "id": "JIfj7",
-                      "name": "Means",
-                      "fill": "$white80",
-                      "textGrowth": "fixed-width",
-                      "width": "fill_container",
-                      "content": "A small badge shows that the person confirmed their university email. Tap it to see what was verified.",
-                      "lineHeight": 1.45,
-                      "fontFamily": "$font",
-                      "fontSize": 14,
-                      "fontWeight": "normal"
-                    },
-                    {
-                      "type": "frame",
-                      "id": "U6fmz",
-                      "name": "Mockup",
-                      "width": "fill_container",
-                      "fill": "$ink70",
-                      "cornerRadius": 16,
-                      "stroke": "$white5",
-                      "strokeWidth": 1,
-                      "layout": "vertical",
-                      "gap": 10,
-                      "padding": 16,
-                      "children": [
-                        {
-                          "type": "frame",
-                          "id": "eCM9C",
-                          "name": "Header mock",
-                          "width": "fill_container",
-                          "fill": "$white5",
-                          "cornerRadius": 16,
-                          "gap": 12,
-                          "padding": 12,
-                          "alignItems": "center",
-                          "children": [
-                            {
-                              "type": "frame",
-                              "id": "u4ckM",
-                              "name": "Avatar",
-                              "width": 44,
-                              "height": 44,
-                              "fill": {
-                                "type": "image",
-                                "enabled": true,
-                                "url": "https://images.unsplash.com/photo-1506863530036-1efeddceb993?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3OTI5Mzc5MjN8&ixlib=rb-4.1.0&q=80&w=1080",
-                                "mode": "cover"
-                              },
-                              "cornerRadius": 22
-                            },
-                            {
-                              "type": "frame",
-                              "id": "Au8hy",
-                              "name": "Who",
-                              "layout": "vertical",
-                              "gap": 4,
-                              "children": [
-                                {
-                                  "type": "frame",
-                                  "id": "qnrg9",
-                                  "name": "Name row",
-                                  "gap": 6,
-                                  "alignItems": "center",
-                                  "children": [
-                                    {
-                                      "type": "text",
-                                      "id": "g5PoEo",
-                                      "name": "Name",
-                                      "fill": "$white",
-                                      "content": "Kateryna Melnyk",
-                                      "fontFamily": "$font",
-                                      "fontSize": 16,
-                                      "fontWeight": "600"
-                                    },
-                                    {
-                                      "type": "icon",
-                                      "id": "hKK1j",
-                                      "name": "Verified",
-                                      "width": 16,
-                                      "height": 16,
-                                      "icon": "badge-check",
-                                      "library": "lucide",
-                                      "fill": "$sky"
-                                    }
-                                  ]
-                                },
-                                {
-                                  "type": "text",
-                                  "id": "jMse6",
-                                  "name": "Meta",
-                                  "fill": "$white60",
-                                  "content": "UMCS Law, 2nd year",
-                                  "fontFamily": "$font",
-                                  "fontSize": 12,
-                                  "fontWeight": "normal"
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "type": "frame",
-                          "id": "oyNFX",
-                          "name": "Tooltip",
-                          "width": "fill_container",
-                          "fill": "$surface",
-                          "cornerRadius": 14,
-                          "stroke": "$white20",
-                          "strokeWidth": 1,
-                          "layout": "vertical",
-                          "gap": 4,
-                          "padding": 12,
-                          "children": [
-                            {
-                              "type": "frame",
-                              "id": "X4lE2",
-                              "name": "Head",
-                              "gap": 6,
-                              "alignItems": "center",
-                              "children": [
-                                {
-                                  "type": "icon",
-                                  "id": "KQR8N",
-                                  "name": "Icon",
-                                  "width": 14,
-                                  "height": 14,
-                                  "icon": "badge-check",
-                                  "library": "lucide",
-                                  "fill": "$sky"
-                                },
-                                {
-                                  "type": "text",
-                                  "id": "wymN5",
-                                  "name": "Title",
-                                  "fill": "$white",
-                                  "content": "Verified student",
-                                  "fontFamily": "$font",
-                                  "fontSize": 13,
-                                  "fontWeight": "700"
-                                }
-                              ]
-                            },
-                            {
-                              "type": "text",
-                              "id": "Fwf1G",
-                              "name": "Text",
-                              "fill": "$white60",
-                              "textGrowth": "fixed-width",
-                              "width": "fill_container",
-                              "content": "Confirmed with a UMCS university email on 12 Oct.",
-                              "lineHeight": 1.4,
-                              "fontFamily": "$font",
-                              "fontSize": 12,
-                              "fontWeight": "normal"
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      "type": "frame",
-                      "id": "b5qef",
-                      "name": "When",
-                      "width": "fill_container",
-                      "gap": 8,
-                      "children": [
-                        {
-                          "type": "text",
-                          "id": "MkzJ3",
-                          "name": "Label",
-                          "fill": "$white60",
-                          "content": "Useful when",
-                          "fontFamily": "$font",
-                          "fontSize": 12,
-                          "fontWeight": "700"
-                        },
-                        {
-                          "type": "text",
-                          "id": "bOQYk",
-                          "name": "Text",
-                          "fill": "$white60",
-                          "textGrowth": "fixed-width",
-                          "width": "fill_container",
-                          "content": "You talk to a stranger about a viewing and want to know they are a real student.",
                           "lineHeight": 1.4,
                           "fontFamily": "$font",
                           "fontSize": 12,

@@ -35,7 +35,7 @@ What changes is how alive it feels.
 
 1. **Grouped bubbles.** Messages from the same person in a row form one group. Only the last bubble of a group has the small tail corner. Only that bubble shows the avatar in groups.
 2. **Context card (the signature).** A chat can start from a post: housing, a course, notes. A card under the header shows the post and its live state, for example "Room still available". When the user scrolls, it shrinks into a one-line chip. This ties chat to what makes Uniezz different from a generic messenger.
-3. **Hover action bar.** Hovering a message shows three quick actions: react, reply, more. On mobile the same actions come from long press, and swipe right replies.
+3. **Hover action bar.** Hovering a message shows three quick actions: react, reply, more. Right-click on a message opens the same menu, and a visible "More" button does too (for touch screens and keyboard users).
 4. **Reactions as small pills** under the bubble. A reaction you added has a blue ring.
 5. **Visible status.** Every sent message shows its state. Nothing fails silently.
 6. **Calm motion.** Existing `rise-in` for new bubbles, `pop-in` for reactions and menus, three soft dots for typing. Everything uses `motion-safe:`.
@@ -46,33 +46,33 @@ Rule: one bold idea (context card). Everything else stays quiet and uses existin
 
 ### P0 — core, replaces the mock
 
-| Feature              | What the user sees                                                                                                    | Behavior and states                                                         |
-| -------------------- | --------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| Realtime messages    | New messages appear without reload                                                                                    | WebSocket or similar. On disconnect show the offline banner and queue sends |
-| Typing indicator     | Three dots bubble with name in groups                                                                                 | Shows after 1 s of typing, hides after 5 s idle                             |
-| Presence             | Green dot on avatar, "Online" or "Last seen 14:20" in header                                                          | User can hide last seen later (privacy setting)                             |
-| Message status       | Clock = sending, one check = sent, two checks = delivered, blue two checks = seen. In groups: tiny avatars of readers | Failed shows red "Not sent · Retry"                                         |
-| Date separators      | Centered chip: Today, Yesterday, 12 Nov                                                                               | Sticky while scrolling                                                      |
-| New messages divider | Line with "3 new messages" at the first unread                                                                        | Disappears after the user reads or leaves                                   |
-| Grouped bubbles      | See design direction                                                                                                  | Group breaks after 5 minutes or a sender change                             |
-| Group sender         | Name above first bubble of a group, color per member                                                                  | Color is stable per member                                                  |
-| Unread               | Count badge in list and in sidebar item                                                                               | Clears on opening thread. Sidebar badge is FE-3.9                           |
-| Jump to latest       | Round button with unread count, bottom right of thread                                                                | Shows when user is scrolled up more than one screen                         |
-| Loading              | Skeleton rows in list, skeleton bubbles in thread                                                                     | No spinner-only screens                                                     |
-| Empty                | Cat from `UIEmpty` with a clear action: "Say hi"                                                                      | Different copy for no chats, no results, empty thread                       |
-| Error                | Inline error with "Try again"                                                                                         | Per list and per thread, never a blank panel                                |
-| Offline              | Banner at top of thread: "You are offline. Messages will send when you reconnect."                                    | Sends are queued and marked sending                                         |
+| Feature              | What the user sees                                                                                                    | Behavior and states                                                                                                                  |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| Realtime messages    | New messages appear without reload                                                                                    | WebSocket or similar. On disconnect show the offline banner. A send that fails shows a toast and the text stays in the message field |
+| Typing indicator     | Three dots bubble with name in groups                                                                                 | Shows after 1 s of typing, hides after 5 s idle                                                                                      |
+| Presence             | Green dot on avatar, "Online" or "Last seen 14:20" in header                                                          | User can hide last seen later (privacy setting)                                                                                      |
+| Message status       | Clock = sending, one check = sent, two checks = delivered, blue two checks = seen. In groups: tiny avatars of readers | A failed send shows a toast and keeps the text as a draft (no failed bubble)                                                         |
+| Date separators      | Centered chip: Today, Yesterday, 12 Nov                                                                               | Sticky while scrolling                                                                                                               |
+| New messages divider | Line with "3 new messages" at the first unread                                                                        | Disappears after the user reads or leaves                                                                                            |
+| Grouped bubbles      | See design direction                                                                                                  | Group breaks after 5 minutes or a sender change                                                                                      |
+| Group sender         | Name above first bubble of a group, color per member                                                                  | Color is stable per member                                                                                                           |
+| Unread               | Count badge in list and in sidebar item                                                                               | Clears on opening thread. Sidebar badge is FE-3.9                                                                                    |
+| Jump to latest       | Round button with unread count, bottom right of thread                                                                | Shows when user is scrolled up more than one screen                                                                                  |
+| Loading              | Skeleton rows in list, skeleton bubbles in thread                                                                     | No spinner-only screens                                                                                                              |
+| Empty                | Cat from `UIEmpty` with a clear action: "Say hi"                                                                      | Different copy for no chats, no results, empty thread                                                                                |
+| Error                | Inline error with "Try again"                                                                                         | Per list and per thread, never a blank panel                                                                                         |
+| Offline              | Banner at top of thread: "You are offline. Check your connection."                                                    | A send while offline fails: toast, text stays in the field as a draft                                                                |
 
 ### P1 — interactive
 
 | Feature                   | What the user sees                                                                                | Behavior and states                                                                                                                              |
 | ------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Reply                     | Quote block on top of the bubble. Preview bar above the composer with close X                     | Tap on quote scrolls to the original and flashes it                                                                                              |
-| Reactions                 | 6 quick emojis on hover or long press, plus "more" opens the picker (`UIEmojiPicker`)             | One reaction per user per message. Tap own reaction to remove                                                                                    |
+| Reactions                 | 6 quick emojis on hover, plus "more" opens the picker (`UIEmojiPicker`)                           | One reaction per user per message. Tap own reaction to remove                                                                                    |
 | Message menu              | Reply, Copy, Edit, Pin, Report, Delete                                                            | Edit only own messages, within 15 minutes. Shows "edited" label                                                                                  |
 | Delete                    | Confirm dialog: Delete for me / Delete for everyone                                               | "Everyone" leaves a "Message deleted" placeholder                                                                                                |
 | Context card              | Post thumbnail, title, state chip, "Open post"                                                    | Hidden if the chat has no post. Collapses on scroll                                                                                              |
-| Pin / mute / archive chat | Pin icon and muted bell in list row. Swipe actions on mobile, menu on desktop                     | Pinned chats stay at the top, max 3                                                                                                              |
+| Pin / mute / archive chat | Pin icon and muted bell in list row. Right-click menu and a "More" button on the web              | Pinned chats stay at the top, max 3                                                                                                              |
 | Search in chat            | Search icon in header opens a bar with result count and up/down arrows                            | Highlights matches in bubbles                                                                                                                    |
 | Message requests          | Requests filter shows chats from people not in connections. Bottom bar: Accept / Decline / Report | Composer is locked until accepted                                                                                                                |
 | Link preview              | Small card under a bubble with image, title, domain                                               | Only for http(s). Fetched by backend                                                                                                             |
@@ -92,10 +92,9 @@ These features are part of the release too. They come after P0 and P1 in build o
 | Polls               | A member asks a question with 2 to 6 options and everyone votes | One vote per person (can be changed until the poll ends). Bars and percents update live. Footer shows voter avatars, vote count and time left. The creator can close the poll                          | A group must choose a place or a time                                       |
 | Forward message     | Send a message to another chat                                  | Opens a picker with search and checkboxes. Up to 5 chats at once. The copy shows a small "Forwarded" label. Attachments go along. Hidden for deleted messages                                          | A student shares a flat offer or a notes link                               |
 | Edit group (owner)  | The owner changes group name, photo and description             | "Edit" button in Group info opens a dialog. Save is disabled until something changes. Members see a system message: "Owner changed the group name"                                                     | A group changes subject, for example a new semester                         |
-| Block user          | A blocked person cannot message you                             | Dialog explains the result and has a switch "Also report this person". The composer shows a locked state with "Unblock". Blocked people do not see your online status                                  | Someone keeps writing after you said no                                     |
 | Report with details | Report one message with a reason and a note                     | Reasons: Spam, Harassment, Fake housing offer, Inappropriate content, Something else. Optional note. Uses the existing `/reports` API (5 per hour). The reporter stays hidden from the reported person | Moderators need context to act on fake offers or abuse                      |
 
-Build order for P2: Drafts and Pinned bar first (small and useful), then Forward and Edit group, then Block and Report details (safety), then Polls and Voice notes (need the most backend work).
+Build order for P2: Drafts and Pinned bar first (small and useful), then Forward and Edit group, then Report details (safety), then Polls and Voice notes (need the most backend work). Blocking is not part of this work: it already exists on the public profile page, and the chat only respects it (locked message field with "Unblock").
 
 Backend needs for P2 are listed below in "Open backend needs".
 
@@ -114,23 +113,22 @@ These features come from student life: housing, study groups and trust. They are
 | Announcement mode       | Only admins can post                        | Switch in Group info, Settings. Members see a lock row instead of the composer: "Only admins can post in this group." Members can still read, react and reply in comments only if allowed later                                                                                          | Faculty and dorm groups where news must not get lost                  |
 | Invite link and QR code | Join a group with one tap                   | Group info shows link, Copy, Share and a QR code. Admins can reset the link, and the old one stops working. Optional: admin must approve new members                                                                                                                                     | New semester, many people join a dorm or course group                 |
 | Notification level      | Control noise per chat                      | Three levels: All messages, Mentions only, Muted. Muted can be 1 hour, 8 hours or until you turn it on. The list row shows a bell-off icon when muted                                                                                                                                    | A busy group chat                                                     |
-| Verified student badge  | Show a real student                         | Small badge after the name in the header and the member list. Tap shows "Verified student. Confirmed with a UMCS university email on 12 Oct." Only shown if the person confirmed the university email                                                                                    | You talk to a stranger and want to know they are a real student       |
 
-Build order for student tools: Notification level, Safety banner and Starter replies first (small), then Verified badge, Invite link and Announcement mode, then Share a Uniezz card and Event card, then Viewing scheduler and Meeting point (need new card types and location permission).
+Build order for student tools: Notification level, Safety banner and Starter replies first (small), then Invite link and Announcement mode, then Share a Uniezz card and Event card, then Viewing scheduler and Meeting point (need new card types and location permission).
 
 ## Screens
 
-| Frame                          | Shows                                                                                                                                                                    |
-| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `05 · Chat · v2`               | Today. Kept for reference                                                                                                                                                |
-| `05a · Chat · Thread v3`       | Main screen: grouped bubbles, context card, reactions, reply quote, hover action bar, seen status, date chips, new messages divider, jump to latest                      |
-| `05b · Chat · Composer states` | Default, typing, reply preview, attachments, emoji picker, mention list, voice recording                                                                                 |
-| `05c · Chat · Message menu`    | Reaction bar and context menu                                                                                                                                            |
-| `05d · Chat · Group`           | Sender names and colors, mentions, group info panel                                                                                                                      |
-| `05e · Chat · List states`     | Pinned, muted, typing preview, unread, requests, swipe actions, loading, empty                                                                                           |
-| `05g · Chat · System states`   | Sending, failed and retry, offline, blocked, request pending, error                                                                                                      |
-| `05h · Chat · More features`   | Voice notes, pinned bar, drafts, polls, forward, edit group, block user, report with details                                                                             |
-| `05i · Chat · Student tools`   | Viewing scheduler, Uniezz cards, safety banner and starter replies, meeting point, event RSVP, announcement mode, invite link and QR, notification level, verified badge |
+| Frame                          | Shows                                                                                                                                                    |
+| ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `05 · Chat · v2`               | Today. Kept for reference                                                                                                                                |
+| `05a · Chat · Thread v3`       | Main screen: grouped bubbles, context card, reactions, reply quote, hover action bar, seen status, date chips, new messages divider, jump to latest      |
+| `05b · Chat · Composer states` | Default, typing, reply preview, attachments, existing emoji picker, mention list, voice recording                                                        |
+| `05c · Chat · Message menu`    | Reaction bar and context menu                                                                                                                            |
+| `05d · Chat · Group`           | Sender names and colors, mentions, group info panel                                                                                                      |
+| `05e · Chat · List states`     | Pinned, muted, typing preview, unread, requests, right-click menu, loading, empty                                                                        |
+| `05g · Chat · System states`   | Sending, send error (toast and draft), offline, blocked, request pending, error                                                                          |
+| `05h · Chat · More features`   | Voice notes, pinned bar, drafts, polls, forward, edit group, report with details                                                                         |
+| `05i · Chat · Student tools`   | Viewing scheduler, Uniezz cards, safety banner and starter replies, meeting point, event RSVP, announcement mode, invite link and QR, notification level |
 
 New reusable components live in frame `00b · Chat Kit · v2`: `UIMessage / In`, `UIMessage / Out`, `UIReaction`, `UIChatComposer`, `UIDateChip`, `UIContextCard`.
 
@@ -161,8 +159,7 @@ Autocapture already records clicks and submits. Add named events only for outcom
 
 | Event                                                | When                                          |
 | ---------------------------------------------------- | --------------------------------------------- |
-| `message_send_failed`                                | Send fails after retries                      |
-| `message_retry`                                      | User taps Retry                               |
+| `message_send_failed`                                | Send fails (a toast is shown)                 |
 | `message_reaction_set`                               | Reaction saved (mutation `analyticsAction`)   |
 | `message_delete`                                     | Delete succeeds, with `scope: me or everyone` |
 | `message_request_accept` / `message_request_decline` | Request answered                              |
@@ -183,10 +180,18 @@ The current API has none of this. Needed for P0, P1 and P2:
 - Uploads: allow files, not only images, for `kind=chat` (today a TODO in `src/schemas/chat.ts`).
 - Link preview endpoint.
 - Moderation: reuse `/reports` for messages.
-- P2: pinned messages per thread (max 3), polls with votes, forwarded-message marker, group edit (name, photo, description) with a system message, block list per user, report reasons, audio upload for voice notes. Drafts stay on the client (local storage per chat).
-- Student tools: card message types (viewing request with slots and answer, Uniezz item card, location, event with RSVP), live location with a timer, group settings (announcement mode, invite link with reset and optional approval), per-user notification level per thread, a `verifiedStudent` flag on profile summaries, and a reminder job for events.
+- P2: pinned messages per thread (max 3), polls with votes, forwarded-message marker, group edit (name, photo, description) with a system message, report reasons, audio upload for voice notes. Drafts stay on the client (local storage per chat).
+- Student tools: card message types (viewing request with slots and answer, Uniezz item card, location, event with RSVP), live location with a timer, group settings (announcement mode, invite link with reset and optional approval), per-user notification level per thread, and a reminder job for events.
 
 Task plan reference: `docs/tasks/TASKS.en.md`, Sprint 3, FE-3.1 to FE-3.9 and BE-3.1 to BE-3.9.
+
+## Review decisions (PR #19)
+
+- **Emoji picker:** we keep the existing `UIEmojiPicker`. The emoji grid in the frames is only an example.
+- **No swipe:** phone users are blocked on the web, so there are no swipe or long-press actions. Chat rows and messages use right-click, hover and a "More" button.
+- **Send errors:** when a send fails, the app shows a toast and keeps the text in the message field as a draft. There is no failed bubble and no Retry button.
+- **Block user:** it already exists on the public profile page, so it is removed from the chat features. The chat only respects it.
+- **Verified student badge:** removed from the scope.
 
 ## Scope and checks
 

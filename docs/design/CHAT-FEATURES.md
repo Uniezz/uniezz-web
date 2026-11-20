@@ -23,8 +23,8 @@ All features here are in the release scope. Build order is in `CHAT.md`.
 | `05c · Chat · Message menu`    | Reactions, message menu, delete dialog                                     |
 | `05d · Chat · Group`           | A group chat and the Group info panel                                      |
 | `05e · Chat · List states`     | The list of chats in all its states                                        |
-| `05g · Chat · System states`   | Sending, failed, offline, requests, blocked, errors                        |
-| `05h · Chat · More features`   | Voice notes, pinned bar, drafts, polls, forward, edit group, block, report |
+| `05g · Chat · System states`   | Sending, send error (toast and draft), offline, requests, blocked, errors  |
+| `05h · Chat · More features`   | Voice notes, pinned bar, drafts, polls, forward, edit group, report        |
 | `05i · Chat · Student tools`   | Viewing scheduler, Uniezz cards, meeting point, events and more            |
 | `00b · Chat Kit · v2`          | The reusable parts (bubbles, reactions, date chip, context card, composer) |
 
@@ -72,7 +72,7 @@ All features here are in the release scope. Build order is in `CHAT.md`.
 ### Row actions
 
 - **What it is:** Quick actions for a chat: Pin, Mute, Mark as read, Archive, Delete chat.
-- **How it works:** On the web, right-click or the "more" button opens a menu. On a phone, swipe the row to see Pin, Mute and Archive.
+- **How it works:** On the web, right-click or the "more" button opens a menu with Pin, Mute, Mark as read, Archive and Delete chat. There is no swipe, because phone users are blocked on the web.
 - **See it in:** `05e`, column "Row actions".
 
 ### Loading, no results and empty list
@@ -88,7 +88,7 @@ All features here are in the release scope. Build order is in `CHAT.md`.
 ### Real-time messages
 
 - **What it is:** New messages appear at once, without reloading the page.
-- **How it works:** If the connection drops, the chat shows an offline banner and keeps the messages the user writes. They are sent when the connection comes back.
+- **How it works:** If the connection drops, the chat shows an offline banner. A message that cannot be sent shows a toast, and its text stays in the message field as a draft.
 - **See it in:** Offline banner in `05g`.
 
 ### Message status
@@ -99,8 +99,8 @@ All features here are in the release scope. Build order is in `CHAT.md`.
   - One check: sent.
   - Two checks: delivered.
   - Two blue checks: seen.
-  - Red "Not sent" with a Retry button: it failed.
-- **See it in:** Status icons in `05a` (outgoing bubbles) and `00b`. Sending and failed states in `05g`.
+  - If sending fails, there is no failed bubble: the app shows a toast and keeps the text in the message field as a draft.
+- **See it in:** Status icons in `05a` (outgoing bubbles) and `00b`. Sending and send-error (toast) states in `05g`.
 
 ### Seen by
 
@@ -158,7 +158,7 @@ All features here are in the release scope. Build order is in `CHAT.md`.
 ### Hover action bar
 
 - **What it is:** Three small buttons that appear next to a message when the user hovers: React, Reply, More.
-- **How it works:** On a phone, a long press opens the same actions, and swiping right replies.
+- **How it works:** Right-click opens the same menu, and a "More" button does too.
 - **See it in:** `05a`, next to the message with the quote.
 
 ### Reply
@@ -170,7 +170,7 @@ All features here are in the release scope. Build order is in `CHAT.md`.
 ### Reactions
 
 - **What it is:** A quick emoji answer to a message. Small pills under the bubble show the emoji and the count. A blue pill means you reacted.
-- **How it works:** Six quick emojis show on hover or long press, and a plus button opens the full emoji picker. One reaction per person per message. Tapping your own reaction removes it.
+- **How it works:** Six quick emojis show on hover, and a plus button opens the full emoji picker. One reaction per person per message. Tapping your own reaction removes it.
 - **See it in:** Reaction bar in `05c`. Pills under a bubble in `05a`. The reaction part in `00b`.
 
 ### Message menu
@@ -304,23 +304,17 @@ All features here are in the release scope. Build order is in `CHAT.md`.
 - **How it works:** One tap sends the message. The chips disappear after the first message.
 - **See it in:** `05i`, under the safety banner.
 
-### Verified student badge
-
-- **What it is:** A small badge after the name when the person confirmed their university email.
-- **How it works:** Tapping it explains what was verified and when.
-- **See it in:** `05i`.
-
 ### Message requests
 
 - **What it is:** When someone who is not a connection writes first, the chat goes to Requests. The message field is locked until the user decides.
 - **How it works:** The user taps Accept, Decline or Report.
 - **See it in:** `05g` ("Request from a stranger") and the Requests chip in `05e`.
 
-### Block user
+### Block user (already built)
 
-- **What it is:** A blocked person cannot message you and cannot see when you are online.
-- **How it works:** A dialog explains this and has a switch "Also report this person". The message field shows "You blocked [name]. Unblock to send a message."
-- **See it in:** The dialog in `05h`. The locked field in `05g`.
+- **What it is:** Blocking already exists on the public profile page. The chat only respects it.
+- **How it works:** When you have blocked someone, the message field shows "You blocked [name]. Unblock to send a message."
+- **See it in:** The locked field in `05g`.
 
 ### Report a message
 
@@ -401,6 +395,6 @@ All features here are in the release scope. Build order is in `CHAT.md`.
 | Composer with emoji and attachments            | Reply, reactions, edit, delete, mentions, voice               |
 | Create group                                   | Group info, roles, owner edit, announcement mode, invite link |
 | Empty state with the cat                       | Loading, error, offline and request states                    |
-| A fixed card for one post                      | Live context card, safety banner, verified badge              |
-| —                                              | Polls, forward, pinned bar, block, detailed report            |
+| A fixed card for one post                      | Live context card, safety banner                              |
+| —                                              | Polls, forward, pinned bar, detailed report                   |
 | —                                              | Viewing scheduler, Uniezz cards, meeting point, event RSVP    |
