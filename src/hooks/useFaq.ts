@@ -62,6 +62,8 @@ export function usePendingFaqProposals() {
     queryFn: ({ pageParam }) => getPendingFaqProposals(pageParam),
     initialPageParam: undefined as string | undefined,
     getNextPageParam: (page) => page.nextCursor ?? undefined,
+    // Tab switches remount the list; mutations invalidate it, so 5 minutes is fresh enough.
+    staleTime: 5 * 60_000,
     retry: (failureCount, error) =>
       !(error instanceof ApiRequestError && error.status === 403) && failureCount < 3,
   });

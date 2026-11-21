@@ -23,6 +23,8 @@ export function usePendingReports() {
     queryFn: ({ pageParam }) => getPendingReports(pageParam),
     initialPageParam: undefined as string | undefined,
     getNextPageParam: (page) => page.nextCursor ?? undefined,
+    // Tab switches remount the list; mutations invalidate it, so 5 minutes is fresh enough.
+    staleTime: 5 * 60_000,
   });
 }
 
@@ -33,6 +35,8 @@ export function useModerationActions() {
     queryFn: ({ pageParam }) => getModerationActions(pageParam),
     initialPageParam: undefined as string | undefined,
     getNextPageParam: (page) => page.nextCursor ?? undefined,
+    // Tab switches remount the list; mutations invalidate it, so 5 minutes is fresh enough.
+    staleTime: 5 * 60_000,
   });
 }
 
@@ -43,6 +47,8 @@ export function useModerators() {
     queryFn: ({ pageParam }) => getModerators(pageParam),
     initialPageParam: undefined as string | undefined,
     getNextPageParam: (page) => page.nextCursor ?? undefined,
+    // Tab switches remount the list; mutations invalidate it, so 5 minutes is fresh enough.
+    staleTime: 5 * 60_000,
   });
 }
 
