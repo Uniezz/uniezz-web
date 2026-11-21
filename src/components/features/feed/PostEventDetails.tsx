@@ -27,7 +27,7 @@ export function PostEventDetails({
             autoComplete="off"
             {...register('date')}
             type="date"
-            className="app-control [color-scheme:dark]"
+            className="app-control scheme-dark"
             aria-invalid={Boolean(errors.date)}
           />
         </UIField>
@@ -36,7 +36,7 @@ export function PostEventDetails({
             autoComplete="off"
             {...register('time')}
             type="time"
-            className="app-control [color-scheme:dark]"
+            className="app-control scheme-dark"
             aria-invalid={Boolean(errors.time)}
           />
         </UIField>

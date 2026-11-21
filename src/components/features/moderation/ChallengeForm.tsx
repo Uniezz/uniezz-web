@@ -93,13 +93,21 @@ export function ChallengeForm({ id, challenge, onSubmit }: ChallengeFormProps) {
       </div>
       <div className="grid grid-cols-2 gap-4">
         <UIField label={t('moderation.challengeStartsAt')}>
-          <input type="datetime-local" className="app-control" {...register('startsAt')} />
+          <input
+            type="datetime-local"
+            className="app-control scheme-dark"
+            {...register('startsAt')}
+          />
         </UIField>
         <UIField
           label={t('moderation.challengeEndsAt')}
           error={errors.endsAt ? t('moderation.challengeEndsAtError') : undefined}
         >
-          <input type="datetime-local" className="app-control" {...register('endsAt')} />
+          <input
+            type="datetime-local"
+            className="app-control scheme-dark"
+            {...register('endsAt')}
+          />
         </UIField>
       </div>
       <UIField

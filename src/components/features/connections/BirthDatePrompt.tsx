@@ -61,7 +61,7 @@ export function BirthDatePrompt() {
         >
           <input
             type="date"
-            className="app-control [color-scheme:dark]"
+            className="app-control scheme-dark"
             max={new Date().toISOString().slice(0, 10)}
             {...register('birthDate')}
           />
