@@ -3,6 +3,7 @@ import type { ModerationTab } from '@/@types';
 
 const MODERATION_TABS = [
   'reports',
+  'faq',
   'moderators',
   'log',
   'challenges',

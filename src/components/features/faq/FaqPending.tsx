@@ -5,7 +5,7 @@ import { UIButton, UIEmpty, UIPanel, UIQueryError } from '@/ui/components';
 import { listComponents } from '@/ui/virtuoso';
 import { toast } from '@/utils';
 
-/** Proposals waiting for a moderator; only FAQ publishers see this tab. */
+/** Proposals waiting for a moderator; only moderators and admins see this tab. */
 export function FaqPending() {
   const { t } = useTranslation();
   const { data, isError, refetch, hasNextPage, isFetchingNextPage, fetchNextPage } =

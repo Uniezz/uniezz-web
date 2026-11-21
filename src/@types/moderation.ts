@@ -49,7 +49,7 @@ export type ReportDecisionInput = { id: string; status: ReportDecision };
 export type RemovableTarget = 'post' | 'comment' | 'file' | 'course';
 export type RemoveContentInput = { type: RemovableTarget; id: string };
 
-export type ModerationTab = 'reports' | 'moderators' | 'log' | 'challenges';
+export type ModerationTab = 'reports' | 'faq' | 'moderators' | 'log' | 'challenges';
 
 /** Anything carrying staff roles, such as the signed-in profile while it loads. */
 export type WithRoles = { roles: string[] | null } | undefined;
