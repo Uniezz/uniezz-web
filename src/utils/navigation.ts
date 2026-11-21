@@ -15,18 +15,26 @@ const ACADEMICS_NAV: NavItem[] = [
   { to: '/faq', labelKey: 'faq.title', leftIcon: CircleHelp },
 ];
 
-const STAFF_NAV: NavItem[] = [
-  { to: '/moderation', labelKey: 'moderation.title', leftIcon: ShieldCheck },
-];
+const MODERATION_NAV: NavItem = {
+  to: '/moderation',
+  labelKey: 'moderation.title',
+  leftIcon: ShieldCheck,
+};
 
 export const NAV_GROUPS: NavGroup[] = [
   { items: MAIN_NAV },
   { section: 'academics', items: ACADEMICS_NAV },
 ];
 
-/** `staff`: moderators and admins also get the moderation tools. */
+/** `staff`: moderators and admins also get the moderation tools, after the academics items. */
 export function getNavigationGroups(chatEnabled: boolean, staff = false): NavGroup[] {
-  const groups = staff ? [...NAV_GROUPS, { section: 'staff', items: STAFF_NAV }] : NAV_GROUPS;
+  const groups = staff
+    ? NAV_GROUPS.map((group) =>
+        group.section === 'academics'
+          ? { ...group, items: [...group.items, MODERATION_NAV] }
+          : group,
+      )
+    : NAV_GROUPS;
   if (chatEnabled) return groups;
   return groups
     .map(({ items, ...group }) => ({
