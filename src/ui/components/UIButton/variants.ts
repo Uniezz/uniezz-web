@@ -17,6 +17,8 @@ export const buttonStyles = cva(
         ghost: 'border-white-10 bg-transparent text-white enabled:hover:bg-white-10',
         danger: 'border-danger bg-danger text-white enabled:hover:bg-danger-hover',
         transparent: 'border-transparent bg-transparent text-white enabled:hover:bg-white-10',
+        // Icon-only actions: no surface, the icon lights up on hover.
+        plain: 'border-transparent bg-transparent text-secondary enabled:hover:text-white',
         gradient: 'border-white bg-white text-ink enabled:hover:bg-white/85',
       },
     },

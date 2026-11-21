@@ -61,7 +61,7 @@ function ConnectionPreferencesForm({
         <input
           autoComplete="off"
           className="app-control"
-          maxLength={200}
+          maxLength={150}
           placeholder={t('connections.intentPlaceholder')}
           value={intent}
           onChange={(event) => setIntent(event.target.value)}

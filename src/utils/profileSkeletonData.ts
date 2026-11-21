@@ -14,6 +14,10 @@ export const sampleProfile: components['schemas']['Profile'] = {
   coins: 0,
   email: null,
   interests: null,
+  birthDate: null,
+  intent: null,
+  openTo: null,
+  roles: null,
   createdAt: '2026-01-01T12:00:00Z',
   privacy: { showEmail: false, showFaculty: true, showYear: true },
   programmes: [
@@ -34,4 +38,6 @@ export const samplePublicProfile: components['schemas']['PublicProfile'] = {
   ...sampleProfile,
   bio: 'A short introduction from this student.',
   interests: ['Music', 'Books', 'Travel'],
+  age: null,
+  photos: null,
 };

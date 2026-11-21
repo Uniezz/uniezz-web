@@ -60,9 +60,19 @@ export const apiMiddleware: Middleware = {
       window.location.replace('/login');
     }
     if (response.ok) {
-      if (response.status === 204) {
+      // Adding a profile photo answers 201 with no body.
+      const isEmptyCreated =
+        response.status === 201 && request.method === 'POST' && schemaPath === '/profile/photos';
+      if (response.status === 204 || isEmptyCreated) {
         const allowsNoContent =
-          (request.method === 'PUT' && schemaPath === '/connections/blocks/{id}') ||
+          isEmptyCreated ||
+          (request.method === 'PUT' &&
+            [
+              '/connections/blocks/{id}',
+              '/profile/photos',
+              '/moderation/moderators/{id}',
+              '/moderation/users/{id}/ban',
+            ].includes(schemaPath)) ||
           (request.method === 'POST' &&
             ['/auth/otp/request', '/auth/otp/verify', '/auth/exchange'].includes(schemaPath)) ||
           (request.method === 'DELETE' &&
@@ -78,6 +88,14 @@ export const apiMiddleware: Middleware = {
               '/study/files/{id}',
               '/profile/banner',
               '/profile/me',
+              '/profile/photos/{id}',
+              '/moderation/comments/{id}',
+              '/moderation/courses/{id}',
+              '/moderation/files/{id}',
+              '/moderation/posts/{id}',
+              '/moderation/moderators/{id}',
+              '/moderation/users/{id}/ban',
+              '/rewards/challenges/{id}',
             ].includes(schemaPath));
         if (!allowsNoContent) {
           throw apiError(`${request.method} ${schemaPath}`, response);

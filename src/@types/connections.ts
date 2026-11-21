@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import type { UseFormReturn } from 'react-hook-form';
 import type { components } from './schema';
 
@@ -29,3 +30,18 @@ export type MatchActionsProps = { connectionId: string; studentId: string };
 export type ConnectionPreferencesProps = { mode: ConnectionFilters['mode']; formId: string; onSaved: () => void };
 export type ConnectionPreferencesFormProps = { preferences: ConnectionPreferences; mode: ConnectionFilters['mode']; formId: string; onSaved: () => void };
 export type ConnectionFilterPanelProps = { form: UseFormReturn<ConnectionFilters>; onApply: (filters: ConnectionFilters) => void };
+
+export type StudentSummary = components['schemas']['ProfileSummary'];
+export type StudentCardProps = {
+  student: StudentSummary;
+  search: string;
+  university?: string;
+  /** A control shown next to the card, such as a moderation action; it sits outside the link. */
+  action?: ReactNode;
+};
+export type StudentSearchResultsProps = {
+  search: string;
+  name: string;
+  /** Renders a control next to each student's card. */
+  action?: (student: StudentSummary) => ReactNode;
+};

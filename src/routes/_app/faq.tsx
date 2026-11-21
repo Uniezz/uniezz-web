@@ -12,7 +12,7 @@ function FAQPage() {
   const { t } = useTranslation();
   const [tab, setTab] = useState<'all' | 'mine' | 'pending'>('all');
   const [isProposing, setIsProposing] = useState(false);
-  // A 403 from the pending list means the student isn't a publisher, so the tab stays hidden.
+  // A 403 from the pending list means the student isn't a moderator, so the tab stays hidden.
   const { data: pending } = usePendingFaqProposals();
   const tabIds = pending ? (['all', 'mine', 'pending'] as const) : (['all', 'mine'] as const);
   const tabLabels = {

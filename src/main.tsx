@@ -82,6 +82,7 @@ const routeMasks = [
     search: () => ({}),
   }),
   createRouteMask({ routeTree, from: '/guide', to: '/', search: () => ({}) }),
+  createRouteMask({ routeTree, from: '/moderation', to: '/', search: () => ({}) }),
   createRouteMask({ routeTree, from: '/profile', to: '/', search: () => ({}) }),
   createRouteMask({ routeTree, from: '/rewards', to: '/', search: () => ({}) }),
 ];

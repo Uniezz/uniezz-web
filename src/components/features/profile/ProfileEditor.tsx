@@ -10,6 +10,7 @@ import { ProfileIdentity } from './ProfileIdentity';
 import { PersonalDetails } from './PersonalDetails';
 import { StudyProgrammes } from './StudyProgrammes';
 import { ProfilePosts } from './ProfilePosts';
+import { ProfilePhotos } from './ProfilePhotos';
 
 export function ProfileEditor({
   profile,
@@ -76,6 +77,9 @@ export function ProfileEditor({
               <StudyProgrammes universityId={profile.universityId} />
             </div>
           </UIPanel>
+          <div className="min-w-0 xl:col-span-2">
+            <ProfilePhotos />
+          </div>
           {showPosts && (
             <div className="min-w-0 xl:col-span-2">
               <ProfilePosts authorId={profile.id} collections />

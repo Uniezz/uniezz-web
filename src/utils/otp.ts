@@ -9,5 +9,6 @@ export const OTP_REQUEST_ERRORS: Record<number, string> = {
 export const OTP_VERIFY_ERRORS: Record<number, string> = {
   400: 'Enter the 6-digit code we sent you.',
   401: 'Wrong or expired code. After 5 attempts, request a new one.',
+  403: 'This account has been banned.',
   422: 'Enter the 6-digit code we sent you.',
 };

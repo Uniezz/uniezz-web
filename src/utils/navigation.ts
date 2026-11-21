@@ -1,4 +1,4 @@
-import { BookOpen, CircleHelp, MessageCircle, House, Users } from 'lucide-react';
+import { BookOpen, CircleHelp, MessageCircle, House, ShieldCheck, Users } from 'lucide-react';
 // Direct path: the components barrel imports these utils back.
 import { UICoin } from '@/ui/components/UICoin';
 import { type NavGroup, type NavItem } from '@/@types';
@@ -15,17 +15,33 @@ const ACADEMICS_NAV: NavItem[] = [
   { to: '/faq', labelKey: 'faq.title', leftIcon: CircleHelp },
 ];
 
+const MODERATION_NAV: NavItem = {
+  to: '/moderation',
+  labelKey: 'moderation.title',
+  leftIcon: ShieldCheck,
+};
+
 export const NAV_GROUPS: NavGroup[] = [
   { items: MAIN_NAV },
   { section: 'academics', items: ACADEMICS_NAV },
 ];
 
-export function getNavigationGroups(chatEnabled: boolean): NavGroup[] {
-  if (chatEnabled) return NAV_GROUPS;
-  return NAV_GROUPS.map(({ items, ...group }) => ({
-    ...group,
-    items: items.filter(({ to }) => to !== '/chat'),
-  })).filter(({ items }) => items.length > 0);
+/** `staff`: moderators and admins also get the moderation tools, after the academics items. */
+export function getNavigationGroups(chatEnabled: boolean, staff = false): NavGroup[] {
+  const groups = staff
+    ? NAV_GROUPS.map((group) =>
+        group.section === 'academics'
+          ? { ...group, items: [...group.items, MODERATION_NAV] }
+          : group,
+      )
+    : NAV_GROUPS;
+  if (chatEnabled) return groups;
+  return groups
+    .map(({ items, ...group }) => ({
+      ...group,
+      items: items.filter(({ to }) => to !== '/chat'),
+    }))
+    .filter(({ items }) => items.length > 0);
 }
 
 // Selecting the current tab clears carried-over return paths and conversation filters.

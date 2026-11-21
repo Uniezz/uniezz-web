@@ -17,3 +17,4 @@ export * from './useProfileForm';
 export * from './useUploadImage';
 export * from './useUploadPostImages';
 export * from './useRewards';
+export * from './useModeration';

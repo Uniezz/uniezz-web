@@ -9,3 +9,4 @@ export * from './feed';
 export * from './faq';
 export * from './media';
 export * from './rewards';
+export * from './moderation';
