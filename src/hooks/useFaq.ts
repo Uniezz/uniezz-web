@@ -55,7 +55,7 @@ export function usePublishFaqEntry() {
   });
 }
 
-// Only FAQ publishers may list pending proposals; a 403 means the moderation tab stays hidden.
+// Only moderators and admins may list pending proposals; a 403 means the moderation tab stays hidden.
 export function usePendingFaqProposals() {
   return useInfiniteQuery({
     queryKey: ['faq', 'pending'],

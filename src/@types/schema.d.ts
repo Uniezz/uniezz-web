@@ -343,7 +343,7 @@ export interface paths {
         };
         /**
          * List FAQ proposals waiting for a moderator
-         * @description Every student's proposals that are not published yet, newest first. Only an FAQ publisher may call this; everyone else gets 403.
+         * @description Every student's proposals that are not published yet, newest first. Moderators and admins only; everyone else gets 403.
          */
         get: operations["listPendingFaqProposals"];
         put?: never;
@@ -364,7 +364,7 @@ export interface paths {
         get?: never;
         /**
          * Approve an FAQ proposal and publish it
-         * @description Only an FAQ publisher may call this. Approving pays the author 5 Uniezz coins once, unless the publisher approves their own proposal; approving an entry that is already published changes nothing. A rejected or unknown entry is 404.
+         * @description Moderators and admins only. Approving pays the author 5 Uniezz coins once, unless the moderator approves their own proposal; approving an entry that is already published changes nothing. A rejected or unknown entry is 404.
          */
         put: operations["approveFaqProposal"];
         post?: never;
