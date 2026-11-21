@@ -3,7 +3,7 @@ import type { QueryClient } from '@tanstack/react-query';
 import { redirect } from '@tanstack/react-router';
 import { api } from './client';
 import { homeAfterSignIn } from './profile';
-import { ApiRequestError } from './errors';
+import { ApiRequestError, apiErrorCode } from './errors';
 
 export async function finishLogin(
   search: Record<string, unknown>,
@@ -26,15 +26,18 @@ export async function finishLogin(
     await api.POST('/auth/exchange', { body: { code } });
   } catch (error) {
     const isHttpError = error instanceof ApiRequestError && error.status !== undefined;
+    const isBanned = apiErrorCode(error) === 'banned';
     captureAnalytics('login_exchange_failed');
     captureAnalytics('sign_in_failed', {
       method: 'USOS',
-      stage: isHttpError ? 'exchange' : 'network',
+      stage: isBanned ? 'banned' : isHttpError ? 'exchange' : 'network',
     });
     return {
-      error: isHttpError
-        ? 'Could not finish sign-in. Please try again.'
-        : 'Could not reach the server. Please try again.',
+      error: isBanned
+        ? 'This account has been banned.'
+        : isHttpError
+          ? 'Could not finish sign-in. Please try again.'
+          : 'Could not reach the server. Please try again.',
     };
   }
 

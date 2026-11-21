@@ -1,22 +1,14 @@
 import { Link, useLocation } from '@tanstack/react-router';
 import { ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import type { components } from '@/@types/schema';
+import type { StudentCardProps } from '@/@types';
 import { UIAvatar, UIUniversityLogo } from '@/ui/components';
 import { authorName } from '@/utils';
 
-export function StudentCard({
-  student,
-  search,
-  university,
-}: {
-  student: components['schemas']['ProfileSummary'];
-  search: string;
-  university?: string;
-}) {
+export function StudentCard({ student, search, university, action }: StudentCardProps) {
   const { t } = useTranslation();
   const href = useLocation({ select: (location) => location.href });
-  return (
+  const card = (
     <Link
       to="/connections/students/$profileId"
       params={{ profileId: student.id }}
@@ -52,5 +44,13 @@ export function StudentCard({
         aria-hidden="true"
       />
     </Link>
+  );
+  // A button can't sit inside a link, so the action goes beside it and the whole row highlights.
+  if (!action) return card;
+  return (
+    <div className="flex items-center pr-2 transition-colors hover:bg-white-5 sm:pr-4 [&>a]:min-w-0 [&>a]:flex-1 [&>a]:hover:bg-transparent">
+      {card}
+      {action}
+    </div>
   );
 }

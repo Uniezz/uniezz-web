@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import {
+  ChallengeCard,
   CoinGrants,
   InviteCard,
   QuestCard,
@@ -60,6 +61,7 @@ function RewardsPage() {
               ) : (
                 <QuestCard quests={quests} />
               )}
+              <ChallengeCard />
               <InviteCard />
               <RedeemInviteForm />
             </div>

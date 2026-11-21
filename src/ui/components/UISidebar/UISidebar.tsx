@@ -6,7 +6,8 @@ import { cn } from '../../cn';
 import { UICoin } from '../UICoin';
 import { formatCompactNumber } from '@/utils/numberFormat';
 import { UINavItem } from '../UINavItem';
-import { getNavigationGroups } from '@/utils';
+import { useMyProfile } from '@/hooks';
+import { getNavigationGroups, isStaff } from '@/utils';
 import { sidebarStyles, sidebarGroupStyles, sidebarUserStyles } from './variants';
 export type UISidebarProps = ComponentProps<'aside'> & {
   /** `coins`: the student's Uniezz coin balance, shown beside their name. */
@@ -90,7 +91,8 @@ function jumpCat(cat: HTMLElement, fromOffset: number) {
 export function UISidebar({ user, counts, className, ...props }: UISidebarProps) {
   const { t, i18n } = useTranslation();
   const chatEnabled = useFeatureFlagEnabled('chat') === true;
-  const navigationGroups = getNavigationGroups(chatEnabled);
+  const { data: me } = useMyProfile();
+  const navigationGroups = getNavigationGroups(chatEnabled, isStaff(me));
   const navRef = useRef<HTMLElement>(null);
   const pathname = useRouterState({ select: (state) => state.location.pathname });
   const [highlight, setHighlight] = useState<{ top: number; height: number } | null>(null);

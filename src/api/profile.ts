@@ -1,4 +1,5 @@
 import type { components } from '@/@types/schema';
+import type { UpdateMeBody } from '@/@types';
 import { api } from './client';
 import { isNewProfile, isOnboardingDone } from '@/utils';
 
@@ -7,7 +8,7 @@ export async function getMyProfile() {
   return data!;
 }
 
-export async function updateMyProfile(body: components['schemas']['UpdateMeInputBody']) {
+export async function updateMyProfile(body: UpdateMeBody) {
   const { data } = await api.PATCH('/profile/me', { body });
   return data!;
 }
@@ -40,6 +41,23 @@ export async function deleteMyAvatar() {
 
 export async function deleteMyBanner() {
   await api.DELETE('/profile/banner');
+}
+
+export async function listMyProfilePhotos() {
+  const { data } = await api.GET('/profile/photos');
+  return data!;
+}
+
+export async function addMyProfilePhoto(mediaId: string) {
+  await api.POST('/profile/photos', { body: { mediaId } });
+}
+
+export async function deleteMyProfilePhoto(id: string) {
+  await api.DELETE('/profile/photos/{id}', { params: { path: { id } } });
+}
+
+export async function reorderMyProfilePhotos(mediaIds: string[]) {
+  await api.PUT('/profile/photos', { body: { mediaIds } });
 }
 
 export async function getProfiles(q: string, cursor?: string) {

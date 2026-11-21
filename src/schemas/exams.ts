@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { optionalSearchStringSchema } from './routeSearch';
+import { optionalSearchStringSchema, returnPathSchema } from './routeSearch';
 
 export const studyMaterialFileSchema = z
   .file()
@@ -18,6 +18,8 @@ export const examsSearchSchema = z.object({
   university: z.string().max(40).optional().catch(undefined),
   semester: z.coerce.number().int().min(1).max(12).optional().catch(undefined),
   q: optionalSearchStringSchema,
+  /** Where closing a course opened from outside exams returns to, such as a moderation report. */
+  courseFrom: returnPathSchema,
 });
 
 const courseNameSchema = z.string().trim().min(3).max(150);

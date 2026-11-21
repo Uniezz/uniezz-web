@@ -5,7 +5,8 @@ import type { PublicProfileProps } from '@/@types';
 import { useMyProfile, useUniversities } from '@/hooks';
 import { UIPanel, UITags, UIUniversityLogo } from '@/ui/components';
 import { ReportButton } from '@/components/features/reports';
-import { authorName } from '@/utils';
+import { BanButton, GrantModeratorButton } from '@/components/features/moderation';
+import { authorName, isAdmin, isStaff } from '@/utils';
 import { cn } from '@/ui/cn';
 
 export function PublicProfile({ profile }: PublicProfileProps) {
@@ -16,7 +17,11 @@ export function PublicProfile({ profile }: PublicProfileProps) {
   const university =
     universities?.find((item) => item.id === profile.universityId)?.name ??
     profile.universityId.toUpperCase();
-  const hasPersonalDetails = Boolean(profile.bio || profile.interests?.length || profile.songUrl);
+  // The first photo is the avatar, already shown above.
+  const extraPhotos = profile.photos?.slice(1) ?? [];
+  const hasPersonalDetails = Boolean(
+    profile.bio || profile.interests?.length || profile.songUrl || extraPhotos.length,
+  );
   const hasStudyDetails = Boolean(profile.programmes?.length);
 
   return (
@@ -39,6 +44,12 @@ export function PublicProfile({ profile }: PublicProfileProps) {
         {me && me.id !== profile.id && (
           <div className="absolute right-2 bottom-2 z-10 flex flex-col items-end gap-2 rounded-xl border border-white-10 bg-surface/75 px-3 py-2 backdrop-blur-md sm:right-3 sm:bottom-3">
             <ReportButton targetType="user" targetId={profile.id} danger />
+            {isStaff(me) && (
+              <div className="flex flex-wrap justify-end gap-2">
+                <BanButton userId={profile.id} />
+                {isAdmin(me) && <GrantModeratorButton userId={profile.id} />}
+              </div>
+            )}
             <BlockStudentButton
               studentId={profile.id}
               onBlocked={() =>
@@ -66,6 +77,9 @@ export function PublicProfile({ profile }: PublicProfileProps) {
               className="line-clamp-2 text-xxl leading-tight font-semibold tracking-tight wrap-anywhere sm:text-4xl"
             >
               {authorName(profile) || t('apiState.student')}
+              {profile.age !== null && (
+                <span className="font-normal text-secondary">, {profile.age}</span>
+              )}
             </h1>
             <p className="flex items-center gap-2 text-label leading-relaxed text-white-80">
               <UIUniversityLogo universityId={profile.universityId} className="shrink-0" />
@@ -93,6 +107,22 @@ export function PublicProfile({ profile }: PublicProfileProps) {
           >
             {hasPersonalDetails && (
               <div className="min-w-0 space-y-8">
+                {extraPhotos.length > 0 && (
+                  <section className="space-y-4">
+                    <h2 className="text-label font-semibold">{t('students.photosTitle')}</h2>
+                    <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                      {extraPhotos.map((url) => (
+                        <li key={url}>
+                          <img
+                            src={url}
+                            alt=""
+                            className="aspect-square w-full rounded-2xl object-cover"
+                          />
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                )}
                 {profile.bio && (
                   <section className="space-y-4">
                     <h2 className="text-label font-semibold">{t('students.bio')}</h2>

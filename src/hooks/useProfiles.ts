@@ -3,8 +3,10 @@ import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tansta
 import { deleteMyAvatar, deleteMyBanner, getProfiles, getPublicProfile, signOut } from '@/api';
 import type { components } from '@/@types/schema';
 import i18n from '@/i18n';
+import { profileSearchQuery } from '@/utils';
 
-export function useProfileSearch(q: string) {
+export function useProfileSearch(name: string) {
+  const q = profileSearchQuery(name);
   return useInfiniteQuery({
     queryKey: ['profiles', 'search', q],
     queryFn: ({ pageParam }) => getProfiles(q, pageParam),

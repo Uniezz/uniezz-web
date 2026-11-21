@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import type { StudentSearchResultsProps } from '@/@types';
 import { Skeleton } from 'skullet/react';
 import { useProfileSearch, useUniversities } from '@/hooks';
 import { VirtuosoGrid } from 'react-virtuoso';
@@ -10,14 +11,17 @@ import { StudentCard } from './StudentCard';
 // Virtuoso renders whole rows, so the first item on screen always starts a row and odd children sit in the left column.
 const gridClass =
   '-mb-px grid md:grid-cols-2 [&>*]:border-b [&>*]:border-white-10 md:[&>*:nth-child(odd)]:border-r';
+// Cards with an action sit in a narrower column, so they get the full width.
+const listClass = '-mb-px grid [&>*]:border-b [&>*]:border-white-10';
 
-export function StudentSearchResults({ search, name }: { search: string; name: string }) {
+export function StudentSearchResults({ search, name, action }: StudentSearchResultsProps) {
   const { t } = useTranslation();
   const { data, isPending, isError, refetch, hasNextPage, isFetchingNextPage, fetchNextPage } =
     useProfileSearch(name);
   const { data: universities } = useUniversities();
   const students = data?.pages.flatMap((page) => page.items ?? []) ?? [];
   const loading = isPending || name !== search.trim();
+  const className = action ? listClass : gridClass;
   const skeletons = [0, 1, 2].map((index) => ({ ...sampleProfile, id: `skeleton-${index}` }));
   return (
     <div className="flex h-full min-h-0 flex-col gap-5">
@@ -34,7 +38,7 @@ export function StudentSearchResults({ search, name }: { search: string; name: s
         <UIPanel surface="tint" className="flex min-h-0 flex-1 flex-col overflow-hidden p-0">
           {loading ? (
             <Skeleton loading label={t('apiState.loading')}>
-              <div inert className={gridClass}>
+              <div inert className={className}>
                 {skeletons.map((student) => (
                   <StudentCard key={student.id} student={student} search={search} />
                 ))}
@@ -48,7 +52,7 @@ export function StudentSearchResults({ search, name }: { search: string; name: s
                 if (hasNextPage && !isFetchingNextPage && !isError) void fetchNextPage();
               }}
               components={gridComponents}
-              listClassName={gridClass}
+              listClassName={className}
               role="region"
               aria-label={t('students.results')}
               tabIndex={0}
@@ -58,6 +62,7 @@ export function StudentSearchResults({ search, name }: { search: string; name: s
                   student={student}
                   search={search}
                   university={universities?.find((item) => item.id === student.universityId)?.name}
+                  action={action?.(student)}
                 />
               )}
             />

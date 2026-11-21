@@ -1,3 +1,4 @@
+export * from './ChallengeCard';
 export * from './CoinGrants';
 export * from './InviteCard';
 export * from './QuestCard';

@@ -8,11 +8,13 @@ import {
 } from './variants';
 import { Link, useMatchRoute } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-import { getNavigationGroups, RESET_TAB_SEARCH } from '@/utils';
+import { useMyProfile } from '@/hooks';
+import { getNavigationGroups, isStaff, RESET_TAB_SEARCH } from '@/utils';
 export const UIBottomTabs = () => {
   const { t } = useTranslation();
   const matchRoute = useMatchRoute();
-  const navigationGroups = getNavigationGroups(useFeatureFlagEnabled('chat') === true);
+  const { data: me } = useMyProfile();
+  const navigationGroups = getNavigationGroups(useFeatureFlagEnabled('chat') === true, isStaff(me));
   return (
     <nav aria-label={t('sidebar.mainNavigation')} className={bottomTabsStyles()}>
       {navigationGroups

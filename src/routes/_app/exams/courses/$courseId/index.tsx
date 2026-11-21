@@ -1,4 +1,4 @@
-import { createFileRoute, redirect } from '@tanstack/react-router';
+import { createFileRoute, redirect, useRouter } from '@tanstack/react-router';
 import { CourseDetailsDialog } from '@/components/features/exams';
 
 export const Route = createFileRoute('/_app/exams/courses/$courseId/')({
@@ -16,15 +16,19 @@ export const Route = createFileRoute('/_app/exams/courses/$courseId/')({
 function CourseDetailsPage() {
   const { courseId } = Route.useParams();
   const navigate = Route.useNavigate();
+  const router = useRouter();
+  const { courseFrom } = Route.useSearch();
   return (
     <CourseDetailsDialog
       courseId={courseId}
       onClose={() =>
-        void navigate({
-          to: '/exams',
-          search: (previous) => ({ ...previous, tab: 'reviews' }),
-          replace: true,
-        })
+        void (courseFrom
+          ? router.navigate({ href: courseFrom, replace: true })
+          : navigate({
+              to: '/exams',
+              search: (previous) => ({ ...previous, tab: 'reviews' }),
+              replace: true,
+            }))
       }
     />
   );
