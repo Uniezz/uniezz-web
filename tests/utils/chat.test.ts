@@ -1,5 +1,13 @@
 import { expect, test } from 'bun:test';
-import { chatAvatar, chatPreview, chatTime, chatTitle, isOwnMessage } from '../../src/utils/chat';
+import {
+  chatAvatar,
+  chatClock,
+  chatPreview,
+  chatTime,
+  chatTitle,
+  isOwnMessage,
+  selectedConversationId,
+} from '../../src/utils/chat';
 import type { ChatConversation, ChatMessage } from '../../src/@types/chat';
 
 const student = {
@@ -59,4 +67,17 @@ test('a message is mine when the sender id matches', () => {
   expect(isOwnMessage({ sender: student } as ChatMessage, 'u1')).toBe(true);
   expect(isOwnMessage({ sender: student } as ChatMessage, 'u2')).toBe(false);
   expect(isOwnMessage({ sender: student } as ChatMessage, undefined)).toBe(false);
+});
+
+test('the open chat comes from the URL, or is the newest chat', () => {
+  const list = [chat({ id: 'a' }), chat({ id: 'b' })];
+  expect(selectedConversationId(list, 'b')).toBe('b');
+  expect(selectedConversationId(list, 'not-loaded-yet')).toBe('not-loaded-yet');
+  expect(selectedConversationId(list, undefined)).toBe('a');
+  expect(selectedConversationId([], undefined)).toBeUndefined();
+});
+
+test('the message clock shows hours and minutes only', () => {
+  expect(chatClock('2026-11-10T10:05:00Z', 'en-GB')).toMatch(/^\d{2}:\d{2}$/);
+  expect(chatClock('nope', 'en-GB')).toBe('');
 });

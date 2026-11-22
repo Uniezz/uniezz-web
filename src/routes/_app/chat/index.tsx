@@ -1,26 +1,36 @@
-import { Activity, useContext } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 
 import { ChatThread } from '@/components/features/chat';
-// TODO(api): Render the selected conversation from API data instead of mock-state context.
-import { ChatGroupRouteContext } from './route';
+import { useConversation, useConversations } from '@/hooks';
+import { UIEmpty, UIPanel } from '@/ui/components';
+import { selectedConversationId } from '@/utils';
 
 export const Route = createFileRoute('/_app/chat/')({ component: ChatPage });
 
 function ChatPage() {
-  const context = useContext(ChatGroupRouteContext);
-  if (!context) return null;
+  const { conversationId } = Route.useSearch();
+  const navigate = Route.useNavigate();
+  const { data, isPending } = useConversations();
+  const conversations = data?.pages.flatMap((page) => page.items ?? []) ?? [];
+  const id = selectedConversationId(conversations, conversationId);
+  const listed = conversations.find((conversation) => conversation.id === id);
+  // A link can point at a chat that is not in the pages loaded so far.
+  const { data: fetched } = useConversation(listed ? undefined : id);
+  const conversation = listed ?? fetched;
 
-  return context.conversations.map((conversation) => (
-    <Activity
+  if (!conversation) {
+    return <UIPanel className="h-full">{!isPending && !id && <UIEmpty />}</UIPanel>;
+  }
+  return (
+    <ChatThread
       key={conversation.id}
-      mode={conversation.id === context.selected ? 'visible' : 'hidden'}
-    >
-      <ChatThread
-        current={conversation}
-        onBack={() => context.setPanel('list')}
-        onSend={(message) => context.sendMessage(conversation.id, message)}
-      />
-    </Activity>
-  ));
+      conversation={conversation}
+      onBack={() =>
+        void navigate({
+          to: '/chat',
+          search: (previous) => ({ ...previous, conversationId: undefined }),
+        })
+      }
+    />
+  );
 }

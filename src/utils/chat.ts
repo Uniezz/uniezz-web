@@ -1,23 +1,5 @@
-import type { ChatConversation, ChatMessage, Conversation } from '@/@types';
-import type { components } from '@/@types/schema';
+import type { ChatConversation, ChatMessage } from '@/@types';
 import { authorName } from './feed';
-
-/** An empty direct conversation with a match, opened from the connections list. */
-export function connectionConversation(
-  profile: components['schemas']['ProfileSummary'],
-): Conversation {
-  return {
-    id: profile.id,
-    name: authorName(profile),
-    preview: '',
-    time: '',
-    group: false,
-    unread: 0,
-    image: 0,
-    imageUrl: profile.avatarUrl ?? undefined,
-    messages: [],
-  };
-}
 
 /** The name shown for a chat: the group name, or the other student. */
 export function chatTitle(conversation: ChatConversation, deletedLabel: string) {
@@ -50,3 +32,17 @@ export function chatTime(iso: string, locale: string, now = new Date()) {
 
 export const isOwnMessage = (message: ChatMessage, myId: string | undefined) =>
   myId !== undefined && message.sender.id === myId;
+
+/** The open chat comes from the URL. Without one, the newest chat is shown. */
+export const selectedConversationId = (
+  conversations: ChatConversation[],
+  conversationId: string | undefined,
+) => conversationId ?? conversations[0]?.id;
+
+/** The time of day shown under a message bubble. */
+export function chatClock(iso: string, locale: string) {
+  const date = new Date(iso);
+  return Number.isNaN(date.getTime())
+    ? ''
+    : new Intl.DateTimeFormat(locale, { hour: '2-digit', minute: '2-digit' }).format(date);
+}

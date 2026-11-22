@@ -9,6 +9,13 @@ export async function getChatConversations(cursor?: string) {
   return data!;
 }
 
+export async function getChatConversation(conversationId: string) {
+  const { data } = await api.GET('/chat/conversations/{id}', {
+    params: { path: { id: conversationId } },
+  });
+  return data!;
+}
+
 /** History, newest first. `nextCursor` points to older messages. */
 export async function getChatMessages(conversationId: string, cursor?: string) {
   const { data } = await api.GET('/chat/conversations/{id}/messages', {

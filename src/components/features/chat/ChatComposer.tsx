@@ -1,11 +1,10 @@
-import { captureAnalytics, toast, trackLocalAction } from '@/utils';
+import { captureAnalytics, toast } from '@/utils';
 import { Paperclip, Send } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import type { Message } from '@/@types';
 import { cn } from '@/ui/cn';
 import { UIButton, UIEmojiPicker } from '@/ui/components';
 import {
@@ -16,15 +15,15 @@ import {
   textFormSchema,
   type TextFormSchema,
 } from '@/schemas';
-import { useUploadImage } from '@/hooks';
+import { useSendMessage, useUploadImage } from '@/hooks';
 import { ChatDraftAttachments, type ChatDraftAttachment } from './ChatDraftAttachments';
 import type { ChatPreviewState } from './ChatImagePreview';
 
 export function ChatComposer({
-  onSend,
+  conversationId,
   onPreview,
 }: {
-  onSend: (message: Message) => void;
+  conversationId: string;
   onPreview: (preview: ChatPreviewState) => void;
 }) {
   const { t } = useTranslation();
@@ -38,6 +37,7 @@ export function ChatComposer({
   const [drafts, setDrafts] = useState<ChatDraftAttachment[]>([]);
   const [isSending, setIsSending] = useState(false);
   const { mutateAsync: uploadImage } = useUploadImage('chat');
+  const { mutate: send } = useSendMessage();
   const messageDraft = useWatch({ control, name: 'text' });
   const hasContent = Boolean(messageDraft?.trim()) || drafts.length > 0;
 
@@ -63,32 +63,29 @@ export function ChatComposer({
     setDrafts((previous) => previous.filter((draft) => draft.id !== id));
   }
 
-  // TODO(api): Send the uploaded mediaIds with the message through the chat API once it exists.
-  // TODO(api): Upload files too once the chat upload kind accepts them; they stay local for now.
   async function sendMessage(text: string) {
     setIsSending(true);
     try {
-      const mediaIds = await Promise.all(
-        drafts.map(async ({ file }) =>
-          isChatImage(file) ? (await uploadImage(file)).mediaId : undefined,
-        ),
+      const attachmentIds = await Promise.all(
+        drafts.map(async ({ file }) => (await uploadImage(file)).mediaId),
       );
-      onSend({
-        text,
-        outgoing: true,
-        time: new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit' }).format(
-          new Date(),
-        ),
-        attachments: drafts.length
-          ? drafts.map(({ file, url }, index) => ({
-              name: file.name,
-              url,
-              size: file.size,
-              contentType: file.type,
-              mediaId: mediaIds[index],
-            }))
-          : undefined,
-      });
+      const sent = drafts;
+      // The message shows at once. When the send fails, the text and images come back to the composer.
+      send(
+        {
+          conversationId,
+          body: text || undefined,
+          attachmentIds,
+          clientId: crypto.randomUUID(),
+        },
+        {
+          onSuccess: () => sent.forEach(({ url }) => URL.revokeObjectURL(url)),
+          onError: () => {
+            reset({ text });
+            setDrafts(sent);
+          },
+        },
+      );
       setDrafts([]);
       reset({ text: '' });
       setIsMultiline(false);
@@ -101,14 +98,14 @@ export function ChatComposer({
   }
 
   const submitText = handleSubmit(
-    ({ text }) => trackLocalAction('message_send', () => void sendMessage(text)),
+    ({ text }) => void sendMessage(text),
     () => captureAnalytics('message_form_validation_failed'),
   );
   function submit(event?: { preventDefault: () => void }) {
     event?.preventDefault();
     if (isSending) return;
     if (drafts.length && !messageDraft?.trim()) {
-      trackLocalAction('message_send', () => void sendMessage(''));
+      void sendMessage('');
       return;
     }
     void submitText();

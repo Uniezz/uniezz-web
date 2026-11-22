@@ -1,5 +1,12 @@
-import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { createChatGroup, getChatConversations, getChatMessages, sendChatMessage } from '@/api';
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  createChatGroup,
+  getChatConversation,
+  getChatConversations,
+  getChatMessages,
+  openDirectConversation,
+  sendChatMessage,
+} from '@/api';
 import { createPendingMessage, removeMessage, toast, upsertMessage } from '@/utils';
 import type { ChatMessagePages } from '@/utils';
 import i18n from '@/i18n';
@@ -15,6 +22,15 @@ export function useConversations() {
     queryFn: ({ pageParam }) => getChatConversations(pageParam),
     initialPageParam: undefined as string | undefined,
     getNextPageParam: (page) => page.nextCursor ?? undefined,
+  });
+}
+
+/** One chat by id, for a link to a chat that is not in the loaded list pages. */
+export function useConversation(conversationId: string | undefined) {
+  return useQuery({
+    queryKey: chatKeys.conversation(conversationId ?? ''),
+    queryFn: () => getChatConversation(conversationId!),
+    enabled: Boolean(conversationId),
   });
 }
 
@@ -78,5 +94,16 @@ export function useCreateChatGroup() {
     mutationFn: ({ name, memberIds }: { name: string; memberIds: string[] }) =>
       createChatGroup(name, memberIds, crypto.randomUUID()),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: chatKeys.conversations() }),
+  });
+}
+
+/** Opens the chat with a connection. The server returns the existing chat when there is one. */
+export function useOpenDirectConversation() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    meta: { analyticsAction: 'conversation_open' },
+    mutationFn: openDirectConversation,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: chatKeys.conversations() }),
+    onError: () => toast.error(i18n.t('apiState.error')),
   });
 }
