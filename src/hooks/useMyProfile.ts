@@ -26,6 +26,8 @@ export function useUpdateMyProfile() {
     mutationFn: (body: UpdateMeBody) => updateMyProfile(body),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['profile', 'me'] });
+      // The photo list starts with the avatar.
+      void queryClient.invalidateQueries({ queryKey: ['profile', 'photos'] });
     },
   });
 }

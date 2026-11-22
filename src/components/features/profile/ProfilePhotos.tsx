@@ -4,7 +4,6 @@ import { apiErrorCode } from '@/api';
 import {
   useAddProfilePhoto,
   useDeleteProfilePhoto,
-  useMyProfile,
   useMyProfilePhotos,
   useReorderProfilePhotos,
   useUploadImage,
@@ -17,17 +16,18 @@ import { toast } from '@/utils';
 // The backend counts the avatar toward this limit.
 const MAX_PHOTOS = 6;
 
-/** Extra profile photos beyond the avatar; changes save right away. */
+/** Profile photos, the avatar first; changes save right away. */
 export function ProfilePhotos() {
   const { t } = useTranslation();
-  const { data: profile } = useMyProfile();
   const { data } = useMyProfilePhotos();
   const { mutateAsync: upload, isPending: isUploading } = useUploadImage('avatar');
   const { mutateAsync: addPhoto, isPending: isAdding } = useAddProfilePhoto();
   const { mutateAsync: deletePhoto, isPending: isDeleting } = useDeleteProfilePhoto();
   const { mutateAsync: reorderPhotos, isPending: isReordering } = useReorderProfilePhotos();
-  const photos = (data?.photos ?? []).filter((photo) => !photo.isAvatar);
-  const canAdd = photos.length + (profile?.avatarUrl ? 1 : 0) < MAX_PHOTOS;
+  const photos = data?.photos ?? [];
+  // The avatar is changed and removed through its own controls, so only these reorder.
+  const extras = photos.filter((photo) => !photo.isAvatar);
+  const canAdd = photos.length < MAX_PHOTOS;
   const busy = isUploading || isAdding || isDeleting || isReordering;
 
   async function add(file?: File) {
@@ -57,7 +57,7 @@ export function ProfilePhotos() {
   }
 
   function move(index: number, offset: number) {
-    const ids = photos.map((photo) => photo.id);
+    const ids = extras.map((photo) => photo.id);
     [ids[index], ids[index + offset]] = [ids[index + offset]!, ids[index]!];
     void run(() => reorderPhotos(ids));
   }
@@ -69,40 +69,45 @@ export function ProfilePhotos() {
         <p className="text-detail text-secondary">{t('students.photosHint')}</p>
       </div>
       <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-        {photos.map((photo, index) => (
-          <li key={photo.id} className="relative aspect-square overflow-hidden rounded-2xl">
-            <img src={photo.url} alt="" className="size-full object-cover" />
-            <div className="absolute inset-x-1.5 bottom-1.5 flex justify-between gap-1">
-              <UIButton
-                bg="transparent"
-                size="pill"
-                aria-label={t('students.photoMoveLeft')}
-                disabled={busy || index === 0}
-                onClick={() => move(index, -1)}
-              >
-                <ChevronLeft className="size-4" aria-hidden="true" />
-              </UIButton>
-              <UIButton
-                bg="transparent"
-                size="pill"
-                aria-label={t('students.photoDelete')}
-                disabled={busy}
-                onClick={() => void run(() => deletePhoto(photo.id))}
-              >
-                <Trash2 className="size-4" aria-hidden="true" />
-              </UIButton>
-              <UIButton
-                bg="transparent"
-                size="pill"
-                aria-label={t('students.photoMoveRight')}
-                disabled={busy || index === photos.length - 1}
-                onClick={() => move(index, 1)}
-              >
-                <ChevronRight className="size-4" aria-hidden="true" />
-              </UIButton>
-            </div>
-          </li>
-        ))}
+        {photos.map((photo) => {
+          const index = extras.indexOf(photo);
+          return (
+            <li key={photo.id} className="relative aspect-square overflow-hidden rounded-2xl">
+              <img src={photo.url} alt="" className="size-full object-cover" />
+              {!photo.isAvatar && (
+                <div className="absolute inset-x-1.5 bottom-1.5 flex justify-between gap-1">
+                  <UIButton
+                    bg="transparent"
+                    size="pill"
+                    aria-label={t('students.photoMoveLeft')}
+                    disabled={busy || index === 0}
+                    onClick={() => move(index, -1)}
+                  >
+                    <ChevronLeft className="size-4" aria-hidden="true" />
+                  </UIButton>
+                  <UIButton
+                    bg="transparent"
+                    size="pill"
+                    aria-label={t('students.photoDelete')}
+                    disabled={busy}
+                    onClick={() => void run(() => deletePhoto(photo.id))}
+                  >
+                    <Trash2 className="size-4" aria-hidden="true" />
+                  </UIButton>
+                  <UIButton
+                    bg="transparent"
+                    size="pill"
+                    aria-label={t('students.photoMoveRight')}
+                    disabled={busy || index === extras.length - 1}
+                    onClick={() => move(index, 1)}
+                  >
+                    <ChevronRight className="size-4" aria-hidden="true" />
+                  </UIButton>
+                </div>
+              )}
+            </li>
+          );
+        })}
         {canAdd && (
           <li>
             <label

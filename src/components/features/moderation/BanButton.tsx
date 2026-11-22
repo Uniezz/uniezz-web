@@ -5,7 +5,8 @@ import { useBan, useBanUser, useUnbanUser } from '@/hooks';
 import { ConfirmActionButton } from './ConfirmActionButton';
 
 /** Ban or unban a student, depending on their current state. */
-export function BanButton({ userId, iconOnly }: BanButtonProps) {
+export function BanButton({ userId, iconOnly, inline }: BanButtonProps) {
+  const showIcon = iconOnly || inline;
   const { t } = useTranslation();
   const { data: ban, isPending } = useBan(userId);
   const { mutateAsync: banUser } = useBanUser();
@@ -17,7 +18,8 @@ export function BanButton({ userId, iconOnly }: BanButtonProps) {
       description={t('moderation.unbanDescription')}
       success={t('moderation.unbanned')}
       onConfirm={() => unbanUser(userId)}
-      icon={iconOnly ? ShieldOff : undefined}
+      icon={showIcon ? ShieldOff : undefined}
+      inline={inline}
     />
   ) : (
     <ConfirmActionButton
@@ -26,7 +28,8 @@ export function BanButton({ userId, iconOnly }: BanButtonProps) {
       success={t('moderation.banned')}
       disabled={isPending}
       onConfirm={() => banUser(userId)}
-      icon={iconOnly ? Ban : undefined}
+      icon={showIcon ? Ban : undefined}
+      inline={inline}
       danger
     />
   );

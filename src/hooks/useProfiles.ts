@@ -28,6 +28,7 @@ export function useDeleteAvatar() {
       queryClient.setQueryData<components['schemas']['Profile']>(['profile', 'me'], (profile) =>
         profile ? { ...profile, avatarUrl: null } : profile,
       );
+      void queryClient.invalidateQueries({ queryKey: ['profile', 'photos'] });
       void queryClient.invalidateQueries({ queryKey: ['profiles'] });
       void queryClient.invalidateQueries({ queryKey: ['feed'] });
     },

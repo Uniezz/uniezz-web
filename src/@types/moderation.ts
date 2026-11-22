@@ -11,7 +11,11 @@ export type ReportItemProps = { report: QueuedReport };
 
 export type BanButtonProps = {
   /** Shows only the ban or unban icon, with the label as its accessible name and tooltip. */
-  iconOnly?: boolean; userId: string };
+  iconOnly?: boolean;
+  /** Shows the icon and label as a text link, like the profile's report and block links. */
+  inline?: boolean;
+  userId: string;
+};
 
 export type ConfirmActionButtonProps = {
   label: string;
@@ -25,6 +29,8 @@ export type ConfirmActionButtonProps = {
   icon?: LucideIcon;
   /** Shows the icon in red, for actions that take something away. */
   danger?: boolean;
+  /** With `icon`, shows the icon and label as a text link instead of an icon button. */
+  inline?: boolean;
 };
 
 export type ChallengeFormDialogProps = {
@@ -40,7 +46,7 @@ export type ChallengeFormProps = {
   onSubmit: (values: ChallengeFormSchema) => void;
 };
 
-export type GrantModeratorButtonProps = { userId: string; icon?: LucideIcon };
+export type GrantModeratorButtonProps = { userId: string; icon?: LucideIcon; inline?: boolean };
 
 export type ReportDecision = components['schemas']['UpdateReportInputBody']['status'];
 export type ReportDecisionInput = { id: string; status: ReportDecision };

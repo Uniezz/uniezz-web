@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { ConfirmActionButtonProps } from '@/@types';
 import { UIButton, UIDialog } from '@/ui/components';
+import { cn } from '@/ui/cn';
 import { toast } from '@/utils';
 
 /** A destructive moderation action that asks for confirmation first. */
@@ -14,6 +15,7 @@ export function ConfirmActionButton({
   children,
   icon: Icon,
   danger,
+  inline,
 }: ConfirmActionButtonProps) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
@@ -34,7 +36,23 @@ export function ConfirmActionButton({
 
   return (
     <>
-      {Icon ? (
+      {Icon && inline ? (
+        <UIButton
+          size="pill"
+          bg="transparent"
+          className={cn(
+            'min-h-0 gap-1 border-0 p-0 enabled:hover:bg-transparent',
+            danger
+              ? 'text-danger/70 enabled:hover:text-danger'
+              : 'text-secondary enabled:hover:text-white',
+          )}
+          disabled={disabled}
+          onClick={() => setOpen(true)}
+        >
+          <Icon className="size-3.5" aria-hidden="true" />
+          {label}
+        </UIButton>
+      ) : Icon ? (
         <UIButton
           size="icon"
           bg="plain"

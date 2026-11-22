@@ -4,7 +4,7 @@ import { useGrantModerator } from '@/hooks';
 import { ConfirmActionButton } from './ConfirmActionButton';
 
 /** Admins make a student a moderator from their profile; granting again changes nothing. */
-export function GrantModeratorButton({ userId, icon }: GrantModeratorButtonProps) {
+export function GrantModeratorButton({ userId, icon, inline }: GrantModeratorButtonProps) {
   const { t } = useTranslation();
   const { mutateAsync: grant } = useGrantModerator();
   return (
@@ -14,6 +14,7 @@ export function GrantModeratorButton({ userId, icon }: GrantModeratorButtonProps
       success={t('moderation.granted')}
       onConfirm={() => grant(userId)}
       icon={icon}
+      inline={inline}
     />
   );
 }
