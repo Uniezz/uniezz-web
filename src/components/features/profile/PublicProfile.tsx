@@ -114,7 +114,7 @@ export function PublicProfile({ profile }: PublicProfileProps) {
                     <ul className="scrollbar-hidden flex gap-3 overflow-x-auto">
                       {photos.map((url) => (
                         <li key={url} className="shrink-0">
-                          <img src={url} alt="" className="h-40 w-30 rounded-2xl object-cover" />
+                          <img src={url} alt="" className="size-48 rounded-2xl object-cover" />
                         </li>
                       ))}
                     </ul>
