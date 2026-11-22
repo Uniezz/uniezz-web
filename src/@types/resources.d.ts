@@ -133,6 +133,7 @@ export default interface Resources {
       "searchUploads": "Search uploads",
       "semester": "Semester",
       "send": "Send",
+      "sendError": "Couldn’t send the message. Try again.",
       "signInAgain": "Sign in again",
       "signOut": "Sign out",
       "studyBuddy": "Study buddy",
