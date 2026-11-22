@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import type { ChatConversation } from '@/@types';
+import { useMarkChatRead } from '@/hooks';
 import { UIPanel } from '@/ui/components';
 import { ChatComposer } from './ChatComposer';
 import { ChatHeader } from './ChatHeader';
@@ -15,6 +16,12 @@ export function ChatThread({
   onBack: () => void;
 }) {
   const [preview, setPreview] = useState<ChatPreviewState | null>(null);
+  const { mutate: markRead } = useMarkChatRead();
+  const { id, unreadCount, lastSeq } = conversation;
+  // Opening a chat, or getting a new message in it, marks everything up to the newest as read.
+  useEffect(() => {
+    if (unreadCount > 0) markRead({ conversationId: id, seq: lastSeq });
+  }, [id, unreadCount, lastSeq, markRead]);
   return (
     <UIPanel className="flex h-full min-h-0 flex-col p-0">
       <ChatHeader conversation={conversation} onBack={onBack} />

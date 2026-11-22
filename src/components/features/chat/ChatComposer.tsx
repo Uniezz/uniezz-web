@@ -1,6 +1,6 @@
-import { captureAnalytics, toast } from '@/utils';
+import { captureAnalytics, getChatDraft, setChatDraft, toast } from '@/utils';
 import { Paperclip, Send } from 'lucide-react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -29,10 +29,10 @@ export function ChatComposer({
   const { t } = useTranslation();
   const { register, control, handleSubmit, reset } = useForm<TextFormSchema>({
     resolver: zodResolver(textFormSchema),
-    defaultValues: { text: '' },
+    defaultValues: { text: getChatDraft(conversationId) },
     mode: 'onChange',
   });
-  const [isMultiline, setIsMultiline] = useState(false);
+  const [isMultiline, setIsMultiline] = useState(() => getChatDraft(conversationId).includes('\n'));
   const fileInput = useRef<HTMLInputElement>(null);
   const [drafts, setDrafts] = useState<ChatDraftAttachment[]>([]);
   const [isSending, setIsSending] = useState(false);
@@ -40,6 +40,9 @@ export function ChatComposer({
   const { mutate: send } = useSendMessage();
   const messageDraft = useWatch({ control, name: 'text' });
   const hasContent = Boolean(messageDraft?.trim()) || drafts.length > 0;
+
+  // Typed text stays when the student opens another chat and comes back.
+  useEffect(() => setChatDraft(conversationId, messageDraft ?? ''), [conversationId, messageDraft]);
 
   function addAttachments(files: File[]) {
     if (!files.length) return;

@@ -4,10 +4,17 @@ import {
   getChatConversation,
   getChatConversations,
   getChatMessages,
+  markChatRead,
   openDirectConversation,
   sendChatMessage,
 } from '@/api';
-import { createPendingMessage, removeMessage, toast, upsertMessage } from '@/utils';
+import {
+  createPendingMessage,
+  patchCachedItem,
+  removeMessage,
+  toast,
+  upsertMessage,
+} from '@/utils';
 import type { ChatMessagePages } from '@/utils';
 import i18n from '@/i18n';
 import { chatKeys } from './chatKeys';
@@ -105,5 +112,19 @@ export function useOpenDirectConversation() {
     mutationFn: openDirectConversation,
     onSuccess: () => queryClient.invalidateQueries({ queryKey: chatKeys.conversations() }),
     onError: () => toast.error(i18n.t('apiState.error')),
+  });
+}
+
+/** Tells the server how far the student has read, and clears the unread count in the cached chats. */
+export function useMarkChatRead() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    meta: { analyticsAction: 'chat_mark_read' },
+    mutationFn: ({ conversationId, seq }: { conversationId: string; seq: number }) =>
+      markChatRead(conversationId, seq),
+    onSuccess: (read, { conversationId }) => {
+      patchCachedItem(queryClient, chatKeys.conversations(), conversationId, read);
+      patchCachedItem(queryClient, chatKeys.conversation(conversationId), conversationId, read);
+    },
   });
 }
