@@ -3,7 +3,7 @@ import { ShieldPlus } from 'lucide-react';
 import { BlockStudentButton } from '@/components/features/connections';
 import { useTranslation } from 'react-i18next';
 import type { PublicProfileProps } from '@/@types';
-import { useMyProfile, useUniversities } from '@/hooks';
+import { useMyProfile, useMyProfilePhotos, useUniversities } from '@/hooks';
 import { UIPanel, UITags, UIUniversityLogo } from '@/ui/components';
 import { ReportButton } from '@/components/features/reports';
 import { BanButton, GrantModeratorButton } from '@/components/features/moderation';
@@ -18,8 +18,12 @@ export function PublicProfile({ profile }: PublicProfileProps) {
   const university =
     universities?.find((item) => item.id === profile.universityId)?.name ??
     profile.universityId.toUpperCase();
+  const isMe = me?.id === profile.id;
+  // The public profile hides photos from yourself, as you are not your own connection.
+  const { data: myPhotos } = useMyProfilePhotos(isMe);
   // Avatar first; null for students you are not connected with, and the avatar alone adds nothing.
-  const photos = profile.photos && profile.photos.length > 1 ? profile.photos : [];
+  const allPhotos = isMe ? myPhotos?.photos?.map((photo) => photo.url) : profile.photos;
+  const photos = allPhotos && allPhotos.length > 1 ? allPhotos : [];
   const hasPersonalDetails = Boolean(
     profile.bio || profile.interests?.length || profile.songUrl || photos.length,
   );
@@ -42,7 +46,7 @@ export function PublicProfile({ profile }: PublicProfileProps) {
           aria-hidden="true"
           className="absolute top-3 right-3 size-12 rounded-xl object-contain sm:top-4 sm:right-4"
         />
-        {me && me.id !== profile.id && (
+        {me && !isMe && (
           <div className="absolute right-2 bottom-2 z-10 flex flex-col items-end gap-2 rounded-xl border border-white-10 bg-surface/75 px-3 py-2 backdrop-blur-md sm:right-3 sm:bottom-3">
             <ReportButton targetType="user" targetId={profile.id} danger />
             {isStaff(me) && <BanButton userId={profile.id} inline />}

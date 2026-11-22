@@ -44,8 +44,8 @@ export function useDeleteMyProfile() {
   });
 }
 
-export function useMyProfilePhotos() {
-  return useQuery({ queryKey: ['profile', 'photos'], queryFn: listMyProfilePhotos });
+export function useMyProfilePhotos(enabled = true) {
+  return useQuery({ queryKey: ['profile', 'photos'], queryFn: listMyProfilePhotos, enabled });
 }
 
 // The public profile shows these photos too, so changes also refresh ['profiles'].
