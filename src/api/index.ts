@@ -6,6 +6,7 @@ export * from './media';
 export * from './reports';
 export * from './auth';
 export * from './faq';
+export * from './chat';
 export * from './connections';
 export * from './study';
 export * from './client';
