@@ -6,6 +6,8 @@ export * from './useProfileProgrammes';
 export * from './useProfiles';
 export * from './useDropdown';
 export * from './useFaq';
+export * from './chatKeys';
+export * from './useChat';
 export * from './useConnections';
 export * from './useStudy';
 export * from './useCreateFeedPost';
