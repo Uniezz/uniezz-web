@@ -4,7 +4,7 @@ import { Outlet, createFileRoute, redirect } from '@tanstack/react-router';
 
 import type { Conversation, Message } from '@/@types';
 // TODO(api): Replace mock conversations and local chat mutations with API queries and mutations.
-import { CHATMOCKS, connectionConversation, createGroupConversation } from '@/utils';
+import { CHATMOCKS, connectionConversation } from '@/utils';
 import { useConnectionsList } from '@/hooks';
 import { ConversationList } from '@/components/features/chat';
 
@@ -16,7 +16,7 @@ export const ChatGroupRouteContext = createContext<{
   setPanel: (panel: 'list' | 'thread') => void;
   sendMessage: (id: string, message: Message) => void;
   onBack: () => void;
-  onCreate: (name: string, members: string[], imageUrl?: string) => void;
+  onCreated: (conversationId: string) => void;
 } | null>(null);
 
 export const Route = createFileRoute('/_app/chat')({
@@ -76,17 +76,9 @@ function ChatPage() {
     setPanel('thread');
     void navigate({ search: (previous) => ({ ...previous, conversationId: id }) });
   }
-  function createGroup(name: string, members: string[], imageUrl?: string): void {
-    const group = createGroupConversation(conversations, name, members, imageUrl);
-    setConversations((conversations) => [...conversations, group]);
+  function openCreatedGroup(conversationId: string): void {
     setPanel('thread');
-    void navigate({
-      to: '/chat',
-      search: (previous) => ({
-        ...previous,
-        conversationId: group.id,
-      }),
-    });
+    void navigate({ to: '/chat', search: (previous) => ({ ...previous, conversationId }) });
   }
   function sendMessage(id: string, message: Message): void {
     setConversations((conversations) =>
@@ -115,7 +107,7 @@ function ChatPage() {
             to: '/chat',
           });
         },
-        onCreate: createGroup,
+        onCreated: openCreatedGroup,
       }}
     >
       <div className="grid h-[calc(100svh-150px)] min-h-[540px] gap-5 md:h-[calc(100svh-120px)] md:grid-cols-[300px_minmax(0,1fr)] lg:-ml-3 lg:h-[calc(100svh-56px)] lg:grid-cols-[340px_minmax(0,1fr)]">

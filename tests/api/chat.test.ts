@@ -9,6 +9,7 @@ mock.module('../../src/api/client.ts', () => ({
   api: { GET: respond('GET'), POST: respond('POST'), PUT: respond('PUT') },
 }));
 const {
+  createChatGroup,
   getChatConversations,
   getChatMessages,
   markChatRead,
@@ -61,5 +62,17 @@ test('opening a direct chat posts the other student id', async () => {
     method: 'POST',
     path: '/chat/conversations/direct',
     options: { body: { userId: 'u1' } },
+  });
+});
+
+test('creating a group sends its name and member ids with an idempotency key', async () => {
+  await createChatGroup('Maths', ['u1', 'u2'], 'key-2');
+  expect(request).toEqual({
+    method: 'POST',
+    path: '/chat/conversations/groups',
+    options: {
+      params: { header: { 'Idempotency-Key': 'key-2' } },
+      body: { name: 'Maths', memberIds: ['u1', 'u2'] },
+    },
   });
 });

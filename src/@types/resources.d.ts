@@ -587,6 +587,7 @@ export default interface Resources {
       "courseUpdate": "Saving course…",
       "faqProposalCreate": "Sending suggestion…",
       "faqPublish": "Publishing question…",
+      "groupCreate": "Creating group…",
       "imageUpload": "Uploading image…",
       "imagesUpload": "Uploading photos…",
       "moderatorGrant": "Adding moderator…",

@@ -46,3 +46,12 @@ export async function openDirectConversation(userId: string) {
   const { data } = await api.POST('/chat/conversations/direct', { body: { userId } });
   return data!;
 }
+
+/** `memberIds` are connections. The creator is added by the server. */
+export async function createChatGroup(name: string, memberIds: string[], idempotencyKey: string) {
+  const { data } = await api.POST('/chat/conversations/groups', {
+    params: { header: { 'Idempotency-Key': idempotencyKey } },
+    body: { name, memberIds },
+  });
+  return data!;
+}

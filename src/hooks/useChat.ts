@@ -1,5 +1,5 @@
 import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { getChatConversations, getChatMessages, sendChatMessage } from '@/api';
+import { createChatGroup, getChatConversations, getChatMessages, sendChatMessage } from '@/api';
 import { createPendingMessage, removeMessage, toast, upsertMessage } from '@/utils';
 import type { ChatMessagePages } from '@/utils';
 import i18n from '@/i18n';
@@ -68,5 +68,15 @@ export function useSendMessage() {
       );
       void queryClient.invalidateQueries({ queryKey: chatKeys.conversations() });
     },
+  });
+}
+
+export function useCreateChatGroup() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    meta: { analyticsAction: 'group_create', progress: () => i18n.t('progress.groupCreate') },
+    mutationFn: ({ name, memberIds }: { name: string; memberIds: string[] }) =>
+      createChatGroup(name, memberIds, crypto.randomUUID()),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: chatKeys.conversations() }),
   });
 }
