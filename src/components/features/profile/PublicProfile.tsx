@@ -111,14 +111,10 @@ export function PublicProfile({ profile }: PublicProfileProps) {
                 {photos.length > 0 && (
                   <section className="space-y-4">
                     <h2 className="text-label font-semibold">{t('students.photosTitle')}</h2>
-                    <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                    <ul className="scrollbar-hidden flex gap-3 overflow-x-auto">
                       {photos.map((url) => (
-                        <li key={url}>
-                          <img
-                            src={url}
-                            alt=""
-                            className="aspect-square w-full rounded-2xl object-cover"
-                          />
+                        <li key={url} className="shrink-0">
+                          <img src={url} alt="" className="h-40 w-30 rounded-2xl object-cover" />
                         </li>
                       ))}
                     </ul>
