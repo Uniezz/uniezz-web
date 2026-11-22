@@ -1,5 +1,5 @@
 import { captureAnalytics, toast, trackLocalAction } from '@/utils';
-import { ArrowLeft, Paperclip, Send } from 'lucide-react';
+import { Paperclip, Send } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from '@tanstack/react-router';
@@ -8,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import type { Message, MessageAttachment, Conversation } from '@/@types';
 import { cn } from '@/ui/cn';
-import { UIAvatar, UIButton, UIEmojiPicker, UIEmpty, UIPanel } from '@/ui/components';
+import { UIButton, UIEmojiPicker, UIEmpty, UIPanel } from '@/ui/components';
 import {
   MAX_CHAT_ATTACHMENTS,
   chatAttachmentAccept,
@@ -22,6 +22,7 @@ import { useUploadImage } from '@/hooks';
 import { CHATMOCKS } from '@/utils';
 import { ChatDraftAttachments, type ChatDraftAttachment } from './ChatDraftAttachments';
 import { ChatFileChip } from './ChatFileChip';
+import { ChatHeader } from './ChatHeader';
 import { ChatImagePreview, type ChatPreviewState } from './ChatImagePreview';
 import { ChatMessageImages } from './ChatMessageImages';
 
@@ -123,29 +124,7 @@ export function ChatThread({
   }
   return (
     <UIPanel className="flex h-full min-h-0 flex-col p-0">
-      <div className="flex items-center gap-3 border-b border-white-5 px-5 py-4">
-        <UIButton
-          bg="transparent"
-          size="icon"
-          className="md:hidden"
-          aria-label={t('app.back')}
-          onClick={onBack}
-        >
-          <ArrowLeft size={18} />
-        </UIButton>
-        <UIAvatar
-          imgSrc={
-            current.imageUrl || (current.image ? `/app/rPsdQ-${current.image}.jpg` : undefined)
-          }
-          avatarSymbols={current.name.slice(0, 2)}
-        />
-        <div>
-          <h2 className="text-section font-semibold">{current.name}</h2>
-          {current.name === 'Kateryna Melnyk' && (
-            <p className="text-detail text-secondary">{CHATMOCKS.status}</p>
-          )}
-        </div>
-      </div>
+      <ChatHeader current={current} onBack={onBack} />
       <div className="flex min-h-0 flex-1 flex-col justify-end overflow-auto px-7 py-5">
         <div className="space-y-2.5 overflow-auto" role="log" aria-label={t('app.messages')}>
           {current.name === 'Kateryna Melnyk' && (
