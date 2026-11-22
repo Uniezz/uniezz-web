@@ -1,28 +1,6 @@
-import type { Conversation } from '@/@types';
+import type { ChatConversation, ChatMessage, Conversation } from '@/@types';
 import type { components } from '@/@types/schema';
 import { authorName } from './feed';
-
-// TODO(api): Replace this local mock group factory with the create-group API mutation.
-export function createGroupConversation(
-  conversations: Conversation[],
-  name: string,
-  members: string[],
-  imageUrl?: string,
-): Conversation {
-  return {
-    id: `group-${conversations.length + 1}`,
-    name: conversations.some((conversation) => conversation.name === name)
-      ? `${name} (${conversations.length + 1})`
-      : name,
-    preview: members.join(', '),
-    time: '',
-    group: true,
-    unread: 0,
-    image: 0,
-    imageUrl,
-    messages: [],
-  };
-}
 
 /** An empty direct conversation with a match, opened from the connections list. */
 export function connectionConversation(
@@ -40,3 +18,35 @@ export function connectionConversation(
     messages: [],
   };
 }
+
+/** The name shown for a chat: the group name, or the other student. */
+export function chatTitle(conversation: ChatConversation, deletedLabel: string) {
+  if (conversation.kind === 'group') return conversation.name ?? '';
+  const { peer } = conversation;
+  return (peer && !peer.deleted && authorName(peer)) || deletedLabel;
+}
+
+/** Direct chats show the other student's photo. Groups have no photo yet. */
+export const chatAvatar = (conversation: ChatConversation) =>
+  conversation.peer?.avatarUrl ?? undefined;
+
+/** The text under the name in the chat list: the last message, or a label for an image-only one. */
+export function chatPreview(conversation: ChatConversation, imageLabel: string) {
+  const message = conversation.lastMessage;
+  if (!message || message.deletedAt || message.kind === 'system') return '';
+  return message.body || (message.attachments?.length ? imageLabel : '');
+}
+
+/** The time of day for today's messages, and a short date for older ones. */
+export function chatTime(iso: string, locale: string, now = new Date()) {
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return '';
+  const sameDay = date.toDateString() === now.toDateString();
+  return new Intl.DateTimeFormat(
+    locale,
+    sameDay ? { hour: '2-digit', minute: '2-digit' } : { day: 'numeric', month: 'short' },
+  ).format(date);
+}
+
+export const isOwnMessage = (message: ChatMessage, myId: string | undefined) =>
+  myId !== undefined && message.sender.id === myId;
