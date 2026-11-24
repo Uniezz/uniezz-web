@@ -45,5 +45,5 @@ export async function finishLogin(
   captureAnalytics('sign_in_succeeded', { method: 'USOS' });
   clearInviteCode();
   queryClient.clear();
-  throw redirect({ to: await homeAfterSignIn(), replace: true });
+  throw redirect({ to: await homeAfterSignIn('usos'), replace: true });
 }

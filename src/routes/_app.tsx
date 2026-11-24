@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { useMyProfile } from '@/hooks';
 import { myProfileQueryOptions } from '@/hooks';
 import { ApiRequestError } from '@/api';
-import { authorName } from '@/utils';
+import { authorName, identifyAnalytics } from '@/utils';
 import { useNarrowViewport } from '@/hooks';
 import { isMobileDevice, shouldBlockMobile } from '@/utils';
 import { optionalSearchStringSchema, returnPathSchema } from '@/schemas';
@@ -23,7 +23,8 @@ export const Route = createFileRoute('/_app')({
   // with `replace`, so the closed page is not kept in history.
   beforeLoad: async ({ context }) => {
     try {
-      await context.queryClient.ensureQueryData(myProfileQueryOptions());
+      // Also identifies a student who was already signed in when the app opened.
+      identifyAnalytics(await context.queryClient.ensureQueryData(myProfileQueryOptions()));
     } catch (error) {
       if (error instanceof ApiRequestError && error.status === 401) {
         throw redirect({ to: '/login', replace: true });

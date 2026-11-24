@@ -1,5 +1,6 @@
 import type { components } from '@/@types/schema';
 import type { UpdateMeBody } from '@/@types';
+import { identifyAnalytics } from '@/utils/analytics';
 import { api } from './client';
 
 export async function getMyProfile() {
@@ -76,10 +77,13 @@ export async function getPublicProfile(id: string) {
 }
 
 /** Where a just-signed-in student lands: onboarding until it is finished or skipped, otherwise the feed. */
-export async function homeAfterSignIn(): Promise<'/onboarding' | '/feed'> {
+export async function homeAfterSignIn(
+  authMethod: 'usos' | 'otp',
+): Promise<'/onboarding' | '/feed'> {
   try {
-    const { onboardedAt } = await getMyProfile();
-    return onboardedAt ? '/feed' : '/onboarding';
+    const profile = await getMyProfile();
+    identifyAnalytics(profile, authMethod);
+    return profile.onboardedAt ? '/feed' : '/onboarding';
   } catch {
     return '/feed';
   }
