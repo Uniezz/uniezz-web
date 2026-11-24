@@ -9,6 +9,7 @@ export * from './search';
 export * from './device';
 export * from './chat';
 export * from './chatDrafts';
+export * from './chatKeys';
 export * from './chatMessages';
 export * from './connections';
 export * from './exams';

@@ -1,5 +1,5 @@
 import { expect, test } from 'bun:test';
-import { chatKeys } from '../../src/hooks/chatKeys';
+import { chatKeys } from '../../src/utils/chatKeys';
 
 test('every chat key starts with the shared chat key, so one call can reach them all', () => {
   for (const key of [

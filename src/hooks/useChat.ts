@@ -9,6 +9,7 @@ import {
   sendChatMessage,
 } from '@/api';
 import {
+  chatKeys,
   createPendingMessage,
   patchCachedItem,
   removeMessage,
@@ -17,7 +18,6 @@ import {
 } from '@/utils';
 import type { ChatMessagePages } from '@/utils';
 import i18n from '@/i18n';
-import { chatKeys } from './chatKeys';
 import { useMyProfile } from './useMyProfile';
 
 // The thread does not virtualize, so only the newest 10 pages (300 messages) stay in memory.
