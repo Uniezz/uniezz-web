@@ -1,5 +1,5 @@
 import type { paths } from '@/@types/schema';
-import { env } from '@/schemas';
+import { env } from '@/schemas/env';
 
 type UsosQuery = NonNullable<paths['/auth/usos/start']['get']['parameters']['query']>;
 

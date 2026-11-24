@@ -16,6 +16,8 @@ const reportTargetLabels = {
   candidate: 'moderation.targetCandidate',
   file: 'moderation.targetFile',
   course: 'moderation.targetCourse',
+  course_comment: 'moderation.targetCourseComment',
+  professor_review: 'moderation.targetProfessorReview',
 } as const;
 
 // The report targets the moderation API can remove; users are banned instead.
@@ -24,6 +26,8 @@ const removableTargets: readonly string[] = [
   'comment',
   'file',
   'course',
+  'course_comment',
+  'professor_review',
 ] satisfies readonly RemovableTarget[];
 
 export function isRemovableTarget(type: string): type is RemovableTarget {

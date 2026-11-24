@@ -86,8 +86,8 @@
     "message": "паведамленне",
     "messages": "Паведамленні",
     "minimumMembers": "Выберыце як мінімум двух чалавек.",
-    "mobileDescription": "Хутка з'явяцца нашы мабільныя праграмы. На дадзены момант адкрыйце uniezz на вашым кампутары.",
-    "mobileTitle": "uniezz прыходзіць на мабільны",
+    "mobileDescription": "Спампуй праграму uniezz з App Store або Google Play.",
+    "mobileTitle": "uniezz на тэлефоне",
     "modeOfStudies": "Рэжым",
     "modeOfStudiesFullTime": "Поўны працоўны дзень",
     "modeOfStudiesPartTime": "Завочны",
@@ -511,7 +511,9 @@
     "title": "Мадэрацыя",
     "unban": "Разблакаваць акаўнт",
     "unbanDescription": "Студэнт зноў зможа ўвайсці.",
-    "unbanned": "Блакаванне знята."
+    "unbanned": "Блакаванне знята.",
+    "targetCourseComment": "Каментарый да прадмета",
+    "targetProfessorReview": "Водгук пра выкладчыка"
   },
   "onboarding": {
     "details": {
@@ -605,7 +607,9 @@
     "signOut": "Выхад…",
     "studyFileDelete": "Выдаленне файла…",
     "userBan": "Блакуем акаўнт…",
-    "userUnban": "Разблакуем акаўнт…"
+    "userUnban": "Разблакуем акаўнт…",
+    "reviewSave": "Захаванне водгуку…",
+    "reviewDelete": "Выдаленне водгуку…"
   },
   "report": {
     "candidate": "Паведаміць пра профіль",
@@ -627,7 +631,8 @@
     "sent": "Справаздача адпраўлена.",
     "spam": "Спам",
     "submit": "Адправіць справаздачу",
-    "user": "Паскардзіцца на карыстальніка"
+    "user": "Паскардзіцца на карыстальніка",
+    "review": "Паскардзіцца на водгук"
   },
   "rewards": {
     "balance": "Твае манеты",
@@ -733,5 +738,17 @@
   "topbar": {
     "changeLanguage": "Змяніць мову",
     "languageCode": "BE"
+  },
+  "professors": {
+    "deleteReview": "Выдаліць водгук",
+    "deleteReviewDescription": "Ваш водгук будзе выдалены назаўсёды.",
+    "editReview": "Змяніць",
+    "noReviews": "Водгукаў пакуль няма.",
+    "openReviews": "Водгукі",
+    "reviewDeleted": "Водгук выдалены.",
+    "reviewHint": "Паказваецца без вашага імя.",
+    "reviewSaved": "Водгук захаваны.",
+    "reviews": "Водгукі",
+    "yourReview": "Ваш водгук"
   }
 }

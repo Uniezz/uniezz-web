@@ -86,8 +86,8 @@
     "message": "Wiadomość",
     "messages": "Wiadomości",
     "minimumMembers": "Wybierz co najmniej dwie osoby.",
-    "mobileDescription": "Nasze aplikacje mobilne pojawią się wkrótce. Na razie otwórz uniezz na komputerze.",
-    "mobileTitle": "uniezz już wkrótce na telefonie",
+    "mobileDescription": "Pobierz aplikację uniezz z App Store lub Google Play.",
+    "mobileTitle": "uniezz na telefonie",
     "modeOfStudies": "Forma studiów",
     "modeOfStudiesFullTime": "Stacjonarne",
     "modeOfStudiesPartTime": "Niestacjonarne",
@@ -511,7 +511,9 @@
     "title": "Moderacja",
     "unban": "Odblokuj konto",
     "unbanDescription": "Student będzie mógł znów się zalogować.",
-    "unbanned": "Blokada zdjęta."
+    "unbanned": "Blokada zdjęta.",
+    "targetCourseComment": "Komentarz do przedmiotu",
+    "targetProfessorReview": "Opinia o wykładowcy"
   },
   "onboarding": {
     "details": {
@@ -605,7 +607,9 @@
     "signOut": "Wylogowywanie…",
     "studyFileDelete": "Usuwanie pliku…",
     "userBan": "Blokowanie konta…",
-    "userUnban": "Odblokowywanie konta…"
+    "userUnban": "Odblokowywanie konta…",
+    "reviewSave": "Zapisywanie opinii…",
+    "reviewDelete": "Usuwanie opinii…"
   },
   "report": {
     "candidate": "Zgłoś profil",
@@ -627,7 +631,8 @@
     "sent": "Zgłoszenie wysłane.",
     "spam": "Spam",
     "submit": "Wyślij zgłoszenie",
-    "user": "Zgłoś użytkownika"
+    "user": "Zgłoś użytkownika",
+    "review": "Zgłoś opinię"
   },
   "rewards": {
     "balance": "Twoje monety",
@@ -733,5 +738,17 @@
   "topbar": {
     "changeLanguage": "Zmień język",
     "languageCode": "PL"
+  },
+  "professors": {
+    "deleteReview": "Usuń opinię",
+    "deleteReviewDescription": "Twoja opinia zostanie trwale usunięta.",
+    "editReview": "Edytuj",
+    "noReviews": "Brak opinii.",
+    "openReviews": "Opinie",
+    "reviewDeleted": "Opinia usunięta.",
+    "reviewHint": "Wyświetlana bez Twojego imienia.",
+    "reviewSaved": "Opinia zapisana.",
+    "reviews": "Opinie",
+    "yourReview": "Twoja opinia"
   }
 }

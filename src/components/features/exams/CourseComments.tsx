@@ -5,6 +5,7 @@ import { toast } from '@/utils';
 import { useCourseComments, useDeleteCourseComment } from '@/hooks';
 import { UIButton, UIDialog, UIQueryError } from '@/ui/components';
 import { listComponents } from '@/ui/virtuoso';
+import { ReportButton } from '@/components/features/reports';
 
 export function CourseComments({ courseId }: { courseId: string }) {
   const { t, i18n } = useTranslation();
@@ -54,7 +55,7 @@ export function CourseComments({ courseId }: { courseId: string }) {
                       timeStyle: 'short',
                     }).format(new Date(comment.createdAt))}
                   </time>
-                  {comment.isMine && (
+                  {comment.isMine ? (
                     <UIButton
                       size="pill"
                       bg="transparent"
@@ -64,6 +65,8 @@ export function CourseComments({ courseId }: { courseId: string }) {
                     >
                       {t('app.remove')}
                     </UIButton>
+                  ) : (
+                    <ReportButton targetType="course_comment" targetId={comment.id} danger />
                   )}
                 </div>
               </article>

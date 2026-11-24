@@ -4,7 +4,6 @@ import { ApiRequestError } from '@/api';
 import { myProfileQueryOptions } from '@/hooks';
 import { UIQueryError } from '@/ui/components';
 import { OnboardingWizard } from '@/components/features/onboarding';
-import { isOnboardingDone } from '@/utils';
 import { privateRouteHead } from '@/utils/routeHead';
 
 // Standalone page, outside the app layout: once skipped or finished it redirects to the feed for good.
@@ -12,8 +11,8 @@ export const Route = createFileRoute('/onboarding')({
   head: () => privateRouteHead('/onboarding'),
   beforeLoad: async ({ context }) => {
     try {
-      const { id } = await context.queryClient.ensureQueryData(myProfileQueryOptions());
-      if (isOnboardingDone(id)) throw redirect({ to: '/feed', replace: true });
+      const { onboardedAt } = await context.queryClient.ensureQueryData(myProfileQueryOptions());
+      if (onboardedAt) throw redirect({ to: '/feed', replace: true });
     } catch (error) {
       if (error instanceof ApiRequestError && error.status === 401) {
         throw redirect({ to: '/login', replace: true });

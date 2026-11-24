@@ -30,6 +30,14 @@ export async function removeCourse(id: string) {
   await api.DELETE('/moderation/courses/{id}', { params: { path: { id } } });
 }
 
+export async function removeCourseComment(id: string) {
+  await api.DELETE('/moderation/course-comments/{id}', { params: { path: { id } } });
+}
+
+export async function removeProfessorReview(id: string) {
+  await api.DELETE('/moderation/professor-reviews/{id}', { params: { path: { id } } });
+}
+
 export async function getBan(id: string) {
   const { data } = await api.GET('/moderation/users/{id}/ban', { params: { path: { id } } });
   return data!;

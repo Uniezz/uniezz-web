@@ -86,8 +86,8 @@
     "message": "Nachricht",
     "messages": "Nachrichten",
     "minimumMembers": "Wählen Sie mindestens zwei Personen aus.",
-    "mobileDescription": "Unsere mobilen Apps sind bald verfügbar. Öffnen Sie zunächst uniezz auf Ihrem Computer.",
-    "mobileTitle": "uniezz kommt auf Mobilgeräte",
+    "mobileDescription": "Lade die uniezz-App im App Store oder bei Google Play herunter.",
+    "mobileTitle": "uniezz auf dem Handy",
     "modeOfStudies": "Modus",
     "modeOfStudiesFullTime": "Vollzeit",
     "modeOfStudiesPartTime": "Teilzeit",
@@ -511,7 +511,9 @@
     "title": "Moderation",
     "unban": "Sperre aufheben",
     "unbanDescription": "Die Person kann sich wieder anmelden.",
-    "unbanned": "Sperre aufgehoben."
+    "unbanned": "Sperre aufgehoben.",
+    "targetCourseComment": "Kurskommentar",
+    "targetProfessorReview": "Dozentenbewertung"
   },
   "onboarding": {
     "details": {
@@ -605,7 +607,9 @@
     "signOut": "Abmeldung…",
     "studyFileDelete": "Datei wird gelöscht…",
     "userBan": "Konto wird gesperrt…",
-    "userUnban": "Sperre wird aufgehoben…"
+    "userUnban": "Sperre wird aufgehoben…",
+    "reviewSave": "Bewertung wird gespeichert…",
+    "reviewDelete": "Bewertung wird gelöscht…"
   },
   "report": {
     "candidate": "Profil melden",
@@ -627,7 +631,8 @@
     "sent": "Bericht gesendet.",
     "spam": "Spam",
     "submit": "Bericht senden",
-    "user": "Benutzer melden"
+    "user": "Benutzer melden",
+    "review": "Bewertung melden"
   },
   "rewards": {
     "balance": "Deine Münzen",
@@ -733,5 +738,17 @@
   "topbar": {
     "changeLanguage": "Sprache ändern",
     "languageCode": "DE"
+  },
+  "professors": {
+    "deleteReview": "Bewertung löschen",
+    "deleteReviewDescription": "Deine Bewertung wird endgültig gelöscht.",
+    "editReview": "Bearbeiten",
+    "noReviews": "Noch keine Bewertungen.",
+    "openReviews": "Bewertungen",
+    "reviewDeleted": "Bewertung gelöscht.",
+    "reviewHint": "Wird ohne deinen Namen angezeigt.",
+    "reviewSaved": "Bewertung gespeichert.",
+    "reviews": "Bewertungen",
+    "yourReview": "Deine Bewertung"
   }
 }

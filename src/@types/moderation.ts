@@ -52,7 +52,13 @@ export type ReportDecision = components['schemas']['UpdateReportInputBody']['sta
 export type ReportDecisionInput = { id: string; status: ReportDecision };
 
 /** Report targets with a removal endpoint; students and discovery cards are banned instead. */
-export type RemovableTarget = 'post' | 'comment' | 'file' | 'course';
+export type RemovableTarget =
+  | 'post'
+  | 'comment'
+  | 'file'
+  | 'course'
+  | 'course_comment'
+  | 'professor_review';
 export type RemoveContentInput = { type: RemovableTarget; id: string };
 
 export type ModerationTab = 'reports' | 'faq' | 'moderators' | 'log' | 'challenges';

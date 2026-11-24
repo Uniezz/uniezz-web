@@ -86,8 +86,8 @@
     "message": "Message",
     "messages": "Messages",
     "minimumMembers": "Select at least two people.",
-    "mobileDescription": "Our mobile apps are coming soon. For now, open uniezz on your computer.",
-    "mobileTitle": "uniezz is coming to mobile",
+    "mobileDescription": "Get the uniezz app on the App Store or Google Play.",
+    "mobileTitle": "uniezz on your phone",
     "modeOfStudies": "Mode",
     "modeOfStudiesFullTime": "Full-time",
     "modeOfStudiesPartTime": "Part-time",
@@ -511,7 +511,9 @@
     "title": "Moderation",
     "unban": "Lift ban",
     "unbanDescription": "The student can sign in again.",
-    "unbanned": "Ban lifted."
+    "unbanned": "Ban lifted.",
+    "targetCourseComment": "Course comment",
+    "targetProfessorReview": "Professor review"
   },
   "onboarding": {
     "details": {
@@ -605,7 +607,9 @@
     "signOut": "Signing out…",
     "studyFileDelete": "Deleting file…",
     "userBan": "Banning student…",
-    "userUnban": "Lifting ban…"
+    "userUnban": "Lifting ban…",
+    "reviewSave": "Saving review…",
+    "reviewDelete": "Deleting review…"
   },
   "report": {
     "candidate": "Report profile",
@@ -627,7 +631,8 @@
     "sent": "Report sent.",
     "spam": "Spam",
     "submit": "Send report",
-    "user": "Report user"
+    "user": "Report user",
+    "review": "Report review"
   },
   "rewards": {
     "balance": "Your coins",
@@ -733,5 +738,17 @@
   "topbar": {
     "changeLanguage": "Change language",
     "languageCode": "EN"
+  },
+  "professors": {
+    "deleteReview": "Delete review",
+    "deleteReviewDescription": "Your review will be permanently deleted.",
+    "editReview": "Edit",
+    "noReviews": "No reviews yet.",
+    "openReviews": "Reviews",
+    "reviewDeleted": "Review deleted.",
+    "reviewHint": "Shown without your name.",
+    "reviewSaved": "Review saved.",
+    "reviews": "Reviews",
+    "yourReview": "Your review"
   }
 }

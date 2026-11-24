@@ -86,8 +86,8 @@
     "message": "Повідомлення",
     "messages": "Повідомлення",
     "minimumMembers": "Обери щонайменше двох людей.",
-    "mobileDescription": "Наші мобільні застосунки незабаром з’являться. А поки відкрий uniezz на комп’ютері.",
-    "mobileTitle": "uniezz незабаром на телефоні",
+    "mobileDescription": "Завантаж застосунок uniezz з App Store або Google Play.",
+    "mobileTitle": "uniezz на телефоні",
     "modeOfStudies": "Форма навчання",
     "modeOfStudiesFullTime": "Денна",
     "modeOfStudiesPartTime": "Заочна",
@@ -511,7 +511,9 @@
     "title": "Модерація",
     "unban": "Розблокувати акаунт",
     "unbanDescription": "Студент зможе знову увійти.",
-    "unbanned": "Блокування знято."
+    "unbanned": "Блокування знято.",
+    "targetCourseComment": "Коментар до предмета",
+    "targetProfessorReview": "Відгук про викладача"
   },
   "onboarding": {
     "details": {
@@ -605,7 +607,9 @@
     "signOut": "Вихід…",
     "studyFileDelete": "Видалення файлу…",
     "userBan": "Блокування акаунта…",
-    "userUnban": "Розблокування акаунта…"
+    "userUnban": "Розблокування акаунта…",
+    "reviewSave": "Збереження відгуку…",
+    "reviewDelete": "Видалення відгуку…"
   },
   "report": {
     "candidate": "Поскаржитися на профіль",
@@ -627,7 +631,8 @@
     "sent": "Скаргу надіслано.",
     "spam": "Спам",
     "submit": "Надіслати скаргу",
-    "user": "Поскаржитися на користувача"
+    "user": "Поскаржитися на користувача",
+    "review": "Поскаржитися на відгук"
   },
   "rewards": {
     "balance": "Твої монети",
@@ -733,5 +738,17 @@
   "topbar": {
     "changeLanguage": "Змінити мову",
     "languageCode": "UK"
+  },
+  "professors": {
+    "deleteReview": "Видалити відгук",
+    "deleteReviewDescription": "Ваш відгук буде видалено назавжди.",
+    "editReview": "Редагувати",
+    "noReviews": "Відгуків ще немає.",
+    "openReviews": "Відгуки",
+    "reviewDeleted": "Відгук видалено.",
+    "reviewHint": "Показується без вашого імені.",
+    "reviewSaved": "Відгук збережено.",
+    "reviews": "Відгуки",
+    "yourReview": "Ваш відгук"
   }
 }

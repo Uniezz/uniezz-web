@@ -86,8 +86,8 @@
     "message": "Mensaje",
     "messages": "Mensajes",
     "minimumMembers": "Seleccione al menos dos personas.",
-    "mobileDescription": "Nuestras aplicaciones móviles estarán disponibles pronto. Por ahora, abra uniezz en su computadora.",
-    "mobileTitle": "uniezz llega al móvil",
+    "mobileDescription": "Descarga la app de uniezz en App Store o Google Play.",
+    "mobileTitle": "uniezz en tu móvil",
     "modeOfStudies": "Modo",
     "modeOfStudiesFullTime": "Jornada completa",
     "modeOfStudiesPartTime": "Tiempo parcial",
@@ -511,7 +511,9 @@
     "title": "Moderación",
     "unban": "Desbloquear cuenta",
     "unbanDescription": "Podrá volver a iniciar sesión.",
-    "unbanned": "Bloqueo levantado."
+    "unbanned": "Bloqueo levantado.",
+    "targetCourseComment": "Comentario de asignatura",
+    "targetProfessorReview": "Reseña de profesor"
   },
   "onboarding": {
     "details": {
@@ -605,7 +607,9 @@
     "signOut": "Cerrando sesión…",
     "studyFileDelete": "Eliminando archivo…",
     "userBan": "Bloqueando la cuenta…",
-    "userUnban": "Desbloqueando la cuenta…"
+    "userUnban": "Desbloqueando la cuenta…",
+    "reviewSave": "Guardando reseña…",
+    "reviewDelete": "Eliminando reseña…"
   },
   "report": {
     "candidate": "Reportar perfil",
@@ -627,7 +631,8 @@
     "sent": "Informe enviado.",
     "spam": "Correo basura",
     "submit": "Enviar informe",
-    "user": "Reportar usuario"
+    "user": "Reportar usuario",
+    "review": "Denunciar reseña"
   },
   "rewards": {
     "balance": "Tus monedas",
@@ -733,5 +738,17 @@
   "topbar": {
     "changeLanguage": "Cambiar idioma",
     "languageCode": "ES"
+  },
+  "professors": {
+    "deleteReview": "Eliminar reseña",
+    "deleteReviewDescription": "Tu reseña se eliminará de forma permanente.",
+    "editReview": "Editar",
+    "noReviews": "Aún no hay reseñas.",
+    "openReviews": "Reseñas",
+    "reviewDeleted": "Reseña eliminada.",
+    "reviewHint": "Se muestra sin tu nombre.",
+    "reviewSaved": "Reseña guardada.",
+    "reviews": "Reseñas",
+    "yourReview": "Tu reseña"
   }
 }

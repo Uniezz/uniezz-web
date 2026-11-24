@@ -16,6 +16,7 @@ test('report labels map known codes and fall back for unknown targets', () => {
   assert.equal(moderationActionLabel('ban'), 'moderation.actionBan');
   assert.equal(moderationActionLabel('mute'), 'moderation.actionOther');
   assert.equal(isRemovableTarget('course'), true);
+  assert.equal(isRemovableTarget('professor_review'), true);
   assert.equal(isRemovableTarget('user'), false);
 });
 

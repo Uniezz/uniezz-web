@@ -8,4 +8,4 @@ export type OtpVerifyInputBody = NonNullable<
   paths['/auth/otp/verify']['post']['requestBody']['content']['application/json']
 >;
 
-export type University = components['schemas']['UniversityDTO'];
+export type University = components['schemas']['University'];

@@ -1,7 +1,6 @@
 import type { components } from '@/@types/schema';
 import type { UpdateMeBody } from '@/@types';
 import { api } from './client';
-import { isNewProfile, isOnboardingDone } from '@/utils';
 
 export async function getMyProfile() {
   const { data } = await api.GET('/profile/me');
@@ -11,6 +10,10 @@ export async function getMyProfile() {
 export async function updateMyProfile(body: UpdateMeBody) {
   const { data } = await api.PATCH('/profile/me', { body });
   return data!;
+}
+
+export async function completeMyOnboarding() {
+  await api.PUT('/profile/onboarding');
 }
 
 export async function deleteMyProfile() {
@@ -72,11 +75,11 @@ export async function getPublicProfile(id: string) {
   return data!;
 }
 
-/** Where a just-signed-in student lands: onboarding for a new account, otherwise the feed. */
+/** Where a just-signed-in student lands: onboarding until it is finished or skipped, otherwise the feed. */
 export async function homeAfterSignIn(): Promise<'/onboarding' | '/feed'> {
   try {
-    const { id, createdAt } = await getMyProfile();
-    return isNewProfile(createdAt) && !isOnboardingDone(id) ? '/onboarding' : '/feed';
+    const { onboardedAt } = await getMyProfile();
+    return onboardedAt ? '/feed' : '/onboarding';
   } catch {
     return '/feed';
   }

@@ -1,6 +1,6 @@
 import type { Middleware } from 'openapi-fetch';
 import type { paths } from '@/@types/schema';
-import { OTP_REQUEST_ERRORS, OTP_VERIFY_ERRORS } from '@/utils';
+import { OTP_REQUEST_ERRORS, OTP_VERIFY_ERRORS } from '@/utils/otp';
 
 type EndpointErrors = { statuses: Record<number, string>; fallback: string };
 const ENDPOINT_ERRORS: Partial<Record<string, EndpointErrors>> = {
@@ -72,6 +72,7 @@ export const apiMiddleware: Middleware = {
               '/profile/photos',
               '/moderation/moderators/{id}',
               '/moderation/users/{id}/ban',
+              '/profile/onboarding',
             ].includes(schemaPath)) ||
           (request.method === 'POST' &&
             ['/auth/otp/request', '/auth/otp/verify', '/auth/exchange'].includes(schemaPath)) ||
@@ -93,6 +94,9 @@ export const apiMiddleware: Middleware = {
               '/moderation/courses/{id}',
               '/moderation/files/{id}',
               '/moderation/posts/{id}',
+              '/moderation/course-comments/{id}',
+              '/moderation/professor-reviews/{id}',
+              '/study/professors/{id}/review',
               '/moderation/moderators/{id}',
               '/moderation/users/{id}/ban',
               '/rewards/challenges/{id}',

@@ -12,6 +12,7 @@ export * from './MaterialFilters';
 export * from './MaterialTable';
 export * from './PreviewStudyFileButton';
 export * from './ProfessorList';
+export * from './ProfessorReviewsDialog';
 export * from './RatingInput';
 export * from './UploadMaterial';
 export * from './UploadMaterialButton';

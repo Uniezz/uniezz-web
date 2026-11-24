@@ -110,6 +110,25 @@ export async function rateProfessor({ id, rating }: { id: string; rating: number
   return data!;
 }
 
+export async function getProfessorReviews(id: string, cursor?: string) {
+  const { data } = await api.GET('/study/professors/{id}/reviews', {
+    params: { path: { id }, query: { limit: 20, cursor } },
+  });
+  return data!;
+}
+
+export async function reviewProfessor({ id, content }: { id: string; content: string }) {
+  const { data } = await api.PUT('/study/professors/{id}/review', {
+    params: { path: { id } },
+    body: { content },
+  });
+  return data!;
+}
+
+export async function deleteMyProfessorReview(id: string) {
+  await api.DELETE('/study/professors/{id}/review', { params: { path: { id } } });
+}
+
 export async function deleteCourseComment(id: string) {
   await api.DELETE('/study/comments/{id}', { params: { path: { id } } });
 }

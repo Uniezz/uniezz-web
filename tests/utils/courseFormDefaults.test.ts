@@ -4,7 +4,7 @@ import { sampleProfile } from '../../src/utils/profileSkeletonData';
 
 const programme = sampleProfile.programmes![0]!;
 
-test('new courses use the primary programme faculty and leave subject blank', () => {
+test('new courses prefill faculty and programme from the primary programme', () => {
   const defaults = courseFormDefaults({
     ...sampleProfile,
     universityId: 'umcs',
@@ -18,18 +18,20 @@ test('new courses use the primary programme faculty and leave subject blank', ()
     description: '',
     universityId: 'umcs',
     faculty: 'Science',
-    subject: '',
+    subject: 'Computing',
     semester: 1,
     difficulty: 3,
+    materials: [],
+    materialType: 'exam',
   });
 });
 
-test('profiles without a primary programme use the first programme faculty', () => {
+test('profiles without a primary programme use the first programme', () => {
   expect(
     courseFormDefaults({ ...sampleProfile, programmes: [{ ...programme, isPrimary: false }] }),
   ).toMatchObject({
     faculty: programme.faculty,
-    subject: '',
+    subject: programme.programme,
   });
 });
 
