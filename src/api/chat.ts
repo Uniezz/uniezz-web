@@ -1,6 +1,6 @@
 import { api } from './client';
 
-export const CHAT_PAGE_SIZE = 30;
+export const CHAT_PAGE_SIZE = 50;
 
 export async function getChatConversations(cursor?: string) {
   const { data } = await api.GET('/chat/conversations', {
