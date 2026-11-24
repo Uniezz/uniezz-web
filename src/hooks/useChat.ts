@@ -21,9 +21,6 @@ import type { ChatMessagePages } from '@/utils';
 import i18n from '@/i18n';
 import { useMyProfile } from './useMyProfile';
 
-// The thread does not virtualize, so only the newest 10 pages (300 messages) stay in memory.
-const MAX_MESSAGE_PAGES = 10;
-
 export function useConversations() {
   return useInfiniteQuery({
     queryKey: chatKeys.conversations(),
@@ -50,7 +47,6 @@ export function useMessages(conversationId: string | undefined) {
     enabled: Boolean(conversationId),
     initialPageParam: undefined as string | undefined,
     getNextPageParam: (page) => page.nextCursor ?? undefined,
-    maxPages: MAX_MESSAGE_PAGES,
   });
 }
 
