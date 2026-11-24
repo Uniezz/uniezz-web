@@ -530,7 +530,9 @@
     "photoDelete": "Eliminando foto…",
     "photoReorder": "Guardando el orden…",
     "challengeSave": "Guardando reto…",
-    "challengeArchive": "Archivando reto…"
+    "challengeArchive": "Archivando reto…",
+    "reviewSave": "Guardando reseña…",
+    "reviewDelete": "Eliminando reseña…"
   },
   "report": {
     "candidate": "Reportar perfil",
@@ -552,7 +554,8 @@
     "sent": "Informe enviado.",
     "spam": "Correo basura",
     "submit": "Enviar informe",
-    "user": "Reportar usuario"
+    "user": "Reportar usuario",
+    "review": "Denunciar reseña"
   },
   "rewards": {
     "balance": "Tus monedas",
@@ -733,6 +736,20 @@
     "archiveChallengeDescription": "Dejará de mostrarse y las acciones dejarán de contar. Las monedas ya pagadas se mantienen.",
     "challengeArchivedToast": "Reto archivado.",
     "addModerator": "Añadir moderador",
-    "alreadyModerator": "Moderador"
+    "alreadyModerator": "Moderador",
+    "targetCourseComment": "Comentario de asignatura",
+    "targetProfessorReview": "Reseña de profesor"
+  },
+  "professors": {
+    "deleteReview": "Eliminar reseña",
+    "deleteReviewDescription": "Tu reseña se eliminará de forma permanente.",
+    "editReview": "Editar",
+    "noReviews": "Aún no hay reseñas.",
+    "openReviews": "Reseñas",
+    "reviewDeleted": "Reseña eliminada.",
+    "reviewHint": "Se muestra sin tu nombre.",
+    "reviewSaved": "Reseña guardada.",
+    "reviews": "Reseñas",
+    "yourReview": "Tu reseña"
   }
 }

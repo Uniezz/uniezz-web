@@ -530,7 +530,9 @@
     "photoDelete": "Удаляем фото…",
     "photoReorder": "Сохраняем порядок…",
     "challengeSave": "Сохраняем челлендж…",
-    "challengeArchive": "Архивируем челлендж…"
+    "challengeArchive": "Архивируем челлендж…",
+    "reviewSave": "Сохранение отзыва…",
+    "reviewDelete": "Удаление отзыва…"
   },
   "report": {
     "candidate": "Пожаловаться на профиль",
@@ -552,7 +554,8 @@
     "sent": "Жалоба отправлена.",
     "spam": "Спам",
     "submit": "Отправить жалобу",
-    "user": "Пожаловаться на пользователя"
+    "user": "Пожаловаться на пользователя",
+    "review": "Пожаловаться на отзыв"
   },
   "rewards": {
     "balance": "Твои монеты",
@@ -733,6 +736,20 @@
     "archiveChallengeDescription": "Студенты перестанут его видеть, а их действия — засчитываться. Выплаченные монеты останутся.",
     "challengeArchivedToast": "Челлендж в архиве.",
     "addModerator": "Добавить модератора",
-    "alreadyModerator": "Модератор"
+    "alreadyModerator": "Модератор",
+    "targetCourseComment": "Комментарий к предмету",
+    "targetProfessorReview": "Отзыв о преподавателе"
+  },
+  "professors": {
+    "deleteReview": "Удалить отзыв",
+    "deleteReviewDescription": "Ваш отзыв будет удалён навсегда.",
+    "editReview": "Изменить",
+    "noReviews": "Отзывов пока нет.",
+    "openReviews": "Отзывы",
+    "reviewDeleted": "Отзыв удалён.",
+    "reviewHint": "Показывается без вашего имени.",
+    "reviewSaved": "Отзыв сохранён.",
+    "reviews": "Отзывы",
+    "yourReview": "Ваш отзыв"
   }
 }

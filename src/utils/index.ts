@@ -23,6 +23,5 @@ export * from './profileSkeletonData';
 export * from './landingMap';
 export * from './rewards';
 export * from './numberFormat';
-export * from './onboarding';
 export * from './roles';
 export * from './moderation';

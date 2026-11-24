@@ -530,7 +530,9 @@
     "photoDelete": "Deleting photo…",
     "photoReorder": "Saving photo order…",
     "challengeSave": "Saving challenge…",
-    "challengeArchive": "Archiving challenge…"
+    "challengeArchive": "Archiving challenge…",
+    "reviewSave": "Saving review…",
+    "reviewDelete": "Deleting review…"
   },
   "report": {
     "candidate": "Report profile",
@@ -552,7 +554,8 @@
     "sent": "Report sent.",
     "spam": "Spam",
     "submit": "Send report",
-    "user": "Report user"
+    "user": "Report user",
+    "review": "Report review"
   },
   "rewards": {
     "balance": "Your coins",
@@ -733,6 +736,20 @@
     "archiveChallengeDescription": "Students stop seeing it and their actions stop counting. Coins already paid stay.",
     "challengeArchivedToast": "Challenge archived.",
     "addModerator": "Add moderator",
-    "alreadyModerator": "Moderator"
+    "alreadyModerator": "Moderator",
+    "targetCourseComment": "Course comment",
+    "targetProfessorReview": "Professor review"
+  },
+  "professors": {
+    "deleteReview": "Delete review",
+    "deleteReviewDescription": "Your review will be permanently deleted.",
+    "editReview": "Edit",
+    "noReviews": "No reviews yet.",
+    "openReviews": "Reviews",
+    "reviewDeleted": "Review deleted.",
+    "reviewHint": "Shown without your name.",
+    "reviewSaved": "Review saved.",
+    "reviews": "Reviews",
+    "yourReview": "Your review"
   }
 }

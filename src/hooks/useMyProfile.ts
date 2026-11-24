@@ -2,6 +2,7 @@ import { queryOptions, useMutation, useQuery, useQueryClient } from '@tanstack/r
 import type { UpdateMeBody } from '@/@types';
 import {
   addMyProfilePhoto,
+  completeMyOnboarding,
   deleteMyProfile,
   deleteMyProfilePhoto,
   getMyProfile,
@@ -28,6 +29,25 @@ export function useUpdateMyProfile() {
       void queryClient.invalidateQueries({ queryKey: ['profile', 'me'] });
       // The photo list starts with the avatar.
       void queryClient.invalidateQueries({ queryKey: ['profile', 'photos'] });
+    },
+  });
+}
+
+export function useCompleteOnboarding() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    meta: { analyticsAction: 'onboarding_complete' },
+    mutationFn: completeMyOnboarding,
+    onSuccess: () => {
+      // Set it right away so the /onboarding guard redirects without waiting for a refetch.
+      queryClient.setQueryData(
+        myProfileQueryOptions().queryKey,
+        (profile) =>
+          profile && { ...profile, onboardedAt: profile.onboardedAt ?? new Date().toISOString() },
+      );
+      void queryClient.invalidateQueries({ queryKey: ['profile', 'me'] });
+      // Onboarded students now appear in the student list.
+      void queryClient.invalidateQueries({ queryKey: ['profiles'] });
     },
   });
 }

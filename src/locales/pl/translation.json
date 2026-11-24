@@ -530,7 +530,9 @@
     "photoDelete": "Usuwanie zdjęcia…",
     "photoReorder": "Zapisywanie kolejności…",
     "challengeSave": "Zapisywanie wyzwania…",
-    "challengeArchive": "Archiwizowanie wyzwania…"
+    "challengeArchive": "Archiwizowanie wyzwania…",
+    "reviewSave": "Zapisywanie opinii…",
+    "reviewDelete": "Usuwanie opinii…"
   },
   "report": {
     "candidate": "Zgłoś profil",
@@ -552,7 +554,8 @@
     "sent": "Zgłoszenie wysłane.",
     "spam": "Spam",
     "submit": "Wyślij zgłoszenie",
-    "user": "Zgłoś użytkownika"
+    "user": "Zgłoś użytkownika",
+    "review": "Zgłoś opinię"
   },
   "rewards": {
     "balance": "Twoje monety",
@@ -733,6 +736,20 @@
     "archiveChallengeDescription": "Studenci przestaną je widzieć, a ich działania przestaną się liczyć. Wypłacone monety zostają.",
     "challengeArchivedToast": "Wyzwanie zarchiwizowane.",
     "addModerator": "Dodaj moderatora",
-    "alreadyModerator": "Moderator"
+    "alreadyModerator": "Moderator",
+    "targetCourseComment": "Komentarz do przedmiotu",
+    "targetProfessorReview": "Opinia o wykładowcy"
+  },
+  "professors": {
+    "deleteReview": "Usuń opinię",
+    "deleteReviewDescription": "Twoja opinia zostanie trwale usunięta.",
+    "editReview": "Edytuj",
+    "noReviews": "Brak opinii.",
+    "openReviews": "Opinie",
+    "reviewDeleted": "Opinia usunięta.",
+    "reviewHint": "Wyświetlana bez Twojego imienia.",
+    "reviewSaved": "Opinia zapisana.",
+    "reviews": "Opinie",
+    "yourReview": "Twoja opinia"
   }
 }

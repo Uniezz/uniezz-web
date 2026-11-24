@@ -530,7 +530,9 @@
     "photoDelete": "Видалення фото…",
     "photoReorder": "Збереження порядку…",
     "challengeSave": "Збереження челенджу…",
-    "challengeArchive": "Архівування челенджу…"
+    "challengeArchive": "Архівування челенджу…",
+    "reviewSave": "Збереження відгуку…",
+    "reviewDelete": "Видалення відгуку…"
   },
   "report": {
     "candidate": "Поскаржитися на профіль",
@@ -552,7 +554,8 @@
     "sent": "Скаргу надіслано.",
     "spam": "Спам",
     "submit": "Надіслати скаргу",
-    "user": "Поскаржитися на користувача"
+    "user": "Поскаржитися на користувача",
+    "review": "Поскаржитися на відгук"
   },
   "rewards": {
     "balance": "Твої монети",
@@ -733,6 +736,20 @@
     "archiveChallengeDescription": "Студенти перестануть його бачити, а їхні дії — враховуватися. Виплачені монети залишаться.",
     "challengeArchivedToast": "Челендж в архіві.",
     "addModerator": "Додати модератора",
-    "alreadyModerator": "Модератор"
+    "alreadyModerator": "Модератор",
+    "targetCourseComment": "Коментар до предмета",
+    "targetProfessorReview": "Відгук про викладача"
+  },
+  "professors": {
+    "deleteReview": "Видалити відгук",
+    "deleteReviewDescription": "Ваш відгук буде видалено назавжди.",
+    "editReview": "Редагувати",
+    "noReviews": "Відгуків ще немає.",
+    "openReviews": "Відгуки",
+    "reviewDeleted": "Відгук видалено.",
+    "reviewHint": "Показується без вашого імені.",
+    "reviewSaved": "Відгук збережено.",
+    "reviews": "Відгуки",
+    "yourReview": "Ваш відгук"
   }
 }

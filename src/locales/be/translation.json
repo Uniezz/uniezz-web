@@ -530,7 +530,9 @@
     "photoDelete": "Выдаляем фота…",
     "photoReorder": "Захоўваем парадак…",
     "challengeSave": "Захоўваем чэлендж…",
-    "challengeArchive": "Архівуем чэлендж…"
+    "challengeArchive": "Архівуем чэлендж…",
+    "reviewSave": "Захаванне водгуку…",
+    "reviewDelete": "Выдаленне водгуку…"
   },
   "report": {
     "candidate": "Паведаміць пра профіль",
@@ -552,7 +554,8 @@
     "sent": "Справаздача адпраўлена.",
     "spam": "Спам",
     "submit": "Адправіць справаздачу",
-    "user": "Паскардзіцца на карыстальніка"
+    "user": "Паскардзіцца на карыстальніка",
+    "review": "Паскардзіцца на водгук"
   },
   "rewards": {
     "balance": "Твае манеты",
@@ -733,6 +736,20 @@
     "archiveChallengeDescription": "Студэнты перастануць яго бачыць, а іх дзеянні — залічвацца. Выплачаныя манеты застануцца.",
     "challengeArchivedToast": "Чэлендж у архіве.",
     "addModerator": "Дадаць мадэратара",
-    "alreadyModerator": "Мадэратар"
+    "alreadyModerator": "Мадэратар",
+    "targetCourseComment": "Каментарый да прадмета",
+    "targetProfessorReview": "Водгук пра выкладчыка"
+  },
+  "professors": {
+    "deleteReview": "Выдаліць водгук",
+    "deleteReviewDescription": "Ваш водгук будзе выдалены назаўсёды.",
+    "editReview": "Змяніць",
+    "noReviews": "Водгукаў пакуль няма.",
+    "openReviews": "Водгукі",
+    "reviewDeleted": "Водгук выдалены.",
+    "reviewHint": "Паказваецца без вашага імя.",
+    "reviewSaved": "Водгук захаваны.",
+    "reviews": "Водгукі",
+    "yourReview": "Ваш водгук"
   }
 }

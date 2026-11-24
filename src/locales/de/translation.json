@@ -530,7 +530,9 @@
     "photoDelete": "Foto wird gelöscht…",
     "photoReorder": "Reihenfolge wird gespeichert…",
     "challengeSave": "Challenge wird gespeichert…",
-    "challengeArchive": "Challenge wird archiviert…"
+    "challengeArchive": "Challenge wird archiviert…",
+    "reviewSave": "Bewertung wird gespeichert…",
+    "reviewDelete": "Bewertung wird gelöscht…"
   },
   "report": {
     "candidate": "Profil melden",
@@ -552,7 +554,8 @@
     "sent": "Bericht gesendet.",
     "spam": "Spam",
     "submit": "Bericht senden",
-    "user": "Benutzer melden"
+    "user": "Benutzer melden",
+    "review": "Bewertung melden"
   },
   "rewards": {
     "balance": "Deine Münzen",
@@ -733,6 +736,20 @@
     "archiveChallengeDescription": "Die Challenge verschwindet und Aktionen zählen nicht mehr. Ausgezahlte Münzen bleiben.",
     "challengeArchivedToast": "Challenge archiviert.",
     "addModerator": "Moderator hinzufügen",
-    "alreadyModerator": "Moderator"
+    "alreadyModerator": "Moderator",
+    "targetCourseComment": "Kurskommentar",
+    "targetProfessorReview": "Dozentenbewertung"
+  },
+  "professors": {
+    "deleteReview": "Bewertung löschen",
+    "deleteReviewDescription": "Deine Bewertung wird endgültig gelöscht.",
+    "editReview": "Bearbeiten",
+    "noReviews": "Noch keine Bewertungen.",
+    "openReviews": "Bewertungen",
+    "reviewDeleted": "Bewertung gelöscht.",
+    "reviewHint": "Wird ohne deinen Namen angezeigt.",
+    "reviewSaved": "Bewertung gespeichert.",
+    "reviews": "Bewertungen",
+    "yourReview": "Deine Bewertung"
   }
 }

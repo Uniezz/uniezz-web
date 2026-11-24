@@ -57,10 +57,14 @@ test('web login and delete endpoints accept their expected 204 responses', async
     '/feed/posts/{id}',
     '/feed/comments/{id}',
     '/profile/programmes/{id}',
+    '/study/professors/{id}/review',
+    '/moderation/course-comments/{id}',
+    '/moderation/professor-reviews/{id}',
   ] as const) {
     await api().DELETE(path, { params: { path: { id: 'id' } } });
   }
   await api().DELETE('/profile/avatar');
+  await api().PUT('/profile/onboarding');
 });
 
 test('only programme deletion tolerates a 404', async () => {
@@ -104,9 +108,13 @@ test('unauthorized protected requests redirect and still reject', async () => {
     },
   });
   try {
-    await expect(
-      client(Response.json({ error: 'unauthorized' }, { status: 401 })).GET('/profile/me'),
-    ).rejects.toBeInstanceOf(ApiRequestError);
+    const unauthorized = () => Response.json({ error: 'unauthorized' }, { status: 401 });
+    // /profile/me only checks the session, so it rejects without redirecting.
+    await expect(client(unauthorized()).GET('/profile/me')).rejects.toBeInstanceOf(ApiRequestError);
+    expect(location).toBeUndefined();
+    await expect(client(unauthorized()).GET('/profile/programmes')).rejects.toBeInstanceOf(
+      ApiRequestError,
+    );
     expect(location).toBe('/login');
   } finally {
     if (original) Object.defineProperty(globalThis, 'window', original);

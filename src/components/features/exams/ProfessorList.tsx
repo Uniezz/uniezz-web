@@ -1,14 +1,18 @@
+import { useState } from 'react';
 import { useSearch } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { toast } from '@/utils';
 import { TableVirtuoso } from 'react-virtuoso';
+import { MessageSquareText } from 'lucide-react';
 import { useProfessors, useRateProfessor, useUniversities } from '@/hooks';
-import { UIEmpty, UIPanel, UIQueryError } from '@/ui/components';
+import { UIButton, UIEmpty, UIPanel, UIQueryError } from '@/ui/components';
 import { fixedTable, tableCellTextClass, tableHeaderCellClass } from '@/ui/virtuoso';
+import type { Professor } from '@/@types';
 import { RatingInput } from './RatingInput';
+import { ProfessorReviewsDialog } from './ProfessorReviewsDialog';
 
 // Name columns share the spare width; the rest fit their longest label in every language.
-const columnWidths = ['', '', '13rem'];
+const columnWidths = ['', '', '13rem', '8rem'];
 const tableComponents = fixedTable(columnWidths);
 
 export function ProfessorList() {
@@ -18,6 +22,7 @@ export function ProfessorList() {
     useProfessors({ universityId: university, q });
   const { data: universities = [] } = useUniversities();
   const { mutate: rate, isPending: isRating, variables: pendingRate } = useRateProfessor();
+  const [reviewed, setReviewed] = useState<Professor | null>(null);
   const professors = data?.pages.flatMap((page) => page.items ?? []) ?? [];
 
   return (
@@ -40,6 +45,10 @@ export function ProfessorList() {
                       {label}
                     </th>
                   ))}
+                  {/* The row's button already says "Reviews"; a visible header would repeat it. */}
+                  <th scope="col" className={tableHeaderCellClass}>
+                    <span className="sr-only">{t('professors.reviews')}</span>
+                  </th>
                 </tr>
               </thead>
             </table>
@@ -75,6 +84,18 @@ export function ProfessorList() {
                       }
                     />
                   </td>
+                  <td className="border-t border-white-5 px-4 py-3">
+                    <UIButton
+                      size="pill"
+                      bg="transparent"
+                      className="min-h-0 gap-1.5 border-0 p-0 text-secondary enabled:hover:bg-transparent enabled:hover:text-white"
+                      onClick={() => setReviewed(professor)}
+                      data-ph-capture-attribute-label="Open professor reviews"
+                    >
+                      <MessageSquareText className="size-4" aria-hidden="true" />
+                      {t('professors.openReviews')}
+                    </UIButton>
+                  </td>
                 </>
               )}
             />
@@ -82,6 +103,9 @@ export function ProfessorList() {
         </div>
       )}
       {isError && <UIQueryError retry={() => void refetch()} />}
+      {reviewed && (
+        <ProfessorReviewsDialog professor={reviewed} onClose={() => setReviewed(null)} />
+      )}
     </UIPanel>
   );
 }

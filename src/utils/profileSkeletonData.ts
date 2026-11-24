@@ -19,6 +19,7 @@ export const sampleProfile: components['schemas']['Profile'] = {
   openTo: null,
   roles: null,
   createdAt: '2026-01-01T12:00:00Z',
+  onboardedAt: '2026-01-01T12:00:00Z',
   privacy: { showEmail: false, showFaculty: true, showYear: true },
   programmes: [
     {

@@ -48,15 +48,17 @@ export function ReportButton({
   const label =
     targetType === 'post'
       ? t('report.post')
-      : targetType === 'comment'
+      : targetType === 'comment' || targetType === 'course_comment'
         ? t('report.comment')
-        : targetType === 'course'
-          ? t('report.course')
-          : targetType === 'file'
-            ? t('report.material')
-            : targetType === 'candidate'
-              ? t('report.candidate')
-              : t('report.user');
+        : targetType === 'professor_review'
+          ? t('report.review')
+          : targetType === 'course'
+            ? t('report.course')
+            : targetType === 'file'
+              ? t('report.material')
+              : targetType === 'candidate'
+                ? t('report.candidate')
+                : t('report.user');
 
   function changeOpen(next: boolean) {
     setOpen(next);

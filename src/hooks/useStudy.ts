@@ -12,14 +12,17 @@ import {
   deleteCourse,
   deleteStudyFile,
   deleteCourseComment,
+  deleteMyProfessorReview,
   getCourse,
   getCourseComments,
   getCourseFiles,
   getCourses,
   getProfessor,
+  getProfessorReviews,
   getProfessors,
   rateCourse,
   rateProfessor,
+  reviewProfessor,
   searchStudyFiles,
   updateCourse,
   uploadStudyMaterial,
@@ -194,6 +197,40 @@ export function useRateProfessor() {
     mutationFn: rateProfessor,
     onSuccess: (professor) =>
       patchCachedItem(queryClient, ['study', 'professors'], professor.id, professor),
+  });
+}
+
+export function useProfessorReviews(professorId: string) {
+  return useInfiniteQuery({
+    queryKey: ['study', 'professors', professorId, 'reviews'],
+    queryFn: ({ pageParam }) => getProfessorReviews(professorId, pageParam),
+    initialPageParam: undefined as string | undefined,
+    getNextPageParam: (page) => page.nextCursor ?? undefined,
+  });
+}
+
+export function useReviewProfessor() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    meta: { analyticsAction: 'professor_review', progress: () => i18n.t('progress.reviewSave') },
+    mutationFn: reviewProfessor,
+    onSuccess: (_, { id }) => {
+      void queryClient.invalidateQueries({ queryKey: ['study', 'professors', id, 'reviews'] });
+    },
+  });
+}
+
+export function useDeleteProfessorReview() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    meta: {
+      analyticsAction: 'professor_review_delete',
+      progress: () => i18n.t('progress.reviewDelete'),
+    },
+    mutationFn: deleteMyProfessorReview,
+    onSuccess: (_, id) => {
+      void queryClient.invalidateQueries({ queryKey: ['study', 'professors', id, 'reviews'] });
+    },
   });
 }
 

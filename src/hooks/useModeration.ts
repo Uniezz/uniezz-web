@@ -8,6 +8,8 @@ import {
   grantModerator,
   removeComment,
   removeCourse,
+  removeCourseComment,
+  removeProfessorReview,
   removeFile,
   removePost,
   revokeModerator,
@@ -93,6 +95,8 @@ export function useRemoveContent() {
         comment: removeComment,
         file: removeFile,
         course: removeCourse,
+        course_comment: removeCourseComment,
+        professor_review: removeProfessorReview,
       } satisfies Record<RemovableTarget, (id: string) => Promise<void>>;
       return remove[type](id);
     },

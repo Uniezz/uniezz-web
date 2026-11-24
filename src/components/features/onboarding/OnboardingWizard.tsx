@@ -5,10 +5,10 @@ import { useNavigate } from '@tanstack/react-router';
 import { ArrowLeft, ArrowRight, Check } from 'lucide-react';
 import type { components } from '@/@types/schema';
 import { AuthLayout } from '@/components/auth';
-import { useProfileForm } from '@/hooks';
+import { useCompleteOnboarding, useProfileForm } from '@/hooks';
 import { UIButton, UIUnsavedChanges } from '@/ui/components';
 import { cn } from '@/ui/cn';
-import { captureAnalytics, markOnboardingDone, toast } from '@/utils';
+import { captureAnalytics, toast } from '@/utils';
 import { PersonalDetails, StudyProgrammes } from '../profile';
 import { ONBOARDING_STEPS, OnboardingAside } from './OnboardingAside';
 import { OnboardingPhoto } from './OnboardingPhoto';
@@ -17,7 +17,9 @@ export function OnboardingWizard({ profile }: { profile: components['schemas']['
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [step, setStep] = useState(0);
-  const { form, saveProfile, isDirty, isPending } = useProfileForm(profile);
+  const { form, saveProfile, isDirty, isPending: isSaving } = useProfileForm(profile);
+  const { mutate: completeOnboarding, isPending: isCompleting } = useCompleteOnboarding();
+  const isPending = isSaving || isCompleting;
   const { handleSubmit } = form;
   const isLast = step === ONBOARDING_STEPS.length - 1;
 
@@ -35,8 +37,10 @@ export function OnboardingWizard({ profile }: { profile: components['schemas']['
   );
 
   function goToFeed() {
-    markOnboardingDone(profile.id);
-    void navigate({ to: '/feed', replace: true });
+    completeOnboarding(undefined, {
+      onSuccess: () => void navigate({ to: '/feed', replace: true }),
+      onError: () => toast.error(t('apiState.error')),
+    });
   }
 
   function next() {
