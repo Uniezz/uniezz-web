@@ -16,6 +16,7 @@ import {
   toast,
   upsertMessage,
 } from '@/utils';
+import type { SendMessageInput } from '@/@types';
 import type { ChatMessagePages } from '@/utils';
 import i18n from '@/i18n';
 import { useMyProfile } from './useMyProfile';
@@ -52,14 +53,6 @@ export function useMessages(conversationId: string | undefined) {
     maxPages: MAX_MESSAGE_PAGES,
   });
 }
-
-export type SendMessageInput = {
-  conversationId: string;
-  body?: string;
-  attachmentIds?: string[];
-  /** A new UUID per send. It is the `Idempotency-Key`, and the server returns it as `clientId`. */
-  clientId: string;
-};
 
 /**
  * The message shows at once as "sending". When the send fails it is removed and a toast is shown;

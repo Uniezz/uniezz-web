@@ -16,3 +16,11 @@ export type ChatPage<T> = { items: T[] | null; nextCursor: string | null };
 
 /** A message as the UI holds it. `sending` exists only on the client, before the server answers. */
 export type ChatMessageView = ChatMessage & { status?: 'sending' };
+
+export type SendMessageInput = {
+  conversationId: string;
+  body?: string;
+  attachmentIds?: string[];
+  /** A new UUID per send. It is the `Idempotency-Key`, and the server returns it as `clientId`. */
+  clientId: string;
+};
