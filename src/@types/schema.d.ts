@@ -198,7 +198,7 @@ export interface paths {
         };
         /**
          * List the logged-in student's conversations
-         * @description Newest activity first, paginated by cursor. Message requests the caller has not accepted yet, and direct conversations with a block either way, are left out.
+         * @description Newest activity first, paginated by cursor. Message requests the caller has not accepted yet, the caller's own requests until they hold a message, and direct conversations with a block either way, are left out.
          */
         get: operations["listChatConversations"];
         put?: never;
@@ -220,7 +220,7 @@ export interface paths {
         put?: never;
         /**
          * Open the direct conversation with a student
-         * @description Returns 201 when the conversation was created and 200 when it already existed. Without a Connection it is a message request: the caller may send one text message without links until the other student accepts or replies, at most 20 new requests a day. Students who do not accept messages from the caller, blocked either way, banned or unknown answer 404.
+         * @description Returns 201 when the conversation was created and 200 when it already existed. Without a Connection it is a message request: the caller may send one text message without links until the other student accepts or replies, at most 20 new requests a day, counted at their first message. Students who do not accept messages from the caller, blocked either way, banned or unknown answer 404.
          */
         post: operations["openDirectConversation"];
         delete?: never;
@@ -4606,15 +4606,6 @@ export interface operations {
             };
             /** @description Unprocessable Entity */
             422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorBody"];
-                };
-            };
-            /** @description Too Many Requests */
-            429: {
                 headers: {
                     [name: string]: unknown;
                 };
