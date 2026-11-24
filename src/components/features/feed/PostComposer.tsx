@@ -116,10 +116,6 @@ export function PostComposer({
                 onSelect={(value) => {
                   setValue('type', value, { shouldDirty: true });
                   clearErrors(['date', 'time']);
-                  if (value === 'question') {
-                    setValue('images', [], { shouldDirty: true });
-                    clearErrors('images');
-                  }
                 }}
               />
               <PostAudienceSelector
@@ -185,7 +181,7 @@ export function PostComposer({
                 </div>
               </div>
             )}
-            {!post && type !== 'question' && (
+            {!post && (
               <PostPhotoField
                 control={control}
                 readingImage={readingImage}

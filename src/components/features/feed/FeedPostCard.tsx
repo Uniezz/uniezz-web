@@ -19,7 +19,7 @@ export function FeedPostCard({ post, filters, source = 'posts' }: FeedPostCardPr
         surface="tint"
         className="transform-gpu overflow-hidden bg-ink/20 p-0 backdrop-blur-[48px]"
       >
-        {image && !isQuestion && (
+        {image && (
           <div className="relative h-50 overflow-hidden rounded-t-card">
             <img
               src={image}
@@ -38,7 +38,7 @@ export function FeedPostCard({ post, filters, source = 'posts' }: FeedPostCardPr
           <div
             className={cn(
               'mb-3 flex items-center gap-3',
-              post.type !== 'announcement' && (!image || isQuestion) && 'pr-24',
+              post.type !== 'announcement' && !image && 'pr-24',
             )}
           >
             <UIAvatar size="regular" imgSrc={post.author.avatarUrl ?? '/app/avatar.png'} alt="" />
