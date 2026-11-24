@@ -1,4 +1,4 @@
-import { AuthLayout } from '@/components';
+import { AppStoreLinks, AuthLayout } from '@/components';
 import { Outlet, Link, createFileRoute } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { useNarrowViewport } from '@/hooks';
@@ -30,6 +30,7 @@ function AuthRoute() {
           description={t('app.mobileDescription')}
           className="bg-blue"
         >
+          <AppStoreLinks />
           <Link
             to="/"
             data-ph-capture-attribute-label={t('app.home')}
