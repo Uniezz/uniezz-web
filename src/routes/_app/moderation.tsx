@@ -4,6 +4,7 @@ import type { ModerationTab } from '@/@types';
 import { FaqPending } from '@/components/features/faq';
 import {
   ChallengeAdmin,
+  ImageQueue,
   ModerationLog,
   ModeratorList,
   ReportQueue,
@@ -29,13 +30,14 @@ function ModerationPage() {
   const navigate = useNavigate({ from: '/moderation' });
   const admin = isAdmin(me);
   const tabIds: readonly ModerationTab[] = admin
-    ? ['reports', 'faq', 'moderators', 'log', 'challenges']
-    : ['reports', 'faq'];
+    ? ['reports', 'images', 'faq', 'moderators', 'log', 'challenges']
+    : ['reports', 'images', 'faq'];
   // Moderators only get their own tabs, whatever the URL asks for.
   const { tab: requested = 'reports' } = Route.useSearch();
   const tab: ModerationTab = tabIds.includes(requested) ? requested : 'reports';
   const tabLabels = {
     reports: t('moderation.reports'),
+    images: t('moderation.images'),
     faq: t('faq.title'),
     moderators: t('moderation.moderators'),
     log: t('moderation.log'),
@@ -63,6 +65,8 @@ function ModerationPage() {
       >
         {tab === 'reports' ? (
           <ReportQueue />
+        ) : tab === 'images' ? (
+          <ImageQueue />
         ) : tab === 'faq' ? (
           <FaqPending />
         ) : tab === 'moderators' ? (

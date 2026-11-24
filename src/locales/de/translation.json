@@ -1,6 +1,7 @@
 {
   "apiState": {
     "commentDeleted": "Kommentar gelöscht",
+    "commentRateLimit": "Du kommentierst zu oft. Warte kurz und versuche es erneut.",
     "deleteCommentDescription": "Dieser Kommentar wird gelöscht.",
     "deleteCommentTitle": "Kommentar löschen?",
     "deletedComment": "Kommentar gelöscht",
@@ -479,6 +480,7 @@
     "published": "Beitrag veröffentlicht",
     "questionPlaceholder": "Was möchten Sie fragen?",
     "questionTitle": "Deine Frage",
+    "rateLimit": "Du postest zu oft. Warte ein paar Minuten und versuche es erneut.",
     "readingPhoto": "Foto wird geladen…",
     "removePhoto": "Foto entfernen",
     "subtitle": "Teilen Sie etwas mit Ihrem Campus.",
@@ -505,6 +507,8 @@
     "courseUpdate": "Kurs wird gespeichert…",
     "faqProposalCreate": "Vorschlag wird gesendet…",
     "faqPublish": "Frage wird veröffentlicht…",
+    "imageRemove": "Bild wird entfernt…",
+    "imageReview": "Bild wird als geprüft markiert…",
     "imagesUpload": "Fotos werden hochgeladen…",
     "imageUpload": "Bild wird hochgeladen…",
     "otpRequest": "Code wird gesendet…",
@@ -663,6 +667,18 @@
     "languageCode": "DE"
   },
   "moderation": {
+    "imageAvatar": "Profilbild",
+    "imageBanner": "Banner",
+    "imageChecked": "Bild als geprüft markiert",
+    "imageFeed": "Feed-Foto",
+    "imageRemoved": "Bild entfernt",
+    "images": "Bilder",
+    "markImageChecked": "Als geprüft markieren",
+    "noImages": "Keine Bilder zu prüfen",
+    "openImage": "Bild in voller Größe öffnen",
+    "openOwner": "Profil der hochladenden Person öffnen",
+    "removeImage": "Bild entfernen",
+    "removeImageDescription": "Das Bild verschwindet überall, wo es angezeigt wird, und seine Datei wird gelöscht.",
     "targetOther": "Inhalt",
     "ban": "Konto sperren",
     "banDescription": "Die Person wird überall abgemeldet und kann sich erst nach Aufhebung der Sperre wieder anmelden. Offene Meldungen zu ihr gelten als geprüft.",

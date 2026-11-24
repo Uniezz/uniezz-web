@@ -1,6 +1,7 @@
 {
   "apiState": {
     "commentDeleted": "Komentarz usunięty",
+    "commentRateLimit": "Komentujesz zbyt często. Odczekaj chwilę i spróbuj ponownie.",
     "deleteCommentDescription": "Komentarz zostanie usunięty.",
     "deleteCommentTitle": "Usunąć komentarz?",
     "deletedComment": "Usunięty komentarz",
@@ -479,6 +480,7 @@
     "published": "Post opublikowany",
     "questionPlaceholder": "O co chcesz zapytać?",
     "questionTitle": "Twoje pytanie",
+    "rateLimit": "Publikujesz zbyt często. Odczekaj kilka minut i spróbuj ponownie.",
     "readingPhoto": "Wczytywanie zdjęcia…",
     "removePhoto": "Usuń zdjęcie",
     "subtitle": "Podziel się czymś ze swoją społecznością studencką.",
@@ -505,6 +507,8 @@
     "courseUpdate": "Zapisywanie kursu…",
     "faqProposalCreate": "Wysyłanie propozycji…",
     "faqPublish": "Publikowanie pytania…",
+    "imageRemove": "Usuwanie zdjęcia…",
+    "imageReview": "Oznaczanie zdjęcia jako sprawdzonego…",
     "imagesUpload": "Przesyłanie zdjęć…",
     "imageUpload": "Przesyłanie obrazu…",
     "otpRequest": "Wysyłanie kodu…",
@@ -663,6 +667,18 @@
     "languageCode": "PL"
   },
   "moderation": {
+    "imageAvatar": "Awatar",
+    "imageBanner": "Baner",
+    "imageChecked": "Zdjęcie oznaczone jako sprawdzone",
+    "imageFeed": "Zdjęcie w feedzie",
+    "imageRemoved": "Zdjęcie usunięte",
+    "images": "Zdjęcia",
+    "markImageChecked": "Oznacz jako sprawdzone",
+    "noImages": "Brak zdjęć do sprawdzenia",
+    "openImage": "Otwórz zdjęcie w pełnym rozmiarze",
+    "openOwner": "Otwórz profil autora",
+    "removeImage": "Usuń zdjęcie",
+    "removeImageDescription": "Zdjęcie zniknie wszędzie, gdzie jest widoczne, a jego plik zostanie usunięty.",
     "targetOther": "Treść",
     "ban": "Zablokuj konto",
     "banDescription": "Student zostanie wylogowany wszędzie i nie zaloguje się, dopóki blokada nie zostanie zdjęta. Oczekujące zgłoszenia na niego zostaną oznaczone jako sprawdzone.",

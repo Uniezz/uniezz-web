@@ -1,6 +1,7 @@
 {
   "apiState": {
     "commentDeleted": "Comment deleted",
+    "commentRateLimit": "You are commenting too often. Wait a moment and try again.",
     "deleteCommentDescription": "This comment will be deleted.",
     "deleteCommentTitle": "Delete comment?",
     "deletedComment": "Deleted comment",
@@ -479,6 +480,7 @@
     "published": "Post published",
     "questionPlaceholder": "What would you like to ask?",
     "questionTitle": "Your question",
+    "rateLimit": "You are posting too often. Wait a few minutes and try again.",
     "readingPhoto": "Loading photo…",
     "removePhoto": "Remove photo",
     "subtitle": "Share something with your campus.",
@@ -505,6 +507,8 @@
     "courseUpdate": "Saving course…",
     "faqProposalCreate": "Sending suggestion…",
     "faqPublish": "Publishing question…",
+    "imageRemove": "Removing the image…",
+    "imageReview": "Marking the image as checked…",
     "imagesUpload": "Uploading photos…",
     "imageUpload": "Uploading image…",
     "otpRequest": "Sending code…",
@@ -663,6 +667,18 @@
     "languageCode": "EN"
   },
   "moderation": {
+    "imageAvatar": "Avatar",
+    "imageBanner": "Banner",
+    "imageChecked": "Image marked as checked",
+    "imageFeed": "Feed photo",
+    "imageRemoved": "Image removed",
+    "images": "Images",
+    "markImageChecked": "Mark as checked",
+    "noImages": "No images to check",
+    "openImage": "Open image in full size",
+    "openOwner": "Open the uploader’s profile",
+    "removeImage": "Remove image",
+    "removeImageDescription": "The image disappears everywhere it is shown and its file is deleted.",
     "targetOther": "Content",
     "ban": "Ban student",
     "banDescription": "The student is signed out everywhere and can't sign in again until unbanned. Pending reports about them are marked reviewed.",

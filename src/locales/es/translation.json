@@ -1,6 +1,7 @@
 {
   "apiState": {
     "commentDeleted": "Comentario eliminado",
+    "commentRateLimit": "Comentas con demasiada frecuencia. Espera un momento e inténtalo de nuevo.",
     "deleteCommentDescription": "Este comentario será eliminado.",
     "deleteCommentTitle": "¿Eliminar comentario?",
     "deletedComment": "comentario eliminado",
@@ -479,6 +480,7 @@
     "published": "Publicación publicada",
     "questionPlaceholder": "¿Qué te gustaría preguntar?",
     "questionTitle": "Tu pregunta",
+    "rateLimit": "Publicas con demasiada frecuencia. Espera unos minutos e inténtalo de nuevo.",
     "readingPhoto": "Cargando foto…",
     "removePhoto": "Quitar foto",
     "subtitle": "Comparte algo con tu campus.",
@@ -505,6 +507,8 @@
     "courseUpdate": "Guardando curso…",
     "faqProposalCreate": "Enviando sugerencia…",
     "faqPublish": "Publicando pregunta…",
+    "imageRemove": "Eliminando la imagen…",
+    "imageReview": "Marcando la imagen como revisada…",
     "imagesUpload": "Subiendo fotos…",
     "imageUpload": "Subiendo imagen…",
     "otpRequest": "Enviando código…",
@@ -663,6 +667,18 @@
     "languageCode": "ES"
   },
   "moderation": {
+    "imageAvatar": "Avatar",
+    "imageBanner": "Banner",
+    "imageChecked": "Imagen marcada como revisada",
+    "imageFeed": "Foto del feed",
+    "imageRemoved": "Imagen eliminada",
+    "images": "Imágenes",
+    "markImageChecked": "Marcar como revisada",
+    "noImages": "No hay imágenes por revisar",
+    "openImage": "Abrir la imagen a tamaño completo",
+    "openOwner": "Abrir el perfil de quien la subió",
+    "removeImage": "Eliminar imagen",
+    "removeImageDescription": "La imagen desaparece de todos los lugares donde se muestra y su archivo se elimina.",
     "targetOther": "Contenido",
     "ban": "Bloquear cuenta",
     "banDescription": "Se cerrarán todas sus sesiones y no podrá iniciar sesión hasta que se levante el bloqueo. Sus reportes pendientes se marcarán como revisados.",

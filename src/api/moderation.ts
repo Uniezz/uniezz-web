@@ -68,3 +68,16 @@ export async function grantModerator(id: string) {
 export async function revokeModerator(id: string) {
   await api.DELETE('/moderation/moderators/{id}', { params: { path: { id } } });
 }
+
+export async function getUnreviewedImages(cursor?: string) {
+  const { data } = await api.GET('/media/images', { params: { query: { cursor } } });
+  return data!;
+}
+
+export async function markImageReviewed(id: string) {
+  await api.PUT('/media/images/{id}/review', { params: { path: { id } } });
+}
+
+export async function removeImage(id: string) {
+  await api.DELETE('/media/images/{id}', { params: { path: { id } } });
+}
