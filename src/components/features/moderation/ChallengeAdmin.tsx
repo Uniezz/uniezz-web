@@ -63,12 +63,14 @@ export function ChallengeAdmin() {
                   )}
                 </div>
                 <p className="text-detail text-secondary">
-                  {t(challengeActionLabel(challenge.action))} ·{' '}
-                  {t(challengePeriodLabels[challenge.period])} ·{' '}
-                  {t('moderation.challengeSummary', {
-                    target: challenge.target,
-                    reward: challenge.reward,
-                  })}
+                  {[
+                    t(challengeActionLabel(challenge.action)),
+                    t(challengePeriodLabels[challenge.period]),
+                    t('moderation.challengeSummary', {
+                      target: challenge.target,
+                      reward: challenge.reward,
+                    }),
+                  ].join(' · ')}
                 </p>
                 {(challenge.startsAt || challenge.endsAt) && (
                   <p className="text-detail text-secondary">
