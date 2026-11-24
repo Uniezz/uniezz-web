@@ -13,6 +13,8 @@ import type { ChatPreviewState } from './ChatImagePreview';
 // goes down by their number. It cannot be negative, so it starts high.
 const START_INDEX = 1_000_000;
 
+const messageListComponents = { ...listComponents, EmptyPlaceholder: () => <UIEmpty /> };
+
 export function ChatMessageList({
   conversationId,
   onPreview,
@@ -22,7 +24,7 @@ export function ChatMessageList({
 }) {
   const { t } = useTranslation();
   const { data: me } = useMyProfile();
-  const { data, isPending, isError, refetch, hasNextPage, isFetchingNextPage, fetchNextPage } =
+  const { data, isError, refetch, hasNextPage, isFetchingNextPage, fetchNextPage } =
     useMessages(conversationId);
   // Pages are newest first, but the thread reads oldest first. System and deleted messages come with W4.
   const pages = (data?.pages ?? []).map((page) =>
@@ -36,7 +38,7 @@ export function ChatMessageList({
       role="log"
       aria-label={t('app.messages')}
     >
-      {messages.length > 0 && (
+      {data && (
         <Virtuoso
           data={messages}
           firstItemIndex={firstItemIndex}
@@ -52,7 +54,7 @@ export function ChatMessageList({
           followOutput={(isAtBottom) =>
             isAtBottom || messages.at(-1)?.status === 'sending' ? 'auto' : false
           }
-          components={listComponents}
+          components={messageListComponents}
           className="min-h-0 flex-1"
           itemContent={(_, message) => (
             <ChatMessageBubble
@@ -63,7 +65,6 @@ export function ChatMessageList({
           )}
         />
       )}
-      {!isPending && !isError && messages.length === 0 && <UIEmpty />}
       {isError && <UIQueryError retry={() => void refetch()} />}
     </div>
   );
