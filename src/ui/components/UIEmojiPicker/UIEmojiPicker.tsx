@@ -11,15 +11,22 @@ export type UIEmojiPickerProps = {
   /** Which edge of the button the picker lines up with; `start` opens it to the right. */
   align?: 'start' | 'end';
   disabled?: boolean;
+  /** Gets the picked emoji. Without it, the emoji goes into the text field. */
+  onPick?: (emoji: string) => void;
   className?: string;
 };
 
-/** Inserts the picked emoji at the cursor of the nearest surrounding textarea. */
-export const UIEmojiPicker = ({ align, disabled, className }: UIEmojiPickerProps) => {
+/** Inserts the picked emoji at the cursor of the nearest surrounding textarea, or gives it to `onPick`. */
+export const UIEmojiPicker = ({ align, disabled, onPick, className }: UIEmojiPickerProps) => {
   const { t, i18n } = useTranslation();
   const { ref, isOpen, toggle, close } = useDropdown();
 
-  function insert(emoji: string) {
+  function pick(emoji: string) {
+    if (onPick) {
+      onPick(emoji);
+      close();
+      return;
+    }
     const field = ref.current?.parentElement?.closest(':has(textarea)')?.querySelector('textarea');
     if (!field) return;
     field.focus();
@@ -56,7 +63,7 @@ export const UIEmojiPicker = ({ align, disabled, className }: UIEmojiPickerProps
         <EmojiPicker.Root
           locale={i18n.resolvedLanguage ?? 'en'}
           columns={8}
-          onEmojiSelect={({ emoji }) => insert(emoji)}
+          onEmojiSelect={({ emoji }) => pick(emoji)}
           className={emojiPickerStyles({ align })}
         >
           <EmojiPicker.Search
