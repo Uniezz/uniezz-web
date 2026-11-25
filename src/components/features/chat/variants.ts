@@ -37,3 +37,14 @@ export const reactionStyles = cva(
     },
   },
 );
+
+export const markerStyles = cva('flex w-full min-w-0 items-center justify-center text-micro', {
+  variants: {
+    variant: {
+      chip: 'pt-3 pb-6 font-semibold text-white-80',
+      divider:
+        'gap-3 pb-3 font-semibold text-sky before:h-px before:flex-1 before:bg-blue-40 after:h-px after:flex-1 after:bg-blue-40',
+      note: 'pb-3 text-center text-secondary',
+    },
+  },
+});

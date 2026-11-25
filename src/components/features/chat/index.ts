@@ -4,6 +4,7 @@ export * from './ChatDraftAttachments';
 export * from './ChatFileChip';
 export * from './ChatHeader';
 export * from './ChatImagePreview';
+export * from './ChatMarker';
 export * from './ChatMessageImages';
 export * from './ChatMessageList';
 export * from './ChatMessageRow';
