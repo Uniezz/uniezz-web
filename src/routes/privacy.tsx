@@ -24,7 +24,10 @@ function PrivacyPage() {
           paragraphs: [
             'Przetwarzamy dane, które podajesz lub tworzysz w Uniezz: adres e-mail, imię i nazwisko, uczelnię, kierunek i wydział, rok studiów, datę urodzenia, język, zdjęcie, opis, zainteresowania i ustawienia profilu. Możemy otrzymać dane o tożsamości i studiach od uczelni lub systemu USOS, gdy logujesz się przez te usługi. Nie otrzymujemy Twojego hasła do USOS.',
             'Przetwarzamy również treści, które publikujesz lub przesyłasz: posty, komentarze, polubienia, zapisane posty, materiały do nauki, oceny, propozycje FAQ, zgłoszenia naruszeń oraz informacje o połączeniach i nagrodach w usłudze. Zgłoszenie może zawierać kopię zgłoszonej treści potrzebną do jej sprawdzenia.',
-            'Podczas korzystania z serwisu przetwarzamy dane techniczne i diagnostyczne, takie jak adres IP, identyfikatory sesji i żądań, odwiedzone strony, interakcje z interfejsem oraz informacje o błędach. Analityka nie rejestruje sesji; teksty i atrybuty elementów interfejsu są maskowane, a parametry zapytań URL usuwane.',
+            'Gdy korzystasz z czatu, przetwarzamy treść wiadomości, zdjęcia przesłane w rozmowach, informacje o rozmowach prywatnych i grupowych, prośbach o wiadomość (w tym o ich przyjęciu lub odrzuceniu), odczytaniu wiadomości i blokadach, a także Twoje ustawienie, kto może do Ciebie pisać. Wiadomości widzą uczestnicy rozmowy; moderatorzy mogą zobaczyć wiadomość, gdy ktoś ją zgłosi.',
+            'Jeśli w funkcji Poznaj określisz, na co jesteś otwarty, Twoja karta jest pokazywana innym studentom: imię i nazwisko, płeć, wiek (wyliczony z daty urodzenia), uczelnia, poziom studiów, zdjęcia, opis, czego szukasz oraz zainteresowania.',
+            'Jeśli zezwolisz aplikacji na powiadomienia, przetwarzamy token powiadomień Twojego urządzenia oraz ustawienie powiadomień. Powiadomienie o wiadomości może zawierać imię nadawcy i początek wiadomości.',
+            'Podczas korzystania z serwisu przetwarzamy dane techniczne i diagnostyczne, takie jak adres IP, identyfikatory sesji i żądań, odwiedzone strony, interakcje z interfejsem oraz informacje o błędach. Analityka nie rejestruje sesji; teksty i atrybuty elementów interfejsu są maskowane, a parametry zapytań URL usuwane. Po zalogowaniu zdarzenia analityczne są powiązane z wewnętrznym identyfikatorem konta, uczelnią i sposobem logowania, bez adresu e-mail i imienia.',
           ],
         },
         {
@@ -32,21 +35,22 @@ function PrivacyPage() {
           bullets: [
             'Utworzenie konta, weryfikacja statusu studenta, logowanie i działanie funkcji Uniezz — wykonanie umowy (art. 6 ust. 1 lit. b RODO).',
             'Wyświetlanie profilu, obsługa publikacji, komentarzy, materiałów, połączeń i nagród — wykonanie umowy (art. 6 ust. 1 lit. b RODO).',
-            'Obsługa zgłoszeń, zapobieganie nadużyciom, ochrona bezpieczeństwa i diagnozowanie awarii — prawnie uzasadniony interes administratora (art. 6 ust. 1 lit. f RODO).',
+            'Prowadzenie czatu, dostarczanie wiadomości i próśb o wiadomość oraz wysyłanie powiadomień push — wykonanie umowy (art. 6 ust. 1 lit. b RODO).',
+            'Obsługa zgłoszeń, przegląd przesłanych zdjęć przez moderatorów, limity wiadomości i próśb o wiadomość, zapobieganie nadużyciom, ochrona bezpieczeństwa i diagnozowanie awarii — prawnie uzasadniony interes administratora (art. 6 ust. 1 lit. f RODO). Moderatorzy mogą przeglądać zdjęcia profilowe, banery i zdjęcia w postach oraz usuwać te, które naruszają regulamin; zdjęcia z rozmów oglądają tylko wtedy, gdy wiadomość zostanie zgłoszona.',
             'Wypełnienie obowiązków prawnych oraz ustalenie, dochodzenie lub obrona roszczeń — obowiązek prawny lub prawnie uzasadniony interes, zależnie od sprawy.',
           ],
         },
         {
           title: 'Komu przekazujemy dane',
           paragraphs: [
-            'Dane udostępniamy dostawcom, którzy pomagają nam prowadzić Uniezz: dostawcy infrastruktury bazy danych (Supabase), przechowywania plików (Amazon Web Services S3), wysyłki e-maili (Resend), analityki produktu (PostHog) i monitorowania błędów oraz działania API (Sentry). Dostawcy przetwarzają dane w naszym imieniu na podstawie umów. Dane nie są sprzedawane.',
+            'Dane udostępniamy dostawcom, którzy pomagają nam prowadzić Uniezz: dostawcy infrastruktury bazy danych (Supabase), przechowywania plików (Amazon Web Services S3), wysyłki e-maili (Resend), wysyłki powiadomień push (Expo, a za jego pośrednictwem Apple Push Notification service i Firebase Cloud Messaging firmy Google), analityki produktu (PostHog) i monitorowania błędów oraz działania API (Sentry). Dostawcy przetwarzają dane w naszym imieniu na podstawie umów. Dane nie są sprzedawane.',
             'Gdy wybierzesz logowanie uczelniane, odpowiedni dostawca tożsamości lub system uczelni uczestniczy w uwierzytelnianiu. Niektóre podmioty mogą przetwarzać dane poza Europejskim Obszarem Gospodarczym. Jeśli dojdzie do takiego transferu, zapewnimy odpowiedni mechanizm wymagany przez RODO, taki jak decyzja stwierdzająca odpowiedni stopień ochrony lub standardowe klauzule umowne.',
           ],
         },
         {
           title: 'Jak długo przechowujemy dane',
           paragraphs: [
-            'Dane konta przechowujemy, dopóki konto jest aktywne. Po zleceniu usunięcia rozpoczynamy proces usuwania konta i powiązanych danych. Niektóre komentarze z odpowiedziami mogą pozostać w formie zanonimizowanej. Utworzone przez Ciebie kursy mogą pozostać z anonimową informacją o autorze, natomiast powiązane z kontem pliki są usuwane. Kopie treści zawarte w zgłoszeniach są anonimizowane po usunięciu konta; po 60 dniach usuwamy kopię zgłoszonej treści i odniesienie do zgłoszonej osoby. Dane techniczne i dane dostawców mogą być przechowywane przez czas niezbędny do bezpieczeństwa, diagnostyki lub zgodności z prawem.',
+            'Dane konta przechowujemy, dopóki konto jest aktywne. Po zleceniu usunięcia rozpoczynamy proces usuwania konta i powiązanych danych. Niektóre komentarze z odpowiedziami mogą pozostać w formie zanonimizowanej. Utworzone przez Ciebie kursy mogą pozostać z anonimową informacją o autorze, natomiast powiązane z kontem pliki są usuwane. Twoje wiadomości są usuwane, a w rozmowach pozostaje jedynie informacja, że wiadomość została usunięta; rozmowy prywatne z Twoim udziałem są usuwane w całości, a Twoje członkostwo w rozmowach grupowych się kończy. Token powiadomień usuwamy przy wylogowaniu i usunięciu konta. Kopie treści zawarte w zgłoszeniach są anonimizowane po usunięciu konta; po 60 dniach usuwamy kopię zgłoszonej treści i odniesienie do zgłoszonej osoby. Dane techniczne i dane dostawców mogą być przechowywane przez czas niezbędny do bezpieczeństwa, diagnostyki lub zgodności z prawem.',
           ],
         },
         {
@@ -59,6 +63,7 @@ function PrivacyPage() {
           title: 'Pliki cookie i analityka',
           paragraphs: [
             'Serwis używa plików cookie niezbędnych do utrzymania bezpiecznej sesji logowania. Korzystamy też z PostHog do pomiaru użycia serwisu i jego ulepszania, co może korzystać z plików cookie lub podobnego zapisu w przeglądarce. Możesz ograniczyć pliki cookie w ustawieniach przeglądarki; może to wpłynąć na działanie logowania lub innych funkcji.',
+            'Aplikacja mobilna przechowuje na urządzeniu sesję logowania i ustawienia, a PostHog zapisuje w niej losowy identyfikator instalacji. Powiadomienia możesz wyłączyć w ustawieniach aplikacji lub systemu.',
           ],
         },
         {
@@ -80,7 +85,10 @@ function PrivacyPage() {
           paragraphs: [
             'We process information you provide or create in Uniezz: email address, name, university, study programme and faculty, year of study, date of birth, language, photo, bio, interests and profile settings. When you sign in through a university service or USOS, we may receive identity and study information from that provider. We do not receive your USOS password.',
             'We also process content you publish or upload: posts, comments, likes, saved posts, study materials, ratings, FAQ proposals, reports of violations, and information about connections and rewards in the service. A report may include a copy of the reported content so we can review it.',
-            'While you use the service, we process technical and diagnostic data such as IP address, session and request identifiers, pages visited, interface interactions and error information. Product analytics does not record sessions; interface text and element attributes are masked, and URL query parameters are removed.',
+            'When you use chat, we process the content of messages, photos sent in conversations, information about direct and group conversations, message requests (including whether they were accepted or declined), read status and blocks, and your setting for who can message you. Messages are visible to the people in the conversation; moderators may see a message when someone reports it.',
+            'If you choose in Meet what you are open to, your card is shown to other students: first and last name, gender, age (calculated from your date of birth), university, level of study, photos, bio, what you are looking for and interests.',
+            'If you allow notifications in the app, we process your device’s notification token and your notification setting. A message notification may include the sender’s first name and the beginning of the message.',
+            'While you use the service, we process technical and diagnostic data such as IP address, session and request identifiers, pages visited, interface interactions and error information. Product analytics does not record sessions; interface text and element attributes are masked, and URL query parameters are removed. After you sign in, analytics events are linked to your internal account ID, university and sign-in method, without your email address or name.',
           ],
         },
         {
@@ -88,21 +96,22 @@ function PrivacyPage() {
           bullets: [
             'Creating your account, verifying student status, signing you in and providing Uniezz features — performing our contract with you (Article 6(1)(b) GDPR).',
             'Displaying profiles and providing posts, comments, study materials, connections and rewards — performing our contract with you (Article 6(1)(b) GDPR).',
-            'Handling reports, preventing abuse, protecting security and diagnosing failures — our legitimate interests (Article 6(1)(f) GDPR).',
+            'Providing chat, delivering messages and message requests, and sending push notifications — performing our contract with you (Article 6(1)(b) GDPR).',
+            'Handling reports, moderators reviewing uploaded photos, limits on messages and message requests, preventing abuse, protecting security and diagnosing failures — our legitimate interests (Article 6(1)(f) GDPR). Moderators may review profile photos, banners and photos in posts and remove those that break the Terms; they see photos from conversations only when a message is reported.',
             'Meeting legal obligations and establishing, exercising or defending legal claims — a legal obligation or our legitimate interests, depending on the matter.',
           ],
         },
         {
           title: 'Who receives your data',
           paragraphs: [
-            'We share data with providers that help us operate Uniezz: database infrastructure (Supabase), file storage (Amazon Web Services S3), email delivery (Resend), product analytics (PostHog), and API error and performance monitoring (Sentry). These providers process data on our behalf under data processing agreements. We do not sell personal data.',
+            'We share data with providers that help us operate Uniezz: database infrastructure (Supabase), file storage (Amazon Web Services S3), email delivery (Resend), push notification delivery (Expo, and through it Apple Push Notification service and Google’s Firebase Cloud Messaging), product analytics (PostHog), and API error and performance monitoring (Sentry). These providers process data on our behalf under data processing agreements. We do not sell personal data.',
             'If you choose university sign-in, the relevant identity provider or university system participates in authentication. Some providers may process data outside the European Economic Area. If such a transfer occurs, we will ensure it is covered by a GDPR transfer mechanism, such as an adequacy decision or standard contractual clauses.',
           ],
         },
         {
           title: 'How long we keep data',
           paragraphs: [
-            'We keep account data while your account is active. When you request account deletion, we start a process to delete the account and associated data. Some comments with replies may remain in anonymised form. Courses you created may remain with anonymous creator attribution, while files associated with your account are deleted. Copies of content in reports are anonymised after the account is deleted; after 60 days we delete the reported content copy and its reference to the reported person. Technical and provider data may be kept as needed for security, diagnostics or legal compliance.',
+            'We keep account data while your account is active. When you request account deletion, we start a process to delete the account and associated data. Some comments with replies may remain in anonymised form. Courses you created may remain with anonymous creator attribution, while files associated with your account are deleted. Your messages are deleted, and conversations show only that a message was deleted; direct conversations you took part in are deleted entirely, and you leave group conversations. We delete your notification token when you sign out or delete your account. Copies of content in reports are anonymised after the account is deleted; after 60 days we delete the reported content copy and its reference to the reported person. Technical and provider data may be kept as needed for security, diagnostics or legal compliance.',
           ],
         },
         {
@@ -115,6 +124,7 @@ function PrivacyPage() {
           title: 'Cookies and analytics',
           paragraphs: [
             'The service uses cookies needed to maintain a secure sign-in session. We also use PostHog to measure use of the service and improve it, which may use cookies or similar browser storage. You can restrict cookies in your browser settings; this may affect sign-in or other features.',
+            'The mobile app stores your sign-in session and settings on your device, and PostHog stores a random installation identifier in it. You can turn notifications off in the app or system settings.',
           ],
         },
         {
