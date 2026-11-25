@@ -12,6 +12,23 @@ export function captureAnalytics(
   }
 }
 
+/** Links the anonymous events before sign-in to the account. Only the internal id and university, no email or name. */
+export function identifyAnalytics(
+  user: { id: string; universityId: string },
+  authMethod?: 'usos' | 'otp',
+): void {
+  try {
+    // The app route calls this on every navigation; send it once per student.
+    if (!authMethod && posthog.get_distinct_id() === user.id) return;
+    posthog.identify(user.id, {
+      university: user.universityId,
+      ...(authMethod && { auth_method: authMethod }),
+    });
+  } catch {
+    // Analytics must never interrupt navigation or a user's action.
+  }
+}
+
 export function analyticsPath(path: string): string {
   return path
     .replace(/^(\/feed\/post\/)(?!new-post(?:\/|$))[^/]+/, '$1:postId')

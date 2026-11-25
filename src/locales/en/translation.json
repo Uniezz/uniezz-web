@@ -27,7 +27,8 @@
     "student": "Student",
     "titleError": "Use 3–150 characters.",
     "unlike": "Unlike",
-    "unsave": "Unsave"
+    "unsave": "Unsave",
+    "commentRateLimit": "You are commenting too often. Wait a moment and try again."
   },
   "app": {
     "accountDeleted": "Account deleted",
@@ -513,7 +514,19 @@
     "unbanDescription": "The student can sign in again.",
     "unbanned": "Ban lifted.",
     "targetCourseComment": "Course comment",
-    "targetProfessorReview": "Professor review"
+    "targetProfessorReview": "Professor review",
+    "imageAvatar": "Avatar",
+    "imageBanner": "Banner",
+    "imageChecked": "Image marked as checked",
+    "imageFeed": "Feed photo",
+    "imageRemoved": "Image removed",
+    "images": "Images",
+    "markImageChecked": "Mark as checked",
+    "noImages": "No images to check",
+    "openImage": "Open image in full size",
+    "openOwner": "Open the uploader’s profile",
+    "removeImage": "Remove image",
+    "removeImageDescription": "The image disappears everywhere it is shown and its file is deleted."
   },
   "onboarding": {
     "details": {
@@ -564,7 +577,8 @@
     "time": "Time",
     "title": "Title",
     "titlePlaceholder": "Give your post a title",
-    "type": "Post type"
+    "type": "Post type",
+    "rateLimit": "You are posting too often. Wait a few minutes and try again."
   },
   "progress": {
     "avatarDelete": "Removing photo…",
@@ -609,7 +623,9 @@
     "userBan": "Banning student…",
     "userUnban": "Lifting ban…",
     "reviewSave": "Saving review…",
-    "reviewDelete": "Deleting review…"
+    "reviewDelete": "Deleting review…",
+    "imageRemove": "Removing the image…",
+    "imageReview": "Marking the image as checked…"
   },
   "report": {
     "candidate": "Report profile",

@@ -27,7 +27,8 @@
     "student": "Alumno",
     "titleError": "Utilice entre 3 y 150 caracteres.",
     "unlike": "A diferencia de",
-    "unsave": "Dejar de guardar"
+    "unsave": "Dejar de guardar",
+    "commentRateLimit": "Comentas con demasiada frecuencia. Espera un momento e inténtalo de nuevo."
   },
   "app": {
     "accountDeleted": "Cuenta eliminada",
@@ -513,7 +514,19 @@
     "unbanDescription": "Podrá volver a iniciar sesión.",
     "unbanned": "Bloqueo levantado.",
     "targetCourseComment": "Comentario de asignatura",
-    "targetProfessorReview": "Reseña de profesor"
+    "targetProfessorReview": "Reseña de profesor",
+    "imageAvatar": "Avatar",
+    "imageBanner": "Banner",
+    "imageChecked": "Imagen marcada como revisada",
+    "imageFeed": "Foto del feed",
+    "imageRemoved": "Imagen eliminada",
+    "images": "Imágenes",
+    "markImageChecked": "Marcar como revisada",
+    "noImages": "No hay imágenes por revisar",
+    "openImage": "Abrir la imagen a tamaño completo",
+    "openOwner": "Abrir el perfil de quien la subió",
+    "removeImage": "Eliminar imagen",
+    "removeImageDescription": "La imagen desaparece de todos los lugares donde se muestra y su archivo se elimina."
   },
   "onboarding": {
     "details": {
@@ -564,7 +577,8 @@
     "time": "Tiempo",
     "title": "Título",
     "titlePlaceholder": "Dale un título a tu publicación",
-    "type": "Tipo de publicación"
+    "type": "Tipo de publicación",
+    "rateLimit": "Publicas con demasiada frecuencia. Espera unos minutos e inténtalo de nuevo."
   },
   "progress": {
     "avatarDelete": "Eliminando foto…",
@@ -609,7 +623,9 @@
     "userBan": "Bloqueando la cuenta…",
     "userUnban": "Desbloqueando la cuenta…",
     "reviewSave": "Guardando reseña…",
-    "reviewDelete": "Eliminando reseña…"
+    "reviewDelete": "Eliminando reseña…",
+    "imageRemove": "Eliminando la imagen…",
+    "imageReview": "Marcando la imagen como revisada…"
   },
   "report": {
     "candidate": "Reportar perfil",

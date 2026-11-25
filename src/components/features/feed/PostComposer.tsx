@@ -1,3 +1,4 @@
+import { ApiRequestError } from '@/api';
 import { captureAnalytics, toast } from '@/utils';
 import { useState } from 'react';
 import { Send } from 'lucide-react';
@@ -95,8 +96,9 @@ export function PostComposer({
                 ...parsePostTagDraft(values.tagDraft),
               ]);
               await onSubmit({ ...values, tags: tags.success ? tags.data : values.tags });
-            } catch {
-              toast.error(t('apiState.error'));
+            } catch (error) {
+              const limited = error instanceof ApiRequestError && error.status === 429;
+              toast.error(t(limited ? 'postComposer.rateLimit' : 'apiState.error'));
             }
           },
           (errors) => {
@@ -116,10 +118,6 @@ export function PostComposer({
                 onSelect={(value) => {
                   setValue('type', value, { shouldDirty: true });
                   clearErrors(['date', 'time']);
-                  if (value === 'question') {
-                    setValue('images', [], { shouldDirty: true });
-                    clearErrors('images');
-                  }
                 }}
               />
               <PostAudienceSelector
@@ -185,7 +183,7 @@ export function PostComposer({
                 </div>
               </div>
             )}
-            {!post && type !== 'question' && (
+            {!post && (
               <PostPhotoField
                 control={control}
                 readingImage={readingImage}

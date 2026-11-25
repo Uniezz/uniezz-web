@@ -3,7 +3,7 @@ import { ShieldPlus } from 'lucide-react';
 import { BlockStudentButton } from '@/components/features/connections';
 import { useTranslation } from 'react-i18next';
 import type { PublicProfileProps } from '@/@types';
-import { useMyProfile, useMyProfilePhotos, useUniversities } from '@/hooks';
+import { useMyProfile, useUniversities } from '@/hooks';
 import { UIPanel, UITags, UIUniversityLogo } from '@/ui/components';
 import { ReportButton } from '@/components/features/reports';
 import { BanButton, GrantModeratorButton } from '@/components/features/moderation';
@@ -19,11 +19,8 @@ export function PublicProfile({ profile }: PublicProfileProps) {
     universities?.find((item) => item.id === profile.universityId)?.name ??
     profile.universityId.toUpperCase();
   const isMe = me?.id === profile.id;
-  // The public profile hides photos from yourself, as you are not your own connection.
-  const { data: myPhotos } = useMyProfilePhotos(isMe);
-  // Avatar first; null for students you are not connected with, and the avatar alone adds nothing.
-  const allPhotos = isMe ? myPhotos?.photos?.map((photo) => photo.url) : profile.photos;
-  const photos = allPhotos && allPhotos.length > 1 ? allPhotos : [];
+  // Avatar first; the avatar alone adds nothing.
+  const photos = profile.photos && profile.photos.length > 1 ? profile.photos : [];
   const hasPersonalDetails = Boolean(
     profile.bio || profile.interests?.length || profile.songUrl || photos.length,
   );

@@ -5,12 +5,15 @@ import {
   getModerationActions,
   getModerators,
   getPendingReports,
+  getUnreviewedImages,
   grantModerator,
+  markImageReviewed,
   removeComment,
   removeCourse,
   removeCourseComment,
   removeProfessorReview,
   removeFile,
+  removeImage,
   removePost,
   revokeModerator,
   unbanUser,
@@ -27,6 +30,43 @@ export function usePendingReports() {
     getNextPageParam: (page) => page.nextCursor ?? undefined,
     // Tab switches remount the list; mutations invalidate it, so 5 minutes is fresh enough.
     staleTime: 5 * 60_000,
+  });
+}
+
+// Oldest first; an image leaves the queue once it is marked checked or removed.
+export function useUnreviewedImages() {
+  return useInfiniteQuery({
+    queryKey: ['moderation', 'images'],
+    queryFn: ({ pageParam }) => getUnreviewedImages(pageParam),
+    initialPageParam: undefined as string | undefined,
+    getNextPageParam: (page) => page.nextCursor ?? undefined,
+    // Tab switches remount the list; mutations invalidate it, so 5 minutes is fresh enough.
+    staleTime: 5 * 60_000,
+  });
+}
+
+export function useMarkImageReviewed() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    meta: { analyticsAction: 'image_review', progress: () => i18n.t('progress.imageReview') },
+    mutationFn: markImageReviewed,
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['moderation', 'images'] });
+    },
+  });
+}
+
+// A removed image disappears everywhere: avatars, banners and feed posts.
+export function useRemoveImage() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    meta: { analyticsAction: 'image_remove', progress: () => i18n.t('progress.imageRemove') },
+    mutationFn: removeImage,
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['moderation', 'images'] });
+      void queryClient.invalidateQueries({ queryKey: ['feed'] });
+      void queryClient.invalidateQueries({ queryKey: ['profiles'] });
+    },
   });
 }
 

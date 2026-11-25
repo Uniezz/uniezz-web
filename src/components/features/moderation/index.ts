@@ -3,6 +3,7 @@ export * from './ChallengeAdmin';
 export * from './ChallengeFormDialog';
 export * from './ConfirmActionButton';
 export * from './GrantModeratorButton';
+export * from './ImageQueue';
 export * from './ModerationLog';
 export * from './ModeratorList';
 export * from './ModeratorSearch';

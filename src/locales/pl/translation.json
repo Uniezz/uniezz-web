@@ -27,7 +27,8 @@
     "student": "Student",
     "titleError": "Wpisz od 3 do 150 znaków.",
     "unlike": "Usuń polubienie",
-    "unsave": "Usuń z zapisanych"
+    "unsave": "Usuń z zapisanych",
+    "commentRateLimit": "Komentujesz zbyt często. Odczekaj chwilę i spróbuj ponownie."
   },
   "app": {
     "accountDeleted": "Konto zostało usunięte",
@@ -513,7 +514,19 @@
     "unbanDescription": "Student będzie mógł znów się zalogować.",
     "unbanned": "Blokada zdjęta.",
     "targetCourseComment": "Komentarz do przedmiotu",
-    "targetProfessorReview": "Opinia o wykładowcy"
+    "targetProfessorReview": "Opinia o wykładowcy",
+    "imageAvatar": "Awatar",
+    "imageBanner": "Baner",
+    "imageChecked": "Zdjęcie oznaczone jako sprawdzone",
+    "imageFeed": "Zdjęcie w feedzie",
+    "imageRemoved": "Zdjęcie usunięte",
+    "images": "Zdjęcia",
+    "markImageChecked": "Oznacz jako sprawdzone",
+    "noImages": "Brak zdjęć do sprawdzenia",
+    "openImage": "Otwórz zdjęcie w pełnym rozmiarze",
+    "openOwner": "Otwórz profil autora",
+    "removeImage": "Usuń zdjęcie",
+    "removeImageDescription": "Zdjęcie zniknie wszędzie, gdzie jest widoczne, a jego plik zostanie usunięty."
   },
   "onboarding": {
     "details": {
@@ -564,7 +577,8 @@
     "time": "Godzina",
     "title": "Tytuł",
     "titlePlaceholder": "Dodaj tytuł posta",
-    "type": "Typ posta"
+    "type": "Typ posta",
+    "rateLimit": "Publikujesz zbyt często. Odczekaj kilka minut i spróbuj ponownie."
   },
   "progress": {
     "avatarDelete": "Usuwanie zdjęcia…",
@@ -609,7 +623,9 @@
     "userBan": "Blokowanie konta…",
     "userUnban": "Odblokowywanie konta…",
     "reviewSave": "Zapisywanie opinii…",
-    "reviewDelete": "Usuwanie opinii…"
+    "reviewDelete": "Usuwanie opinii…",
+    "imageRemove": "Usuwanie zdjęcia…",
+    "imageReview": "Oznaczanie zdjęcia jako sprawdzonego…"
   },
   "report": {
     "candidate": "Zgłoś profil",

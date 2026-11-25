@@ -61,7 +61,7 @@ export type RemovableTarget =
   | 'professor_review';
 export type RemoveContentInput = { type: RemovableTarget; id: string };
 
-export type ModerationTab = 'reports' | 'faq' | 'moderators' | 'log' | 'challenges';
+export type ModerationTab = 'reports' | 'images' | 'faq' | 'moderators' | 'log' | 'challenges';
 
 /** Anything carrying staff roles, such as the signed-in profile while it loads. */
 export type WithRoles = { roles: string[] | null } | undefined;

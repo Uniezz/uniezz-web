@@ -11,6 +11,7 @@ import { type FormEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Skeleton } from 'skullet/react';
 import type { FeedComment, FeedPostSearch } from '@/@types';
+import { ApiRequestError } from '@/api';
 import { cn } from '@/ui/cn';
 import { inputStyles } from '@/ui/components/UIInput/variants';
 import { UIAvatar, UIButton, UIEmojiPicker, UIEmpty, UIPanel, UIQueryError } from '@/ui/components';
@@ -113,8 +114,9 @@ function FeedPostPage() {
       setCommentDraft('');
       setReplyTo(null);
       setIsCommentMultiline(false);
-    } catch {
-      toast.error(t('apiState.error'));
+    } catch (error) {
+      const limited = error instanceof ApiRequestError && error.status === 429;
+      toast.error(t(limited ? 'apiState.commentRateLimit' : 'apiState.error'));
     }
   };
 

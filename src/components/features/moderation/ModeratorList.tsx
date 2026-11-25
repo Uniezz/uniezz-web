@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Virtuoso } from 'react-virtuoso';
+import { UserMinus } from 'lucide-react';
 import { useModerators, useRevokeModerator } from '@/hooks';
 import { UIEmpty, UIQueryError } from '@/ui/components';
 import { listComponents } from '@/ui/virtuoso';
@@ -56,6 +57,8 @@ export function ModeratorList() {
                   description={t('moderation.revokeDescription')}
                   success={t('moderation.revoked')}
                   onConfirm={() => revoke(moderator.userId)}
+                  icon={UserMinus}
+                  danger
                 />
               </div>
             )}

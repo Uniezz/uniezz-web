@@ -73,6 +73,7 @@ export const apiMiddleware: Middleware = {
               '/moderation/moderators/{id}',
               '/moderation/users/{id}/ban',
               '/profile/onboarding',
+              '/media/images/{id}/review',
             ].includes(schemaPath)) ||
           (request.method === 'POST' &&
             ['/auth/otp/request', '/auth/otp/verify', '/auth/exchange'].includes(schemaPath)) ||
@@ -100,6 +101,7 @@ export const apiMiddleware: Middleware = {
               '/moderation/moderators/{id}',
               '/moderation/users/{id}/ban',
               '/rewards/challenges/{id}',
+              '/media/images/{id}',
             ].includes(schemaPath));
         if (!allowsNoContent) {
           throw apiError(`${request.method} ${schemaPath}`, response);

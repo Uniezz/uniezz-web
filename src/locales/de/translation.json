@@ -27,7 +27,8 @@
     "student": "Student",
     "titleError": "Verwenden Sie 3–150 Zeichen.",
     "unlike": "Im Gegensatz zu",
-    "unsave": "Nicht speichern"
+    "unsave": "Nicht speichern",
+    "commentRateLimit": "Du kommentierst zu oft. Warte kurz und versuche es erneut."
   },
   "app": {
     "accountDeleted": "Konto gelöscht",
@@ -513,7 +514,19 @@
     "unbanDescription": "Die Person kann sich wieder anmelden.",
     "unbanned": "Sperre aufgehoben.",
     "targetCourseComment": "Kurskommentar",
-    "targetProfessorReview": "Dozentenbewertung"
+    "targetProfessorReview": "Dozentenbewertung",
+    "imageAvatar": "Profilbild",
+    "imageBanner": "Banner",
+    "imageChecked": "Bild als geprüft markiert",
+    "imageFeed": "Feed-Foto",
+    "imageRemoved": "Bild entfernt",
+    "images": "Bilder",
+    "markImageChecked": "Als geprüft markieren",
+    "noImages": "Keine Bilder zu prüfen",
+    "openImage": "Bild in voller Größe öffnen",
+    "openOwner": "Profil der hochladenden Person öffnen",
+    "removeImage": "Bild entfernen",
+    "removeImageDescription": "Das Bild verschwindet überall, wo es angezeigt wird, und seine Datei wird gelöscht."
   },
   "onboarding": {
     "details": {
@@ -564,7 +577,8 @@
     "time": "Zeit",
     "title": "Titel",
     "titlePlaceholder": "Geben Sie Ihrem Beitrag einen Titel",
-    "type": "Beitragstyp"
+    "type": "Beitragstyp",
+    "rateLimit": "Du postest zu oft. Warte ein paar Minuten und versuche es erneut."
   },
   "progress": {
     "avatarDelete": "Foto wird entfernt…",
@@ -609,7 +623,9 @@
     "userBan": "Konto wird gesperrt…",
     "userUnban": "Sperre wird aufgehoben…",
     "reviewSave": "Bewertung wird gespeichert…",
-    "reviewDelete": "Bewertung wird gelöscht…"
+    "reviewDelete": "Bewertung wird gelöscht…",
+    "imageRemove": "Bild wird entfernt…",
+    "imageReview": "Bild wird als geprüft markiert…"
   },
   "report": {
     "candidate": "Profil melden",
