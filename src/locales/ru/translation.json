@@ -196,6 +196,7 @@
   },
   "chat": {
     "action": "Новая группа",
+    "emptyThread": "Сообщений пока нет. Поздоровайтесь!",
     "jumpToLatest": "Перейти к последнему сообщению",
     "newMessages_few": "{{count}} новых сообщения",
     "newMessages_many": "{{count}} новых сообщений",

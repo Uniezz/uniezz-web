@@ -196,6 +196,7 @@
   },
   "chat": {
     "action": "Nuevo grupo",
+    "emptyThread": "Aún no hay mensajes. ¡Saluda!",
     "jumpToLatest": "Ir al último mensaje",
     "newMessages_many": "{{count}} mensajes nuevos",
     "newMessages_one": "{{count}} mensaje nuevo",

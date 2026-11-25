@@ -196,6 +196,7 @@
   },
   "chat": {
     "action": "Neue Gruppe",
+    "emptyThread": "Noch keine Nachrichten. Sag Hallo!",
     "jumpToLatest": "Zur neuesten Nachricht springen",
     "newMessages_one": "{{count}} neue Nachricht",
     "newMessages_other": "{{count}} neue Nachrichten",

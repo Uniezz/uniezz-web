@@ -9,6 +9,7 @@ const files = [
   'ChatMessageBubble.tsx',
   'ChatMessageRow.tsx',
   'ChatReaction.tsx',
+  'ChatThreadSkeleton.tsx',
 ];
 
 const rawColor = /#[0-9a-f]{3,8}\b|\b(?:rgba?|hsla?|oklch|color-mix)\(/i;

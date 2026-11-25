@@ -11,8 +11,18 @@ import { ChatJumpToLatest } from './ChatJumpToLatest';
 import { ChatMarker } from './ChatMarker';
 import { ChatMessageBubble } from './ChatMessageBubble';
 import type { ChatPreviewState } from './ChatImagePreview';
+import { ChatThreadSkeleton } from './ChatThreadSkeleton';
 
-const messageListComponents = { ...listComponents, EmptyPlaceholder: () => <UIEmpty /> };
+function EmptyThread() {
+  const { t } = useTranslation();
+  return (
+    <UIEmpty>
+      <p>{t('chat.emptyThread')}</p>
+    </UIEmpty>
+  );
+}
+
+const messageListComponents = { ...listComponents, EmptyPlaceholder: EmptyThread };
 
 // A sending message has a `clientId` until the server gives it an `id`, so the key stays the same.
 const messageKey = (_: number, message: ChatMessageView) => message.clientId ?? message.id;
@@ -36,6 +46,7 @@ export function ChatMessageList({
   const {
     messages,
     firstItemIndex,
+    isPending,
     isLoaded,
     isError,
     refetch,
@@ -83,6 +94,7 @@ export function ChatMessageList({
       role="log"
       aria-label={t('app.messages')}
     >
+      {isPending ? <ChatThreadSkeleton /> : null}
       {isLoaded && (
         <Virtuoso
           ref={list}

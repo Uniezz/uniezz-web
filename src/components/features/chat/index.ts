@@ -12,6 +12,7 @@ export * from './ChatMessageList';
 export * from './ChatMessageRow';
 export * from './ChatReaction';
 export * from './ChatThread';
+export * from './ChatThreadSkeleton';
 export * from './ConnectionsList';
 export * from './ConversationList';
 export * from './CreateGroup';

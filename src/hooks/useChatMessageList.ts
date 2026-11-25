@@ -13,7 +13,7 @@ const START_INDEX = 1_000_000;
 /** The messages of a thread, oldest first, and how Virtuoso loads, follows and groups them. */
 export function useChatMessageList(conversationId: string, unreadAtOpen: ChatUnreadAtOpen) {
   const { data: me } = useMyProfile();
-  const { data, isError, refetch, hasNextPage, isFetchingNextPage, fetchNextPage } =
+  const { data, isPending, isError, refetch, hasNextPage, isFetchingNextPage, fetchNextPage } =
     useMessages(conversationId);
   // Pages are newest first, but the thread reads oldest first. System and deleted messages come with W4.
   const pages = (data?.pages ?? []).map((page) =>
@@ -68,6 +68,7 @@ export function useChatMessageList(conversationId: string, unreadAtOpen: ChatUnr
   return {
     messages,
     firstItemIndex,
+    isPending,
     isLoaded: data !== undefined,
     isError,
     refetch,
