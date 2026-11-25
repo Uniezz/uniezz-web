@@ -25,6 +25,7 @@ const render = (props: Partial<ChatMessageBubbleProps> = {}) =>
       position="single"
       isGroup={false}
       onPreview={() => {}}
+      onReport={() => {}}
       onDelete={() => {}}
       {...props}
     />,

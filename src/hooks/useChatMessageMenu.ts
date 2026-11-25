@@ -1,4 +1,4 @@
-import { Copy, Trash2 } from 'lucide-react';
+import { Copy, Flag, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import type { ChatMessageView, Option } from '@/@types';
@@ -10,11 +10,13 @@ import { toast } from '@/utils/mutationProgress';
 export function useChatMessageMenu(
   message: ChatMessageView,
   outgoing: boolean,
+  onReport: (message: ChatMessageView) => void,
   onDelete: (message: ChatMessageView) => void,
 ) {
   const { t } = useTranslation();
   const menuOptions: Partial<Record<ChatMessageAction, Option>> = {
     copy: { value: 'copy', label: t('chat.copyText'), Icon: Copy },
+    report: { value: 'report', label: t('chat.report'), Icon: Flag, danger: true },
     delete: { value: 'delete', label: t('chat.delete'), Icon: Trash2, danger: true },
   };
   const options = messageActions(message, outgoing).flatMap((action) => menuOptions[action] ?? []);
@@ -32,6 +34,7 @@ export function useChatMessageMenu(
 
   function selectAction(action: string) {
     if (action === 'copy') void copyText();
+    if (action === 'report') onReport(message);
     if (action === 'delete') onDelete(message);
   }
 

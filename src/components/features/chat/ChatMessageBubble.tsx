@@ -23,6 +23,7 @@ export type ChatMessageBubbleProps = {
   /** In a group chat, incoming messages show who wrote them. */
   isGroup: boolean;
   onPreview: (preview: ChatPreviewState) => void;
+  onReport: (message: ChatMessageView) => void;
   onDelete: (message: ChatMessageView) => void;
 };
 
@@ -33,11 +34,12 @@ export const ChatMessageBubble = memo(function ChatMessageBubble({
   position,
   isGroup,
   onPreview,
+  onReport,
   onDelete,
 }: ChatMessageBubbleProps) {
   const { t, i18n } = useTranslation();
   const { sender, body, status } = message;
-  const { options, selectAction } = useChatMessageMenu(message, outgoing, onDelete);
+  const { options, selectAction } = useChatMessageMenu(message, outgoing, onReport, onDelete);
 
   const isDeleted = message.deletedAt !== null;
   const images = message.attachments ?? [];

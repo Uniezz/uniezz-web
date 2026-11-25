@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Virtuoso, type VirtuosoHandle } from 'react-virtuoso';
 
 import type { ChatMessageView, ChatUnreadAtOpen } from '@/@types';
+import { ReportDialog } from '@/components/features/reports';
 import { useChatMessageList } from '@/hooks';
 import { UIEmpty, UIQueryError } from '@/ui/components';
 import { listComponents } from '@/ui/virtuoso';
@@ -38,7 +39,8 @@ export function ChatMessageList({
 }) {
   const { t, i18n } = useTranslation();
   const list = useRef<VirtuosoHandle>(null);
-  // One dialog for the list, because a row is removed from the page when it scrolls away.
+  // One dialog of each kind for the list, because a row is removed from the page when it scrolls away.
+  const [messageToReport, setMessageToReport] = useState<ChatMessageView | null>(null);
   const [messageToDelete, setMessageToDelete] = useState<ChatMessageView | null>(null);
   const {
     messages,
@@ -80,6 +82,7 @@ export function ChatMessageList({
           position={position}
           isGroup={isGroup}
           onPreview={onPreview}
+          onReport={setMessageToReport}
           onDelete={setMessageToDelete}
         />
       </>
@@ -118,6 +121,13 @@ export function ChatMessageList({
         />
       ) : null}
       {isError && <UIQueryError retry={() => void refetch()} />}
+      <ReportDialog
+        open={messageToReport !== null}
+        onClose={() => setMessageToReport(null)}
+        title={t('report.message')}
+        targetType="message"
+        targetId={messageToReport?.id ?? ''}
+      />
       <ChatDeleteDialog message={messageToDelete} onClose={() => setMessageToDelete(null)} />
     </div>
   );
