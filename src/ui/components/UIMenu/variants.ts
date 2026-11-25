@@ -12,6 +12,7 @@ export const menuOptionStyles = cva(
         true: 'bg-white-10 text-white',
         false: 'bg-transparent text-white-80 enabled:hover:bg-white-5 enabled:hover:text-white',
       },
+      danger: { true: 'text-danger enabled:hover:text-danger' },
     },
   },
 );
@@ -22,5 +23,6 @@ export const menuIconStyles = cva('grid size-8 shrink-0 place-items-center', {
       true: 'text-periwinkle',
       false: 'text-secondary',
     },
+    danger: { true: 'text-danger' },
   },
 });

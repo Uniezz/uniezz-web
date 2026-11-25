@@ -41,14 +41,17 @@ export const UIMenu = ({ options, value, onSelect, className, ...props }: UIMenu
             bg="transparent"
             data-ph-capture-attribute-label={option.label}
             aria-current={isActive}
-            className={menuOptionStyles({ active: isActive })}
+            className={menuOptionStyles({ active: isActive, danger: option.danger })}
             onClick={() => onSelect(option.value)}
           >
             {option.universityId ? (
               <UIUniversityLogo universityId={option.universityId} size="md" />
             ) : (
               option.Icon && (
-                <span className={menuIconStyles({ active: isActive })} aria-hidden="true">
+                <span
+                  className={menuIconStyles({ active: isActive, danger: option.danger })}
+                  aria-hidden="true"
+                >
                   <option.Icon className="h-4 w-6 rounded-xs" />
                 </span>
               )

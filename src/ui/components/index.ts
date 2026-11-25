@@ -1,4 +1,5 @@
 export * from './BrandBackground';
+export * from './UIActionMenu';
 export * from './UIAvatar';
 export * from './UIButton';
 export * from './UIInput';

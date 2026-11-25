@@ -7,4 +7,6 @@ export type Option = {
   /** Shows this university's logo in place of Icon */
   universityId?: string;
   description?: string;
+  /** A red row, for an action that cannot be undone */
+  danger?: boolean;
 };
