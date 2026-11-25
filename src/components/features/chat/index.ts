@@ -1,3 +1,4 @@
+export * from './ChatBubble';
 export * from './ChatComposer';
 export * from './ChatDraftAttachments';
 export * from './ChatFileChip';

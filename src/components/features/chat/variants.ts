@@ -7,3 +7,21 @@ export const messageRowStyles = cva('flex w-full min-w-0 flex-col', {
     position: { single: 'pb-3', first: 'pb-0.5', middle: 'pb-0.5', last: 'pb-3' },
   },
 });
+
+export const bubbleStyles = cva(
+  'flex w-fit max-w-[80%] min-w-0 flex-col gap-1 rounded-story border px-3.5 py-2.5 text-body leading-[1.4] wrap-break-word whitespace-pre-wrap text-white',
+  {
+    variants: {
+      variant: { in: 'border-white-10 bg-white-10', out: 'border-transparent bg-blue' },
+      tail: { true: '', false: '' },
+    },
+    compoundVariants: [
+      { variant: 'in', tail: true, className: 'rounded-bl-[6px]' },
+      { variant: 'out', tail: true, className: 'rounded-br-[6px]' },
+    ],
+  },
+);
+
+export const bubbleMetaStyles = cva('flex items-center gap-1 text-caption', {
+  variants: { variant: { in: 'text-secondary', out: 'justify-end text-white-80' } },
+});
