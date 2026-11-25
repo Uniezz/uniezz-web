@@ -25,3 +25,15 @@ export const bubbleStyles = cva(
 export const bubbleMetaStyles = cva('flex items-center gap-1 text-caption', {
   variants: { variant: { in: 'text-secondary', out: 'justify-end text-white-80' } },
 });
+
+export const reactionStyles = cva(
+  'inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-micro font-semibold text-white transition-[color,background-color,scale] focus-visible:outline-2 focus-visible:outline-blue motion-safe:animate-pop-in motion-safe:active:scale-[0.97]',
+  {
+    variants: {
+      selected: {
+        true: 'border-blue bg-blue-20',
+        false: 'border-white-10 bg-white-10 hover:bg-white-20',
+      },
+    },
+  },
+);
