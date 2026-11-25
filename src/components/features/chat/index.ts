@@ -5,6 +5,7 @@ export * from './ChatHeader';
 export * from './ChatImagePreview';
 export * from './ChatMessageImages';
 export * from './ChatMessageList';
+export * from './ChatMessageRow';
 export * from './ChatThread';
 export * from './ConnectionsList';
 export * from './ConversationList';
