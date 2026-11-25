@@ -40,6 +40,11 @@ export async function sendChatMessage(
   return data!;
 }
 
+/** Deletes one of my messages for everyone. It stays in the history as an empty message. */
+export async function deleteChatMessage(messageId: string) {
+  await api.DELETE('/chat/messages/{id}', { params: { path: { id: messageId } } });
+}
+
 export async function markChatRead(conversationId: string, seq: number) {
   const { data } = await api.PUT('/chat/conversations/{id}/read', {
     params: { path: { id: conversationId } },

@@ -1,5 +1,5 @@
 import { Check } from 'lucide-react';
-import { useLayoutEffect, useRef, useState, type ComponentProps } from 'react';
+import { Fragment, useLayoutEffect, useRef, useState, type ComponentProps } from 'react';
 import { type Option } from '@/@types';
 import { cn } from '@/ui/cn';
 import { UIButton } from '../UIButton';
@@ -40,43 +40,45 @@ export const UIMenu = ({
       ref={ref}
       className={cn(menuStyles({ size }), opensUp && 'top-auto bottom-full mt-0 mb-2', className)}
     >
-      {options.map((option) => {
+      {options.map((option, index) => {
         const isActive = option.value === value;
 
         return (
-          <UIButton
-            key={option.value}
-            size="md"
-            bg="transparent"
-            data-ph-capture-attribute-label={option.label}
-            aria-current={isActive}
-            className={menuOptionStyles({ active: isActive, size, danger: option.danger })}
-            onClick={() => onSelect(option.value)}
-          >
-            {option.universityId ? (
-              <UIUniversityLogo universityId={option.universityId} size="md" />
-            ) : (
-              option.Icon && (
-                <span
-                  className={menuIconStyles({ active: isActive, danger: option.danger })}
-                  aria-hidden="true"
-                >
-                  <option.Icon className="h-4 w-6 rounded-xs" />
-                </span>
-              )
-            )}
-            <span className="min-w-0 flex-1 text-left">
-              <span className="block wrap-break-word">{option.label}</span>
-              {option.description && (
-                <span className="mt-0.5 block text-detail font-normal text-secondary">
-                  {option.description}
-                </span>
+          <Fragment key={option.value}>
+            {option.danger && index > 0 ? <div className="h-px shrink-0 bg-white-10" /> : null}
+            <UIButton
+              size="md"
+              bg="transparent"
+              data-ph-capture-attribute-label={option.label}
+              aria-current={isActive}
+              className={menuOptionStyles({ active: isActive, size, danger: option.danger })}
+              onClick={() => onSelect(option.value)}
+            >
+              {option.universityId ? (
+                <UIUniversityLogo universityId={option.universityId} size="md" />
+              ) : (
+                option.Icon && (
+                  <span
+                    className={cn(menuIconStyles({ active: isActive, danger: option.danger }))}
+                    aria-hidden="true"
+                  >
+                    <option.Icon className="h-4 w-6 rounded-xs" />
+                  </span>
+                )
               )}
-            </span>
-            {isActive ? (
-              <Check className="shrink-0 text-periwinkle" size={16} aria-hidden="true" />
-            ) : null}
-          </UIButton>
+              <span className="min-w-0 flex-1 text-left">
+                <span className="block wrap-break-word">{option.label}</span>
+                {option.description && (
+                  <span className="mt-0.5 block text-detail font-normal text-secondary">
+                    {option.description}
+                  </span>
+                )}
+              </span>
+              {isActive ? (
+                <Check className="shrink-0 text-periwinkle" size={16} aria-hidden="true" />
+              ) : null}
+            </UIButton>
+          </Fragment>
         );
       })}
     </div>

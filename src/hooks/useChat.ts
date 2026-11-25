@@ -1,6 +1,7 @@
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   createChatGroup,
+  deleteChatMessage,
   getChatConversation,
   getChatConversations,
   getChatMessages,
@@ -11,12 +12,13 @@ import {
 import {
   chatKeys,
   createPendingMessage,
+  markMessageDeleted,
   patchCachedItem,
   removeMessage,
   toast,
   upsertMessage,
 } from '@/utils';
-import type { SendMessageInput } from '@/@types';
+import type { ChatMessage, SendMessageInput } from '@/@types';
 import type { ChatMessagePages } from '@/utils';
 import i18n from '@/i18n';
 import { useMyProfile } from './useMyProfile';
@@ -80,6 +82,22 @@ export function useSendMessage() {
       );
       void queryClient.invalidateQueries({ queryKey: chatKeys.conversations() });
     },
+  });
+}
+
+/** Deletes my message for everyone. The message changes only after the server accepts it. */
+export function useDeleteMessage() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    meta: { analyticsAction: 'message_delete' },
+    mutationFn: ({ id }: ChatMessage) => deleteChatMessage(id),
+    onSuccess: (_, { id, conversationId }) => {
+      queryClient.setQueryData<ChatMessagePages>(chatKeys.messages(conversationId), (data) =>
+        markMessageDeleted(data, id),
+      );
+      void queryClient.invalidateQueries({ queryKey: chatKeys.conversations() });
+    },
+    onError: () => toast.error(i18n.t('apiState.error')),
   });
 }
 

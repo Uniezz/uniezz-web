@@ -197,6 +197,10 @@
   "chat": {
     "action": "Nowa grupa",
     "copyText": "Kopiuj tekst",
+    "delete": "Usuń",
+    "deleteDescription": "Zniknie z tego czatu u wszystkich uczestników.",
+    "deleteForEveryone": "Usuń u wszystkich",
+    "deleteTitle": "Usunąć tę wiadomość?",
     "emptyThread": "Brak wiadomości. Przywitaj się!",
     "jumpToLatest": "Przejdź do najnowszej wiadomości",
     "messageDeleted": "Wiadomość usunięta",

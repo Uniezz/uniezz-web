@@ -197,6 +197,10 @@
   "chat": {
     "action": "Nuevo grupo",
     "copyText": "Copiar texto",
+    "delete": "Eliminar",
+    "deleteDescription": "Se eliminará de este chat para todos los miembros.",
+    "deleteForEveryone": "Eliminar para todos",
+    "deleteTitle": "¿Eliminar este mensaje?",
     "emptyThread": "Aún no hay mensajes. ¡Saluda!",
     "jumpToLatest": "Ir al último mensaje",
     "messageDeleted": "Mensaje eliminado",

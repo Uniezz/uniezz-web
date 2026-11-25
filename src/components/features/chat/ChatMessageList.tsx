@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Virtuoso, type VirtuosoHandle } from 'react-virtuoso';
 
@@ -7,6 +7,7 @@ import { useChatMessageList } from '@/hooks';
 import { UIEmpty, UIQueryError } from '@/ui/components';
 import { listComponents } from '@/ui/virtuoso';
 import { chatDay, LATEST_MESSAGE, messageKey } from '@/utils';
+import { ChatDeleteDialog } from './ChatDeleteDialog';
 import { ChatJumpToLatest } from './ChatJumpToLatest';
 import { ChatMarker } from './ChatMarker';
 import { ChatMessageBubble } from './ChatMessageBubble';
@@ -37,6 +38,8 @@ export function ChatMessageList({
 }) {
   const { t, i18n } = useTranslation();
   const list = useRef<VirtuosoHandle>(null);
+  // One dialog for the list, because a row is removed from the page when it scrolls away.
+  const [messageToDelete, setMessageToDelete] = useState<ChatMessageView | null>(null);
   const {
     messages,
     firstItemIndex,
@@ -77,6 +80,7 @@ export function ChatMessageList({
           position={position}
           isGroup={isGroup}
           onPreview={onPreview}
+          onDelete={setMessageToDelete}
         />
       </>
     );
@@ -114,6 +118,7 @@ export function ChatMessageList({
         />
       ) : null}
       {isError && <UIQueryError retry={() => void refetch()} />}
+      <ChatDeleteDialog message={messageToDelete} onClose={() => setMessageToDelete(null)} />
     </div>
   );
 }

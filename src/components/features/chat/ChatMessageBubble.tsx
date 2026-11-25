@@ -23,6 +23,7 @@ export type ChatMessageBubbleProps = {
   /** In a group chat, incoming messages show who wrote them. */
   isGroup: boolean;
   onPreview: (preview: ChatPreviewState) => void;
+  onDelete: (message: ChatMessageView) => void;
 };
 
 /** One message row. It is memoized, so loading older pages does not re-render the rows on screen. */
@@ -32,10 +33,11 @@ export const ChatMessageBubble = memo(function ChatMessageBubble({
   position,
   isGroup,
   onPreview,
+  onDelete,
 }: ChatMessageBubbleProps) {
   const { t, i18n } = useTranslation();
   const { sender, body, status } = message;
-  const { options, selectAction } = useChatMessageMenu(message, outgoing);
+  const { options, selectAction } = useChatMessageMenu(message, outgoing, onDelete);
 
   const isDeleted = message.deletedAt !== null;
   const images = message.attachments ?? [];
@@ -75,7 +77,7 @@ export const ChatMessageBubble = memo(function ChatMessageBubble({
           variant={outgoing ? 'out' : 'in'}
           tail={endsGroup && !isDeleted}
           className={cn(
-            'max-w-full group-has-[+:popover-open]/message:ring-2',
+            'max-w-full ring-inset group-has-[+:popover-open]/message:ring-2',
             outgoing ? 'ring-sky' : 'ring-blue',
             isDeleted && 'border-white-20 bg-transparent',
           )}

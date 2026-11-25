@@ -79,6 +79,7 @@ export const apiMiddleware: Middleware = {
             ['/auth/otp/request', '/auth/otp/verify', '/auth/exchange'].includes(schemaPath)) ||
           (request.method === 'DELETE' &&
             [
+              '/chat/messages/{id}',
               '/feed/comments/{id}',
               '/feed/posts/{id}',
               '/profile/avatar',

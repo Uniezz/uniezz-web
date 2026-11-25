@@ -6,10 +6,16 @@ const respond = (method: string) => async (path: string, options?: unknown) => {
   return { data: { ok: true } };
 };
 mock.module('../../src/api/client.ts', () => ({
-  api: { GET: respond('GET'), POST: respond('POST'), PUT: respond('PUT') },
+  api: {
+    GET: respond('GET'),
+    POST: respond('POST'),
+    PUT: respond('PUT'),
+    DELETE: respond('DELETE'),
+  },
 }));
 const {
   createChatGroup,
+  deleteChatMessage,
   getChatConversations,
   getChatMessages,
   markChatRead,
@@ -74,5 +80,14 @@ test('creating a group sends its name and member ids with an idempotency key', a
       params: { header: { 'Idempotency-Key': 'key-2' } },
       body: { name: 'Maths', memberIds: ['u1', 'u2'] },
     },
+  });
+});
+
+test('deleting a message sends only its id', async () => {
+  await deleteChatMessage('m1');
+  expect(request).toEqual({
+    method: 'DELETE',
+    path: '/chat/messages/{id}',
+    options: { params: { path: { id: 'm1' } } },
   });
 });

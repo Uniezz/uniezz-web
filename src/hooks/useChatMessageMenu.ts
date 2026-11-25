@@ -1,4 +1,4 @@
-import { Copy } from 'lucide-react';
+import { Copy, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import type { ChatMessageView, Option } from '@/@types';
@@ -7,10 +7,15 @@ import { messageActions, type ChatMessageAction } from '@/utils/chatActions';
 import { toast } from '@/utils/mutationProgress';
 
 /** The menu of one message. An action is shown only when it has an option here. */
-export function useChatMessageMenu(message: ChatMessageView, outgoing: boolean) {
+export function useChatMessageMenu(
+  message: ChatMessageView,
+  outgoing: boolean,
+  onDelete: (message: ChatMessageView) => void,
+) {
   const { t } = useTranslation();
   const menuOptions: Partial<Record<ChatMessageAction, Option>> = {
     copy: { value: 'copy', label: t('chat.copyText'), Icon: Copy },
+    delete: { value: 'delete', label: t('chat.delete'), Icon: Trash2, danger: true },
   };
   const options = messageActions(message, outgoing).flatMap((action) => menuOptions[action] ?? []);
 
@@ -27,6 +32,7 @@ export function useChatMessageMenu(message: ChatMessageView, outgoing: boolean) 
 
   function selectAction(action: string) {
     if (action === 'copy') void copyText();
+    if (action === 'delete') onDelete(message);
   }
 
   return { options, selectAction };
