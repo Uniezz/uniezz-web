@@ -1,4 +1,5 @@
 import type { ChatMessageView } from '@/@types';
+import { isOwnMessage } from './chat';
 
 const GROUP_GAP_MS = 5 * 60 * 1000;
 
@@ -30,3 +31,18 @@ export function messagePosition(
   if (joinsPrevious) return joinsNext ? 'middle' : 'last';
   return joinsNext ? 'first' : 'single';
 }
+
+/**
+ * The first unread message, when `lastReadSeq` is where the student stopped reading. The message before it
+ * must be loaded, so the divider never shows at a wrong place.
+ */
+export const startsUnread = (
+  previous: ChatMessageView | undefined,
+  message: ChatMessageView,
+  lastReadSeq: number,
+  myId: string | undefined,
+) =>
+  previous !== undefined &&
+  previous.seq <= lastReadSeq &&
+  message.seq > lastReadSeq &&
+  !isOwnMessage(message, myId);

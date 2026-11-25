@@ -1,6 +1,6 @@
 import { expect, test } from 'bun:test';
 import { createPendingMessage } from '../../src/utils/chatMessages';
-import { messagePosition, startsDay } from '../../src/utils/chatGroups';
+import { messagePosition, startsDay, startsUnread } from '../../src/utils/chatGroups';
 
 /** Times are local, so the tests pass in every time zone. */
 const message = (time: string, senderId: string | null = 'u1') => {
@@ -49,4 +49,14 @@ test('messages from deleted accounts are not grouped', () => {
 test('the first message starts a day, and the next one on that day does not', () => {
   expect(startsDay(undefined, message('22T10:00'))).toBe(true);
   expect(startsDay(message('22T10:00'), message('22T18:00'))).toBe(false);
+});
+
+test('the unread part starts at the first incoming message after the last read one', () => {
+  const at = (seq: number, senderId = 'u2') => ({ ...message('22T10:00', senderId), seq });
+  expect(startsUnread(at(5), at(6), 5, 'u1')).toBe(true);
+  expect(startsUnread(at(4), at(5), 5, 'u1')).toBe(false);
+  expect(startsUnread(at(6), at(7), 5, 'u1')).toBe(false);
+  expect(startsUnread(at(5), at(6, 'u1'), 5, 'u1')).toBe(false);
+  // The message before it is not loaded yet.
+  expect(startsUnread(undefined, at(6), 5, 'u1')).toBe(false);
 });

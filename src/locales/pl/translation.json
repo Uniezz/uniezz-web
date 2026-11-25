@@ -196,6 +196,10 @@
   },
   "chat": {
     "action": "Nowa grupa",
+    "newMessages_few": "{{count}} nowe wiadomości",
+    "newMessages_many": "{{count}} nowych wiadomości",
+    "newMessages_one": "{{count}} nowa wiadomość",
+    "newMessages_other": "{{count}} nowej wiadomości",
     "sending": "Wysyłanie",
     "sent": "Wysłano",
     "title": "Czat"

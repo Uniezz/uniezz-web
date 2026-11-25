@@ -196,6 +196,10 @@
   },
   "chat": {
     "action": "Новая група",
+    "newMessages_few": "{{count}} новыя паведамленні",
+    "newMessages_many": "{{count}} новых паведамленняў",
+    "newMessages_one": "{{count}} новае паведамленне",
+    "newMessages_other": "{{count}} новага паведамлення",
     "sending": "Адпраўляецца",
     "sent": "Адпраўлена",
     "title": "Чат"

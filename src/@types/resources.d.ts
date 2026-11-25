@@ -198,6 +198,8 @@ export default interface Resources {
     },
     "chat": {
       "action": "New group",
+      "newMessages_one": "{{count}} new message",
+      "newMessages_other": "{{count}} new messages",
       "sending": "Sending",
       "sent": "Sent",
       "title": "Chat"

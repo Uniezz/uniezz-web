@@ -7,6 +7,7 @@ export * from './useProfiles';
 export * from './useDropdown';
 export * from './useFaq';
 export * from './useChat';
+export * from './useChatMessageList';
 export * from './useConnections';
 export * from './useStudy';
 export * from './useCreateFeedPost';

@@ -196,6 +196,9 @@
   },
   "chat": {
     "action": "Nuevo grupo",
+    "newMessages_many": "{{count}} mensajes nuevos",
+    "newMessages_one": "{{count}} mensaje nuevo",
+    "newMessages_other": "{{count}} mensajes nuevos",
     "sending": "Enviando",
     "sent": "Enviado",
     "title": "Charlar"
