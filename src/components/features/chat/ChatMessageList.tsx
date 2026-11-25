@@ -20,10 +20,12 @@ const INITIAL_TOP_ITEM = { index: 'LAST', align: 'end' } as const;
 
 export function ChatMessageList({
   conversationId,
+  isGroup,
   unreadAtOpen,
   onPreview,
 }: {
   conversationId: string;
+  isGroup: boolean;
   unreadAtOpen: ChatUnreadAtOpen;
   onPreview: (preview: ChatPreviewState) => void;
 }) {
@@ -57,6 +59,7 @@ export function ChatMessageList({
           message={message}
           outgoing={outgoing}
           position={position}
+          isGroup={isGroup}
           onPreview={onPreview}
         />
       </>

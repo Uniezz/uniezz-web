@@ -29,6 +29,7 @@ export function ChatThread({
       <ChatHeader conversation={conversation} onBack={onBack} />
       <ChatMessageList
         conversationId={conversation.id}
+        isGroup={conversation.kind === 'group'}
         unreadAtOpen={unreadAtOpen}
         onPreview={setPreview}
       />

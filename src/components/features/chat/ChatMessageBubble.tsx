@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import type { ChatMessageView } from '@/@types';
 import { UIAvatar } from '@/ui/components/UIAvatar';
 import { chatClock } from '@/utils/chat';
+import { senderColor } from '@/utils/chatColors';
 import type { ChatMessagePosition } from '@/utils/chatGroups';
 import { authorName } from '@/utils/feed';
 import { ChatBubble } from './ChatBubble';
@@ -16,6 +17,8 @@ export type ChatMessageBubbleProps = {
   message: ChatMessageView;
   outgoing: boolean;
   position: ChatMessagePosition;
+  /** In a group chat, incoming messages show who wrote them. */
+  isGroup: boolean;
   onPreview: (preview: ChatPreviewState) => void;
 };
 
@@ -24,6 +27,7 @@ export const ChatMessageBubble = memo(function ChatMessageBubble({
   message,
   outgoing,
   position,
+  isGroup,
   onPreview,
 }: ChatMessageBubbleProps) {
   const { t, i18n } = useTranslation();
@@ -31,6 +35,7 @@ export const ChatMessageBubble = memo(function ChatMessageBubble({
 
   const images = message.attachments ?? [];
 
+  const showsSender = isGroup && !outgoing && (position === 'first' || position === 'single');
   const endsGroup = position === 'last' || position === 'single';
   const StatusIcon = status === 'sending' ? Clock : Check;
 
@@ -58,6 +63,13 @@ export const ChatMessageBubble = memo(function ChatMessageBubble({
       <ChatBubble
         variant={outgoing ? 'out' : 'in'}
         tail={endsGroup}
+        sender={
+          showsSender ? (
+            <span className={senderColor(sender.id)}>
+              {(!sender.deleted && authorName(sender)) || t('app.accountDeleted')}
+            </span>
+          ) : null
+        }
         meta={
           <>
             <span>{chatClock(message.createdAt, i18n.language)}</span>

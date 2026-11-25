@@ -23,6 +23,7 @@ const render = (props: Partial<ChatMessageBubbleProps> = {}) =>
       message={pending}
       outgoing={false}
       position="single"
+      isGroup={false}
       onPreview={() => {}}
       {...props}
     />,
@@ -49,4 +50,15 @@ test('only own messages show the status', () => {
 
 test('own messages have no avatar', () => {
   expect(render({ outgoing: true })).not.toContain('/anna.png');
+});
+
+test('a group chat shows the sender once, above the first incoming bubble', () => {
+  const hasSender = (props: Partial<ChatMessageBubbleProps>) =>
+    render(props).includes('chat-bubble-sender');
+  expect(hasSender({ isGroup: true, position: 'first' })).toBe(true);
+  expect(hasSender({ isGroup: true, position: 'single' })).toBe(true);
+  expect(hasSender({ isGroup: true, position: 'middle' })).toBe(false);
+  expect(hasSender({ isGroup: true, position: 'last' })).toBe(false);
+  expect(hasSender({ isGroup: true, outgoing: true })).toBe(false);
+  expect(hasSender({ isGroup: false })).toBe(false);
 });
