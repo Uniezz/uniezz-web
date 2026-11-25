@@ -43,7 +43,7 @@ function PrivacyPage() {
         {
           title: 'Komu przekazujemy dane',
           paragraphs: [
-            'Dane udostępniamy dostawcom, którzy pomagają nam prowadzić Uniezz: dostawcy infrastruktury bazy danych (Supabase), przechowywania plików (Amazon Web Services S3), wysyłki e-maili (Resend), wysyłki powiadomień push (Expo, a za jego pośrednictwem Apple Push Notification service i Firebase Cloud Messaging firmy Google), analityki produktu (PostHog) i monitorowania błędów oraz działania API (Sentry). Dostawcy przetwarzają dane w naszym imieniu na podstawie umów. Dane nie są sprzedawane.',
+            'Dane udostępniamy dostawcom, którzy pomagają nam prowadzić Uniezz: dostawcy infrastruktury bazy danych (Supabase), przechowywania plików (Amazon Web Services S3), wysyłki e-maili (Resend), wysyłki powiadomień push (Expo, a za jego pośrednictwem Apple Push Notification service i Firebase Cloud Messaging firmy Google), analityki produktu (PostHog, dane przechowywane w Unii Europejskiej, we Frankfurcie) i monitorowania błędów oraz działania API (Sentry). Dostawcy przetwarzają dane w naszym imieniu na podstawie umów. Dane nie są sprzedawane.',
             'Gdy wybierzesz logowanie uczelniane, odpowiedni dostawca tożsamości lub system uczelni uczestniczy w uwierzytelnianiu. Niektóre podmioty mogą przetwarzać dane poza Europejskim Obszarem Gospodarczym. Jeśli dojdzie do takiego transferu, zapewnimy odpowiedni mechanizm wymagany przez RODO, taki jak decyzja stwierdzająca odpowiedni stopień ochrony lub standardowe klauzule umowne.',
           ],
         },
@@ -104,7 +104,7 @@ function PrivacyPage() {
         {
           title: 'Who receives your data',
           paragraphs: [
-            'We share data with providers that help us operate Uniezz: database infrastructure (Supabase), file storage (Amazon Web Services S3), email delivery (Resend), push notification delivery (Expo, and through it Apple Push Notification service and Google’s Firebase Cloud Messaging), product analytics (PostHog), and API error and performance monitoring (Sentry). These providers process data on our behalf under data processing agreements. We do not sell personal data.',
+            'We share data with providers that help us operate Uniezz: database infrastructure (Supabase), file storage (Amazon Web Services S3), email delivery (Resend), push notification delivery (Expo, and through it Apple Push Notification service and Google’s Firebase Cloud Messaging), product analytics (PostHog, with data stored in the European Union, in Frankfurt), and API error and performance monitoring (Sentry). These providers process data on our behalf under data processing agreements. We do not sell personal data.',
             'If you choose university sign-in, the relevant identity provider or university system participates in authentication. Some providers may process data outside the European Economic Area. If such a transfer occurs, we will ensure it is covered by a GDPR transfer mechanism, such as an adequacy decision or standard contractual clauses.',
           ],
         },
