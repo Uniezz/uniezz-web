@@ -12,12 +12,19 @@ export type LegalPageProps = {
   title: string;
   intro: string;
   sections: LegalSection[];
+  /** The day the text last changed, as YYYY-MM-DD; bump it with every change to the text. */
+  updatedAt: string;
   children?: ReactNode;
 };
 
-export function LegalPage({ title, intro, sections, children }: LegalPageProps) {
+export function LegalPage({ title, intro, sections, updatedAt, children }: LegalPageProps) {
   const { t, i18n } = useTranslation();
   const isPolish = i18n.resolvedLanguage === 'pl';
+  // Read as UTC, so the day does not shift with the reader's time zone.
+  const updatedLabel = new Intl.DateTimeFormat(isPolish ? 'pl-PL' : 'en-GB', {
+    dateStyle: 'long',
+    timeZone: 'UTC',
+  }).format(new Date(`${updatedAt}T00:00:00Z`));
 
   return (
     <div className="bg-app min-h-svh px-4 py-6 text-white sm:px-8 sm:py-10">
@@ -39,6 +46,10 @@ export function LegalPage({ title, intro, sections, children }: LegalPageProps) 
             <div className="space-y-4">
               <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">{title}</h1>
               <p className="text-body leading-relaxed text-secondary">{intro}</p>
+              <p className="text-detail text-secondary">
+                {isPolish ? 'Ostatnia aktualizacja: ' : 'Last updated: '}
+                <time dateTime={updatedAt}>{updatedLabel}</time>
+              </p>
             </div>
             {children}
             <div className="space-y-8">

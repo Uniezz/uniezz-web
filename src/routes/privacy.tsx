@@ -144,6 +144,7 @@ function PrivacyPage() {
           : 'This policy explains how Uniezz collects and uses your personal data.'
       }
       sections={sections}
+      updatedAt="2026-11-25"
     />
   );
 }

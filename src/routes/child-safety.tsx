@@ -114,6 +114,7 @@ function ChildSafetyPage() {
           : 'Public standards for uniezz that prohibit Child Sexual Abuse and Exploitation (CSAE).'
       }
       sections={sections}
+      updatedAt="2026-11-25"
     />
   );
 }

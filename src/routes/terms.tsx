@@ -154,6 +154,7 @@ function TermsPage() {
           : 'These Terms explain the rules for using the Uniezz service.'
       }
       sections={sections}
+      updatedAt="2026-11-25"
     />
   );
 }
