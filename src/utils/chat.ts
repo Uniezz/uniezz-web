@@ -46,3 +46,28 @@ export function chatClock(iso: string, locale: string) {
     ? ''
     : new Intl.DateTimeFormat(locale, { hour: '2-digit', minute: '2-digit' }).format(date);
 }
+
+const startOfDay = (date: Date) =>
+  new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
+
+/** The date chip in a thread: Today, Yesterday, or a date. The year shows only when it is not this year. */
+export function chatDay(iso: string, locale: string, now = new Date()) {
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return '';
+  // Rounded, because a day with a clock change is not 24 hours long.
+  const daysAgo = Math.round((startOfDay(now) - startOfDay(date)) / (24 * 60 * 60 * 1000));
+  if (daysAgo === 0 || daysAgo === 1) {
+    const label = new Intl.RelativeTimeFormat(locale, { numeric: 'auto' }).format(-daysAgo, 'day');
+    return label.charAt(0).toLocaleUpperCase(locale) + label.slice(1);
+  }
+  const parts = new Intl.DateTimeFormat(locale, {
+    day: 'numeric',
+    month: 'short',
+    year: date.getFullYear() === now.getFullYear() ? undefined : 'numeric',
+  }).formatToParts(date);
+  // No dot after a short month ("лист."), and no text after the year ("2025 р.").
+  return parts
+    .filter(({ type }, index) => type !== 'literal' || index < parts.length - 1)
+    .map(({ type, value }) => (type === 'month' ? value.replace('.', '') : value))
+    .join('');
+}

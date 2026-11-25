@@ -5,7 +5,8 @@ import type { ChatMessageView } from '@/@types';
 import { useMessages, useMyProfile } from '@/hooks';
 import { UIEmpty, UIQueryError } from '@/ui/components';
 import { listComponents } from '@/ui/virtuoso';
-import { isOwnMessage, messagePosition } from '@/utils';
+import { chatDay, isOwnMessage, messagePosition, startsDay } from '@/utils';
+import { ChatMarker } from './ChatMarker';
 import { ChatMessageBubble } from './ChatMessageBubble';
 import type { ChatPreviewState } from './ChatImagePreview';
 
@@ -28,7 +29,7 @@ export function ChatMessageList({
   conversationId: string;
   onPreview: (preview: ChatPreviewState) => void;
 }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { data: me } = useMyProfile();
   const { data, isError, refetch, hasNextPage, isFetchingNextPage, fetchNextPage } =
     useMessages(conversationId);
@@ -51,13 +52,21 @@ export function ChatMessageList({
 
   const renderMessage = (itemIndex: number, message: ChatMessageView) => {
     const index = itemIndex - firstItemIndex;
+    const previous = messages[index - 1];
     return (
-      <ChatMessageBubble
-        message={message}
-        outgoing={isOwnMessage(message, me?.id)}
-        position={messagePosition(messages[index - 1], message, messages[index + 1])}
-        onPreview={onPreview}
-      />
+      <>
+        {startsDay(previous, message) ? (
+          <ChatMarker variant="chip" role="listitem">
+            {chatDay(message.createdAt, i18n.language)}
+          </ChatMarker>
+        ) : null}
+        <ChatMessageBubble
+          message={message}
+          outgoing={isOwnMessage(message, me?.id)}
+          position={messagePosition(previous, message, messages[index + 1])}
+          onPreview={onPreview}
+        />
+      </>
     );
   };
 
