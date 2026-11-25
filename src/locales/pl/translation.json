@@ -202,6 +202,7 @@
     "newMessages_many": "{{count}} nowych wiadomości",
     "newMessages_one": "{{count}} nowa wiadomość",
     "newMessages_other": "{{count}} nowej wiadomości",
+    "offline": "Jesteś offline. Sprawdź połączenie.",
     "sending": "Wysyłanie",
     "sent": "Wysłano",
     "title": "Czat"

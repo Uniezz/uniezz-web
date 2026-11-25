@@ -7,6 +7,7 @@ import { ChatComposer } from './ChatComposer';
 import { ChatHeader } from './ChatHeader';
 import { ChatImagePreview, type ChatPreviewState } from './ChatImagePreview';
 import { ChatMessageList } from './ChatMessageList';
+import { ChatOfflineBanner } from './ChatOfflineBanner';
 
 export function ChatThread({
   conversation,
@@ -27,6 +28,7 @@ export function ChatThread({
   return (
     <UIPanel className="flex h-full min-h-0 flex-col p-0">
       <ChatHeader conversation={conversation} onBack={onBack} />
+      <ChatOfflineBanner />
       <ChatMessageList
         conversationId={conversation.id}
         isGroup={conversation.kind === 'group'}

@@ -10,6 +10,7 @@ export * from './ChatMarker';
 export * from './ChatMessageImages';
 export * from './ChatMessageList';
 export * from './ChatMessageRow';
+export * from './ChatOfflineBanner';
 export * from './ChatReaction';
 export * from './ChatThread';
 export * from './ChatThreadSkeleton';

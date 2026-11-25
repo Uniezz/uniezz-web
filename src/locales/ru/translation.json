@@ -202,6 +202,7 @@
     "newMessages_many": "{{count}} новых сообщений",
     "newMessages_one": "{{count}} новое сообщение",
     "newMessages_other": "{{count}} нового сообщения",
+    "offline": "Нет соединения. Проверьте интернет.",
     "sending": "Отправляется",
     "sent": "Отправлено",
     "title": "Чат"

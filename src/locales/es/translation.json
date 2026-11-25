@@ -201,6 +201,7 @@
     "newMessages_many": "{{count}} mensajes nuevos",
     "newMessages_one": "{{count}} mensaje nuevo",
     "newMessages_other": "{{count}} mensajes nuevos",
+    "offline": "Estás sin conexión. Comprueba tu conexión.",
     "sending": "Enviando",
     "sent": "Enviado",
     "title": "Charlar"

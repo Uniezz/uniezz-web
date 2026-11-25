@@ -8,6 +8,7 @@ const files = [
   'ChatMarker.tsx',
   'ChatMessageBubble.tsx',
   'ChatMessageRow.tsx',
+  'ChatOfflineBanner.tsx',
   'ChatReaction.tsx',
   'ChatThreadSkeleton.tsx',
 ];

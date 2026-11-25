@@ -200,6 +200,7 @@
     "jumpToLatest": "Zur neuesten Nachricht springen",
     "newMessages_one": "{{count}} neue Nachricht",
     "newMessages_other": "{{count}} neue Nachrichten",
+    "offline": "Du bist offline. Prüfe deine Verbindung.",
     "sending": "Wird gesendet",
     "sent": "Gesendet",
     "title": "Chatten"

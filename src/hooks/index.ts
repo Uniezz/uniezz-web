@@ -15,6 +15,7 @@ export * from './useCreatePost';
 export * from './useCreateReport';
 export * from './useLandingScroll';
 export * from './useNarrowViewport';
+export * from './useOnline';
 export * from './useProfileForm';
 export * from './useUploadImage';
 export * from './useUploadPostImages';

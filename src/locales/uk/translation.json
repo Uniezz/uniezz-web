@@ -202,6 +202,7 @@
     "newMessages_many": "{{count}} нових повідомлень",
     "newMessages_one": "{{count}} нове повідомлення",
     "newMessages_other": "{{count}} нового повідомлення",
+    "offline": "Немає з’єднання. Перевірте інтернет.",
     "sending": "Надсилається",
     "sent": "Надіслано",
     "title": "Чат"
