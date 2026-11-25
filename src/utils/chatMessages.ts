@@ -74,3 +74,13 @@ export function createPendingMessage(
     status: 'sending',
   };
 }
+
+// Virtuoso keeps the scroll position when older messages are added at the top only if `firstItemIndex`
+// goes down by their number. It cannot be negative, so it starts high.
+export const MESSAGE_START_INDEX = 1_000_000;
+
+// The newest message: the list opens there, and the jump button scrolls there.
+export const LATEST_MESSAGE = { index: 'LAST', align: 'end' } as const;
+
+// A sending message has a `clientId` until the server gives it an `id`, so the key stays the same.
+export const messageKey = (_: number, message: ChatMessageView) => message.clientId ?? message.id;

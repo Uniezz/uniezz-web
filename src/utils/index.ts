@@ -13,6 +13,7 @@ export * from './chatDrafts';
 export * from './chatGroups';
 export * from './chatKeys';
 export * from './chatMessages';
+export * from './chatSkeletonData';
 export * from './connections';
 export * from './exams';
 export * from './image';

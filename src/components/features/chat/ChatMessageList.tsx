@@ -6,7 +6,7 @@ import type { ChatMessageView, ChatUnreadAtOpen } from '@/@types';
 import { useChatMessageList } from '@/hooks';
 import { UIEmpty, UIQueryError } from '@/ui/components';
 import { listComponents } from '@/ui/virtuoso';
-import { chatDay } from '@/utils';
+import { chatDay, LATEST_MESSAGE, messageKey } from '@/utils';
 import { ChatJumpToLatest } from './ChatJumpToLatest';
 import { ChatMarker } from './ChatMarker';
 import { ChatMessageBubble } from './ChatMessageBubble';
@@ -23,12 +23,6 @@ function EmptyThread() {
 }
 
 const messageListComponents = { ...listComponents, EmptyPlaceholder: EmptyThread };
-
-// A sending message has a `clientId` until the server gives it an `id`, so the key stays the same.
-const messageKey = (_: number, message: ChatMessageView) => message.clientId ?? message.id;
-
-// The newest message: the list opens there, and the jump button scrolls there.
-const LATEST_ITEM = { index: 'LAST', align: 'end' } as const;
 
 export function ChatMessageList({
   conversationId,
@@ -102,7 +96,7 @@ export function ChatMessageList({
           firstItemIndex={firstItemIndex}
           rangeChanged={loadOlderMessages}
           computeItemKey={messageKey}
-          initialTopMostItemIndex={LATEST_ITEM}
+          initialTopMostItemIndex={LATEST_MESSAGE}
           alignToBottom
           followOutput={followNewMessages}
           atBottomStateChange={handleAtBottomChange}
@@ -116,7 +110,7 @@ export function ChatMessageList({
           unreadCount={newCount}
           aria-label={jumpLabel}
           className="absolute right-7 bottom-5"
-          onClick={() => list.current?.scrollToIndex(LATEST_ITEM)}
+          onClick={() => list.current?.scrollToIndex(LATEST_MESSAGE)}
         />
       ) : null}
       {isError && <UIQueryError retry={() => void refetch()} />}

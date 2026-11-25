@@ -2,13 +2,15 @@ import { useState } from 'react';
 import type { ListRange } from 'react-virtuoso';
 
 import type { ChatMessageView, ChatUnreadAtOpen } from '@/@types';
-import { isOwnMessage, messagePosition, startsDay, startsUnread } from '@/utils';
+import {
+  isOwnMessage,
+  MESSAGE_START_INDEX,
+  messagePosition,
+  startsDay,
+  startsUnread,
+} from '@/utils';
 import { useMessages } from './useChat';
 import { useMyProfile } from './useMyProfile';
-
-// Virtuoso keeps the scroll position when older messages are added at the top only if `firstItemIndex`
-// goes down by their number. It cannot be negative, so it starts high.
-const START_INDEX = 1_000_000;
 
 /** The messages of a thread, oldest first, and how Virtuoso loads, follows and groups them. */
 export function useChatMessageList(conversationId: string, unreadAtOpen: ChatUnreadAtOpen) {
@@ -20,7 +22,7 @@ export function useChatMessageList(conversationId: string, unreadAtOpen: ChatUnr
     (page.items ?? []).filter(({ kind, deletedAt }) => kind === 'text' && !deletedAt),
   );
   const messages: ChatMessageView[] = pages.flat().reverse();
-  const firstItemIndex = START_INDEX - pages.slice(1).flat().length;
+  const firstItemIndex = MESSAGE_START_INDEX - pages.slice(1).flat().length;
 
   // Older messages load before the student reaches the top.
   const loadOlderMessages = ({ startIndex }: ListRange) => {
