@@ -199,6 +199,7 @@
     "copyText": "Kopiuj tekst",
     "emptyThread": "Brak wiadomości. Przywitaj się!",
     "jumpToLatest": "Przejdź do najnowszej wiadomości",
+    "messageActions": "Akcje wiadomości",
     "newMessages_few": "{{count}} nowe wiadomości",
     "newMessages_many": "{{count}} nowych wiadomości",
     "newMessages_one": "{{count}} nowa wiadomość",

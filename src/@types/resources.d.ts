@@ -201,6 +201,7 @@ export default interface Resources {
       "copyText": "Copy text",
       "emptyThread": "No messages yet. Say hi!",
       "jumpToLatest": "Jump to latest message",
+      "messageActions": "Message actions",
       "newMessages_one": "{{count}} new message",
       "newMessages_other": "{{count}} new messages",
       "offline": "You are offline. Check your connection.",

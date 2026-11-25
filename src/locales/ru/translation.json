@@ -199,6 +199,7 @@
     "copyText": "Копировать текст",
     "emptyThread": "Сообщений пока нет. Поздоровайтесь!",
     "jumpToLatest": "Перейти к последнему сообщению",
+    "messageActions": "Действия с сообщением",
     "newMessages_few": "{{count}} новых сообщения",
     "newMessages_many": "{{count}} новых сообщений",
     "newMessages_one": "{{count}} новое сообщение",

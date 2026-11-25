@@ -38,6 +38,11 @@ export const reactionStyles = cva(
   },
 );
 
+// Shown on hover, on keyboard focus, while its menu is open, and always on touch screens.
+export const messageMoreStyles = cva(
+  'shrink-0 opacity-0 group-hover/message:opacity-100 focus-visible:opacity-100 has-[+:popover-open]:opacity-100 pointer-coarse:opacity-100',
+);
+
 export const markerStyles = cva('flex w-full min-w-0 items-center justify-center text-micro', {
   variants: {
     variant: {

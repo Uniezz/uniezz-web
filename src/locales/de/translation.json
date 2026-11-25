@@ -199,6 +199,7 @@
     "copyText": "Text kopieren",
     "emptyThread": "Noch keine Nachrichten. Sag Hallo!",
     "jumpToLatest": "Zur neuesten Nachricht springen",
+    "messageActions": "Nachrichtenaktionen",
     "newMessages_one": "{{count}} neue Nachricht",
     "newMessages_other": "{{count}} neue Nachrichten",
     "offline": "Du bist offline. Prüfe deine Verbindung.",

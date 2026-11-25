@@ -199,6 +199,7 @@
     "copyText": "Капіяваць тэкст",
     "emptyThread": "Паведамленняў пакуль няма. Павітайцеся!",
     "jumpToLatest": "Перайсці да апошняга паведамлення",
+    "messageActions": "Дзеянні з паведамленнем",
     "newMessages_few": "{{count}} новыя паведамленні",
     "newMessages_many": "{{count}} новых паведамленняў",
     "newMessages_one": "{{count}} новае паведамленне",

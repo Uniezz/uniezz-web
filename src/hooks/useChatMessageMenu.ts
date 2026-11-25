@@ -2,7 +2,9 @@ import { Copy } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import type { ChatMessageView, Option } from '@/@types';
-import { captureAnalytics, messageActions, toast, type ChatMessageAction } from '@/utils';
+import { captureAnalytics } from '@/utils/analytics';
+import { messageActions, type ChatMessageAction } from '@/utils/chatActions';
+import { toast } from '@/utils/mutationProgress';
 
 /** The menu of one message. An action is shown only when it has an option here. */
 export function useChatMessageMenu(message: ChatMessageView, outgoing: boolean) {

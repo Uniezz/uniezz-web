@@ -52,6 +52,13 @@ test('own messages have no avatar', () => {
   expect(render({ outgoing: true })).not.toContain('/anna.png');
 });
 
+test('a sent message has a menu, and a sending one does not', () => {
+  const hasMenu = (props: Partial<ChatMessageBubbleProps>) =>
+    render(props).includes('popover="auto"');
+  expect(hasMenu({ message: { ...pending, status: undefined } })).toBe(true);
+  expect(hasMenu({})).toBe(false);
+});
+
 test('a group chat shows the sender once, above the first incoming bubble', () => {
   const hasSender = (props: Partial<ChatMessageBubbleProps>) =>
     render(props).includes('chat-bubble-sender');
