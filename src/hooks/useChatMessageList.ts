@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { ListRange } from 'react-virtuoso';
 
 import type { ChatMessageView, ChatUnreadAtOpen } from '@/@types';
@@ -31,6 +32,16 @@ export function useChatMessageList(conversationId: string, unreadAtOpen: ChatUnr
   const followNewMessages = (isAtBottom: boolean) =>
     isAtBottom || messages.at(-1)?.status === 'sending' ? 'auto' : false;
 
+  // The newest message when the student scrolled up, or null at the bottom.
+  const [leftAtSeq, setLeftAtSeq] = useState<number | null>(null);
+  const handleAtBottomChange = (isAtBottom: boolean) =>
+    setLeftAtSeq(isAtBottom ? null : messages.reduce((max, { seq }) => Math.max(max, seq), 0));
+  const newCount =
+    leftAtSeq === null
+      ? 0
+      : messages.filter((message) => message.seq > leftAtSeq && !isOwnMessage(message, me?.id))
+          .length;
+
   const isFirstUnread = (index: number) =>
     unreadAtOpen.count > 0 &&
     startsUnread(messages[index - 1], messages[index], unreadAtOpen.lastReadSeq, me?.id);
@@ -62,6 +73,9 @@ export function useChatMessageList(conversationId: string, unreadAtOpen: ChatUnr
     refetch,
     loadOlderMessages,
     followNewMessages,
+    handleAtBottomChange,
+    isScrolledUp: leftAtSeq !== null,
+    newCount,
     getRow,
   };
 }

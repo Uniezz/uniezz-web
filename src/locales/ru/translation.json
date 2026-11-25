@@ -196,6 +196,7 @@
   },
   "chat": {
     "action": "Новая группа",
+    "jumpToLatest": "Перейти к последнему сообщению",
     "newMessages_few": "{{count}} новых сообщения",
     "newMessages_many": "{{count}} новых сообщений",
     "newMessages_one": "{{count}} новое сообщение",

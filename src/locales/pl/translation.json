@@ -196,6 +196,7 @@
   },
   "chat": {
     "action": "Nowa grupa",
+    "jumpToLatest": "Przejdź do najnowszej wiadomości",
     "newMessages_few": "{{count}} nowe wiadomości",
     "newMessages_many": "{{count}} nowych wiadomości",
     "newMessages_one": "{{count}} nowa wiadomość",
