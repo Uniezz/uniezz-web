@@ -1,4 +1,4 @@
-import { Check, Clock } from 'lucide-react';
+import { Ban, Check, Clock } from 'lucide-react';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -37,6 +37,7 @@ export const ChatMessageBubble = memo(function ChatMessageBubble({
   const { sender, body, status } = message;
   const { options, selectAction } = useChatMessageMenu(message, outgoing);
 
+  const isDeleted = message.deletedAt !== null;
   const images = message.attachments ?? [];
 
   const showsSender = isGroup && !outgoing && (position === 'first' || position === 'single');
@@ -72,10 +73,11 @@ export const ChatMessageBubble = memo(function ChatMessageBubble({
       >
         <ChatBubble
           variant={outgoing ? 'out' : 'in'}
-          tail={endsGroup}
+          tail={endsGroup && !isDeleted}
           className={cn(
             'max-w-full group-has-[+:popover-open]/message:ring-2',
             outgoing ? 'ring-sky' : 'ring-blue',
+            isDeleted && 'border-white-20 bg-transparent',
           )}
           sender={
             showsSender ? (
@@ -85,19 +87,27 @@ export const ChatMessageBubble = memo(function ChatMessageBubble({
             ) : null
           }
           meta={
-            <>
-              <span>{chatClock(message.createdAt, i18n.language)}</span>
-              {outgoing ? (
-                <>
-                  <StatusIcon size={14} className="text-white" aria-hidden="true" />
-                  <span className="sr-only">
-                    {status === 'sending' ? t('chat.sending') : t('chat.sent')}
-                  </span>
-                </>
-              ) : null}
-            </>
+            isDeleted ? null : (
+              <>
+                <span>{chatClock(message.createdAt, i18n.language)}</span>
+                {outgoing ? (
+                  <>
+                    <StatusIcon size={14} className="text-white" aria-hidden="true" />
+                    <span className="sr-only">
+                      {status === 'sending' ? t('chat.sending') : t('chat.sent')}
+                    </span>
+                  </>
+                ) : null}
+              </>
+            )
           }
         >
+          {isDeleted ? (
+            <p className="flex items-center gap-2 text-label text-secondary">
+              <Ban size={14} aria-hidden="true" />
+              {t('chat.messageDeleted')}
+            </p>
+          ) : null}
           {images.length > 0 ? <ChatMessageImages images={images} onOpen={openImage} /> : null}
           {body ? <p>{body}</p> : null}
         </ChatBubble>

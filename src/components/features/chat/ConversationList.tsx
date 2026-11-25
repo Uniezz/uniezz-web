@@ -50,7 +50,7 @@ export function ConversationList({
   const conversations = (data?.pages.flatMap((page) => page.items ?? []) ?? []).map((c) => ({
     ...c,
     title: chatTitle(c, t('app.accountDeleted')),
-    preview: chatPreview(c, t('app.attachedImage')),
+    preview: chatPreview(c, t('app.attachedImage'), t('chat.messageDeleted')),
   }));
   const selectedId = selectedConversationId(conversations, selected);
   const visible = conversations.filter(

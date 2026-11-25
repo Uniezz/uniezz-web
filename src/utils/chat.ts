@@ -22,10 +22,15 @@ export const initials = (name: string) =>
     .join('')
     .toUpperCase();
 
-/** The text under the name in the chat list: the last message, or a label for an image-only one. */
-export function chatPreview(conversation: ChatConversation, imageLabel: string) {
+/** The text under the name in the chat list: the last message, or a label for an image-only or deleted one. */
+export function chatPreview(
+  conversation: ChatConversation,
+  imageLabel: string,
+  deletedLabel: string,
+) {
   const message = conversation.lastMessage;
-  if (!message || message.deletedAt || message.kind === 'system') return '';
+  if (!message || message.kind === 'system') return '';
+  if (message.deletedAt) return deletedLabel;
   return message.body || (message.attachments?.length ? imageLabel : '');
 }
 

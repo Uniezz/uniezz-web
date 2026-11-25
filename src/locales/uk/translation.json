@@ -199,6 +199,7 @@
     "copyText": "Копіювати текст",
     "emptyThread": "Повідомлень ще немає. Привітайтеся!",
     "jumpToLatest": "Перейти до останнього повідомлення",
+    "messageDeleted": "Повідомлення видалено",
     "newMessages_few": "{{count}} нові повідомлення",
     "newMessages_many": "{{count}} нових повідомлень",
     "newMessages_one": "{{count}} нове повідомлення",

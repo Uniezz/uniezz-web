@@ -59,6 +59,17 @@ test('a sent message has a menu, and a sending one does not', () => {
   expect(hasMenu({})).toBe(false);
 });
 
+test('a deleted message shows a marker without time, status, tail and menu', () => {
+  const html = render({
+    outgoing: true,
+    message: { ...pending, status: undefined, body: null, deletedAt: '2026-11-25T10:00:00Z' },
+  });
+  expect(html).toContain('lucide-ban');
+  expect(html).not.toContain('chat-bubble-meta');
+  expect(html).not.toContain('rounded-br-[6px]');
+  expect(html).not.toContain('popover="auto"');
+});
+
 test('a group chat shows the sender once, above the first incoming bubble', () => {
   const hasSender = (props: Partial<ChatMessageBubbleProps>) =>
     render(props).includes('chat-bubble-sender');

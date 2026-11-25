@@ -17,9 +17,9 @@ export function useChatMessageList(conversationId: string, unreadAtOpen: ChatUnr
   const { data: me } = useMyProfile();
   const { data, isPending, isError, refetch, hasNextPage, isFetchingNextPage, fetchNextPage } =
     useMessages(conversationId);
-  // Pages are newest first, but the thread reads oldest first. System and deleted messages come with W4.
+  // Pages are newest first, but the thread reads oldest first. System messages are not shown yet.
   const pages = (data?.pages ?? []).map((page) =>
-    (page.items ?? []).filter(({ kind, deletedAt }) => kind === 'text' && !deletedAt),
+    (page.items ?? []).filter(({ kind }) => kind === 'text'),
   );
   const messages: ChatMessageView[] = pages.flat().reverse();
   const firstItemIndex = MESSAGE_START_INDEX - pages.slice(1).flat().length;

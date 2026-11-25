@@ -46,15 +46,17 @@ test('a deleted student and a group fall back to a label or the group name', () 
   );
 });
 
-test('the preview is the last message text, or a label for images only', () => {
+test('the preview is the last message text, or a label for images only or a deleted one', () => {
   const last = (extra: object) =>
     chat({ lastMessage: { ...message, ...extra } as ChatConversation['lastMessage'] });
   const message = { kind: 'text', body: 'Hi', attachments: null, deletedAt: null };
-  expect(chatPreview(last({}), 'Photo')).toBe('Hi');
-  expect(chatPreview(last({ body: null, attachments: [{}] }), 'Photo')).toBe('Photo');
-  expect(chatPreview(last({ deletedAt: '2026-11-22T11:00:00Z' }), 'Photo')).toBe('');
-  expect(chatPreview(last({ kind: 'system', body: null }), 'Photo')).toBe('');
-  expect(chatPreview(chat(), 'Photo')).toBe('');
+  expect(chatPreview(last({}), 'Photo', 'Deleted')).toBe('Hi');
+  expect(chatPreview(last({ body: null, attachments: [{}] }), 'Photo', 'Deleted')).toBe('Photo');
+  expect(
+    chatPreview(last({ body: null, deletedAt: '2026-11-22T11:00:00Z' }), 'Photo', 'Deleted'),
+  ).toBe('Deleted');
+  expect(chatPreview(last({ kind: 'system', body: null }), 'Photo', 'Deleted')).toBe('');
+  expect(chatPreview(chat(), 'Photo', 'Deleted')).toBe('');
 });
 
 test('time shows the clock for today and a date for older messages', () => {

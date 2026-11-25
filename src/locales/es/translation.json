@@ -199,6 +199,7 @@
     "copyText": "Copiar texto",
     "emptyThread": "Aún no hay mensajes. ¡Saluda!",
     "jumpToLatest": "Ir al último mensaje",
+    "messageDeleted": "Mensaje eliminado",
     "newMessages_many": "{{count}} mensajes nuevos",
     "newMessages_one": "{{count}} mensaje nuevo",
     "newMessages_other": "{{count}} mensajes nuevos",
