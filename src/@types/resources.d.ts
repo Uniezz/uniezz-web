@@ -198,6 +198,8 @@ export default interface Resources {
     },
     "chat": {
       "action": "New group",
+      "sending": "Sending",
+      "sent": "Sent",
       "title": "Chat"
     },
     "common": {

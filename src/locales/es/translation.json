@@ -196,6 +196,8 @@
   },
   "chat": {
     "action": "Nuevo grupo",
+    "sending": "Enviando",
+    "sent": "Enviado",
     "title": "Charlar"
   },
   "common": {

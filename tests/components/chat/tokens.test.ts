@@ -6,6 +6,7 @@ const files = [
   'ChatBubble.tsx',
   'ChatJumpToLatest.tsx',
   'ChatMarker.tsx',
+  'ChatMessageBubble.tsx',
   'ChatMessageRow.tsx',
   'ChatReaction.tsx',
 ];
