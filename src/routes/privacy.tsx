@@ -27,7 +27,7 @@ function PrivacyPage() {
             'Gdy korzystasz z czatu, przetwarzamy treść wiadomości, zdjęcia przesłane w rozmowach, informacje o rozmowach prywatnych i grupowych, prośbach o wiadomość (w tym o ich przyjęciu lub odrzuceniu), odczytaniu wiadomości i blokadach, a także Twoje ustawienie, kto może do Ciebie pisać. Wiadomości widzą uczestnicy rozmowy; moderatorzy mogą zobaczyć wiadomość, gdy ktoś ją zgłosi.',
             'Jeśli w funkcji Poznaj określisz, na co jesteś otwarty, Twoja karta jest pokazywana innym studentom: imię i nazwisko, płeć, wiek (wyliczony z daty urodzenia), uczelnia, poziom studiów, zdjęcia, opis, czego szukasz oraz zainteresowania.',
             'Jeśli zezwolisz aplikacji na powiadomienia, przetwarzamy token powiadomień Twojego urządzenia oraz ustawienie powiadomień. Powiadomienie o wiadomości może zawierać imię nadawcy i początek wiadomości.',
-            'Podczas korzystania z serwisu przetwarzamy dane techniczne i diagnostyczne, takie jak adres IP, identyfikatory sesji i żądań, odwiedzone strony, interakcje z interfejsem oraz informacje o błędach. Analityka nie rejestruje sesji; teksty i atrybuty elementów interfejsu są maskowane, a parametry zapytań URL usuwane. Po zalogowaniu zdarzenia analityczne są powiązane z wewnętrznym identyfikatorem konta, uczelnią i sposobem logowania, bez adresu e-mail i imienia.',
+            'Podczas korzystania z serwisu przetwarzamy dane techniczne i diagnostyczne, takie jak adres IP, identyfikatory sesji i żądań, odwiedzone strony, interakcje z interfejsem oraz informacje o błędach. Analityka nie rejestruje sesji; teksty i atrybuty elementów interfejsu są maskowane, a parametry zapytań URL usuwane.',
           ],
         },
         {
@@ -88,7 +88,7 @@ function PrivacyPage() {
             'When you use chat, we process the content of messages, photos sent in conversations, information about direct and group conversations, message requests (including whether they were accepted or declined), read status and blocks, and your setting for who can message you. Messages are visible to the people in the conversation; moderators may see a message when someone reports it.',
             'If you choose in Meet what you are open to, your card is shown to other students: first and last name, gender, age (calculated from your date of birth), university, level of study, photos, bio, what you are looking for and interests.',
             'If you allow notifications in the app, we process your device’s notification token and your notification setting. A message notification may include the sender’s first name and the beginning of the message.',
-            'While you use the service, we process technical and diagnostic data such as IP address, session and request identifiers, pages visited, interface interactions and error information. Product analytics does not record sessions; interface text and element attributes are masked, and URL query parameters are removed. After you sign in, analytics events are linked to your internal account ID, university and sign-in method, without your email address or name.',
+            'While you use the service, we process technical and diagnostic data such as IP address, session and request identifiers, pages visited, interface interactions and error information. Product analytics does not record sessions; interface text and element attributes are masked, and URL query parameters are removed.',
           ],
         },
         {
