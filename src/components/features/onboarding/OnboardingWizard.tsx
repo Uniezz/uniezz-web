@@ -5,7 +5,7 @@ import { useNavigate } from '@tanstack/react-router';
 import { ArrowLeft, ArrowRight, Check } from 'lucide-react';
 import type { components } from '@/@types/schema';
 import { AuthLayout } from '@/components/auth';
-import { useCompleteOnboarding, useProfileForm } from '@/hooks';
+import { useCompleteOnboarding, useMyProfile, useProfileForm } from '@/hooks';
 import { UIButton, UIUnsavedChanges } from '@/ui/components';
 import { cn } from '@/ui/cn';
 import { captureAnalytics, toast } from '@/utils';
@@ -22,6 +22,9 @@ export function OnboardingWizard({ profile }: { profile: components['schemas']['
   const isPending = isSaving || isCompleting;
   const { handleSubmit } = form;
   const isLast = step === ONBOARDING_STEPS.length - 1;
+  // Skip doesn't save the form, so it waits for a saved name; the loader's profile goes stale after saving.
+  const { data: savedProfile } = useMyProfile();
+  const canSkip = Boolean(savedProfile?.firstName && savedProfile?.lastName);
 
   // Photo and details share one form, so they are saved together when leaving the details step.
   const saveDetails = handleSubmit(
@@ -92,7 +95,7 @@ export function OnboardingWizard({ profile }: { profile: components['schemas']['
                 <ArrowLeft size={18} aria-hidden />
               </UIButton>
             )}
-            {!isLast && (
+            {!isLast && canSkip && (
               <UIButton
                 bg="transparent"
                 disabled={isPending}
@@ -102,7 +105,11 @@ export function OnboardingWizard({ profile }: { profile: components['schemas']['
                 {t('onboarding.skip')}
               </UIButton>
             )}
-            <UIButton disabled={isPending} onClick={next} className={cn(isLast && 'ml-auto')}>
+            <UIButton
+              disabled={isPending}
+              onClick={next}
+              className={cn((isLast || !canSkip) && 'ml-auto')}
+            >
               {isLast ? t('onboarding.finish') : t('onboarding.next')}
               {isLast ? <Check size={18} aria-hidden /> : <ArrowRight size={18} aria-hidden />}
             </UIButton>

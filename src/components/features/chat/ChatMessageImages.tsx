@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next';
 
-import type { MessageAttachment } from '@/@types';
 import { cn } from '@/ui/cn';
 
 // Telegram-style collage: the images fill the whole frame, with no empty space.
@@ -23,7 +22,7 @@ export function ChatMessageImages({
   images,
   onOpen,
 }: {
-  images: MessageAttachment[];
+  images: { url: string }[];
   onOpen: (index: number) => void;
 }) {
   const { t } = useTranslation();

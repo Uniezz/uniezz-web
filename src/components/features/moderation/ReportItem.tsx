@@ -66,9 +66,7 @@ export function ReportItem({ report }: ReportItemProps) {
     <UIPanel surface="tint" className="space-y-3 rounded-programme p-4">
       <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
         <h3 className="text-section font-semibold">
-          {t(reportTargetLabel(targetType))}
-          {' · '}
-          {t(reportReasonLabel(report.reason))}
+          {[t(reportTargetLabel(targetType)), t(reportReasonLabel(report.reason))].join(' · ')}
         </h3>
         <p className="text-detail text-secondary">
           {new Intl.DateTimeFormat(i18n.resolvedLanguage, {

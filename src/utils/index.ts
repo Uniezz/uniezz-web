@@ -8,10 +8,11 @@ export * from './map';
 export * from './search';
 export * from './device';
 export * from './chat';
+export * from './chatDrafts';
+export * from './chatKeys';
+export * from './chatMessages';
 export * from './connections';
 export * from './exams';
-// TODO(api): Remove these mock exports when their consumers are API-backed.
-export * from './CHATMOCKS';
 export * from './image';
 export * from './files';
 export * from './query';

@@ -1,5 +1,5 @@
-import { captureAnalytics, trackLocalAction } from '@/utils';
-import { useState } from 'react';
+import { captureAnalytics } from '@/utils';
+import { useEffect, useState } from 'react';
 import { ArrowLeft, Minus, Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useForm, useWatch } from 'react-hook-form';
@@ -9,29 +9,25 @@ import { useBlocker } from '@tanstack/react-router';
 import { Virtuoso } from 'react-virtuoso';
 import { UIButton, UIAvatar, UIField, UIDialog, UISearch } from '@/ui/components';
 import { listComponents } from '@/ui/virtuoso';
-// TODO(api): Load group members and image choices from API-backed data.
-import { CHATMOCKS, matchesSearch } from '@/utils';
-import { readImageFile } from '@/utils';
-import { avatarImageSchema, groupSchema, type GroupSchema } from '@/schemas';
-
-const avatarForMember = (name: string): string => {
-  const image = CHATMOCKS.initialConversations.find(
-    (conversation) => conversation.name === name,
-  )?.image;
-  return image ? `/app/rPsdQ-${image}.jpg` : '/app/avatar.png';
-};
+import { authorName, matchesSearch } from '@/utils';
+import { groupSchema, type GroupSchema } from '@/schemas';
+import { useConnectionsList, useCreateChatGroup, useUniversities } from '@/hooks';
 
 export function CreateGroup({
   onBack,
-  onCreate,
+  onCreated,
 }: {
   onBack: () => void;
-  onCreate: (name: string, members: string[], imageUrl?: string) => void;
+  onCreated: (conversationId: string) => void;
 }) {
   const { t } = useTranslation();
   const [search, setSearch] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
-  const [imageError, setImageError] = useState('');
+  const [createdId, setCreatedId] = useState<string>();
+  const { mutate: createGroup, isPending } = useCreateChatGroup();
+  const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useConnectionsList();
+  const { data: universities = [] } = useUniversities();
+  const students =
+    data?.pages.flatMap((page) => page.items ?? []).map(({ profile }) => profile) ?? [];
   const {
     register,
     handleSubmit,
@@ -40,38 +36,20 @@ export function CreateGroup({
     formState: { errors, isDirty },
   } = useForm<GroupSchema>({
     resolver: zodResolver(groupSchema),
-    defaultValues: { name: '', members: ['Kateryna Melnyk', 'Taras Hnatiuk'] },
+    defaultValues: { name: '', members: [] },
   });
   const members = useWatch({ control, name: 'members' });
-  const hasUnsavedChanges = isDirty || search !== '' || imageUrl !== '';
+  const hasUnsavedChanges = isDirty || search !== '';
   const blocker = useBlocker({
-    shouldBlockFn: ({ current, next }) => {
-      if (!hasUnsavedChanges) return false;
-      const createdGroup =
-        current.pathname === '/chat/new-group' &&
-        next.pathname === '/chat' &&
-        'conversationId' in next.search &&
-        typeof next.search.conversationId === 'string' &&
-        next.search.conversationId.startsWith('group-');
-      return !createdGroup;
-    },
-    enableBeforeUnload: () => hasUnsavedChanges,
+    shouldBlockFn: () => hasUnsavedChanges && !createdId,
+    enableBeforeUnload: () => hasUnsavedChanges && !createdId,
     withResolver: true,
   });
-
-  async function changeImage(file?: File) {
-    if (!file) return;
-    if (!avatarImageSchema.safeParse(file).success) {
-      setImageError(t('app.photoError'));
-      return;
-    }
-    try {
-      setImageUrl(await readImageFile(file));
-      setImageError('');
-    } catch {
-      setImageError(t('app.photoError'));
-    }
-  }
+  // Leave only after the blocker knows the group exists, so the unsaved-changes dialog stays away.
+  useEffect(() => {
+    if (createdId) onCreated(createdId);
+  }, [createdId, onCreated]);
+  const student = (id: string) => students.find((profile) => profile.id === id);
 
   return (
     <>
@@ -98,7 +76,7 @@ export function CreateGroup({
         className="flex min-h-0 flex-1 flex-col gap-5"
         onSubmit={handleSubmit(
           ({ name, members }) =>
-            trackLocalAction('group_create', () => onCreate(name, members, imageUrl || undefined)),
+            createGroup({ name, memberIds: members }, { onSuccess: ({ id }) => setCreatedId(id) }),
           () => captureAnalytics('group_form_validation_failed'),
         )}
       >
@@ -107,27 +85,8 @@ export function CreateGroup({
             <ArrowLeft size={18} />
           </UIButton>
           <h2 className="flex-1 text-card-title font-semibold">{t('chat.action')}</h2>
-          <label className="cursor-pointer rounded-full">
-            <UIAvatar size="regular" imgSrc={imageUrl || '/app/avatar.png'} alt="" />
-            <input
-              type="file"
-              className="sr-only"
-              accept="image/png,image/jpeg,image/webp"
-              aria-label={t('app.changePhoto')}
-              onChange={(event) => {
-                const file = event.target.files?.[0];
-                event.target.value = '';
-                void changeImage(file);
-              }}
-            />
-          </label>
         </div>
         <p className="text-label text-secondary">{t('app.groupDescription')}</p>
-        {imageError && (
-          <p role="alert" className="text-detail text-warning">
-            {imageError}
-          </p>
-        )}
         <UIField
           label={t('app.groupName')}
           error={errors.name ? t('app.required') : undefined}
@@ -150,27 +109,27 @@ export function CreateGroup({
           className="rounded-xl"
         />
         <div className="grid grid-cols-[repeat(auto-fill,12rem)] gap-2">
-          {members.map((name) => (
+          {members.map((id) => (
             <div
-              key={name}
+              key={id}
               className="flex min-w-0 items-center gap-2 overflow-hidden rounded-full border border-transparent bg-white-10 px-2 py-1 text-detail text-white"
             >
               <UIAvatar
                 className="shrink-0"
                 size="sm"
-                imgSrc={avatarForMember(name)}
+                imgSrc={student(id)?.avatarUrl ?? undefined}
                 alt=""
                 aria-hidden="true"
               />
-              <span className="min-w-0 flex-1 truncate">{name}</span>
+              <span className="min-w-0 flex-1 truncate">{authorName(student(id))}</span>
               <button
                 type="button"
                 data-ph-capture-attribute-label="Remove group member"
-                aria-label={`${t('app.remove')} ${name}`}
+                aria-label={`${t('app.remove')} ${authorName(student(id))}`}
                 onClick={() =>
                   setValue(
                     'members',
-                    members.filter((member) => member !== name),
+                    members.filter((member) => member !== id),
                     {
                       shouldDirty: true,
                     },
@@ -185,28 +144,34 @@ export function CreateGroup({
         </div>
         <p className="text-caption font-semibold text-muted uppercase">{t('app.suggested')}</p>
         <Virtuoso
-          data={CHATMOCKS.students.filter(
-            (s) => !members.includes(s.name) && matchesSearch(search, s.name, s.meta),
+          data={students.filter(
+            (s) => !members.includes(s.id) && matchesSearch(search, authorName(s)),
           )}
-          computeItemKey={(_, s) => s.name}
+          computeItemKey={(_, s) => s.id}
+          endReached={() => {
+            if (hasNextPage && !isFetchingNextPage) void fetchNextPage();
+          }}
           components={listComponents}
           aria-label={t('app.suggested')}
           className="scrollbar-gray min-h-0 flex-1"
           itemContent={(_, s) => (
             <div role="listitem" className="flex items-center justify-between gap-3 pb-4">
               <div className="flex min-w-0 items-center gap-3">
-                <UIAvatar size="md" imgSrc={avatarForMember(s.name)} alt="" aria-hidden="true" />
+                <UIAvatar size="md" imgSrc={s.avatarUrl ?? undefined} alt="" aria-hidden="true" />
                 <div className="min-w-0">
-                  <strong className="text-label font-medium">{s.name}</strong>
-                  <p className="text-micro text-muted">{s.meta}</p>
+                  <strong className="text-label font-medium">{authorName(s)}</strong>
+                  <p className="text-micro text-muted">
+                    {universities.find((university) => university.id === s.universityId)?.name}
+                  </p>
                 </div>
               </div>
               <UIButton
                 bg="transparent"
                 size="icon"
-                aria-label={`${t('app.add')} ${s.name}`}
+                aria-label={`${t('app.add')} ${authorName(s)}`}
+                data-ph-capture-attribute-label="Add group member"
                 className="group border-transparent bg-transparent enabled:hover:border-transparent enabled:hover:bg-transparent"
-                onClick={() => setValue('members', [...members, s.name], { shouldDirty: true })}
+                onClick={() => setValue('members', [...members, s.id], { shouldDirty: true })}
               >
                 <Plus size={16} className="transition-transform group-hover:scale-125" />
               </UIButton>
@@ -221,6 +186,7 @@ export function CreateGroup({
           )}
           <UIButton
             type="submit"
+            disabled={isPending}
             bg="primary"
             size="sm"
             className="rounded-xl text-ink enabled:hover:bg-white"
