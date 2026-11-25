@@ -15,7 +15,7 @@ export function ChatMarker({ variant, className, children, ...props }: ChatMarke
       <span
         className={cn(
           'min-w-0 wrap-break-word',
-          variant === 'chip' && 'rounded-full bg-white-10 px-3 py-1.5',
+          variant === 'chip' && 'rounded-full bg-white-10 px-3 py-1',
         )}
       >
         {children}

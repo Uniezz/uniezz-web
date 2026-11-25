@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 
 import type { ChatMessageView } from '@/@types';
 import { useChatMessageMenu } from '@/hooks/useChatMessageMenu';
-import { UIActionMenu } from '@/ui/components/UIActionMenu';
 import { UIAvatar } from '@/ui/components/UIAvatar';
+import { UIContextMenu } from '@/ui/components/UIContextMenu';
 import { cn } from '@/ui/cn';
 import { chatClock, initials } from '@/utils/chat';
 import { senderColor } from '@/utils/chatColors';
@@ -15,7 +15,6 @@ import { ChatBubble } from './ChatBubble';
 import type { ChatPreviewState } from './ChatImagePreview';
 import { ChatMessageImages } from './ChatMessageImages';
 import { ChatMessageRow } from './ChatMessageRow';
-import { messageMoreStyles } from './variants';
 
 export type ChatMessageBubbleProps = {
   message: ChatMessageView;
@@ -65,47 +64,44 @@ export const ChatMessageBubble = memo(function ChatMessageBubble({
         ) : null
       }
     >
-      <div
-        className={cn(
-          'group/message flex w-full min-w-0 items-center gap-1',
-          outgoing && 'flex-row-reverse',
-        )}
+      <UIContextMenu
+        options={options}
+        onSelect={selectAction}
+        align={outgoing ? 'end' : 'start'}
+        className="group/message w-fit max-w-[80%] min-w-0"
       >
-        <UIActionMenu
-          options={options}
-          onSelect={selectAction}
-          label={t('chat.messageActions')}
-          className={messageMoreStyles()}
+        <ChatBubble
+          variant={outgoing ? 'out' : 'in'}
+          tail={endsGroup}
+          className={cn(
+            'max-w-full group-has-[+:popover-open]/message:ring-2',
+            outgoing ? 'ring-sky' : 'ring-blue',
+          )}
+          sender={
+            showsSender ? (
+              <span className={senderColor(sender.id)}>
+                {(!sender.deleted && authorName(sender)) || t('app.accountDeleted')}
+              </span>
+            ) : null
+          }
+          meta={
+            <>
+              <span>{chatClock(message.createdAt, i18n.language)}</span>
+              {outgoing ? (
+                <>
+                  <StatusIcon size={14} className="text-white" aria-hidden="true" />
+                  <span className="sr-only">
+                    {status === 'sending' ? t('chat.sending') : t('chat.sent')}
+                  </span>
+                </>
+              ) : null}
+            </>
+          }
         >
-          <ChatBubble
-            variant={outgoing ? 'out' : 'in'}
-            tail={endsGroup}
-            sender={
-              showsSender ? (
-                <span className={senderColor(sender.id)}>
-                  {(!sender.deleted && authorName(sender)) || t('app.accountDeleted')}
-                </span>
-              ) : null
-            }
-            meta={
-              <>
-                <span>{chatClock(message.createdAt, i18n.language)}</span>
-                {outgoing ? (
-                  <>
-                    <StatusIcon size={12} aria-hidden="true" />
-                    <span className="sr-only">
-                      {status === 'sending' ? t('chat.sending') : t('chat.sent')}
-                    </span>
-                  </>
-                ) : null}
-              </>
-            }
-          >
-            {images.length > 0 ? <ChatMessageImages images={images} onOpen={openImage} /> : null}
-            {body ? <p>{body}</p> : null}
-          </ChatBubble>
-        </UIActionMenu>
-      </div>
+          {images.length > 0 ? <ChatMessageImages images={images} onOpen={openImage} /> : null}
+          {body ? <p>{body}</p> : null}
+        </ChatBubble>
+      </UIContextMenu>
     </ChatMessageRow>
   );
 });

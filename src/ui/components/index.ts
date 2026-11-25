@@ -1,5 +1,4 @@
 export * from './BrandBackground';
-export * from './UIActionMenu';
 export * from './UIAvatar';
 export * from './UIButton';
 export * from './UIInput';
@@ -18,6 +17,7 @@ export * from './UITags';
 export * from './UISelect';
 export * from './UIUniversityLogo';
 export * from './UIChip';
+export * from './UIContextMenu';
 export * from './UIField';
 export * from './UISwitch';
 export * from './UIDialog';

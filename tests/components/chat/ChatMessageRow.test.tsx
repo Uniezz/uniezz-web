@@ -14,6 +14,6 @@ test('an incoming row keeps the avatar column when it has no avatar', () => {
 test('rows inside a group are closer together', () => {
   const row = (position: 'middle' | 'last') =>
     renderToStaticMarkup(<ChatMessageRow align="start" position={position} />);
-  expect(row('middle')).toContain('pb-0.5');
-  expect(row('last')).toContain('pb-3');
+  expect(row('middle')).toContain('pb-1');
+  expect(row('last')).toContain('pb-4');
 });

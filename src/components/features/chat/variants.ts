@@ -4,7 +4,7 @@ import { cva } from 'class-variance-authority';
 export const messageRowStyles = cva('flex w-full min-w-0 flex-col', {
   variants: {
     align: { start: 'items-start', end: 'items-end' },
-    position: { single: 'pb-3', first: 'pb-0.5', middle: 'pb-0.5', last: 'pb-3' },
+    position: { single: 'pb-4', first: 'pb-1', middle: 'pb-1', last: 'pb-4' },
   },
 });
 
@@ -38,17 +38,12 @@ export const reactionStyles = cva(
   },
 );
 
-// Shown on hover, on keyboard focus, while its menu is open, and always on touch screens.
-export const messageMoreStyles = cva(
-  'shrink-0 opacity-0 group-hover/message:opacity-100 focus-visible:opacity-100 has-[+:popover-open]:opacity-100 pointer-coarse:opacity-100',
-);
-
 export const markerStyles = cva('flex w-full min-w-0 items-center justify-center text-micro', {
   variants: {
     variant: {
-      chip: 'pt-3 pb-6 font-semibold text-white-80',
+      chip: 'pt-2 pb-6 font-semibold text-white-80',
       divider:
-        'gap-3 pb-3 font-semibold text-sky before:h-px before:flex-1 before:bg-blue-40 after:h-px after:flex-1 after:bg-blue-40',
+        'gap-3 pb-4 font-semibold text-sky before:h-px before:flex-1 before:bg-blue-40 after:h-px after:flex-1 after:bg-blue-40',
       note: 'pb-3 text-center text-secondary',
     },
   },

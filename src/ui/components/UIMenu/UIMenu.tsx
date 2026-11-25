@@ -10,9 +10,18 @@ export type UIMenuProps = Omit<ComponentProps<'div'>, 'onSelect' | 'ref'> & {
   options: Option[];
   value: string;
   onSelect: (value: string) => void;
+  /** `compact` has smaller rows, for a list of actions. */
+  size?: 'md' | 'compact';
 };
 
-export const UIMenu = ({ options, value, onSelect, className, ...props }: UIMenuProps) => {
+export const UIMenu = ({
+  options,
+  value,
+  onSelect,
+  size = 'md',
+  className,
+  ...props
+}: UIMenuProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const [opensUp, setOpensUp] = useState(false);
 
@@ -29,7 +38,7 @@ export const UIMenu = ({ options, value, onSelect, className, ...props }: UIMenu
     <div
       {...props}
       ref={ref}
-      className={cn(menuStyles(), opensUp && 'top-auto bottom-full mt-0 mb-2', className)}
+      className={cn(menuStyles({ size }), opensUp && 'top-auto bottom-full mt-0 mb-2', className)}
     >
       {options.map((option) => {
         const isActive = option.value === value;
@@ -41,7 +50,7 @@ export const UIMenu = ({ options, value, onSelect, className, ...props }: UIMenu
             bg="transparent"
             data-ph-capture-attribute-label={option.label}
             aria-current={isActive}
-            className={menuOptionStyles({ active: isActive, danger: option.danger })}
+            className={menuOptionStyles({ active: isActive, size, danger: option.danger })}
             onClick={() => onSelect(option.value)}
           >
             {option.universityId ? (
