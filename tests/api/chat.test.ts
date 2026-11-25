@@ -17,12 +17,12 @@ const {
   sendChatMessage,
 } = await import('../../src/api/chat.ts');
 
-test('the conversation list asks for a page of 30 and passes the cursor', async () => {
+test('the conversation list asks for a page of 50 and passes the cursor', async () => {
   await getChatConversations('next');
   expect(request).toEqual({
     method: 'GET',
     path: '/chat/conversations',
-    options: { params: { query: { cursor: 'next', limit: 30 } } },
+    options: { params: { query: { cursor: 'next', limit: 50 } } },
   });
 });
 
@@ -31,7 +31,7 @@ test('history reads one conversation, newest first, one page at a time', async (
   expect(request).toEqual({
     method: 'GET',
     path: '/chat/conversations/{id}/messages',
-    options: { params: { path: { id: 'c1' }, query: { cursor: undefined, limit: 30 } } },
+    options: { params: { path: { id: 'c1' }, query: { cursor: undefined, limit: 50 } } },
   });
 });
 
