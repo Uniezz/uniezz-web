@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import type { ChatMessageView } from '@/@types';
 import { UIAvatar } from '@/ui/components/UIAvatar';
-import { chatClock } from '@/utils/chat';
+import { chatClock, initials } from '@/utils/chat';
 import { senderColor } from '@/utils/chatColors';
 import type { ChatMessagePosition } from '@/utils/chatGroups';
 import { authorName } from '@/utils/feed';
@@ -54,7 +54,7 @@ export const ChatMessageBubble = memo(function ChatMessageBubble({
           <UIAvatar
             size="sm"
             imgSrc={sender.avatarUrl ?? undefined}
-            avatarSymbols={authorName(sender).slice(0, 2)}
+            avatarSymbols={initials(authorName(sender))}
             aria-hidden="true"
           />
         ) : null

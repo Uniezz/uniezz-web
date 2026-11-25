@@ -18,6 +18,7 @@ import {
   chatPreview,
   chatTime,
   chatTitle,
+  initials,
   matchesSearch,
   selectedConversationId,
 } from '@/utils';
@@ -112,7 +113,7 @@ export function ConversationList({
                 aria-current={selectedId === c.id ? 'true' : undefined}
                 className={`flex w-full items-center gap-3 rounded-2xl border border-transparent p-2.5 text-left transition-colors hover:bg-white-5 ${selectedId === c.id ? 'border-white-10 bg-white-10' : ''}`}
               >
-                <UIAvatar imgSrc={chatAvatar(c)} avatarSymbols={c.title.slice(0, 2)} />
+                <UIAvatar imgSrc={chatAvatar(c)} avatarSymbols={initials(c.title)} />
                 <span className="grid min-w-0 flex-1 grid-cols-[minmax(0,1fr)_auto] items-center gap-x-2 gap-y-0.75">
                   <strong className="truncate text-body font-semibold">{c.title}</strong>
                   <span className="justify-self-end text-detail text-secondary">

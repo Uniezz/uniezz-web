@@ -12,6 +12,16 @@ export function chatTitle(conversation: ChatConversation, deletedLabel: string) 
 export const chatAvatar = (conversation: ChatConversation) =>
   conversation.peer?.avatarUrl ?? undefined;
 
+/** Up to two letters for an avatar without a photo. Spreading keeps emoji whole. */
+export const initials = (name: string) =>
+  name
+    .trim()
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((word) => [...word][0] ?? '')
+    .join('')
+    .toUpperCase();
+
 /** The text under the name in the chat list: the last message, or a label for an image-only one. */
 export function chatPreview(conversation: ChatConversation, imageLabel: string) {
   const message = conversation.lastMessage;
