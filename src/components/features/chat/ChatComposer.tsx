@@ -71,7 +71,7 @@ export function ChatComposer({
     // Offline, TanStack Query would pause the send without an error. The text and images stay here instead.
     if (!onlineManager.isOnline()) {
       captureAnalytics('message_send_failed', { stage: 'offline' });
-      toast.error(t('app.sendError'));
+      toast.error(t('chat.offline'));
       return;
     }
     setIsSending(true);
