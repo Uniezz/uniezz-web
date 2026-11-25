@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import type { ChatConversation } from '@/@types';
 import { UIAvatar, UIButton } from '@/ui/components';
-import { chatAvatar, chatTitle } from '@/utils';
+import { chatAvatar, chatTitle, initials } from '@/utils';
 
 export function ChatHeader({
   conversation,
@@ -25,7 +25,7 @@ export function ChatHeader({
       >
         <ArrowLeft size={18} />
       </UIButton>
-      <UIAvatar imgSrc={chatAvatar(conversation)} avatarSymbols={title.slice(0, 2)} />
+      <UIAvatar imgSrc={chatAvatar(conversation)} avatarSymbols={initials(title)} />
       <h2 className="text-section font-semibold">{title}</h2>
     </div>
   );

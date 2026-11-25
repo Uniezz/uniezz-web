@@ -1,4 +1,5 @@
 import { captureAnalytics, getChatDraft, setChatDraft, toast } from '@/utils';
+import { onlineManager } from '@tanstack/react-query';
 import { Paperclip, Send } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -67,6 +68,12 @@ export function ChatComposer({
   }
 
   async function sendMessage(text: string) {
+    // Offline, TanStack Query would pause the send without an error. The text and images stay here instead.
+    if (!onlineManager.isOnline()) {
+      captureAnalytics('message_send_failed', { stage: 'offline' });
+      toast.error(t('chat.offline'));
+      return;
+    }
     setIsSending(true);
     try {
       const attachmentIds = await Promise.all(

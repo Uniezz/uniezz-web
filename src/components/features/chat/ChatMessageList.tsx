@@ -1,70 +1,118 @@
+import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Virtuoso } from 'react-virtuoso';
+import { Virtuoso, type VirtuosoHandle } from 'react-virtuoso';
 
-import type { ChatMessageView } from '@/@types';
-import { useMessages, useMyProfile } from '@/hooks';
+import type { ChatMessageView, ChatUnreadAtOpen } from '@/@types';
+import { useChatMessageList } from '@/hooks';
 import { UIEmpty, UIQueryError } from '@/ui/components';
 import { listComponents } from '@/ui/virtuoso';
-import { isOwnMessage } from '@/utils';
+import { chatDay, LATEST_MESSAGE, messageKey } from '@/utils';
+import { ChatJumpToLatest } from './ChatJumpToLatest';
+import { ChatMarker } from './ChatMarker';
 import { ChatMessageBubble } from './ChatMessageBubble';
 import type { ChatPreviewState } from './ChatImagePreview';
+import { ChatThreadSkeleton } from './ChatThreadSkeleton';
 
-// Virtuoso keeps the scroll position when older messages are added at the top only if `firstItemIndex`
-// goes down by their number. It cannot be negative, so it starts high.
-const START_INDEX = 1_000_000;
+function EmptyThread() {
+  const { t } = useTranslation();
+  return (
+    <UIEmpty>
+      <p>{t('chat.emptyThread')}</p>
+    </UIEmpty>
+  );
+}
 
-const messageListComponents = { ...listComponents, EmptyPlaceholder: () => <UIEmpty /> };
+const messageListComponents = { ...listComponents, EmptyPlaceholder: EmptyThread };
 
 export function ChatMessageList({
   conversationId,
+  isGroup,
+  unreadAtOpen,
   onPreview,
 }: {
   conversationId: string;
+  isGroup: boolean;
+  unreadAtOpen: ChatUnreadAtOpen;
   onPreview: (preview: ChatPreviewState) => void;
 }) {
-  const { t } = useTranslation();
-  const { data: me } = useMyProfile();
-  const { data, isError, refetch, hasNextPage, isFetchingNextPage, fetchNextPage } =
-    useMessages(conversationId);
-  // Pages are newest first, but the thread reads oldest first. System and deleted messages come with W4.
-  const pages = (data?.pages ?? []).map((page) =>
-    (page.items ?? []).filter(({ kind, deletedAt }) => kind === 'text' && !deletedAt),
-  );
-  const messages: ChatMessageView[] = pages.flat().reverse();
-  const firstItemIndex = START_INDEX - pages.slice(1).flat().length;
+  const { t, i18n } = useTranslation();
+  const list = useRef<VirtuosoHandle>(null);
+  const {
+    messages,
+    firstItemIndex,
+    isPending,
+    isLoaded,
+    isError,
+    refetch,
+    loadOlderMessages,
+    followNewMessages,
+    handleAtBottomChange,
+    isScrolledUp,
+    newCount,
+    getRow,
+  } = useChatMessageList(conversationId, unreadAtOpen);
+
+  const jumpLabel =
+    newCount > 0
+      ? `${t('chat.jumpToLatest')}, ${t('chat.newMessages', { count: newCount })}`
+      : t('chat.jumpToLatest');
+
+  const renderMessage = (itemIndex: number, message: ChatMessageView) => {
+    const { outgoing, firstOfDay, firstUnread, position } = getRow(itemIndex, message);
+    return (
+      <>
+        {firstOfDay ? (
+          <ChatMarker variant="chip" role="listitem">
+            {chatDay(message.createdAt, i18n.language)}
+          </ChatMarker>
+        ) : null}
+        {firstUnread ? (
+          <ChatMarker variant="divider" role="listitem">
+            {t('chat.newMessages', { count: unreadAtOpen.count })}
+          </ChatMarker>
+        ) : null}
+        <ChatMessageBubble
+          message={message}
+          outgoing={outgoing}
+          position={position}
+          isGroup={isGroup}
+          onPreview={onPreview}
+        />
+      </>
+    );
+  };
+
   return (
     <div
-      className="flex min-h-0 flex-1 flex-col px-7 py-5"
+      className="relative flex min-h-0 flex-1 flex-col px-7 py-5"
       role="log"
       aria-label={t('app.messages')}
     >
-      {data && (
+      {isPending ? <ChatThreadSkeleton /> : null}
+      {isLoaded && (
         <Virtuoso
+          ref={list}
           data={messages}
           firstItemIndex={firstItemIndex}
-          // Older messages load before the student reaches the top.
-          rangeChanged={({ startIndex }) => {
-            if (startIndex - firstItemIndex <= 30 && hasNextPage && !isFetchingNextPage)
-              void fetchNextPage();
-          }}
-          computeItemKey={(_, message) => message.clientId ?? message.id}
-          initialTopMostItemIndex={{ index: 'LAST', align: 'end' }}
+          rangeChanged={loadOlderMessages}
+          computeItemKey={messageKey}
+          initialTopMostItemIndex={LATEST_MESSAGE}
           alignToBottom
-          // A new message scrolls the list only at the bottom, or when it is the one being sent.
-          followOutput={(isAtBottom) =>
-            isAtBottom || messages.at(-1)?.status === 'sending' ? 'auto' : false
-          }
+          followOutput={followNewMessages}
+          atBottomStateChange={handleAtBottomChange}
           components={messageListComponents}
           className="min-h-0 flex-1"
-          itemContent={(_, message) => (
-            <ChatMessageBubble
-              message={message}
-              outgoing={isOwnMessage(message, me?.id)}
-              onPreview={onPreview}
-            />
-          )}
+          itemContent={renderMessage}
         />
       )}
+      {isScrolledUp ? (
+        <ChatJumpToLatest
+          unreadCount={newCount}
+          aria-label={jumpLabel}
+          className="absolute right-7 bottom-5"
+          onClick={() => list.current?.scrollToIndex(LATEST_MESSAGE)}
+        />
+      ) : null}
       {isError && <UIQueryError retry={() => void refetch()} />}
     </div>
   );

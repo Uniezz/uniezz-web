@@ -196,6 +196,15 @@
   },
   "chat": {
     "action": "Новая група",
+    "emptyThread": "Паведамленняў пакуль няма. Павітайцеся!",
+    "jumpToLatest": "Перайсці да апошняга паведамлення",
+    "newMessages_few": "{{count}} новыя паведамленні",
+    "newMessages_many": "{{count}} новых паведамленняў",
+    "newMessages_one": "{{count}} новае паведамленне",
+    "newMessages_other": "{{count}} новага паведамлення",
+    "offline": "Няма злучэння. Праверце інтэрнэт.",
+    "sending": "Адпраўляецца",
+    "sent": "Адпраўлена",
     "title": "Чат"
   },
   "common": {

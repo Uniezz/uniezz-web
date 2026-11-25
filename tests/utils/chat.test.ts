@@ -2,6 +2,7 @@ import { expect, test } from 'bun:test';
 import {
   chatAvatar,
   chatClock,
+  chatDay,
   chatPreview,
   chatTime,
   chatTitle,
@@ -80,4 +81,17 @@ test('the open chat comes from the URL, or is the newest chat', () => {
 test('the message clock shows hours and minutes only', () => {
   expect(chatClock('2026-11-10T10:05:00Z', 'en-GB')).toMatch(/^\d{2}:\d{2}$/);
   expect(chatClock('nope', 'en-GB')).toBe('');
+});
+
+test('the date chip shows Today, Yesterday, or a date', () => {
+  const now = new Date('2026-11-22T12:00');
+  const day = (time: string, locale = 'en') => chatDay(new Date(time).toISOString(), locale, now);
+  expect(day('2026-11-22T00:01')).toBe('Today');
+  expect(day('2026-11-21T23:59')).toBe('Yesterday');
+  expect(day('2026-11-21T10:00', 'de')).toBe('Gestern');
+  expect(day('2026-11-20T10:00')).toBe('Nov 20');
+  expect(day('2025-11-20T10:00')).toBe('Nov 20, 2025');
+  expect(day('2026-11-20T10:00', 'uk')).toBe('20 лист');
+  expect(day('2025-11-20T10:00', 'uk')).toBe('20 лист 2025');
+  expect(chatDay('not a date', 'en', now)).toBe('');
 });

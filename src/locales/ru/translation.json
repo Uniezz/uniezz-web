@@ -196,6 +196,15 @@
   },
   "chat": {
     "action": "Новая группа",
+    "emptyThread": "Сообщений пока нет. Поздоровайтесь!",
+    "jumpToLatest": "Перейти к последнему сообщению",
+    "newMessages_few": "{{count}} новых сообщения",
+    "newMessages_many": "{{count}} новых сообщений",
+    "newMessages_one": "{{count}} новое сообщение",
+    "newMessages_other": "{{count}} нового сообщения",
+    "offline": "Нет соединения. Проверьте интернет.",
+    "sending": "Отправляется",
+    "sent": "Отправлено",
     "title": "Чат"
   },
   "common": {

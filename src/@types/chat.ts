@@ -24,3 +24,6 @@ export type SendMessageInput = {
   /** A new UUID per send. It is the `Idempotency-Key`, and the server returns it as `clientId`. */
   clientId: string;
 };
+
+/** What was unread when the student opened the chat. */
+export type ChatUnreadAtOpen = { count: number; lastReadSeq: number };

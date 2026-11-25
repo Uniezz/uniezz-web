@@ -198,6 +198,13 @@ export default interface Resources {
     },
     "chat": {
       "action": "New group",
+      "emptyThread": "No messages yet. Say hi!",
+      "jumpToLatest": "Jump to latest message",
+      "newMessages_one": "{{count}} new message",
+      "newMessages_other": "{{count}} new messages",
+      "offline": "You are offline. Check your connection.",
+      "sending": "Sending",
+      "sent": "Sent",
       "title": "Chat"
     },
     "common": {
