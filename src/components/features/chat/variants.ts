@@ -48,3 +48,16 @@ export const markerStyles = cva('flex w-full min-w-0 items-center justify-center
     },
   },
 });
+
+export const attachmentCardStyles = cva(
+  'flex w-52 max-w-full min-w-0 items-center gap-2.5 rounded-xl border bg-white-10 p-2',
+  {
+    variants: {
+      state: {
+        uploading: 'border-transparent',
+        done: 'border-transparent',
+        error: 'border-danger',
+      },
+    },
+  },
+);
