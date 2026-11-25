@@ -196,6 +196,7 @@
   },
   "chat": {
     "action": "Nuevo grupo",
+    "copyText": "Copiar texto",
     "emptyThread": "Aún no hay mensajes. ¡Saluda!",
     "jumpToLatest": "Ir al último mensaje",
     "newMessages_many": "{{count}} mensajes nuevos",
@@ -204,6 +205,7 @@
     "offline": "Estás sin conexión. Comprueba tu conexión.",
     "sending": "Enviando",
     "sent": "Enviado",
+    "textCopied": "Texto copiado",
     "title": "Charlar"
   },
   "common": {

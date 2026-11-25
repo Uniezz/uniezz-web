@@ -198,6 +198,7 @@ export default interface Resources {
     },
     "chat": {
       "action": "New group",
+      "copyText": "Copy text",
       "emptyThread": "No messages yet. Say hi!",
       "jumpToLatest": "Jump to latest message",
       "newMessages_one": "{{count}} new message",
@@ -205,6 +206,7 @@ export default interface Resources {
       "offline": "You are offline. Check your connection.",
       "sending": "Sending",
       "sent": "Sent",
+      "textCopied": "Text copied",
       "title": "Chat"
     },
     "common": {

@@ -196,6 +196,7 @@
   },
   "chat": {
     "action": "Nowa grupa",
+    "copyText": "Kopiuj tekst",
     "emptyThread": "Brak wiadomości. Przywitaj się!",
     "jumpToLatest": "Przejdź do najnowszej wiadomości",
     "newMessages_few": "{{count}} nowe wiadomości",
@@ -205,6 +206,7 @@
     "offline": "Jesteś offline. Sprawdź połączenie.",
     "sending": "Wysyłanie",
     "sent": "Wysłano",
+    "textCopied": "Tekst skopiowany",
     "title": "Czat"
   },
   "common": {

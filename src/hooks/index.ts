@@ -8,6 +8,7 @@ export * from './useDropdown';
 export * from './useFaq';
 export * from './useChat';
 export * from './useChatMessageList';
+export * from './useChatMessageMenu';
 export * from './useConnections';
 export * from './useStudy';
 export * from './useCreateFeedPost';
