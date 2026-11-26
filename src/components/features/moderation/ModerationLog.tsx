@@ -3,7 +3,7 @@ import { Virtuoso } from 'react-virtuoso';
 import { useModerationActions } from '@/hooks';
 import { UIEmpty, UIQueryError } from '@/ui/components';
 import { listComponents } from '@/ui/virtuoso';
-import { moderationActionLabel } from '@/utils';
+import { moderationActionLabel, dateFormatter } from '@/utils';
 
 /** What moderators and admins did, newest first; the backend keeps a year. */
 export function ModerationLog() {
@@ -11,7 +11,7 @@ export function ModerationLog() {
   const { data, isPending, isError, refetch, hasNextPage, isFetchingNextPage, fetchNextPage } =
     useModerationActions();
   const actions = data?.pages.flatMap((page) => page.items ?? []) ?? [];
-  const formatDate = new Intl.DateTimeFormat(i18n.resolvedLanguage, {
+  const formatDate = dateFormatter(i18n.resolvedLanguage, {
     dateStyle: 'medium',
     timeStyle: 'short',
   });

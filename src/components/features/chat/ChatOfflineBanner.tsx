@@ -10,7 +10,7 @@ export function ChatOfflineBanner() {
   return (
     <div role="status">
       {isOnline ? null : (
-        <p className="flex items-center justify-center gap-2 bg-warning-soft px-5 py-2 text-detail text-warning">
+        <p className="mx-5 mt-3 flex items-center gap-2.5 rounded-[14px] border border-amber-30 bg-amber-10 px-3.5 py-2.5 text-detail text-amber">
           <WifiOff size={16} aria-hidden="true" />
           {t('chat.offline')}
         </p>

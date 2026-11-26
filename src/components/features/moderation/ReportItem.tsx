@@ -11,6 +11,7 @@ import {
   reportTargetLabel,
   snapshotPreview,
   toast,
+  dateFormatter,
 } from '@/utils';
 import { BanButton } from './BanButton';
 import { ConfirmActionButton } from './ConfirmActionButton';
@@ -69,7 +70,7 @@ export function ReportItem({ report }: ReportItemProps) {
           {[t(reportTargetLabel(targetType)), t(reportReasonLabel(report.reason))].join(' · ')}
         </h3>
         <p className="text-detail text-secondary">
-          {new Intl.DateTimeFormat(i18n.resolvedLanguage, {
+          {dateFormatter(i18n.resolvedLanguage, {
             dateStyle: 'medium',
             timeStyle: 'short',
           }).format(new Date(report.createdAt))}

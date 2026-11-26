@@ -16,7 +16,7 @@ export function ChatJumpToLatest({ unreadCount = 0, className, ...props }: ChatJ
     <UIButton
       size="icon"
       bg="secondary"
-      className={cn('relative bg-surface', className)}
+      className={cn('relative size-11 border-white-20 bg-surface', className)}
       {...props}
       data-ph-capture-attribute-label="Jump to latest message"
     >

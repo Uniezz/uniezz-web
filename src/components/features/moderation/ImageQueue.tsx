@@ -5,7 +5,7 @@ import { Virtuoso } from 'react-virtuoso';
 import { useMarkImageReviewed, useRemoveImage, useUnreviewedImages } from '@/hooks';
 import { UIButton, UIEmpty, UIQueryError } from '@/ui/components';
 import { listComponents } from '@/ui/virtuoso';
-import { toast } from '@/utils';
+import { toast, dateFormatter } from '@/utils';
 import { ConfirmActionButton } from './ConfirmActionButton';
 
 /** Uploaded avatars, banners and feed photos no moderator has checked yet, oldest first. */
@@ -17,7 +17,7 @@ export function ImageQueue() {
   const { mutateAsync: removeImage } = useRemoveImage();
   const href = useLocation({ select: (location) => location.href });
   const images = data?.pages.flatMap((page) => page.items ?? []) ?? [];
-  const formatDate = new Intl.DateTimeFormat(i18n.resolvedLanguage, {
+  const formatDate = dateFormatter(i18n.resolvedLanguage, {
     dateStyle: 'medium',
     timeStyle: 'short',
   });

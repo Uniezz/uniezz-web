@@ -3,10 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { Virtuoso, type VirtuosoHandle } from 'react-virtuoso';
 
 import type { ChatMessageView, ChatUnreadAtOpen } from '@/@types';
-import { useChatMessageList } from '@/hooks';
+import { ReportDialog } from '@/components/features/reports';
+import { useChatMessageDialogs, useChatMessageList } from '@/hooks';
 import { UIEmpty, UIQueryError } from '@/ui/components';
 import { listComponents } from '@/ui/virtuoso';
 import { chatDay, LATEST_MESSAGE, messageKey } from '@/utils';
+import { ChatDeleteDialog } from './ChatDeleteDialog';
 import { ChatJumpToLatest } from './ChatJumpToLatest';
 import { ChatMarker } from './ChatMarker';
 import { ChatMessageBubble } from './ChatMessageBubble';
@@ -37,6 +39,9 @@ export function ChatMessageList({
 }) {
   const { t, i18n } = useTranslation();
   const list = useRef<VirtuosoHandle>(null);
+  // One dialog of each kind for the list, because a row is removed from the page when it scrolls away.
+  const { messageToReport, messageToDelete, openReport, openDelete, closeReport, closeDelete } =
+    useChatMessageDialogs();
   const {
     messages,
     firstItemIndex,
@@ -77,6 +82,8 @@ export function ChatMessageList({
           position={position}
           isGroup={isGroup}
           onPreview={onPreview}
+          onReport={openReport}
+          onDelete={openDelete}
         />
       </>
     );
@@ -99,7 +106,12 @@ export function ChatMessageList({
           initialTopMostItemIndex={LATEST_MESSAGE}
           alignToBottom
           followOutput={followNewMessages}
+          // Small shifts after rows are measured still count as the bottom, so the jump button waits for a real scroll up.
+          atBottomThreshold={100}
           atBottomStateChange={handleAtBottomChange}
+          // Rows are drawn and measured before they reach the screen, and size fixes land in the same frame.
+          increaseViewportBy={{ top: 800, bottom: 400 }}
+          skipAnimationFrameInResizeObserver
           components={messageListComponents}
           className="min-h-0 flex-1"
           itemContent={renderMessage}
@@ -114,6 +126,14 @@ export function ChatMessageList({
         />
       ) : null}
       {isError && <UIQueryError retry={() => void refetch()} />}
+      <ReportDialog
+        open={messageToReport !== null}
+        onClose={closeReport}
+        title={t('report.message')}
+        targetType="message"
+        targetId={messageToReport?.id ?? ''}
+      />
+      <ChatDeleteDialog message={messageToDelete} onClose={closeDelete} />
     </div>
   );
 }

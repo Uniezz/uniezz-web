@@ -3,7 +3,7 @@ import { Virtuoso } from 'react-virtuoso';
 import { useMyCoinGrants } from '@/hooks';
 import { UIEmpty, UIQueryError } from '@/ui/components';
 import { listComponents } from '@/ui/virtuoso';
-import { coinGrantReasonLabel, formatCompactNumber } from '@/utils';
+import { coinGrantReasonLabel, formatCompactNumber, dateFormatter } from '@/utils';
 
 /** The coins the student has earned, newest first. */
 export function CoinGrants() {
@@ -11,7 +11,7 @@ export function CoinGrants() {
   const { data, isPending, isError, refetch, hasNextPage, isFetchingNextPage, fetchNextPage } =
     useMyCoinGrants();
   const grants = data?.pages.flatMap((page) => page.items ?? []) ?? [];
-  const formatDate = new Intl.DateTimeFormat(i18n.resolvedLanguage, {
+  const formatDate = dateFormatter(i18n.resolvedLanguage, {
     dateStyle: 'medium',
     timeStyle: 'short',
   });

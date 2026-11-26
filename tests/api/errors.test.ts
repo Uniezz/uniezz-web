@@ -56,6 +56,7 @@ test('web login and delete endpoints accept their expected 204 responses', async
   for (const path of [
     '/feed/posts/{id}',
     '/feed/comments/{id}',
+    '/chat/messages/{id}',
     '/profile/programmes/{id}',
     '/study/professors/{id}/review',
     '/moderation/course-comments/{id}',

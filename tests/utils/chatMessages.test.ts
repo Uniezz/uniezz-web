@@ -2,6 +2,7 @@ import { expect, test } from 'bun:test';
 import type { ChatMessageView } from '../../src/@types';
 import {
   createPendingMessage,
+  markMessageDeleted,
   mergeMessage,
   removeMessage,
   upsertMessage,
@@ -55,6 +56,14 @@ test('upsert puts the message in the newest page and removes it from older pages
 test('removing by client id drops only that message', () => {
   const data = removeMessage(pages([message(2), message(1)]), 'k2');
   expect(data?.pages[0].items?.map((m) => m.seq)).toEqual([1]);
+});
+
+test('a deleted message keeps its place but loses its content, also in an older page', () => {
+  const data = markMessageDeleted(pages([message(2)], [message(1)]), 'm1');
+  expect(data?.pages[1].items?.[0]).toMatchObject({ id: 'm1', seq: 1, body: null });
+  expect(data?.pages[1].items?.[0].deletedAt).toBeTruthy();
+  expect(data?.pages[0].items?.[0]).toMatchObject({ body: 'm2', deletedAt: null });
+  expect(markMessageDeleted(undefined, 'm1')).toBeUndefined();
 });
 
 test('the pending message carries the sender, text and client id', () => {

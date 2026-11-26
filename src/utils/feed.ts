@@ -7,6 +7,7 @@ import type {
   DatePreset,
 } from '@/@types';
 import type { PostSchema } from '@/schemas';
+import { dateFormatter } from './dateFormat';
 
 export async function uploadPostImages(
   files: File[],
@@ -60,7 +61,7 @@ export function postDate(post: PostDateInput, locale: string) {
   const date = new Date(post.eventDate ?? post.createdAt);
   return Number.isNaN(date.getTime())
     ? ''
-    : new Intl.DateTimeFormat(locale, {
+    : dateFormatter(locale, {
         month: 'short',
         day: 'numeric',
         hour: '2-digit',

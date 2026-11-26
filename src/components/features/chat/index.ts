@@ -1,6 +1,7 @@
 export * from './ChatAttachmentCard';
 export * from './ChatBubble';
 export * from './ChatComposer';
+export * from './ChatDeleteDialog';
 export * from './ChatDraftAttachments';
 export * from './ChatFileChip';
 export * from './ChatHeader';

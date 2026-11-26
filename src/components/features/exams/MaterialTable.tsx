@@ -6,7 +6,7 @@ import { useSearch } from '@tanstack/react-router';
 import type { StudyFile } from '@/@types';
 import { fixedTable, tableCellTextClass, tableHeaderCellClass } from '@/ui/virtuoso';
 import { PreviewStudyFileButton } from './PreviewStudyFileButton';
-import { studyFileTypeLabels, toast } from '@/utils';
+import { studyFileTypeLabels, toast, dateFormatter } from '@/utils';
 import { useDeleteStudyFile, useMyProfile, useStudyFiles } from '@/hooks';
 import { UIButton, UIDialog, UIEmpty, UIPanel, UIQueryError } from '@/ui/components';
 
@@ -23,7 +23,7 @@ export function MaterialTable() {
   const [toDelete, setToDelete] = useState<StudyFile | null>(null);
   const { mutate: deleteFile, isPending: isDeleting } = useDeleteStudyFile();
   const files = data?.pages.flatMap((page) => page.items ?? []) ?? [];
-  const date = new Intl.DateTimeFormat(i18n.language, { dateStyle: 'medium' });
+  const date = dateFormatter(i18n.language, { dateStyle: 'medium' });
 
   return (
     <UIPanel className="flex min-h-0 flex-1 flex-col overflow-hidden p-2">

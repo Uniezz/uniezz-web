@@ -46,6 +46,26 @@ export function removeMessage(data: ChatMessagePages | undefined, clientId: stri
   };
 }
 
+/** Empties a message and marks it as deleted, as the server does. */
+export function markMessageDeleted(data: ChatMessagePages | undefined, messageId: string) {
+  if (!data) return data;
+  const deleted = {
+    deletedAt: new Date().toISOString(),
+    body: null,
+    attachments: null,
+    payload: {},
+  };
+  return {
+    ...data,
+    pages: data.pages.map((page) => ({
+      ...page,
+      items:
+        page.items?.map((item) => (item.id === messageId ? { ...item, ...deleted } : item)) ??
+        page.items,
+    })),
+  };
+}
+
 /** The message the student sees right after pressing send, before the server answers. */
 export function createPendingMessage(
   { conversationId, body, clientId }: { conversationId: string; body?: string; clientId: string },
