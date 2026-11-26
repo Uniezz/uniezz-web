@@ -17,6 +17,7 @@ const reportTargetLabels = {
   file: 'moderation.targetFile',
   course: 'moderation.targetCourse',
   course_comment: 'moderation.targetCourseComment',
+  message: 'moderation.targetMessage',
   professor_review: 'moderation.targetProfessorReview',
 } as const;
 
@@ -56,7 +57,13 @@ export function snapshotPreview(snapshot: QueuedReport['snapshot']) {
   const name = [snapshotText(snapshot.firstName), snapshotText(snapshot.lastName)]
     .filter(Boolean)
     .join(' ');
-  const body = [snapshot.content, snapshot.description, snapshot.intent, snapshot.bio]
+  const body = [
+    snapshot.content,
+    snapshot.body,
+    snapshot.description,
+    snapshot.intent,
+    snapshot.bio,
+  ]
     .map(snapshotText)
     .filter(Boolean)
     .join('\n\n');

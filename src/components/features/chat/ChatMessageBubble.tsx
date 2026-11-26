@@ -71,14 +71,15 @@ export const ChatMessageBubble = memo(function ChatMessageBubble({
       <UIContextMenu
         options={options}
         onSelect={selectAction}
+        label={t('chat.messageActions')}
         align={outgoing ? 'end' : 'start'}
         className="group/message w-fit max-w-[80%] min-w-0"
       >
         <ChatBubble
           variant={outgoing ? 'out' : 'in'}
-          tail={endsGroup}
+          tail={endsGroup && !isDeleted}
           className={cn(
-            'max-w-full ring-inset group-has-[+:popover-open]/message:ring-2',
+            'max-w-full min-w-0 ring-inset group-has-[+:popover-open]/message:ring-2',
             outgoing ? 'ring-sky' : 'ring-blue',
             isDeleted && 'border-dashed bg-transparent py-2',
             isDeleted && (outgoing ? 'border-blue-40' : 'border-white-20'),
