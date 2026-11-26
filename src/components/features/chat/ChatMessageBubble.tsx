@@ -76,18 +76,19 @@ export const ChatMessageBubble = memo(function ChatMessageBubble({
       >
         <ChatBubble
           variant={outgoing ? 'out' : 'in'}
-          tail={endsGroup && !isDeleted}
+          tail={endsGroup}
           className={cn(
             'max-w-full ring-inset group-has-[+:popover-open]/message:ring-2',
             outgoing ? 'ring-sky' : 'ring-blue',
-            isDeleted && 'border-white-20 bg-transparent',
+            isDeleted && 'border-dashed bg-transparent py-2',
+            isDeleted && (outgoing ? 'border-blue-40' : 'border-white-20'),
           )}
           sender={showsSender ? <MessageSender sender={sender} /> : null}
           meta={isDeleted ? null : <MessageMeta message={message} outgoing={outgoing} />}
         >
           {isDeleted ? (
-            <p className="flex items-center gap-2 text-label text-secondary">
-              <Ban size={14} aria-hidden="true" />
+            <p className="flex items-center gap-1.5 text-detail text-white-60 italic">
+              <Ban size={13} aria-hidden="true" />
               {t('chat.messageDeleted')}
             </p>
           ) : null}
