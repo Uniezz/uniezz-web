@@ -14,6 +14,11 @@ export function ChatDeleteDialog({
 }) {
   const { t } = useTranslation();
   const { mutate: deleteMessage, isPending } = useDeleteMessage();
+
+  const handleDelete = () => {
+    if (message) deleteMessage(message, { onSuccess: onClose });
+  };
+
   return (
     <UIDialog
       open={message !== null}
@@ -24,12 +29,7 @@ export function ChatDeleteDialog({
       className="max-w-100"
     >
       <div className="flex flex-col gap-2">
-        <UIButton
-          size="pill"
-          bg="danger"
-          disabled={isPending}
-          onClick={() => message && deleteMessage(message, { onSuccess: onClose })}
-        >
+        <UIButton size="pill" bg="danger" disabled={isPending} onClick={handleDelete}>
           {t('chat.deleteForEveryone')}
         </UIButton>
         <UIButton size="pill" bg="transparent" disabled={isPending} onClick={onClose}>
