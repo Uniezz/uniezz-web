@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { useMyChallenges } from '@/hooks';
 import { UICoin, UIPanel } from '@/ui/components';
 import { cn } from '@/ui/cn';
-import { challengeText, formatCompactNumber } from '@/utils';
+import { challengeText, formatCompactNumber, dateFormatter } from '@/utils';
 
 /** Running challenges with their progress; each pays its reward once per period. */
 export function ChallengeCard() {
@@ -10,7 +10,7 @@ export function ChallengeCard() {
   const { data } = useMyChallenges();
   const challenges = data?.items ?? [];
   const language = i18n.resolvedLanguage;
-  const formatDate = new Intl.DateTimeFormat(language, { dateStyle: 'medium', timeStyle: 'short' });
+  const formatDate = dateFormatter(language, { dateStyle: 'medium', timeStyle: 'short' });
 
   // Loading and errors stay silent: challenges are optional extras next to the quests.
   if (challenges.length === 0) return null;

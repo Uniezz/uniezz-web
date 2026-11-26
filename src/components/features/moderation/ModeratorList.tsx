@@ -4,7 +4,7 @@ import { UserMinus } from 'lucide-react';
 import { useModerators, useRevokeModerator } from '@/hooks';
 import { UIEmpty, UIQueryError } from '@/ui/components';
 import { listComponents } from '@/ui/virtuoso';
-import { authorName } from '@/utils';
+import { authorName, dateFormatter } from '@/utils';
 import { ConfirmActionButton } from './ConfirmActionButton';
 import { ModeratorSearch } from './ModeratorSearch';
 
@@ -15,7 +15,7 @@ export function ModeratorList() {
     useModerators();
   const { mutateAsync: revoke } = useRevokeModerator();
   const moderators = data?.pages.flatMap((page) => page.items ?? []) ?? [];
-  const formatDate = new Intl.DateTimeFormat(i18n.resolvedLanguage, { dateStyle: 'medium' });
+  const formatDate = dateFormatter(i18n.resolvedLanguage, { dateStyle: 'medium' });
 
   return (
     <div className="grid min-h-0 flex-1 gap-6 lg:grid-cols-2">

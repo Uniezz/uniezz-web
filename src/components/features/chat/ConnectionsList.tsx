@@ -5,7 +5,7 @@ import { useConnectionsList, useUniversities } from '@/hooks';
 import { Virtuoso } from 'react-virtuoso';
 import { UIAvatar, UIEmpty, UIQueryError } from '@/ui/components';
 import { listComponents } from '@/ui/virtuoso';
-import { authorName } from '@/utils';
+import { authorName, dateFormatter } from '@/utils';
 
 export type ConnectionsListProps = {
   selected: string;
@@ -55,7 +55,7 @@ export function ConnectionsList({ selected, onOpen }: ConnectionsListProps) {
             <div className="space-y-2 px-2.5 pb-3">
               <p className="text-detail text-secondary">
                 {t(`app.${mode}`)} ·{' '}
-                {new Intl.DateTimeFormat(i18n.language, { dateStyle: 'medium' }).format(
+                {dateFormatter(i18n.language, { dateStyle: 'medium' }).format(
                   new Date(connectedAt),
                 )}
               </p>

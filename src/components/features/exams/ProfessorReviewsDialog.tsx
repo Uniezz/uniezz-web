@@ -2,7 +2,7 @@ import type { ProfessorReviewsDialogProps } from '@/@types';
 import { useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Virtuoso } from 'react-virtuoso';
-import { toast } from '@/utils';
+import { toast, dateFormatter } from '@/utils';
 import { useDeleteProfessorReview, useProfessorReviews, useReviewProfessor } from '@/hooks';
 import { courseCommentSchema } from '@/schemas';
 import { UIButton, UIDialog, UIDialogFooter, UIField, UIQueryError } from '@/ui/components';
@@ -130,7 +130,7 @@ export function ProfessorReviewsDialog({ professor, onClose }: ProfessorReviewsD
                     </p>
                     <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2">
                       <time dateTime={review.updatedAt} className="text-detail text-secondary">
-                        {new Intl.DateTimeFormat(i18n.language, {
+                        {dateFormatter(i18n.language, {
                           dateStyle: 'medium',
                           timeStyle: 'short',
                         }).format(new Date(review.updatedAt))}

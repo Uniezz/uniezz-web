@@ -1,4 +1,5 @@
 import type { ChatConversation, ChatMessage } from '@/@types';
+import { dateFormatter } from './dateFormat';
 import { authorName } from './feed';
 
 /** The name shown for a chat: the group name, or the other student. */
@@ -39,7 +40,7 @@ export function chatTime(iso: string, locale: string, now = new Date()) {
   const date = new Date(iso);
   if (Number.isNaN(date.getTime())) return '';
   const sameDay = date.toDateString() === now.toDateString();
-  return new Intl.DateTimeFormat(
+  return dateFormatter(
     locale,
     sameDay ? { hour: '2-digit', minute: '2-digit' } : { day: 'numeric', month: 'short' },
   ).format(date);

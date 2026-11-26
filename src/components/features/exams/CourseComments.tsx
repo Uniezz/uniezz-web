@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Virtuoso } from 'react-virtuoso';
-import { toast } from '@/utils';
+import { toast, dateFormatter } from '@/utils';
 import { useCourseComments, useDeleteCourseComment } from '@/hooks';
 import { UIButton, UIDialog, UIQueryError } from '@/ui/components';
 import { listComponents } from '@/ui/virtuoso';
@@ -50,7 +50,7 @@ export function CourseComments({ courseId }: { courseId: string }) {
                 </p>
                 <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2">
                   <time dateTime={comment.createdAt} className="text-detail text-secondary">
-                    {new Intl.DateTimeFormat(i18n.language, {
+                    {dateFormatter(i18n.language, {
                       dateStyle: 'medium',
                       timeStyle: 'short',
                     }).format(new Date(comment.createdAt))}

@@ -6,7 +6,7 @@ import type { Challenge } from '@/@types';
 import { useArchiveChallenge, useChallenges } from '@/hooks';
 import { UIButton, UIEmpty, UIPanel, UIQueryError } from '@/ui/components';
 import { listComponents } from '@/ui/virtuoso';
-import { challengeActionLabel, challengePeriodLabels, challengeText } from '@/utils';
+import { challengeActionLabel, challengePeriodLabels, challengeText, dateFormatter } from '@/utils';
 import { ChallengeFormDialog } from './ChallengeFormDialog';
 import { ConfirmActionButton } from './ConfirmActionButton';
 
@@ -19,7 +19,7 @@ export function ChallengeAdmin() {
   // `null`: the dialog creates a new challenge.
   const [editing, setEditing] = useState<Challenge | null | undefined>(undefined);
   const challenges = data?.pages.flatMap((page) => page.items ?? []) ?? [];
-  const formatDate = new Intl.DateTimeFormat(i18n.resolvedLanguage, {
+  const formatDate = dateFormatter(i18n.resolvedLanguage, {
     dateStyle: 'medium',
     timeStyle: 'short',
   });
