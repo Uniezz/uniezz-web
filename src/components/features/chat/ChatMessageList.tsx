@@ -106,6 +106,8 @@ export function ChatMessageList({
           initialTopMostItemIndex={LATEST_MESSAGE}
           alignToBottom
           followOutput={followNewMessages}
+          // Small shifts after rows are measured still count as the bottom, so the jump button waits for a real scroll up.
+          atBottomThreshold={100}
           atBottomStateChange={handleAtBottomChange}
           // Rows are drawn and measured before they reach the screen, and size fixes land in the same frame.
           increaseViewportBy={{ top: 800, bottom: 400 }}
