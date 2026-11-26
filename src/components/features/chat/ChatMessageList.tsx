@@ -107,6 +107,9 @@ export function ChatMessageList({
           alignToBottom
           followOutput={followNewMessages}
           atBottomStateChange={handleAtBottomChange}
+          // Rows are drawn and measured before they reach the screen, and size fixes land in the same frame.
+          increaseViewportBy={{ top: 800, bottom: 400 }}
+          skipAnimationFrameInResizeObserver
           components={messageListComponents}
           className="min-h-0 flex-1"
           itemContent={renderMessage}
