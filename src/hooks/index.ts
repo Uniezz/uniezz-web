@@ -7,6 +7,7 @@ export * from './useProfiles';
 export * from './useDropdown';
 export * from './useFaq';
 export * from './useChat';
+export * from './useChatMessageDialogs';
 export * from './useChatMessageList';
 export * from './useChatMessageMenu';
 export * from './useConnections';

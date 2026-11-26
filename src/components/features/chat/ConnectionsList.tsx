@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router';
+import type { Connection } from '@/@types';
 import { MatchActions } from '@/components/features/connections';
 import { useTranslation } from 'react-i18next';
 import { useConnectionsList, useUniversities } from '@/hooks';
@@ -12,6 +13,8 @@ export type ConnectionsListProps = {
   onOpen: (id: string) => void;
 };
 
+const connectionKey = (_: number, { id }: Connection) => id;
+
 export function ConnectionsList({ selected, onOpen }: ConnectionsListProps) {
   const { t, i18n } = useTranslation();
   const { data, isPending, isError, refetch, hasNextPage, isFetchingNextPage, fetchNextPage } =
@@ -21,57 +24,57 @@ export function ConnectionsList({ selected, onOpen }: ConnectionsListProps) {
 
   if (!isPending && !isError && connections.length === 0) return <UIEmpty />;
 
+  const loadMore = () => {
+    if (hasNextPage && !isFetchingNextPage && !isError) void fetchNextPage();
+  };
+
+  const renderConnection = (_: number, { id, profile, mode, connectedAt }: Connection) => (
+    <div role="listitem" className="pb-0.5">
+      <button
+        type="button"
+        data-ph-capture-attribute-label="Open connection"
+        onClick={() => onOpen(profile.id)}
+        aria-current={selected === profile.id ? 'true' : undefined}
+        className={`flex w-full items-center gap-3 rounded-2xl border border-transparent p-2.5 text-left transition-colors hover:bg-white-5 ${selected === profile.id ? 'border-white-10 bg-white-10' : ''}`}
+      >
+        <UIAvatar imgSrc={profile.avatarUrl ?? undefined} alt="" />
+        <span className="grid min-w-0 flex-1 grid-cols-[minmax(0,1fr)_auto] items-center gap-x-2 gap-y-0.75">
+          <strong className="truncate text-body font-semibold">{authorName(profile)}</strong>
+          <span className="justify-self-end text-detail text-secondary">{t('app.sayHi')}</span>
+          <span className="block min-h-5 truncate text-label text-secondary">
+            {universities.find((university) => university.id === profile.universityId)?.name}
+          </span>
+        </span>
+      </button>
+      <div className="space-y-2 px-2.5 pb-3">
+        <p className="text-detail text-secondary">
+          {t(`app.${mode}`)} ·{' '}
+          {dateFormatter(i18n.language, { dateStyle: 'medium' }).format(new Date(connectedAt))}
+        </p>
+        <Link
+          to="/connections/students/$profileId"
+          params={{ profileId: profile.id }}
+          search={{ studentSearch: undefined }}
+          data-ph-capture-attribute-label="Open matched profile"
+          className="text-detail underline focus-visible:outline-2 focus-visible:outline-blue"
+        >
+          {t('connections.viewProfile')}
+        </Link>
+        <MatchActions connectionId={id} studentId={profile.id} />
+      </div>
+    </div>
+  );
+
   return (
     <>
       <Virtuoso
         data={connections}
-        computeItemKey={(_, { id }) => id}
-        endReached={() => {
-          if (hasNextPage && !isFetchingNextPage && !isError) void fetchNextPage();
-        }}
+        computeItemKey={connectionKey}
+        endReached={loadMore}
         components={listComponents}
         aria-label={t('connections.title')}
         className="min-h-0 flex-1"
-        itemContent={(_, { id, profile, mode, connectedAt }) => (
-          <div role="listitem" className="pb-0.5">
-            <button
-              type="button"
-              data-ph-capture-attribute-label="Open connection"
-              onClick={() => onOpen(profile.id)}
-              aria-current={selected === profile.id ? 'true' : undefined}
-              className={`flex w-full items-center gap-3 rounded-2xl border border-transparent p-2.5 text-left transition-colors hover:bg-white-5 ${selected === profile.id ? 'border-white-10 bg-white-10' : ''}`}
-            >
-              <UIAvatar imgSrc={profile.avatarUrl ?? undefined} alt="" />
-              <span className="grid min-w-0 flex-1 grid-cols-[minmax(0,1fr)_auto] items-center gap-x-2 gap-y-0.75">
-                <strong className="truncate text-body font-semibold">{authorName(profile)}</strong>
-                <span className="justify-self-end text-detail text-secondary">
-                  {t('app.sayHi')}
-                </span>
-                <span className="block min-h-5 truncate text-label text-secondary">
-                  {universities.find((university) => university.id === profile.universityId)?.name}
-                </span>
-              </span>
-            </button>
-            <div className="space-y-2 px-2.5 pb-3">
-              <p className="text-detail text-secondary">
-                {t(`app.${mode}`)} ·{' '}
-                {dateFormatter(i18n.language, { dateStyle: 'medium' }).format(
-                  new Date(connectedAt),
-                )}
-              </p>
-              <Link
-                to="/connections/students/$profileId"
-                params={{ profileId: profile.id }}
-                search={{ studentSearch: undefined }}
-                data-ph-capture-attribute-label="Open matched profile"
-                className="text-detail underline focus-visible:outline-2 focus-visible:outline-blue"
-              >
-                {t('connections.viewProfile')}
-              </Link>
-              <MatchActions connectionId={id} studentId={profile.id} />
-            </div>
-          </div>
-        )}
+        itemContent={renderConnection}
       />
       {isError && <UIQueryError retry={() => void refetch()} />}
     </>

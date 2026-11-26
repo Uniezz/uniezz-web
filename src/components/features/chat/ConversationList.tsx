@@ -47,6 +47,7 @@ export function ConversationList({
     useConversations();
   const form = useForm<{ search: string }>({ defaultValues: { search: '' } });
   const { search = '' } = useWatch({ control: form.control });
+  const changeSearch = (value: string) => form.setValue('search', value);
   const conversations = (data?.pages.flatMap((page) => page.items ?? []) ?? []).map((c) => ({
     ...c,
     title: chatTitle(c, t('app.accountDeleted')),
@@ -66,11 +67,7 @@ export function ConversationList({
         </UIButton>
       </div>
       <div className="px-2">
-        <UISearch
-          value={search}
-          onChange={(search) => form.setValue('search', search)}
-          label={t('app.searchConversations')}
-        />
+        <UISearch value={search} onChange={changeSearch} label={t('app.searchConversations')} />
       </div>
       <div className="my-3.5 px-2 [&_button]:min-h-8 [&_button]:px-3.5 [&_button]:py-1.5 [&_button]:text-detail">
         <UISegmented

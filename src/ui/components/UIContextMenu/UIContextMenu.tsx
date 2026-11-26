@@ -39,6 +39,11 @@ export const UIContextMenu = ({
     else open();
   }
 
+  function selectOption(value: string) {
+    document.getElementById(menuId)?.hidePopover();
+    onSelect(value);
+  }
+
   return (
     <>
       <div
@@ -65,10 +70,7 @@ export const UIContextMenu = ({
             positionTryFallbacks: 'flip-block, flip-inline, flip-block flip-inline',
           }}
           className="max-h-72 overflow-y-auto bg-surface not-open:hidden"
-          onSelect={(value) => {
-            document.getElementById(menuId)?.hidePopover();
-            onSelect(value);
-          }}
+          onSelect={selectOption}
         />
       ) : null}
     </>

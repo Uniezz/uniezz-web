@@ -21,6 +21,7 @@ export type Gender = 'male' | 'female';
 export type DiscoveryCard = components['schemas']['Card'];
 export type Discovery = components['schemas']['DiscoverOutputBody'];
 
+export type Connection = components['schemas']['Connection'];
 export type ConnectionPreferences = components['schemas']['Preferences'];
 export type UpdateConnectionPreferencesInput = components['schemas']['SavePreferencesInputBody'];
 export type ActOnCandidateInput = components['schemas']['ActOnCandidateInputBody'];

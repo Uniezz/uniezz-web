@@ -1,10 +1,10 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Virtuoso, type VirtuosoHandle } from 'react-virtuoso';
 
 import type { ChatMessageView, ChatUnreadAtOpen } from '@/@types';
 import { ReportDialog } from '@/components/features/reports';
-import { useChatMessageList } from '@/hooks';
+import { useChatMessageDialogs, useChatMessageList } from '@/hooks';
 import { UIEmpty, UIQueryError } from '@/ui/components';
 import { listComponents } from '@/ui/virtuoso';
 import { chatDay, LATEST_MESSAGE, messageKey } from '@/utils';
@@ -40,8 +40,8 @@ export function ChatMessageList({
   const { t, i18n } = useTranslation();
   const list = useRef<VirtuosoHandle>(null);
   // One dialog of each kind for the list, because a row is removed from the page when it scrolls away.
-  const [messageToReport, setMessageToReport] = useState<ChatMessageView | null>(null);
-  const [messageToDelete, setMessageToDelete] = useState<ChatMessageView | null>(null);
+  const { messageToReport, messageToDelete, openReport, openDelete, closeReport, closeDelete } =
+    useChatMessageDialogs();
   const {
     messages,
     firstItemIndex,
@@ -82,8 +82,8 @@ export function ChatMessageList({
           position={position}
           isGroup={isGroup}
           onPreview={onPreview}
-          onReport={setMessageToReport}
-          onDelete={setMessageToDelete}
+          onReport={openReport}
+          onDelete={openDelete}
         />
       </>
     );
@@ -128,12 +128,12 @@ export function ChatMessageList({
       {isError && <UIQueryError retry={() => void refetch()} />}
       <ReportDialog
         open={messageToReport !== null}
-        onClose={() => setMessageToReport(null)}
+        onClose={closeReport}
         title={t('report.message')}
         targetType="message"
         targetId={messageToReport?.id ?? ''}
       />
-      <ChatDeleteDialog message={messageToDelete} onClose={() => setMessageToDelete(null)} />
+      <ChatDeleteDialog message={messageToDelete} onClose={closeDelete} />
     </div>
   );
 }

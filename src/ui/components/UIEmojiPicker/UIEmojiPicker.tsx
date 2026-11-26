@@ -1,5 +1,6 @@
-import { EmojiPicker } from 'frimousse';
+import { EmojiPicker, type Emoji, type EmojiPickerListComponents } from 'frimousse';
 import { FaceSlightlySmiling } from 'lucide-react';
+import type { KeyboardEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useDropdown } from '@/hooks';
@@ -16,12 +17,28 @@ export type UIEmojiPickerProps = {
   className?: string;
 };
 
+const emojiListComponents: Partial<EmojiPickerListComponents> = {
+  CategoryHeader: ({ category, ...props }) => (
+    <div
+      {...props}
+      className="rounded-md bg-surface px-2 py-1.5 text-micro font-semibold text-secondary backdrop-blur-xl"
+    >
+      {category.label}
+    </div>
+  ),
+  Emoji: ({ emoji, ...props }) => (
+    <button type="button" {...props} className={emojiStyles()}>
+      {emoji.emoji}
+    </button>
+  ),
+};
+
 /** Inserts the picked emoji at the cursor of the nearest surrounding textarea, or gives it to `onPick`. */
 export const UIEmojiPicker = ({ align, disabled, onPick, className }: UIEmojiPickerProps) => {
   const { t, i18n } = useTranslation();
   const { ref, isOpen, toggle, close } = useDropdown();
 
-  function pick(emoji: string) {
+  function pick({ emoji }: Emoji) {
     if (onPick) {
       onPick(emoji);
       close();
@@ -37,17 +54,15 @@ export const UIEmojiPicker = ({ align, disabled, onPick, className }: UIEmojiPic
     close();
   }
 
+  function closeOnEscape(event: KeyboardEvent<HTMLDivElement>) {
+    if (event.key === 'Escape' && isOpen) {
+      event.stopPropagation();
+      close();
+    }
+  }
+
   return (
-    <div
-      ref={ref}
-      className={cn('relative flex', className)}
-      onKeyDown={(event) => {
-        if (event.key === 'Escape' && isOpen) {
-          event.stopPropagation();
-          close();
-        }
-      }}
-    >
+    <div ref={ref} className={cn('relative flex', className)} onKeyDown={closeOnEscape}>
       <UIButton
         size="icon"
         bg="transparent"
@@ -63,7 +78,7 @@ export const UIEmojiPicker = ({ align, disabled, onPick, className }: UIEmojiPic
         <EmojiPicker.Root
           locale={i18n.resolvedLanguage ?? 'en'}
           columns={8}
-          onEmojiSelect={({ emoji }) => pick(emoji)}
+          onEmojiSelect={pick}
           className={emojiPickerStyles({ align })}
         >
           <EmojiPicker.Search
@@ -79,23 +94,7 @@ export const UIEmojiPicker = ({ align, disabled, onPick, className }: UIEmojiPic
             <EmojiPicker.Empty className="p-3 text-detail text-secondary">
               {t('app.noEmoji')}
             </EmojiPicker.Empty>
-            <EmojiPicker.List
-              components={{
-                CategoryHeader: ({ category, ...props }) => (
-                  <div
-                    {...props}
-                    className="rounded-md bg-surface px-2 py-1.5 text-micro font-semibold text-secondary backdrop-blur-xl"
-                  >
-                    {category.label}
-                  </div>
-                ),
-                Emoji: ({ emoji, ...props }) => (
-                  <button type="button" {...props} className={emojiStyles()}>
-                    {emoji.emoji}
-                  </button>
-                ),
-              }}
-            />
+            <EmojiPicker.List components={emojiListComponents} />
           </EmojiPicker.Viewport>
         </EmojiPicker.Root>
       )}

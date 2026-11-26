@@ -19,6 +19,14 @@ const reasons = [
 
 export type ReportTargetType = components['schemas']['CreateReportInputBody']['targetType'];
 
+/** The message for a failed report: a repeat report, too many reports, or any other error. */
+function reportErrorKey(error: unknown) {
+  const status = error instanceof ApiRequestError ? error.status : undefined;
+  if (status === 409) return 'report.duplicate';
+  if (status === 429) return 'report.rateLimit';
+  return 'apiState.error';
+}
+
 export function ReportDialog({
   open,
   onClose,
@@ -53,6 +61,20 @@ export function ReportDialog({
     resetMutation();
   }
 
+  async function submitReport({ reason, details }: ReportSchema) {
+    try {
+      await createReport({ targetType, targetId, reason, details: details || undefined });
+      close();
+      toast.success(t('report.sent'));
+    } catch (error) {
+      toast.error(t(reportErrorKey(error)));
+    }
+  }
+
+  const onSubmit = handleSubmit(submitReport, () =>
+    captureAnalytics('report_form_validation_failed'),
+  );
+
   return (
     <UIDialog
       open={open}
@@ -61,30 +83,7 @@ export function ReportDialog({
       title={title}
       description={t('report.description')}
     >
-      <form
-        className="space-y-4"
-        onSubmit={handleSubmit(
-          async ({ reason, details }) => {
-            try {
-              await createReport({ targetType, targetId, reason, details: details || undefined });
-              close();
-              toast.success(t('report.sent'));
-            } catch (error) {
-              const status = error instanceof ApiRequestError ? error.status : undefined;
-              toast.error(
-                t(
-                  status === 409
-                    ? 'report.duplicate'
-                    : status === 429
-                      ? 'report.rateLimit'
-                      : 'apiState.error',
-                ),
-              );
-            }
-          },
-          () => captureAnalytics('report_form_validation_failed'),
-        )}
-      >
+      <form className="space-y-4" onSubmit={onSubmit}>
         <fieldset disabled={isPending} className="space-y-4">
           <UIField label={t('report.reason')} error={errors.reason ? t('app.required') : undefined}>
             <Controller
