@@ -1,4 +1,4 @@
-import { captureAnalytics, toast } from '@/utils';
+import { apiErrorKey, captureAnalytics, toast } from '@/utils';
 import { useState } from 'react';
 import { Building2, Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -52,8 +52,8 @@ export function AddProgramme({
       });
       toast.success(t('app.saved'));
       setOpen(false);
-    } catch {
-      toast.error(t('apiState.profileSaveError'));
+    } catch (error) {
+      toast.error(t(apiErrorKey(error, 'apiState.profileSaveError')));
     }
   }
 

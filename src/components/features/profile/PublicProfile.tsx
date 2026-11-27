@@ -9,6 +9,8 @@ import { ReportButton } from '@/components/features/reports';
 import { BanButton, GrantModeratorButton } from '@/components/features/moderation';
 import { authorName, isAdmin, isStaff, profileUrl } from '@/utils';
 import { cn } from '@/ui/cn';
+import { FollowButton } from './FollowButton';
+import { ProfileFollows } from './ProfileFollows';
 
 export function PublicProfile({ profile }: PublicProfileProps) {
   const { t } = useTranslation();
@@ -104,6 +106,15 @@ export function PublicProfile({ profile }: PublicProfileProps) {
                 </>
               )}
             </p>
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-3 pt-1">
+              <ProfileFollows
+                profileId={profile.id}
+                name={authorName(profile) || t('apiState.student')}
+                followersCount={profile.followersCount}
+                followingCount={profile.followingCount}
+              />
+              {me && !isMe && <FollowButton profile={profile} />}
+            </div>
             {profile.email && (
               <a
                 href={`mailto:${profile.email}`}

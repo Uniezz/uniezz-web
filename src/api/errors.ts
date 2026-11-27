@@ -74,6 +74,7 @@ export const apiMiddleware: Middleware = {
               '/moderation/users/{id}/ban',
               '/profile/onboarding',
               '/media/images/{id}/review',
+              '/profiles/{id}/follow',
             ].includes(schemaPath)) ||
           (request.method === 'POST' &&
             ['/auth/otp/request', '/auth/otp/verify', '/auth/exchange'].includes(schemaPath)) ||
@@ -91,6 +92,7 @@ export const apiMiddleware: Middleware = {
               '/profile/banner',
               '/profile/me',
               '/profile/photos/{id}',
+              '/profiles/{id}/follow',
               '/moderation/comments/{id}',
               '/moderation/courses/{id}',
               '/moderation/files/{id}',

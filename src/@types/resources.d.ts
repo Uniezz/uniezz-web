@@ -4,6 +4,7 @@ export default interface Resources {
     "apiState": {
       "commentDeleted": "Comment deleted",
       "commentRateLimit": "You are commenting too often. Wait a moment and try again.",
+      "contentNotAllowed": "This text contains words that aren't allowed. Change it and try again.",
       "deleteCommentDescription": "This comment will be deleted.",
       "deleteCommentTitle": "Delete comment?",
       "deletePostDescription": "The post and its comments will be deleted.",
@@ -353,6 +354,15 @@ export default interface Resources {
       "title": "Feed",
       "today": "Today",
       "type": "Post type"
+    },
+    "follows": {
+      "empty": "Nobody here yet.",
+      "follow": "Follow",
+      "followed": "You're following them now.",
+      "followers": "Followers",
+      "following": "Following",
+      "unfollow": "Unfollow",
+      "unfollowed": "You unfollowed them."
     },
     "landing": {
       "appsDownload": "Download on the",

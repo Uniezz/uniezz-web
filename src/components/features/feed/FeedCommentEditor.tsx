@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { toast } from '@/utils';
+import { apiErrorKey, toast } from '@/utils';
 import type { FeedComment } from '@/@types';
 import { useUpdateFeedComment } from '@/hooks';
 import { UIButton, UIEmojiPicker } from '@/ui/components';
@@ -27,8 +27,8 @@ export function FeedCommentEditor({
         try {
           await updateComment({ id: comment.id, content: result.data });
           onClose();
-        } catch {
-          toast.error(t('apiState.error'));
+        } catch (error) {
+          toast.error(t(apiErrorKey(error)));
         }
       }}
     >

@@ -14,7 +14,7 @@ import {
   useUploadStudyMaterial,
 } from '@/hooks';
 import { createCourseFormSchema } from '@/schemas';
-import { captureAnalytics, toast } from '@/utils';
+import { apiErrorKey, captureAnalytics, toast } from '@/utils';
 import { canUploadCourseMaterial, courseFormDefaults, studyFileTypeLabels } from '@/utils';
 import {
   UIButton,
@@ -115,8 +115,8 @@ export function CourseFormDialog({ course, onClose }: CourseFormDialogProps) {
       }
       toast.success(t('courses.created'));
       onClose(true);
-    } catch {
-      toast.error(t('apiState.error'));
+    } catch (error) {
+      toast.error(t(apiErrorKey(error)));
     }
   }
   return (

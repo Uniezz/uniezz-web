@@ -28,7 +28,8 @@
     "student": "Student",
     "titleError": "Wpisz od 3 do 150 znaków.",
     "unlike": "Usuń polubienie",
-    "unsave": "Usuń z zapisanych"
+    "unsave": "Usuń z zapisanych",
+    "contentNotAllowed": "Ten tekst zawiera niedozwolone słowa. Zmień go i spróbuj ponownie."
   },
   "app": {
     "accountDeleted": "Konto zostało usunięte",
@@ -791,5 +792,14 @@
     "profileGone": "Nie znaleźliśmy tego profilu",
     "courseGone": "Nie znaleźliśmy tego przedmiotu",
     "professorGone": "Nie znaleźliśmy tego wykładowcy"
+  },
+  "follows": {
+    "follow": "Obserwuj",
+    "followers": "Obserwujący",
+    "following": "Obserwowani",
+    "empty": "Nikogo tu jeszcze nie ma.",
+    "unfollow": "Przestań obserwować",
+    "followed": "Obserwujesz tę osobę.",
+    "unfollowed": "Nie obserwujesz już tej osoby."
   }
 }

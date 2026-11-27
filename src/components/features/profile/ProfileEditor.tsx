@@ -1,4 +1,4 @@
-import { captureAnalytics, profileUrl, toast } from '@/utils';
+import { apiErrorKey, captureAnalytics, profileUrl, toast } from '@/utils';
 import { Check } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { FormProvider } from 'react-hook-form';
@@ -69,8 +69,8 @@ export function ProfileEditor({
                   try {
                     await saveProfile(data);
                     toast.success(t('app.saved'));
-                  } catch {
-                    toast.error(t('apiState.profileSaveError'));
+                  } catch (error) {
+                    toast.error(t(apiErrorKey(error, 'apiState.profileSaveError')));
                   }
                 },
                 () => captureAnalytics('profile_form_validation_failed'),

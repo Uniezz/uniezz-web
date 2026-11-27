@@ -28,7 +28,8 @@
     "student": "Alumno",
     "titleError": "Utilice entre 3 y 150 caracteres.",
     "unlike": "A diferencia de",
-    "unsave": "Dejar de guardar"
+    "unsave": "Dejar de guardar",
+    "contentNotAllowed": "Este texto contiene palabras no permitidas. Cámbialo y vuelve a intentarlo."
   },
   "app": {
     "accountDeleted": "Cuenta eliminada",
@@ -790,5 +791,14 @@
     "profileGone": "No encontramos este perfil",
     "courseGone": "No encontramos esta asignatura",
     "professorGone": "No encontramos este profesor"
+  },
+  "follows": {
+    "follow": "Seguir",
+    "followers": "Seguidores",
+    "following": "Seguidos",
+    "empty": "Aún no hay nadie aquí.",
+    "unfollow": "Dejar de seguir",
+    "followed": "Ahora sigues a esta persona.",
+    "unfollowed": "Ya no sigues a esta persona."
   }
 }

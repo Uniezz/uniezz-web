@@ -1,7 +1,7 @@
 import type { ConnectionPreferencesFormProps, ConnectionPreferencesProps } from '@/@types';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { toast } from '@/utils';
+import { apiErrorKey, toast } from '@/utils';
 import { apiErrorCode } from '@/api';
 import { useMyConnectionPreferences, useUpdateMyConnectionPreferences } from '@/hooks';
 import { UIField, UIQueryError } from '@/ui/components';
@@ -48,7 +48,7 @@ function ConnectionPreferencesForm({
             ? 'connections.datingRequiresAdult'
             : code === 'dating_requires_profile'
               ? 'connections.datingRequiresProfile'
-              : 'apiState.error',
+              : apiErrorKey(error),
         ),
       );
     }

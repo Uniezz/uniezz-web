@@ -3,7 +3,7 @@ import { useId, useState, type FormEvent } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { Flame, Pencil, Trash2 } from 'lucide-react';
-import { courseUrl, toast } from '@/utils';
+import { apiErrorKey, courseUrl, toast } from '@/utils';
 import {
   useAddCourseComment,
   useCourse,
@@ -49,8 +49,8 @@ export function CourseDetailsDialog({ courseId, onClose }: CourseDetailsDialogPr
       await addComment({ courseId, body: result.data });
       setComment('');
       toast.success(t('courses.commentAdded'));
-    } catch {
-      toast.error(t('apiState.error'));
+    } catch (error) {
+      toast.error(t(apiErrorKey(error)));
     }
   }
   return (

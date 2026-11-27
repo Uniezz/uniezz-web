@@ -4,7 +4,7 @@ import { useController, useFormContext, useWatch } from 'react-hook-form';
 import { Camera, ImagePlus, LogOut, Trash2, X } from 'lucide-react';
 
 import { useSignOut, useUniversities } from '@/hooks';
-import { useDeleteMyProfile, useUpdateProfileLanguage } from '@/hooks';
+import { useDeleteMyProfile, useMyProfile, useUpdateProfileLanguage } from '@/hooks';
 import {
   UIButton,
   UIDialog,
@@ -17,6 +17,7 @@ import { type ProfileFormSchema } from '@/schemas';
 import { apiErrorCode } from '@/api';
 import { readImageFile, toast } from '@/utils';
 import { cn } from '@/ui/cn';
+import { ProfileFollows } from './ProfileFollows';
 
 export function ProfileIdentity({
   universityId,
@@ -31,6 +32,7 @@ export function ProfileIdentity({
   const { mutate: signOut, isPending: isSigningOut } = useSignOut();
   const { mutateAsync: deleteMyProfile, isPending: isDeletingProfile } = useDeleteMyProfile();
   const { mutate: updateLanguage } = useUpdateProfileLanguage();
+  const { data: me } = useMyProfile();
   const { t } = useTranslation();
   const {
     control,
@@ -194,6 +196,14 @@ export function ProfileIdentity({
             {universities?.find((item) => item.id === universityId)?.name ??
               universityId.toUpperCase()}
           </p>
+          {me && (
+            <ProfileFollows
+              name={t('app.yourProfile')}
+              followersCount={me.followersCount}
+              followingCount={me.followingCount}
+              className="mt-4 justify-center [&_button]:text-center"
+            />
+          )}
           {errors.avatarFile && (
             <p role="alert" className="mt-3 text-detail text-warning">
               {t('app.photoError')}

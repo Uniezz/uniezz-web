@@ -8,7 +8,7 @@ import { AuthLayout } from '@/components/auth';
 import { useCompleteOnboarding, useMyProfile, useProfileForm } from '@/hooks';
 import { UIButton, UIUnsavedChanges } from '@/ui/components';
 import { cn } from '@/ui/cn';
-import { captureAnalytics, takeReturnPath, toast } from '@/utils';
+import { apiErrorKey, captureAnalytics, takeReturnPath, toast } from '@/utils';
 import { PersonalDetails, StudyProgrammes } from '../profile';
 import { ONBOARDING_STEPS, OnboardingAside } from './OnboardingAside';
 import { OnboardingPhoto } from './OnboardingPhoto';
@@ -32,8 +32,8 @@ export function OnboardingWizard({ profile }: { profile: components['schemas']['
       try {
         if (isDirty) await saveProfile(data);
         setStep(2);
-      } catch {
-        toast.error(t('apiState.profileSaveError'));
+      } catch (error) {
+        toast.error(t(apiErrorKey(error, 'apiState.profileSaveError')));
       }
     },
     () => captureAnalytics('profile_form_validation_failed'),

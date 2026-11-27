@@ -2,7 +2,7 @@ import { useId } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { toast } from '@/utils';
+import { apiErrorKey, toast } from '@/utils';
 import { useCreateFaqProposal } from '@/hooks';
 import { faqProposalSchema, type FaqProposalFormSchema } from '@/schemas';
 import { UIButton, UIDialog, UIDialogFooter, UIField } from '@/ui/components';
@@ -27,8 +27,8 @@ export function FaqProposalDialog({ open, onClose }: { open: boolean; onClose: (
       reset();
       toast.success(t('faq.proposalSent'));
       onClose();
-    } catch {
-      toast.error(t('apiState.error'));
+    } catch (error) {
+      toast.error(t(apiErrorKey(error)));
     }
   }
 

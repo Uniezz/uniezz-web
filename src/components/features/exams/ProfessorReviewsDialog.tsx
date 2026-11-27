@@ -2,7 +2,7 @@ import type { ProfessorReviewsDialogProps } from '@/@types';
 import { useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Virtuoso } from 'react-virtuoso';
-import { professorUrl, toast } from '@/utils';
+import { apiErrorKey, professorUrl, toast } from '@/utils';
 import {
   useDeleteProfessorReview,
   useLeaveWhenGone,
@@ -51,8 +51,8 @@ export function ProfessorReviewsDialog({ professorId, onClose }: ProfessorReview
       setContent('');
       setIsEditing(false);
       toast.success(t('professors.reviewSaved'));
-    } catch {
-      toast.error(t('apiState.error'));
+    } catch (error) {
+      toast.error(t(apiErrorKey(error)));
     }
   }
 

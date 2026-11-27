@@ -1,6 +1,19 @@
 import posthog from 'posthog-js';
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { deleteMyAvatar, deleteMyBanner, getProfiles, getPublicProfile, signOut } from '@/api';
+import {
+  deleteMyAvatar,
+  deleteMyBanner,
+  followProfile,
+  getMyFollowers,
+  getMyFollowing,
+  getProfileFollowers,
+  getProfileFollowing,
+  getProfiles,
+  getPublicProfile,
+  signOut,
+  unfollowProfile,
+} from '@/api';
+import type { PublicProfile } from '@/@types';
 import type { components } from '@/@types/schema';
 import i18n from '@/i18n';
 import { profileSearchQuery, retryUnlessNotFound } from '@/utils';
@@ -20,6 +33,60 @@ export function usePublicProfile(id: string) {
     queryKey: ['profiles', id],
     queryFn: () => getPublicProfile(id),
     retry: retryUnlessNotFound,
+  });
+}
+
+// The count moves at once; a failed request puts the profile back.
+export function useFollowProfile() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    meta: { analyticsAction: 'profile_follow' },
+    mutationFn: ({ id, follow }: { id: string; follow: boolean }) =>
+      follow ? followProfile(id) : unfollowProfile(id),
+    onMutate: async ({ id, follow }) => {
+      await queryClient.cancelQueries({ queryKey: ['profiles', id] });
+      const previous = queryClient.getQueryData<PublicProfile>(['profiles', id]);
+      queryClient.setQueryData<PublicProfile>(['profiles', id], (profile) =>
+        profile && profile.followedByMe !== follow
+          ? {
+              ...profile,
+              followedByMe: follow,
+              followersCount: profile.followersCount + (follow ? 1 : -1),
+            }
+          : profile,
+      );
+      return { previous };
+    },
+    onError: (_error, { id }, context) => {
+      queryClient.setQueryData(['profiles', id], context?.previous);
+    },
+    onSettled: (_data, _error, { id }) => {
+      void queryClient.invalidateQueries({ queryKey: ['profiles', id] });
+      void queryClient.invalidateQueries({ queryKey: ['profile', 'me'] });
+      void queryClient.invalidateQueries({ queryKey: ['follows'] });
+    },
+  });
+}
+
+/** Followers of a student, or of the signed-in student when profileId is missing. */
+export function useFollowers(profileId?: string) {
+  return useInfiniteQuery({
+    queryKey: ['follows', profileId ?? 'me', 'followers'],
+    queryFn: ({ pageParam }) =>
+      profileId ? getProfileFollowers(profileId, pageParam) : getMyFollowers(pageParam),
+    initialPageParam: undefined as string | undefined,
+    getNextPageParam: (page) => page.nextCursor ?? undefined,
+  });
+}
+
+/** Students a student follows, or the signed-in student follows when profileId is missing. */
+export function useFollowing(profileId?: string) {
+  return useInfiniteQuery({
+    queryKey: ['follows', profileId ?? 'me', 'following'],
+    queryFn: ({ pageParam }) =>
+      profileId ? getProfileFollowing(profileId, pageParam) : getMyFollowing(pageParam),
+    initialPageParam: undefined as string | undefined,
+    getNextPageParam: (page) => page.nextCursor ?? undefined,
   });
 }
 

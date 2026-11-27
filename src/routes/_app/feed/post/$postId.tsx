@@ -34,7 +34,14 @@ import {
   useLeaveWhenGone,
 } from '@/hooks';
 import { useNarrowViewport } from '@/hooks';
-import { authorName, feedPostNeighbours, isAuthorProfilePath, postUrl, toast } from '@/utils';
+import {
+  apiErrorKey,
+  authorName,
+  feedPostNeighbours,
+  isAuthorProfilePath,
+  postUrl,
+  toast,
+} from '@/utils';
 import { FeedCommentItem, FeedCommentsSkeleton } from '@/components/features/feed';
 import { FeedLikeButton } from '@/components/features/feed';
 import { FeedSaveButton } from '@/components/features/feed';
@@ -131,7 +138,7 @@ function FeedPostPage() {
       setIsCommentMultiline(false);
     } catch (error) {
       const limited = error instanceof ApiRequestError && error.status === 429;
-      toast.error(t(limited ? 'apiState.commentRateLimit' : 'apiState.error'));
+      toast.error(t(limited ? 'apiState.commentRateLimit' : apiErrorKey(error)));
     }
   };
 

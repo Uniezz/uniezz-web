@@ -6,3 +6,6 @@ export * from './ProfilePosts';
 export * from './ProfileStickyBar';
 export * from './PublicProfile';
 export * from './StudyProgrammes';
+export * from './FollowButton';
+export * from './FollowsDialog';
+export * from './ProfileFollows';

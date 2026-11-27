@@ -28,7 +28,8 @@
     "student": "Student",
     "titleError": "Use 3–150 characters.",
     "unlike": "Unlike",
-    "unsave": "Unsave"
+    "unsave": "Unsave",
+    "contentNotAllowed": "This text contains words that aren't allowed. Change it and try again."
   },
   "app": {
     "accountDeleted": "Account deleted",
@@ -789,5 +790,14 @@
     "profileGone": "Couldn't find this profile",
     "courseGone": "Couldn't find this course",
     "professorGone": "Couldn't find this professor"
+  },
+  "follows": {
+    "follow": "Follow",
+    "followers": "Followers",
+    "following": "Following",
+    "empty": "Nobody here yet.",
+    "unfollow": "Unfollow",
+    "followed": "You're following them now.",
+    "unfollowed": "You unfollowed them."
   }
 }

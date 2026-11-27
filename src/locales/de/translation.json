@@ -28,7 +28,8 @@
     "student": "Student",
     "titleError": "Verwenden Sie 3–150 Zeichen.",
     "unlike": "Im Gegensatz zu",
-    "unsave": "Nicht speichern"
+    "unsave": "Nicht speichern",
+    "contentNotAllowed": "Dieser Text enthält unzulässige Wörter. Ändere ihn und versuch es noch einmal."
   },
   "app": {
     "accountDeleted": "Konto gelöscht",
@@ -789,5 +790,14 @@
     "profileGone": "Dieses Profil gibt es nicht",
     "courseGone": "Diesen Kurs gibt es nicht",
     "professorGone": "Diese Lehrkraft gibt es nicht"
+  },
+  "follows": {
+    "follow": "Folgen",
+    "followers": "Follower",
+    "following": "Gefolgt",
+    "empty": "Hier ist noch niemand.",
+    "unfollow": "Entfolgen",
+    "followed": "Du folgst jetzt.",
+    "unfollowed": "Du folgst nicht mehr."
   }
 }

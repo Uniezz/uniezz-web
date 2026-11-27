@@ -1,5 +1,5 @@
 import { ApiRequestError } from '@/api';
-import { captureAnalytics, toast } from '@/utils';
+import { apiErrorKey, captureAnalytics, toast } from '@/utils';
 import { useState } from 'react';
 import { Send } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -98,7 +98,7 @@ export function PostComposer({
               await onSubmit({ ...values, tags: tags.success ? tags.data : values.tags });
             } catch (error) {
               const limited = error instanceof ApiRequestError && error.status === 429;
-              toast.error(t(limited ? 'postComposer.rateLimit' : 'apiState.error'));
+              toast.error(t(limited ? 'postComposer.rateLimit' : apiErrorKey(error)));
             }
           },
           (errors) => {

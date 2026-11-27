@@ -6,7 +6,7 @@ import type { FaqEntry, FaqLanguage } from '@/@types';
 import { useApproveFaqProposal } from '@/hooks';
 import { faqTextsSchema, type FaqTextsFormSchema } from '@/schemas';
 import { UIButton, UIDialog, UIDialogFooter, UIField, UISubTabs } from '@/ui/components';
-import { LNG_OPTIONS, toast } from '@/utils';
+import { LNG_OPTIONS, apiErrorKey, toast } from '@/utils';
 
 const empty = { question: '', answer: '' };
 
@@ -49,8 +49,8 @@ export function FaqApprovalDialog({
       await approve({ id: proposal.id, texts });
       toast.success(t('faq.approved'));
       onClose();
-    } catch {
-      toast.error(t('apiState.error'));
+    } catch (error) {
+      toast.error(t(apiErrorKey(error)));
     }
   }
 
