@@ -68,6 +68,10 @@ export function ProfessorReviewsDialog({ professorId, onClose }: ProfessorReview
     }
   }
 
+  const copyLink = (
+    <UICopyLink url={professorUrl(professorId)} analyticsLabel="Copy professor link" />
+  );
+
   return (
     <>
       <UIDialog
@@ -83,9 +87,9 @@ export function ProfessorReviewsDialog({ professorId, onClose }: ProfessorReview
             : t('apiState.loading')
         }
         footer={
-          showForm && (
-            // Pinned below the list so the form stays visible however long the list is.
-            <UIDialogFooter className="block">
+          // Pinned below the list so the form stays visible however long the list is.
+          <UIDialogFooter className="block">
+            {showForm ? (
               <form onSubmit={submit} className="space-y-3">
                 <UIField
                   label={t('professors.yourReview')}
@@ -101,33 +105,37 @@ export function ProfessorReviewsDialog({ professorId, onClose }: ProfessorReview
                     onChange={(event) => setContent(event.target.value)}
                   />
                 </UIField>
-                <div className="flex justify-end gap-3">
-                  {isEditing && (
-                    <UIButton
-                      bg="secondary"
-                      disabled={isSaving}
-                      onClick={() => {
-                        setIsEditing(false);
-                        setContent('');
-                      }}
-                    >
-                      {t('app.cancel')}
+                <div className="flex items-center justify-between gap-3">
+                  {copyLink}
+                  <div className="flex gap-3">
+                    {isEditing && (
+                      <UIButton
+                        bg="secondary"
+                        disabled={isSaving}
+                        onClick={() => {
+                          setIsEditing(false);
+                          setContent('');
+                        }}
+                      >
+                        {t('app.cancel')}
+                      </UIButton>
+                    )}
+                    <UIButton type="submit" disabled={isSaving || !isValid}>
+                      {t('app.submit')}
                     </UIButton>
-                  )}
-                  <UIButton type="submit" disabled={isSaving || !isValid}>
-                    {t('app.submit')}
-                  </UIButton>
+                  </div>
                 </div>
               </form>
-            </UIDialogFooter>
-          )
+            ) : (
+              copyLink
+            )}
+          </UIDialogFooter>
         }
       >
         <div
           ref={setScrollParent}
           className="scrollbar-hidden min-h-0 flex-1 space-y-6 overflow-y-auto"
         >
-          <UICopyLink url={professorUrl(professorId)} analyticsLabel="Copy professor link" />
           {isPending && <p role="status">{t('apiState.loading')}</p>}
           {!isPending && !isError && reviews.length === 0 && (
             <p className="text-secondary">{t('professors.noReviews')}</p>
