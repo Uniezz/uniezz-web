@@ -333,7 +333,10 @@
     "statusPublished": "Апублікавана",
     "statusRejected": "Адхілена",
     "submitProposal": "Адправіць прапанову",
-    "title": "FAQ"
+    "title": "FAQ",
+    "translate": "Перакласці",
+    "translateTitle": "Перакласці і апублікаваць",
+    "translateDescription": "Напішыце пытанне і адказ на кожнай мове. Студэнты бачаць версію на мове са свайго профілю."
   },
   "feed": {
     "allTypes": "Усе віды",

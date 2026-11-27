@@ -1,26 +1,19 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Virtuoso } from 'react-virtuoso';
-import { useApproveFaqProposal, usePendingFaqProposals } from '@/hooks';
+import type { FaqEntry } from '@/@types';
+import { usePendingFaqProposals } from '@/hooks';
 import { UIButton, UIEmpty, UIPanel, UIQueryError } from '@/ui/components';
 import { listComponents } from '@/ui/virtuoso';
-import { toast } from '@/utils';
+import { FaqApprovalDialog } from './FaqApprovalDialog';
 
 /** Proposals waiting for a moderator; only moderators and admins see this tab. */
 export function FaqPending() {
   const { t } = useTranslation();
   const { data, isError, refetch, hasNextPage, isFetchingNextPage, fetchNextPage } =
     usePendingFaqProposals();
-  const { mutateAsync: approve, isPending: isApproving } = useApproveFaqProposal();
+  const [approving, setApproving] = useState<FaqEntry | null>(null);
   const proposals = data?.pages.flatMap((page) => page.items ?? []) ?? [];
-
-  async function approveProposal(id: string) {
-    try {
-      await approve(id);
-      toast.success(t('faq.approved'));
-    } catch {
-      toast.error(t('apiState.error'));
-    }
-  }
 
   if (!isError && proposals.length === 0) {
     return (
@@ -44,15 +37,16 @@ export function FaqPending() {
         itemContent={(_, proposal) => (
           <div role="listitem" className="pb-3">
             <UIPanel surface="tint" className="rounded-programme p-4">
-              <h3 className="text-section font-bold wrap-anywhere">{proposal.question}</h3>
+              <div className="flex items-start justify-between gap-3">
+                <h3 className="text-section font-bold wrap-anywhere">{proposal.question}</h3>
+                <span className="app-tag shrink-0 border-white-20 bg-surface px-2 py-1 uppercase">
+                  {proposal.language}
+                </span>
+              </div>
               <p className="mt-3 whitespace-pre-line text-secondary">{proposal.answer}</p>
               <div className="mt-4 flex justify-end">
-                <UIButton
-                  size="sm"
-                  disabled={isApproving}
-                  onClick={() => void approveProposal(proposal.id)}
-                >
-                  {t('faq.approve')}
+                <UIButton size="sm" onClick={() => setApproving(proposal)}>
+                  {t('faq.translate')}
                 </UIButton>
               </div>
             </UIPanel>
@@ -60,6 +54,7 @@ export function FaqPending() {
         )}
       />
       {isError && <UIQueryError retry={() => void refetch()} />}
+      {approving && <FaqApprovalDialog proposal={approving} onClose={() => setApproving(null)} />}
     </div>
   );
 }

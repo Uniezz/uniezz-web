@@ -331,7 +331,10 @@
     "statusPublished": "Published",
     "statusRejected": "Rejected",
     "submitProposal": "Send suggestion",
-    "title": "FAQ"
+    "title": "FAQ",
+    "translate": "Translate",
+    "translateTitle": "Translate and publish",
+    "translateDescription": "Write the question and answer in every language. Students read the one set in their profile."
   },
   "feed": {
     "allTypes": "All types",

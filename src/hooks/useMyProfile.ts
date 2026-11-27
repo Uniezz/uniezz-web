@@ -1,5 +1,5 @@
 import { queryOptions, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import type { UpdateMeBody } from '@/@types';
+import type { ProfileLanguage, UpdateMeBody } from '@/@types';
 import {
   addMyProfilePhoto,
   completeMyOnboarding,
@@ -30,6 +30,17 @@ export function useUpdateMyProfile() {
       // The photo list starts with the avatar.
       void queryClient.invalidateQueries({ queryKey: ['profile', 'photos'] });
     },
+  });
+}
+
+// Saved in the background so the backend writes to the student in it (push notifications).
+export function useUpdateProfileLanguage() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    meta: { analyticsAction: 'profile_language_update' },
+    // LNG_OPTIONS lists exactly the profile languages.
+    mutationFn: (language: string) => updateMyProfile({ language: language as ProfileLanguage }),
+    onSuccess: () => void queryClient.invalidateQueries({ queryKey: ['profile', 'me'] }),
   });
 }
 

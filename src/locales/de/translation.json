@@ -331,7 +331,10 @@
     "statusPublished": "Veröffentlicht",
     "statusRejected": "Abgelehnt",
     "submitProposal": "Vorschlag senden",
-    "title": "FAQ"
+    "title": "FAQ",
+    "translate": "Übersetzen",
+    "translateTitle": "Übersetzen und veröffentlichen",
+    "translateDescription": "Schreib Frage und Antwort in jeder Sprache. Studierende sehen die Version in der Sprache ihres Profils."
   },
   "feed": {
     "allTypes": "Alle Arten",

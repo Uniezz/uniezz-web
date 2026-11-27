@@ -332,7 +332,10 @@
     "statusPublished": "Publicado",
     "statusRejected": "Rechazado",
     "submitProposal": "Enviar sugerencia",
-    "title": "PREGUNTAS FRECUENTES"
+    "title": "PREGUNTAS FRECUENTES",
+    "translate": "Traducir",
+    "translateTitle": "Traducir y publicar",
+    "translateDescription": "Escribe la pregunta y la respuesta en cada idioma. Los estudiantes ven la versión en el idioma de su perfil."
   },
   "feed": {
     "allTypes": "Todos los tipos",

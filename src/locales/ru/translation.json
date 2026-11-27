@@ -333,7 +333,10 @@
     "statusPublished": "Опубликовано",
     "statusRejected": "Отклонено",
     "submitProposal": "Отправить",
-    "title": "Частые вопросы"
+    "title": "Частые вопросы",
+    "translate": "Перевести",
+    "translateTitle": "Перевести и опубликовать",
+    "translateDescription": "Напишите вопрос и ответ на каждом языке. Студенты видят версию на языке из своего профиля."
   },
   "feed": {
     "allTypes": "Все типы",

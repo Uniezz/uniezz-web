@@ -6,3 +6,16 @@ export const faqProposalSchema = z.object({
 });
 
 export type FaqProposalFormSchema = z.infer<typeof faqProposalSchema>;
+
+/** A published question has its text in every interface language. */
+export const faqTextsSchema = z.object({
+  pl: faqProposalSchema,
+  en: faqProposalSchema,
+  uk: faqProposalSchema,
+  ru: faqProposalSchema,
+  be: faqProposalSchema,
+  de: faqProposalSchema,
+  es: faqProposalSchema,
+});
+
+export type FaqTextsFormSchema = z.infer<typeof faqTextsSchema>;

@@ -333,7 +333,10 @@ export default interface Resources {
       "statusPublished": "Published",
       "statusRejected": "Rejected",
       "submitProposal": "Send suggestion",
-      "title": "FAQ"
+      "title": "FAQ",
+      "translate": "Translate",
+      "translateDescription": "Write the question and answer in every language. Students read the one set in their profile.",
+      "translateTitle": "Translate and publish"
     },
     "feed": {
       "allTypes": "All types",

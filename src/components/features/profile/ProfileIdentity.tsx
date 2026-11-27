@@ -4,7 +4,7 @@ import { useController, useFormContext, useWatch } from 'react-hook-form';
 import { Camera, ImagePlus, LogOut, Trash2, X } from 'lucide-react';
 
 import { useSignOut, useUniversities } from '@/hooks';
-import { useDeleteMyProfile } from '@/hooks';
+import { useDeleteMyProfile, useUpdateProfileLanguage } from '@/hooks';
 import {
   UIButton,
   UIDialog,
@@ -30,6 +30,7 @@ export function ProfileIdentity({
   const { data: universities } = useUniversities();
   const { mutate: signOut, isPending: isSigningOut } = useSignOut();
   const { mutateAsync: deleteMyProfile, isPending: isDeletingProfile } = useDeleteMyProfile();
+  const { mutate: updateLanguage } = useUpdateProfileLanguage();
   const { t } = useTranslation();
   const {
     control,
@@ -226,7 +227,7 @@ export function ProfileIdentity({
         </div>
         <div className="mt-4 flex items-center justify-between gap-3 border-t border-white-10 pt-4">
           <span className="text-detail font-semibold">{t('topbar.changeLanguage')}</span>
-          <UILanguageSwitcher />
+          <UILanguageSwitcher onChange={updateLanguage} />
         </div>
         <UIButton
           bg="transparent"

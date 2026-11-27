@@ -6,7 +6,12 @@ import { LNG_OPTIONS } from '@/utils';
 import { UIButton } from '../UIButton';
 import { UIMenu } from '../UIMenu';
 
-export function UILanguageSwitcher() {
+export type UILanguageSwitcherProps = {
+  /** Runs after the interface language changes, e.g. to save it to the profile. */
+  onChange?: (language: string) => void;
+};
+
+export function UILanguageSwitcher({ onChange }: UILanguageSwitcherProps) {
   const { t, i18n } = useTranslation();
   const { ref, isOpen, toggle, close } = useDropdown();
   const language = i18n.resolvedLanguage ?? i18n.language;
@@ -31,6 +36,7 @@ export function UILanguageSwitcher() {
           value={language}
           onSelect={(language) => {
             void i18n.changeLanguage(language);
+            onChange?.(language);
             close();
           }}
         />
