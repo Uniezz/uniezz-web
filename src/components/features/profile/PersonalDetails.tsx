@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
-import { useFormContext, useWatch } from 'react-hook-form';
-import { UIEmojiPicker, UIField } from '@/ui/components';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
+import { UIEmojiPicker, UIField, UISegmented } from '@/ui/components';
 import { type ProfileFormSchema } from '@/schemas';
 
 export function PersonalDetails({ showHeading = true }: { showHeading?: boolean }) {
@@ -9,12 +9,17 @@ export function PersonalDetails({ showHeading = true }: { showHeading?: boolean 
     register,
     control,
     setValue,
-    formState: { errors },
+    formState: { errors, defaultValues },
   } = useFormContext<ProfileFormSchema>();
   const [first = '', last = '', bio = '', song = ''] = useWatch({
     control,
     name: ['first', 'last', 'bio', 'song'],
   });
+  const savedGender = defaultValues?.gender;
+  const genders = [
+    { value: 'female', label: t('students.genderFemale') },
+    { value: 'male', label: t('students.genderMale') },
+  ] as const;
   return (
     <div>
       {showHeading && <h2 className="mb-4 text-md font-bold">{t('app.personalDetails')}</h2>}
@@ -53,6 +58,32 @@ export function PersonalDetails({ showHeading = true }: { showHeading?: boolean 
         </UIField>
       </div>
       <div className="mt-4 space-y-4">
+        <UIField
+          label={t('students.gender')}
+          labelAs="div"
+          hint={savedGender ? undefined : t('students.genderHint')}
+        >
+          {savedGender ? (
+            <p className="text-base font-medium">
+              {genders.find((option) => option.value === savedGender)?.label}
+            </p>
+          ) : (
+            <Controller
+              name="gender"
+              control={control}
+              render={({ field }) => (
+                <UISegmented
+                  options={genders.map((option) => option.label)}
+                  value={genders.find((option) => option.value === field.value)?.label ?? ''}
+                  onChange={(label) =>
+                    field.onChange(genders.find((option) => option.label === label)?.value)
+                  }
+                  label={t('students.gender')}
+                />
+              )}
+            />
+          )}
+        </UIField>
         <UIField
           label={t('students.bio')}
           error={errors.bio && t('students.bioError')}

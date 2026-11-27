@@ -41,8 +41,16 @@ function ConnectionPreferencesForm({
       onSaved();
       toast.success(t('connections.preferencesSaved'));
     } catch (error) {
-      const needsAdult = apiErrorCode(error) === 'dating_requires_adult';
-      toast.error(t(needsAdult ? 'connections.datingRequiresAdult' : 'apiState.error'));
+      const code = apiErrorCode(error);
+      toast.error(
+        t(
+          code === 'dating_requires_adult'
+            ? 'connections.datingRequiresAdult'
+            : code === 'dating_requires_profile'
+              ? 'connections.datingRequiresProfile'
+              : 'apiState.error',
+        ),
+      );
     }
   }
 

@@ -1,6 +1,7 @@
 {
   "apiState": {
     "commentDeleted": "Kommentar gelöscht",
+    "commentRateLimit": "Du kommentierst zu oft. Warte kurz und versuche es erneut.",
     "deleteCommentDescription": "Dieser Kommentar wird gelöscht.",
     "deleteCommentTitle": "Kommentar löschen?",
     "deletedComment": "Kommentar gelöscht",
@@ -27,8 +28,7 @@
     "student": "Student",
     "titleError": "Verwenden Sie 3–150 Zeichen.",
     "unlike": "Im Gegensatz zu",
-    "unsave": "Nicht speichern",
-    "commentRateLimit": "Du kommentierst zu oft. Warte kurz und versuche es erneut."
+    "unsave": "Nicht speichern"
   },
   "app": {
     "accountDeleted": "Konto gelöscht",
@@ -220,6 +220,7 @@
     "block": "Schüler blockieren",
     "blockDescription": "Ihr werdet euch nicht mehr in Discovery, Profilen, Matches und im Feed sehen.",
     "datingRequiresAdult": "Um die Datierung zu aktivieren, geben Sie ein Geburtsdatum ein und bestätigen Sie, dass Sie mindestens 18 Jahre alt sind.",
+    "datingRequiresProfile": "Um Dating zu aktivieren, gib dein Geschlecht im Profil an (Profil → Bearbeiten).",
     "emptyDescription": "Sie haben jeden gesehen, der dazu passt. Erweitern Sie Ihre Filter oder schauen Sie später noch einmal vorbei.",
     "emptyTitle": "Noch niemand hier",
     "everyone": "Alle",
@@ -490,18 +491,30 @@
     "grantDescription": "Die Person kann Meldungen prüfen, Beiträge, Kommentare und Dateien entfernen und Konten sperren. Gilt ab der nächsten Anfrage.",
     "granted": "Moderator hinzugefügt.",
     "grantedAt": "Seit {{date}}",
+    "imageAvatar": "Profilbild",
+    "imageBanner": "Banner",
+    "imageChecked": "Bild als geprüft markiert",
+    "imageFeed": "Feed-Foto",
+    "imageRemoved": "Bild entfernt",
+    "images": "Bilder",
     "log": "Aktivitätsprotokoll",
+    "markImageChecked": "Als geprüft markieren",
     "moderators": "Moderatoren",
     "newChallenge": "Neue Challenge",
     "noActions": "Noch nichts passiert.",
     "noChallenges": "Noch keine Challenges.",
+    "noImages": "Keine Bilder zu prüfen",
     "noModerators": "Noch keine Moderatoren.",
     "noReports": "Keine offenen Meldungen.",
     "noSnapshot": "Keine Kopie des Inhalts vorhanden.",
     "openContent": "Inhalt öffnen",
+    "openImage": "Bild in voller Größe öffnen",
+    "openOwner": "Profil der hochladenden Person öffnen",
     "remove": "Inhalt entfernen",
     "removed": "Inhalt entfernt.",
     "removeDescription": "Der Inhalt wird für alle gelöscht und seine Meldungen gelten als geprüft. Das lässt sich nicht rückgängig machen.",
+    "removeImage": "Bild entfernen",
+    "removeImageDescription": "Das Bild verschwindet überall, wo es angezeigt wird, und seine Datei wird gelöscht.",
     "reports": "Meldungen",
     "review": "Als geprüft markieren",
     "reviewed": "Meldung als geprüft markiert.",
@@ -512,28 +525,16 @@
     "targetCandidate": "Entdecken-Karte",
     "targetComment": "Kommentar",
     "targetCourse": "Kurs",
+    "targetCourseComment": "Kurskommentar",
     "targetFile": "Lernmaterial",
     "targetOther": "Inhalt",
     "targetPost": "Beitrag",
+    "targetProfessorReview": "Dozentenbewertung",
     "targetUser": "Profil",
     "title": "Moderation",
     "unban": "Sperre aufheben",
     "unbanDescription": "Die Person kann sich wieder anmelden.",
-    "unbanned": "Sperre aufgehoben.",
-    "targetCourseComment": "Kurskommentar",
-    "targetProfessorReview": "Dozentenbewertung",
-    "imageAvatar": "Profilbild",
-    "imageBanner": "Banner",
-    "imageChecked": "Bild als geprüft markiert",
-    "imageFeed": "Feed-Foto",
-    "imageRemoved": "Bild entfernt",
-    "images": "Bilder",
-    "markImageChecked": "Als geprüft markieren",
-    "noImages": "Keine Bilder zu prüfen",
-    "openImage": "Bild in voller Größe öffnen",
-    "openOwner": "Profil der hochladenden Person öffnen",
-    "removeImage": "Bild entfernen",
-    "removeImageDescription": "Das Bild verschwindet überall, wo es angezeigt wird, und seine Datei wird gelöscht."
+    "unbanned": "Sperre aufgehoben."
   },
   "onboarding": {
     "details": {
@@ -575,6 +576,7 @@
     "published": "Beitrag veröffentlicht",
     "questionPlaceholder": "Was möchten Sie fragen?",
     "questionTitle": "Deine Frage",
+    "rateLimit": "Du postest zu oft. Warte ein paar Minuten und versuche es erneut.",
     "readingPhoto": "Foto wird geladen…",
     "removePhoto": "Foto entfernen",
     "subtitle": "Teilen Sie etwas mit Ihrem Campus.",
@@ -584,8 +586,19 @@
     "time": "Zeit",
     "title": "Titel",
     "titlePlaceholder": "Geben Sie Ihrem Beitrag einen Titel",
-    "type": "Beitragstyp",
-    "rateLimit": "Du postest zu oft. Warte ein paar Minuten und versuche es erneut."
+    "type": "Beitragstyp"
+  },
+  "professors": {
+    "deleteReview": "Bewertung löschen",
+    "deleteReviewDescription": "Deine Bewertung wird endgültig gelöscht.",
+    "editReview": "Bearbeiten",
+    "noReviews": "Noch keine Bewertungen.",
+    "openReviews": "Bewertungen",
+    "reviewDeleted": "Bewertung gelöscht.",
+    "reviewHint": "Wird ohne deinen Namen angezeigt.",
+    "reviews": "Bewertungen",
+    "reviewSaved": "Bewertung gespeichert.",
+    "yourReview": "Deine Bewertung"
   },
   "progress": {
     "avatarDelete": "Foto wird entfernt…",
@@ -606,6 +619,8 @@
     "faqProposalCreate": "Vorschlag wird gesendet…",
     "faqPublish": "Frage wird veröffentlicht…",
     "groupCreate": "Gruppe wird erstellt…",
+    "imageRemove": "Bild wird entfernt…",
+    "imageReview": "Bild wird als geprüft markiert…",
     "imagesUpload": "Fotos werden hochgeladen…",
     "imageUpload": "Bild wird hochgeladen…",
     "moderatorGrant": "Moderator wird hinzugefügt…",
@@ -625,14 +640,12 @@
     "reportCreate": "Meldung wird gesendet…",
     "reportDismiss": "Meldung wird verworfen…",
     "reportReview": "Meldung wird markiert…",
+    "reviewDelete": "Bewertung wird gelöscht…",
+    "reviewSave": "Bewertung wird gespeichert…",
     "signOut": "Abmeldung…",
     "studyFileDelete": "Datei wird gelöscht…",
     "userBan": "Konto wird gesperrt…",
-    "userUnban": "Sperre wird aufgehoben…",
-    "reviewSave": "Bewertung wird gespeichert…",
-    "reviewDelete": "Bewertung wird gelöscht…",
-    "imageRemove": "Bild wird entfernt…",
-    "imageReview": "Bild wird als geprüft markiert…"
+    "userUnban": "Sperre wird aufgehoben…"
   },
   "report": {
     "candidate": "Profil melden",
@@ -650,12 +663,12 @@
     "post": "Beitrag melden",
     "rateLimit": "Sie haben die Meldegrenze erreicht. Versuchen Sie es später noch einmal.",
     "reason": "Grund",
+    "review": "Bewertung melden",
     "selectReason": "Wählen Sie einen Grund aus",
     "sent": "Bericht gesendet.",
     "spam": "Spam",
     "submit": "Bericht senden",
-    "user": "Benutzer melden",
-    "review": "Bewertung melden"
+    "user": "Benutzer melden"
   },
   "rewards": {
     "balance": "Deine Münzen",
@@ -738,6 +751,10 @@
     "bio": "Bio",
     "bioError": "Die Biografie darf höchstens 500 Zeichen lang sein.",
     "bioPlaceholder": "Erzählen Sie anderen Studenten, was Sie studieren, was Sie lieben oder wonach Sie suchen",
+    "gender": "Geschlecht",
+    "genderFemale": "Weiblich",
+    "genderHint": "Kann nur einmal festgelegt werden",
+    "genderMale": "Männlich",
     "interests": "Interessen",
     "interestsError": "Verwenden Sie bis zu 10 Interessen mit jeweils bis zu 30 Zeichen.",
     "interestsHint": "Trennen Sie Interessen durch Kommas",
@@ -761,17 +778,5 @@
   "topbar": {
     "changeLanguage": "Sprache ändern",
     "languageCode": "DE"
-  },
-  "professors": {
-    "deleteReview": "Bewertung löschen",
-    "deleteReviewDescription": "Deine Bewertung wird endgültig gelöscht.",
-    "editReview": "Bearbeiten",
-    "noReviews": "Noch keine Bewertungen.",
-    "openReviews": "Bewertungen",
-    "reviewDeleted": "Bewertung gelöscht.",
-    "reviewHint": "Wird ohne deinen Namen angezeigt.",
-    "reviewSaved": "Bewertung gespeichert.",
-    "reviews": "Bewertungen",
-    "yourReview": "Deine Bewertung"
   }
 }

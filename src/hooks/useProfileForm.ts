@@ -19,6 +19,7 @@ function defaults(profile: components['schemas']['Profile']): ProfileFormSchema 
     banner: profile.bannerUrl ?? '',
     bannerFile: undefined,
     song: profile.songUrl ?? '',
+    gender: profile.gender,
   };
 }
 
@@ -66,6 +67,8 @@ export function useProfileForm(profile: components['schemas']['Profile']) {
         avatarMediaId: avatar?.mediaId,
         bannerMediaId: banner?.mediaId,
         songUrl: values.song.trim(),
+        // The API sets gender only once, so a saved gender is never sent again.
+        gender: profile.gender ? undefined : (values.gender ?? undefined),
       });
     },
     onSuccess: (saved) => {

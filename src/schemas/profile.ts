@@ -62,6 +62,7 @@ export const profileFormSchema = profileSchema.extend({
   bannerFile: bannerImageSchema.optional(),
   /** An empty string clears the song; otherwise http or https only, like the API. */
   song: z.string().max(500).refine(isSongUrl),
+  gender: z.enum(['male', 'female']).nullable(),
 });
 export type ProfileFormSchema = z.infer<typeof profileFormSchema>;
 export type ProgrammeFormSchema = z.infer<typeof programmeSchema>;

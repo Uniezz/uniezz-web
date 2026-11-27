@@ -1,6 +1,7 @@
 {
   "apiState": {
     "commentDeleted": "Comment deleted",
+    "commentRateLimit": "You are commenting too often. Wait a moment and try again.",
     "deleteCommentDescription": "This comment will be deleted.",
     "deleteCommentTitle": "Delete comment?",
     "deletedComment": "Deleted comment",
@@ -27,8 +28,7 @@
     "student": "Student",
     "titleError": "Use 3–150 characters.",
     "unlike": "Unlike",
-    "unsave": "Unsave",
-    "commentRateLimit": "You are commenting too often. Wait a moment and try again."
+    "unsave": "Unsave"
   },
   "app": {
     "accountDeleted": "Account deleted",
@@ -220,6 +220,7 @@
     "block": "Block student",
     "blockDescription": "You will stop seeing each other in discovery, profiles, matches and the feed.",
     "datingRequiresAdult": "To enable dating, enter a birth date confirming you are at least 18.",
+    "datingRequiresProfile": "To enable dating, set your gender in your profile (Profile → Edit).",
     "emptyDescription": "You have seen everyone who matches. Widen your filters or check back later.",
     "emptyTitle": "No one here yet",
     "everyone": "Everyone",
@@ -490,18 +491,30 @@
     "grantDescription": "The student can review reports, remove posts, comments and files, and ban students. It takes effect on their next request.",
     "granted": "Moderator added.",
     "grantedAt": "Since {{date}}",
+    "imageAvatar": "Avatar",
+    "imageBanner": "Banner",
+    "imageChecked": "Image marked as checked",
+    "imageFeed": "Feed photo",
+    "imageRemoved": "Image removed",
+    "images": "Images",
     "log": "Activity log",
+    "markImageChecked": "Mark as checked",
     "moderators": "Moderators",
     "newChallenge": "New challenge",
     "noActions": "Nothing has happened yet.",
     "noChallenges": "No challenges yet.",
+    "noImages": "No images to check",
     "noModerators": "No moderators yet.",
     "noReports": "No reports waiting.",
     "noSnapshot": "No copy of the content is left.",
     "openContent": "Open content",
+    "openImage": "Open image in full size",
+    "openOwner": "Open the uploader’s profile",
     "remove": "Remove content",
     "removed": "Content removed.",
     "removeDescription": "The content is deleted for everyone and its pending reports are marked reviewed. This can't be undone.",
+    "removeImage": "Remove image",
+    "removeImageDescription": "The image disappears everywhere it is shown and its file is deleted.",
     "reports": "Reports",
     "review": "Mark reviewed",
     "reviewed": "Report marked reviewed.",
@@ -512,28 +525,16 @@
     "targetCandidate": "Discovery card",
     "targetComment": "Comment",
     "targetCourse": "Course",
+    "targetCourseComment": "Course comment",
     "targetFile": "Study material",
     "targetOther": "Content",
     "targetPost": "Post",
+    "targetProfessorReview": "Professor review",
     "targetUser": "Profile",
     "title": "Moderation",
     "unban": "Lift ban",
     "unbanDescription": "The student can sign in again.",
-    "unbanned": "Ban lifted.",
-    "targetCourseComment": "Course comment",
-    "targetProfessorReview": "Professor review",
-    "imageAvatar": "Avatar",
-    "imageBanner": "Banner",
-    "imageChecked": "Image marked as checked",
-    "imageFeed": "Feed photo",
-    "imageRemoved": "Image removed",
-    "images": "Images",
-    "markImageChecked": "Mark as checked",
-    "noImages": "No images to check",
-    "openImage": "Open image in full size",
-    "openOwner": "Open the uploader’s profile",
-    "removeImage": "Remove image",
-    "removeImageDescription": "The image disappears everywhere it is shown and its file is deleted."
+    "unbanned": "Ban lifted."
   },
   "onboarding": {
     "details": {
@@ -575,6 +576,7 @@
     "published": "Post published",
     "questionPlaceholder": "What would you like to ask?",
     "questionTitle": "Your question",
+    "rateLimit": "You are posting too often. Wait a few minutes and try again.",
     "readingPhoto": "Loading photo…",
     "removePhoto": "Remove photo",
     "subtitle": "Share something with your campus.",
@@ -584,8 +586,19 @@
     "time": "Time",
     "title": "Title",
     "titlePlaceholder": "Give your post a title",
-    "type": "Post type",
-    "rateLimit": "You are posting too often. Wait a few minutes and try again."
+    "type": "Post type"
+  },
+  "professors": {
+    "deleteReview": "Delete review",
+    "deleteReviewDescription": "Your review will be permanently deleted.",
+    "editReview": "Edit",
+    "noReviews": "No reviews yet.",
+    "openReviews": "Reviews",
+    "reviewDeleted": "Review deleted.",
+    "reviewHint": "Shown without your name.",
+    "reviews": "Reviews",
+    "reviewSaved": "Review saved.",
+    "yourReview": "Your review"
   },
   "progress": {
     "avatarDelete": "Removing photo…",
@@ -606,6 +619,8 @@
     "faqProposalCreate": "Sending suggestion…",
     "faqPublish": "Publishing question…",
     "groupCreate": "Creating group…",
+    "imageRemove": "Removing the image…",
+    "imageReview": "Marking the image as checked…",
     "imagesUpload": "Uploading photos…",
     "imageUpload": "Uploading image…",
     "moderatorGrant": "Adding moderator…",
@@ -625,14 +640,12 @@
     "reportCreate": "Sending report…",
     "reportDismiss": "Dismissing report…",
     "reportReview": "Marking report reviewed…",
+    "reviewDelete": "Deleting review…",
+    "reviewSave": "Saving review…",
     "signOut": "Signing out…",
     "studyFileDelete": "Deleting file…",
     "userBan": "Banning student…",
-    "userUnban": "Lifting ban…",
-    "reviewSave": "Saving review…",
-    "reviewDelete": "Deleting review…",
-    "imageRemove": "Removing the image…",
-    "imageReview": "Marking the image as checked…"
+    "userUnban": "Lifting ban…"
   },
   "report": {
     "candidate": "Report profile",
@@ -650,12 +663,12 @@
     "post": "Report post",
     "rateLimit": "You have reached the reporting limit. Try again later.",
     "reason": "Reason",
+    "review": "Report review",
     "selectReason": "Select a reason",
     "sent": "Report sent.",
     "spam": "Spam",
     "submit": "Send report",
-    "user": "Report user",
-    "review": "Report review"
+    "user": "Report user"
   },
   "rewards": {
     "balance": "Your coins",
@@ -738,6 +751,10 @@
     "bio": "Bio",
     "bioError": "Bio must be 500 characters or fewer.",
     "bioPlaceholder": "Tell other students what you study, love, or are looking for",
+    "gender": "Gender",
+    "genderFemale": "Female",
+    "genderHint": "Can be set only once",
+    "genderMale": "Male",
     "interests": "Interests",
     "interestsError": "Use up to 10 interests, each up to 30 characters.",
     "interestsHint": "Separate interests with commas",
@@ -761,17 +778,5 @@
   "topbar": {
     "changeLanguage": "Change language",
     "languageCode": "EN"
-  },
-  "professors": {
-    "deleteReview": "Delete review",
-    "deleteReviewDescription": "Your review will be permanently deleted.",
-    "editReview": "Edit",
-    "noReviews": "No reviews yet.",
-    "openReviews": "Reviews",
-    "reviewDeleted": "Review deleted.",
-    "reviewHint": "Shown without your name.",
-    "reviewSaved": "Review saved.",
-    "reviews": "Reviews",
-    "yourReview": "Your review"
   }
 }

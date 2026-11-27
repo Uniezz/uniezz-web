@@ -24,6 +24,7 @@ test('the profile form validates bio, interests and privacy', () => {
     photo: '/app/avatar.png',
     banner: '',
     song: '',
+    gender: null,
   };
   expect(
     profileFormSchema.parse({ ...profile, bio: ' Hello ', interests: 'music, , sport ' }),
@@ -34,6 +35,8 @@ test('the profile form validates bio, interests and privacy', () => {
     bio: ' Hello ',
     interests: 'music, , sport ',
   });
+  expect(profileFormSchema.safeParse({ ...profile, gender: 'female' }).success).toBe(true);
+  expect(profileFormSchema.safeParse({ ...profile, gender: 'other' }).success).toBe(false);
   expect(profileFormSchema.safeParse({ ...profile, bio: 'x'.repeat(501) }).success).toBe(false);
   expect(profileFormSchema.safeParse({ ...profile, interests: 'x'.repeat(31) }).success).toBe(
     false,
