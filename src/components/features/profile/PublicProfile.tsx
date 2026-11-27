@@ -1,5 +1,5 @@
 import { useNavigate } from '@tanstack/react-router';
-import { ShieldPlus } from 'lucide-react';
+import { Mars, ShieldPlus, Venus } from 'lucide-react';
 import { BlockStudentButton } from '@/components/features/connections';
 import { useTranslation } from 'react-i18next';
 import type { PublicProfileProps } from '@/@types';
@@ -79,9 +79,24 @@ export function PublicProfile({ profile }: PublicProfileProps) {
                 <span className="font-normal text-secondary">, {profile.age}</span>
               )}
             </h1>
-            <p className="flex items-center gap-2 text-label leading-relaxed text-white-80">
+            <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-label leading-relaxed text-white-80">
               <UIUniversityLogo universityId={profile.universityId} className="shrink-0" />
               <span className="min-w-0 wrap-anywhere">{university}</span>
+              {profile.gender && (
+                <>
+                  <span aria-hidden="true">·</span>
+                  <span className="flex items-center gap-1.5">
+                    {profile.gender === 'female' ? (
+                      <Venus className="size-4 text-pink" aria-hidden="true" />
+                    ) : (
+                      <Mars className="size-4 text-blue" aria-hidden="true" />
+                    )}
+                    {t(
+                      profile.gender === 'female' ? 'students.genderFemale' : 'students.genderMale',
+                    )}
+                  </span>
+                </>
+              )}
             </p>
             {profile.email && (
               <a
