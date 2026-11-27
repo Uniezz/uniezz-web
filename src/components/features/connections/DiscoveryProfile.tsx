@@ -17,7 +17,7 @@ export type DiscoveryProfileProps = { filters: ConnectionFilters };
 
 export function DiscoveryProfile({ filters }: DiscoveryProfileProps) {
   const { t } = useTranslation();
-  const { data, isPending, isError, refetch } = useDiscovery(filters);
+  const { data, isPending, isFetching, isError, refetch } = useDiscovery(filters);
   const { mutate: act, isPending: isActing } = useCandidateAction();
   const [leaving, setLeaving] = useState<{ id: string; direction: 'left' | 'right' } | null>(null);
   const card = data?.items?.[0];
@@ -41,7 +41,8 @@ export function DiscoveryProfile({ filters }: DiscoveryProfileProps) {
     );
   };
 
-  if (isPending) {
+  // An emptied deck refetches the next one; keep the skeleton instead of flashing the empty state.
+  if (isPending || (!card && isFetching)) {
     return (
       <Skeleton loading label={t('apiState.loading')}>
         <UIPanel inert className={panelClass} />

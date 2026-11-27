@@ -6,9 +6,11 @@ import type {
 import { toDiscoverQuery } from '@/utils';
 import { api } from './client';
 
+const DISCOVERY_DECK_SIZE = 5;
+
 export async function discoverConnections(filters: ConnectionFilters) {
   const { data } = await api.GET('/connections/discover', {
-    params: { query: toDiscoverQuery(filters) },
+    params: { query: { ...toDiscoverQuery(filters), limit: DISCOVERY_DECK_SIZE } },
   });
   return data!;
 }
