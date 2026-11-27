@@ -672,7 +672,8 @@
     "sent": "Report sent.",
     "spam": "Spam",
     "submit": "Send report",
-    "user": "Report user"
+    "user": "Report user",
+    "action": "Report"
   },
   "rewards": {
     "balance": "Your coins",

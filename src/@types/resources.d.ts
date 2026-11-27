@@ -663,6 +663,7 @@ export default interface Resources {
       "userUnban": "Lifting ban…"
     },
     "report": {
+      "action": "Report",
       "candidate": "Report profile",
       "comment": "Report comment",
       "course": "Report course",

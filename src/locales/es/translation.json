@@ -673,7 +673,8 @@
     "sent": "Informe enviado.",
     "spam": "Correo basura",
     "submit": "Enviar informe",
-    "user": "Reportar usuario"
+    "user": "Reportar usuario",
+    "action": "Reportar"
   },
   "rewards": {
     "balance": "Tus monedas",

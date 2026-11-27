@@ -76,12 +76,14 @@ export function ReportButton({
         className={
           compact
             ? 'min-h-0 gap-1.5 rounded-full border border-danger/25 bg-danger-soft py-1 pr-2.5 pl-2 text-micro font-semibold text-danger backdrop-blur-md enabled:hover:border-danger/50 enabled:hover:bg-danger/25'
-            : `min-h-0 gap-1 border-0 p-0 ${danger ? 'text-danger/70 enabled:hover:text-danger' : 'text-secondary enabled:hover:text-white'} enabled:hover:bg-transparent`
+            : `min-h-0 gap-1 border-0 p-0 whitespace-nowrap ${danger ? 'text-danger/70 enabled:hover:text-danger' : 'text-secondary enabled:hover:text-white'} enabled:hover:bg-transparent`
         }
+        // The button sits next to what it reports, so it only says "Report"; the full name stays for screen readers.
+        aria-label={label}
         onClick={() => changeOpen(true)}
       >
         <FlagTriangleRight className="size-3.5" aria-hidden="true" />
-        {label}
+        {t('report.action')}
       </UIButton>
       <UIDialog
         open={open}

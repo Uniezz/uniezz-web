@@ -672,7 +672,8 @@
     "sent": "Bericht gesendet.",
     "spam": "Spam",
     "submit": "Bericht senden",
-    "user": "Benutzer melden"
+    "user": "Benutzer melden",
+    "action": "Melden"
   },
   "rewards": {
     "balance": "Deine Münzen",

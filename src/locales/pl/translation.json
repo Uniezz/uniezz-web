@@ -674,7 +674,8 @@
     "sent": "Zgłoszenie wysłane.",
     "spam": "Spam",
     "submit": "Wyślij zgłoszenie",
-    "user": "Zgłoś użytkownika"
+    "user": "Zgłoś użytkownika",
+    "action": "Zgłoś"
   },
   "rewards": {
     "balance": "Twoje monety",
