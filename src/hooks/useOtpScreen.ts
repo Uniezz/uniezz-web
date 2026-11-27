@@ -81,7 +81,7 @@ export const useOtpScreen = (university: string) => {
           captureAnalytics('sign_in_succeeded', { method: 'OTP' });
           clearInviteCode();
           queryClient.clear();
-          navigate({ to: await homeAfterSignIn(), replace: true });
+          navigate({ href: await homeAfterSignIn(), replace: true });
         }
       } catch (error) {
         captureAnalytics('sign_in_failed', { method: 'OTP', step: data.step });

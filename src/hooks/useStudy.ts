@@ -36,7 +36,7 @@ import type {
   StudyFileQuery,
   UpdateCourseInput,
 } from '@/@types';
-import { patchCachedItem } from '@/utils';
+import { patchCachedItem, retryUnlessNotFound } from '@/utils';
 import i18n from '@/i18n';
 
 export function useStudyFiles(query: StudyFileQuery) {
@@ -78,6 +78,7 @@ export function useCourse(id: string) {
   return useQuery({
     queryKey: ['study', 'courses', id],
     queryFn: () => getCourse(id),
+    retry: retryUnlessNotFound,
     enabled: !!id,
   });
 }

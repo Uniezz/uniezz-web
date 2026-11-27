@@ -778,5 +778,12 @@
   "topbar": {
     "changeLanguage": "Sprache ändern",
     "languageCode": "DE"
+  },
+  "share": {
+    "copyLink": "Link kopieren",
+    "copied": "Link kopiert",
+    "postGone": "Diesen Beitrag gibt es nicht",
+    "profileGone": "Dieses Profil gibt es nicht",
+    "courseGone": "Diesen Kurs gibt es nicht"
   }
 }

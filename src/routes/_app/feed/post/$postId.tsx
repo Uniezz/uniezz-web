@@ -14,7 +14,15 @@ import type { FeedComment, FeedPostSearch } from '@/@types';
 import { ApiRequestError } from '@/api';
 import { cn } from '@/ui/cn';
 import { inputStyles } from '@/ui/components/UIInput/variants';
-import { UIAvatar, UIButton, UIEmojiPicker, UIEmpty, UIPanel, UIQueryError } from '@/ui/components';
+import {
+  UIAvatar,
+  UIButton,
+  UICopyLink,
+  UIEmojiPicker,
+  UIEmpty,
+  UIPanel,
+  UIQueryError,
+} from '@/ui/components';
 import { listComponents } from '@/ui/virtuoso';
 import { Virtuoso } from 'react-virtuoso';
 import {
@@ -23,9 +31,10 @@ import {
   useFeedComments,
   useCreateComment,
   useMyProfile,
+  useLeaveWhenGone,
 } from '@/hooks';
 import { useNarrowViewport } from '@/hooks';
-import { authorName, feedPostNeighbours, isAuthorProfilePath, toast } from '@/utils';
+import { authorName, feedPostNeighbours, isAuthorProfilePath, postUrl, toast } from '@/utils';
 import { FeedCommentItem, FeedCommentsSkeleton } from '@/components/features/feed';
 import { FeedLikeButton } from '@/components/features/feed';
 import { FeedSaveButton } from '@/components/features/feed';
@@ -51,6 +60,7 @@ function FeedPostPage() {
     data: loadedPost,
     isPending: isPostPending,
     isError: isPostError,
+    error: postError,
     refetch: refetchPost,
   } = useFeedPost(postId);
   const {
@@ -76,6 +86,11 @@ function FeedPostPage() {
   const [commentDraft, setCommentDraft] = useState('');
   const isNarrow = useNarrowViewport();
   const [replyTo, setReplyTo] = useState<FeedComment | null>(null);
+  useLeaveWhenGone(
+    postError,
+    t('share.postGone'),
+    () => void router.navigate({ to: '/feed', search: { postFrom: undefined }, replace: true }),
+  );
   const [isCommentMultiline, setIsCommentMultiline] = useState(false);
   const post = loadedPost ?? (isPostPending ? samplePost : undefined);
   if (!post) {
@@ -160,6 +175,7 @@ function FeedPostPage() {
     <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
       <FeedLikeButton id={post.id} kind="post" liked={post.likedByMe} count={post.likesCount} />
       <FeedSaveButton id={post.id} saved={post.savedByMe} />
+      <UICopyLink url={postUrl(post.id)} analyticsLabel="Copy post link" />
       <FeedPostActions post={post} />
     </div>
   );

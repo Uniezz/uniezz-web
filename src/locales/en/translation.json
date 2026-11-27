@@ -778,5 +778,12 @@
   "topbar": {
     "changeLanguage": "Change language",
     "languageCode": "EN"
+  },
+  "share": {
+    "copyLink": "Copy link",
+    "copied": "Link copied",
+    "postGone": "Couldn't find this post",
+    "profileGone": "Couldn't find this profile",
+    "courseGone": "Couldn't find this course"
   }
 }

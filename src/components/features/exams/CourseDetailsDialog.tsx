@@ -3,17 +3,19 @@ import { useId, useState, type FormEvent } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { Flame, Pencil, Trash2 } from 'lucide-react';
-import { toast } from '@/utils';
+import { courseUrl, toast } from '@/utils';
 import {
   useAddCourseComment,
   useCourse,
   useDeleteCourse,
+  useLeaveWhenGone,
   useRateCourse,
   useUniversities,
 } from '@/hooks';
 import { courseCommentSchema } from '@/schemas';
 import {
   UIButton,
+  UICopyLink,
   UIDialog,
   UIDialogFooter,
   UIField,
@@ -27,7 +29,9 @@ import { RatingInput } from './RatingInput';
 
 export function CourseDetailsDialog({ courseId, onClose }: CourseDetailsDialogProps) {
   const { t } = useTranslation();
-  const { data: course, isPending, isError, refetch } = useCourse(courseId);
+  const { data: course, isPending, isError, error, refetch } = useCourse(courseId);
+  // Closing shows the course list behind the dialog.
+  useLeaveWhenGone(error, t('share.courseGone'), onClose);
   const { data: universities = [] } = useUniversities();
   const { mutate: rate, isPending: isRating } = useRateCourse();
   const { mutateAsync: addComment, isPending: isAddingComment } = useAddCourseComment();
@@ -58,7 +62,7 @@ export function CourseDetailsDialog({ courseId, onClose }: CourseDetailsDialogPr
           if (!open) onClose();
         }}
         title={t('courses.details')}
-        description={course?.name ?? t('apiState.loading')}
+        description={course?.name ?? (isError ? '' : t('apiState.loading'))}
         footer={
           course && (
             <UIDialogFooter className="justify-between">
@@ -93,6 +97,7 @@ export function CourseDetailsDialog({ courseId, onClose }: CourseDetailsDialogPr
                     {t('courses.delete')}
                   </UIButton>
                 )}
+                <UICopyLink url={courseUrl(courseId)} analyticsLabel="Copy course link" />
                 <ReportButton targetType="course" targetId={courseId} danger />
               </div>
               <UIButton

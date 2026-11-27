@@ -12,7 +12,7 @@ import { myProfileQueryOptions } from '@/hooks';
 import { ApiRequestError } from '@/api';
 import { authorName } from '@/utils';
 import { useNarrowViewport } from '@/hooks';
-import { isMobileDevice, shouldBlockMobile } from '@/utils';
+import { isMobileDevice, saveReturnPath, shouldBlockMobile } from '@/utils';
 import { optionalSearchStringSchema, returnPathSchema } from '@/schemas';
 import { AppStoreLinks } from '@/components';
 import { privateRouteHead } from '@/utils/routeHead';
@@ -21,11 +21,12 @@ export const Route = createFileRoute('/_app')({
   head: ({ matches }) => privateRouteHead(matches[matches.length - 1]!.pathname),
   // Runs on every visit to a closed page, including Back. A guest goes to sign-in
   // with `replace`, so the closed page is not kept in history.
-  beforeLoad: async ({ context }) => {
+  beforeLoad: async ({ context, location }) => {
     try {
       await context.queryClient.ensureQueryData(myProfileQueryOptions());
     } catch (error) {
       if (error instanceof ApiRequestError && error.status === 401) {
+        saveReturnPath(location.href);
         throw redirect({ to: '/login', replace: true });
       }
       throw error;

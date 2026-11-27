@@ -3,7 +3,7 @@ import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tansta
 import { deleteMyAvatar, deleteMyBanner, getProfiles, getPublicProfile, signOut } from '@/api';
 import type { components } from '@/@types/schema';
 import i18n from '@/i18n';
-import { profileSearchQuery } from '@/utils';
+import { profileSearchQuery, retryUnlessNotFound } from '@/utils';
 
 export function useProfileSearch(name: string) {
   const q = profileSearchQuery(name);
@@ -16,7 +16,11 @@ export function useProfileSearch(name: string) {
 }
 
 export function usePublicProfile(id: string) {
-  return useQuery({ queryKey: ['profiles', id], queryFn: () => getPublicProfile(id) });
+  return useQuery({
+    queryKey: ['profiles', id],
+    queryFn: () => getPublicProfile(id),
+    retry: retryUnlessNotFound,
+  });
 }
 
 export function useDeleteAvatar() {

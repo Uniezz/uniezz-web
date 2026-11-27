@@ -22,7 +22,7 @@ import {
   updateFeedPost,
 } from '@/api';
 import type { FeedFilters, FeedPostSource } from '@/@types';
-import { patchCachedItem } from '@/utils';
+import { patchCachedItem, retryUnlessNotFound } from '@/utils';
 import i18n from '@/i18n';
 
 export function useUpdateFeedComment() {
@@ -141,6 +141,7 @@ export function useFeedPost(id: string) {
     gcTime: 10 * 60_000,
     queryKey: ['feed', 'post', id],
     queryFn: () => getFeedPost(id),
+    retry: retryUnlessNotFound,
   });
 }
 

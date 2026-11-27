@@ -8,7 +8,7 @@ import { AuthLayout } from '@/components/auth';
 import { useCompleteOnboarding, useMyProfile, useProfileForm } from '@/hooks';
 import { UIButton, UIUnsavedChanges } from '@/ui/components';
 import { cn } from '@/ui/cn';
-import { captureAnalytics, toast } from '@/utils';
+import { captureAnalytics, takeReturnPath, toast } from '@/utils';
 import { PersonalDetails, StudyProgrammes } from '../profile';
 import { ONBOARDING_STEPS, OnboardingAside } from './OnboardingAside';
 import { OnboardingPhoto } from './OnboardingPhoto';
@@ -41,7 +41,7 @@ export function OnboardingWizard({ profile }: { profile: components['schemas']['
 
   function goToFeed() {
     completeOnboarding(undefined, {
-      onSuccess: () => void navigate({ to: '/feed', replace: true }),
+      onSuccess: () => void navigate({ href: takeReturnPath() ?? '/feed', replace: true }),
       onError: () => toast.error(t('apiState.error')),
     });
   }

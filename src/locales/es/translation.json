@@ -779,5 +779,12 @@
   "topbar": {
     "changeLanguage": "Cambiar idioma",
     "languageCode": "ES"
+  },
+  "share": {
+    "copyLink": "Copiar enlace",
+    "copied": "Enlace copiado",
+    "postGone": "No encontramos esta publicación",
+    "profileGone": "No encontramos este perfil",
+    "courseGone": "No encontramos esta asignatura"
   }
 }

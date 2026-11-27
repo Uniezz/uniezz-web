@@ -1,9 +1,9 @@
-import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { createFileRoute, useNavigate, useRouter } from '@tanstack/react-router';
 import { ChevronLeft } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
 import { useTranslation } from 'react-i18next';
 import { Skeleton } from 'skullet/react';
-import { usePublicProfile } from '@/hooks';
+import { useLeaveWhenGone, usePublicProfile } from '@/hooks';
 import { UIQueryError } from '@/ui/components';
 import { PublicProfile } from '@/components/features/profile';
 import { ProfilePosts } from '@/components/features/profile';
@@ -28,7 +28,13 @@ export const Route = createFileRoute('/_app/connections/students/$profileId')({
 function StudentProfilePage() {
   const { profileId } = Route.useParams();
   const { t } = useTranslation();
-  const { data: profile, isPending, isError, refetch } = usePublicProfile(profileId);
+  const { data: profile, isPending, isError, error, refetch } = usePublicProfile(profileId);
+  const navigate = useNavigate();
+  useLeaveWhenGone(
+    error,
+    t('share.profileGone'),
+    () => void navigate({ to: '/feed', replace: true }),
+  );
   // The bar shows once the card has left the viewport through the top, not the bottom.
   const { ref: card, entry } = useInView();
   const cardAbove = entry ? !entry.isIntersecting && entry.boundingClientRect.top < 0 : false;

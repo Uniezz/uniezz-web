@@ -1,11 +1,11 @@
-import { captureAnalytics, toast } from '@/utils';
+import { captureAnalytics, profileUrl, toast } from '@/utils';
 import { Check } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { FormProvider } from 'react-hook-form';
 import { useDeleteBanner } from '@/hooks';
 import { useProfileForm } from '@/hooks';
 import type { components } from '@/@types/schema';
-import { UIButton, UIPanel, UITopbar, UIUnsavedChanges } from '@/ui/components';
+import { UIButton, UICopyLink, UIPanel, UITopbar, UIUnsavedChanges } from '@/ui/components';
 import { ProfileIdentity } from './ProfileIdentity';
 import { PersonalDetails } from './PersonalDetails';
 import { StudyProgrammes } from './StudyProgrammes';
@@ -29,6 +29,11 @@ export function ProfileEditor({
       <>
         <UIUnsavedChanges dirty={isDirty} />
         <UITopbar title={t('app.yourProfile')}>
+          <UICopyLink
+            url={profileUrl(profile.id)}
+            analyticsLabel="Copy my profile link"
+            className="h-9 min-h-9 shrink-0 rounded-full border border-white-10 bg-white-5 px-3 py-0 text-detail whitespace-nowrap text-white enabled:hover:bg-white-20"
+          />
           {isDirty && (
             <UIButton
               type="submit"

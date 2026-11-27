@@ -4,10 +4,10 @@ import { BlockStudentButton } from '@/components/features/connections';
 import { useTranslation } from 'react-i18next';
 import type { PublicProfileProps } from '@/@types';
 import { useMyProfile, useUniversities } from '@/hooks';
-import { UIPanel, UITags, UIUniversityLogo } from '@/ui/components';
+import { UICopyLink, UIPanel, UITags, UIUniversityLogo } from '@/ui/components';
 import { ReportButton } from '@/components/features/reports';
 import { BanButton, GrantModeratorButton } from '@/components/features/moderation';
-import { authorName, isAdmin, isStaff } from '@/utils';
+import { authorName, isAdmin, isStaff, profileUrl } from '@/utils';
 import { cn } from '@/ui/cn';
 
 export function PublicProfile({ profile }: PublicProfileProps) {
@@ -43,20 +43,27 @@ export function PublicProfile({ profile }: PublicProfileProps) {
           aria-hidden="true"
           className="absolute top-3 right-3 size-12 rounded-xl object-contain sm:top-4 sm:right-4"
         />
-        {me && !isMe && (
+        {me && (
           <div className="absolute right-2 bottom-2 z-10 flex flex-col items-end gap-2 rounded-xl border border-white-10 bg-surface/75 px-3 py-2 backdrop-blur-md sm:right-3 sm:bottom-3">
-            <ReportButton targetType="user" targetId={profile.id} danger />
-            {isStaff(me) && <BanButton userId={profile.id} inline />}
-            {isAdmin(me) && <GrantModeratorButton userId={profile.id} icon={ShieldPlus} inline />}
-            <BlockStudentButton
-              studentId={profile.id}
-              onBlocked={() =>
-                void navigate({
-                  to: '/connections/students',
-                  search: { studentSearch: undefined },
-                })
-              }
-            />
+            <UICopyLink url={profileUrl(profile.id)} analyticsLabel="Copy profile link" />
+            {!isMe && (
+              <>
+                <ReportButton targetType="user" targetId={profile.id} danger />
+                {isStaff(me) && <BanButton userId={profile.id} inline />}
+                {isAdmin(me) && (
+                  <GrantModeratorButton userId={profile.id} icon={ShieldPlus} inline />
+                )}
+                <BlockStudentButton
+                  studentId={profile.id}
+                  onBlocked={() =>
+                    void navigate({
+                      to: '/connections/students',
+                      search: { studentSearch: undefined },
+                    })
+                  }
+                />
+              </>
+            )}
           </div>
         )}
       </div>

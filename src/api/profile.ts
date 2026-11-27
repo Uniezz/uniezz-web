@@ -1,5 +1,6 @@
 import type { components } from '@/@types/schema';
 import type { UpdateMeBody } from '@/@types';
+import { takeReturnPath } from '@/utils/shareLinks';
 import { api } from './client';
 
 export async function getMyProfile() {
@@ -75,11 +76,12 @@ export async function getPublicProfile(id: string) {
   return data!;
 }
 
-/** Where a just-signed-in student lands: onboarding until it is finished or skipped, otherwise the feed. */
-export async function homeAfterSignIn(): Promise<'/onboarding' | '/feed'> {
+/** Where a just-signed-in student lands: onboarding until it is finished or skipped, otherwise the page they opened as a guest, or the feed. */
+export async function homeAfterSignIn(): Promise<string> {
   try {
     const { onboardedAt } = await getMyProfile();
-    return onboardedAt ? '/feed' : '/onboarding';
+    // Onboarding keeps the page a guest opened from a link and goes there when it ends.
+    return onboardedAt ? (takeReturnPath() ?? '/feed') : '/onboarding';
   } catch {
     return '/feed';
   }

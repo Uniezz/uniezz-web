@@ -780,5 +780,12 @@
   "topbar": {
     "changeLanguage": "Змяніць мову",
     "languageCode": "BE"
+  },
+  "share": {
+    "copyLink": "Скапіяваць спасылку",
+    "copied": "Спасылка скапіявана",
+    "postGone": "Не знайшлі такога допісу",
+    "profileGone": "Не знайшлі такога профілю",
+    "courseGone": "Не знайшлі такога прадмета"
   }
 }

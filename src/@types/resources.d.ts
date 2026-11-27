@@ -745,6 +745,13 @@ export default interface Resources {
       "termsDescription": "Terms and rules for using the Uniezz student community in Lublin.",
       "termsTitle": "Terms of service — uniezz"
     },
+    "share": {
+      "copied": "Link copied",
+      "copyLink": "Copy link",
+      "courseGone": "Couldn't find this course",
+      "postGone": "Couldn't find this post",
+      "profileGone": "Couldn't find this profile"
+    },
     "sidebar": {
       "mainNavigation": "Main navigation"
     },

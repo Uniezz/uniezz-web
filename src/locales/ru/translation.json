@@ -780,5 +780,12 @@
   "topbar": {
     "changeLanguage": "Сменить язык",
     "languageCode": "RU"
+  },
+  "share": {
+    "copyLink": "Скопировать ссылку",
+    "copied": "Ссылка скопирована",
+    "postGone": "Не нашли такой пост",
+    "profileGone": "Не нашли такой профиль",
+    "courseGone": "Не нашли такой предмет"
   }
 }
