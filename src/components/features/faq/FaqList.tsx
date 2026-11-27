@@ -3,9 +3,8 @@ import { ChevronDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Skeleton } from 'skullet/react';
 import { useFaqEntries } from '@/hooks';
-import { Virtuoso } from 'react-virtuoso';
+import { useInView } from 'react-intersection-observer';
 import { UIEmpty, UIPanel, UIQueryError, UISearch } from '@/ui/components';
-import { listComponents } from '@/ui/virtuoso';
 import { matchesSearch } from '@/utils';
 
 export function FaqList() {
@@ -16,9 +15,12 @@ export function FaqList() {
   const entries = (data?.pages.flatMap((page) => page.items ?? []) ?? []).filter((entry) =>
     matchesSearch(search, entry.question, entry.answer),
   );
-  const loadMore = () => {
-    if (hasNextPage && !isFetchingNextPage && !isError) void fetchNextPage();
-  };
+  // The next page loads once the end of the list scrolls into view.
+  const { ref: endRef } = useInView({
+    onChange: (inView) => {
+      if (inView && hasNextPage && !isFetchingNextPage && !isError) void fetchNextPage();
+    },
+  });
 
   return (
     <div className="flex min-h-0 flex-1 flex-col gap-4">
@@ -38,15 +40,15 @@ export function FaqList() {
           <p>{t(search.trim() ? 'faq.noResults' : 'faq.empty')}</p>
         </UIEmpty>
       ) : (
-        <Virtuoso
-          data={entries}
-          computeItemKey={(_, entry) => entry.id}
-          endReached={loadMore}
-          components={listComponents}
+        // Not virtualised: the FAQ is short, and an answer opening must not re-layout every row
+        // or close again when it scrolls away.
+        <div
+          role="list"
           aria-label={t('faq.title')}
-          className="min-h-0 flex-1 motion-safe:animate-rise-in"
-          itemContent={(_, entry) => (
-            <div role="listitem" className="pb-3">
+          className="min-h-0 flex-1 overflow-y-auto motion-safe:animate-rise-in"
+        >
+          {entries.map((entry) => (
+            <div key={entry.id} role="listitem" className="pb-3">
               <UIPanel surface="tint" className="rounded-programme p-4">
                 <details className="group">
                   <summary
@@ -64,8 +66,9 @@ export function FaqList() {
                 </details>
               </UIPanel>
             </div>
-          )}
-        />
+          ))}
+          <div ref={endRef} aria-hidden="true" />
+        </div>
       )}
       {isError && <UIQueryError retry={() => void refetch()} />}
     </div>
