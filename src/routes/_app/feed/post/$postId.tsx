@@ -175,7 +175,12 @@ function FeedPostPage() {
     <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
       <FeedLikeButton id={post.id} kind="post" liked={post.likedByMe} count={post.likesCount} />
       <FeedSaveButton id={post.id} saved={post.savedByMe} />
-      <UICopyLink url={postUrl(post.id)} analyticsLabel="Copy post link" />
+      <UICopyLink
+        url={postUrl(post.id)}
+        analyticsLabel="Copy post link"
+        iconOnly
+        className="text-white"
+      />
       <FeedPostActions post={post} />
     </div>
   );

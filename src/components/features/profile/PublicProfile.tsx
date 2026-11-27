@@ -43,27 +43,26 @@ export function PublicProfile({ profile }: PublicProfileProps) {
           aria-hidden="true"
           className="absolute top-3 right-3 size-12 rounded-xl object-contain sm:top-4 sm:right-4"
         />
-        {me && (
+        <UICopyLink
+          url={profileUrl(profile.id)}
+          analyticsLabel="Copy profile link"
+          iconOnly
+          className="absolute top-3 left-3 z-10 size-10 justify-center rounded-full border border-white-10 bg-surface/75 text-white backdrop-blur-md enabled:hover:bg-surface sm:top-4 sm:left-4"
+        />
+        {me && !isMe && (
           <div className="absolute right-2 bottom-2 z-10 flex flex-col items-end gap-2 rounded-xl border border-white-10 bg-surface/75 px-3 py-2 backdrop-blur-md sm:right-3 sm:bottom-3">
-            <UICopyLink url={profileUrl(profile.id)} analyticsLabel="Copy profile link" />
-            {!isMe && (
-              <>
-                <ReportButton targetType="user" targetId={profile.id} danger />
-                {isStaff(me) && <BanButton userId={profile.id} inline />}
-                {isAdmin(me) && (
-                  <GrantModeratorButton userId={profile.id} icon={ShieldPlus} inline />
-                )}
-                <BlockStudentButton
-                  studentId={profile.id}
-                  onBlocked={() =>
-                    void navigate({
-                      to: '/connections/students',
-                      search: { studentSearch: undefined },
-                    })
-                  }
-                />
-              </>
-            )}
+            <ReportButton targetType="user" targetId={profile.id} danger />
+            {isStaff(me) && <BanButton userId={profile.id} inline />}
+            {isAdmin(me) && <GrantModeratorButton userId={profile.id} icon={ShieldPlus} inline />}
+            <BlockStudentButton
+              studentId={profile.id}
+              onBlocked={() =>
+                void navigate({
+                  to: '/connections/students',
+                  search: { studentSearch: undefined },
+                })
+              }
+            />
           </div>
         )}
       </div>

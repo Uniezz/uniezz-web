@@ -20,6 +20,8 @@ export const examsSearchSchema = z.object({
   q: optionalSearchStringSchema,
   /** Where closing a course opened from outside exams returns to, such as a moderation report. */
   courseFrom: returnPathSchema,
+  /** The professor whose reviews are open, so the dialog has a link. */
+  professor: optionalSearchStringSchema,
 });
 
 const courseNameSchema = z.string().trim().min(3).max(150);

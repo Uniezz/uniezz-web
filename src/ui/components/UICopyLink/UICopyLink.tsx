@@ -9,10 +9,18 @@ export type UICopyLinkProps = Omit<UIButtonProps, 'children' | 'onClick' | 'left
   url: string;
   /** What is shared, in English, such as "Copy post link"; never user content. */
   analyticsLabel: string;
+  /** Only the icon, with the label as its tooltip, for a row of icon actions. */
+  iconOnly?: boolean;
 };
 
 /** Copies a link to the clipboard; the address bar can't, since in-app addresses are masked. */
-export function UICopyLink({ url, analyticsLabel, className, ...props }: UICopyLinkProps) {
+export function UICopyLink({
+  url,
+  analyticsLabel,
+  iconOnly,
+  className,
+  ...props
+}: UICopyLinkProps) {
   const { t } = useTranslation();
 
   async function copy(): Promise<void> {
@@ -34,11 +42,13 @@ export function UICopyLink({ url, analyticsLabel, className, ...props }: UICopyL
         className,
       )}
       data-ph-capture-attribute-label={analyticsLabel}
+      aria-label={iconOnly ? t('share.copyLink') : undefined}
+      title={iconOnly ? t('share.copyLink') : undefined}
       onClick={() => void copy()}
       {...props}
     >
-      <Link2 className="size-3.5 shrink-0" aria-hidden="true" />
-      {t('share.copyLink')}
+      <Link2 className={iconOnly ? 'size-4 shrink-0' : 'size-3.5 shrink-0'} aria-hidden="true" />
+      {!iconOnly && t('share.copyLink')}
     </UIButton>
   );
 }

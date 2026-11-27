@@ -786,6 +786,7 @@
     "copied": "Link skopiowany",
     "postGone": "Nie znaleźliśmy tego posta",
     "profileGone": "Nie znaleźliśmy tego profilu",
-    "courseGone": "Nie znaleźliśmy tego przedmiotu"
+    "courseGone": "Nie znaleźliśmy tego przedmiotu",
+    "professorGone": "Nie znaleźliśmy tego wykładowcy"
   }
 }

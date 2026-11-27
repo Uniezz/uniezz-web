@@ -2,17 +2,32 @@ import type { ProfessorReviewsDialogProps } from '@/@types';
 import { useState, type FormEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Virtuoso } from 'react-virtuoso';
-import { toast } from '@/utils';
-import { useDeleteProfessorReview, useProfessorReviews, useReviewProfessor } from '@/hooks';
+import { professorUrl, toast } from '@/utils';
+import {
+  useDeleteProfessorReview,
+  useLeaveWhenGone,
+  useProfessor,
+  useProfessorReviews,
+  useReviewProfessor,
+} from '@/hooks';
 import { courseCommentSchema } from '@/schemas';
-import { UIButton, UIDialog, UIDialogFooter, UIField, UIQueryError } from '@/ui/components';
+import {
+  UIButton,
+  UICopyLink,
+  UIDialog,
+  UIDialogFooter,
+  UIField,
+  UIQueryError,
+} from '@/ui/components';
 import { listComponents } from '@/ui/virtuoso';
 import { ReportButton } from '@/components/features/reports';
 
-export function ProfessorReviewsDialog({ professor, onClose }: ProfessorReviewsDialogProps) {
+export function ProfessorReviewsDialog({ professorId, onClose }: ProfessorReviewsDialogProps) {
   const { t, i18n } = useTranslation();
+  const { data: professor, error: professorError } = useProfessor(professorId);
+  useLeaveWhenGone(professorError, t('share.professorGone'), onClose);
   const { data, isPending, isError, refetch, hasNextPage, fetchNextPage, isFetchingNextPage } =
-    useProfessorReviews(professor.id);
+    useProfessorReviews(professorId);
   const { mutateAsync: saveReview, isPending: isSaving } = useReviewProfessor();
   const { mutateAsync: deleteReview, isPending: isDeleting } = useDeleteProfessorReview();
   const [content, setContent] = useState('');
@@ -32,7 +47,7 @@ export function ProfessorReviewsDialog({ professor, onClose }: ProfessorReviewsD
     const result = courseCommentSchema.safeParse({ content });
     if (!result.success || isSaving) return;
     try {
-      await saveReview({ id: professor.id, content: result.data.content });
+      await saveReview({ id: professorId, content: result.data.content });
       setContent('');
       setIsEditing(false);
       toast.success(t('professors.reviewSaved'));
@@ -43,7 +58,7 @@ export function ProfessorReviewsDialog({ professor, onClose }: ProfessorReviewsD
 
   async function confirmDelete() {
     try {
-      await deleteReview(professor.id);
+      await deleteReview(professorId);
       setIsDeleteOpen(false);
       setIsEditing(false);
       setContent('');
@@ -62,7 +77,11 @@ export function ProfessorReviewsDialog({ professor, onClose }: ProfessorReviewsD
           if (!open) onClose();
         }}
         title={t('professors.reviews')}
-        description={[professor.degree, professor.name].filter(Boolean).join(' ')}
+        description={
+          professor
+            ? [professor.degree, professor.name].filter(Boolean).join(' ')
+            : t('apiState.loading')
+        }
         footer={
           showForm && (
             // Pinned below the list so the form stays visible however long the list is.
@@ -108,6 +127,7 @@ export function ProfessorReviewsDialog({ professor, onClose }: ProfessorReviewsD
           ref={setScrollParent}
           className="scrollbar-hidden min-h-0 flex-1 space-y-6 overflow-y-auto"
         >
+          <UICopyLink url={professorUrl(professorId)} analyticsLabel="Copy professor link" />
           {isPending && <p role="status">{t('apiState.loading')}</p>}
           {!isPending && !isError && reviews.length === 0 && (
             <p className="text-secondary">{t('professors.noReviews')}</p>

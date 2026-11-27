@@ -6,6 +6,8 @@ import { SITE_ORIGIN } from '@/utils/site';
 export const postUrl = (id: string) => `${SITE_ORIGIN}/feed/post/${encodeURIComponent(id)}`;
 export const profileUrl = (id: string) =>
   `${SITE_ORIGIN}/connections/students/${encodeURIComponent(id)}`;
+export const professorUrl = (id: string) =>
+  `${SITE_ORIGIN}/exams?${new URLSearchParams({ tab: 'professors', professor: id })}`;
 export const courseUrl = (id: string) => `${SITE_ORIGIN}/exams/courses/${encodeURIComponent(id)}`;
 
 /** A shared link to something deleted, hidden or mistyped: the backend answers 404, or 400 for a broken id. */

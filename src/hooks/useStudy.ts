@@ -187,6 +187,7 @@ export function useProfessor(id: string) {
   return useQuery({
     queryKey: ['study', 'professors', id],
     queryFn: () => getProfessor(id),
+    retry: retryUnlessNotFound,
     enabled: !!id,
   });
 }

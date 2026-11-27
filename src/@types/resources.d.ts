@@ -750,6 +750,7 @@ export default interface Resources {
       "copyLink": "Copy link",
       "courseGone": "Couldn't find this course",
       "postGone": "Couldn't find this post",
+      "professorGone": "Couldn't find this professor",
       "profileGone": "Couldn't find this profile"
     },
     "sidebar": {

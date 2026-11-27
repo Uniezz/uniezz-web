@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { useSearch } from '@tanstack/react-router';
+import { useNavigate, useSearch } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { toast } from '@/utils';
 import { TableVirtuoso } from 'react-virtuoso';
@@ -7,7 +6,6 @@ import { MessageSquareText } from 'lucide-react';
 import { useProfessors, useRateProfessor, useUniversities } from '@/hooks';
 import { UIButton, UIEmpty, UIPanel, UIQueryError } from '@/ui/components';
 import { fixedTable, tableCellTextClass, tableHeaderCellClass } from '@/ui/virtuoso';
-import type { Professor } from '@/@types';
 import { RatingInput } from './RatingInput';
 import { ProfessorReviewsDialog } from './ProfessorReviewsDialog';
 
@@ -17,12 +15,12 @@ const tableComponents = fixedTable(columnWidths);
 
 export function ProfessorList() {
   const { t } = useTranslation();
-  const { university, q = '' } = useSearch({ from: '/_app/exams' });
+  const { university, q = '', professor: openProfessorId } = useSearch({ from: '/_app/exams' });
+  const navigate = useNavigate({ from: '/exams' });
   const { data, isPending, isError, refetch, hasNextPage, isFetchingNextPage, fetchNextPage } =
     useProfessors({ universityId: university, q });
   const { data: universities = [] } = useUniversities();
   const { mutate: rate, isPending: isRating, variables: pendingRate } = useRateProfessor();
-  const [reviewed, setReviewed] = useState<Professor | null>(null);
   const professors = data?.pages.flatMap((page) => page.items ?? []) ?? [];
 
   return (
@@ -89,7 +87,11 @@ export function ProfessorList() {
                       size="pill"
                       bg="transparent"
                       className="min-h-0 gap-1.5 border-0 p-0 text-secondary enabled:hover:bg-transparent enabled:hover:text-white"
-                      onClick={() => setReviewed(professor)}
+                      onClick={() =>
+                        void navigate({
+                          search: (previous) => ({ ...previous, professor: professor.id }),
+                        })
+                      }
                       data-ph-capture-attribute-label="Open professor reviews"
                     >
                       <MessageSquareText className="size-4" aria-hidden="true" />
@@ -103,8 +105,16 @@ export function ProfessorList() {
         </div>
       )}
       {isError && <UIQueryError retry={() => void refetch()} />}
-      {reviewed && (
-        <ProfessorReviewsDialog professor={reviewed} onClose={() => setReviewed(null)} />
+      {openProfessorId && (
+        <ProfessorReviewsDialog
+          professorId={openProfessorId}
+          onClose={() =>
+            void navigate({
+              search: (previous) => ({ ...previous, professor: undefined }),
+              replace: true,
+            })
+          }
+        />
       )}
     </UIPanel>
   );

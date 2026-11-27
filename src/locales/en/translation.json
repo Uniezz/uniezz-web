@@ -784,6 +784,7 @@
     "copied": "Link copied",
     "postGone": "Couldn't find this post",
     "profileGone": "Couldn't find this profile",
-    "courseGone": "Couldn't find this course"
+    "courseGone": "Couldn't find this course",
+    "professorGone": "Couldn't find this professor"
   }
 }

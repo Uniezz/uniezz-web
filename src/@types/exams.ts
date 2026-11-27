@@ -17,7 +17,7 @@ export type CourseFile = components['schemas']['CourseFile'];
 export type AddCourseFileInput = components['schemas']['AddCourseFileInputBody'];
 export type Professor = components['schemas']['Professor'];
 
-export type ProfessorReviewsDialogProps = { professor: Professor; onClose: () => void };
+export type ProfessorReviewsDialogProps = { professorId: string; onClose: () => void };
 export type CourseDetailsDialogProps = { courseId: string; onClose: () => void };
 export type CourseFormDialogProps = { course?: Course; onClose: (ignoreBlocker?: boolean) => void };
 export type CourseMaterialsProps = { courseId: string };
