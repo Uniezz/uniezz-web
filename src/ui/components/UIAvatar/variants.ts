@@ -5,7 +5,10 @@ export const avatarStyles = cva(
   {
     variants: {
       size: {
+        xs: 'h-6 w-6',
         sm: 'h-7 w-7',
+        // the mobile app's sm avatar
+        mobileSm: 'h-8 w-8',
         md: 'h-9 w-9',
         regular: 'h-11 w-11',
         lg: 'h-14 w-14',
@@ -25,7 +28,9 @@ export const avatarStyles = cva(
 export const avatarTextStyles = cva('font-semibold text-white', {
   variants: {
     size: {
+      xs: 'text-[10px]',
       sm: 'text-caption',
+      mobileSm: 'text-caption',
       md: 'text-sm',
       regular: 'text-base',
       lg: 'text-lg',
@@ -37,7 +42,9 @@ export const avatarTextStyles = cva('font-semibold text-white', {
 export const avatarStatusStyles = cva('absolute rounded-full bg-success', {
   variants: {
     size: {
+      xs: 'right-0 bottom-0 h-1.5 w-1.5',
       sm: 'right-0.5 bottom-0.5 h-1.5 w-1.5',
+      mobileSm: 'right-0.5 bottom-0.5 h-2 w-2',
       md: 'right-1 bottom-1 h-2 w-2',
       regular: 'right-1 bottom-1 h-2.5 w-2.5',
       lg: 'right-1 bottom-1 h-3 w-3',

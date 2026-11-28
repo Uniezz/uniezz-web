@@ -29,7 +29,8 @@
     "titleError": "Verwenden Sie 3–150 Zeichen.",
     "unlike": "Im Gegensatz zu",
     "unsave": "Nicht speichern",
-    "contentNotAllowed": "Dieser Text enthält unzulässige Wörter. Ändere ihn und versuch es noch einmal."
+    "contentNotAllowed": "Dieser Text enthält unzulässige Wörter. Ändere ihn und versuch es noch einmal.",
+    "commentSent": "Kommentar hinzugefügt"
   },
   "app": {
     "accountDeleted": "Konto gelöscht",
@@ -158,7 +159,12 @@
     "viewPost": "Beitrag ansehen",
     "writeMessage": "Nachricht schreiben",
     "yearOfStudy": "Studienjahr",
-    "yourProfile": "Ihr Profil"
+    "yourProfile": "Ihr Profil",
+    "liveNow": "Jetzt live",
+    "study": "Studium",
+    "connected": "Verbunden",
+    "students": "Studierende",
+    "moreOptions": "Mehr"
   },
   "auth": {
     "backToUniversities": "Zurück zu den Universitäten",
@@ -168,42 +174,98 @@
       "privacy": "uniezz sieht oder speichert niemals Ihr Universitätspasswort."
     },
     "errors": {
-      "codeInvalid": "Geben Sie den 6-stelligen Code ein, den wir Ihnen gesendet haben.",
-      "emailInvalid": "Bitte geben Sie die korrekte E-Mail-Adresse an",
-      "emailRequired": "Geben Sie Ihre Universitäts-E-Mail-Adresse ein."
+      "codeInvalid": "Gib den 6-stelligen Code ein.",
+      "emailInvalid": "Gib eine gültige E-Mail-Adresse ein.",
+      "emailRequired": "Gib deine Uni-E-Mail ein."
     },
     "login": {
-      "continueWith": "Fahren Sie mit {{provider}} fort",
-      "subtitle": "Wählen Sie Ihre Universität aus, um sich mit USOS oder einem E-Mail-Code der Universität anzumelden.",
-      "title": "anmelden"
+      "continueWith": "Weiter mit {{provider}}",
+      "subtitle": "Wähle deine Hochschule. Anmeldung per USOS oder Code an deine Uni-E-Mail.",
+      "title": "Anmelden"
     },
     "otp": {
       "changeEmail": "E-Mail ändern",
-      "codeLabel": "6-stelliger Bestätigungscode",
+      "codeLabel": "6-stelliger Code",
       "codesPerHour": "3 Codes pro Stunde",
-      "codeSubtitle": "Wir haben einen sechsstelligen Code an {{email}} gesendet. Es läuft in 10 Minuten ab.",
-      "codeTitle": "Überprüfen Sie Ihren Universitäts-Posteingang",
-      "didntGetIt": "Nicht verstanden?",
+      "codeSubtitle": "Wir haben einen 6-stelligen Code an deine Uni-E-Mail gesendet. Er gilt 10 Minuten.",
+      "codeTitle": "Prüfe dein Postfach",
+      "didntGetIt": "Nichts bekommen?",
       "emailLabel": "E-Mail",
       "emailPlaceholder": "you@university.edu",
-      "emailSubtitle": "Wir senden einen sechsstelligen Code an diesen Posteingang. Verwenden Sie die von Ihrer Universität angegebene Adresse.",
-      "emailTitle": "Geben Sie Ihre Universitäts-E-Mail-Adresse an",
+      "emailSubtitle": "Wir senden dir einen 6-stelligen Code.",
+      "emailTitle": "Deine Uni-E-Mail",
       "notice": "Durch die E-Mail-Anmeldung wird nur Ihre Universitätsdomäne bestätigt. Fakultät und Studienjahr bleiben selbst angegeben, bis Ihr Konto mit USOS oder Ihrem Universitätsverzeichnis verknüpft wird.",
-      "resend": "Code erneut senden",
+      "resend": "Erneut senden",
       "send": "Code senden",
-      "verify": "Überprüfen und fortfahren"
-    }
+      "verify": "Bestätigen",
+      "change": "Ändern"
+    },
+    "loadingUniversities": "Hochschulen werden geladen…",
+    "universitiesLoadError": "Hochschulen nicht geladen. Versuch es noch mal.",
+    "noUniversities": "Keine Hochschulen verfügbar.",
+    "emailCode": "E-Mail-Code",
+    "university": "Hochschule",
+    "passwordPrivacy": "uniezz sieht dein Uni-Passwort nie.",
+    "signInError": "Anmeldung fehlgeschlagen.",
+    "logOut": "Abmelden",
+    "deleteAccount": "Konto löschen",
+    "deleteAccountTitle": "Konto löschen?",
+    "deleteAccountDescription": "Deine Münzen, Matches, dein Profil, deine Beiträge und Studiengänge werden gelöscht. Das ist endgültig.",
+    "reauthenticateToDelete": "Melde dich neu an und lösche dein Konto dann noch mal."
   },
   "chat": {
     "action": "Neue Gruppe",
     "emptyThread": "Noch keine Nachrichten. Sag Hallo!",
     "jumpToLatest": "Zur neuesten Nachricht springen",
+    "members_one": "{{count}} Mitglied",
+    "members_other": "{{count}} Mitglieder",
     "newMessages_one": "{{count}} neue Nachricht",
     "newMessages_other": "{{count}} neue Nachrichten",
     "offline": "Du bist offline. Prüfe deine Verbindung.",
     "sending": "Wird gesendet",
     "sent": "Gesendet",
-    "title": "Chatten"
+    "title": "Chatten",
+    "whoCanMessage": "Wer mir schreiben darf",
+    "whoCanMessageHint": "Gilt nur für neue Anfragen. Laufende Chats bleiben.",
+    "whoEveryone": "Alle",
+    "whoUniversity": "Meine Uni",
+    "whoMatches": "Nur Matches",
+    "requestsTab": "Anfragen",
+    "noRequests": "Keine Anfragen",
+    "deletedMessage": "Nachricht gelöscht",
+    "photo": "Foto",
+    "someone": "jemand",
+    "systemGroupCreated": "{{name}} hat „{{title}}“ erstellt",
+    "systemRenamed": "{{name}} hat die Gruppe in „{{title}}“ umbenannt",
+    "systemMemberAdded": "{{name}} hat {{names}} hinzugefügt",
+    "systemMemberRemoved": "{{name}} hat {{target}} entfernt",
+    "systemMemberLeft": "{{name}} hat die Gruppe verlassen",
+    "systemOwnerChanged": "{{target}} leitet jetzt die Gruppe",
+    "systemOther": "Gruppe aktualisiert",
+    "read": "Gelesen",
+    "copied": "Kopiert",
+    "deleteMessageTitle": "Nachricht löschen?",
+    "deleteMessageDescription": "Sie wird für alle gelöscht.",
+    "requestFrom": "{{name}} möchte dir schreiben",
+    "requestHint": "Nimm an, um zu antworten. Ablehnen bleibt unbemerkt.",
+    "requestWaiting": "Anfrage gesendet. Mehr geht, sobald {{name}} annimmt oder antwortet.",
+    "requestDeclined": "Anfrage abgelehnt",
+    "requestFirstMessage": "Schreib {{name}}. Bis zur Annahme geht nur eine Nachricht, nur Text, ohne Links.",
+    "accept": "Annehmen",
+    "decline": "Ablehnen",
+    "selected_one": "{{count}} ausgewählt",
+    "selected_other": "{{count}} ausgewählt",
+    "addToGroup": "Hinzufügen",
+    "saveName": "Speichern",
+    "owner": "Leitung",
+    "removeMemberTitle": "{{name}} entfernen?",
+    "leaveGroupTitle": "Gruppe verlassen?",
+    "leaveGroupDescription": "Du bekommst keine Nachrichten mehr. Leitest du die Gruppe, übernimmt das älteste Mitglied.",
+    "leaveGroup": "Verlassen",
+    "copy": "Kopieren",
+    "delete": "Löschen",
+    "report": "Melden",
+    "cannotMessage": "Du kannst dieser Person nicht schreiben."
   },
   "common": {
     "appName": "uniezz"
@@ -246,7 +308,13 @@
     "unmatchDescription": "Diese Übereinstimmung wird für Sie beide entfernt.",
     "unmatched": "Übereinstimmung entfernt.",
     "viewProfile": "Profil ansehen",
-    "women": "Frauen"
+    "women": "Frauen",
+    "removeTitle": "Match entfernen?",
+    "removeDescription": "Ihr seht dann beide nicht mehr das volle Profil des anderen.",
+    "inCommon": "Gemeinsamkeiten",
+    "closedToMode": "Du bist für diesen Modus nicht offen. Speichere deine Vorlieben in den Filtern.",
+    "likeLimit": "Tageslimit von {{limit}} Likes erreicht. Morgen geht’s weiter.",
+    "cardExpired": "Karte abgelaufen. Hier die nächste."
   },
   "courses": {
     "addComment": "Fügen Sie einen Kommentar hinzu",
@@ -334,7 +402,11 @@
     "title": "FAQ",
     "translate": "Übersetzen",
     "translateTitle": "Übersetzen und veröffentlichen",
-    "translateDescription": "Schreib Frage und Antwort in jeder Sprache. Studierende sehen die Version in der Sprache ihres Profils."
+    "translateDescription": "Schreib Frage und Antwort in jeder Sprache. Studierende sehen die Version in der Sprache ihres Profils.",
+    "proposalDescription": "Schreib eine Frage und ihre Antwort. Die Moderation prüft sie vorab.",
+    "questionError": "3 bis 200 Zeichen.",
+    "answerError": "1 bis 2000 Zeichen.",
+    "proposalSubmit": "Senden"
   },
   "feed": {
     "allTypes": "Alle Arten",
@@ -350,7 +422,13 @@
     "thisYear": "Dieses Jahr",
     "title": "Füttern",
     "today": "Heute",
-    "type": "Beitragstyp"
+    "type": "Beitragstyp",
+    "allStudents": "Alle Studierenden",
+    "search": "Suchen…",
+    "filtersTitle": "Filter",
+    "lastWeek": "Letzte 7 Tage",
+    "lastMonth": "Letzte 30 Tage",
+    "news": "News"
   },
   "landing": {
     "appsDownload": "Laden im",
@@ -589,7 +667,11 @@
     "time": "Zeit",
     "title": "Titel",
     "titlePlaceholder": "Geben Sie Ihrem Beitrag einen Titel",
-    "type": "Beitragstyp"
+    "type": "Beitragstyp",
+    "audience": "Wer sieht es?",
+    "audienceAll": "Alle auf uniezz Lublin",
+    "audienceUniversity": "Nur {{university}}",
+    "editNote": "Typ und Zielgruppe sind danach nicht mehr änderbar."
   },
   "professors": {
     "deleteReview": "Bewertung löschen",
@@ -672,7 +754,8 @@
     "spam": "Spam",
     "submit": "Bericht senden",
     "user": "Benutzer melden",
-    "action": "Melden"
+    "action": "Melden",
+    "message": "Nachricht melden"
   },
   "rewards": {
     "balance": "Deine Münzen",
@@ -734,7 +817,12 @@
     "shopSoonDescription": "Bald kannst du deine Münzen hier ausgeben.",
     "tabEarn": "Verdienen",
     "tabSpend": "Ausgeben",
-    "title": "Belohnungen"
+    "title": "Belohnungen",
+    "challengeUntil": "Bis {{date}}",
+    "challengeDaily": "Täglich",
+    "challengeWeekly": "Wöchentlich",
+    "historyEmptyApp": "Noch keine Münzen. Like, antworte und poste.",
+    "shopSoonDescriptionApp": "Bald gibst du hier Münzen aus. Sammle weiter!"
   },
   "seo": {
     "appTitle": "uniezz",
@@ -777,11 +865,25 @@
     "songError": "Verwenden Sie einen http- oder https-Link mit bis zu 500 Zeichen.",
     "songHint": "Link zu dem Song, der Sie repräsentiert – Spotify, YouTube, überall",
     "songPlaceholder": "https://open.spotify.com/track/…",
-    "tryAnotherName": "Versuchen Sie es mit einem anderen Namen."
+    "tryAnotherName": "Versuchen Sie es mit einem anderen Namen.",
+    "profile": "Profil",
+    "block": "Blockieren",
+    "blockTitle": "Person blockieren?",
+    "blockDescription": "Ihr seht euch auf uniezz nicht mehr.",
+    "blocked": "Blockiert.",
+    "posts": "Beiträge",
+    "noPosts": "Noch keine Beiträge",
+    "photos": "Fotos",
+    "removePhoto": "Foto entfernen",
+    "liked": "Geliked",
+    "saved": "Gespeichert",
+    "noLikedPosts": "Noch nichts geliked",
+    "noSavedPosts": "Noch nichts gespeichert"
   },
   "topbar": {
     "changeLanguage": "Sprache ändern",
-    "languageCode": "DE"
+    "languageCode": "DE",
+    "search": "Suchen"
   },
   "share": {
     "copyLink": "Link kopieren",
@@ -799,5 +901,56 @@
     "unfollow": "Entfolgen",
     "followed": "Du folgst jetzt.",
     "unfollowed": "Du folgst nicht mehr."
+  },
+  "tabs": {
+    "chat": "Chat",
+    "connections": "Leute",
+    "feed": "Feed",
+    "exams": "Prüfungen",
+    "faq": "FAQ"
+  },
+  "study": {
+    "filters": "Filter",
+    "create": "Hinzufügen",
+    "semesterShort": "Semester {{semester}}",
+    "averageRating": "Ø Bewertung",
+    "ratingSummary": "{{rating}} ({{votes}})",
+    "noRatings": "Noch keine Bewertungen",
+    "yourRating": "Deine Bewertung",
+    "files": "Dateien",
+    "comments": "Kommentare",
+    "noComments": "Noch keine Kommentare.",
+    "deleteCommentTitle": "Kommentar löschen?",
+    "editCourse": "Kurs bearbeiten",
+    "addCourse": "Kurs hinzufügen",
+    "materialType": "Art",
+    "chooseFiles": "Dateien wählen",
+    "difficulty": "Schwierigkeit",
+    "courseDeleted": "Kurs gelöscht",
+    "deleteCourseTitle": "Kurs löschen?",
+    "deleteCourseDescription": "Dateien, Kommentare und Bewertungen werden mitgelöscht. Das ist endgültig.",
+    "reviews": "Bewertungen",
+    "noReviews": "Noch keine Bewertungen.",
+    "reviewDeleted": "Bewertung gelöscht.",
+    "deleteReviewTitle": "Bewertung löschen?",
+    "deleteReviewDescription": "Deine Bewertung wird endgültig gelöscht.",
+    "yourReview": "Deine Bewertung",
+    "reviewHint": "Anonym sichtbar.",
+    "reviewSaved": "Bewertung gespeichert.",
+    "saveReview": "Speichern",
+    "noProgrammeTitle": "Erst Studiengang hinzufügen",
+    "noProgrammeDescription": "Kurse gehören zu einem Studiengang. Füg ihn im Profil hinzu.",
+    "deleteFileTitle": "Datei löschen?",
+    "deleteFileDescription": "Die Datei wird für alle entfernt.",
+    "tabCourses": "Kurse",
+    "tabProfessors": "Dozenten",
+    "tabMyMaterials": "Meine Uploads",
+    "searchMyMaterials": "Meine Uploads suchen",
+    "programmes": "Studiengänge",
+    "discardChangesDescription": "Wenn du gehst, sind deine Änderungen weg.",
+    "discard": "Verwerfen"
+  },
+  "language": {
+    "title": "Sprache"
   }
 }

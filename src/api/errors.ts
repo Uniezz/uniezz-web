@@ -104,6 +104,10 @@ export const apiMiddleware: Middleware = {
               '/moderation/users/{id}/ban',
               '/rewards/challenges/{id}',
               '/media/images/{id}',
+              '/chat/messages/{id}',
+              '/chat/requests/{id}',
+              '/chat/conversations/{id}/members/me',
+              '/chat/conversations/{id}/members/{userId}',
             ].includes(schemaPath));
         if (!allowsNoContent) {
           throw apiError(`${request.method} ${schemaPath}`, response);

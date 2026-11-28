@@ -25,6 +25,8 @@ export function UILanguageSwitcher({ onChange }: UILanguageSwitcherProps) {
         onClick={toggle}
         aria-label={t('topbar.changeLanguage')}
         aria-expanded={isOpen}
+        // on a phone, the mobile app's LanguagePicker trigger: 10 side padding, 13 semibold
+        className="max-lg:gap-1.5 max-lg:px-2.5 max-lg:text-sm"
       >
         {Flag && <Flag className="h-4 w-6 shrink-0 rounded-xs" />}
         {t('topbar.languageCode')}
@@ -33,6 +35,8 @@ export function UILanguageSwitcher({ onChange }: UILanguageSwitcherProps) {
       {isOpen && (
         <UIMenu
           options={LNG_OPTIONS}
+          // the mobile app's language menu: 190 wide, radius 14, solid surface
+          className="max-lg:w-47.5 max-lg:min-w-0 max-lg:rounded-[14px] max-lg:bg-surface max-lg:p-1.25"
           value={language}
           onSelect={(language) => {
             void i18n.changeLanguage(language);

@@ -1,6 +1,6 @@
 import { cn } from '@/ui/cn';
 import { UIText } from '../UIText';
-import { rowstyles } from './variants';
+import { rowRadioStyles, rowstyles } from './variants';
 import { VariantProps } from 'class-variance-authority';
 import { Check } from 'lucide-react';
 
@@ -12,12 +12,20 @@ export type UIRowProps = VariantProps<typeof rowstyles> & {
   onClick: () => void;
 };
 
-export const UIRow = ({ iconText, iconSrc, topText, fullName, onClick, selected }: UIRowProps) => {
+export const UIRow = ({
+  iconText,
+  iconSrc,
+  topText,
+  fullName,
+  onClick,
+  selected,
+  appearance,
+}: UIRowProps) => {
   return (
     <button
       type="button"
       onClick={onClick}
-      className={cn(rowstyles({ selected }))}
+      className={cn(rowstyles({ appearance, selected }))}
       title={fullName}
       data-ph-capture-attribute-label={fullName}
       aria-label={fullName}
@@ -47,15 +55,21 @@ export const UIRow = ({ iconText, iconSrc, topText, fullName, onClick, selected 
           </UIText>
         </div>
       </div>
-      <span
-        className={cn(
-          'flex size-5 shrink-0 items-center justify-center rounded-full border',
-          selected ? 'border-white bg-white text-ink' : 'border-white/30',
-        )}
-        aria-hidden
-      >
-        {selected ? <Check size={12} /> : null}
-      </span>
+      {appearance === 'inset' ? (
+        <span className={rowRadioStyles({ selected: Boolean(selected) })} aria-hidden>
+          {selected ? <span className="size-2.5 rounded-full bg-sky" /> : null}
+        </span>
+      ) : (
+        <span
+          className={cn(
+            'flex size-5 shrink-0 items-center justify-center rounded-full border',
+            selected ? 'border-white bg-white text-ink' : 'border-white/30',
+          )}
+          aria-hidden
+        >
+          {selected ? <Check size={12} /> : null}
+        </span>
+      )}
     </button>
   );
 };

@@ -29,7 +29,8 @@
     "titleError": "Wpisz od 3 do 150 znaków.",
     "unlike": "Usuń polubienie",
     "unsave": "Usuń z zapisanych",
-    "contentNotAllowed": "Ten tekst zawiera niedozwolone słowa. Zmień go i spróbuj ponownie."
+    "contentNotAllowed": "Ten tekst zawiera niedozwolone słowa. Zmień go i spróbuj ponownie.",
+    "commentSent": "Dodano komentarz"
   },
   "app": {
     "accountDeleted": "Konto zostało usunięte",
@@ -158,7 +159,12 @@
     "viewPost": "Zobacz post",
     "writeMessage": "Napisz wiadomość",
     "yearOfStudy": "Rok studiów",
-    "yourProfile": "Twój profil"
+    "yourProfile": "Twój profil",
+    "liveNow": "Trwa teraz",
+    "study": "Nauka",
+    "connected": "Połączono",
+    "students": "Studenci",
+    "moreOptions": "Więcej opcji"
   },
   "auth": {
     "backToUniversities": "Wróć do wyboru uczelni",
@@ -168,36 +174,53 @@
       "privacy": "uniezz nie ma dostępu do twojego hasła uczelnianego i go nie przechowuje."
     },
     "errors": {
-      "codeInvalid": "Wpisz 6-cyfrowy kod, który ci wysłaliśmy.",
-      "emailInvalid": "Podaj poprawny adres e-mail",
-      "emailRequired": "Wpisz swój uczelniany adres e-mail."
+      "codeInvalid": "Wpisz 6-cyfrowy kod z e-maila.",
+      "emailInvalid": "Podaj poprawny e-mail",
+      "emailRequired": "Podaj uczelniany e-mail."
     },
     "login": {
-      "continueWith": "Zaloguj się przez {{provider}}",
-      "subtitle": "Wybierz uczelnię i zaloguj się przez USOS lub za pomocą kodu wysłanego na uczelniany adres e-mail.",
+      "continueWith": "Kontynuuj przez {{provider}}",
+      "subtitle": "Wybierz uczelnię i zaloguj się przez USOS lub kod z uczelnianego e-maila.",
       "title": "Zaloguj się"
     },
     "otp": {
       "changeEmail": "Zmień e-mail",
-      "codeLabel": "6-cyfrowy kod weryfikacyjny",
+      "codeLabel": "6-cyfrowy kod",
       "codesPerHour": "3 kody na godzinę",
-      "codeSubtitle": "Wysłaliśmy sześciocyfrowy kod na adres {{email}}. Kod jest ważny przez 10 minut.",
-      "codeTitle": "Sprawdź skrzynkę uczelnianą",
-      "didntGetIt": "Kod nie dotarł?",
+      "codeSubtitle": "Wysłaliśmy 6-cyfrowy kod na Twój uczelniany e-mail. Ważny 10 minut.",
+      "codeTitle": "Sprawdź skrzynkę",
+      "didntGetIt": "Nie dotarł?",
       "emailLabel": "E-mail",
       "emailPlaceholder": "ty@uczelnia.edu",
-      "emailSubtitle": "Wyślemy sześciocyfrowy kod na ten adres. Użyj adresu nadanego przez uczelnię.",
-      "emailTitle": "Podaj uczelniany e-mail",
+      "emailSubtitle": "Wyślemy na niego 6-cyfrowy kod.",
+      "emailTitle": "Podaj e-mail uczelniany",
       "notice": "Logowanie e-mailem potwierdza tylko domenę uczelni. Wydział i rok studiów podajesz samodzielnie. Dane te pozostają niezweryfikowane do czasu połączenia konta z USOS lub rejestrem uczelni.",
-      "resend": "Wyślij kod ponownie",
+      "resend": "Wyślij ponownie",
       "send": "Wyślij kod",
-      "verify": "Zweryfikuj i kontynuuj"
-    }
+      "verify": "Potwierdź kod",
+      "change": "Zmień"
+    },
+    "loadingUniversities": "Wczytuję uczelnie...",
+    "universitiesLoadError": "Nie udało się wczytać uczelni. Spróbuj ponownie.",
+    "noUniversities": "Brak dostępnych uczelni.",
+    "emailCode": "kod e-mail",
+    "university": "uczelnię",
+    "passwordPrivacy": "uniezz nigdy nie widzi Twojego hasła do uczelni.",
+    "signInError": "Nie udało się zalogować.",
+    "logOut": "Wyloguj",
+    "deleteAccount": "Usuń konto",
+    "deleteAccountTitle": "Usunąć konto?",
+    "deleteAccountDescription": "Stracisz monety i dopasowania. Usuniemy też profil, posty i kierunki studiów. Tego nie da się cofnąć.",
+    "reauthenticateToDelete": "Zaloguj się ponownie i znów spróbuj usunąć konto."
   },
   "chat": {
     "action": "Nowa grupa",
     "emptyThread": "Brak wiadomości. Przywitaj się!",
     "jumpToLatest": "Przejdź do najnowszej wiadomości",
+    "members_one": "{{count}} członek",
+    "members_few": "{{count}} członków",
+    "members_many": "{{count}} członków",
+    "members_other": "{{count}} członków",
     "newMessages_one": "{{count}} nowa wiadomość",
     "newMessages_few": "{{count}} nowe wiadomości",
     "newMessages_many": "{{count}} nowych wiadomości",
@@ -205,7 +228,50 @@
     "offline": "Jesteś offline. Sprawdź połączenie.",
     "sending": "Wysyłanie",
     "sent": "Wysłano",
-    "title": "Czat"
+    "title": "Czat",
+    "whoCanMessage": "Kto może do mnie pisać",
+    "whoCanMessageHint": "Dotyczy tylko nowych próśb. Trwające rozmowy zostają.",
+    "whoEveryone": "Wszyscy",
+    "whoUniversity": "Moja uczelnia",
+    "whoMatches": "Tylko dopasowania",
+    "requestsTab": "Prośby",
+    "noRequests": "Brak próśb o wiadomość",
+    "deletedMessage": "Wiadomość usunięta",
+    "photo": "Zdjęcie",
+    "someone": "ktoś",
+    "systemGroupCreated": "{{name}} utworzył(a) „{{title}}”",
+    "systemRenamed": "{{name}} zmienił(a) nazwę grupy na „{{title}}”",
+    "systemMemberAdded": "{{name}} dodał(a): {{names}}",
+    "systemMemberRemoved": "{{name}} usunął(-ęła) {{target}}",
+    "systemMemberLeft": "{{name}} opuścił(a) grupę",
+    "systemOwnerChanged": "{{target}} jest teraz właścicielem grupy",
+    "systemOther": "Grupa zaktualizowana",
+    "read": "Przeczytane",
+    "copied": "Skopiowano",
+    "deleteMessageTitle": "Usunąć wiadomość?",
+    "deleteMessageDescription": "Zniknie u wszystkich w tym czacie.",
+    "requestFrom": "{{name}} chce do Ciebie napisać",
+    "requestHint": "Zaakceptuj, aby odpowiedzieć. Ta osoba nie dowie się o odrzuceniu.",
+    "requestWaiting": "Prośba wysłana. Napiszesz więcej, gdy {{name}} ją przyjmie lub odpowie.",
+    "requestDeclined": "Prośba odrzucona",
+    "requestFirstMessage": "Napisz pierwszą wiadomość do {{name}}. Do akceptacji możesz wysłać jedną, sam tekst, bez linków.",
+    "accept": "Akceptuj",
+    "decline": "Odrzuć",
+    "selected_one": "{{count}} wybrana",
+    "selected_few": "{{count}} wybrane",
+    "selected_many": "{{count}} wybranych",
+    "selected_other": "{{count}} wybranych",
+    "addToGroup": "Dodaj do grupy",
+    "saveName": "Zapisz nazwę",
+    "owner": "Właściciel",
+    "removeMemberTitle": "Usunąć {{name}} z grupy?",
+    "leaveGroupTitle": "Opuścić tę grupę?",
+    "leaveGroupDescription": "Nie będziesz dostawać jej wiadomości. Jeśli jesteś właścicielem, grupę przejmie najstarszy członek.",
+    "leaveGroup": "Opuść grupę",
+    "copy": "Kopiuj",
+    "delete": "Usuń",
+    "report": "Zgłoś",
+    "cannotMessage": "Ta osoba nie przyjmuje od Ciebie wiadomości."
   },
   "common": {
     "appName": "uniezz"
@@ -248,7 +314,13 @@
     "unmatchDescription": "To dopasowanie zostanie usunięte dla was obojga.",
     "unmatched": "Dopasowanie usunięte.",
     "viewProfile": "Zobacz profil",
-    "women": "Kobiety"
+    "women": "Kobiety",
+    "removeTitle": "Usunąć to dopasowanie?",
+    "removeDescription": "Oboje stracicie dostęp do pełnych profili.",
+    "inCommon": "Wspólne",
+    "closedToMode": "Ten tryb jest wyłączony. Zapisz preferencje w filtrach, aby zobaczyć studentów.",
+    "likeLimit": "Dzisiejszy limit {{limit}} połączeń wyczerpany. Wróć jutro.",
+    "cardExpired": "Ta karta wygasła. Oto następna."
   },
   "courses": {
     "addComment": "Dodaj komentarz",
@@ -336,7 +408,11 @@
     "title": "Częste pytania",
     "translate": "Przetłumacz",
     "translateTitle": "Przetłumacz i opublikuj",
-    "translateDescription": "Wpisz pytanie i odpowiedź w każdym języku. Studenci zobaczą wersję w języku ustawionym w profilu."
+    "translateDescription": "Wpisz pytanie i odpowiedź w każdym języku. Studenci zobaczą wersję w języku ustawionym w profilu.",
+    "proposalDescription": "Napisz pytanie i odpowiedź. Moderator sprawdzi je przed publikacją.",
+    "questionError": "Od 3 do 200 znaków.",
+    "answerError": "Od 1 do 2000 znaków.",
+    "proposalSubmit": "Wyślij"
   },
   "feed": {
     "allTypes": "Wszystkie typy",
@@ -352,7 +428,13 @@
     "thisYear": "Ten rok",
     "title": "Aktualności",
     "today": "Dzisiaj",
-    "type": "Typ posta"
+    "type": "Typ posta",
+    "allStudents": "Wszyscy studenci",
+    "search": "Szukaj...",
+    "filtersTitle": "Filtry",
+    "lastWeek": "Ostatnie 7 dni",
+    "lastMonth": "Ostatnie 30 dni",
+    "news": "Ogłoszenia"
   },
   "landing": {
     "appsDownload": "Pobierz z",
@@ -591,7 +673,11 @@
     "time": "Godzina",
     "title": "Tytuł",
     "titlePlaceholder": "Dodaj tytuł posta",
-    "type": "Typ posta"
+    "type": "Typ posta",
+    "audience": "Kto to zobaczy",
+    "audienceAll": "Wszyscy w uniezz",
+    "audienceUniversity": "Tylko {{university}}",
+    "editNote": "Po publikacji nie zmienisz typu posta ani odbiorców."
   },
   "professors": {
     "deleteReview": "Usuń opinię",
@@ -674,7 +760,8 @@
     "spam": "Spam",
     "submit": "Wyślij zgłoszenie",
     "user": "Zgłoś użytkownika",
-    "action": "Zgłoś"
+    "action": "Zgłoś",
+    "message": "Zgłoś wiadomość"
   },
   "rewards": {
     "balance": "Twoje monety",
@@ -736,7 +823,12 @@
     "shopSoonDescription": "Wkrótce wydasz tu swoje monety.",
     "tabEarn": "Zdobywaj",
     "tabSpend": "Wydawaj",
-    "title": "Nagrody"
+    "title": "Nagrody",
+    "challengeUntil": "Do {{date}}",
+    "challengeDaily": "Codziennie",
+    "challengeWeekly": "Co tydzień",
+    "historyEmptyApp": "Brak monet. Lajkuj, odpowiadaj i publikuj, by je zdobyć.",
+    "shopSoonDescriptionApp": "Wkrótce wydasz tu monety. Zbieraj dalej!"
   },
   "seo": {
     "appTitle": "uniezz",
@@ -779,11 +871,25 @@
     "songError": "Podaj link http lub https, do 500 znaków.",
     "songHint": "Link do piosenki, która Cię opisuje — Spotify, YouTube, gdziekolwiek",
     "songPlaceholder": "https://open.spotify.com/track/…",
-    "tryAnotherName": "Spróbuj wpisać inne imię lub nazwisko."
+    "tryAnotherName": "Spróbuj wpisać inne imię lub nazwisko.",
+    "profile": "Profil studenta",
+    "block": "Zablokuj",
+    "blockTitle": "Zablokować tego studenta?",
+    "blockDescription": "Nie zobaczycie się nigdzie w uniezz.",
+    "blocked": "Student zablokowany.",
+    "posts": "Posty",
+    "noPosts": "Brak postów",
+    "photos": "Zdjęcia",
+    "removePhoto": "Usuń zdjęcie",
+    "liked": "Polubione",
+    "saved": "Zapisane",
+    "noLikedPosts": "Brak polubionych postów",
+    "noSavedPosts": "Brak zapisanych postów"
   },
   "topbar": {
     "changeLanguage": "Zmień język",
-    "languageCode": "PL"
+    "languageCode": "PL",
+    "search": "Szukaj"
   },
   "share": {
     "copyLink": "Kopiuj link",
@@ -801,5 +907,56 @@
     "unfollow": "Przestań obserwować",
     "followed": "Obserwujesz tę osobę.",
     "unfollowed": "Nie obserwujesz już tej osoby."
+  },
+  "tabs": {
+    "chat": "Czat",
+    "connections": "Poznaj",
+    "feed": "Posty",
+    "exams": "Egzaminy",
+    "faq": "FAQ"
+  },
+  "study": {
+    "filters": "Filtry",
+    "create": "Dodaj",
+    "semesterShort": "Semestr {{semester}}",
+    "averageRating": "Średnia ocena",
+    "ratingSummary": "{{rating}} ({{votes}})",
+    "noRatings": "Brak ocen",
+    "yourRating": "Twoja ocena",
+    "files": "Pliki",
+    "comments": "Komentarze",
+    "noComments": "Brak komentarzy.",
+    "deleteCommentTitle": "Usunąć komentarz?",
+    "editCourse": "Edytuj przedmiot",
+    "addCourse": "Dodaj przedmiot",
+    "materialType": "Typ materiału",
+    "chooseFiles": "Wybierz pliki",
+    "difficulty": "Trudność",
+    "courseDeleted": "Przedmiot usunięty",
+    "deleteCourseTitle": "Usunąć przedmiot?",
+    "deleteCourseDescription": "Usuniemy też jego pliki, komentarze i oceny. Tego nie da się cofnąć.",
+    "reviews": "Opinie",
+    "noReviews": "Brak opinii.",
+    "reviewDeleted": "Opinia usunięta.",
+    "deleteReviewTitle": "Usunąć opinię?",
+    "deleteReviewDescription": "Opinia zostanie usunięta na zawsze.",
+    "yourReview": "Twoja opinia",
+    "reviewHint": "Bez Twojego imienia.",
+    "reviewSaved": "Opinia zapisana.",
+    "saveReview": "Zapisz",
+    "noProgrammeTitle": "Najpierw dodaj kierunek",
+    "noProgrammeDescription": "Przedmioty należą do kierunku. Dodaj go w profilu.",
+    "deleteFileTitle": "Usunąć plik?",
+    "deleteFileDescription": "Plik zniknie dla wszystkich.",
+    "tabCourses": "Kursy",
+    "tabProfessors": "Wykładowcy",
+    "tabMyMaterials": "Moje materiały",
+    "searchMyMaterials": "Szukaj moich materiałów",
+    "programmes": "Kierunki",
+    "discardChangesDescription": "Jeśli wyjdziesz, niezapisane zmiany przepadną.",
+    "discard": "Odrzuć"
+  },
+  "language": {
+    "title": "Język"
   }
 }

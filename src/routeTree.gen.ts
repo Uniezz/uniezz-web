@@ -23,6 +23,7 @@ import { Route as AppChatRouteRouteImport } from './routes/_app/chat/route'
 import { Route as AppExamsRouteImport } from './routes/_app/exams'
 import { Route as AppFaqRouteImport } from './routes/_app/faq'
 import { Route as AppFeedRouteRouteImport } from './routes/_app/feed/route'
+import { Route as AppFollowsRouteImport } from './routes/_app/follows'
 import { Route as AppGuideRouteImport } from './routes/_app/guide'
 import { Route as AppModerationRouteImport } from './routes/_app/moderation'
 import { Route as AppProfileRouteImport } from './routes/_app/profile'
@@ -33,6 +34,7 @@ import { Route as AppChatIndexRouteImport } from './routes/_app/chat/index'
 import { Route as AppChatNewGroupRouteImport } from './routes/_app/chat/new-group'
 import { Route as AppConnectionsIndexRouteImport } from './routes/_app/connections/index'
 import { Route as AppFeedIndexRouteImport } from './routes/_app/feed/index'
+import { Route as AppChatGroupConversationIdRouteImport } from './routes/_app/chat/group/$conversationId'
 import { Route as AppConnectionsStudentsIndexRouteImport } from './routes/_app/connections/students/index'
 import { Route as AppConnectionsStudentsProfileIdRouteImport } from './routes/_app/connections/students/$profileId'
 import { Route as AppExamsCoursesNewRouteImport } from './routes/_app/exams/courses/new'
@@ -111,6 +113,11 @@ const AppFeedRouteRoute = AppFeedRouteRouteImport.update({
   path: '/feed',
   getParentRoute: () => AppRoute,
 } as any)
+const AppFollowsRoute = AppFollowsRouteImport.update({
+  id: '/follows',
+  path: '/follows',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppGuideRoute = AppGuideRouteImport.update({
   id: '/guide',
   path: '/guide',
@@ -161,6 +168,12 @@ const AppFeedIndexRoute = AppFeedIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppFeedRouteRoute,
 } as any)
+const AppChatGroupConversationIdRoute =
+  AppChatGroupConversationIdRouteImport.update({
+    id: '/group/$conversationId',
+    path: '/group/$conversationId',
+    getParentRoute: () => AppChatRouteRoute,
+  } as any)
 const AppConnectionsStudentsIndexRoute =
   AppConnectionsStudentsIndexRouteImport.update({
     id: '/connections/students/',
@@ -225,6 +238,7 @@ export interface FileRoutesByFullPath {
   '/otp': typeof authOtpRoute
   '/exams': typeof AppExamsRouteWithChildren
   '/faq': typeof AppFaqRoute
+  '/follows': typeof AppFollowsRoute
   '/guide': typeof AppGuideRoute
   '/moderation': typeof AppModerationRoute
   '/profile': typeof AppProfileRoute
@@ -235,6 +249,7 @@ export interface FileRoutesByFullPath {
   '/chat/': typeof AppChatIndexRoute
   '/connections/': typeof AppConnectionsIndexRoute
   '/feed/': typeof AppFeedIndexRoute
+  '/chat/group/$conversationId': typeof AppChatGroupConversationIdRoute
   '/connections/students/$profileId': typeof AppConnectionsStudentsProfileIdRoute
   '/exams/courses/new': typeof AppExamsCoursesNewRoute
   '/feed/post/$postId': typeof AppFeedPostPostIdRouteWithChildren
@@ -256,6 +271,7 @@ export interface FileRoutesByTo {
   '/otp': typeof authOtpRoute
   '/exams': typeof AppExamsRouteWithChildren
   '/faq': typeof AppFaqRoute
+  '/follows': typeof AppFollowsRoute
   '/guide': typeof AppGuideRoute
   '/moderation': typeof AppModerationRoute
   '/profile': typeof AppProfileRoute
@@ -266,6 +282,7 @@ export interface FileRoutesByTo {
   '/chat': typeof AppChatIndexRoute
   '/connections': typeof AppConnectionsIndexRoute
   '/feed': typeof AppFeedIndexRoute
+  '/chat/group/$conversationId': typeof AppChatGroupConversationIdRoute
   '/connections/students/$profileId': typeof AppConnectionsStudentsProfileIdRoute
   '/exams/courses/new': typeof AppExamsCoursesNewRoute
   '/feed/post/$postId': typeof AppFeedPostPostIdRouteWithChildren
@@ -292,6 +309,7 @@ export interface FileRoutesById {
   '/(auth)/otp': typeof authOtpRoute
   '/_app/exams': typeof AppExamsRouteWithChildren
   '/_app/faq': typeof AppFaqRoute
+  '/_app/follows': typeof AppFollowsRoute
   '/_app/guide': typeof AppGuideRoute
   '/_app/moderation': typeof AppModerationRoute
   '/_app/profile': typeof AppProfileRoute
@@ -302,6 +320,7 @@ export interface FileRoutesById {
   '/_app/chat/': typeof AppChatIndexRoute
   '/_app/connections/': typeof AppConnectionsIndexRoute
   '/_app/feed/': typeof AppFeedIndexRoute
+  '/_app/chat/group/$conversationId': typeof AppChatGroupConversationIdRoute
   '/_app/connections/students/$profileId': typeof AppConnectionsStudentsProfileIdRoute
   '/_app/exams/courses/new': typeof AppExamsCoursesNewRoute
   '/_app/feed/post/$postId': typeof AppFeedPostPostIdRouteWithChildren
@@ -327,6 +346,7 @@ export interface FileRouteTypes {
     | '/otp'
     | '/exams'
     | '/faq'
+    | '/follows'
     | '/guide'
     | '/moderation'
     | '/profile'
@@ -337,6 +357,7 @@ export interface FileRouteTypes {
     | '/chat/'
     | '/connections/'
     | '/feed/'
+    | '/chat/group/$conversationId'
     | '/connections/students/$profileId'
     | '/exams/courses/new'
     | '/feed/post/$postId'
@@ -358,6 +379,7 @@ export interface FileRouteTypes {
     | '/otp'
     | '/exams'
     | '/faq'
+    | '/follows'
     | '/guide'
     | '/moderation'
     | '/profile'
@@ -368,6 +390,7 @@ export interface FileRouteTypes {
     | '/chat'
     | '/connections'
     | '/feed'
+    | '/chat/group/$conversationId'
     | '/connections/students/$profileId'
     | '/exams/courses/new'
     | '/feed/post/$postId'
@@ -393,6 +416,7 @@ export interface FileRouteTypes {
     | '/(auth)/otp'
     | '/_app/exams'
     | '/_app/faq'
+    | '/_app/follows'
     | '/_app/guide'
     | '/_app/moderation'
     | '/_app/profile'
@@ -403,6 +427,7 @@ export interface FileRouteTypes {
     | '/_app/chat/'
     | '/_app/connections/'
     | '/_app/feed/'
+    | '/_app/chat/group/$conversationId'
     | '/_app/connections/students/$profileId'
     | '/_app/exams/courses/new'
     | '/_app/feed/post/$postId'
@@ -526,6 +551,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppFeedRouteRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/follows': {
+      id: '/_app/follows'
+      path: '/follows'
+      fullPath: '/follows'
+      preLoaderRoute: typeof AppFollowsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/guide': {
       id: '/_app/guide'
       path: '/guide'
@@ -595,6 +627,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/feed/'
       preLoaderRoute: typeof AppFeedIndexRouteImport
       parentRoute: typeof AppFeedRouteRoute
+    }
+    '/_app/chat/group/$conversationId': {
+      id: '/_app/chat/group/$conversationId'
+      path: '/group/$conversationId'
+      fullPath: '/chat/group/$conversationId'
+      preLoaderRoute: typeof AppChatGroupConversationIdRouteImport
+      parentRoute: typeof AppChatRouteRoute
     }
     '/_app/connections/students/': {
       id: '/_app/connections/students/'
@@ -681,11 +720,13 @@ const authRouteRouteWithChildren = authRouteRoute._addFileChildren(
 interface AppChatRouteRouteChildren {
   AppChatNewGroupRoute: typeof AppChatNewGroupRoute
   AppChatIndexRoute: typeof AppChatIndexRoute
+  AppChatGroupConversationIdRoute: typeof AppChatGroupConversationIdRoute
 }
 
 const AppChatRouteRouteChildren: AppChatRouteRouteChildren = {
   AppChatNewGroupRoute: AppChatNewGroupRoute,
   AppChatIndexRoute: AppChatIndexRoute,
+  AppChatGroupConversationIdRoute: AppChatGroupConversationIdRoute,
 }
 
 const AppChatRouteRouteWithChildren = AppChatRouteRoute._addFileChildren(
@@ -742,6 +783,7 @@ interface AppRouteChildren {
   AppFeedRouteRoute: typeof AppFeedRouteRouteWithChildren
   AppExamsRoute: typeof AppExamsRouteWithChildren
   AppFaqRoute: typeof AppFaqRoute
+  AppFollowsRoute: typeof AppFollowsRoute
   AppGuideRoute: typeof AppGuideRoute
   AppModerationRoute: typeof AppModerationRoute
   AppProfileRoute: typeof AppProfileRoute
@@ -756,6 +798,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppFeedRouteRoute: AppFeedRouteRouteWithChildren,
   AppExamsRoute: AppExamsRouteWithChildren,
   AppFaqRoute: AppFaqRoute,
+  AppFollowsRoute: AppFollowsRoute,
   AppGuideRoute: AppGuideRoute,
   AppModerationRoute: AppModerationRoute,
   AppProfileRoute: AppProfileRoute,

@@ -29,7 +29,8 @@
     "titleError": "Введи от 3 до 150 символов.",
     "unlike": "Убрать отметку «Нравится»",
     "unsave": "Убрать из сохранённых",
-    "contentNotAllowed": "В тексте есть недопустимые слова. Измени его и попробуй ещё раз."
+    "contentNotAllowed": "В тексте есть недопустимые слова. Измени его и попробуй ещё раз.",
+    "commentSent": "Комментарий добавлен"
   },
   "app": {
     "accountDeleted": "Аккаунт удалён",
@@ -158,7 +159,12 @@
     "viewPost": "Посмотреть пост",
     "writeMessage": "Напиши сообщение",
     "yearOfStudy": "Курс",
-    "yourProfile": "Твой профиль"
+    "yourProfile": "Твой профиль",
+    "liveNow": "Сейчас в эфире",
+    "study": "Учёба",
+    "connected": "Знакомы",
+    "students": "Студенты",
+    "moreOptions": "Другие действия"
   },
   "auth": {
     "backToUniversities": "К выбору университета",
@@ -168,36 +174,53 @@
       "privacy": "uniezz не имеет доступа к твоему университетскому паролю и не хранит его."
     },
     "errors": {
-      "codeInvalid": "Введи 6-значный код, который мы тебе отправили.",
-      "emailInvalid": "Укажи действующий адрес электронной почты",
-      "emailRequired": "Введи свой университетский адрес электронной почты."
+      "codeInvalid": "Введите 6-значный код из письма.",
+      "emailInvalid": "Введите правильный адрес почты",
+      "emailRequired": "Введите вузовскую почту."
     },
     "login": {
-      "continueWith": "Войти через {{provider}}",
-      "subtitle": "Выбери университет и войди через USOS или с помощью кода, отправленного на университетскую почту.",
+      "continueWith": "Продолжить через {{provider}}",
+      "subtitle": "Выберите вуз, чтобы войти через USOS или код на вузовскую почту.",
       "title": "Войти"
     },
     "otp": {
       "changeEmail": "Изменить адрес почты",
-      "codeLabel": "6-значный код подтверждения",
+      "codeLabel": "6-значный код",
       "codesPerHour": "3 кода в час",
-      "codeSubtitle": "Мы отправили шестизначный код на {{email}}. Он действует 10 минут.",
-      "codeTitle": "Проверь университетскую почту",
-      "didntGetIt": "Код не пришёл?",
-      "emailLabel": "Электронная почта",
+      "codeSubtitle": "Мы отправили 6-значный код на вузовскую почту. Он действует 10 минут.",
+      "codeTitle": "Проверьте почту",
+      "didntGetIt": "Не пришёл?",
+      "emailLabel": "Почта",
       "emailPlaceholder": "student@university.edu",
-      "emailSubtitle": "Отправим шестизначный код на этот адрес. Укажи почту, которую предоставил университет.",
-      "emailTitle": "Укажи университетскую почту",
+      "emailSubtitle": "Отправим туда 6-значный код.",
+      "emailTitle": "Введите вузовскую почту",
       "notice": "Вход по почте подтверждает только домен университета. Факультет и курс ты указываешь самостоятельно. Эти данные остаются непроверенными, пока аккаунт не будет связан с USOS или реестром университета.",
-      "resend": "Отправить код ещё раз",
+      "resend": "Отправить снова",
       "send": "Отправить код",
-      "verify": "Подтвердить и продолжить"
-    }
+      "verify": "Подтвердить код",
+      "change": "Изменить"
+    },
+    "loadingUniversities": "Загружаем вузы…",
+    "universitiesLoadError": "Не удалось загрузить вузы. Попробуйте ещё раз.",
+    "noUniversities": "Нет доступных вузов.",
+    "emailCode": "код на почту",
+    "university": "вуз",
+    "passwordPrivacy": "uniezz не видит ваш пароль от вуза.",
+    "signInError": "Не удалось войти.",
+    "logOut": "Выйти",
+    "deleteAccount": "Удалить аккаунт",
+    "deleteAccountTitle": "Удалить аккаунт?",
+    "deleteAccountDescription": "Вы потеряете монеты и знакомства. Профиль, посты и учебные программы тоже удалятся. Это нельзя отменить.",
+    "reauthenticateToDelete": "Войдите снова и повторите удаление аккаунта."
   },
   "chat": {
     "action": "Новая группа",
     "emptyThread": "Сообщений пока нет. Поздоровайтесь!",
     "jumpToLatest": "Перейти к последнему сообщению",
+    "members_one": "{{count}} участник",
+    "members_few": "{{count}} участника",
+    "members_many": "{{count}} участников",
+    "members_other": "{{count}} участников",
     "newMessages_one": "{{count}} новое сообщение",
     "newMessages_few": "{{count}} новых сообщения",
     "newMessages_many": "{{count}} новых сообщений",
@@ -205,7 +228,50 @@
     "offline": "Нет соединения. Проверьте интернет.",
     "sending": "Отправляется",
     "sent": "Отправлено",
-    "title": "Чат"
+    "title": "Чат",
+    "whoCanMessage": "Кто может мне писать",
+    "whoCanMessageHint": "Только для новых запросов; начатые чаты останутся.",
+    "whoEveryone": "Все",
+    "whoUniversity": "Студенты моего вуза",
+    "whoMatches": "Только метчи",
+    "requestsTab": "Запросы",
+    "noRequests": "Нет запросов",
+    "deletedMessage": "Сообщение удалено",
+    "photo": "Фото",
+    "someone": "кто-то",
+    "systemGroupCreated": "{{name}} создаёт «{{title}}»",
+    "systemRenamed": "{{name}} переименовывает группу в «{{title}}»",
+    "systemMemberAdded": "{{name}} добавляет: {{names}}",
+    "systemMemberRemoved": "{{name}} удаляет {{target}}",
+    "systemMemberLeft": "{{name}} выходит из группы",
+    "systemOwnerChanged": "{{target}} теперь владелец группы",
+    "systemOther": "Группа обновлена",
+    "read": "Прочитано",
+    "copied": "Скопировано",
+    "deleteMessageTitle": "Удалить сообщение?",
+    "deleteMessageDescription": "Оно удалится у всех в чате.",
+    "requestFrom": "{{name}} хочет вам написать",
+    "requestHint": "Примите, чтобы ответить. Если отклоните, человек не узнает.",
+    "requestWaiting": "Запрос отправлен. Писать дальше можно, когда {{name}} примет его или ответит.",
+    "requestDeclined": "Запрос отклонён",
+    "requestFirstMessage": "Напишите {{name}} первым. Пока запрос не принят, можно отправить одно сообщение: только текст, без ссылок.",
+    "accept": "Принять",
+    "decline": "Отклонить",
+    "selected_one": "Выбрано: {{count}}",
+    "selected_few": "Выбрано: {{count}}",
+    "selected_many": "Выбрано: {{count}}",
+    "selected_other": "Выбрано: {{count}}",
+    "addToGroup": "Добавить в группу",
+    "saveName": "Сохранить",
+    "owner": "Владелец",
+    "removeMemberTitle": "Удалить {{name}} из группы?",
+    "leaveGroupTitle": "Выйти из группы?",
+    "leaveGroupDescription": "Вы перестанете получать сообщения группы. Если вы владелец, права перейдут самому давнему участнику.",
+    "leaveGroup": "Выйти из группы",
+    "copy": "Копировать",
+    "delete": "Удалить",
+    "report": "Пожаловаться",
+    "cannotMessage": "Этот студент не принимает от вас сообщения."
   },
   "common": {
     "appName": "uniezz"
@@ -248,7 +314,13 @@
     "unmatchDescription": "Это совпадение будет удалено у вас обоих.",
     "unmatched": "Совпадение удалено.",
     "viewProfile": "Открыть профиль",
-    "women": "Девушек"
+    "women": "Девушек",
+    "removeTitle": "Удалить совпадение?",
+    "removeDescription": "Вы оба потеряете доступ к полным профилям друг друга.",
+    "inCommon": "Общее",
+    "closedToMode": "Этот режим у вас выключен. Сохраните предпочтения в фильтрах, чтобы видеть студентов.",
+    "likeLimit": "Лимит {{limit}} знакомств на сегодня исчерпан. Попробуйте завтра.",
+    "cardExpired": "Карточка устарела. Вот следующая."
   },
   "courses": {
     "addComment": "Добавить комментарий",
@@ -336,7 +408,11 @@
     "title": "Частые вопросы",
     "translate": "Перевести",
     "translateTitle": "Перевести и опубликовать",
-    "translateDescription": "Напишите вопрос и ответ на каждом языке. Студенты видят версию на языке из своего профиля."
+    "translateDescription": "Напишите вопрос и ответ на каждом языке. Студенты видят версию на языке из своего профиля.",
+    "proposalDescription": "Напишите вопрос и ответ. Модератор проверит их до публикации.",
+    "questionError": "От 3 до 200 символов.",
+    "answerError": "От 1 до 2000 символов.",
+    "proposalSubmit": "Отправить"
   },
   "feed": {
     "allTypes": "Все типы",
@@ -352,7 +428,13 @@
     "thisYear": "Этот год",
     "title": "Лента",
     "today": "Сегодня",
-    "type": "Тип поста"
+    "type": "Тип поста",
+    "allStudents": "Все студенты",
+    "search": "Поиск...",
+    "filtersTitle": "Фильтры",
+    "lastWeek": "7 дней",
+    "lastMonth": "30 дней",
+    "news": "Объявления"
   },
   "landing": {
     "appsDownload": "Скачать в",
@@ -591,7 +673,11 @@
     "time": "Время",
     "title": "Заголовок",
     "titlePlaceholder": "Добавь заголовок поста",
-    "type": "Тип поста"
+    "type": "Тип поста",
+    "audience": "Кто увидит",
+    "audienceAll": "Все в uniezz Люблина",
+    "audienceUniversity": "Только {{university}}",
+    "editNote": "Тип поста и аудиторию потом не изменить."
   },
   "professors": {
     "deleteReview": "Удалить отзыв",
@@ -674,7 +760,8 @@
     "spam": "Спам",
     "submit": "Отправить жалобу",
     "user": "Пожаловаться на пользователя",
-    "action": "Пожаловаться"
+    "action": "Пожаловаться",
+    "message": "Пожаловаться на сообщение"
   },
   "rewards": {
     "balance": "Твои монеты",
@@ -736,7 +823,12 @@
     "shopSoonDescription": "Скоро здесь можно будет потратить монеты.",
     "tabEarn": "Зарабатывай",
     "tabSpend": "Трать",
-    "title": "Награды"
+    "title": "Награды",
+    "challengeUntil": "До {{date}}",
+    "challengeDaily": "День",
+    "challengeWeekly": "Неделя",
+    "historyEmptyApp": "Монет пока нет. Лайкайте, отвечайте и публикуйте, чтобы их получить.",
+    "shopSoonDescriptionApp": "Скоро здесь можно будет тратить монеты. Копите!"
   },
   "seo": {
     "appTitle": "uniezz",
@@ -779,11 +871,25 @@
     "songError": "Используйте ссылку http или https, до 500 символов.",
     "songHint": "Ссылка на песню, которая вас описывает — Spotify, YouTube, где угодно",
     "songPlaceholder": "https://open.spotify.com/track/…",
-    "tryAnotherName": "Попробуй ввести другое имя или фамилию."
+    "tryAnotherName": "Попробуй ввести другое имя или фамилию.",
+    "profile": "Профиль студента",
+    "block": "Заблокировать",
+    "blockTitle": "Заблокировать студента?",
+    "blockDescription": "Вы больше не увидите друг друга в uniezz.",
+    "blocked": "Студент заблокирован.",
+    "posts": "Посты",
+    "noPosts": "Постов пока нет",
+    "photos": "Фото",
+    "removePhoto": "Удалить фото",
+    "liked": "Нравится",
+    "saved": "Сохранённые",
+    "noLikedPosts": "Нет понравившихся постов",
+    "noSavedPosts": "Нет сохранённых постов"
   },
   "topbar": {
     "changeLanguage": "Сменить язык",
-    "languageCode": "RU"
+    "languageCode": "RU",
+    "search": "Поиск"
   },
   "share": {
     "copyLink": "Скопировать ссылку",
@@ -801,5 +907,56 @@
     "unfollow": "Отписаться",
     "followed": "Вы подписались.",
     "unfollowed": "Вы отписались."
+  },
+  "tabs": {
+    "chat": "Чат",
+    "connections": "Знакомства",
+    "feed": "Лента",
+    "exams": "Экзамены",
+    "faq": "FAQ"
+  },
+  "study": {
+    "filters": "Фильтры",
+    "create": "Добавить",
+    "semesterShort": "Семестр {{semester}}",
+    "averageRating": "Средняя оценка",
+    "ratingSummary": "{{rating}} ({{votes}})",
+    "noRatings": "Оценок пока нет",
+    "yourRating": "Ваша оценка",
+    "files": "Файлы",
+    "comments": "Комментарии",
+    "noComments": "Комментариев пока нет.",
+    "deleteCommentTitle": "Удалить комментарий?",
+    "editCourse": "Изменить курс",
+    "addCourse": "Добавить курс",
+    "materialType": "Тип материала",
+    "chooseFiles": "Выбрать файлы",
+    "difficulty": "Сложность",
+    "courseDeleted": "Курс удалён",
+    "deleteCourseTitle": "Удалить курс?",
+    "deleteCourseDescription": "Его файлы, комментарии и оценки тоже удалятся. Это нельзя отменить.",
+    "reviews": "Отзывы",
+    "noReviews": "Отзывов пока нет.",
+    "reviewDeleted": "Отзыв удалён.",
+    "deleteReviewTitle": "Удалить отзыв?",
+    "deleteReviewDescription": "Отзыв удалится навсегда.",
+    "yourReview": "Ваш отзыв",
+    "reviewHint": "Без вашего имени.",
+    "reviewSaved": "Отзыв сохранён.",
+    "saveReview": "Сохранить",
+    "noProgrammeTitle": "Сначала добавьте направление",
+    "noProgrammeDescription": "Курсы привязаны к направлению. Добавьте его в профиле и попробуйте снова.",
+    "deleteFileTitle": "Удалить файл?",
+    "deleteFileDescription": "Файл удалится у всех.",
+    "tabCourses": "Курсы",
+    "tabProfessors": "Преподаватели",
+    "tabMyMaterials": "Мои материалы",
+    "searchMyMaterials": "Поиск моих материалов",
+    "programmes": "Направления",
+    "discardChangesDescription": "Если уйти сейчас, несохранённые изменения пропадут.",
+    "discard": "Не сохранять"
+  },
+  "language": {
+    "title": "Язык"
   }
 }

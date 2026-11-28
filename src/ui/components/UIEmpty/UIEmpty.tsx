@@ -6,14 +6,17 @@ import { emptySkyStyles, emptyStyles } from './variants';
 export type UIEmptyProps = {
   /** Replaces the default message */
   children?: ReactNode;
+  /** On a phone, covers the screen between the header and the tab bar and centres the cat there, as the mobile app's `isScreenCentred`. */
+  isScreenCentred?: boolean;
 };
 
-export const UIEmpty = ({ children }: UIEmptyProps) => {
+export const UIEmpty = ({ children, isScreenCentred = false }: UIEmptyProps) => {
   const { t } = useTranslation();
   return (
-    <div role="status" className={emptyStyles()}>
+    <div role="status" className={emptyStyles({ isScreenCentred })}>
       <span aria-hidden="true" className={emptySkyStyles()} />
-      <CatScene className="h-36" />
+      {/* the mobile app's 127px cat on a phone; stretched, since its absolute layers give it no width */}
+      <CatScene className="h-36 max-lg:h-[127px] max-lg:self-stretch" />
       <div className="relative z-10 px-6 pb-6">{children ?? <p>{t('app.empty')}</p>}</div>
     </div>
   );

@@ -9,6 +9,8 @@ export type UISubTabsProps<T extends string> = {
   label: string;
   /** Tabs get `${idPrefix}-tab-${id}`; the page's tab panel must use `${idPrefix}-tab-panel`. */
   idPrefix: string;
+  /** On a phone, scroll the tabs sideways instead of squeezing them. */
+  scrollable?: boolean;
   className?: string;
 };
 
@@ -19,10 +21,11 @@ export function UISubTabs<T extends string>({
   onChange,
   label,
   idPrefix,
+  scrollable = false,
   className,
 }: UISubTabsProps<T>) {
   return (
-    <div role="tablist" aria-label={label} className={cn(subTabsStyles(), className)}>
+    <div role="tablist" aria-label={label} className={cn(subTabsStyles({ scrollable }), className)}>
       {tabs.map((tab, index) => {
         const selected = tab.id === value;
         return (
@@ -35,7 +38,7 @@ export function UISubTabs<T extends string>({
             aria-controls={`${idPrefix}-tab-panel`}
             tabIndex={selected ? 0 : -1}
             data-ph-capture-attribute-label={`View ${idPrefix} ${tab.id}`}
-            className={subTabStyles({ selected })}
+            className={subTabStyles({ selected, scrollable })}
             onClick={() => onChange(tab.id)}
             onKeyDown={(event) => {
               if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;

@@ -19,6 +19,8 @@ function RootLayout() {
       <Outlet />
       <Toaster
         position="top-right"
+        // globals.css moves it top centre on a phone, as in the mobile app
+        containerClassName="app-toaster"
         gutter={10}
         containerStyle={{ top: 24, right: 24 }}
         toastOptions={{

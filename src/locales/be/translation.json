@@ -29,7 +29,8 @@
     "titleError": "Выкарыстоўвайце 3–150 знакаў.",
     "unlike": "У адрозненне ад",
     "unsave": "Скасаваць захаванне",
-    "contentNotAllowed": "У тэксце ёсць недапушчальныя словы. Змяні яго і паспрабуй яшчэ раз."
+    "contentNotAllowed": "У тэксце ёсць недапушчальныя словы. Змяні яго і паспрабуй яшчэ раз.",
+    "commentSent": "Каментарый дададзены"
   },
   "app": {
     "accountDeleted": "Уліковы запіс выдалены",
@@ -158,7 +159,12 @@
     "viewPost": "Прагляд паведамлення",
     "writeMessage": "Напісаць паведамленне",
     "yearOfStudy": "Год навучання",
-    "yourProfile": "Ваш профіль"
+    "yourProfile": "Ваш профіль",
+    "liveNow": "Зараз",
+    "study": "Вучоба",
+    "connected": "Вы знаёмыя",
+    "students": "Студэнты",
+    "moreOptions": "Іншыя дзеянні"
   },
   "auth": {
     "backToUniversities": "Вяртаемся ва ўніверсітэты",
@@ -168,36 +174,53 @@
       "privacy": "uniezz ніколі не бачыць і не захоўвае пароль вашага ўніверсітэта."
     },
     "errors": {
-      "codeInvalid": "Увядзіце 6-значны код, які мы вам даслалі.",
-      "emailInvalid": "Калі ласка, укажыце правільны адрас электроннай пошты",
-      "emailRequired": "Увядзіце адрас электроннай пошты вашага універсітэта."
+      "codeInvalid": "Увядзіце 6-значны код з ліста.",
+      "emailInvalid": "Увядзіце правільны email",
+      "emailRequired": "Увядзіце ўніверсітэцкі email."
     },
     "login": {
-      "continueWith": "Працягвайце з {{provider}}",
-      "subtitle": "Выберыце свой універсітэт для ўваходу з дапамогай USOS або кода электроннай пошты універсітэта.",
-      "title": "Увайдзіце ў сістэму"
+      "continueWith": "Працягнуць праз {{provider}}",
+      "subtitle": "Выберыце ўніверсітэт, каб увайсці праз USOS або код на пошту.",
+      "title": "Увайсці"
     },
     "otp": {
       "changeEmail": "Змяніць электронную пошту",
-      "codeLabel": "6-значны код спраўджання",
+      "codeLabel": "6-значны код",
       "codesPerHour": "3 кода ў гадзіну",
-      "codeSubtitle": "Мы адправілі шасцізначны код на {{email}}. Ён мінае праз 10 хвілін.",
-      "codeTitle": "Праверце паштовую скрыню ва ўніверсітэце",
-      "didntGetIt": "Не зразумелі?",
-      "emailLabel": "Электронная пошта",
+      "codeSubtitle": "Мы даслалі 6-значны код на ўніверсітэцкую пошту. Ён дзейнічае 10 хвілін.",
+      "codeTitle": "Праверце пошту",
+      "didntGetIt": "Не прыйшоў код?",
+      "emailLabel": "Email",
       "emailPlaceholder": "you@university.edu",
-      "emailSubtitle": "Мы вышлем шасцізначны код на гэтую скрыню. Выкарыстоўвайце адрас, выдадзены вашым універсітэтам.",
-      "emailTitle": "Укажыце свой універсітэцкі адрас электроннай пошты",
+      "emailSubtitle": "Мы дашлём туды 6-значны код.",
+      "emailTitle": "Увядзіце ўніверсітэцкі email",
       "notice": "Уваход па электроннай пошце пацвярджае толькі дамен вашага універсітэта. Факультэт і год навучання застаюцца самаабвешчанымі, пакуль ваш уліковы запіс не будзе звязаны з USOS або каталогам вашага універсітэта.",
-      "resend": "Паўторна адправіць код",
+      "resend": "Даслаць зноў",
       "send": "Адправіць код",
-      "verify": "Праверце і працягвайце"
-    }
+      "verify": "Праверыць код",
+      "change": "Змяніць"
+    },
+    "loadingUniversities": "Загрузка ўніверсітэтаў…",
+    "universitiesLoadError": "Не ўдалося загрузіць універсітэты. Паспрабуйце зноў.",
+    "noUniversities": "Няма даступных універсітэтаў.",
+    "emailCode": "Код на пошту",
+    "university": "універсітэт",
+    "passwordPrivacy": "uniezz не бачыць ваш пароль ад універсітэта.",
+    "signInError": "Не ўдалося ўвайсці.",
+    "logOut": "Выйсці",
+    "deleteAccount": "Выдаліць акаўнт",
+    "deleteAccountTitle": "Выдаліць акаўнт?",
+    "deleteAccountDescription": "Вы страціце манеты і знаёмствы. Профіль, допісы і праграмы навучання таксама выдаляцца. Гэта нельга адмяніць.",
+    "reauthenticateToDelete": "Увайдзіце зноў і паўтарыце выдаленне акаўнта."
   },
   "chat": {
     "action": "Новая група",
     "emptyThread": "Паведамленняў пакуль няма. Павітайцеся!",
     "jumpToLatest": "Перайсці да апошняга паведамлення",
+    "members_one": "{{count}} удзельнік",
+    "members_few": "{{count}} удзельнікі",
+    "members_many": "{{count}} удзельнікаў",
+    "members_other": "{{count}} удзельнікаў",
     "newMessages_one": "{{count}} новае паведамленне",
     "newMessages_few": "{{count}} новыя паведамленні",
     "newMessages_many": "{{count}} новых паведамленняў",
@@ -205,7 +228,50 @@
     "offline": "Няма злучэння. Праверце інтэрнэт.",
     "sending": "Адпраўляецца",
     "sent": "Адпраўлена",
-    "title": "Чат"
+    "title": "Чат",
+    "whoCanMessage": "Хто можа мне пісаць",
+    "whoCanMessageHint": "Толькі для новых запытаў; пачатыя размовы застануцца.",
+    "whoEveryone": "Усе",
+    "whoUniversity": "Студэнты маёй ВНУ",
+    "whoMatches": "Толькі метчы",
+    "requestsTab": "Запыты",
+    "noRequests": "Няма запытаў",
+    "deletedMessage": "Паведамленне выдалена",
+    "photo": "Фота",
+    "someone": "нехта",
+    "systemGroupCreated": "{{name}} стварае «{{title}}»",
+    "systemRenamed": "{{name}} перайменоўвае групу на «{{title}}»",
+    "systemMemberAdded": "{{name}} дадае: {{names}}",
+    "systemMemberRemoved": "{{name}} выдаляе {{target}}",
+    "systemMemberLeft": "{{name}} выходзіць з групы",
+    "systemOwnerChanged": "{{target}} цяпер уладальнік групы",
+    "systemOther": "Групу абноўлена",
+    "read": "Прачытана",
+    "copied": "Скапіявана",
+    "deleteMessageTitle": "Выдаліць паведамленне?",
+    "deleteMessageDescription": "Яно знікне для ўсіх у чаце.",
+    "requestFrom": "{{name}} хоча вам напісаць",
+    "requestHint": "Прыміце, каб адказаць. Пра адмову чалавек не даведаецца.",
+    "requestWaiting": "Запыт адпраўлены. Пісаць далей можна, калі {{name}} прыме яго або адкажа.",
+    "requestDeclined": "Запыт адхілены",
+    "requestFirstMessage": "Напішыце першае паведамленне для {{name}}. Пакуль запыт не прыняты — адно паведамленне, толькі тэкст, без спасылак.",
+    "accept": "Прыняць",
+    "decline": "Адхіліць",
+    "selected_one": "Абрана: {{count}}",
+    "selected_other": "Абрана: {{count}}",
+    "selected_few": "Абрана: {{count}}",
+    "selected_many": "Абрана: {{count}}",
+    "addToGroup": "Дадаць у групу",
+    "saveName": "Захаваць назву",
+    "owner": "Уладальнік",
+    "removeMemberTitle": "Выдаліць {{name}} з групы?",
+    "leaveGroupTitle": "Выйсці з групы?",
+    "leaveGroupDescription": "Вы больш не атрымаеце паведамленні групы. Калі вы ўладальнік, групу атрымае найстарэйшы ўдзельнік.",
+    "leaveGroup": "Выйсці з групы",
+    "copy": "Капіяваць",
+    "delete": "Выдаліць",
+    "report": "Паскардзіцца",
+    "cannotMessage": "Гэты студэнт не прымае ад вас паведамленні."
   },
   "common": {
     "appName": "uniezz"
@@ -248,7 +314,13 @@
     "unmatchDescription": "Гэта супадзенне будзе выдалена для вас абодвух.",
     "unmatched": "Супадзенне выдалена.",
     "viewProfile": "Паглядзець профіль",
-    "women": "жанчыны"
+    "women": "жанчыны",
+    "removeTitle": "Выдаліць пару?",
+    "removeDescription": "Вы абодва страціце доступ да поўных профіляў адно аднаго.",
+    "inCommon": "Агульнае",
+    "closedToMode": "Вы яшчэ не ўдзельнічаеце ў гэтым рэжыме. Захавайце налады ў фільтрах, каб бачыць студэнтаў.",
+    "likeLimit": "Сённяшні ліміт {{limit}} знаёмстваў вычарпаны. Паспрабуйце заўтра.",
+    "cardExpired": "Картка састарэла. Вось наступная."
   },
   "courses": {
     "addComment": "Дадайце каментарый",
@@ -336,7 +408,11 @@
     "title": "FAQ",
     "translate": "Перакласці",
     "translateTitle": "Перакласці і апублікаваць",
-    "translateDescription": "Напішыце пытанне і адказ на кожнай мове. Студэнты бачаць версію на мове са свайго профілю."
+    "translateDescription": "Напішыце пытанне і адказ на кожнай мове. Студэнты бачаць версію на мове са свайго профілю.",
+    "proposalDescription": "Напішыце пытанне і адказ. Мадэратар праверыць іх перад публікацыяй.",
+    "questionError": "Ад 3 да 200 сімвалаў.",
+    "answerError": "Ад 1 да 2000 сімвалаў.",
+    "proposalSubmit": "Адправіць"
   },
   "feed": {
     "allTypes": "Усе віды",
@@ -352,7 +428,13 @@
     "thisYear": "Гэты год",
     "title": "Карміць",
     "today": "сёння",
-    "type": "Тып паведамлення"
+    "type": "Тып паведамлення",
+    "allStudents": "Усе студэнты",
+    "search": "Пошук…",
+    "filtersTitle": "Фільтры",
+    "lastWeek": "Апошнія 7 дзён",
+    "lastMonth": "Апошнія 30 дзён",
+    "news": "Абвесткі"
   },
   "landing": {
     "appsDownload": "Спампаваць у",
@@ -591,7 +673,11 @@
     "time": "Час",
     "title": "Назва",
     "titlePlaceholder": "Дайце сваёй публікацыі назву",
-    "type": "Тып паведамлення"
+    "type": "Тып паведамлення",
+    "audience": "Хто бачыць",
+    "audienceAll": "Усе ў uniezz у Любліне",
+    "audienceUniversity": "Толькі {{university}}",
+    "editNote": "Тып і аўдыторыю нельга змяніць пасля публікацыі."
   },
   "professors": {
     "deleteReview": "Выдаліць водгук",
@@ -674,7 +760,8 @@
     "spam": "Спам",
     "submit": "Адправіць справаздачу",
     "user": "Паскардзіцца на карыстальніка",
-    "action": "Паведаміць"
+    "action": "Паведаміць",
+    "message": "Паскардзіцца на паведамленне"
   },
   "rewards": {
     "balance": "Твае манеты",
@@ -736,7 +823,12 @@
     "shopSoonDescription": "Хутка тут можна будзе патраціць манеты.",
     "tabEarn": "Зарабляй",
     "tabSpend": "Выдаткоўвай",
-    "title": "Узнагароды"
+    "title": "Узнагароды",
+    "challengeUntil": "Да {{date}}",
+    "challengeDaily": "Штодня",
+    "challengeWeekly": "Штотыдзень",
+    "historyEmptyApp": "Манет пакуль няма. Ацэньвайце, адказвайце і пішыце допісы.",
+    "shopSoonDescriptionApp": "Хутка тут можна будзе траціць манеты. Збірайце іх!"
   },
   "seo": {
     "appTitle": "uniezz",
@@ -779,11 +871,25 @@
     "songError": "Выкарыстоўвайце спасылку http або https, да 500 сімвалаў.",
     "songHint": "Спасылка на песню, якая прадстаўляе вас — Spotify, YouTube, дзе заўгодна",
     "songPlaceholder": "https://open.spotify.com/track/…",
-    "tryAnotherName": "Паспрабуйце іншую назву."
+    "tryAnotherName": "Паспрабуйце іншую назву.",
+    "profile": "Профіль студэнта",
+    "block": "Заблакіраваць",
+    "blockTitle": "Заблакіраваць студэнта?",
+    "blockDescription": "Вы не будзеце бачыць адно аднаго ў uniezz.",
+    "blocked": "Студэнт заблакіраваны.",
+    "posts": "Допісы",
+    "noPosts": "Пакуль няма допісаў",
+    "photos": "Фота",
+    "removePhoto": "Выдаліць фота",
+    "liked": "Упадабаныя",
+    "saved": "Захавана",
+    "noLikedPosts": "Пакуль няма ўпадабаных допісаў",
+    "noSavedPosts": "Пакуль няма захаваных допісаў"
   },
   "topbar": {
     "changeLanguage": "Змяніць мову",
-    "languageCode": "BE"
+    "languageCode": "BE",
+    "search": "Пошук"
   },
   "share": {
     "copyLink": "Скапіяваць спасылку",
@@ -801,5 +907,56 @@
     "unfollow": "Адпісацца",
     "followed": "Вы падпісаліся.",
     "unfollowed": "Вы адпісаліся."
+  },
+  "tabs": {
+    "chat": "Чат",
+    "connections": "Знаёмствы",
+    "feed": "Стужка",
+    "exams": "Экзамены",
+    "faq": "FAQ"
+  },
+  "study": {
+    "filters": "Фільтры",
+    "create": "Дадаць",
+    "semesterShort": "Семестр {{semester}}",
+    "averageRating": "Сярэдняя ацэнка",
+    "ratingSummary": "{{rating}} ({{votes}})",
+    "noRatings": "Ацэнак пакуль няма",
+    "yourRating": "Ваша ацэнка",
+    "files": "Файлы",
+    "comments": "Каментарыі",
+    "noComments": "Каментароў пакуль няма.",
+    "deleteCommentTitle": "Выдаліць каментарый?",
+    "editCourse": "Рэдагаваць курс",
+    "addCourse": "Дадаць курс",
+    "materialType": "Тып матэрыялу",
+    "chooseFiles": "Выбраць файлы",
+    "difficulty": "Складанасць",
+    "courseDeleted": "Курс выдалены",
+    "deleteCourseTitle": "Выдаліць курс?",
+    "deleteCourseDescription": "Файлы, каментарыі і ацэнкі курса таксама выдаляцца. Гэта нельга адмяніць.",
+    "reviews": "Водгукі",
+    "noReviews": "Водгукаў пакуль няма.",
+    "reviewDeleted": "Водгук выдалены.",
+    "deleteReviewTitle": "Выдаліць водгук?",
+    "deleteReviewDescription": "Водгук будзе выдалены назаўсёды.",
+    "yourReview": "Ваш водгук",
+    "reviewHint": "Паказваецца без вашага імя.",
+    "reviewSaved": "Водгук захаваны.",
+    "saveReview": "Захаваць",
+    "noProgrammeTitle": "Спачатку дадайце праграму",
+    "noProgrammeDescription": "Курсы належаць да праграмы навучання. Дадайце яе ў профілі і паспрабуйце зноў.",
+    "deleteFileTitle": "Выдаліць файл?",
+    "deleteFileDescription": "Файл знікне для ўсіх.",
+    "tabCourses": "Курсы",
+    "tabProfessors": "Выкладчыкі",
+    "tabMyMaterials": "Мае матэрыялы",
+    "searchMyMaterials": "Пошук у маіх матэрыялах",
+    "programmes": "Праграмы навучання",
+    "discardChangesDescription": "Калі выйдзеце, незахаваныя змены страцяцца.",
+    "discard": "Скасаваць"
+  },
+  "language": {
+    "title": "Мова"
   }
 }

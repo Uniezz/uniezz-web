@@ -39,15 +39,24 @@ export const UIInput = ({
   const isErrorPresent = Boolean(errorText);
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 max-lg:gap-1.5">
       {label ? (
-        <UIText as="label" htmlFor={inputId} size="sm" weight="semibold">
+        // on a phone, the mobile app's caption: 12 semibold secondary
+        <UIText
+          as="label"
+          htmlFor={inputId}
+          size="sm"
+          weight="semibold"
+          className="max-lg:text-micro max-lg:text-secondary"
+        >
           {label}
         </UIText>
       ) : null}
 
       <div className={cn(inputStyles({ error: isErrorPresent }), className)}>
-        {IconLeft ? <IconLeft className="text-muted" size={18} /> : null}
+        {IconLeft ? (
+          <IconLeft className="text-muted max-lg:size-4.25 max-lg:text-white-60" size={18} />
+        ) : null}
 
         <input
           {...props}
@@ -79,7 +88,12 @@ export const UIInput = ({
       </div>
 
       {isErrorPresent || reserveErrorSpace ? (
-        <UIText as="p" id={errorId} color="error" className="min-h-lh pl-2">
+        <UIText
+          as="p"
+          id={errorId}
+          color="error"
+          className="min-h-lh pl-2 max-lg:pl-0 max-lg:text-sm max-lg:font-semibold"
+        >
           {errorText}
         </UIText>
       ) : null}

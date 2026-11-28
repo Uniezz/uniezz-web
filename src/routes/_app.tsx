@@ -1,4 +1,5 @@
-import { BrandBackground, UIBottomTabs, UIDialog, UISidebar } from '@/ui/components';
+import { BrandBackground, UIDialog, UISidebar } from '@/ui/components';
+import { MeetTabGate } from '@/components/features/connections';
 import { Outlet, createFileRoute, redirect, retainSearchParams } from '@tanstack/react-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -31,14 +32,16 @@ export const Route = createFileRoute('/_app')({
     search: Record<string, unknown>,
   ): {
     conversationId?: string;
-    chatType?: 'groups' | 'connections' | undefined;
+    chatType?: 'groups' | 'connections' | 'requests' | undefined;
     /** Where the open post was opened from, so returning from it keeps its Back. */
     postFrom?: string;
   } => {
     const conversationId = optionalSearchStringSchema.parse(search.conversationId);
     const postFrom = returnPathSchema.parse(search.postFrom);
     const chatType =
-      search.chatType === 'groups' || search.chatType === 'connections'
+      search.chatType === 'groups' ||
+      search.chatType === 'connections' ||
+      search.chatType === 'requests'
         ? search.chatType
         : undefined;
     return {
@@ -80,16 +83,19 @@ function AppLayout() {
           }}
           counts={{ '/chat': 2, '/connections': 2 }}
         />
-        <main className="min-w-0 flex-1 px-4 py-6 pb-28 sm:px-7 lg:px-10 lg:py-7 lg:pb-7">
+        {/* on a phone, the mobile app's 16px sides at every width, and room for the floating tab bar */}
+        <main className="min-w-0 flex-1 px-4 py-6 pb-[calc(var(--bottom-tabs-height)+16px)] lg:px-10 lg:py-7 lg:pb-7">
           <Outlet />
-          <UIBottomTabs />
+          {/* the tab bar, with the Meet tab locked until the birth date is set */}
+          <MeetTabGate />
         </main>
         <UIDialog
           open={isAppOfferOpen}
           onOpenChange={handleAppOfferOpenChange}
           title={t('app.mobileTitle')}
           description={t('app.mobileDescription')}
-          className="bg-blue"
+          // only phones get it: the mobile app's bottom sheet
+          placement="bottom"
         >
           <AppStoreLinks />
         </UIDialog>

@@ -29,7 +29,8 @@
     "titleError": "Use 3–150 characters.",
     "unlike": "Unlike",
     "unsave": "Unsave",
-    "contentNotAllowed": "This text contains words that aren't allowed. Change it and try again."
+    "contentNotAllowed": "This text contains words that aren't allowed. Change it and try again.",
+    "commentSent": "Comment added"
   },
   "app": {
     "accountDeleted": "Account deleted",
@@ -158,7 +159,12 @@
     "viewPost": "View post",
     "writeMessage": "Write a message",
     "yearOfStudy": "Year of study",
-    "yourProfile": "Your profile"
+    "yourProfile": "Your profile",
+    "liveNow": "Live now",
+    "study": "Study",
+    "connected": "Connected",
+    "students": "Students",
+    "moreOptions": "More options"
   },
   "auth": {
     "backToUniversities": "Back to universities",
@@ -168,42 +174,98 @@
       "privacy": "uniezz never sees or stores your university password."
     },
     "errors": {
-      "codeInvalid": "Enter the 6-digit code we sent you.",
-      "emailInvalid": "Please, provide correct email address",
+      "codeInvalid": "Enter the 6-digit code we sent.",
+      "emailInvalid": "Enter a valid email address.",
       "emailRequired": "Enter your university email address."
     },
     "login": {
       "continueWith": "Continue with {{provider}}",
-      "subtitle": "Choose your university to sign in with USOS or a university email code.",
+      "subtitle": "Pick your university to sign in with USOS or an email code.",
       "title": "Sign in"
     },
     "otp": {
       "changeEmail": "Change email",
-      "codeLabel": "6-digit verification code",
+      "codeLabel": "6-digit code",
       "codesPerHour": "3 codes per hour",
-      "codeSubtitle": "We sent a six-digit code to {{email}}. It expires in 10 minutes.",
-      "codeTitle": "Check your university inbox",
+      "codeSubtitle": "We sent a 6-digit code to your university email. It expires in 10 minutes.",
+      "codeTitle": "Check your inbox",
       "didntGetIt": "Didn't get it?",
       "emailLabel": "Email",
       "emailPlaceholder": "you@university.edu",
-      "emailSubtitle": "We'll send a six-digit code to this inbox. Use the address your university issued.",
-      "emailTitle": "Provide your university email",
+      "emailSubtitle": "We'll send a 6-digit code there.",
+      "emailTitle": "Enter your university email",
       "notice": "Email sign-in confirms your university domain only. Faculty and year of study stay self-declared until your account is linked to USOS or your university directory.",
       "resend": "Resend code",
       "send": "Send code",
-      "verify": "Verify and continue"
-    }
+      "verify": "Verify code",
+      "change": "Change"
+    },
+    "loadingUniversities": "Loading universities...",
+    "universitiesLoadError": "Couldn’t load universities. Try again.",
+    "noUniversities": "No universities yet.",
+    "emailCode": "Email code",
+    "university": "university",
+    "passwordPrivacy": "uniezz never sees your university password.",
+    "signInError": "Couldn’t sign in.",
+    "logOut": "Log out",
+    "deleteAccount": "Delete account",
+    "deleteAccountTitle": "Delete account?",
+    "deleteAccountDescription": "Your profile, posts, study programmes, coins and matches will be deleted. This can’t be undone.",
+    "reauthenticateToDelete": "Sign in again, then try deleting your account."
   },
   "chat": {
     "action": "New group",
     "emptyThread": "No messages yet. Say hi!",
     "jumpToLatest": "Jump to latest message",
+    "members_one": "{{count}} member",
+    "members_other": "{{count}} members",
     "newMessages_one": "{{count}} new message",
     "newMessages_other": "{{count}} new messages",
     "offline": "You are offline. Check your connection.",
     "sending": "Sending",
     "sent": "Sent",
-    "title": "Chat"
+    "title": "Chat",
+    "whoCanMessage": "Who can message me",
+    "whoCanMessageHint": "Only affects new requests. Existing chats stay.",
+    "whoEveryone": "Everyone",
+    "whoUniversity": "My university",
+    "whoMatches": "Only matches",
+    "requestsTab": "Requests",
+    "noRequests": "No requests",
+    "deletedMessage": "Message deleted",
+    "photo": "Photo",
+    "someone": "someone",
+    "systemGroupCreated": "{{name}} created “{{title}}”",
+    "systemRenamed": "{{name}} renamed the group to “{{title}}”",
+    "systemMemberAdded": "{{name}} added {{names}}",
+    "systemMemberRemoved": "{{name}} removed {{target}}",
+    "systemMemberLeft": "{{name}} left the group",
+    "systemOwnerChanged": "{{target}} is now the group owner",
+    "systemOther": "The group was updated",
+    "read": "Read",
+    "copied": "Copied",
+    "deleteMessageTitle": "Delete message?",
+    "deleteMessageDescription": "It will be deleted for everyone.",
+    "requestFrom": "{{name}} wants to message you",
+    "requestHint": "Accept to reply. If you decline, they won't know.",
+    "requestWaiting": "Request sent. You can write more once {{name}} accepts or replies.",
+    "requestDeclined": "Request declined",
+    "requestFirstMessage": "Write to {{name}}. Until they accept, you can send one text message, no links.",
+    "accept": "Accept",
+    "decline": "Decline",
+    "selected_one": "{{count}} selected",
+    "selected_other": "{{count}} selected",
+    "addToGroup": "Add to group",
+    "saveName": "Save name",
+    "owner": "Owner",
+    "removeMemberTitle": "Remove {{name}}?",
+    "leaveGroupTitle": "Leave group?",
+    "leaveGroupDescription": "You'll stop getting messages. If you're the owner, the longest-standing member takes over.",
+    "leaveGroup": "Leave group",
+    "copy": "Copy",
+    "delete": "Delete",
+    "report": "Report",
+    "cannotMessage": "This student doesn't accept your messages."
   },
   "common": {
     "appName": "uniezz"
@@ -246,7 +308,13 @@
     "unmatchDescription": "This match will be removed for both of you.",
     "unmatched": "Match removed.",
     "viewProfile": "View profile",
-    "women": "Women"
+    "women": "Women",
+    "removeTitle": "Remove match?",
+    "removeDescription": "You'll both lose access to each other's full profile.",
+    "inCommon": "In common",
+    "closedToMode": "This mode is off for you. Save your preferences in Filters to see students.",
+    "likeLimit": "You've used today's {{limit}} connects. Try again tomorrow.",
+    "cardExpired": "This card expired. Here's the next one."
   },
   "courses": {
     "addComment": "Add a comment",
@@ -334,7 +402,11 @@
     "title": "FAQ",
     "translate": "Translate",
     "translateTitle": "Translate and publish",
-    "translateDescription": "Write the question and answer in every language. Students read the one set in their profile."
+    "translateDescription": "Write the question and answer in every language. Students read the one set in their profile.",
+    "proposalDescription": "Write a question and answer. A moderator checks it first.",
+    "questionError": "Use 3 to 200 characters.",
+    "answerError": "Use 1 to 2000 characters.",
+    "proposalSubmit": "Send"
   },
   "feed": {
     "allTypes": "All types",
@@ -350,7 +422,13 @@
     "thisYear": "This year",
     "title": "Feed",
     "today": "Today",
-    "type": "Post type"
+    "type": "Post type",
+    "allStudents": "All students",
+    "search": "Search...",
+    "filtersTitle": "Filters",
+    "lastWeek": "Last 7 days",
+    "lastMonth": "Last 30 days",
+    "news": "News"
   },
   "landing": {
     "appsDownload": "Download on the",
@@ -589,7 +667,11 @@
     "time": "Time",
     "title": "Title",
     "titlePlaceholder": "Give your post a title",
-    "type": "Post type"
+    "type": "Post type",
+    "audience": "Who can see it",
+    "audienceAll": "Everyone on uniezz",
+    "audienceUniversity": "Only {{university}}",
+    "editNote": "You can't change post type or audience after posting."
   },
   "professors": {
     "deleteReview": "Delete review",
@@ -672,7 +754,8 @@
     "spam": "Spam",
     "submit": "Send report",
     "user": "Report user",
-    "action": "Report"
+    "action": "Report",
+    "message": "Report message"
   },
   "rewards": {
     "balance": "Your coins",
@@ -734,7 +817,12 @@
     "shopSoonDescription": "Soon you can spend your coins here.",
     "tabEarn": "Earn",
     "tabSpend": "Spend",
-    "title": "Rewards"
+    "title": "Rewards",
+    "challengeUntil": "Until {{date}}",
+    "challengeDaily": "Daily",
+    "challengeWeekly": "Weekly",
+    "historyEmptyApp": "No coins yet. Like, reply and post to earn some.",
+    "shopSoonDescriptionApp": "Soon you can spend coins here. Keep earning!"
   },
   "seo": {
     "appTitle": "uniezz",
@@ -777,11 +865,25 @@
     "songError": "Use an http or https link, up to 500 characters.",
     "songHint": "Link to the song that represents you — Spotify, YouTube, anywhere",
     "songPlaceholder": "https://open.spotify.com/track/…",
-    "tryAnotherName": "Try a different name."
+    "tryAnotherName": "Try a different name.",
+    "profile": "Student profile",
+    "block": "Block",
+    "blockTitle": "Block student?",
+    "blockDescription": "You won't see each other anywhere on uniezz.",
+    "blocked": "Student blocked.",
+    "posts": "Posts",
+    "noPosts": "No posts yet",
+    "photos": "Photos",
+    "removePhoto": "Remove photo",
+    "liked": "Liked",
+    "saved": "Saved",
+    "noLikedPosts": "No liked posts yet",
+    "noSavedPosts": "No saved posts yet"
   },
   "topbar": {
     "changeLanguage": "Change language",
-    "languageCode": "EN"
+    "languageCode": "EN",
+    "search": "Search"
   },
   "share": {
     "copyLink": "Copy link",
@@ -799,5 +901,56 @@
     "unfollow": "Unfollow",
     "followed": "You're following them now.",
     "unfollowed": "You unfollowed them."
+  },
+  "tabs": {
+    "chat": "Chat",
+    "connections": "Meet",
+    "feed": "Feed",
+    "exams": "Exams",
+    "faq": "FAQ"
+  },
+  "study": {
+    "filters": "Filters",
+    "create": "Add",
+    "semesterShort": "Semester {{semester}}",
+    "averageRating": "Average rating",
+    "ratingSummary": "{{rating}} ({{votes}})",
+    "noRatings": "No ratings yet",
+    "yourRating": "Your rating",
+    "files": "Files",
+    "comments": "Comments",
+    "noComments": "No comments yet.",
+    "deleteCommentTitle": "Delete comment?",
+    "editCourse": "Edit course",
+    "addCourse": "Add course",
+    "materialType": "Material type",
+    "chooseFiles": "Choose files",
+    "difficulty": "Difficulty",
+    "courseDeleted": "Course deleted",
+    "deleteCourseTitle": "Delete course?",
+    "deleteCourseDescription": "Its files, comments and ratings will be deleted too. This can't be undone.",
+    "reviews": "Reviews",
+    "noReviews": "No reviews yet.",
+    "reviewDeleted": "Review deleted.",
+    "deleteReviewTitle": "Delete review?",
+    "deleteReviewDescription": "Your review will be deleted for good.",
+    "yourReview": "Your review",
+    "reviewHint": "Shown without your name.",
+    "reviewSaved": "Review saved.",
+    "saveReview": "Save",
+    "noProgrammeTitle": "Add a programme first",
+    "noProgrammeDescription": "Courses belong to a study programme. Add one in your profile, then try again.",
+    "deleteFileTitle": "Delete file?",
+    "deleteFileDescription": "It will be removed for everyone.",
+    "tabCourses": "Courses",
+    "tabProfessors": "Professors",
+    "tabMyMaterials": "My materials",
+    "searchMyMaterials": "Search my materials",
+    "programmes": "Programmes",
+    "discardChangesDescription": "Your unsaved changes will be lost.",
+    "discard": "Discard"
+  },
+  "language": {
+    "title": "Language"
   }
 }
