@@ -42,7 +42,9 @@ export function ModerationLog() {
           className="flex flex-wrap items-baseline gap-x-4 gap-y-1 border-b border-white-10 py-3 text-label"
         >
           <span className="min-w-0 flex-1">{t(moderationActionLabel(action.type))}</span>
-          <span className="font-mono text-detail text-secondary">{action.targetId}</span>
+          <span className="font-mono text-detail text-secondary max-lg:min-w-0 max-lg:break-all">
+            {action.targetId}
+          </span>
           <span className="shrink-0 text-detail text-secondary">
             {formatDate.format(new Date(action.createdAt))}
           </span>

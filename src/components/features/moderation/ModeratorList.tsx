@@ -18,7 +18,7 @@ export function ModeratorList() {
   const formatDate = new Intl.DateTimeFormat(i18n.resolvedLanguage, { dateStyle: 'medium' });
 
   return (
-    <div className="grid min-h-0 flex-1 gap-6 lg:grid-cols-2">
+    <div className="grid min-h-0 flex-1 gap-6 max-lg:grid-rows-[auto_minmax(0,1fr)] lg:grid-cols-2">
       <section className="flex min-h-0 flex-col gap-4">
         <h2 className="shrink-0 text-section font-semibold">{t('moderation.moderators')}</h2>
         {isPending ? (
