@@ -15,7 +15,7 @@ export function FinishLoginPage({ error }: FinishLoginPageProps) {
         // on a phone, the mobile app's finish screen: only a spinner on ink
         <div
           role="status"
-          aria-label="Finishing sign-in"
+          aria-label={t('apiState.loading')}
           className="fixed inset-0 z-20 grid place-items-center bg-ink lg:hidden"
         >
           <LoaderCircle size={24} aria-hidden className="text-white motion-safe:animate-spin" />
