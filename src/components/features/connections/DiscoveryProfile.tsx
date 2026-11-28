@@ -10,8 +10,9 @@ import { cn } from '@/ui/cn';
 import { authorName, studyLevelLabels, toast } from '@/utils';
 import { DiscoveryActions } from './DiscoveryActions';
 
+// On a phone the card fills the screen between the header and the tab bar, as in the app.
 const panelClass =
-  'relative flex min-h-100 flex-col overflow-hidden rounded-feature p-0 xl:h-[calc(100svh-9.5rem)] xl:min-h-140';
+  'relative flex min-h-100 flex-col overflow-hidden rounded-feature p-0 max-lg:h-[calc(100svh-17rem)] max-lg:rounded-2xl xl:h-[calc(100svh-9.5rem)] xl:min-h-140';
 
 export type DiscoveryProfileProps = { filters: ConnectionFilters };
 
@@ -82,7 +83,7 @@ export function DiscoveryProfile({ filters }: DiscoveryProfileProps) {
       )}
     >
       <CandidateCard card={card} />
-      <div className="relative shrink-0 px-6 pb-6">
+      <div className="relative shrink-0 px-6 pb-6 max-lg:px-3.5 max-lg:pb-3.5">
         <DiscoveryActions
           disabled={isActing}
           onPass={() => decide('pass')}
@@ -114,7 +115,7 @@ function CandidateCard({ card }: { card: DiscoveryCard }) {
       {/* The photo fills the whole panel, behind the text and the actions. */}
       <img src={photo} alt="" className="absolute inset-0 size-full object-cover" />
       <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-ink-90 via-ink-0 to-ink-0" />
-      <div className="relative flex min-h-0 flex-1 flex-col gap-4 p-6">
+      <div className="relative flex min-h-0 flex-1 flex-col gap-4 p-6 max-lg:gap-3 max-lg:p-3.5">
         <div className="flex shrink-0 items-start gap-4">
           {photos.length > 1 && (
             <div className="flex flex-1 gap-1 pt-2" aria-hidden="true">
@@ -155,28 +156,34 @@ function CandidateCard({ card }: { card: DiscoveryCard }) {
         )}
         <div className="mt-auto flex min-h-0 flex-col gap-4">
           <div className="shrink-0">
-            <h2 className="text-profile-name font-bold tracking-[-1.2px] wrap-anywhere">
+            <h2 className="text-profile-name font-bold tracking-[-1.2px] wrap-anywhere max-lg:truncate max-lg:text-lg max-lg:tracking-[-0.6px]">
               {card.age === null ? name : `${name}, ${card.age}`}
             </h2>
-            {meta && <p className="mt-1 text-base font-medium text-white-80">{meta}</p>}
+            {meta && (
+              <p className="mt-1 text-base font-medium text-white-80 max-lg:mt-0.5 max-lg:text-label">
+                {meta}
+              </p>
+            )}
           </div>
           {card.intent && (
             <div className="flex min-h-0 flex-col">
               <p className="mb-2 text-detail text-sky">{t('connections.iWantTo')}</p>
-              <p className="line-clamp-3 text-section leading-[1.4] font-medium wrap-anywhere">
+              <p className="line-clamp-3 text-section leading-[1.4] font-medium wrap-anywhere max-lg:line-clamp-2">
                 {card.intent}
               </p>
             </div>
           )}
           {card.bio && (
-            <p className="line-clamp-3 text-base wrap-anywhere text-white-80">{card.bio}</p>
+            <p className="line-clamp-3 text-base wrap-anywhere text-white-80 max-lg:line-clamp-2">
+              {card.bio}
+            </p>
           )}
           <UITags
             tags={card.interests}
             label={t('connections.interests')}
             highlight={(interest) => shared.has(interest.toLowerCase())}
             highlightLabel={t('connections.sharedInterest')}
-            className="-mx-6 shrink-0 px-6"
+            className="-mx-6 shrink-0 px-6 max-lg:-mx-3.5 max-lg:px-3.5"
           />
         </div>
       </div>

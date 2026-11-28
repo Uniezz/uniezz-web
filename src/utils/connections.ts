@@ -40,3 +40,42 @@ export const studyLevelLabels = {
   third_cycle: 'app.studyLevelThirdCycle',
   phd_school: 'app.studyLevelPhdSchool',
 } as const satisfies Record<StudyLevel, string>;
+
+// the phone Meet tabs, as in the app
+export const CONNECTION_MODES = [
+  ['friends', 'app.friends'],
+  ['studyBuddy', 'app.study'],
+  ['dating', 'app.dating'],
+] as const;
+
+// opened together with the birth date, so the deck has cards; dating needs an adult with a full profile
+export const DEFAULT_OPEN_TO = ['friends', 'studyBuddy'] as const;
+
+// the backend allows this many likes per 24 hours
+export const DAILY_LIKE_LIMIT = 50;
+
+// candidate action errors by HTTP status, as the app shows them
+export const CANDIDATE_ERRORS: Record<number, 'connections.cardExpired' | 'connections.likeLimit'> =
+  {
+    404: 'connections.cardExpired',
+    429: 'connections.likeLimit',
+  };
+
+// short university names for the phone Meet card, as in the app; others show their id
+export const UNIVERSITY_SHORT_NAMES: Record<string, string> = {
+  umcs: 'UMCS',
+  umlub: 'UM',
+  kul: 'KUL',
+  up: 'Przyrodniczy',
+  pollub: 'Politechnika Lubelska',
+  wspa: 'WSPA',
+  wsei: 'WSEI',
+};
+
+/** A calendar day ("2004-05-17") in local time, so the day never shifts. */
+export const toCalendarDay = (date: Date) =>
+  [
+    date.getFullYear(),
+    String(date.getMonth() + 1).padStart(2, '0'),
+    String(date.getDate()).padStart(2, '0'),
+  ].join('-');

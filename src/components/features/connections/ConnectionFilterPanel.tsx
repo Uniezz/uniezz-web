@@ -34,7 +34,11 @@ function FilterSection({ label, children }: { label: string; children: ReactNode
   );
 }
 
-export function ConnectionFilterPanel({ form, onApply }: ConnectionFilterPanelProps) {
+export function ConnectionFilterPanel({
+  form,
+  onApply,
+  className,
+}: ConnectionFilterPanelProps & { className?: string }) {
   const { t } = useTranslation();
   const preferencesFormId = useId();
   const { data: preferences } = useMyConnectionPreferences();
@@ -73,7 +77,7 @@ export function ConnectionFilterPanel({ form, onApply }: ConnectionFilterPanelPr
 
   return (
     // The fields scroll while the connection controls and Save stay visible.
-    <UIPanel className="flex min-h-0 flex-col gap-3 xl:absolute xl:inset-0">
+    <UIPanel className={cn('flex min-h-0 flex-col gap-3 xl:absolute xl:inset-0', className)}>
       <div className="flex shrink-0 flex-wrap items-center justify-between gap-3">
         <h2 className="flex min-h-9 items-center gap-2 text-section font-semibold">
           <SlidersHorizontal className="size-4.5 text-secondary" aria-hidden="true" />

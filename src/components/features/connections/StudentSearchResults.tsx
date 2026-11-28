@@ -8,9 +8,9 @@ import { gridComponents } from '@/ui/virtuoso';
 import { sampleProfile } from '@/utils';
 import { StudentCard } from './StudentCard';
 
-// Virtuoso renders whole rows, so the first item on screen always starts a row and odd children sit in the left column.
+// One column on a phone, as in the app. Virtuoso renders whole rows, so the first item on screen always starts a row and odd children sit in the left column.
 const gridClass =
-  '-mb-px grid md:grid-cols-2 [&>*]:border-b [&>*]:border-white-10 md:[&>*:nth-child(odd)]:border-r';
+  '-mb-px grid lg:grid-cols-2 [&>*]:border-b [&>*]:border-white-10 lg:[&>*:nth-child(odd)]:border-r';
 // Cards with an action sit in a narrower column, so they get the full width.
 const listClass = '-mb-px grid [&>*]:border-b [&>*]:border-white-10';
 

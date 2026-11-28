@@ -3,7 +3,8 @@ import { ChevronLeft } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import debounce from 'lodash/debounce';
 import { useTranslation } from 'react-i18next';
-import { StudentSearchResults } from '@/components/features/connections';
+import { StudentSearchResults, StudentsScreen } from '@/components/features/connections';
+import { usePhoneViewport } from '@/hooks';
 import { UITopbar } from '@/ui/components';
 import { optionalSearchStringSchema } from '@/schemas';
 
@@ -15,6 +16,29 @@ export const Route = createFileRoute('/_app/connections/students/')({
 });
 
 function StudentsPage() {
+  const isPhone = usePhoneViewport();
+  const { studentSearch = '' } = Route.useSearch();
+  const navigate = Route.useNavigate();
+  if (isPhone) {
+    return (
+      <StudentsScreen
+        initialQuery={studentSearch}
+        onQueryChange={(query) =>
+          void navigate({
+            search: (previous) => ({
+              ...previous,
+              studentSearch: query.slice(0, 120) || undefined,
+            }),
+            replace: true,
+          })
+        }
+      />
+    );
+  }
+  return <DesktopStudentsPage />;
+}
+
+function DesktopStudentsPage() {
   const { t } = useTranslation();
   const { studentSearch = '' } = Route.useSearch();
   const navigate = Route.useNavigate();

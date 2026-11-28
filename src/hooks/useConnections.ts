@@ -1,4 +1,10 @@
-import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  keepPreviousData,
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import type { ConnectionFilters, Discovery } from '@/@types';
 import {
   actOnCandidate,
@@ -13,10 +19,12 @@ import {
 import { captureAnalytics } from '@/utils';
 import i18n from '@/i18n';
 
-export function useDiscovery(filters: ConnectionFilters) {
+/** `keepPrevious`: the phone deck keeps the last card while new filters load, as in the app. */
+export function useDiscovery(filters: ConnectionFilters, { keepPrevious = false } = {}) {
   return useQuery({
     queryKey: ['connections', 'discover', filters],
     queryFn: () => discoverConnections(filters),
+    placeholderData: keepPrevious ? keepPreviousData : undefined,
   });
 }
 
