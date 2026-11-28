@@ -54,7 +54,7 @@ export const UICollapsingHeader = ({
       )}
       <h1
         className={cn(
-          'min-w-0 flex-1 origin-left truncate text-[30px] leading-[30px] font-bold tracking-[-1px] transition-transform motion-reduce:transition-none',
+          '-my-[0.2em] min-w-0 flex-1 origin-left truncate py-[0.2em] text-[30px] leading-[30px] font-bold tracking-[-1px] transition-transform motion-reduce:transition-none',
           isCompact && 'scale-92',
         )}
       >

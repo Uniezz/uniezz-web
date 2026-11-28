@@ -72,7 +72,7 @@ export function UITopbar({
         {/* on a phone, one line at the mobile app's 30px title size */}
         <h1
           className={cn(
-            'truncate text-[30px] leading-[30px] font-bold tracking-[-1px] lg:text-page-title lg:tracking-[-1.4px] lg:whitespace-normal',
+            '-my-[0.2em] truncate py-[0.2em] text-[30px] leading-[30px] font-bold tracking-[-1px] lg:text-page-title lg:tracking-[-1.4px] lg:whitespace-normal',
             'origin-left motion-safe:transition-transform max-lg:duration-200',
             compact && 'max-lg:scale-92',
           )}
