@@ -18,7 +18,7 @@ export const OtpCodeField = ({ value, onChange, cellCount, errorText }: OtpCodeF
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="relative flex w-full gap-2.5">
+      <div className="relative flex w-full gap-2.5 max-lg:gap-2">
         {Array.from({ length: cellCount }, (_, index) => {
           const digit = digits[index] ?? '';
           const isFocused =
@@ -29,9 +29,12 @@ export const OtpCodeField = ({ value, onChange, cellCount, errorText }: OtpCodeF
             <div
               key={index}
               className={cn(
-                'flex h-14 min-w-0 flex-1 items-center justify-center rounded-xl border bg-white/5 text-xl font-semibold text-white',
-                isFocused ? 'border-white/60' : 'border-white/10',
-                isEntered ? 'bg-white/10' : '',
+                // on a phone, the mobile app's cells: 58 high, 26px, white 3% fill, sky focus
+                'flex h-14 min-w-0 flex-1 items-center justify-center rounded-xl border bg-white/5 text-xl font-semibold text-white max-lg:h-14.5 max-lg:bg-white-3 max-lg:text-[26px]',
+                isFocused
+                  ? 'border-white/60 max-lg:border-[1.5px] max-lg:border-sky'
+                  : 'border-white/10 max-lg:border-white-12',
+                isEntered ? 'bg-white/10 max-lg:bg-white-3' : '',
               )}
             >
               {digit}
@@ -52,7 +55,12 @@ export const OtpCodeField = ({ value, onChange, cellCount, errorText }: OtpCodeF
         />
       </div>
       {/* Always rendered so an error appearing doesn't shift the layout. */}
-      <UIText as="p" id={errorId} color="error" className="min-h-lh pl-2">
+      <UIText
+        as="p"
+        id={errorId}
+        color="error"
+        className="min-h-lh pl-2 max-lg:pl-0 max-lg:text-sm max-lg:font-semibold"
+      >
         {errorText}
       </UIText>
     </div>

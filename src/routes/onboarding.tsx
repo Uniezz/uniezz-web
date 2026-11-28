@@ -1,4 +1,5 @@
 import { createFileRoute, redirect, useRouter } from '@tanstack/react-router';
+import { LoaderCircle } from 'lucide-react';
 
 import { ApiRequestError } from '@/api';
 import { myProfileQueryOptions } from '@/hooks';
@@ -22,12 +23,22 @@ export const Route = createFileRoute('/onboarding')({
   },
   loader: ({ context }) => context.queryClient.ensureQueryData(myProfileQueryOptions()),
   errorComponent: OnboardingError,
+  pendingComponent: OnboardingPending,
   component: OnboardingPage,
 });
 
 function OnboardingError() {
   const router = useRouter();
   return <UIQueryError retry={() => void router.invalidate()} />;
+}
+
+// the mobile app's loading onboarding: a spinner on the page
+function OnboardingPending() {
+  return (
+    <div role="status" className="grid min-h-svh place-items-center bg-ink">
+      <LoaderCircle size={24} aria-hidden className="text-white motion-safe:animate-spin" />
+    </div>
+  );
 }
 
 function OnboardingPage() {

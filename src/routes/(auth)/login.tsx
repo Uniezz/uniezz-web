@@ -1,9 +1,14 @@
-import { captureAnalytics, getInviteCode, startUniversityLogin } from '@/utils';
+import {
+  UNIVERSITY_SHORT_NAMES,
+  captureAnalytics,
+  getInviteCode,
+  startUniversityLogin,
+} from '@/utils';
 import { AuthPage } from '@/components';
 import { useUniversities } from '@/hooks';
-import { UIButton, UIRow, UIText } from '@/ui/components';
+import { UIButton, UIRow, UIRowGroup, UIText } from '@/ui/components';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ShieldCheck } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -36,51 +41,79 @@ function LoginPage() {
     navigate({ to: '/otp', search: { university: selectedUniversity.id } });
   };
 
+  const handleRetry = () => void refetch();
+
   return (
     <AuthPage topText={t('auth.login.title')} bottomText={t('auth.login.subtitle')}>
-      <div className="flex flex-col gap-1 rounded-2xl border border-white/10 bg-white/5 p-1.5">
+      {/* the desktop box; on a phone only its content shows */}
+      <div className="flex flex-col gap-1 rounded-2xl border border-white/10 bg-white/5 p-1.5 max-lg:contents">
         {isPending ? (
-          <UIText color="gray">Loading universities...</UIText>
+          <UIText color="gray">{t('auth.loadingUniversities')}</UIText>
         ) : isError ? (
-          <UIButton bg="secondary" onClick={() => void refetch()}>
-            Couldn’t load universities. Try again.
+          <UIButton bg="secondary" onClick={handleRetry}>
+            {t('auth.universitiesLoadError')}
           </UIButton>
         ) : universities.length === 0 ? (
-          <UIText color="gray">No universities available.</UIText>
+          <UIText color="gray">{t('auth.noUniversities')}</UIText>
         ) : (
-          <div className="flex flex-col gap-1">
-            {universities.map(({ id, name }) => (
-              <UIRow
-                key={id}
-                onClick={() => setSelectedId(id)}
-                selected={id === selectedUniversity?.id}
-                iconText={id.toUpperCase().slice(0, 3)}
-                iconSrc={`/universities/${id}.png`}
-                topText={id.toUpperCase()}
-                fullName={name}
-              />
-            ))}
-          </div>
+          <>
+            <div className="flex flex-col gap-1 max-lg:hidden">
+              {universities.map(({ id, name }) => (
+                <UIRow
+                  key={id}
+                  onClick={() => setSelectedId(id)}
+                  selected={id === selectedUniversity?.id}
+                  iconText={id.toUpperCase().slice(0, 3)}
+                  iconSrc={`/universities/${id}.png`}
+                  topText={id.toUpperCase()}
+                  fullName={name}
+                />
+              ))}
+            </div>
+            {/* Phone: the mobile app's inset row picker, scrolling on its own above the pinned button. */}
+            <div className="-mb-1 scrollbar-hidden max-h-[max(160px,calc(100svh-400px-env(safe-area-inset-top)-env(safe-area-inset-bottom)))] overflow-y-auto overscroll-contain lg:hidden">
+              <UIRowGroup label={t('auth.login.title')}>
+                {universities.map(({ id, name }) => (
+                  <UIRow
+                    key={id}
+                    appearance="inset"
+                    onClick={() => setSelectedId(id)}
+                    selected={id === selectedUniversity?.id}
+                    iconText={id.toUpperCase().slice(0, 3)}
+                    iconSrc={`/universities/${id}.png`}
+                    topText={UNIVERSITY_SHORT_NAMES[id] ?? name}
+                    fullName={name}
+                  />
+                ))}
+              </UIRowGroup>
+            </div>
+          </>
         )}
       </div>
       <UIButton
-        className="w-full"
+        className="w-full max-lg:min-h-14 max-lg:rounded-[14px] max-lg:motion-safe:animate-rise-in max-lg:motion-safe:[animation-delay:400ms] max-lg:[&>svg:first-child]:hidden"
         bg="gradient"
         leftIcon={ArrowRight}
         onClick={handleContinue}
         disabled={!selectedUniversity || isError}
       >
-        <UIText weight="semibold" className="text-ink">
-          {selectedUniversity
-            ? t('auth.login.continueWith', {
-                provider:
-                  selectedUniversity.authMethod === 'OTP'
-                    ? 'Email code'
-                    : selectedUniversity.authMethod,
-              })
-            : 'Continue'}
+        <ShieldCheck size={18} aria-hidden className="text-ink lg:hidden" />
+        <UIText
+          weight="semibold"
+          className="text-ink max-lg:min-w-0 max-lg:text-center max-lg:text-section"
+        >
+          {t('auth.login.continueWith', {
+            provider:
+              selectedUniversity?.authMethod === 'OTP'
+                ? t('auth.emailCode')
+                : (selectedUniversity?.authMethod ?? t('auth.university')),
+          })}
         </UIText>
       </UIButton>
+      {/* the mobile app's note under the button */}
+      <UIText size="sm" color="secondary" className="-mt-1.5 pb-2 text-center lg:hidden">
+        {t('auth.passwordPrivacy')}
+      </UIText>
     </AuthPage>
   );
 }

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormProvider } from 'react-hook-form';
 import { useNavigate } from '@tanstack/react-router';
-import { ArrowLeft, ArrowRight, Check } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, ChevronRight } from 'lucide-react';
 import type { components } from '@/@types/schema';
 import { AuthLayout } from '@/components/auth';
 import { useCompleteOnboarding, useMyProfile, useProfileForm } from '@/hooks';
@@ -56,8 +56,8 @@ export function OnboardingWizard({ profile }: { profile: components['schemas']['
     <FormProvider {...form}>
       <UIUnsavedChanges dirty={isDirty} />
       <AuthLayout aside={<OnboardingAside step={step} />}>
-        {/* Full panel height on desktop: the progress bar stays on top (below the language switcher) and the buttons at the bottom on every step. */}
-        <div className="flex flex-col gap-8 md:min-h-[calc(100svh-6rem)] md:pt-10">
+        {/* Full panel height (phone: the rest of the screen): the progress bar stays on top (below the language switcher on desktop) and the buttons at the bottom on every step. */}
+        <div className="flex flex-col gap-8 max-lg:flex-1 max-lg:gap-5 lg:min-h-[calc(100svh-6rem)] lg:pt-10">
           <div className="flex gap-1.5" aria-hidden>
             {ONBOARDING_STEPS.map((key, index) => (
               <span
@@ -82,7 +82,8 @@ export function OnboardingWizard({ profile }: { profile: components['schemas']['
             </form>
           )}
           {step === 2 && <StudyProgrammes universityId={profile.universityId} />}
-          <div className="mt-auto flex items-center gap-2">
+          {/* Phone: pinned to the screen bottom over the scrolling fields, as in the app. */}
+          <div className="mt-auto flex items-center gap-2 max-lg:sticky max-lg:bottom-0 max-lg:z-10 max-lg:-mx-5 max-lg:bg-ink-40 max-lg:px-5 max-lg:pt-3 max-lg:pb-[calc(env(safe-area-inset-bottom)+8px)] max-lg:backdrop-blur-xl">
             {step > 0 && (
               <UIButton
                 bg="ghost"
@@ -90,7 +91,8 @@ export function OnboardingWizard({ profile }: { profile: components['schemas']['
                 aria-label={t('app.back')}
                 disabled={isPending}
                 onClick={() => setStep(step - 1)}
-                className="size-11 p-0"
+                // on a phone, the mobile app's UIIconButton: 40, radius 12, glass
+                className="size-11 p-0 max-lg:size-10 max-lg:shrink-0 max-lg:rounded-xl max-lg:bg-surface-60 max-lg:backdrop-blur-xl"
               >
                 <ArrowLeft size={18} aria-hidden />
               </UIButton>
@@ -100,7 +102,7 @@ export function OnboardingWizard({ profile }: { profile: components['schemas']['
                 bg="transparent"
                 disabled={isPending}
                 onClick={goToFeed}
-                className="ml-auto text-secondary"
+                className="ml-auto text-secondary max-lg:min-w-0 max-lg:flex-1 max-lg:rounded-[14px] max-lg:px-3"
               >
                 {t('onboarding.skip')}
               </UIButton>
@@ -108,10 +110,20 @@ export function OnboardingWizard({ profile }: { profile: components['schemas']['
             <UIButton
               disabled={isPending}
               onClick={next}
-              className={cn((isLast || !canSkip) && 'ml-auto')}
+              className={cn(
+                'max-lg:min-w-0 max-lg:flex-1 max-lg:gap-1.5 max-lg:rounded-[14px] max-lg:px-3',
+                (isLast || !canSkip) && 'ml-auto',
+              )}
             >
               {isLast ? t('onboarding.finish') : t('onboarding.next')}
-              {isLast ? <Check size={18} aria-hidden /> : <ArrowRight size={18} aria-hidden />}
+              {isLast ? (
+                <Check size={18} aria-hidden />
+              ) : (
+                <>
+                  <ArrowRight size={18} aria-hidden className="max-lg:hidden" />
+                  <ChevronRight size={18} aria-hidden className="lg:hidden" />
+                </>
+              )}
             </UIButton>
           </div>
         </div>
