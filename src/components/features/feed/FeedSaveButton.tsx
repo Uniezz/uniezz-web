@@ -25,7 +25,7 @@ export function FeedSaveButton({ id, saved }: { id: string; saved: boolean }) {
       size="pill"
       className={cn(
         'min-h-0 gap-1.5 border-0 p-0 enabled:hover:bg-transparent',
-        saved && 'text-sky',
+        saved ? 'text-sky' : 'max-lg:text-white-60',
       )}
       disabled={isPending}
       aria-label={t(saved ? 'apiState.unsave' : 'apiState.save')}
@@ -35,7 +35,7 @@ export function FeedSaveButton({ id, saved }: { id: string; saved: boolean }) {
       <Bookmark
         size={16}
         fill={saved ? 'currentColor' : 'none'}
-        className={cn(popping && 'animate-like-pop')}
+        className={cn('max-lg:size-3.5', popping && 'animate-like-pop max-lg:animate-none')}
         onAnimationEnd={() => setPopping(false)}
         aria-hidden="true"
       />

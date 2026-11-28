@@ -3,6 +3,7 @@ import {
   Link,
   Outlet,
   useLocation,
+  useMatchRoute,
   useRouter,
   retainSearchParams,
 } from '@tanstack/react-router';
@@ -32,12 +33,14 @@ import {
   useCreateComment,
   useMyProfile,
   useLeaveWhenGone,
+  usePhoneViewport,
 } from '@/hooks';
 import { useNarrowViewport } from '@/hooks';
 import {
   apiErrorKey,
   authorName,
   feedPostNeighbours,
+  formatCompactNumber,
   isAuthorProfilePath,
   postUrl,
   toast,
@@ -48,7 +51,7 @@ import { FeedSaveButton } from '@/components/features/feed';
 import { sampleComment, samplePost } from '@/utils';
 import { FeedPostActions } from '@/components/features/feed';
 import { PostMedia } from '@/components/features/feed';
-import { PostDetails } from '@/components/features/feed';
+import { PostDetails, PostPhonePage } from '@/components/features/feed';
 import { commentSchema, feedPostSearchSchema } from '@/schemas';
 
 export const Route = createFileRoute('/_app/feed/post/$postId')({
@@ -56,12 +59,31 @@ export const Route = createFileRoute('/_app/feed/post/$postId')({
     feedPostSearchSchema.parse(search),
   search: { middlewares: [retainSearchParams(['postFilters', 'postSource'])] },
   remountDeps: ({ params }) => params.postId,
-  component: FeedPostPage,
+  component: PostRoute,
 });
+
+// Below lg, the mobile app's stack screen; from lg up, the desktop two-column page.
+function PostRoute() {
+  const isPhone = usePhoneViewport();
+  const { postId } = Route.useParams();
+  const { postFrom, postFilters = {}, postSource = 'posts' } = Route.useSearch();
+  const isEditing = useMatchRoute()({ to: '/feed/post/$postId/edit', params: { postId } });
+  if (!isPhone) return <FeedPostPage />;
+  // the edit screen is its own full screen on a phone, with nothing behind it
+  if (isEditing) return <Outlet />;
+  return (
+    <PostPhonePage
+      postId={postId}
+      postFrom={postFrom}
+      postFilters={postFilters}
+      postSource={postSource}
+    />
+  );
+}
 
 function FeedPostPage() {
   const { postId } = Route.useParams();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { postFrom, postFilters = {}, postSource = 'posts' } = Route.useSearch();
   const {
     data: loadedPost,
@@ -147,7 +169,7 @@ function FeedPostPage() {
   const author = (
     <>
       <UIAvatar size="md" imgSrc={post.author.avatarUrl ?? '/app/avatar.png'} alt="" />
-      <p className="text-label font-medium text-white">
+      <p className="text-label font-medium text-white max-md:truncate">
         {authorName(post.author) || t('apiState.student')}
       </p>
     </>
@@ -157,14 +179,14 @@ function FeedPostPage() {
       <div className="flex items-center justify-between gap-3">
         {/* Opened from the author's profile: Back already returns there, a link would only loop. */}
         {isAuthorProfilePath(postFrom, post.author.id, me?.id) ? (
-          <div className="flex w-fit items-center gap-3">{author}</div>
+          <div className="flex w-fit items-center gap-3 max-md:min-w-0">{author}</div>
         ) : (
           <Link
             to="/connections/students/$profileId"
             data-ph-capture-attribute-label="Open post author profile"
             params={{ profileId: post.author.id }}
             search={{ studentSearch: undefined, from: href }}
-            className="flex w-fit items-center gap-3 rounded-sm hover:underline focus-visible:outline-2 focus-visible:outline-blue"
+            className="flex w-fit items-center gap-3 rounded-sm hover:underline focus-visible:outline-2 focus-visible:outline-blue max-md:min-w-0"
           >
             {author}
           </Link>
@@ -179,7 +201,8 @@ function FeedPostPage() {
     </>
   );
   const postActions = (
-    <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+    // On a phone, the stats row closes the post card, as in the mobile app.
+    <div className="flex flex-wrap items-center gap-x-5 gap-y-2 max-md:border-t max-md:border-white-10 max-md:pt-3">
       <FeedLikeButton id={post.id} kind="post" liked={post.likedByMe} count={post.likesCount} />
       <FeedSaveButton id={post.id} saved={post.savedByMe} />
       <UICopyLink
@@ -200,33 +223,44 @@ function FeedPostPage() {
             type="button"
             onClick={() => void router.navigate({ href: postFrom ?? '/feed' })}
             data-ph-capture-attribute-label={postFrom ? t('app.back') : t('feed.title')}
-            className="mb-5 inline-flex min-h-11 items-center gap-2 px-2 py-2 text-label text-secondary transition-colors hover:text-white xl:absolute xl:top-0 xl:-left-32 xl:mb-0"
+            className="mb-5 inline-flex min-h-11 items-center gap-2 px-2 py-2 text-label text-secondary transition-colors hover:text-white max-md:mb-3 xl:absolute xl:top-0 xl:-left-32 xl:mb-0"
           >
             <ChevronLeft className="size-5" /> {postFrom ? t('app.back') : t('feed.title')}
           </button>
           <div inert={isPostPending} className="relative">
             <div className="grid min-w-0 items-stretch gap-5 md:h-[calc(100svh-9rem)] md:min-h-0 md:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.75fr)] xl:h-[calc(100svh-56px)]">
               {hasMedia ? (
-                <UIPanel className="overflow-hidden p-0">
+                <UIPanel className="overflow-hidden p-0 max-md:rounded-2xl">
                   <PostMedia images={post.mediaUrls ?? []} />
                 </UIPanel>
               ) : (
+                // On a phone, the post sits in the card above the comments instead.
                 <UIPanel
                   surface="tint"
-                  className="flex min-h-0 flex-col gap-4 bg-ink/20 p-6 backdrop-blur-[48px] sm:p-8"
+                  className="flex min-h-0 flex-col gap-4 bg-ink/20 p-6 backdrop-blur-[48px] max-md:hidden sm:p-8"
                 >
                   {postHeader}
                 </UIPanel>
               )}
+              {/* On a phone, as in the mobile app: the post is a card, the comments and their field sit on the page. */}
               <UIPanel
                 surface="tint"
-                className="flex min-h-0 min-w-0 flex-col bg-ink/20 p-0 backdrop-blur-[48px]"
+                className="flex min-h-0 min-w-0 flex-col bg-ink/20 p-0 backdrop-blur-[48px] max-md:overflow-visible max-md:rounded-none max-md:border-0 max-md:bg-transparent max-md:backdrop-blur-none"
               >
-                <div className="max-h-[45%] shrink-0 space-y-3 overflow-y-auto border-b border-white-10 p-5.5 sm:p-6">
-                  {hasMedia && postHeader}
+                <div className="max-h-[45%] shrink-0 space-y-3 overflow-y-auto border-b border-white-10 p-5.5 max-md:space-y-4 max-md:rounded-card max-md:border max-md:bg-white-5 max-md:p-2.5 md:p-6">
+                  {hasMedia ? postHeader : <div className="space-y-3 md:hidden">{postHeader}</div>}
                   {postActions}
                 </div>
-                <section aria-label={t('app.comments')} className="flex min-h-0 flex-1 flex-col">
+                <section
+                  aria-label={t('app.comments')}
+                  className="flex min-h-0 flex-1 flex-col max-md:order-last"
+                >
+                  <h2 className="mt-5 flex items-baseline gap-2 text-md font-semibold tracking-[-0.4px] md:hidden">
+                    {t('app.comments')}
+                    <span className="text-detail font-normal text-secondary">
+                      {formatCompactNumber(post.commentsCount, i18n.resolvedLanguage)}
+                    </span>
+                  </h2>
                   <Virtuoso
                     data={comments}
                     computeItemKey={(_, comment) => comment.id}
@@ -241,21 +275,22 @@ function FeedPostPage() {
                     aria-label={t('app.comments')}
                     className="min-h-0 flex-1"
                     itemContent={(_, comment) => (
-                      <div role="listitem" className="px-5.5 pt-5 sm:px-6">
+                      <div role="listitem" className="px-5.5 pt-5 max-md:px-1 max-md:pt-4 md:px-6">
                         <FeedCommentItem comment={comment} onReply={setReplyTo} />
                       </div>
                     )}
                   />
                   {areCommentsPending && !isPostPending && (
-                    <div className="p-5.5 sm:p-6">
+                    <div className="p-5.5 max-md:px-1 md:p-6">
                       <FeedCommentsSkeleton />
                     </div>
                   )}
                   {areCommentsError && <UIQueryError retry={() => void refetchComments()} />}
                 </section>
+                {/* On a phone, right under the post: the bottom tabs leave no room to pin it to the screen. */}
                 <form
                   onSubmit={sendComment}
-                  className="shrink-0 border-t border-white-10 p-4 sm:p-5"
+                  className="shrink-0 border-t border-white-10 p-4 max-md:border-t-0 max-md:px-0 max-md:pb-0 md:p-5"
                 >
                   {replyTo && (
                     <div className="mb-3 flex min-w-0 items-start gap-2 px-1">
@@ -287,7 +322,7 @@ function FeedPostPage() {
                   <div
                     className={cn(
                       inputStyles(),
-                      'relative py-1 pr-3 focus-within:border-white-10',
+                      'relative py-1 pr-3 focus-within:border-white-10 max-md:min-h-12 max-md:pl-4',
                       isCommentMultiline ? 'rounded-2xl' : 'rounded-full',
                     )}
                   >
@@ -313,7 +348,7 @@ function FeedPostPage() {
                       disabled={isCreatingComment}
                       aria-label={t('app.addComment')}
                       placeholder={t('app.addComment')}
-                      className="field-sizing-content max-h-28 min-h-6 min-w-0 flex-1 resize-none bg-transparent p-0 text-label leading-6 text-white outline-none placeholder:text-secondary"
+                      className="field-sizing-content max-h-28 min-h-6 min-w-0 flex-1 resize-none bg-transparent p-0 text-label leading-6 text-white outline-none placeholder:text-secondary max-md:text-base"
                     />
                     <UIEmojiPicker
                       disabled={isCreatingComment}

@@ -4,9 +4,10 @@ import { Masonry, useInfiniteLoader, type RenderComponentProps } from 'masonic';
 import { Skeleton } from 'skullet/react';
 import { useTranslation } from 'react-i18next';
 import { UIButton, UIEmpty, UIQueryError } from '@/ui/components';
-import { useFeedPosts } from '@/hooks';
-import { samplePost } from '@/utils';
+import { useFeedPosts, usePhoneViewport } from '@/hooks';
+import { FEED_SKELETON_COUNT, samplePost } from '@/utils';
 import { FeedPostCard } from './FeedPostCard';
+import { PostCardSkeleton } from './PostCardSkeleton';
 
 function FeedPostsSkeleton() {
   return (
@@ -28,6 +29,7 @@ export function FeedPosts({
   source?: FeedPostSource;
 }) {
   const { t } = useTranslation();
+  const isPhone = usePhoneViewport();
   const queryFilters = useMemo(
     () => ({ ...filters, q: search.trim() || undefined }),
     [filters, search],
@@ -69,20 +71,44 @@ export function FeedPosts({
     setLayout({ count: items.length, first, key: layout.key + Number(!appended) });
   }
 
+  // On a phone, the mobile app's list: placeholder cards, a centred error or empty state, infinite scroll.
+  if (isPhone) {
+    if (isPending) {
+      return (
+        <div className="flex flex-col gap-4">
+          {Array.from({ length: FEED_SKELETON_COUNT }, (_, index) => (
+            <PostCardSkeleton key={index} />
+          ))}
+        </div>
+      );
+    }
+    if (items.length === 0) {
+      return (
+        <div className="flex min-h-[50svh] items-center justify-center text-center">
+          {isError ? (
+            <UIQueryError retry={() => void refetch()} />
+          ) : (
+            !isPlaceholderData && <UIEmpty />
+          )}
+        </div>
+      );
+    }
+  }
+
   return (
     <Skeleton loading={isPending} label={t('apiState.loading')}>
       {isPending ? (
         <FeedPostsSkeleton />
       ) : (
-        <div className="space-y-6 transition-opacity duration-200 motion-safe:animate-rise-in">
+        <div className="space-y-6 transition-opacity duration-200 max-lg:space-y-4 lg:motion-safe:animate-rise-in">
           {items.length > 0 ? (
             <Masonry
               key={layout.key}
               items={items}
               itemKey={(post) => post.id}
               columnWidth={300}
-              columnGutter={24}
-              maxColumnCount={3}
+              columnGutter={isPhone ? 16 : 24}
+              maxColumnCount={isPhone ? 1 : 3}
               render={renderPost}
               onRender={maybeLoadMore}
               role="list"
@@ -92,7 +118,8 @@ export function FeedPosts({
             !isError && !isPlaceholderData && <UIEmpty />
           )}
           {isError && <UIQueryError retry={() => void refetch()} />}
-          {hasNextPage && (
+          {isPhone && isFetchingNextPage && <PostCardSkeleton />}
+          {hasNextPage && !isPhone && (
             <UIButton
               bg="secondary"
               disabled={isFetchingNextPage}

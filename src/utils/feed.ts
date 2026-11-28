@@ -102,3 +102,55 @@ export function feedPostNeighbours(id: string, pages: FeedPostsPage[] | undefine
     nextId: index >= 0 ? (ids[index + 1] ?? null) : null,
   };
 }
+
+/** The mobile app's feed type chips, in its order; '' is "All". */
+export const FEED_PHONE_TYPES = [
+  ['', 'app.all'],
+  ['announcement', 'feed.news'],
+  ['question', 'app.question'],
+  ['event', 'app.event'],
+] as const;
+
+/** The mobile app's date chips: preset, label and how many days back from today's midnight. */
+export const FEED_PHONE_DATE_PRESETS = [
+  ['', 'feed.anyTime', null],
+  ['today', 'feed.today', 0],
+  ['week', 'feed.lastWeek', 6],
+  ['month', 'feed.lastMonth', 29],
+] as const;
+
+/** Midnight `days` ago, so the value (and the query key) stays the same all day. */
+export function midnightDaysAgo(days: number, now = new Date()) {
+  const midnight = new Date(now);
+  midnight.setHours(0, 0, 0, 0);
+  midnight.setDate(midnight.getDate() - days);
+  return midnight.toISOString();
+}
+
+/** An event counts as live from its start until 2 hours later. */
+export function isLiveEvent(eventDate: string | null | undefined, now = Date.now()) {
+  const start = eventDate ? new Date(eventDate).getTime() : NaN;
+  return start <= now && now < start + 2 * 60 * 60 * 1000;
+}
+
+export function eventTime(eventDate: string, locale: string) {
+  const date = new Date(eventDate);
+  return Number.isNaN(date.getTime())
+    ? ''
+    : new Intl.DateTimeFormat(locale, { hour: '2-digit', minute: '2-digit' }).format(date);
+}
+
+/** Scroll offset after which the mobile app's headers turn compact. */
+export const HEADER_COMPACT_OFFSET = 24;
+/** Placeholder cards while the feed loads, as in the mobile app. */
+export const FEED_SKELETON_COUNT = 3;
+/** Load the next feed page when the open post is this close to the end, as the app's pager. */
+export const POST_PAGER_PREFETCH = 5;
+/** Horizontal swipe distance that changes the post. */
+export const POST_SWIPE_DISTANCE = 60;
+/** The mobile app's post type segments in the composer, in its order. */
+export const POST_TYPE_SEGMENTS = [
+  ['question', 'app.question'],
+  ['announcement', 'feed.news'],
+  ['event', 'app.event'],
+] as const;

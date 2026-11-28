@@ -40,7 +40,7 @@ export function FeedCommentItem({
     <article className="flex items-start gap-3 motion-safe:animate-rise-in">
       <UIAvatar size="md" imgSrc={comment.author?.avatarUrl ?? '/app/avatar.png'} alt="" />
       <div className="min-w-0 flex-1">
-        <strong className="block text-label font-semibold">
+        <strong className="block text-label font-semibold max-lg:truncate">
           {!comment.deleted && comment.author ? (
             <Link
               to="/connections/students/$profileId"

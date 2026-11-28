@@ -35,7 +35,9 @@ export function FeedLikeButton({
       size="pill"
       className={cn(
         'min-h-0 gap-1.5 border-0 p-0 enabled:hover:bg-transparent',
-        liked && 'text-danger',
+        // on a phone, the mobile app's muted heart and 13px count
+        'max-lg:gap-1.25 max-lg:text-detail max-lg:font-semibold',
+        liked ? 'text-danger' : 'max-lg:text-white-60',
       )}
       disabled={isPending}
       aria-label={`${t(liked ? 'apiState.unlike' : 'apiState.like')} (${new Intl.NumberFormat(i18n.resolvedLanguage).format(count)})`}
@@ -45,7 +47,10 @@ export function FeedLikeButton({
       <Heart
         size={16}
         fill={liked || popping ? 'currentColor' : 'none'}
-        className={cn(popping && 'animate-like-pop text-danger')}
+        className={cn(
+          'max-lg:size-3.5',
+          popping && 'animate-like-pop text-danger max-lg:[animation-duration:210ms]',
+        )}
         onAnimationEnd={() => setPopping(false)}
         aria-hidden="true"
       />{' '}

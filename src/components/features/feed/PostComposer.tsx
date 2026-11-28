@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { FeedPost } from '@/@types';
-import { useMyProfile } from '@/hooks';
+import { useMyProfile, usePhoneViewport } from '@/hooks';
 import { parsePostTagDraft, postSchema, postTagAdditionSchema, type PostSchema } from '@/schemas';
 import { postFormDefaults } from '@/utils';
 import {
@@ -23,18 +23,22 @@ import { PostPhotoField } from './PostPhotoField';
 import { PostTagsField } from './PostTagsField';
 import { PostTypeSelector } from './PostTypeSelector';
 import { PostAudienceSelector } from './PostAudienceSelector';
+import { PostComposerScreen } from './PostComposerScreen';
 
-export function PostComposer({
-  post,
-  isPending,
-  onSubmit,
-  onCancel,
-}: {
+type PostComposerProps = {
   post?: FeedPost;
   isPending: boolean;
   onSubmit: (values: PostSchema) => Promise<void>;
   onCancel: () => void;
-}) {
+};
+
+// Below lg, the mobile app's full-screen composer; from lg up, the side panel.
+export function PostComposer(props: PostComposerProps) {
+  const isPhone = usePhoneViewport();
+  return isPhone ? <PostComposerScreen {...props} /> : <PostComposerDialog {...props} />;
+}
+
+function PostComposerDialog({ post, isPending, onSubmit, onCancel }: PostComposerProps) {
   const { data: author, isError: profileError, refetch: refetchProfile } = useMyProfile();
   const { t } = useTranslation();
   const [readingImage, setReadingImage] = useState(false);
