@@ -62,11 +62,16 @@ export function FaqProposalDialog({ open, onClose }: { open: boolean; onClose: (
         onOpenChange={handleOpenChange}
         title={t(isPhone ? 'faq.propose' : 'faq.proposeTitle')}
         description={isPhone ? undefined : t('faq.proposeDescription')}
+        // the footer below pads the sheet's bottom itself, as the other form sheets
+        className="max-lg:pb-0"
         footer={
           isPhone ? (
-            <UIButton type="submit" form={formId} disabled={isPending} className="w-full">
-              {t('faq.proposalSubmit')}
-            </UIButton>
+            // pinned below the fields over a surface gradient, as the app's UIFormSheet
+            <div className="sticky bottom-0 z-10 -mx-4 mt-2 flex bg-linear-to-t from-surface from-70% to-surface/0 px-4 pt-4 pb-[max(16px,env(safe-area-inset-bottom))]">
+              <UIButton type="submit" form={formId} disabled={isPending} className="flex-1">
+                {t('faq.proposalSubmit')}
+              </UIButton>
+            </div>
           ) : (
             <UIDialogFooter>
               <UIButton bg="secondary" onClick={onClose} disabled={isPending}>
@@ -81,7 +86,7 @@ export function FaqProposalDialog({ open, onClose }: { open: boolean; onClose: (
       >
         <form
           id={formId}
-          className="flex min-h-0 flex-1 flex-col gap-4 max-lg:gap-3.5"
+          className="flex min-h-0 flex-1 flex-col gap-4 max-lg:mt-4 max-lg:gap-3.5"
           onSubmit={handleSubmit(submit)}
         >
           {isPhone && <p className="text-detail text-secondary">{t('faq.proposalDescription')}</p>}
