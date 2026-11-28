@@ -32,7 +32,7 @@ export function CommentComposer({
   return (
     <form
       onSubmit={handleSubmit}
-      className="fixed inset-x-0 bottom-0 z-30 flex flex-col gap-2 bg-ink px-4 pt-2 pb-[max(12px,env(safe-area-inset-bottom))]"
+      className="sticky bottom-0 z-30 -mx-4 mt-auto -mb-4 flex flex-col gap-2 bg-ink px-4 pt-2 pb-[max(12px,env(safe-area-inset-bottom))]"
     >
       {banner && (
         <div className="flex items-center gap-2 px-1">

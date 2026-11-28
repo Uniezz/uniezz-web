@@ -244,9 +244,9 @@ export function PostPhonePage({
       onTouchCancel={handleTouchEnd}
       onTouchMove={handleTouchMove}
       onWheel={handleWheel}
-      // fills the screen under a short post, so a swipe in the empty space still moves posts;
-      // 40px is main's padding above and below on this tab-less screen
-      className="min-h-[calc(100svh-40px)]"
+      // fills the screen under a short post, so a swipe in the empty space still moves posts and the
+      // composer sits at the bottom; 40px is main's padding above and below on this tab-less screen
+      className="flex min-h-[calc(100svh-40px)] flex-col"
     >
       <span data-hide-bottom-tabs hidden />
       <header className="scroll-blur sticky top-0 z-30 -mx-4 -mt-6 mb-3 px-4 pt-[calc(8px+env(safe-area-inset-top))]">
