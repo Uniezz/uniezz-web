@@ -1,11 +1,6 @@
 import { BrandBackground, UIBottomTabs, UIDialog, UISidebar } from '@/ui/components';
-import {
-  Outlet,
-  createFileRoute,
-  Link,
-  redirect,
-  retainSearchParams,
-} from '@tanstack/react-router';
+import { Outlet, createFileRoute, redirect, retainSearchParams } from '@tanstack/react-router';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMyProfile } from '@/hooks';
 import { myProfileQueryOptions } from '@/hooks';
@@ -64,10 +59,15 @@ function AppLayout() {
   const { t } = useTranslation();
   const narrow = useNarrowViewport();
   const { data: profile } = useMyProfile();
-  const blocked = shouldBlockMobile(
-    isMobileDevice(navigator.userAgent, navigator.platform, navigator.maxTouchPoints),
-    narrow,
-  );
+  // a phone is offered the app after onboarding; closing the offer keeps using the site here
+  const [isAppOfferClosed, setIsAppOfferClosed] = useState(false);
+  const isAppOfferOpen =
+    !isAppOfferClosed &&
+    shouldBlockMobile(
+      isMobileDevice(navigator.userAgent, navigator.platform, navigator.maxTouchPoints),
+      narrow,
+    );
+  const handleAppOfferOpenChange = (open: boolean) => setIsAppOfferClosed(!open);
   return (
     <>
       <BrandBackground variant="app" className="app-shell-background flex min-h-svh">
@@ -83,24 +83,17 @@ function AppLayout() {
           counts={{ '/chat': 2, '/connections': 2 }}
         />
         <main className="min-w-0 flex-1 px-4 py-6 pb-28 sm:px-7 lg:px-10 lg:py-7 lg:pb-7">
-          {blocked ? null : <Outlet />}
+          <Outlet />
           <UIBottomTabs />
         </main>
         <UIDialog
-          open={blocked}
-          dismissible={false}
+          open={isAppOfferOpen}
+          onOpenChange={handleAppOfferOpenChange}
           title={t('app.mobileTitle')}
           description={t('app.mobileDescription')}
           className="bg-blue"
         >
           <AppStoreLinks />
-          <Link
-            to="/"
-            data-ph-capture-attribute-label={t('app.home')}
-            className="mt-6 inline-block text-sm underline"
-          >
-            {t('app.home')}
-          </Link>
         </UIDialog>
       </BrandBackground>
     </>
