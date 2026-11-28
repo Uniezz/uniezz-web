@@ -28,11 +28,12 @@ export function useProfileSearch(name: string) {
   });
 }
 
-export function usePublicProfile(id: string) {
+export function usePublicProfile(id: string, isEnabled = true) {
   return useQuery({
     queryKey: ['profiles', id],
     queryFn: () => getPublicProfile(id),
     retry: retryUnlessNotFound,
+    enabled: isEnabled,
   });
 }
 
@@ -41,6 +42,9 @@ export function useFollowProfile() {
   const queryClient = useQueryClient();
   return useMutation({
     meta: { analyticsAction: 'profile_follow' },
+    mutationKey: ['profileFollow'],
+    // repeated taps run in order, as the mobile app's optimistic toggles
+    scope: { id: 'profileFollow' },
     mutationFn: ({ id, follow }: { id: string; follow: boolean }) =>
       follow ? followProfile(id) : unfollowProfile(id),
     onMutate: async ({ id, follow }) => {
@@ -61,9 +65,13 @@ export function useFollowProfile() {
       queryClient.setQueryData(['profiles', id], context?.previous);
     },
     onSettled: (_data, _error, { id }) => {
-      void queryClient.invalidateQueries({ queryKey: ['profiles', id] });
-      void queryClient.invalidateQueries({ queryKey: ['profile', 'me'] });
-      void queryClient.invalidateQueries({ queryKey: ['follows'] });
+      // only the last queued tap refetches, so a refetch never flips the button back
+      if (queryClient.isMutating({ mutationKey: ['profileFollow'] }) > 1) return;
+      return Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['profiles', id] }),
+        queryClient.invalidateQueries({ queryKey: ['profile', 'me'] }),
+        queryClient.invalidateQueries({ queryKey: ['follows'] }),
+      ]);
     },
   });
 }

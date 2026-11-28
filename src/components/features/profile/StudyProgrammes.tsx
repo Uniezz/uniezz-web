@@ -134,6 +134,8 @@ function ProgrammeCard({
       </UIPanel>
       <UIDialog
         placement="right"
+        // a bottom sheet on a phone, as the mobile app's form sheets
+        sheet
         open={open}
         onOpenChange={(next) => {
           if (!next) closeEditor();

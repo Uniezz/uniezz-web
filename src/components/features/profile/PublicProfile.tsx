@@ -43,7 +43,7 @@ export function PublicProfile({ profile }: PublicProfileProps) {
           src="/favicon.png"
           alt=""
           aria-hidden="true"
-          className="absolute top-3 right-3 size-12 rounded-xl object-contain sm:top-4 sm:right-4"
+          className="absolute top-3 right-3 size-12 rounded-xl object-contain max-lg:hidden sm:top-4 sm:right-4"
         />
         <UICopyLink
           url={profileUrl(profile.id)}
@@ -52,7 +52,7 @@ export function PublicProfile({ profile }: PublicProfileProps) {
           className="absolute top-3 left-3 z-10 size-10 justify-center rounded-full border border-white-10 bg-surface/75 text-white backdrop-blur-md enabled:hover:bg-surface sm:top-4 sm:left-4"
         />
         {me && !isMe && (
-          <div className="absolute right-2 bottom-2 z-10 flex flex-col items-end gap-2 rounded-xl border border-white-10 bg-surface/75 px-3 py-2 backdrop-blur-md sm:right-3 sm:bottom-3">
+          <div className="absolute right-2 bottom-2 z-10 flex flex-col items-end gap-2 rounded-xl border border-white-10 bg-surface/75 px-3 py-2 backdrop-blur-md max-lg:top-3 max-lg:right-3 max-lg:bottom-auto lg:right-3 lg:bottom-3">
             <ReportButton targetType="user" targetId={profile.id} danger />
             {isStaff(me) && <BanButton userId={profile.id} inline />}
             {isAdmin(me) && <GrantModeratorButton userId={profile.id} icon={ShieldPlus} inline />}
@@ -69,25 +69,26 @@ export function PublicProfile({ profile }: PublicProfileProps) {
         )}
       </div>
       <div className="px-4 pb-6 sm:px-8 sm:pb-8">
-        <div className="relative grid grid-cols-[auto_minmax(0,1fr)] items-end gap-x-5 sm:gap-x-6">
-          <div className="-mt-10 self-start rounded-full sm:row-span-2 sm:-mt-12">
+        {/* On a phone the avatar and name centre under the cover, as in the app's profile hero. */}
+        <div className="relative grid grid-cols-[auto_minmax(0,1fr)] items-end gap-x-5 max-lg:grid-cols-1 max-lg:justify-items-center lg:gap-x-6">
+          <div className="-mt-10 self-start rounded-full max-lg:-mt-14 max-lg:self-center lg:row-span-2 lg:-mt-12">
             <img
               src={profile.avatarUrl ?? '/app/avatar.png'}
               alt=""
-              className="size-24 rounded-full bg-surface object-cover sm:size-32"
+              className="size-24 rounded-full bg-surface object-cover max-lg:size-28 lg:size-32"
             />
           </div>
-          <div className="col-span-2 mt-4 min-w-0 space-y-3 sm:col-span-1 sm:col-start-2 sm:row-start-2 sm:mt-2">
+          <div className="col-span-2 mt-4 min-w-0 space-y-3 max-lg:col-span-1 max-lg:w-full max-lg:text-center lg:col-span-1 lg:col-start-2 lg:row-start-2 lg:mt-2">
             <h1
               title={authorName(profile) || undefined}
-              className="line-clamp-2 text-xxl leading-tight font-semibold tracking-tight wrap-anywhere sm:text-4xl"
+              className="line-clamp-2 text-xxl leading-tight font-semibold tracking-tight wrap-anywhere lg:text-4xl"
             >
               {authorName(profile) || t('apiState.student')}
               {profile.age !== null && (
                 <span className="font-normal text-secondary">, {profile.age}</span>
               )}
             </h1>
-            <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-label leading-relaxed text-white-80">
+            <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-label leading-relaxed text-white-80 max-lg:justify-center">
               <UIUniversityLogo universityId={profile.universityId} className="shrink-0" />
               <span className="min-w-0 wrap-anywhere">{university}</span>
               {profile.gender && (
@@ -106,12 +107,14 @@ export function PublicProfile({ profile }: PublicProfileProps) {
                 </>
               )}
             </p>
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-3 pt-1">
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-3 pt-1 max-lg:justify-between max-lg:text-left">
               <ProfileFollows
                 profileId={profile.id}
                 name={authorName(profile) || t('apiState.student')}
                 followersCount={profile.followersCount}
                 followingCount={profile.followingCount}
+                // On a phone each count sits on one line with its label, as in the app.
+                className="max-lg:gap-4 max-lg:[&>button]:flex max-lg:[&>button]:items-baseline max-lg:[&>button]:gap-1 max-lg:[&>button>span:first-child]:text-sm"
               />
               {me && !isMe && <FollowButton profile={profile} />}
             </div>

@@ -3,11 +3,16 @@ import { ChevronLeft } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
 import { useTranslation } from 'react-i18next';
 import { Skeleton } from 'skullet/react';
-import { useLeaveWhenGone, usePublicProfile } from '@/hooks';
+import { useLeaveWhenGone, usePhoneViewport, usePublicProfile } from '@/hooks';
 import { UIQueryError } from '@/ui/components';
 import { PublicProfile } from '@/components/features/profile';
 import { ProfilePosts } from '@/components/features/profile';
-import { ProfileStickyBar } from '@/components/features/profile';
+import {
+  ProfilePhoneError,
+  ProfilePhoneSkeleton,
+  ProfileStickyBar,
+  StudentProfilePhone,
+} from '@/components/features/profile';
 import { samplePublicProfile } from '@/utils';
 import { optionalSearchStringSchema, returnPathSchema } from '@/schemas';
 
@@ -38,6 +43,12 @@ function StudentProfilePage() {
   // The bar shows once the card has left the viewport through the top, not the bottom.
   const { ref: card, entry } = useInView();
   const cardAbove = entry ? !entry.isIntersecting && entry.boundingClientRect.top < 0 : false;
+  const isPhone = usePhoneViewport();
+  if (isPhone) {
+    if (isError) return <ProfilePhoneError retry={refetch} title={t('students.profile')} />;
+    if (isPending) return <ProfilePhoneSkeleton title={t('students.profile')} />;
+    return <StudentProfilePhone profile={profile} />;
+  }
   if (isError) {
     return (
       <div className="relative mx-auto max-w-5xl space-y-5">

@@ -105,8 +105,12 @@ export function ProfileIdentity({
     }
   }
   return (
-    <div className="space-y-4">
-      <UIPanel surface="tint" className="relative overflow-hidden rounded-profile text-center">
+    // on a phone the two panels join the editor's grid, so it can order them as the app does
+    <div className="space-y-4 max-lg:contents">
+      <UIPanel
+        surface="tint"
+        className="relative overflow-hidden rounded-profile text-center max-lg:order-1 max-lg:rounded-card max-lg:py-6"
+      >
         {currentBanner && (
           <>
             <img src={currentBanner} alt="" className="absolute inset-0 size-full object-cover" />
@@ -150,7 +154,7 @@ export function ProfileIdentity({
           )}
         </div>
         <div className="relative">
-          <div className="relative mx-auto mb-4.5 size-22">
+          <div className="relative mx-auto mb-4.5 size-22 max-lg:mb-5 max-lg:size-28">
             <img
               src={preview || photo}
               alt={`${defaultValues?.first} ${defaultValues?.last}`}
@@ -165,7 +169,7 @@ export function ProfileIdentity({
             >
               <span
                 className={cn(
-                  'inline-flex size-7 items-center justify-center rounded-full border border-white-10 bg-surface/80 text-secondary backdrop-blur-[12px] transition-colors',
+                  'inline-flex size-7 items-center justify-center rounded-full border border-white-10 bg-surface/80 text-secondary backdrop-blur-[12px] transition-colors max-lg:size-8',
                   !disabled && !readingImage && 'group-hover:text-white',
                 )}
               >
@@ -184,10 +188,10 @@ export function ProfileIdentity({
               />
             </label>
           </div>
-          <h2 className="text-[21px] leading-[1.2] font-bold">
+          <h2 className="text-[21px] leading-[1.2] font-bold max-lg:text-[34px] max-lg:leading-[1.1] max-lg:font-semibold max-lg:tracking-[-1.2px] max-lg:wrap-anywhere">
             {defaultValues?.first} {defaultValues?.last}
           </h2>
-          <p className="mt-1.25 text-detail font-medium text-balance text-secondary">
+          <p className="mt-1.25 text-detail font-medium text-balance text-secondary max-lg:mt-2 max-lg:text-label">
             <UIUniversityLogo
               universityId={universityId}
               size="xs"
@@ -216,7 +220,7 @@ export function ProfileIdentity({
           )}
         </div>
       </UIPanel>
-      <UIPanel surface="tint" className="rounded-profile p-4.5">
+      <UIPanel surface="tint" className="rounded-profile p-4.5 max-lg:order-4">
         <h2 className="mb-3.5 text-base font-bold">{t('app.profileVisibility')}</h2>
         <div className="space-y-3">
           <UISwitch
@@ -236,7 +240,9 @@ export function ProfileIdentity({
           />
         </div>
         <div className="mt-4 flex items-center justify-between gap-3 border-t border-white-10 pt-4">
-          <span className="text-detail font-semibold">{t('topbar.changeLanguage')}</span>
+          <span className="text-detail font-semibold max-lg:min-w-0">
+            {t('topbar.changeLanguage')}
+          </span>
           <UILanguageSwitcher onChange={updateLanguage} />
         </div>
         <UIButton

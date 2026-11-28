@@ -73,6 +73,8 @@ export function AddProgramme({
       </UIButton>
       <UIDialog
         placement="right"
+        // a bottom sheet on a phone, as the mobile app's form sheets
+        sheet
         open={open}
         onOpenChange={setOpen}
         title={t('app.addProgramme')}

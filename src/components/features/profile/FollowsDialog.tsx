@@ -56,7 +56,7 @@ export function FollowsDialog({
         onClick={(event) => {
           if ((event.target as HTMLElement).closest('a')) onClose();
         }}
-        className="scrollbar-hidden -mx-6 min-h-0 flex-1 overflow-y-auto"
+        className="-mx-6 scrollbar-hidden min-h-0 flex-1 overflow-y-auto"
       >
         {scrollParent &&
           (list === 'followers' ? (

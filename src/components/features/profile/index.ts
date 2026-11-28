@@ -9,3 +9,6 @@ export * from './StudyProgrammes';
 export * from './FollowButton';
 export * from './FollowsDialog';
 export * from './ProfileFollows';
+export * from './OwnProfilePhone';
+export * from './StudentProfilePhone';
+export * from './FollowsScreen';
