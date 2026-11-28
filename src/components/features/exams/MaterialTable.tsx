@@ -6,6 +6,7 @@ import { useSearch } from '@tanstack/react-router';
 import type { StudyFile } from '@/@types';
 import { fixedTable, tableCellTextClass, tableHeaderCellClass } from '@/ui/virtuoso';
 import { PreviewStudyFileButton } from './PreviewStudyFileButton';
+import { phoneTableClass } from './phoneTable';
 import { studyFileTypeLabels, toast } from '@/utils';
 import { useDeleteStudyFile, useMyProfile, useStudyFiles } from '@/hooks';
 import { UIButton, UIDialog, UIEmpty, UIPanel, UIQueryError } from '@/ui/components';
@@ -26,13 +27,13 @@ export function MaterialTable() {
   const date = new Intl.DateTimeFormat(i18n.language, { dateStyle: 'medium' });
 
   return (
-    <UIPanel className="flex min-h-0 flex-1 flex-col overflow-hidden p-2">
+    <UIPanel className="flex min-h-0 flex-1 flex-col overflow-hidden p-2 max-lg:rounded-2xl max-lg:p-0">
       {!isPending && !isError && files.length === 0 ? (
         <UIEmpty />
       ) : (
         <div className="min-h-0 min-w-0 flex-1 overflow-x-auto">
-          <div className="flex h-full min-w-[640px] flex-col">
-            <table className="w-full table-fixed text-left text-body">
+          <div className="flex h-full min-w-[640px] flex-col max-lg:min-w-0">
+            <table className="w-full table-fixed text-left text-body max-lg:hidden">
               <colgroup>
                 {columnWidths.map((width, index) => (
                   <col key={index} style={width ? { width } : undefined} />
@@ -56,20 +57,22 @@ export function MaterialTable() {
               endReached={() => {
                 if (hasNextPage && !isFetchingNextPage && !isError) void fetchNextPage();
               }}
-              className="scrollbar-gray min-h-0 flex-1"
+              className={`scrollbar-gray min-h-0 flex-1 ${phoneTableClass}`}
               components={tableComponents}
               aria-label={t('app.myUploads')}
               itemContent={(_, file) => (
                 <>
                   <td className="border-t border-white-5 px-4 py-3">
-                    <div className="flex items-center gap-3">
+                    <div className="flex min-w-0 items-center gap-3">
                       <FileText size={18} className="shrink-0 text-secondary" aria-hidden="true" />
-                      <span className="font-semibold">{file.title}</span>
+                      <span className="min-w-0 font-semibold max-lg:truncate">{file.title}</span>
                     </div>
                   </td>
-                  <td className={tableCellTextClass}>{t(studyFileTypeLabels[file.type])}</td>
+                  <td className={`${tableCellTextClass} max-lg:truncate`}>
+                    {t(studyFileTypeLabels[file.type])}
+                  </td>
                   <td className={tableCellTextClass}>{date.format(new Date(file.createdAt))}</td>
-                  <td className="border-t border-white-5 px-4 py-3">
+                  <td className="border-t border-white-5 px-4 py-3 max-lg:col-span-2">
                     <div className="flex justify-end gap-2">
                       <PreviewStudyFileButton file={file} />
                       {me?.id === file.authorId && (

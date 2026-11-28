@@ -62,6 +62,7 @@ export function UploadMaterial({ courseId, onClose }: UploadMaterialProps) {
     <UIDialog
       open
       placement="right"
+      className="max-lg:p-4"
       dismissible={!isPending}
       onOpenChange={(open) => {
         if (!open) onClose();
@@ -128,10 +129,15 @@ export function UploadMaterial({ courseId, onClose }: UploadMaterialProps) {
             </fieldset>
           </fieldset>
           <UIDialogFooter>
-            <UIButton bg="secondary" disabled={isPending} onClick={() => onClose()}>
+            <UIButton
+              bg="secondary"
+              className="max-lg:hidden"
+              disabled={isPending}
+              onClick={() => onClose()}
+            >
               {t('app.cancel')}
             </UIButton>
-            <UIButton type="submit" disabled={isPending}>
+            <UIButton type="submit" disabled={isPending} className="max-lg:flex-1">
               {t('exams.action')}
             </UIButton>
           </UIDialogFooter>

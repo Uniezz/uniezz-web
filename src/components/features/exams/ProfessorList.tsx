@@ -7,6 +7,7 @@ import { useProfessors, useRateProfessor, useUniversities } from '@/hooks';
 import { UIButton, UIEmpty, UIPanel, UIQueryError } from '@/ui/components';
 import { fixedTable, tableCellTextClass, tableHeaderCellClass } from '@/ui/virtuoso';
 import { RatingInput } from './RatingInput';
+import { phoneTableClass } from './phoneTable';
 import { ProfessorReviewsDialog } from './ProfessorReviewsDialog';
 
 // Name columns share the spare width; the rest fit their longest label in every language.
@@ -24,13 +25,13 @@ export function ProfessorList() {
   const professors = data?.pages.flatMap((page) => page.items ?? []) ?? [];
 
   return (
-    <UIPanel className="flex min-h-0 flex-1 flex-col overflow-hidden p-2">
+    <UIPanel className="flex min-h-0 flex-1 flex-col overflow-hidden p-2 max-lg:rounded-2xl max-lg:p-0">
       {!isPending && !isError && professors.length === 0 ? (
         <UIEmpty />
       ) : (
         <div className="min-h-0 min-w-0 flex-1 overflow-x-auto">
-          <div className="flex h-full min-w-[640px] flex-col">
-            <table className="w-full table-fixed text-left text-body">
+          <div className="flex h-full min-w-[640px] flex-col max-lg:min-w-0">
+            <table className="w-full table-fixed text-left text-body max-lg:hidden">
               <colgroup>
                 {columnWidths.map((width, index) => (
                   <col key={index} style={width ? { width } : undefined} />
@@ -58,13 +59,13 @@ export function ProfessorList() {
               }}
               components={tableComponents}
               aria-label={t('app.professorRatings')}
-              className="scrollbar-gray min-h-0 flex-1"
+              className={`scrollbar-gray min-h-0 flex-1 ${phoneTableClass}`}
               itemContent={(_, professor) => (
                 <>
-                  <td className="border-t border-white-5 px-4 py-3 font-semibold">
+                  <td className="border-t border-white-5 px-4 py-3 font-semibold max-lg:truncate">
                     {[professor.degree, professor.name].filter(Boolean).join(' ')}
                   </td>
-                  <td className={tableCellTextClass}>
+                  <td className={`${tableCellTextClass} max-lg:truncate`}>
                     {universities.find(({ id }) => id === professor.universityId)?.name}
                   </td>
                   <td className="border-t border-white-5 px-4 py-3">

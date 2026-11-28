@@ -36,6 +36,7 @@ function EditCoursePage() {
     <UIDialog
       open
       placement="right"
+      className="max-lg:p-4"
       onOpenChange={(open) => {
         if (!open) close();
       }}

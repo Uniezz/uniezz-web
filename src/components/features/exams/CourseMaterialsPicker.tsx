@@ -1,6 +1,6 @@
 import { useId, useState } from 'react';
 import type { ReactNode } from 'react';
-import { Upload } from 'lucide-react';
+import { Upload, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { studyMaterialFilesSchema } from '@/schemas';
 import { readImageFile, toast } from '@/utils';
@@ -11,7 +11,9 @@ export type CourseMaterialsPickerProps = {
   disabled: boolean;
   onFilesChange: (files: File[]) => void;
   onReadingChange: (isReading: boolean) => void;
-  children: ReactNode;
+  children?: ReactNode;
+  /** `rows`: the mobile app's picker, file names in rows over a full-width Choose files button. */
+  appearance?: 'tiles' | 'rows';
 };
 
 export function CourseMaterialsPicker({
@@ -20,6 +22,7 @@ export function CourseMaterialsPicker({
   onFilesChange,
   onReadingChange,
   children,
+  appearance = 'tiles',
 }: CourseMaterialsPickerProps) {
   const inputId = useId();
   const { t } = useTranslation();
@@ -63,6 +66,61 @@ export function CourseMaterialsPicker({
     setPreviews((previous) => previous.filter((preview) => preview.key !== key));
   }
 
+  const fileInput = (
+    <input
+      id={inputId}
+      type="file"
+      multiple
+      accept="application/pdf,image/jpeg,image/png,image/webp"
+      className="peer sr-only"
+      disabled={disabled || isReading}
+      onChange={(event) => {
+        const selected = Array.from(event.currentTarget.files ?? []);
+        event.currentTarget.value = '';
+        void addFiles(selected);
+      }}
+    />
+  );
+  if (appearance === 'rows') {
+    return (
+      <div className="flex flex-col gap-2">
+        {files.length > 0 && (
+          <ul aria-label={t('courses.materials')} className="flex flex-col gap-2">
+            {files.map((file) => (
+              <li
+                key={courseMaterialKey(file)}
+                className="flex items-center gap-3 rounded-[14px] bg-white-5 px-3.5 py-2.5"
+              >
+                <span className="min-w-0 flex-1 truncate text-body text-white">{file.name}</span>
+                <button
+                  type="button"
+                  disabled={disabled}
+                  aria-label={`${t('courses.removeMaterial')}: ${file.name}`}
+                  data-ph-capture-attribute-label="Remove course material"
+                  onClick={() => removeFile(courseMaterialKey(file))}
+                  className="shrink-0 text-secondary disabled:opacity-40"
+                >
+                  <X size={16} aria-hidden="true" />
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+        <label
+          htmlFor={inputId}
+          data-ph-capture-attribute-label="Choose course materials"
+          className="group block cursor-pointer"
+        >
+          {fileInput}
+          <span className="flex min-h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-full border border-white-10 bg-white-5 px-5 text-body font-semibold group-hover:bg-white-10 peer-focus-visible:outline-2 peer-focus-visible:outline-blue peer-disabled:cursor-not-allowed peer-disabled:opacity-40">
+            <Upload size={18} aria-hidden="true" />
+            {t('study.chooseFiles')}
+          </span>
+        </label>
+      </div>
+    );
+  }
+
   return (
     <div className="grid grid-cols-[minmax(0,1fr)_minmax(8rem,0.55fr)] gap-3">
       <label
@@ -70,19 +128,7 @@ export function CourseMaterialsPicker({
         data-ph-capture-attribute-label="Choose course materials"
         className="group block cursor-pointer"
       >
-        <input
-          id={inputId}
-          type="file"
-          multiple
-          accept="application/pdf,image/jpeg,image/png,image/webp"
-          className="peer sr-only"
-          disabled={disabled || isReading}
-          onChange={(event) => {
-            const selected = Array.from(event.currentTarget.files ?? []);
-            event.currentTarget.value = '';
-            void addFiles(selected);
-          }}
-        />
+        {fileInput}
         <span className="app-control flex cursor-pointer items-center justify-between gap-3 group-hover:bg-white-10 peer-focus-visible:outline-2 peer-focus-visible:outline-blue peer-disabled:cursor-not-allowed peer-disabled:opacity-40">
           <span>{t('courses.chooseFiles')}</span>
           <Upload size={18} aria-hidden="true" />

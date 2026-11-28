@@ -8,7 +8,7 @@ import { studyFileTypeLabels, toast } from '@/utils';
 
 const CourseFileViewer = lazy(() => import('./CourseFileViewer'));
 
-export function PreviewStudyFileButton({ file }: PreviewStudyFileButtonProps) {
+export function PreviewStudyFileButton({ file, stretched }: PreviewStudyFileButtonProps) {
   const { t } = useTranslation();
   const [url, setUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -30,14 +30,18 @@ export function PreviewStudyFileButton({ file }: PreviewStudyFileButtonProps) {
       <UIButton
         size="icon"
         bg="transparent"
-        className="border-0 text-secondary enabled:hover:bg-transparent enabled:hover:text-white"
+        className={
+          stretched
+            ? 'absolute inset-0 size-auto rounded-2xl border-0 bg-transparent p-0 enabled:hover:bg-transparent disabled:opacity-100 motion-safe:enabled:active:scale-100'
+            : 'border-0 text-secondary enabled:hover:bg-transparent enabled:hover:text-white'
+        }
         aria-label={`${t('courses.previewMaterial')}: ${file.title}`}
         data-ph-capture-attribute-label="Preview material"
         aria-busy={isLoading}
         disabled={isLoading}
         onClick={() => void preview()}
       >
-        <Eye size={15} aria-hidden="true" />
+        {!stretched && <Eye size={15} aria-hidden="true" />}
       </UIButton>
       <UIDialog
         open={Boolean(url)}

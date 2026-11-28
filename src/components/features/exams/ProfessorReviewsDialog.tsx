@@ -76,6 +76,7 @@ export function ProfessorReviewsDialog({ professorId, onClose }: ProfessorReview
     <>
       <UIDialog
         placement="right"
+        className="max-lg:p-4"
         open
         onOpenChange={(open) => {
           if (!open) onClose();

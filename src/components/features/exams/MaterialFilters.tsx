@@ -47,13 +47,15 @@ export function MaterialFilters() {
         : 'app.searchCourses',
   );
   return (
-    <div className="mb-5.5 space-y-4">
+    <div className="mb-5.5 space-y-4 max-lg:mb-3 max-lg:space-y-3">
       <UISubTabs
         tabs={tabIds.map((id, index) => ({ id, label: tabs[index] }))}
         value={tab}
         onChange={selectTab}
         label={t('exams.title')}
         idPrefix="exams"
+        // one line per tab on a phone, as in the app; long Polish labels end in an ellipsis
+        className="max-lg:gap-3 max-lg:[&_button]:min-w-0 max-lg:[&_button]:truncate"
       />
       <div className="flex min-w-0 items-center gap-2">
         <form

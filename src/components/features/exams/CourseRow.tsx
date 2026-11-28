@@ -26,17 +26,22 @@ export const CourseRow = memo(function CourseRow({
           params={{ courseId: course.id }}
           search={(previous) => ({ ...previous, tab: 'reviews' })}
           data-ph-capture-attribute-label="Open course details"
-          className="font-semibold wrap-anywhere hover:underline focus-visible:outline-2 focus-visible:outline-blue"
+          className="font-semibold wrap-anywhere hover:underline focus-visible:outline-2 focus-visible:outline-blue max-lg:block max-lg:truncate"
         >
           {course.name}
         </Link>
-        <p className="mt-1 text-detail font-medium text-secondary">{universityName}</p>
+        <p className="mt-1 text-detail font-medium text-secondary max-lg:truncate">
+          {universityName}
+        </p>
       </td>
-      {[course.subject, course.semester].map((value, index) => (
-        <td key={index} className={tableCellTextClass}>
-          {value}
-        </td>
-      ))}
+      <td className={`${tableCellTextClass} max-lg:truncate`}>{course.subject}</td>
+      <td className={tableCellTextClass}>
+        <span className="max-lg:hidden">{course.semester}</span>
+        {/* a bare number means nothing once the column header is gone on a phone */}
+        <span className="whitespace-nowrap lg:hidden">
+          {t('exams.semesterNumber', { semester: course.semester })}
+        </span>
+      </td>
       <td className="border-t border-white-5 px-4 py-3">
         <RatingInput average={course.difficulty} count={0} readOnly icon={Flame} />
       </td>
