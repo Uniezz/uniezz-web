@@ -27,10 +27,16 @@ export function FaqList() {
       <UISearch value={search} onChange={setSearch} label={t('faq.search')} />
       {isPending ? (
         <Skeleton loading label={t('apiState.loading')}>
-          <div inert className="space-y-3">
+          <div inert className="space-y-3 max-lg:space-y-2">
             {Array.from({ length: 4 }, (_, index) => (
-              <UIPanel key={index} surface="tint" className="rounded-programme p-4">
-                <p className="text-section font-bold">{t('faq.title')}</p>
+              <UIPanel
+                key={index}
+                surface="tint"
+                className="rounded-programme p-4 max-lg:rounded-2xl max-lg:p-3.5"
+              >
+                <p className="text-section font-bold max-lg:text-body max-lg:font-semibold">
+                  {t('faq.title')}
+                </p>
               </UIPanel>
             ))}
           </div>
@@ -48,21 +54,26 @@ export function FaqList() {
           className="min-h-0 flex-1 overflow-y-auto motion-safe:animate-rise-in"
         >
           {entries.map((entry) => (
-            <div key={entry.id} role="listitem" className="pb-3">
-              <UIPanel surface="tint" className="rounded-programme p-4">
+            <div key={entry.id} role="listitem" className="pb-3 max-lg:pb-2">
+              <UIPanel
+                surface="tint"
+                className="rounded-programme p-4 max-lg:rounded-2xl max-lg:p-3.5"
+              >
                 <details className="group">
                   <summary
                     data-ph-capture-attribute-label="Toggle FAQ answer"
-                    className="flex cursor-pointer list-none items-center justify-between gap-3 text-section font-bold [&::-webkit-details-marker]:hidden"
+                    className="flex cursor-pointer list-none items-center justify-between gap-3 text-section font-bold max-lg:text-body max-lg:font-semibold [&::-webkit-details-marker]:hidden"
                   >
-                    {entry.question}
+                    <span className="max-lg:min-w-0 max-lg:wrap-anywhere">{entry.question}</span>
                     <ChevronDown
                       size={16}
                       className="shrink-0 transition-transform group-open:rotate-180"
                       aria-hidden="true"
                     />
                   </summary>
-                  <p className="mt-3 whitespace-pre-line text-secondary">{entry.answer}</p>
+                  <p className="mt-3 whitespace-pre-line text-secondary max-lg:mt-2 max-lg:wrap-anywhere">
+                    {entry.answer}
+                  </p>
                 </details>
               </UIPanel>
             </div>

@@ -35,15 +35,22 @@ export function FaqPending() {
         aria-label={t('faq.pending')}
         className="min-h-0 flex-1 motion-safe:animate-rise-in"
         itemContent={(_, proposal) => (
-          <div role="listitem" className="pb-3">
-            <UIPanel surface="tint" className="rounded-programme p-4">
+          <div role="listitem" className="pb-3 max-lg:pb-2">
+            <UIPanel
+              surface="tint"
+              className="rounded-programme p-4 max-lg:rounded-2xl max-lg:p-3.5"
+            >
               <div className="flex items-start justify-between gap-3">
-                <h3 className="text-section font-bold wrap-anywhere">{proposal.question}</h3>
+                <h3 className="text-section font-bold wrap-anywhere max-lg:min-w-0 max-lg:text-body max-lg:font-semibold">
+                  {proposal.question}
+                </h3>
                 <span className="app-tag shrink-0 border-white-20 bg-surface px-2 py-1 uppercase">
                   {proposal.language}
                 </span>
               </div>
-              <p className="mt-3 whitespace-pre-line text-secondary">{proposal.answer}</p>
+              <p className="mt-3 whitespace-pre-line text-secondary max-lg:mt-2 max-lg:wrap-anywhere">
+                {proposal.answer}
+              </p>
               <div className="mt-4 flex justify-end">
                 <UIButton size="sm" onClick={() => setApproving(proposal)}>
                   {t('faq.translate')}

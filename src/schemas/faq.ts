@@ -1,8 +1,9 @@
 import { z } from 'zod';
 
+// the messages are translation keys, shown under the fields on a phone
 export const faqProposalSchema = z.object({
-  question: z.string().trim().min(3).max(200),
-  answer: z.string().trim().min(1).max(2000),
+  question: z.string().trim().min(3, 'faq.questionError').max(200, 'faq.questionError'),
+  answer: z.string().trim().min(1, 'faq.answerError').max(2000, 'faq.answerError'),
 });
 
 export type FaqProposalFormSchema = z.infer<typeof faqProposalSchema>;

@@ -20,10 +20,16 @@ export function FaqProposals() {
   if (isPending) {
     return (
       <Skeleton loading label={t('apiState.loading')}>
-        <div inert className="space-y-3">
+        <div inert className="space-y-3 max-lg:space-y-2">
           {Array.from({ length: 3 }, (_, index) => (
-            <UIPanel key={index} surface="tint" className="rounded-programme p-4">
-              <p className="text-section font-bold">{t('faq.title')}</p>
+            <UIPanel
+              key={index}
+              surface="tint"
+              className="rounded-programme p-4 max-lg:rounded-2xl max-lg:p-3.5"
+            >
+              <p className="text-section font-bold max-lg:text-body max-lg:font-semibold">
+                {t('faq.title')}
+              </p>
             </UIPanel>
           ))}
         </div>
@@ -51,17 +57,22 @@ export function FaqProposals() {
         aria-label={t('faq.myProposals')}
         className="min-h-0 flex-1 motion-safe:animate-rise-in"
         itemContent={(_, proposal) => (
-          <div role="listitem" className="pb-3">
-            <UIPanel surface="tint" className="rounded-programme p-4">
+          <div role="listitem" className="pb-3 max-lg:pb-2">
+            <UIPanel
+              surface="tint"
+              className="rounded-programme p-4 max-lg:rounded-2xl max-lg:p-3.5"
+            >
               <div className="flex items-start justify-between gap-3">
-                <h3 className="min-w-0 text-section font-bold wrap-anywhere">
+                <h3 className="min-w-0 text-section font-bold wrap-anywhere max-lg:text-body max-lg:font-semibold">
                   {proposal.question}
                 </h3>
                 <span className="shrink-0 rounded-full border border-white-10 bg-white-5 px-2 py-1 text-micro font-semibold text-secondary">
                   {t(statusLabels[proposal.status])}
                 </span>
               </div>
-              <p className="mt-3 whitespace-pre-line text-secondary">{proposal.answer}</p>
+              <p className="mt-3 whitespace-pre-line text-secondary max-lg:mt-2 max-lg:wrap-anywhere">
+                {proposal.answer}
+              </p>
             </UIPanel>
           </div>
         )}

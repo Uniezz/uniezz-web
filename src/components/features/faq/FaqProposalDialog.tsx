@@ -1,25 +1,31 @@
-import { useId } from 'react';
+import { useId, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { apiErrorKey, toast } from '@/utils';
-import { useCreateFaqProposal } from '@/hooks';
+import { useCreateFaqProposal, usePhoneViewport } from '@/hooks';
 import { faqProposalSchema, type FaqProposalFormSchema } from '@/schemas';
 import { UIButton, UIDialog, UIDialogFooter, UIField } from '@/ui/components';
+import { cn } from '@/ui/cn';
 
 export function FaqProposalDialog({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { t } = useTranslation();
   const formId = useId();
+  const isPhone = usePhoneViewport();
+  const [isDiscardOpen, setIsDiscardOpen] = useState(false);
   const { mutateAsync: createProposal, isPending } = useCreateFaqProposal();
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<FaqProposalFormSchema>({
     resolver: zodResolver(faqProposalSchema),
     defaultValues: { question: '', answer: '' },
   });
+  // the app's sheet: the schema's message per field; desktop keeps "Required"
+  const errorText = (message?: string) =>
+    message ? (isPhone ? t(message as 'faq.questionError') : t('app.required')) : undefined;
 
   async function submit(values: FaqProposalFormSchema) {
     try {
@@ -32,49 +38,96 @@ export function FaqProposalDialog({ open, onClose }: { open: boolean; onClose: (
     }
   }
 
+  // on a phone, as the app's sheet: closing with text asks first, and a closed sheet starts over
+  const handleOpenChange = (next: boolean) => {
+    if (next) return;
+    if (isPhone && isDirty && !isPending) return setIsDiscardOpen(true);
+    if (isPhone) reset();
+    onClose();
+  };
+  const handleKeepEditing = () => setIsDiscardOpen(false);
+  const handleDiscard = () => {
+    setIsDiscardOpen(false);
+    reset();
+    onClose();
+  };
+
   return (
-    <UIDialog
-      placement="right"
-      open={open}
-      onOpenChange={(next) => {
-        if (!next) onClose();
-      }}
-      title={t('faq.proposeTitle')}
-      description={t('faq.proposeDescription')}
-      footer={
-        <UIDialogFooter>
-          <UIButton bg="secondary" onClick={onClose} disabled={isPending}>
-            {t('app.cancel')}
-          </UIButton>
-          <UIButton type="submit" form={formId} disabled={isPending}>
-            {t('faq.submitProposal')}
-          </UIButton>
-        </UIDialogFooter>
-      }
-    >
-      <form
-        id={formId}
-        className="flex min-h-0 flex-1 flex-col gap-4"
-        onSubmit={handleSubmit(submit)}
+    <>
+      <UIDialog
+        placement="right"
+        // a bottom sheet on a phone, as the mobile app's form sheets
+        sheet
+        open={open}
+        onOpenChange={handleOpenChange}
+        title={t(isPhone ? 'faq.propose' : 'faq.proposeTitle')}
+        description={isPhone ? undefined : t('faq.proposeDescription')}
+        footer={
+          isPhone ? (
+            <UIButton type="submit" form={formId} disabled={isPending} className="w-full">
+              {t('faq.proposalSubmit')}
+            </UIButton>
+          ) : (
+            <UIDialogFooter>
+              <UIButton bg="secondary" onClick={onClose} disabled={isPending}>
+                {t('app.cancel')}
+              </UIButton>
+              <UIButton type="submit" form={formId} disabled={isPending}>
+                {t('faq.submitProposal')}
+              </UIButton>
+            </UIDialogFooter>
+          )
+        }
       >
-        <UIField label={t('faq.question')} error={errors.question ? t('app.required') : undefined}>
-          <input
-            autoComplete="off"
-            className="app-control"
-            maxLength={200}
-            placeholder={t('faq.questionPlaceholder')}
-            {...register('question')}
-          />
-        </UIField>
-        <UIField label={t('faq.answer')} error={errors.answer ? t('app.required') : undefined}>
-          <textarea
-            className="app-control h-62.5 resize-none"
-            maxLength={2000}
-            placeholder={t('faq.answerPlaceholder')}
-            {...register('answer')}
-          />
-        </UIField>
-      </form>
-    </UIDialog>
+        <form
+          id={formId}
+          className="flex min-h-0 flex-1 flex-col gap-4 max-lg:gap-3.5"
+          onSubmit={handleSubmit(submit)}
+        >
+          {isPhone && <p className="text-detail text-secondary">{t('faq.proposalDescription')}</p>}
+          <UIField label={t('faq.question')} error={errorText(errors.question?.message)}>
+            {isPhone ? (
+              <textarea
+                autoComplete="off"
+                className="app-control h-24 resize-none"
+                maxLength={200}
+                {...register('question')}
+              />
+            ) : (
+              <input
+                autoComplete="off"
+                className="app-control"
+                maxLength={200}
+                placeholder={t('faq.questionPlaceholder')}
+                {...register('question')}
+              />
+            )}
+          </UIField>
+          <UIField label={t('faq.answer')} error={errorText(errors.answer?.message)}>
+            <textarea
+              className={cn('app-control resize-none', isPhone ? 'h-37.5' : 'h-62.5')}
+              maxLength={2000}
+              placeholder={isPhone ? undefined : t('faq.answerPlaceholder')}
+              {...register('answer')}
+            />
+          </UIField>
+        </form>
+      </UIDialog>
+      <UIDialog
+        open={isDiscardOpen}
+        onOpenChange={setIsDiscardOpen}
+        title={t('app.unsavedChangesTitle')}
+        description={t('app.discardChangesDescription')}
+      >
+        <div className="flex justify-end gap-3">
+          <UIButton bg="secondary" onClick={handleKeepEditing}>
+            {t('app.keepEditing')}
+          </UIButton>
+          <UIButton bg="danger" onClick={handleDiscard}>
+            {t('app.discardChanges')}
+          </UIButton>
+        </div>
+      </UIDialog>
+    </>
   );
 }
