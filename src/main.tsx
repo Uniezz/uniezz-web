@@ -10,6 +10,7 @@ import { createAnalyticsMutationCache, sanitizeAnalyticsEvent } from './utils/an
 import { showMutationProgress } from './utils/mutationProgress';
 import { showCoinRewards } from './utils/coinRewards';
 import { hideSplashWhenReady } from './utils/splash';
+import { appStoreFor } from './utils/stores';
 import { routeTree } from './routeTree.gen';
 import { useMyProfile } from './hooks';
 import { ApiRequestError } from './api/errors';
@@ -22,6 +23,11 @@ try {
 } catch {
   // Storage can be unavailable in private browsing.
 }
+
+// A shared post, student or course opened in a phone browser goes to the app's store. Only on a
+// page load: in-app taps on the same pages stay on the web.
+const appStore = appStoreFor(navigator.userAgent, window.location.pathname);
+if (appStore) window.location.replace(appStore);
 
 const routeMasks = [
   createRouteMask({ routeTree, from: '/login', to: '/', search: () => ({}) }),
