@@ -34,7 +34,8 @@ export function ChatMessageRow({
     >
       <div className="flex w-full min-w-0 items-end gap-2">
         {incoming ? (
-          <div data-slot="chat-message-avatar" className="size-7 shrink-0">
+          // On a phone, a group names the sender under the run instead, as in the app.
+          <div data-slot="chat-message-avatar" className="size-7 shrink-0 max-lg:hidden">
             {avatar}
           </div>
         ) : null}
@@ -47,7 +48,7 @@ export function ChatMessageRow({
           data-slot="chat-message-footer"
           className={cn(
             'flex max-w-full flex-wrap gap-1.5 pt-1.5 text-caption text-secondary',
-            incoming ? 'pl-9' : 'justify-end',
+            incoming ? 'pl-9 max-lg:pl-0' : 'justify-end',
           )}
         >
           {footer}

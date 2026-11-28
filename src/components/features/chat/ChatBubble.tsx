@@ -28,8 +28,12 @@ export function ChatBubble({
       className={cn(bubbleStyles({ variant, tail }), className)}
       {...props}
     >
+      {/* on a phone, the sender shows under the run instead, as in the app */}
       {sender ? (
-        <div data-slot="chat-bubble-sender" className="text-label font-semibold text-sky">
+        <div
+          data-slot="chat-bubble-sender"
+          className="text-label font-semibold text-sky max-lg:hidden"
+        >
           {sender}
         </div>
       ) : null}

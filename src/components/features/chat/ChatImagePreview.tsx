@@ -1,5 +1,6 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { useRef, type TouchEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 
@@ -20,6 +21,23 @@ export function ChatImagePreview({
   const image = preview?.images[preview.index];
   const count = preview?.images.length ?? 0;
   const index = preview?.index ?? 0;
+  // on a phone, a horizontal swipe moves through the gallery, as the app's full-screen viewer
+  const swipeStart = useRef<{ x: number; y: number } | null>(null);
+  const handleTouchStart = (event: TouchEvent) => {
+    const touch = event.touches[0];
+    swipeStart.current =
+      event.touches.length === 1 && touch ? { x: touch.clientX, y: touch.clientY } : null;
+  };
+  const handleTouchEnd = (event: TouchEvent) => {
+    const start = swipeStart.current;
+    const touch = event.changedTouches[0];
+    swipeStart.current = null;
+    if (!start || !touch) return;
+    const dx = touch.clientX - start.x;
+    if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(touch.clientY - start.y)) return;
+    if (dx < 0 && index < count - 1) onIndexChange(index + 1);
+    if (dx > 0 && index > 0) onIndexChange(index - 1);
+  };
 
   return (
     <Dialog.Root open={Boolean(preview)} onOpenChange={(open) => !open && onClose()}>
@@ -28,6 +46,8 @@ export function ChatImagePreview({
         <Dialog.Content
           aria-describedby={undefined}
           className="fixed inset-0 z-50 flex items-center justify-center outline-none"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
           onKeyDown={(event) => {
             if (event.key === 'ArrowLeft' && index > 0) onIndexChange(index - 1);
             if (event.key === 'ArrowRight' && index < count - 1) onIndexChange(index + 1);
@@ -79,7 +99,7 @@ export function ChatImagePreview({
                 aria-label={t('app.previousImage')}
                 disabled={index === 0}
                 onClick={() => onIndexChange(index - 1)}
-                className="absolute top-1/2 left-4 -translate-y-1/2 bg-surface"
+                className="absolute top-1/2 left-4 -translate-y-1/2 bg-surface max-lg:hidden"
               >
                 <ChevronLeft size={18} aria-hidden="true" />
               </UIButton>
@@ -89,7 +109,7 @@ export function ChatImagePreview({
                 aria-label={t('app.nextImage')}
                 disabled={index === count - 1}
                 onClick={() => onIndexChange(index + 1)}
-                className="absolute top-1/2 right-4 -translate-y-1/2 bg-surface"
+                className="absolute top-1/2 right-4 -translate-y-1/2 bg-surface max-lg:hidden"
               >
                 <ChevronRight size={18} aria-hidden="true" />
               </UIButton>

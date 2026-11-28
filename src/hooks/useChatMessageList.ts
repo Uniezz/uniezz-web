@@ -13,13 +13,20 @@ import { useMessages } from './useChat';
 import { useMyProfile } from './useMyProfile';
 
 /** The messages of a thread, oldest first, and how Virtuoso loads, follows and groups them. */
-export function useChatMessageList(conversationId: string, unreadAtOpen: ChatUnreadAtOpen) {
+export function useChatMessageList(
+  conversationId: string,
+  unreadAtOpen: ChatUnreadAtOpen,
+  /** The phone thread shows system lines and "Message deleted" bubbles, as the app does. */
+  { withSystem = false }: { withSystem?: boolean } = {},
+) {
   const { data: me } = useMyProfile();
   const { data, isPending, isError, refetch, hasNextPage, isFetchingNextPage, fetchNextPage } =
     useMessages(conversationId);
   // Pages are newest first, but the thread reads oldest first. System and deleted messages come with W4.
   const pages = (data?.pages ?? []).map((page) =>
-    (page.items ?? []).filter(({ kind, deletedAt }) => kind === 'text' && !deletedAt),
+    (page.items ?? []).filter(
+      ({ kind, deletedAt }) => withSystem || (kind === 'text' && !deletedAt),
+    ),
   );
   const messages: ChatMessageView[] = pages.flat().reverse();
   const firstItemIndex = MESSAGE_START_INDEX - pages.slice(1).flat().length;

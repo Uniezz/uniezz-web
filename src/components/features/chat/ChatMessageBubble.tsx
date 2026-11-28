@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router';
 import { Check, Clock } from 'lucide-react';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -37,6 +38,7 @@ export const ChatMessageBubble = memo(function ChatMessageBubble({
 
   const showsSender = isGroup && !outgoing && (position === 'first' || position === 'single');
   const endsGroup = position === 'last' || position === 'single';
+  const senderName = (!sender.deleted && authorName(sender)) || t('app.accountDeleted');
   const StatusIcon = status === 'sending' ? Clock : Check;
 
   const openImage = (index: number) =>
@@ -63,13 +65,7 @@ export const ChatMessageBubble = memo(function ChatMessageBubble({
       <ChatBubble
         variant={outgoing ? 'out' : 'in'}
         tail={endsGroup}
-        sender={
-          showsSender ? (
-            <span className={senderColor(sender.id)}>
-              {(!sender.deleted && authorName(sender)) || t('app.accountDeleted')}
-            </span>
-          ) : null
-        }
+        sender={showsSender ? <span className={senderColor(sender.id)}>{senderName}</span> : null}
         meta={
           <>
             <span>{chatClock(message.createdAt, i18n.language)}</span>
@@ -87,6 +83,26 @@ export const ChatMessageBubble = memo(function ChatMessageBubble({
         {images.length > 0 ? <ChatMessageImages images={images} onOpen={openImage} /> : null}
         {body ? <p>{body}</p> : null}
       </ChatBubble>
+      {/* on a phone, a group names the sender under the last message of a run, as in the app */}
+      {isGroup && !outgoing && endsGroup ? (
+        <Link
+          to="/connections/students/$profileId"
+          params={{ profileId: sender.id ?? '' }}
+          search={{ studentSearch: undefined }}
+          disabled={!sender.id}
+          data-ph-capture-attribute-label="Open message sender profile"
+          className="mt-1 flex max-w-full min-w-0 items-center gap-1.5 text-micro font-semibold text-secondary focus-visible:outline-2 focus-visible:outline-blue lg:hidden"
+        >
+          <UIAvatar
+            size="sm"
+            imgSrc={sender.avatarUrl ?? undefined}
+            avatarSymbols={initials(authorName(sender))}
+            className="shrink-0 *:size-6"
+            aria-hidden="true"
+          />
+          <span className="truncate">{senderName}</span>
+        </Link>
+      ) : null}
     </ChatMessageRow>
   );
 });

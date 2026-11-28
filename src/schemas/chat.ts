@@ -24,3 +24,13 @@ export const chatAttachmentSchema = z
   .instanceof(File)
   .refine(isChatImage)
   .refine((file) => file.size > 0 && file.size <= 10 * MB);
+
+/** Renaming a group in its settings, as the app's renameGroupSchema. */
+export const renameGroupSchema = z.object({ groupName: z.string().trim().min(1).max(80) });
+export type RenameGroupSchema = z.infer<typeof renameGroupSchema>;
+
+/** Adding people to an existing group: no name, at least one person. */
+export const addGroupMembersSchema = z.object({
+  name: z.string(),
+  members: z.array(z.string()).min(1),
+});

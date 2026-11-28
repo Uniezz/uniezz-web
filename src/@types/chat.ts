@@ -27,3 +27,7 @@ export type SendMessageInput = {
 
 /** What was unread when the student opened the chat. */
 export type ChatUnreadAtOpen = { count: number; lastReadSeq: number };
+
+export type ChatSettings = Schemas['Settings'];
+export type UpdateChatSettingsInput = Schemas['UpdateMyChatSettingsInputBody'];
+export type WhoCanMessage = ChatSettings['whoCanMessage'];

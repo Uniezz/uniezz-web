@@ -84,7 +84,7 @@ export function ChatMessageList({
 
   return (
     <div
-      className="relative flex min-h-0 flex-1 flex-col px-7 py-5"
+      className="relative flex min-h-0 flex-1 flex-col px-7 py-5 max-lg:px-4 max-lg:py-2"
       role="log"
       aria-label={t('app.messages')}
     >
@@ -109,7 +109,7 @@ export function ChatMessageList({
         <ChatJumpToLatest
           unreadCount={newCount}
           aria-label={jumpLabel}
-          className="absolute right-7 bottom-5"
+          className="absolute right-7 bottom-5 max-lg:right-4"
           onClick={() => list.current?.scrollToIndex(LATEST_MESSAGE)}
         />
       ) : null}

@@ -5,4 +5,8 @@ export const chatKeys = {
   conversation: (conversationId: string) =>
     [...chatKeys.all, 'conversation', conversationId] as const,
   messages: (conversationId: string) => [...chatKeys.all, 'messages', conversationId] as const,
+  members: (conversationId: string) => [...chatKeys.all, 'members', conversationId] as const,
+  requests: () => [...chatKeys.all, 'requests'] as const,
+  unread: () => [...chatKeys.all, 'unread'] as const,
+  settings: () => [...chatKeys.all, 'settings'] as const,
 };

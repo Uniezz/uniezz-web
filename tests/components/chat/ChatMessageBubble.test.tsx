@@ -1,4 +1,10 @@
 import { expect, test } from 'bun:test';
+import {
+  createMemoryHistory,
+  createRootRoute,
+  createRouter,
+  RouterContextProvider,
+} from '@tanstack/react-router';
 import { renderToStaticMarkup } from 'react-dom/server';
 
 import {
@@ -17,16 +23,23 @@ const pending = createPendingMessage(
     universityId: 'umcs',
   },
 );
+// the phone-only sender link needs a router to build its href
+const router = createRouter({
+  routeTree: createRootRoute(),
+  history: createMemoryHistory(),
+});
 const render = (props: Partial<ChatMessageBubbleProps> = {}) =>
   renderToStaticMarkup(
-    <ChatMessageBubble
-      message={pending}
-      outgoing={false}
-      position="single"
-      isGroup={false}
-      onPreview={() => {}}
-      {...props}
-    />,
+    <RouterContextProvider router={router}>
+      <ChatMessageBubble
+        message={pending}
+        outgoing={false}
+        position="single"
+        isGroup={false}
+        onPreview={() => {}}
+        {...props}
+      />
+    </RouterContextProvider>,
   );
 
 test('only the last bubble of a group shows the avatar and the tail', () => {
@@ -61,4 +74,14 @@ test('a group chat shows the sender once, above the first incoming bubble', () =
   expect(hasSender({ isGroup: true, position: 'last' })).toBe(false);
   expect(hasSender({ isGroup: true, outgoing: true })).toBe(false);
   expect(hasSender({ isGroup: false })).toBe(false);
+});
+
+test('on a phone, a group names the sender under the last incoming bubble of a run', () => {
+  const hasPhoneSender = (props: Partial<ChatMessageBubbleProps>) =>
+    render(props).includes('Open message sender profile');
+  expect(hasPhoneSender({ isGroup: true, position: 'last' })).toBe(true);
+  expect(hasPhoneSender({ isGroup: true, position: 'single' })).toBe(true);
+  expect(hasPhoneSender({ isGroup: true, position: 'first' })).toBe(false);
+  expect(hasPhoneSender({ isGroup: true, outgoing: true })).toBe(false);
+  expect(hasPhoneSender({ isGroup: false })).toBe(false);
 });

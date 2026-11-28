@@ -124,7 +124,7 @@ export function ChatComposer({
   return (
     <form
       className={cn(
-        'mx-5 mb-5 border border-white-10 bg-white-5',
+        'mx-5 mb-5 border border-white-10 bg-white-5 max-lg:mx-4 max-lg:mb-3',
         isMultiline || drafts.length > 0 ? 'rounded-2xl' : 'rounded-full',
       )}
       onSubmit={submit}
@@ -181,9 +181,10 @@ export function ChatComposer({
           rows={1}
           maxLength={4000}
           placeholder={t('app.writeMessage')}
-          className="field-sizing-content max-h-32 min-h-9.5 min-w-0 flex-1 resize-none bg-transparent p-2 text-body leading-[1.4] outline-none placeholder:text-secondary"
+          className="field-sizing-content max-h-32 min-h-9.5 min-w-0 flex-1 resize-none bg-transparent p-2 text-body leading-[1.4] outline-none placeholder:truncate placeholder:text-secondary max-lg:text-base"
         />
-        <UIEmojiPicker className="shrink-0" />
+        {/* a phone has emoji on its keyboard, as the app relies on */}
+        <UIEmojiPicker className="shrink-0 max-lg:hidden" />
         {hasContent && (
           <UIButton
             type="submit"
@@ -192,7 +193,7 @@ export function ChatComposer({
             leftIcon={Send}
             aria-label={t('app.send')}
             disabled={isSending}
-            className="shrink-0 border-transparent enabled:hover:bg-transparent"
+            className="shrink-0 border-transparent enabled:hover:bg-transparent max-lg:rounded-full max-lg:bg-white max-lg:text-ink max-lg:enabled:hover:bg-white"
           >
             {''}
           </UIButton>

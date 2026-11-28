@@ -11,6 +11,7 @@ import {
   UIQueryError,
   UISearch,
   UISegmented,
+  UITopbar,
 } from '@/ui/components';
 import { listComponents } from '@/ui/virtuoso';
 import {
@@ -58,21 +59,30 @@ export function ConversationList({
       matchesSearch(search, title, preview) && (filter !== 'groups' || kind === 'group'),
   );
   return (
-    <UIPanel className={`${hidden ? 'hidden md:flex' : 'flex'} min-h-0 flex-col px-3 py-5`}>
-      <div className="mb-3.5 flex items-center justify-between px-2">
+    <UIPanel
+      className={`${hidden ? 'hidden lg:flex' : 'flex'} min-h-0 flex-col px-3 py-5 max-lg:rounded-none max-lg:border-0 max-lg:bg-transparent max-lg:p-0 max-lg:before:hidden`}
+    >
+      {/* on a phone, the app's header: the title, the new-group button and the profile avatar */}
+      <div className="lg:hidden">
+        <UITopbar
+          title={t('chat.title')}
+          action={{ label: t('chat.action'), icon: SquarePen, onClick: onNewGroup }}
+        />
+      </div>
+      <div className="mb-3.5 flex items-center justify-between px-2 max-lg:hidden">
         <h1 className="text-panel-title font-bold tracking-[-0.8px]">{t('chat.title')}</h1>
         <UIButton size="icon" bg="secondary" aria-label={t('chat.action')} onClick={onNewGroup}>
           <SquarePen size={17} />
         </UIButton>
       </div>
-      <div className="px-2">
+      <div className="px-2 max-lg:px-0">
         <UISearch
           value={search}
           onChange={(search) => form.setValue('search', search)}
           label={t('app.searchConversations')}
         />
       </div>
-      <div className="my-3.5 px-2 [&_button]:min-h-8 [&_button]:px-3.5 [&_button]:py-1.5 [&_button]:text-detail">
+      <div className="my-3.5 px-2 max-lg:px-0 [&_button]:min-h-8 [&_button]:px-3.5 [&_button]:py-1.5 [&_button]:text-detail">
         <UISegmented
           label={t('chat.title')}
           options={[t('app.all'), t('app.groups'), t('connections.title')]}
@@ -111,11 +121,17 @@ export function ConversationList({
                 data-ph-capture-attribute-label="Open conversation"
                 onClick={() => onOpen(c.id)}
                 aria-current={selectedId === c.id ? 'true' : undefined}
-                className={`flex w-full items-center gap-3 rounded-2xl border border-transparent p-2.5 text-left transition-colors hover:bg-white-5 ${selectedId === c.id ? 'border-white-10 bg-white-10' : ''}`}
+                className={`flex w-full items-center gap-3 rounded-2xl border border-transparent p-2.5 text-left transition-colors hover:bg-white-5 max-lg:rounded-none max-lg:px-0 ${selectedId === c.id ? 'border-white-10 bg-white-10 max-lg:border-transparent max-lg:bg-transparent' : ''}`}
               >
-                <UIAvatar imgSrc={chatAvatar(c)} avatarSymbols={initials(c.title)} />
+                <UIAvatar
+                  imgSrc={chatAvatar(c)}
+                  avatarSymbols={initials(c.title)}
+                  className="max-lg:*:size-12"
+                />
                 <span className="grid min-w-0 flex-1 grid-cols-[minmax(0,1fr)_auto] items-center gap-x-2 gap-y-0.75">
-                  <strong className="truncate text-body font-semibold">{c.title}</strong>
+                  <strong className="truncate text-body font-semibold max-lg:text-base">
+                    {c.title}
+                  </strong>
                   <span className="justify-self-end text-detail text-secondary">
                     {c.lastMessage ? chatTime(c.lastMessage.createdAt, i18n.language) : ''}
                   </span>

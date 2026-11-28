@@ -15,18 +15,24 @@ export function ChatHeader({
   const { t } = useTranslation();
   const title = chatTitle(conversation, t('app.accountDeleted'));
   return (
-    <div className="flex items-center gap-3 border-b border-white-5 px-5 py-4">
+    <div className="flex items-center gap-3 border-b border-white-5 px-5 py-4 max-lg:gap-2.5 max-lg:border-b-0 max-lg:px-4 max-lg:py-2">
       <UIButton
         bg="transparent"
         size="icon"
-        className="md:hidden"
+        className="lg:hidden"
         aria-label={t('app.back')}
         onClick={onBack}
       >
         <ArrowLeft size={18} />
       </UIButton>
-      <UIAvatar imgSrc={chatAvatar(conversation)} avatarSymbols={initials(title)} />
-      <h2 className="text-section font-semibold">{title}</h2>
+      <UIAvatar
+        imgSrc={chatAvatar(conversation)}
+        avatarSymbols={initials(title)}
+        className="max-lg:*:size-8"
+      />
+      <h2 className="text-section font-semibold max-lg:min-w-0 max-lg:truncate max-lg:text-base">
+        {title}
+      </h2>
     </div>
   );
 }

@@ -84,7 +84,9 @@ export function CreateGroup({
           <UIButton size="icon" bg="transparent" onClick={onBack} aria-label={t('app.back')}>
             <ArrowLeft size={18} />
           </UIButton>
-          <h2 className="flex-1 text-card-title font-semibold">{t('chat.action')}</h2>
+          <h2 className="flex-1 text-card-title font-semibold max-lg:min-w-0 max-lg:truncate">
+            {t('chat.action')}
+          </h2>
         </div>
         <p className="text-label text-secondary">{t('app.groupDescription')}</p>
         <UIField
@@ -159,8 +161,10 @@ export function CreateGroup({
               <div className="flex min-w-0 items-center gap-3">
                 <UIAvatar size="md" imgSrc={s.avatarUrl ?? undefined} alt="" aria-hidden="true" />
                 <div className="min-w-0">
-                  <strong className="text-label font-medium">{authorName(s)}</strong>
-                  <p className="text-micro text-muted">
+                  <strong className="text-label font-medium max-lg:block max-lg:truncate">
+                    {authorName(s)}
+                  </strong>
+                  <p className="text-micro text-muted max-lg:truncate">
                     {universities.find((university) => university.id === s.universityId)?.name}
                   </p>
                 </div>
@@ -178,7 +182,8 @@ export function CreateGroup({
             </div>
           )}
         />
-        <div className="flex items-center justify-start gap-3">
+        {/* on a phone, a full-width button pinned under the list, as in the app */}
+        <div className="flex items-center justify-start gap-3 max-lg:flex-col max-lg:items-stretch">
           {errors.members && (
             <p className="text-detail text-warning" role="alert">
               {t('app.minimumMembers')}
@@ -189,7 +194,7 @@ export function CreateGroup({
             disabled={isPending}
             bg="primary"
             size="sm"
-            className="rounded-xl text-ink enabled:hover:bg-white"
+            className="rounded-xl text-ink enabled:hover:bg-white max-lg:min-h-11"
           >
             {t('app.createGroup')}
           </UIButton>

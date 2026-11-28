@@ -26,7 +26,8 @@ export function ChatThread({
     if (unreadCount > 0) markRead({ conversationId: id, seq: lastSeq });
   }, [id, unreadCount, lastSeq, markRead]);
   return (
-    <UIPanel className="flex h-full min-h-0 flex-col p-0">
+    // On a phone, the thread covers the page and its bottom tabs, as a pushed screen does in the app.
+    <UIPanel className="flex h-full min-h-0 flex-col p-0 max-lg:fixed max-lg:inset-0 max-lg:z-50 max-lg:rounded-none max-lg:border-0 max-lg:bg-ink max-lg:pt-[env(safe-area-inset-top)] max-lg:pb-[env(safe-area-inset-bottom)] max-lg:before:hidden">
       <ChatHeader conversation={conversation} onBack={onBack} />
       <ChatOfflineBanner />
       <ChatMessageList

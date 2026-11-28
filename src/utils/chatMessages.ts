@@ -35,6 +35,40 @@ export function upsertMessage(data: ChatMessagePages | undefined, message: ChatM
   return { ...data, pages: [{ ...first, items: mergeMessage(first.items, message) }, ...rest] };
 }
 
+/**
+ * Writes catch-up results into a loaded thread: a known message (or the pending one with its client id)
+ * is replaced, a newer one joins the newest page, and an older one the loaded pages lack stays out.
+ */
+export function mergeFetchedMessages(
+  data: ChatMessagePages | undefined,
+  fetched: ChatMessageView[],
+) {
+  if (!data || fetched.length === 0) return data;
+  const loaded = data.pages.flatMap((page) => page.items ?? []);
+  const newestSeq = Math.max(0, ...loaded.filter((m) => m.status !== 'sending').map((m) => m.seq));
+  const loadedMatch = (message: ChatMessageView) => loaded.find((item) => isSame(item, message));
+  const replaceInPlace = (pages: ChatMessagePages, message: ChatMessageView) => ({
+    ...pages,
+    pages: pages.pages.map((page) => ({
+      ...page,
+      items: page.items?.map((item) => (isSame(item, message) ? message : item)) ?? page.items,
+    })),
+  });
+  return fetched.reduce<ChatMessagePages>((pages, message) => {
+    const match = loadedMatch(message);
+    // a pending message sits on top, so the stored one takes its place by seq instead
+    if (match)
+      return match.status === 'sending'
+        ? upsertMessage(pages, message)!
+        : replaceInPlace(pages, message);
+    return message.seq > newestSeq ? upsertMessage(pages, message)! : pages;
+  }, data);
+}
+
+/** The highest change the thread holds: where its catch-up starts. */
+export const newestChangeSeq = (data: ChatMessagePages | undefined) =>
+  Math.max(0, ...(data?.pages ?? []).flatMap((page) => (page.items ?? []).map((m) => m.changeSeq)));
+
 export function removeMessage(data: ChatMessagePages | undefined, clientId: string) {
   if (!data) return data;
   return {
