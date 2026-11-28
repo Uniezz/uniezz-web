@@ -3,7 +3,16 @@
     "details": [
       {
         "appIDs": ["ZSVCJ3UTY6.com.uniezz"],
-        "components": [{ "/": "/invite/*" }]
+        "components": [
+          { "/": "/invite/*" },
+          { "/": "/feed/post/new-post", "exclude": true },
+          { "/": "/feed/post/*/edit", "exclude": true },
+          { "/": "/feed/post/*" },
+          { "/": "/connections/students/*" },
+          { "/": "/exams/courses/new", "exclude": true },
+          { "/": "/exams/courses/*/*", "exclude": true },
+          { "/": "/exams/courses/*" }
+        ]
       }
     ]
   }
