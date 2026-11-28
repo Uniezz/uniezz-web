@@ -1231,21 +1231,24 @@ body[data-scroll-locked] {
   width: calc(100% - var(--removed-body-scroll-bar-size, 0px));
 }
 
-* {
-  scrollbar-color: var(--color-white-40) transparent;
-  scrollbar-width: thin;
-}
+/* in the base layer, so utilities such as scrollbar-hidden can override it */
+@layer base {
+  * {
+    scrollbar-color: var(--color-white-40) transparent;
+    scrollbar-width: thin;
+  }
 
-*::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
 
-*::-webkit-scrollbar-thumb {
-  border: 3px solid transparent;
-  border-radius: 999px;
-  background: var(--color-white-40);
-  background-clip: content-box;
+  *::-webkit-scrollbar-thumb {
+    border: 3px solid transparent;
+    border-radius: 999px;
+    background: var(--color-white-40);
+    background-clip: content-box;
+  }
 }
 
 input:-webkit-autofill,
