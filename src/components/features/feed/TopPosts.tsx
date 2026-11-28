@@ -28,7 +28,7 @@ export function TopPosts() {
       {/* On a phone, the mobile app's story row: it bleeds to the screen edges, fades there and starts with a "New post" tile. */}
       <div
         className={cn(
-          'mb-6 flex gap-3 overflow-x-auto max-lg:-mx-4 max-lg:mb-5 max-lg:[scrollbar-width:none] max-lg:gap-2 max-lg:[mask-image:linear-gradient(to_right,transparent,black_16px,black_calc(100%-16px),transparent)] max-lg:px-4 sm:max-lg:-mx-7 sm:max-lg:px-7',
+          'mb-6 flex gap-3 overflow-x-auto max-lg:-mx-4 max-lg:mb-5 max-lg:scrollbar-hidden max-lg:gap-2 max-lg:[mask-image:linear-gradient(to_right,transparent,black_16px,black_calc(100%-16px),transparent)] max-lg:px-4 sm:max-lg:-mx-7 sm:max-lg:px-7',
           (status || items.length === 0) && 'lg:hidden',
         )}
       >

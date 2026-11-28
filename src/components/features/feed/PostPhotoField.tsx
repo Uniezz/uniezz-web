@@ -94,7 +94,7 @@ export function PostPhotoField({
         <div
           role="region"
           aria-label={t('postComposer.photos')}
-          className="-mx-5 flex [scrollbar-width:none] gap-2 overflow-x-auto [mask-image:linear-gradient(to_right,transparent,black_20px,black_calc(100%-20px),transparent)] px-5 sm:-mx-8 sm:px-8"
+          className="-mx-5 scrollbar-hidden flex gap-2 overflow-x-auto [mask-image:linear-gradient(to_right,transparent,black_20px,black_calc(100%-20px),transparent)] px-5 sm:-mx-8 sm:px-8"
         >
           {images.length < 10 && (
             <label
@@ -188,7 +188,7 @@ export function PostPhotoField({
           role="region"
           aria-label={t('postComposer.photos')}
           tabIndex={0}
-          className="flex h-38 max-w-full min-w-0 items-start gap-3 overflow-x-auto overflow-y-hidden rounded-feature [overflow-anchor:none] focus-visible:outline-2 focus-visible:outline-blue"
+          className="scrollbar-hidden flex h-38 max-w-full min-w-0 items-start gap-3 overflow-x-auto overflow-y-hidden rounded-feature [overflow-anchor:none] focus-visible:outline-2 focus-visible:outline-blue"
         >
           {previews.map((image, index) => (
             <div

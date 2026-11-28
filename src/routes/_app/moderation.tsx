@@ -55,7 +55,7 @@ function ModerationPage() {
         }
         label={t('moderation.title')}
         idPrefix="moderation"
-        className="mb-4 shrink-0 max-lg:[scrollbar-width:none] max-lg:gap-4 max-lg:overflow-x-auto max-lg:[&>button]:whitespace-nowrap"
+        className="mb-4 shrink-0 max-lg:scrollbar-hidden max-lg:gap-4 max-lg:overflow-x-auto max-lg:[&>button]:whitespace-nowrap"
       />
       <div
         id="moderation-tab-panel"

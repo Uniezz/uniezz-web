@@ -428,7 +428,7 @@ export function CourseFormDialog({ course, onClose, onDeleted }: CourseFormDialo
                     control={control}
                     render={({ field }) =>
                       isPhone ? (
-                        <div className="-mx-4 flex [scrollbar-width:none] gap-1.5 overflow-x-auto [mask-image:linear-gradient(to_right,transparent,black_16px,black_calc(100%-16px),transparent)] px-4">
+                        <div className="-mx-4 scrollbar-hidden flex gap-1.5 overflow-x-auto [mask-image:linear-gradient(to_right,transparent,black_16px,black_calc(100%-16px),transparent)] px-4">
                           {Array.from({ length: 12 }, (_, index) => index + 1).map((value) => (
                             <SheetChip
                               key={value}
@@ -501,7 +501,7 @@ function ChipRow({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div role="group" aria-label={label} className="flex flex-col gap-1.5">
       <span className="text-micro font-semibold text-secondary">{label}</span>
-      <div className="-mx-4 flex [scrollbar-width:none] gap-1.5 overflow-x-auto [mask-image:linear-gradient(to_right,transparent,black_16px,black_calc(100%-16px),transparent)] px-4">
+      <div className="-mx-4 scrollbar-hidden flex gap-1.5 overflow-x-auto [mask-image:linear-gradient(to_right,transparent,black_16px,black_calc(100%-16px),transparent)] px-4">
         {children}
       </div>
     </div>

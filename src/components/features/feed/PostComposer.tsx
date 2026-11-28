@@ -175,7 +175,7 @@ function PostComposerDialog({ post, isPending, onSubmit, onCancel }: PostCompose
                 <p className="text-detail font-semibold text-secondary">
                   {t('postComposer.photos')}
                 </p>
-                <div className="flex h-36 gap-3 overflow-x-auto rounded-feature">
+                <div className="scrollbar-hidden flex h-36 gap-3 overflow-x-auto rounded-feature">
                   {post.mediaUrls.map((url, index) => (
                     <img
                       key={url}

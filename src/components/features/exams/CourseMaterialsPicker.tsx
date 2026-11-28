@@ -140,7 +140,7 @@ export function CourseMaterialsPicker({
           role="region"
           aria-label={t('courses.materials')}
           tabIndex={0}
-          className="col-span-full mt-3 flex h-44 max-w-full min-w-0 items-start gap-3 overflow-x-auto overflow-y-hidden rounded-feature [overflow-anchor:none] focus-visible:outline-2 focus-visible:outline-blue"
+          className="col-span-full mt-3 scrollbar-hidden flex h-44 max-w-full min-w-0 items-start gap-3 overflow-x-auto overflow-y-hidden rounded-feature [overflow-anchor:none] focus-visible:outline-2 focus-visible:outline-blue"
         >
           {files.map((file) => (
             <CourseMaterialPreview

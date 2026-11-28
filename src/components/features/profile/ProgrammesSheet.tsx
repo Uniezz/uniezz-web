@@ -196,7 +196,7 @@ export function ProgrammesSheet({ open, onClose, programmes, universityId }: Pro
                   render={({ field }) => (
                     <Group label={t(label)}>
                       {/* chip rows run edge to edge, so chips scroll under the fades */}
-                      <div className="-mx-4 flex [scrollbar-width:none] gap-1.5 overflow-x-auto [mask-image:linear-gradient(to_right,transparent,black_16px,black_calc(100%-16px),transparent)] px-4">
+                      <div className="-mx-4 scrollbar-hidden flex gap-1.5 overflow-x-auto [mask-image:linear-gradient(to_right,transparent,black_16px,black_calc(100%-16px),transparent)] px-4">
                         {options.map(([value, optionLabel]) => (
                           <UIChip
                             key={value}

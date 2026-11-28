@@ -19,7 +19,7 @@ export function PostMediaPager({ images }: { images: string[] }) {
       <div
         data-swipe-ignore=""
         onScroll={handleScroll}
-        className="flex h-full snap-x snap-mandatory [scrollbar-width:none] overflow-x-auto overscroll-x-contain"
+        className="scrollbar-hidden flex h-full snap-x snap-mandatory overflow-x-auto overscroll-x-contain"
       >
         {images.map((src, imageIndex) => (
           <button

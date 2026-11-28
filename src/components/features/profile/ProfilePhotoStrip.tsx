@@ -12,7 +12,7 @@ export function ProfilePhotoStrip({ urls }: ProfilePhotoStripProps) {
   return (
     <section className="flex flex-col gap-3" aria-label={t('students.photos')}>
       <h2 className="text-section font-semibold">{t('students.photos')}</h2>
-      <ul className="-mx-5 flex [scrollbar-width:none] gap-2 overflow-x-auto px-5">
+      <ul className="-mx-5 scrollbar-hidden flex gap-2 overflow-x-auto px-5">
         {urls.map((url, index) => (
           <li key={url} className="h-32 w-24 shrink-0 overflow-hidden rounded-2xl bg-surface-60">
             <button

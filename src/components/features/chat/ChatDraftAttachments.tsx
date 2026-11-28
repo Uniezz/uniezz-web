@@ -21,7 +21,10 @@ export function ChatDraftAttachments({
   const { t } = useTranslation();
   if (!drafts.length) return null;
   return (
-    <ul className="flex gap-3 overflow-x-auto px-4 pt-3" aria-label={t('app.attachmentsToSend')}>
+    <ul
+      className="scrollbar-hidden flex gap-3 overflow-x-auto px-4 pt-3"
+      aria-label={t('app.attachmentsToSend')}
+    >
       {drafts.map(({ id, file, url }) => (
         <li
           key={id}

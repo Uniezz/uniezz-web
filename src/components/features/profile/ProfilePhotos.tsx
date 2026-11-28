@@ -92,7 +92,7 @@ export function ProfilePhotos() {
             {photos.length} / {MAX_PHOTOS}
           </span>
         </div>
-        <ul className="-mx-5 flex [scrollbar-width:none] gap-2 overflow-x-auto px-5">
+        <ul className="-mx-5 scrollbar-hidden flex gap-2 overflow-x-auto px-5">
           {photos.map((photo, index) => (
             <li
               key={photo.id}
@@ -163,7 +163,7 @@ export function ProfilePhotos() {
         <p className="text-detail text-secondary">{t('students.photosHint')}</p>
       </div>
       {/* on a phone, a sideways strip of portrait thumbnails to the panel edge, as in the app */}
-      <ul className="grid grid-cols-2 gap-3 max-lg:-mx-5 max-lg:flex max-lg:[scrollbar-width:none] max-lg:gap-2 max-lg:overflow-x-auto max-lg:px-5 sm:grid-cols-3 lg:grid-cols-5">
+      <ul className="grid grid-cols-2 gap-3 max-lg:-mx-5 max-lg:scrollbar-hidden max-lg:flex max-lg:gap-2 max-lg:overflow-x-auto max-lg:px-5 sm:grid-cols-3 lg:grid-cols-5">
         {photos.map((photo) => {
           const index = extras.indexOf(photo);
           return (

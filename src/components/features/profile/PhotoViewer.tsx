@@ -29,7 +29,7 @@ export function PhotoViewer({ urls, index, onClose }: PhotoViewerProps) {
           <Dialog.Title className="sr-only">{t('app.openImage')}</Dialog.Title>
           <div
             ref={scrollToStart}
-            className="flex size-full snap-x snap-mandatory [scrollbar-width:none] overflow-x-auto"
+            className="scrollbar-hidden flex size-full snap-x snap-mandatory overflow-x-auto"
           >
             {urls.map((url) => (
               <img
