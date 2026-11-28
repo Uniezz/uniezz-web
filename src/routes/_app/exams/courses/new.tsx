@@ -2,7 +2,7 @@ import { createFileRoute, redirect } from '@tanstack/react-router';
 import { toast } from '@/utils';
 import { CourseFormDialog } from '@/components/features/exams';
 import i18n from '@/i18n';
-import { myProfileQueryOptions } from '@/hooks';
+import { myProfileQueryOptions, useGoBack } from '@/hooks';
 
 export const Route = createFileRoute('/_app/exams/courses/new')({
   beforeLoad: async ({ context, search }) => {
@@ -22,17 +22,8 @@ export const Route = createFileRoute('/_app/exams/courses/new')({
 });
 
 function NewCoursePage() {
-  const navigate = Route.useNavigate();
-  return (
-    <CourseFormDialog
-      onClose={(ignoreBlocker = false) =>
-        void navigate({
-          to: '/exams',
-          search: (previous) => ({ ...previous, tab: 'reviews' }),
-          replace: true,
-          ignoreBlocker,
-        })
-      }
-    />
-  );
+  const goBack = useGoBack();
+  const handleClose = (ignoreBlocker = false) =>
+    goBack({ to: '/exams', search: { tab: 'reviews' } }, ignoreBlocker);
+  return <CourseFormDialog onClose={handleClose} />;
 }

@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { toast } from '@/utils';
 import { PostComposer } from '@/components/features/feed';
-import { useCreatePost } from '@/hooks';
+import { useCreatePost, useGoBack } from '@/hooks';
 
 export const Route = createFileRoute('/_app/feed/post/new-post')({
   component: NewPostPage,
@@ -10,15 +10,10 @@ export const Route = createFileRoute('/_app/feed/post/new-post')({
 
 function NewPostPage() {
   const { mutateAsync: createPost, isPending } = useCreatePost();
-  const navigate = Route.useNavigate();
-  // Replaces the composer's entry, so Back afterwards doesn't reopen it.
+  const goBack = useGoBack();
+  // Back to the screen that opened the composer, so Back afterwards doesn't reopen it.
   const leave = (ignoreBlocker = false) =>
-    void navigate({
-      to: '/feed',
-      search: { postFrom: undefined },
-      replace: true,
-      ignoreBlocker,
-    });
+    goBack({ to: '/feed', search: { postFrom: undefined } }, ignoreBlocker);
   const { t } = useTranslation();
 
   return (

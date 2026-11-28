@@ -21,7 +21,7 @@ export function MeetTabGate() {
   };
   const handleSaved = () => {
     setIsOpen(false);
-    void navigate({ to: '/connections' });
+    void navigate({ to: '/connections', replace: true });
   };
   return (
     <>

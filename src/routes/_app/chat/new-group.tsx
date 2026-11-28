@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 
 import { CreateGroup, NewGroupScreen } from '@/components/features/chat';
-import { usePhoneViewport } from '@/hooks';
+import { useGoBack, usePhoneViewport } from '@/hooks';
 import { optionalSearchStringSchema } from '@/schemas';
 import { UIPanel } from '@/ui/components';
 
@@ -16,20 +16,20 @@ export const Route = createFileRoute('/_app/chat/new-group')({
 
 function NewGroupPage() {
   const navigate = Route.useNavigate();
+  const goBack = useGoBack();
+  const handleBack = () =>
+    goBack(
+      groupId
+        ? { to: '/chat/group/$conversationId', params: { conversationId: groupId } }
+        : { to: '/chat', search: (previous) => ({ ...previous, conversationId: undefined }) },
+    );
   const { groupId } = Route.useSearch();
   const isPhone = usePhoneViewport();
   if (isPhone) {
     return (
       <NewGroupScreen
         groupId={groupId}
-        onBack={() =>
-          void (groupId
-            ? navigate({ to: '/chat/group/$conversationId', params: { conversationId: groupId } })
-            : navigate({
-                to: '/chat',
-                search: (previous) => ({ ...previous, conversationId: undefined }),
-              }))
-        }
+        onBack={handleBack}
         onCreated={(conversationId) =>
           void navigate({
             to: '/chat',

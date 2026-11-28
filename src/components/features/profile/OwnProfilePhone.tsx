@@ -1,4 +1,4 @@
-import { Link, useNavigate, useRouter } from '@tanstack/react-router';
+import { Link, useNavigate } from '@tanstack/react-router';
 import { useFeatureFlagEnabled } from '@posthog/react';
 import { ArrowLeft } from 'lucide-react';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
@@ -12,6 +12,7 @@ import {
   useDeleteBanner,
   useDeleteMyProfile,
   useFeedPosts,
+  useGoBack,
   useScrolledPast,
   useSignOut,
   useUpdateMyProfile,
@@ -324,11 +325,9 @@ export function ProfilePhoneHeader({
   title?: string;
 }) {
   const { t } = useTranslation();
-  const router = useRouter();
-  const navigate = useNavigate();
+  const goBack = useGoBack();
   const isScrolled = useScrolledPast(8);
-  const handleBack = () =>
-    window.history.length > 1 ? router.history.back() : void navigate({ to: '/feed' });
+  const handleBack = () => goBack({ to: '/feed' });
   return (
     <header
       data-compact={isScrolled || undefined}

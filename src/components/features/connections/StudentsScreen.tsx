@@ -1,9 +1,8 @@
-import { useRouter } from '@tanstack/react-router';
 import { Search } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { useEndReached, useProfileSearch, useScrolledPast } from '@/hooks';
+import { useEndReached, useGoBack, useProfileSearch, useScrolledPast } from '@/hooks';
 import {
   UIButton,
   UICollapsingHeader,
@@ -23,7 +22,7 @@ export function StudentsScreen({
   onQueryChange: (query: string) => void;
 }) {
   const { t } = useTranslation();
-  const router = useRouter();
+  const goBack = useGoBack();
   const [search, setSearch] = useState(initialQuery);
   const [query, setQuery] = useState(initialQuery.trim());
   const [isSearching, setIsSearching] = useState(false);
@@ -35,10 +34,7 @@ export function StudentsScreen({
     if (hasNextPage && !isFetchingNextPage) void fetchNextPage();
   });
 
-  const handleBack = () =>
-    window.history.length > 1
-      ? router.history.back()
-      : void router.navigate({ to: '/connections' });
+  const handleBack = () => goBack({ to: '/connections' });
   const handleSearchOpen = () => setIsSearching(true);
   const handleSearchClose = () => setIsSearching(false);
   const handleSearchSubmit = () => {

@@ -6,7 +6,7 @@ import {
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
-import { useNavigate } from '@tanstack/react-router';
+import { useNavigate, useRouter } from '@tanstack/react-router';
 import {
   acceptChatRequest,
   addChatMembers,
@@ -347,12 +347,20 @@ export function useRefreshChatPhotos() {
 export function useOpenDirectChat() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const router = useRouter();
   const { mutateAsync, isPending } = useMutation({
     meta: { analyticsAction: 'chat_direct_open' },
     mutationFn: openDirectConversation,
   });
-  const openConversation = (conversationId: string, userId?: string) =>
-    navigate({ to: '/chat', search: { conversationId, ...(userId ? { userId } : {}) } });
+  // as the app's dismissTo + push: from elsewhere the chat list goes under the chat, so Back lands there
+  const openConversation = async (conversationId: string, userId?: string) => {
+    const { pathname, search } = router.state.location;
+    const isOnChatList =
+      ['/chat', '/chat/'].includes(pathname) &&
+      !('conversationId' in search && search.conversationId);
+    if (!isOnChatList) await navigate({ to: '/chat', search: {} });
+    return navigate({ to: '/chat', search: { conversationId, ...(userId ? { userId } : {}) } });
+  };
   const openChat = async (userId: string) => {
     const cached = findCachedConversation(
       queryClient,

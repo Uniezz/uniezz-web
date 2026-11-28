@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { createFileRoute, useNavigate, useRouter } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import {
   ChallengeCard,
@@ -9,7 +9,13 @@ import {
   RedeemInviteForm,
   RewardsShopSoon,
 } from '@/components/features/rewards';
-import { useMyDailyQuests, useMyProfile, usePhoneViewport, useScrolledPast } from '@/hooks';
+import {
+  useGoBack,
+  useMyDailyQuests,
+  useMyProfile,
+  usePhoneViewport,
+  useScrolledPast,
+} from '@/hooks';
 import {
   UICoin,
   UICollapsingHeader,
@@ -33,14 +39,12 @@ function RewardsPage() {
 /** The mobile app's rewards screen: a pushed screen, one list under a pinned header. */
 function RewardsPhonePage() {
   const { t, i18n } = useTranslation();
-  const router = useRouter();
-  const navigate = useNavigate();
+  const goBack = useGoBack();
   const { data: profile } = useMyProfile();
   const { data: quests, isPending, isError, refetch } = useMyDailyQuests();
   const [tab, setTab] = useState<'earn' | 'spend'>('earn');
   const isCompact = useScrolledPast(HEADER_COMPACT_OFFSET);
-  const handleBack = () =>
-    window.history.length > 1 ? router.history.back() : void navigate({ to: '/profile' });
+  const handleBack = () => goBack({ to: '/profile' });
   const handleRetry = () => void refetch();
   return (
     <div data-hide-bottom-tabs className="-mt-6 pb-10">

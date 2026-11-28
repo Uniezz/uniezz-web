@@ -1,4 +1,3 @@
-import { useRouter } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import type { FollowList } from '@/@types';
 import { StudentRow, StudentRowSkeletons } from '@/components/features/connections';
@@ -6,6 +5,7 @@ import {
   useEndReached,
   useFollowers,
   useFollowing,
+  useGoBack,
   useMyProfile,
   usePublicProfile,
   useScrolledPast,
@@ -23,14 +23,23 @@ export type FollowsScreenProps = {
 /** Phone-only: the mobile app's Follows screen, titled with the student's name. */
 export function FollowsScreen({ profileId, list, onListChange }: FollowsScreenProps) {
   const { t } = useTranslation();
-  const router = useRouter();
+  const goBack = useGoBack();
   const isCompact = useScrolledPast(HEADER_COMPACT_OFFSET);
   // both come from the cache of the profile that opened this screen
   const { data: me } = useMyProfile();
   const { data: student } = usePublicProfile(profileId ?? '', Boolean(profileId));
   const owner = profileId ? student : me;
   const title = (owner && authorName(owner)) || t(`follows.${list}`);
-  const handleBack = () => router.history.back();
+  const handleBack = () =>
+    goBack(
+      profileId
+        ? {
+            to: '/connections/students/$profileId',
+            params: { profileId },
+            search: { studentSearch: undefined },
+          }
+        : { to: '/profile' },
+    );
   return (
     <div data-hide-bottom-tabs className="-mx-4 -mt-6 px-4">
       <UICollapsingHeader

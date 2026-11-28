@@ -9,6 +9,7 @@ import type { ChatMember } from '@/@types';
 import {
   useChatMembers,
   useConversation,
+  useGoBack,
   useLeaveChatGroup,
   useMyProfile,
   useRemoveChatMember,
@@ -31,6 +32,7 @@ import { ChatConfirm } from './ChatConfirm';
 export function GroupSettingsScreen({ conversationId }: { conversationId: string }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const goBack = useGoBack();
   const { data: me } = useMyProfile();
   const { data: conversation } = useConversation(conversationId);
   const { data: memberPage, isPending, isError, refetch } = useChatMembers(conversationId);
@@ -53,7 +55,7 @@ export function GroupSettingsScreen({ conversationId }: { conversationId: string
   });
 
   const handleBack = () =>
-    void navigate({ to: '/chat', search: (previous) => ({ ...previous, conversationId }) });
+    goBack({ to: '/chat', search: (previous) => ({ ...previous, conversationId }) });
   const handleRename = handleSubmit(async ({ groupName }) => {
     try {
       const renamed = await rename(groupName);
@@ -79,7 +81,8 @@ export function GroupSettingsScreen({ conversationId }: { conversationId: string
   // the oldest member takes over an owner who leaves; the last one out deletes the group
   const handleLeaveConfirm = () =>
     leave(undefined, {
-      onSuccess: () => void navigate({ to: '/chat', search: {} }),
+      // the group is gone, so its chat and settings make way for the list
+      onSuccess: () => void navigate({ to: '/chat', search: {}, replace: true }),
       onError: (error) => toast.error(t(apiErrorKey(error))),
     });
 

@@ -1,7 +1,7 @@
 import { createFileRoute, redirect } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { CourseFormDialog } from '@/components/features/exams';
-import { useCourse } from '@/hooks';
+import { useCourse, useGoBack } from '@/hooks';
 import { UIDialog, UIEmpty, UIQueryError } from '@/ui/components';
 
 export const Route = createFileRoute('/_app/exams/courses/$courseId/edit')({
@@ -20,17 +20,14 @@ export const Route = createFileRoute('/_app/exams/courses/$courseId/edit')({
 
 function EditCoursePage() {
   const { courseId } = Route.useParams();
-  const navigate = Route.useNavigate();
+  const goBack = useGoBack();
   const { t } = useTranslation();
   const { data: course, isPending, isError, refetch } = useCourse(courseId);
   const close = (ignoreBlocker = false) =>
-    void navigate({
-      to: '/exams/courses/$courseId',
-      params: { courseId },
-      search: { tab: 'reviews' },
-      replace: true,
+    goBack(
+      { to: '/exams/courses/$courseId', params: { courseId }, search: { tab: 'reviews' } },
       ignoreBlocker,
-    });
+    );
   if (course?.isMine) return <CourseFormDialog course={course} onClose={close} />;
   return (
     <UIDialog

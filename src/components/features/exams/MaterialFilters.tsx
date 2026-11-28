@@ -17,7 +17,7 @@ export function MaterialFilters() {
   const navigate = useNavigate({ from: '/exams' });
   const { data: universities = [] } = useUniversities();
   const setSearch = (patch: Partial<ExamsSearch>) =>
-    void navigate({ search: (previous) => ({ ...previous, ...patch }) });
+    void navigate({ search: (previous) => ({ ...previous, ...patch }), replace: true });
   const [searchByTab, setSearchByTab] = useState<Partial<Record<ExamsTab, string>>>(() => ({
     [tab]: q ?? '',
   }));

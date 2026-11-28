@@ -40,7 +40,10 @@ function ChatPage() {
           <ChatListScreen
             filter={chatType === 'connections' ? 'all' : chatType}
             onFilterChange={(next) =>
-              void navigate({ search: { chatType: next === 'all' ? undefined : next } })
+              void navigate({
+                search: { chatType: next === 'all' ? undefined : next },
+                replace: true,
+              })
             }
             onOpen={openConversation}
             onNewGroup={() => void navigate({ to: '/chat/new-group' })}
@@ -63,6 +66,7 @@ function ChatPage() {
               chatType: chatType === 'all' ? undefined : chatType,
               ...(previous.conversationId ? { conversationId: previous.conversationId } : {}),
             }),
+            replace: true,
           })
         }
         onNewGroup={() => void navigate({ to: '/chat/new-group' })}

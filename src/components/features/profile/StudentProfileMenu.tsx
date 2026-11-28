@@ -1,10 +1,9 @@
-import { useRouter } from '@tanstack/react-router';
 import { Ellipsis, ShieldPlus } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BanButton, GrantModeratorButton } from '@/components/features/moderation';
 import { ReportButton } from '@/components/features/reports';
-import { useBlockStudent, useDropdown, useMyProfile } from '@/hooks';
+import { useBlockStudent, useDropdown, useGoBack, useMyProfile } from '@/hooks';
 import { cn } from '@/ui/cn';
 import { UIButton, UIDialog } from '@/ui/components';
 import { menuStyles } from '@/ui/components/UIMenu/variants';
@@ -18,7 +17,7 @@ const itemClass =
 /** The mobile app's "More options" menu on a student's profile: report and block, plus staff tools. */
 export function StudentProfileMenu({ studentId }: StudentProfileMenuProps) {
   const { t } = useTranslation();
-  const router = useRouter();
+  const goBack = useGoBack();
   const { data: me } = useMyProfile();
   const { ref, isOpen, toggle, close } = useDropdown();
   const [isBlockOpen, setIsBlockOpen] = useState(false);
@@ -33,7 +32,7 @@ export function StudentProfileMenu({ studentId }: StudentProfileMenuProps) {
       await block(studentId);
       setIsBlockOpen(false);
       toast.success(t('students.blocked'));
-      router.history.back();
+      goBack({ to: '/connections/students', search: { studentSearch: undefined } });
     } catch {
       toast.error(t('apiState.error'));
     }

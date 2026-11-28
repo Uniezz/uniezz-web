@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
 import { PostComposer } from '@/components/features/feed';
-import { useFeedPost, useMyProfile, usePhoneViewport, useUpdateFeedPost } from '@/hooks';
+import { useFeedPost, useGoBack, useMyProfile, usePhoneViewport, useUpdateFeedPost } from '@/hooks';
 import { X } from 'lucide-react';
 import { UIButton, UIDialog, UIEmpty, UIQueryError } from '@/ui/components';
 import { postFormDefaults, toast } from '@/utils';
@@ -14,7 +14,7 @@ export const Route = createFileRoute('/_app/feed/post/$postId/edit')({
 
 function EditPostPage() {
   const { postId } = Route.useParams();
-  const navigate = Route.useNavigate();
+  const goBack = useGoBack();
   const { t } = useTranslation();
   const {
     data: post,
@@ -26,14 +26,9 @@ function EditPostPage() {
   const { mutateAsync: updatePost, isPending } = useUpdateFeedPost();
   const isPhone = usePhoneViewport();
 
-  // Replaces the form's entry, so Back can't reopen it; retained `postFrom` keeps the post's Back.
+  // Back to the post, so Back afterwards can't reopen the form.
   function backToPost(ignoreBlocker = false) {
-    void navigate({
-      to: '/feed/post/$postId',
-      params: { postId },
-      replace: true,
-      ignoreBlocker,
-    });
+    goBack({ to: '/feed/post/$postId', params: { postId } }, ignoreBlocker);
   }
 
   if (isLoadingPost || isLoadingProfile || !post || !profile || profile.id !== post.author.id) {

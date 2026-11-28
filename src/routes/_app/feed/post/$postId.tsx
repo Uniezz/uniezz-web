@@ -35,7 +35,7 @@ import {
   useLeaveWhenGone,
   usePhoneViewport,
 } from '@/hooks';
-import { useNarrowViewport } from '@/hooks';
+import { useGoBack, useNarrowViewport } from '@/hooks';
 import {
   apiErrorKey,
   authorName,
@@ -110,6 +110,8 @@ function FeedPostPage() {
   } = useFeedComments(postId);
   const { createComment, isPending: isCreatingComment } = useCreateComment();
   const router = useRouter();
+  const goBack = useGoBack();
+  const handleBack = () => goBack({ href: postFrom ?? '/feed' });
   const href = useLocation({ select: (location) => location.href });
   const { data: me } = useMyProfile();
   const [commentDraft, setCommentDraft] = useState('');
@@ -221,7 +223,7 @@ function FeedPostPage() {
         <div className="relative mx-auto max-w-5xl">
           <button
             type="button"
-            onClick={() => void router.navigate({ href: postFrom ?? '/feed' })}
+            onClick={handleBack}
             data-ph-capture-attribute-label={postFrom ? t('app.back') : t('feed.title')}
             className="mb-5 inline-flex min-h-11 items-center gap-2 px-2 py-2 text-label text-secondary transition-colors hover:text-white max-md:mb-3 xl:absolute xl:top-0 xl:-left-32 xl:mb-0"
           >

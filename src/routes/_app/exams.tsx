@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import type { ExamsSearch } from '@/@types';
 import { examsSearchSchema } from '@/schemas';
-import { useMyProfile, usePhoneViewport, useScrolledPast } from '@/hooks';
+import { useGoBack, useMyProfile, usePhoneViewport, useScrolledPast } from '@/hooks';
 import { toast } from '@/utils';
 import { UISearchOverlay, UISubTabs, UITopbar } from '@/ui/components';
 import {
@@ -72,6 +72,7 @@ function ExamsPhonePage() {
   const { t } = useTranslation();
   const { tab = 'reviews', university, semester, q, professor } = Route.useSearch();
   const navigate = Route.useNavigate();
+  const goBack = useGoBack();
   const { data: profile } = useMyProfile();
   const isHeaderCompact = useScrolledPast(HEADER_COMPACT_OFFSET);
   // `search` is the text being typed; a query applies on submit, shared by Courses and My materials
@@ -87,8 +88,13 @@ function ExamsPhonePage() {
     window.scrollTo(0, scrollOffsets.current[tab] ?? 0);
   }, [tab]);
 
+  // tabs and filters change the page in place, as the app's pager and filters do
   const setSearchParams = (patch: Partial<ExamsSearch>) =>
-    void navigate({ search: (previous) => ({ ...previous, ...patch }), resetScroll: false });
+    void navigate({
+      search: (previous) => ({ ...previous, ...patch }),
+      replace: true,
+      resetScroll: false,
+    });
   const selectTab = (next: ExamsTab) => {
     scrollOffsets.current[tab] = window.scrollY;
     setSearchParams({ tab: next === 'reviews' ? undefined : next });
@@ -147,9 +153,9 @@ function ExamsPhonePage() {
     });
   };
   const handleProfessorClose = () =>
-    void navigate({
+    goBack({
+      to: '/exams',
       search: (previous) => ({ ...previous, professor: undefined }),
-      replace: true,
       resetScroll: false,
     });
   const tabLabels = {

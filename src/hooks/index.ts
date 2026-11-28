@@ -27,3 +27,4 @@ export * from './useEndReached';
 export * from './useScrolledPast';
 export * from './useChatUnread';
 export * from './useLongPress';
+export * from './useGoBack';

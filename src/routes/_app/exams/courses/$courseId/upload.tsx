@@ -1,5 +1,6 @@
 import { createFileRoute, redirect } from '@tanstack/react-router';
 import { UploadMaterial } from '@/components/features/exams';
+import { useGoBack } from '@/hooks';
 
 export const Route = createFileRoute('/_app/exams/courses/$courseId/upload')({
   beforeLoad: ({ search, params }) => {
@@ -15,19 +16,11 @@ export const Route = createFileRoute('/_app/exams/courses/$courseId/upload')({
 });
 function UploadMaterialPage() {
   const { courseId } = Route.useParams();
-  const navigate = Route.useNavigate();
-  return (
-    <UploadMaterial
-      courseId={courseId}
-      onClose={(ignoreBlocker = false) =>
-        void navigate({
-          to: '/exams/courses/$courseId',
-          params: { courseId },
-          search: (previous) => ({ ...previous, tab: 'reviews' }),
-          replace: true,
-          ignoreBlocker,
-        })
-      }
-    />
-  );
+  const goBack = useGoBack();
+  const handleClose = (ignoreBlocker = false) =>
+    goBack(
+      { to: '/exams/courses/$courseId', params: { courseId }, search: { tab: 'reviews' } },
+      ignoreBlocker,
+    );
+  return <UploadMaterial courseId={courseId} onClose={handleClose} />;
 }

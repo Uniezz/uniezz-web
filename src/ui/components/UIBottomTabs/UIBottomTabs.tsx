@@ -33,6 +33,8 @@ export const UIBottomTabs = ({ onTabClick }: UIBottomTabsProps = {}) => {
             <Link
               key={to}
               to={to}
+              // as the app's tabs: switching tabs isn't a step Back walks through
+              replace
               search={
                 matchRoute({ to, fuzzy: true }) ? ((() => RESET_TAB_SEARCH) as never) : undefined
               }

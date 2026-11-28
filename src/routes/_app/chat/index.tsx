@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 
 import { ChatThread, ConversationScreen } from '@/components/features/chat';
-import { useConversation, useConversations, usePhoneViewport } from '@/hooks';
+import { useConversation, useConversations, useGoBack, usePhoneViewport } from '@/hooks';
 import { UIEmpty, UIPanel } from '@/ui/components';
 import { DRAFT_CHAT_ID, selectedConversationId } from '@/utils';
 
@@ -10,6 +10,7 @@ export const Route = createFileRoute('/_app/chat/')({ component: ChatPage });
 function ChatPage() {
   const { conversationId, userId } = Route.useSearch();
   const navigate = Route.useNavigate();
+  const goBack = useGoBack();
   const isPhone = usePhoneViewport();
   const isDraft = conversationId === DRAFT_CHAT_ID;
   const { data, isPending } = useConversations();
@@ -19,8 +20,9 @@ function ChatPage() {
   // A link can point at a chat that is not in the pages loaded so far.
   const { data: fetched, isError, refetch } = useConversation(listed ? undefined : id);
   const conversation = listed ?? fetched;
+  // as the app: a chat always sits over the chat list, which Back returns to
   const handleBack = () =>
-    void navigate({
+    goBack({
       to: '/chat',
       search: (previous) => ({ ...previous, conversationId: undefined, userId: undefined }),
     });

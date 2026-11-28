@@ -51,7 +51,7 @@ function ModerationPage() {
         tabs={tabIds.map((id) => ({ id, label: tabLabels[id] }))}
         value={tab}
         onChange={(next) =>
-          void navigate({ search: { tab: next === 'reports' ? undefined : next } })
+          void navigate({ search: { tab: next === 'reports' ? undefined : next }, replace: true })
         }
         label={t('moderation.title')}
         idPrefix="moderation"
