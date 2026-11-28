@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type TouchEvent } from 'react';
+import { useEffect, useRef, useState, type TouchEvent, type WheelEvent } from 'react';
 import { Link, useNavigate, useRouter } from '@tanstack/react-router';
 import { ArrowLeft, Flag, Pencil, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -12,6 +12,7 @@ import {
   useFeedComments,
   useFeedPost,
   useFeedPosts,
+  useGoBack,
   useLeaveWhenGone,
   useMyProfile,
   useUpdateFeedComment,
@@ -82,7 +83,12 @@ export function PostPhonePage({
   const [isCardVisible, setIsCardVisible] = useState(true);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
+  const goBack = useGoBack();
   const swipeStart = useRef<{ x: number; y: number } | null>(null);
+  const pageRef = useRef<HTMLDivElement>(null);
+  // a trackpad's sideways swipe: the distance so far, and the timer that ends the gesture
+  const wheelX = useRef(0);
+  const wheelEnd = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   useLeaveWhenGone(
     postError,
     t('share.postGone'),
@@ -127,7 +133,7 @@ export function PostPhonePage({
       replace: true,
     });
   };
-  const handleBack = () => void router.navigate({ href: postFrom ?? '/feed' });
+  const handleBack = () => goBack({ href: postFrom ?? '/feed' });
   const handleEditPost = () => void navigate({ to: '/feed/post/$postId/edit', params: { postId } });
   const handleDeleteOpen = () => setConfirmDelete(true);
   const handleDeleteClose = () => setConfirmDelete(false);
@@ -148,10 +154,18 @@ export function PostPhonePage({
     );
     swipeStart.current = touch && !ignore ? { x: touch.clientX, y: touch.clientY } : null;
   };
+  // the post follows a sideways finger, as the app's pager page does, and springs back on release
+  const dragPage = (dx: number) => {
+    const page = pageRef.current;
+    if (!page) return;
+    page.style.transition = dx === 0 ? 'transform 200ms ease-out' : 'none';
+    page.style.transform = dx === 0 ? '' : `translateX(${dx}px)`;
+  };
   const handleTouchEnd = (event: TouchEvent) => {
     const start = swipeStart.current;
     const touch = event.changedTouches[0];
     swipeStart.current = null;
+    dragPage(0);
     if (!start || !touch) return;
     const dx = touch.clientX - start.x;
     const dy = touch.clientY - start.y;
@@ -159,8 +173,29 @@ export function PostPhonePage({
     goToPost(dx < 0 ? nextId : previousId);
   };
   // dragging the list closes the keyboard, as the app's keyboardDismissMode="on-drag"
-  const handleTouchMove = () => {
+  const handleTouchMove = (event: TouchEvent) => {
     if (document.activeElement === inputRef.current) inputRef.current?.blur();
+    const start = swipeStart.current;
+    const touch = event.touches[0];
+    if (!start || !touch) return;
+    const dx = touch.clientX - start.x;
+    const dy = touch.clientY - start.y;
+    const hasTarget = dx < 0 ? Boolean(nextId) : Boolean(previousId);
+    // a vertical scroll stays a scroll; with no post on that side the page barely gives
+    if (Math.abs(dx) > Math.abs(dy) * 1.5) dragPage(hasTarget ? dx * 0.6 : dx * 0.15);
+  };
+  const handleWheel = (event: WheelEvent) => {
+    if (Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;
+    if ((event.target as HTMLElement).closest('[data-swipe-ignore], [role=dialog]')) return;
+    clearTimeout(wheelEnd.current);
+    // one gesture moves at most one post; it ends once the trackpad goes quiet
+    wheelEnd.current = setTimeout(() => (wheelX.current = 0), 250);
+    if (wheelX.current === Infinity) return;
+    wheelX.current += event.deltaX;
+    if (Math.abs(wheelX.current) < POST_SWIPE_DISTANCE * 2) return;
+    const id = wheelX.current > 0 ? nextId : previousId;
+    wheelX.current = Infinity;
+    goToPost(id);
   };
   const handleReply = (comment: FeedComment) => {
     setEditing(null);
@@ -201,7 +236,15 @@ export function PostPhonePage({
   };
 
   return (
-    <div onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} onTouchMove={handleTouchMove}>
+    <div
+      // globals.css turns off the browser's sideways Back/Forward while this page is open
+      data-post-swipe=""
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      onTouchCancel={handleTouchEnd}
+      onTouchMove={handleTouchMove}
+      onWheel={handleWheel}
+    >
       <span data-hide-bottom-tabs hidden />
       <header className="scroll-blur sticky top-0 z-30 -mx-4 -mt-6 mb-3 px-4 pt-[calc(8px+env(safe-area-inset-top))]">
         <div className="flex h-11 items-center gap-2.5">
@@ -281,55 +324,57 @@ export function PostPhonePage({
           </div>
         )}
       </header>
-      {post ? (
-        <div ref={cardRef}>
-          <PostCard
-            post={post}
-            isAuthorDisabled={isAuthorProfilePath(postFrom, post.author.id, me?.id)}
-          />
-        </div>
-      ) : isPostPending ? (
-        <PostCardSkeleton />
-      ) : isPostError ? (
-        <div className="flex justify-center text-center">
-          <UIQueryError retry={() => void refetchPost()} />
-        </div>
-      ) : (
-        <UIEmpty />
-      )}
-      {post && (
-        <section aria-label={t('app.comments')} className="mt-4">
-          <h2 className="flex items-baseline gap-2 text-md font-semibold tracking-[-0.4px]">
-            {t('app.comments')}
-            <span className="text-detail font-normal tracking-normal text-secondary">
-              {formatCompactNumber(post.commentsCount, i18n.resolvedLanguage)}
-            </span>
-          </h2>
-          {areCommentsPending ? (
-            <CommentSkeletonRows count={4} />
-          ) : areCommentsError ? (
-            <div className="flex justify-center text-center">
-              <UIQueryError retry={() => void refetchComments()} />
-            </div>
-          ) : comments.length === 0 ? (
-            <UIEmpty />
-          ) : (
-            <Virtuoso
-              data={comments}
-              useWindowScroll
-              computeItemKey={(_, comment) => comment.id}
-              endReached={() => {
-                if (hasMoreComments && !isFetchingMoreComments) void fetchMoreComments();
-              }}
-              aria-label={t('app.comments')}
-              itemContent={(_, comment) => (
-                <CommentItem comment={comment} onReply={handleReply} onEdit={handleEdit} />
-              )}
+      <div ref={pageRef}>
+        {post ? (
+          <div ref={cardRef}>
+            <PostCard
+              post={post}
+              isAuthorDisabled={isAuthorProfilePath(postFrom, post.author.id, me?.id)}
             />
-          )}
-          {isFetchingMoreComments && <CommentSkeletonRows count={1} />}
-        </section>
-      )}
+          </div>
+        ) : isPostPending ? (
+          <PostCardSkeleton />
+        ) : isPostError ? (
+          <div className="flex justify-center text-center">
+            <UIQueryError retry={() => void refetchPost()} />
+          </div>
+        ) : (
+          <UIEmpty />
+        )}
+        {post && (
+          <section aria-label={t('app.comments')} className="mt-4">
+            <h2 className="flex items-baseline gap-2 text-md font-semibold tracking-[-0.4px]">
+              {t('app.comments')}
+              <span className="text-detail font-normal tracking-normal text-secondary">
+                {formatCompactNumber(post.commentsCount, i18n.resolvedLanguage)}
+              </span>
+            </h2>
+            {areCommentsPending ? (
+              <CommentSkeletonRows count={4} />
+            ) : areCommentsError ? (
+              <div className="flex justify-center text-center">
+                <UIQueryError retry={() => void refetchComments()} />
+              </div>
+            ) : comments.length === 0 ? (
+              <UIEmpty />
+            ) : (
+              <Virtuoso
+                data={comments}
+                useWindowScroll
+                computeItemKey={(_, comment) => comment.id}
+                endReached={() => {
+                  if (hasMoreComments && !isFetchingMoreComments) void fetchMoreComments();
+                }}
+                aria-label={t('app.comments')}
+                itemContent={(_, comment) => (
+                  <CommentItem comment={comment} onReply={handleReply} onEdit={handleEdit} />
+                )}
+              />
+            )}
+            {isFetchingMoreComments && <CommentSkeletonRows count={1} />}
+          </section>
+        )}
+      </div>
       {post && (
         <CommentComposer
           value={draft}

@@ -1198,6 +1198,22 @@ body,
 html {
   overscroll-behavior-y: none;
 }
+
+/* on a phone, as the mobile app: the page scrolls without a scroll bar */
+@media (width < 64rem) {
+  html {
+    scrollbar-width: none;
+  }
+
+  html::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* the browser's sideways Back/Forward would fight the swipe between posts */
+  html:has([data-post-swipe]) {
+    overscroll-behavior-x: none;
+  }
+}
 main {
   width: 100%;
   height: 100%;
