@@ -1283,6 +1283,17 @@ input[type='search']::-webkit-search-cancel-button {
   background-clip: content-box;
 }
 
+/* as the mobile app: while a useDropdown menu is open, a tap outside only closes it, so nothing
+   under the tap reacts; the menu, its wrapper and any dialog opened from it stay usable */
+html:has([data-dropdown-open]) body * {
+  pointer-events: none;
+}
+
+html:has([data-dropdown-open])
+  :is([data-dropdown-open], [data-dropdown-open] *, [role='dialog'], [role='dialog'] *) {
+  pointer-events: auto;
+}
+
 /* a utility, so variants such as max-lg:scrollbar-hidden work */
 @utility scrollbar-hidden {
   scrollbar-width: none;

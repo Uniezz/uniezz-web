@@ -38,7 +38,7 @@ export function StudentProfileMenu({ studentId }: StudentProfileMenuProps) {
     }
   };
   return (
-    <div ref={ref} className="relative">
+    <div ref={ref} data-dropdown-open={isOpen || undefined} className="relative">
       <button
         type="button"
         aria-label={t('app.moreOptions')}

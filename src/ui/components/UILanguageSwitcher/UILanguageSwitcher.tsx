@@ -18,7 +18,7 @@ export function UILanguageSwitcher({ onChange }: UILanguageSwitcherProps) {
   const Flag = LNG_OPTIONS.find((option) => option.value === language)?.Icon;
 
   return (
-    <div className="relative flex" ref={ref}>
+    <div className="relative flex" ref={ref} data-dropdown-open={isOpen || undefined}>
       <UIButton
         bg="secondary"
         size="pill"

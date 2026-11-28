@@ -35,6 +35,7 @@ export function PostTypeSelector({
       <div
         className="relative flex"
         ref={ref}
+        data-dropdown-open={isOpen || undefined}
         onKeyDown={(event) => {
           if (event.key === 'Escape') {
             close();

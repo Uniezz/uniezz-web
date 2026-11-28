@@ -33,6 +33,7 @@ export const UIEmojiPicker = ({ align, disabled, className }: UIEmojiPickerProps
   return (
     <div
       ref={ref}
+      data-dropdown-open={isOpen || undefined}
       className={cn('relative flex', className)}
       onKeyDown={(event) => {
         if (event.key === 'Escape' && isOpen) {

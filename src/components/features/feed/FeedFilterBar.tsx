@@ -13,7 +13,7 @@ export function FeedFilterBar({ filters, onChange }: FeedFilterBarProps) {
   const activeCount = [filters.type, filters.university, filters.from].filter(Boolean).length;
 
   return (
-    <div className="relative flex" ref={ref}>
+    <div className="relative flex" ref={ref} data-dropdown-open={isOpen || undefined}>
       <UIButton
         className="relative size-10 shrink-0 backdrop-blur-[40px]"
         size="icon"

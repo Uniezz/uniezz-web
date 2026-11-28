@@ -95,6 +95,7 @@ export function AddProgramme({
               <div
                 className="relative"
                 ref={ref}
+                data-dropdown-open={isOpen || undefined}
                 onKeyDown={(event) => {
                   if (event.key === 'Escape') close();
                 }}
