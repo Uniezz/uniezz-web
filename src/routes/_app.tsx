@@ -12,7 +12,7 @@ import { myProfileQueryOptions } from '@/hooks';
 import { ApiRequestError } from '@/api';
 import { authorName } from '@/utils';
 import { useNarrowViewport } from '@/hooks';
-import { isMobileDevice, saveReturnPath, shouldBlockMobile } from '@/utils';
+import { appStoreFor, isMobileDevice, saveReturnPath, shouldBlockMobile } from '@/utils';
 import { optionalSearchStringSchema, returnPathSchema } from '@/schemas';
 import { AppStoreLinks } from '@/components';
 import { privateRouteHead } from '@/utils/routeHead';
@@ -22,6 +22,8 @@ export const Route = createFileRoute('/_app')({
   // Runs on every visit to a closed page, including Back. A guest goes to sign-in
   // with `replace`, so the closed page is not kept in history.
   beforeLoad: async ({ context, location }) => {
+    const store = appStoreFor(navigator.userAgent, location.pathname);
+    if (store) throw redirect({ href: store });
     try {
       await context.queryClient.ensureQueryData(myProfileQueryOptions());
     } catch (error) {
