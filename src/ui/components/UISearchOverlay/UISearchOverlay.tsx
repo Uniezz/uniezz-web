@@ -1,5 +1,5 @@
 import { ArrowUp, Search } from 'lucide-react';
-import { type FormEvent, type KeyboardEvent, type PointerEvent } from 'react';
+import { type FormEvent, type KeyboardEvent, type MouseEvent, type PointerEvent } from 'react';
 import { searchOverlayBarStyles, searchOverlayStyles, searchOverlaySubmitStyles } from './variants';
 
 export type UISearchOverlayProps = {
@@ -36,12 +36,21 @@ export const UISearchOverlay = ({
   };
   // keeps focus in the field, so pressing submit doesn't blur and close before the search runs
   const keepFocus = (event: PointerEvent) => event.preventDefault();
-  // iOS Safari keeps focus when a non-focusable area is tapped, so the backdrop closes itself
+  // A tap on the backdrop closes on its click, not on press: closing on press unmounted the overlay
+  // first, so the click landed on the content under it. Holding focus also stops the field's blur
+  // from closing it early; iOS Safari wouldn't blur on a non-focusable area anyway.
   const handleBackdropPointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    if (event.target === event.currentTarget) event.preventDefault();
+  };
+  const handleBackdropClick = (event: MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) onClose();
   };
   return (
-    <div className={searchOverlayStyles()} onPointerDown={handleBackdropPointerDown}>
+    <div
+      className={searchOverlayStyles()}
+      onPointerDown={handleBackdropPointerDown}
+      onClick={handleBackdropClick}
+    >
       <form role="search" onSubmit={handleSubmit} className={searchOverlayBarStyles()}>
         <Search size={17} className="shrink-0 text-white-60" aria-hidden />
         <input
